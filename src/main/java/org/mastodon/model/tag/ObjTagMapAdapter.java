@@ -38,7 +38,8 @@ import org.mastodon.adapter.RefBimap;
  * between source objects ({@code O}) and wrapped objects ({@code WI}) is
  * established by a {@link RefBimap}.
  *
- * @param <O> object type of source {@code ObjTagMap}.
+ * @param <O>
+ *            object type of source {@code ObjTagMap}.
  *
  * @param <WO>
  *            object type of this wrapped {@code ObjTagMap}.

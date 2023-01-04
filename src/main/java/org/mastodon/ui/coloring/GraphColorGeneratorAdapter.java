@@ -33,9 +33,10 @@ import org.mastodon.graph.Edge;
 import org.mastodon.graph.Vertex;
 
 /**
- * Adapts a {@code GraphColorGenerator<V, E>} as a {@code GraphColorGenerator<WV, WE>}.
- * The mapping between source vertices/edges ({@code V, E}) and wrapped
- * vertices/edges ({@code WV, WE}) is established by {@link RefBimap}s.
+ * Adapts a {@code GraphColorGenerator<V, E>} as a
+ * {@code GraphColorGenerator<WV, WE>}. The mapping between source
+ * vertices/edges ({@code V, E}) and wrapped vertices/edges ({@code WV, WE}) is
+ * established by {@link RefBimap}s.
  * <p>
  * The adapted source coloring is modifiable.
  *
@@ -50,8 +51,7 @@ import org.mastodon.graph.Vertex;
  *
  * @author Tobias Pietzsch
  */
-public class GraphColorGeneratorAdapter< V extends Vertex< E >, E extends Edge< V >, WV extends Vertex< WE >, WE extends Edge< WV > >
-		implements GraphColorGenerator< WV, WE >
+public class GraphColorGeneratorAdapter< V extends Vertex< E >, E extends Edge< V >, WV extends Vertex< WE >, WE extends Edge< WV > > implements GraphColorGenerator< WV, WE >
 {
 	private GraphColorGenerator< V, E > colorGenerator;
 
@@ -59,9 +59,7 @@ public class GraphColorGeneratorAdapter< V extends Vertex< E >, E extends Edge< 
 
 	private final RefBimap< E, WE > edgeMap;
 
-	public GraphColorGeneratorAdapter(
-			final RefBimap< V, WV > vertexMap,
-			final RefBimap< E, WE > edgeMap )
+	public GraphColorGeneratorAdapter( final RefBimap< V, WV > vertexMap, final RefBimap< E, WE > edgeMap )
 	{
 		this.vertexMap = vertexMap;
 		this.edgeMap = edgeMap;

@@ -104,7 +104,8 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 		// Post-process dependency graph.
 		// 1.) remove cycles
 		dependencies.removeCycles();
-		// 2.) recursively remove vertices with missing inputs or featurecomputers
+		// 2.) recursively remove vertices with missing inputs or
+		// featurecomputers
 		dependencies.removeIncomputable();
 	}
 
@@ -131,27 +132,23 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 				for ( final ModuleItem< ? > item : info.outputs() )
 				{
 					if ( !Feature.class.isAssignableFrom( item.getType() ) )
-						throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName()
-								+ " because output " + item + " is not of type Feature." );
+						throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName() + " because output " + item + " is not of type Feature." );
 
 					if ( featureSpec != null )
-						throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName()
-								+ " because it defines more than one output." );
+						throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName() + " because it defines more than one output." );
 
 					@SuppressWarnings( "unchecked" )
 					final Class< ? extends Feature< ? > > type = ( Class< ? extends Feature< ? > > ) item.getType();
 					featureSpec = featureSpecs.getSpec( type );
 				}
 				if ( featureSpec == null )
-					throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName()
-							+ " because it does not define an output." );
+					throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName() + " because it does not define an output." );
 
 				FeatureDependencyGraph.Vertex v = dependencies.get( featureSpec );
 				if ( v == null )
 					v = dependencies.addVertex( featureSpec );
 				if ( v.getFeatureComputer() != null )
-					throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName()
-							+ " because it computes " + featureSpec + " which is already computed by " + v.getFeatureComputer() );
+					throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName() + " because it computes " + featureSpec + " which is already computed by " + v.getFeatureComputer() );
 				v.setFeatureComputer( fc, info );
 
 				for ( final ModuleItem< ? > item : info.inputs() )
@@ -186,9 +183,7 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 	@Override
 	public FeatureComputer getFeatureComputerFor( final FeatureSpec< ?, ? > spec )
 	{
-		return null == dependencies.get( spec )
-				? null
-				: dependencies.get( spec ).getFeatureComputer();
+		return null == dependencies.get( spec ) ? null : dependencies.get( spec ).getFeatureComputer();
 	}
 
 	@Override
@@ -201,10 +196,10 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 	public Collection< FeatureSpec< ?, ? > > getDependencies( final FeatureSpec< ?, ? > spec )
 	{
 		final Vertex vertex = dependencies.get( spec );
-		if (null == vertex)
+		if ( null == vertex )
 			return Collections.emptyList();
 
-		final List<FeatureSpec< ?, ? >> deps = new ArrayList<>();
+		final List< FeatureSpec< ?, ? > > deps = new ArrayList<>();
 		for ( final Edge edge : vertex.outgoingEdges() )
 		{
 			final Vertex target = edge.getTarget();
@@ -262,24 +257,22 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 	}
 
 	/**
-	 * Try to set a value for the specified {@link ModuleItem} that is a parameter
-	 * of the {@link FeatureComputer} described by the specified
+	 * Try to set a value for the specified {@link ModuleItem} that is a
+	 * parameter of the {@link FeatureComputer} described by the specified
 	 * {@link CommandModule}.
 	 * <p>
-	 * An error is printed if this {@link DefaultFeatureComputerService} cannot assign a
-	 * value for the specified class of input.
+	 * An error is printed if this {@link DefaultFeatureComputerService} cannot
+	 * assign a value for the specified class of input.
 	 *
 	 * @param item
-	 *                           the parameter in the feature computer to set value
-	 *                           of.
+	 *            the parameter in the feature computer to set value of.
 	 * @param module
-	 *                           the command module representing the feature
-	 *                           computer.
+	 *            the command module representing the feature computer.
 	 * @param parameterClass
-	 *                           the class of the parameter to set.
+	 *            the class of the parameter to set.
 	 * @param featureModel
-	 *                           the map of already computed features to potentially
-	 *                           serve as parameter.
+	 *            the map of already computed features to potentially serve as
+	 *            parameter.
 	 */
 	protected void provideParameters( final ModuleItem< ? > item, final CommandModule module, final Class< ? > parameterClass, final Map< FeatureSpec< ?, ? >, Feature< ? > > featureModel )
 	{
@@ -295,7 +288,7 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 		}
 
 		// FeatureComputationStatus.
-		if (FeatureComputationStatus.class.isAssignableFrom( parameterClass ))
+		if ( FeatureComputationStatus.class.isAssignableFrom( parameterClass ) )
 		{
 			@SuppressWarnings( "unchecked" )
 			final ModuleItem< FeatureComputationStatus > statusModule = ( ModuleItem< FeatureComputationStatus > ) item;
@@ -367,7 +360,8 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 		}
 
 		/**
-		 * @param progress computation progress as a number between 0 and 1
+		 * @param progress
+		 *            computation progress as a number between 0 and 1
 		 */
 		public void notifyProgress( final double progress )
 		{

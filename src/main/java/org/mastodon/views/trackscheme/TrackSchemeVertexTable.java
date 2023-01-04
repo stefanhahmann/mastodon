@@ -39,15 +39,16 @@ import org.mastodon.collection.RefCollections;
 import org.mastodon.collection.RefSet;
 
 /**
- * A "table" that contains vertices ({@link TrackSchemeVertex}).
- * The "table" has a "row" for each time point, that contains all the vertices
- * of this time point. Each "row" in the table is basically a {@link TrackSchemeVertexList}.
- * These lists are sorted in ascending order with respect to the {@link TrackSchemeVertex#getLayoutX() layout X} coordinate.
+ * A "table" that contains vertices ({@link TrackSchemeVertex}). The "table" has
+ * a "row" for each time point, that contains all the vertices of this time
+ * point. Each "row" in the table is basically a {@link TrackSchemeVertexList}.
+ * These lists are sorted in ascending order with respect to the
+ * {@link TrackSchemeVertex#getLayoutX() layout X} coordinate.
  */
 public class TrackSchemeVertexTable
 {
 	/**
-	 *  Ordered list of all existing timepoints.
+	 * Ordered list of all existing timepoints.
 	 */
 	private final TIntArrayList timepoints;
 
@@ -60,15 +61,17 @@ public class TrackSchemeVertexTable
 	 */
 	private final TIntObjectMap< TrackSchemeVertexList > timepointToOrderedVertices;
 
-	private final TrackSchemeGraph<?, ?> graph;
+	private final TrackSchemeGraph< ?, ? > graph;
 
-	public TrackSchemeVertexTable( TrackSchemeGraph<?, ?> graph ) {
+	public TrackSchemeVertexTable( TrackSchemeGraph< ?, ? > graph )
+	{
 		this.graph = graph;
 		timepoints = new TIntArrayList();
-		timepointToOrderedVertices = new TIntObjectArrayMap< >();
+		timepointToOrderedVertices = new TIntObjectArrayMap<>();
 	}
 
-	public void clear() {
+	public void clear()
+	{
 		timepoints.clear();
 		timepointToOrderedVertices.clear();
 	}
@@ -78,8 +81,9 @@ public class TrackSchemeVertexTable
 		return timepoints;
 	}
 
-	public TrackSchemeVertexList getOrderedVertices(int timepoint ) {
-		return timepointToOrderedVertices.get(timepoint);
+	public TrackSchemeVertexList getOrderedVertices( int timepoint )
+	{
+		return timepointToOrderedVertices.get( timepoint );
 	}
 
 	public void add( TrackSchemeVertex v )
@@ -95,7 +99,7 @@ public class TrackSchemeVertexTable
 		vlist.add( v );
 	}
 
-	public RefSet<TrackSchemeVertex> getVerticesWithin( double lx1, double ly1, double lx2, double ly2 )
+	public RefSet< TrackSchemeVertex > getVerticesWithin( double lx1, double ly1, double lx2, double ly2 )
 	{
 		final int tStart = ( int ) Math.ceil( Math.min( ly1, ly2 ) );
 		final int tEnd = ( int ) Math.floor( Math.max( ly1, ly2 ) ) + 1;
@@ -129,7 +133,7 @@ public class TrackSchemeVertexTable
 		int closestVertexIndex = -1;
 
 		final TIntIterator tpIter = new TIntAlternatingIterator( timepoints, ( int ) ly );
-		while( tpIter.hasNext() )
+		while ( tpIter.hasNext() )
 		{
 			final int tp = tpIter.next();
 			final double diffy = ( ly - tp ) * aspectRatioXtoY;
@@ -214,17 +218,13 @@ public class TrackSchemeVertexTable
 	{
 		final TrackSchemeVertexList vertices = timepointToOrderedVertices.get( vertex.getTimepoint() );
 		final int index = vertices.binarySearch( vertex.getLayoutX() );
-		return ( index > 0 )
-				? vertices.get( index - 1, ref )
-				: null;
+		return ( index > 0 ) ? vertices.get( index - 1, ref ) : null;
 	}
 
 	public TrackSchemeVertex getRightSibling( TrackSchemeVertex vertex, TrackSchemeVertex ref )
 	{
 		final TrackSchemeVertexList vertices = timepointToOrderedVertices.get( vertex.getTimepoint() );
 		final int index = vertices.binarySearch( vertex.getLayoutX() );
-		return ( index < vertices.size() - 1 )
-				? vertices.get( index + 1, ref )
-				: null;
+		return ( index < vertices.size() - 1 ) ? vertices.get( index + 1, ref ) : null;
 	}
 }

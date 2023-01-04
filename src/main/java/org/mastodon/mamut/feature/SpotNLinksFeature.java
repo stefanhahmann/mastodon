@@ -60,13 +60,7 @@ public class SpotNLinksFeature implements Feature< Spot >
 	{
 		public Spec()
 		{
-			super(
-					KEY,
-					HELP_STRING,
-					SpotNLinksFeature.class,
-					Spot.class,
-					Multiplicity.SINGLE,
-					PROJECTION_SPEC );
+			super( KEY, HELP_STRING, SpotNLinksFeature.class, Spot.class, Multiplicity.SINGLE, PROJECTION_SPEC );
 		}
 	}
 

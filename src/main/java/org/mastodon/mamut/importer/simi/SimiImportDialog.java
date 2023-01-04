@@ -179,12 +179,7 @@ public class SimiImportDialog
 				@Override
 				public void actionPerformed( final ActionEvent e )
 				{
-					final File file = FileChooser.chooseFile(
-							Dialog.this,
-							null,
-							new ExtensionFileFilter( "sbd" ),
-							"Open .sbd File",
-							FileChooser.DialogType.LOAD );
+					final File file = FileChooser.chooseFile( Dialog.this, null, new ExtensionFileFilter( "sbd" ), "Open .sbd File", FileChooser.DialogType.LOAD );
 					if ( file != null )
 						pathTextField.setText( file.getAbsolutePath() );
 				}

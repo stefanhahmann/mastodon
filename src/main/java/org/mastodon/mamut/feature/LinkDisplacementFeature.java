@@ -50,8 +50,7 @@ public class LinkDisplacementFeature implements Feature< Link >
 
 	private static final String KEY = "Link displacement";
 
-	private static final String HELP_STRING = "Computes the link displacement in physical units "
-			+ "as the distance between the source spot and the target spot.";
+	private static final String HELP_STRING = "Computes the link displacement in physical units " + "as the distance between the source spot and the target spot.";
 
 	private static final FeatureProjectionSpec PROJECTION_SPEC = new FeatureProjectionSpec( KEY, Dimension.LENGTH );
 
@@ -66,13 +65,7 @@ public class LinkDisplacementFeature implements Feature< Link >
 	{
 		public Spec()
 		{
-			super(
-					KEY,
-					HELP_STRING,
-					LinkDisplacementFeature.class,
-					Link.class,
-					Multiplicity.SINGLE,
-					PROJECTION_SPEC );
+			super( KEY, HELP_STRING, LinkDisplacementFeature.class, Link.class, Multiplicity.SINGLE, PROJECTION_SPEC );
 		}
 	}
 

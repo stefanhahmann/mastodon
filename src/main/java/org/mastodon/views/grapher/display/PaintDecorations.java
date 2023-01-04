@@ -79,14 +79,7 @@ public class PaintDecorations
 	 * @param style
 	 *            style with which to paint (background color, etc.)
 	 */
-	public void paintBackground(
-			final Graphics2D g2,
-			final int width,
-			final int height,
-			final int axesWidth,
-			final int axesHeight,
-			final ScreenEntities screenEntities,
-			final DataDisplayStyle style )
+	public void paintBackground( final Graphics2D g2, final int width, final int height, final int axesWidth, final int axesHeight, final ScreenEntities screenEntities, final DataDisplayStyle style )
 	{
 		g2.setColor( style.getBackgroundColor() );
 		g2.fillRect( 0, 0, width, height );
@@ -114,14 +107,7 @@ public class PaintDecorations
 	 * @param style
 	 *            style with which to paint (background color, etc.)
 	 */
-	public void paintHeaders(
-			final Graphics2D g2,
-			final int width,
-			final int height,
-			final int axesWidth,
-			final int axesHeight,
-			final ScreenEntities screenEntities,
-			final DataDisplayStyle style )
+	public void paintHeaders( final Graphics2D g2, final int width, final int height, final int axesWidth, final int axesHeight, final ScreenEntities screenEntities, final DataDisplayStyle style )
 	{
 		final ScreenTransform screenTransform = new ScreenTransform();
 		screenEntities.getScreenTransform( screenTransform );
@@ -129,7 +115,7 @@ public class PaintDecorations
 		final double maxX = screenTransform.getMaxX();
 		final double minY = screenTransform.getMinY();
 		final double maxY = screenTransform.getMaxY();
-		
+
 		double xScale = screenTransform.getScaleX();
 		double yScale = screenTransform.getScaleY();
 		xScale = Double.isNaN( xScale ) ? 1. : xScale;
@@ -195,11 +181,7 @@ public class PaintDecorations
 			// 3. Y label
 			g2.setFont( style.getAxisLabelFont() );
 			final int yLabelWidth = fm.stringWidth( yLabel );
-			drawStringRotated( g2,
-					axesWidth - tickWidth - 2 - maxStringWidth - 5,
-					height / 2 + yLabelWidth / 2,
-					-90.,
-					yLabel );
+			drawStringRotated( g2, axesWidth - tickWidth - 2 - maxStringWidth - 5, height / 2 + yLabelWidth / 2, -90., yLabel );
 		}
 
 		if ( isVisibleXAxis )
@@ -243,9 +225,7 @@ public class PaintDecorations
 			// 3. X label
 			g2.setFont( style.getAxisLabelFont() );
 			final int xLabelWidth = fm.stringWidth( xLabel );
-			g2.drawString( xLabel,
-					axesWidth + ( width - axesWidth ) / 2 - xLabelWidth / 2,
-					ytop + tickWidth + 2 + 2 * fontAscent + 5 );
+			g2.drawString( xLabel, axesWidth + ( width - axesWidth ) / 2 - xLabelWidth / 2, ytop + tickWidth + 2 + 2 * fontAscent + 5 );
 		}
 
 		if ( isVisibleYAxis && isVisibleXAxis )

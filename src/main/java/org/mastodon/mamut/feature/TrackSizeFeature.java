@@ -66,13 +66,7 @@ public class TrackSizeFeature implements Feature< Spot >
 	{
 		public Spec()
 		{
-			super(
-					KEY,
-					INFO_STRING,
-					TrackSizeFeature.class,
-					Spot.class,
-					Multiplicity.SINGLE,
-					PROJECTION_SPEC );
+			super( KEY, INFO_STRING, TrackSizeFeature.class, Spot.class, Multiplicity.SINGLE, PROJECTION_SPEC );
 		}
 	}
 
@@ -82,7 +76,7 @@ public class TrackSizeFeature implements Feature< Spot >
 		this.projection = FeatureProjections.project( key( PROJECTION_SPEC ), map, Dimension.NONE_UNITS );
 	}
 
-	public int get(final Spot spot)
+	public int get( final Spot spot )
 	{
 		return map.getInt( spot );
 	}

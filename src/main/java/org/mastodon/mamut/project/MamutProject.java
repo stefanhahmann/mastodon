@@ -86,9 +86,7 @@ public class MamutProject
 		this( projectRoot, null );
 	}
 
-	public MamutProject(
-			final File projectRoot,
-			final File datasetXmlFile )
+	public MamutProject( final File projectRoot, final File datasetXmlFile )
 	{
 		this.projectRoot = projectRoot;
 		this.datasetXmlFile = datasetXmlFile;
@@ -153,23 +151,17 @@ public class MamutProject
 	@Override
 	public String toString()
 	{
-		return super.toString() + "\n"
-				+ " - projectRoot: " + getProjectRoot() + "\n"
-				+ " - dataset: " + getDatasetXmlFile();
+		return super.toString() + "\n" + " - projectRoot: " + getProjectRoot() + "\n" + " - dataset: " + getDatasetXmlFile();
 	}
 
 	public ProjectReader openForReading() throws IOException
 	{
-		return projectRoot.isDirectory()
-				? new ReadFromDirectory()
-				: new ReadFromZip();
+		return projectRoot.isDirectory() ? new ReadFromDirectory() : new ReadFromZip();
 	}
 
 	public ProjectWriter openForWriting() throws IOException
 	{
-		return projectRoot.isDirectory()
-				? new WriteToDirectory()
-				: new WriteToZip();
+		return projectRoot.isDirectory() ? new WriteToDirectory() : new WriteToZip();
 	}
 
 	public interface ProjectReader extends Closeable
@@ -189,7 +181,7 @@ public class MamutProject
 		 * @return the collection of feature keys.
 		 */
 		Collection< String > getFeatureKeys();
-		
+
 		InputStream getGuiInputStream() throws IOException;
 	}
 
@@ -240,10 +232,7 @@ public class MamutProject
 			if ( !featureFolder.exists() || !featureFolder.canRead() )
 				return Collections.emptyList();
 
-			final List< String > featureKeys = Arrays.stream( featureFolder.listFiles( ( dir, name ) -> name.toLowerCase().endsWith( ".raw" ) ) )
-				.map( f -> f.getName() )
-				.map( s -> s.replace( ".raw", "" ) )
-				.collect( Collectors.toList() );
+			final List< String > featureKeys = Arrays.stream( featureFolder.listFiles( ( dir, name ) -> name.toLowerCase().endsWith( ".raw" ) ) ).map( f -> f.getName() ).map( s -> s.replace( ".raw", "" ) ).collect( Collectors.toList() );
 			return featureKeys;
 		}
 
@@ -294,9 +283,7 @@ public class MamutProject
 		@Override
 		public Collection< String > getFeatureKeys()
 		{
-			return zip.listFile( FEATURE_FOLDER_NAME ).stream()
-				.map( s -> s.replace( ".raw", "" ) )
-				.collect( Collectors.toList() );
+			return zip.listFile( FEATURE_FOLDER_NAME ).stream().map( s -> s.replace( ".raw", "" ) ).collect( Collectors.toList() );
 		}
 
 		@Override

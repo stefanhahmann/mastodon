@@ -64,36 +64,19 @@ public class ExportableChartPanel extends ChartPanel
 		super( chart );
 	}
 
-	public ExportableChartPanel(
-			final JFreeChart chart,
-			final boolean properties,
-			final boolean save,
-			final boolean print,
-			final boolean zoom,
-			final boolean tooltips )
+	public ExportableChartPanel( final JFreeChart chart, final boolean properties, final boolean save, final boolean print, final boolean zoom, final boolean tooltips )
 	{
 		super( chart, properties, save, print, zoom, tooltips );
 	}
 
-	public ExportableChartPanel( final JFreeChart chart, final int width, final int height,
-			final int minimumDrawWidth, final int minimumDrawHeight, final int maximumDrawWidth,
-			final int maximumDrawHeight, final boolean useBuffer, final boolean properties,
-			final boolean save, final boolean print, final boolean zoom, final boolean tooltips )
+	public ExportableChartPanel( final JFreeChart chart, final int width, final int height, final int minimumDrawWidth, final int minimumDrawHeight, final int maximumDrawWidth, final int maximumDrawHeight, final boolean useBuffer, final boolean properties, final boolean save, final boolean print, final boolean zoom, final boolean tooltips )
 	{
-		super( chart, width, height, minimumDrawWidth, minimumDrawHeight,
-				maximumDrawWidth, maximumDrawHeight,
-				useBuffer, properties, save, print, zoom, tooltips );
+		super( chart, width, height, minimumDrawWidth, minimumDrawHeight, maximumDrawWidth, maximumDrawHeight, useBuffer, properties, save, print, zoom, tooltips );
 	}
 
-	public ExportableChartPanel( final JFreeChart chart, final int width, final int height,
-			final int minimumDrawWidth, final int minimumDrawHeight, final int maximumDrawWidth,
-			final int maximumDrawHeight, final boolean useBuffer, final boolean properties,
-			final boolean copy, final boolean save, final boolean print, final boolean zoom,
-			final boolean tooltips )
+	public ExportableChartPanel( final JFreeChart chart, final int width, final int height, final int minimumDrawWidth, final int minimumDrawHeight, final int maximumDrawWidth, final int maximumDrawHeight, final boolean useBuffer, final boolean properties, final boolean copy, final boolean save, final boolean print, final boolean zoom, final boolean tooltips )
 	{
-		super( chart, width, height, minimumDrawWidth, minimumDrawHeight,
-				maximumDrawWidth, maximumDrawHeight,
-				useBuffer, properties, copy, save, print, zoom, tooltips );
+		super( chart, width, height, minimumDrawWidth, minimumDrawHeight, maximumDrawWidth, maximumDrawHeight, useBuffer, properties, copy, save, print, zoom, tooltips );
 	}
 
 	/*
@@ -150,8 +133,8 @@ public class ExportableChartPanel extends ChartPanel
 			final JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setDialogTitle( "Export chart to PNG, PDF or SVG" );
 			fileChooser.setCurrentDirectory( currentDir );
-			fileChooser.addChoosableFileFilter( new FileNameExtensionFilter("PNG Image File", "png" ) );
-			fileChooser.addChoosableFileFilter( new FileNameExtensionFilter("Portable Document File (PDF)", "pdf" ) );
+			fileChooser.addChoosableFileFilter( new FileNameExtensionFilter( "PNG Image File", "png" ) );
+			fileChooser.addChoosableFileFilter( new FileNameExtensionFilter( "Portable Document File (PDF)", "pdf" ) );
 			fileChooser.addChoosableFileFilter( new FileNameExtensionFilter( "Scalable Vector Graphics (SVG)", "svg" ) );
 			fileChooser.setSelectedFile( new File( currentDir, getChart().getTitle().getText().replaceAll( "\\.+$", "" ) + ".pdf" ) );
 			final int option = fileChooser.showSaveDialog( this );
@@ -170,8 +153,7 @@ public class ExportableChartPanel extends ChartPanel
 			else if ( file.getPath().endsWith( ".svg" ) )
 				ChartExporter.exportChartAsSVG( file, getChart(), getWidth(), getHeight() );
 			else
-				JOptionPane.showMessageDialog( SwingUtilities.getWindowAncestor( this ), "Invalid file extension.\n"
-						+ "Please choose a filename with one of the 3 supported extension: .png, .pdf or .svg." );
+				JOptionPane.showMessageDialog( SwingUtilities.getWindowAncestor( this ), "Invalid file extension.\n" + "Please choose a filename with one of the 3 supported extension: .png, .pdf or .svg." );
 		}
 		catch ( final IOException | DocumentException e )
 		{

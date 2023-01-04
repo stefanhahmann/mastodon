@@ -37,9 +37,7 @@ import org.mastodon.views.context.ContextListener;
 
 import net.imglib2.realtransform.AffineTransform3D;
 
-public class OverlayContext< V extends OverlayVertex< V, ? > > implements
-		Context< V >,
-		TransformListener< AffineTransform3D >
+public class OverlayContext< V extends OverlayVertex< V, ? > > implements Context< V >, TransformListener< AffineTransform3D >
 {
 	private final OverlayGraph< V, ? > graph;
 
@@ -49,9 +47,7 @@ public class OverlayContext< V extends OverlayVertex< V, ? > > implements
 
 	private ContextListener< V > contextListener = null;
 
-	public OverlayContext(
-			final OverlayGraph< V, ? > overlayGraph,
-			final OverlayGraphRenderer< V, ? > renderer )
+	public OverlayContext( final OverlayGraph< V, ? > overlayGraph, final OverlayGraphRenderer< V, ? > renderer )
 	{
 		this.graph = overlayGraph;
 		this.index = graph.getIndex();
@@ -67,10 +63,12 @@ public class OverlayContext< V extends OverlayVertex< V, ? > > implements
 	@Override
 	public Iterable< V > getInsideVertices( final int timepoint )
 	{
-//		final ConvexPolytope visiblePolytope = renderer.getVisiblePolytopeGlobal( transform, timepoint );
-//		final ClipConvexPolytope< V > ccp = index.getSpatialIndex( timepoint ).getClipConvexPolytope();
-//		ccp.clip( visiblePolytope );
-//		return ccp.getInsideValues();
+		// final ConvexPolytope visiblePolytope =
+		// renderer.getVisiblePolytopeGlobal( transform, timepoint );
+		// final ClipConvexPolytope< V > ccp = index.getSpatialIndex( timepoint
+		// ).getClipConvexPolytope();
+		// ccp.clip( visiblePolytope );
+		// return ccp.getInsideValues();
 		return renderer.getVisibleVertices( transform, timepoint );
 	}
 

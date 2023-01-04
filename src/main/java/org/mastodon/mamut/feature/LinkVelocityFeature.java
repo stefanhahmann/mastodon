@@ -50,8 +50,7 @@ public class LinkVelocityFeature implements Feature< Link >
 
 	private static final String KEY = "Link velocity";
 
-	private static final String HELP_STRING = "Computes the link velocity as the distance between "
-			+ "the source and target spots divided by their frame difference. Units are in physical distance per frame.";
+	private static final String HELP_STRING = "Computes the link velocity as the distance between " + "the source and target spots divided by their frame difference. Units are in physical distance per frame.";
 
 	private static final FeatureProjectionSpec PROJECTION_SPEC = new FeatureProjectionSpec( KEY, Dimension.VELOCITY );
 
@@ -66,13 +65,7 @@ public class LinkVelocityFeature implements Feature< Link >
 	{
 		public Spec()
 		{
-			super(
-					KEY,
-					HELP_STRING,
-					LinkVelocityFeature.class,
-					Link.class,
-					Multiplicity.SINGLE,
-					PROJECTION_SPEC );
+			super( KEY, HELP_STRING, LinkVelocityFeature.class, Link.class, Multiplicity.SINGLE, PROJECTION_SPEC );
 		}
 	}
 
@@ -112,7 +105,6 @@ public class LinkVelocityFeature implements Feature< Link >
 		private final Spot ref1;
 
 		private final Spot ref2;
-
 
 		public MyProjection( final ModelGraph graph, final String units )
 		{

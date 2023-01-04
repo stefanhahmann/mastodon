@@ -31,8 +31,10 @@ package org.mastodon.model;
 /**
  * TODO
  *
- * @param <V> vertex type.
- * @param <E> edge type.
+ * @param <V>
+ *            vertex type.
+ * @param <E>
+ *            edge type.
  *
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  * @author Jean-Yves Tinevez

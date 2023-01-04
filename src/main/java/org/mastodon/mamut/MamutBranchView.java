@@ -87,11 +87,7 @@ import org.scijava.ui.behaviour.util.Behaviours;
 import org.scijava.ui.behaviour.util.WrappedActionMap;
 import org.scijava.ui.behaviour.util.WrappedInputMap;
 
-public class MamutBranchView< 
-	VG extends ViewGraph< BranchSpot, BranchLink, V, E >, 
-	V extends Vertex< E >, 
-	E extends Edge< V > >
-		implements IMastodonFrameView, IMastodonView
+public class MamutBranchView< VG extends ViewGraph< BranchSpot, BranchLink, V, E >, V extends Vertex< E >, E extends Edge< V > > implements IMastodonFrameView, IMastodonView
 {
 
 	protected final MamutAppModel appModel;
@@ -145,26 +141,22 @@ public class MamutBranchView<
 
 		// Highlight.
 		final HighlightModel< Spot, Link > graphHighlightModel = appModel.getHighlightModel();
-		final HighlightModel< BranchSpot, BranchLink > branchHighlightModel =
-				new BranchGraphHighlightAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphHighlightModel );
+		final HighlightModel< BranchSpot, BranchLink > branchHighlightModel = new BranchGraphHighlightAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphHighlightModel );
 		this.highlightModel = new HighlightModelAdapter<>( branchHighlightModel, vertexMap, edgeMap );
 
 		// Focus
 		final FocusModel< Spot, Link > graphFocusModel = appModel.getFocusModel();
-		final FocusModel< BranchSpot, BranchLink > branchFocusfocusModel =
-				new BranchGraphFocusAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphFocusModel );
+		final FocusModel< BranchSpot, BranchLink > branchFocusfocusModel = new BranchGraphFocusAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphFocusModel );
 		this.focusModel = new FocusModelAdapter<>( branchFocusfocusModel, vertexMap, edgeMap );
 
 		// Selection
 		final SelectionModel< Spot, Link > graphSelectionModel = appModel.getSelectionModel();
-		final SelectionModel< BranchSpot, BranchLink > branchSelectionModel =
-				new BranchGraphSelectionAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphSelectionModel );
+		final SelectionModel< BranchSpot, BranchLink > branchSelectionModel = new BranchGraphSelectionAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphSelectionModel );
 		selectionModel = new SelectionModelAdapter<>( branchSelectionModel, vertexMap, edgeMap );
 
 		// Navigation.
 		final NavigationHandler< Spot, Link > graphNavigationHandler = groupHandle.getModel( appModel.NAVIGATION );
-		final NavigationHandler< BranchSpot, BranchLink > branchGraphNavigation =
-				new BranchGraphNavigationHandlerAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphNavigationHandler );
+		final NavigationHandler< BranchSpot, BranchLink > branchGraphNavigation = new BranchGraphNavigationHandlerAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphNavigationHandler );
 		this.navigationHandler = new NavigationHandlerAdapter<>( branchGraphNavigation, vertexMap, edgeMap );
 
 		// Time-point.
@@ -230,10 +222,7 @@ public class MamutBranchView<
 		onClose( () -> keymap.updateListeners().remove( updateListener ) );
 	}
 
-	protected final ColoringModel registerBranchColoring(
-			final GraphColorGeneratorAdapter< BranchSpot, BranchLink, V, E > colorGeneratorAdapter,
-			final JMenuHandle menuHandle,
-			final Runnable refresh )
+	protected final ColoringModel registerBranchColoring( final GraphColorGeneratorAdapter< BranchSpot, BranchLink, V, E > colorGeneratorAdapter, final JMenuHandle menuHandle, final Runnable refresh )
 	{
 		final FeatureModel featureModel = appModel.getModel().getFeatureModel();
 		final FeatureColorModeManager featureColorModeManager = appModel.getFeatureColorModeManager();
@@ -268,10 +257,7 @@ public class MamutBranchView<
 		return coloringModel;
 	}
 
-	protected void registerColorbarOverlay(
-			final ColorBarOverlay colorBarOverlay,
-			final JMenuHandle menuHandle,
-			final Runnable refresh )
+	protected void registerColorbarOverlay( final ColorBarOverlay colorBarOverlay, final JMenuHandle menuHandle, final Runnable refresh )
 	{
 		menuHandle.getMenu().add( new JSeparator() );
 		final JCheckBoxMenuItem toggleOverlay = new JCheckBoxMenuItem( "Show colorbar", ColorBarOverlay.DEFAULT_VISIBLE );
@@ -303,16 +289,10 @@ public class MamutBranchView<
 		}
 	}
 
-	protected void registerTagSetMenu(
-			final JMenuHandle menuHandle,
-			final Runnable refresh )
+	protected void registerTagSetMenu( final JMenuHandle menuHandle, final Runnable refresh )
 	{
 		final Model model = appModel.getModel();
-		final TagSetMenu< Spot, Link > tagSetMenu = new TagSetMenu<>(
-				menuHandle.getMenu(),
-				model.getTagSetModel(),
-				appModel.getSelectionModel(),
-				model.getGraph().getLock(), model );
+		final TagSetMenu< Spot, Link > tagSetMenu = new TagSetMenu<>( menuHandle.getMenu(), model.getTagSetModel(), appModel.getSelectionModel(), model.getGraph().getLock(), model );
 		tagSetModel.listeners().add( tagSetMenu );
 		onClose( () -> tagSetModel.listeners().remove( tagSetMenu ) );
 	}
@@ -353,8 +333,7 @@ public class MamutBranchView<
 		final ModelGraph graph = appModel.getModel().getGraph();
 		final ModelBranchGraph branchGraph = appModel.getModel().getBranchGraph();
 		final TagSetModel< Spot, Link > tagSetModel = appModel.getModel().getTagSetModel();
-		final BranchGraphTagSetAdapter< Spot, Link, BranchSpot, BranchLink > branchGraphTagSetModel =
-				new BranchGraphTagSetAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), tagSetModel );
+		final BranchGraphTagSetAdapter< Spot, Link, BranchSpot, BranchLink > branchGraphTagSetModel = new BranchGraphTagSetAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), tagSetModel );
 		return branchGraphTagSetModel;
 	}
 }

@@ -64,8 +64,8 @@ public class ModelGraph extends AbstractModelGraph< ModelGraph, SpotPool, LinkPo
 	}
 
 	/**
-	 * Register a {@link PropertyChangeListener} that will be notified when
-	 * a {@code Spot}s label is changed.
+	 * Register a {@link PropertyChangeListener} that will be notified when a
+	 * {@code Spot}s label is changed.
 	 *
 	 * @param listener
 	 *            the listener to register.

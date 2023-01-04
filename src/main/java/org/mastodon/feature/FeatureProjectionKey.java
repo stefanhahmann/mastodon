@@ -34,7 +34,8 @@ import java.util.Arrays;
  * Links a {@link FeatureProjectionSpec} to source indices (according to the
  * features {@link Multiplicity}).
  * <p>
- * Can be used to {@link Feature#project(FeatureProjectionKey) retrieve} a projection from a {@link Feature}.
+ * Can be used to {@link Feature#project(FeatureProjectionKey) retrieve} a
+ * projection from a {@link Feature}.
  */
 public final class FeatureProjectionKey
 {

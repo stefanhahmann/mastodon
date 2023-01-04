@@ -127,14 +127,7 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 
 	public MamutViewBdv( final MamutAppModel appModel, final Map< String, Object > guiState )
 	{
-		super( appModel,
-				new OverlayGraphWrapper<>(
-						appModel.getModel().getGraph(),
-						appModel.getModel().getGraphIdBimap(),
-						appModel.getModel().getSpatioTemporalIndex(),
-						appModel.getModel().getGraph().getLock(),
-						new ModelOverlayProperties( appModel.getModel().getGraph(), appModel.getRadiusStats() ) ),
-				new String[] { KeyConfigContexts.BIGDATAVIEWER } );
+		super( appModel, new OverlayGraphWrapper<>( appModel.getModel().getGraph(), appModel.getModel().getGraphIdBimap(), appModel.getModel().getSpatioTemporalIndex(), appModel.getModel().getGraph().getLock(), new ModelOverlayProperties( appModel.getModel().getGraph(), appModel.getRadiusStats() ) ), new String[] { KeyConfigContexts.BIGDATAVIEWER } );
 
 		sharedBdvData = appModel.getSharedBdvData();
 
@@ -155,7 +148,6 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 		MastodonFrameViewActions.install( viewActions, this );
 		BigDataViewerActionsMamut.install( viewActions, bdv );
 
-		
 		/*
 		 * We have to build the coloring menu handles now. But the other actions
 		 * need to be included in the menus later, after they have been
@@ -168,22 +160,14 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 		final JMenuHandle colorbarMenuHandle = new JMenuHandle();
 		final ViewMenu menu = new ViewMenu( this );
 		final ActionMap actionMap = frame.getKeybindings().getConcatenatedActionMap();
-		MamutMenuBuilder.build( menu, actionMap,
-				fileMenu(),
-				viewMenu(
-						colorMenu( menuHandle ),
-						colorbarMenu( colorbarMenuHandle ) ),
-				editMenu(),
-				ViewMenuBuilder.menu( "Settings" ) );
+		MamutMenuBuilder.build( menu, actionMap, fileMenu(), viewMenu( colorMenu( menuHandle ), colorbarMenu( colorbarMenuHandle ) ), editMenu(), ViewMenuBuilder.menu( "Settings" ) );
 
 		// The view panel.
 		viewer = bdv.getViewer();
 
 		// we need the coloring now.
-		final GraphColorGeneratorAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > coloring =
-				new GraphColorGeneratorAdapter<>( viewGraph.getVertexMap(), viewGraph.getEdgeMap() );
-		coloringModel = registerColoring( coloring, menuHandle,
-				() -> viewer.getDisplay().repaint() );
+		final GraphColorGeneratorAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > coloring = new GraphColorGeneratorAdapter<>( viewGraph.getVertexMap(), viewGraph.getEdgeMap() );
+		coloringModel = registerColoring( coloring, menuHandle, () -> viewer.getDisplay().repaint() );
 		colorBarOverlay = new ColorBarOverlay( coloringModel, () -> viewer.getBackground() );
 		registerColorbarOverlay( colorBarOverlay, colorbarMenuHandle, () -> viewer.getDisplay().repaint() );
 
@@ -199,12 +183,7 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 		else
 			viewer.state().setViewerTransform( tLoaded );
 
-		final OverlayGraphRenderer< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > tracksOverlay = createRenderer(
-				viewGraph,
-				highlightModel,
-				focusModel,
-				selectionModel,
-				coloring );
+		final OverlayGraphRenderer< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > tracksOverlay = createRenderer( viewGraph, highlightModel, focusModel, selectionModel, coloring );
 
 		viewer.getDisplay().overlays().add( tracksOverlay );
 		viewer.renderTransformListeners().add( tracksOverlay );
@@ -212,7 +191,6 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 
 		final Model model = appModel.getModel();
 		final ModelGraph modelGraph = model.getGraph();
-
 
 		highlightModel.listeners().add( () -> viewer.getDisplay().repaint() );
 		focusModel.listeners().add( () -> viewer.getDisplay().repaint() );
@@ -250,13 +228,7 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 		 * (vertices are object vertices that wrap a pool vertex...)
 		 */
 		final NavigationHandler< Spot, Link > navigationHandlerAdapter = groupHandle.getModel( appModel.NAVIGATION );
-		final JPanel searchField = SearchVertexLabel.install(
-				viewActions,
-				appModel.getModel().getGraph(),
-				navigationHandlerAdapter,
-				appModel.getSelectionModel(),
-				appModel.getFocusModel(),
-				viewer );
+		final JPanel searchField = SearchVertexLabel.install( viewActions, appModel.getModel().getGraph(), navigationHandlerAdapter, appModel.getSelectionModel(), appModel.getFocusModel(), viewer );
 		frame.getSettingsPanel().add( searchField );
 
 		NavigationActions.install( viewActions, viewer, sharedBdvData.is2D() );
@@ -284,34 +256,10 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 		frame.setVisible( true );
 
 		MainWindow.addMenus( menu, actionMap );
-		MamutMenuBuilder.build( menu, actionMap,
-				fileMenu(
-						separator(),
-						item( BigDataViewerActions.LOAD_SETTINGS ),
-						item( BigDataViewerActions.SAVE_SETTINGS ),
-						separator(),
-						item( RecordMovieDialog.RECORD_MOVIE_DIALOG ),
-						item( RecordMaxProjectionMovieDialog.RECORD_MIP_MOVIE_DIALOG ) ),
-				viewMenu(
-						separator(),
-						item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL ) ),
-				editMenu(
-						item( UndoActions.UNDO ),
-						item( UndoActions.REDO ),
-						separator(),
-						item( SelectionActions.DELETE_SELECTION ),
-						item( SelectionActions.SELECT_WHOLE_TRACK ),
-						item( SelectionActions.SELECT_TRACK_DOWNWARD ),
-						item( SelectionActions.SELECT_TRACK_UPWARD ),
-						separator(),
-						tagSetMenu( tagSetMenuHandle ) ),
-				ViewMenuBuilder.menu( "Settings",
-						item( BigDataViewerActions.BRIGHTNESS_SETTINGS ),
-						item( BigDataViewerActions.VISIBILITY_AND_GROUPING ) ) );
+		MamutMenuBuilder.build( menu, actionMap, fileMenu( separator(), item( BigDataViewerActions.LOAD_SETTINGS ), item( BigDataViewerActions.SAVE_SETTINGS ), separator(), item( RecordMovieDialog.RECORD_MOVIE_DIALOG ), item( RecordMaxProjectionMovieDialog.RECORD_MIP_MOVIE_DIALOG ) ), viewMenu( separator(), item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL ) ), editMenu( item( UndoActions.UNDO ), item( UndoActions.REDO ), separator(), item( SelectionActions.DELETE_SELECTION ), item( SelectionActions.SELECT_WHOLE_TRACK ), item( SelectionActions.SELECT_TRACK_DOWNWARD ), item( SelectionActions.SELECT_TRACK_UPWARD ), separator(), tagSetMenu( tagSetMenuHandle ) ), ViewMenuBuilder.menu( "Settings", item( BigDataViewerActions.BRIGHTNESS_SETTINGS ), item( BigDataViewerActions.VISIBILITY_AND_GROUPING ) ) );
 		appModel.getPlugins().addMenus( menu );
 
-		registerTagSetMenu( tagSetMenuHandle,
-				() -> viewer.getDisplay().repaint() );
+		registerTagSetMenu( tagSetMenuHandle, () -> viewer.getDisplay().repaint() );
 
 		// Restore coloring.
 		restoreColoring( coloringModel, guiState );
@@ -322,19 +270,9 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 
 	}
 
-	protected OverlayGraphRenderer< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > createRenderer(
-			final OverlayGraphWrapper< Spot, Link > viewGraph,
-			final HighlightModel< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > highlightModel,
-			final FocusModel< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > focusModel,
-			final SelectionModel< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > selectionModel,
-			final GraphColorGenerator< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > coloring )
+	protected OverlayGraphRenderer< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > createRenderer( final OverlayGraphWrapper< Spot, Link > viewGraph, final HighlightModel< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > highlightModel, final FocusModel< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > focusModel, final SelectionModel< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > selectionModel, final GraphColorGenerator< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > coloring )
 	{
-		return new OverlayGraphRenderer< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > >(
-				viewGraph,
-				highlightModel,
-				focusModel,
-				selectionModel,
-				coloring );
+		return new OverlayGraphRenderer< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > >( viewGraph, highlightModel, focusModel, selectionModel, coloring );
 	}
 
 	ContextProvider< Spot > getContextProvider()

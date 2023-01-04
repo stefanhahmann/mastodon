@@ -44,27 +44,49 @@ public class RenderSettings implements Style< RenderSettings >
 	 */
 
 	public static final int DEFAULT_LIMIT_TIME_RANGE = 20;
+
 	public static final double DEFAULT_LIMIT_FOCUS_RANGE = 100.;
+
 	public static final boolean DEFAULT_USE_ANTI_ALIASING = true;
+
 	public static final boolean DEFAULT_USE_GRADIENT = false;
+
 	public static final boolean DEFAULT_DRAW_SPOTS = true;
+
 	public static final boolean DEFAULT_DRAW_LINKS = true;
+
 	public static final boolean DEFAULT_DRAW_LINKS_AHEAD_IN_TIME = false;
+
 	public static final boolean DEFAULT_DRAW_ARROW_HEADS = false;
+
 	public static final boolean DEFAULT_DRAW_ELLIPSE = true;
+
 	public static final boolean DEFAULT_DRAW_SLICE_INTERSECTION = true;
+
 	public static final boolean DEFAULT_DRAW_SLICE_PROJECTION = !DEFAULT_DRAW_SLICE_INTERSECTION;
-	public static final boolean DEFAULT_DRAW_POINTS = !DEFAULT_DRAW_ELLIPSE || (DEFAULT_DRAW_ELLIPSE && DEFAULT_DRAW_SLICE_INTERSECTION);
+
+	public static final boolean DEFAULT_DRAW_POINTS = !DEFAULT_DRAW_ELLIPSE || ( DEFAULT_DRAW_ELLIPSE && DEFAULT_DRAW_SLICE_INTERSECTION );
+
 	public static final boolean DEFAULT_DRAW_POINTS_FOR_ELLIPSE = false;
+
 	public static final boolean DEFAULT_DRAW_SPOT_LABELS = false;
+
 	public static final boolean DEFAULT_FILL_SPOTS = false;
+
 	public static final boolean DEFAULT_IS_FOCUS_LIMIT_RELATIVE = true;
+
 	public static final double DEFAULT_ELLIPSOID_FADE_DEPTH = 0.2;
+
 	public static final double DEFAULT_POINT_FADE_DEPTH = 0.;
+
 	public static final double DEFAULT_SPOT_STROKE_WIDTH = 1.0;
+
 	public static final double DEFAULT_LINK_STROKE_WIDTH = 1.0;
+
 	public static final int DEFAULT_COLOR_SPOT_AND_PRESENT = Color.GREEN.getRGB();
+
 	public static final int DEFAULT_COLOR_PAST = Color.RED.getRGB();
+
 	public static final int DEFAULT_COLOR_FUTURE = Color.BLUE.getRGB();
 
 	public interface UpdateListener
@@ -204,7 +226,8 @@ public class RenderSettings implements Style< RenderSettings >
 	private boolean drawPoints;
 
 	/**
-	 * Whether to draw spot centers also for those points that are visible as ellipses.
+	 * Whether to draw spot centers also for those points that are visible as
+	 * ellipses.
 	 */
 	private boolean drawPointsForEllipses;
 
@@ -239,8 +262,8 @@ public class RenderSettings implements Style< RenderSettings >
 	private double focusLimit;
 
 	/**
-	 * Whether the {@link #focusLimit} is relative to the the current
-	 * view coordinate system.
+	 * Whether the {@link #focusLimit} is relative to the the current view
+	 * coordinate system.
 	 *
 	 * <p>
 	 * If {@code true} then the distance is in current view coordinates. For
@@ -253,18 +276,18 @@ public class RenderSettings implements Style< RenderSettings >
 	private boolean isFocusLimitViewRelative;
 
 	/**
-	 * The ratio of {@link #focusLimit} at which ellipsoids start to
-	 * fade. Ellipsoids are drawn increasingly translucent the closer they are
-	 * to {@link #focusLimit}. Up to ratio {@link #ellipsoidFadeDepth}
-	 * they are fully opaque, then their alpha value goes to 0 linearly.
+	 * The ratio of {@link #focusLimit} at which ellipsoids start to fade.
+	 * Ellipsoids are drawn increasingly translucent the closer they are to
+	 * {@link #focusLimit}. Up to ratio {@link #ellipsoidFadeDepth} they are
+	 * fully opaque, then their alpha value goes to 0 linearly.
 	 */
 	private double ellipsoidFadeDepth;
 
 	/**
-	 * The ratio of {@link #focusLimit} at which points start to
-	 * fade. Points are drawn increasingly translucent the closer they are
-	 * to {@link #focusLimit}. Up to ratio {@link #pointFadeDepth}
-	 * they are fully opaque, then their alpha value goes to 0 linearly.
+	 * The ratio of {@link #focusLimit} at which points start to fade. Points
+	 * are drawn increasingly translucent the closer they are to
+	 * {@link #focusLimit}. Up to ratio {@link #pointFadeDepth} they are fully
+	 * opaque, then their alpha value goes to 0 linearly.
 	 */
 	private double pointFadeDepth;
 
@@ -272,7 +295,7 @@ public class RenderSettings implements Style< RenderSettings >
 	 * The stroke with of spots.
 	 */
 	private double spotStrokeWidth;
-	
+
 	/**
 	 * The stroke with of links.
 	 */

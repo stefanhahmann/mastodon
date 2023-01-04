@@ -70,11 +70,6 @@ public class ReadZip implements Closeable
 
 	public Collection< String > listFile( final String fn )
 	{
-		return Collections.list( zipFile.entries() )
-			.stream()
-			.filter( e -> e.getName().startsWith( fn + "/" ) )
-			.map( e -> e.getName() )
-			.map( s -> s.replace( fn + "/", "" ) )
-			.collect( Collectors.toList() );
+		return Collections.list( zipFile.entries() ).stream().filter( e -> e.getName().startsWith( fn + "/" ) ).map( e -> e.getName() ).map( s -> s.replace( fn + "/", "" ) ).collect( Collectors.toList() );
 	}
 }

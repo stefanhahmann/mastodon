@@ -90,22 +90,15 @@ public class SimiImporter
 	 * @throws ParseException
 	 *             when errors occur in parsing.
 	 */
-	public static void read(
-			final String sbdFilename,
-			final IntUnaryOperator timepointIdFunction,
-			final LabelFunction labelFunction,
-			final BiFunction< Integer, double[], double[] > positionFunction,
-			final double radius,
-			final boolean interpolateMissingSpots,
-			final Model model )
-					throws IOException, ParseException
+	public static void read( final String sbdFilename, final IntUnaryOperator timepointIdFunction, final LabelFunction labelFunction, final BiFunction< Integer, double[], double[] > positionFunction, final double radius, final boolean interpolateMissingSpots, final Model model ) throws IOException, ParseException
 	{
 		final Simi simi = readSDB( new File( sbdFilename ) );
 		new Builder( model, simi, timepointIdFunction, labelFunction, positionFunction, radius, interpolateMissingSpots );
 	}
 
 	/**
-	 * Function to generate Spot labels from various names appearing in the simi file.
+	 * Function to generate Spot labels from various names appearing in the simi
+	 * file.
 	 */
 	public interface LabelFunction
 	{
@@ -217,9 +210,7 @@ public class SimiImporter
 
 		public boolean matches( final int n )
 		{
-			return matchExactly
-					? n == count
-					: n >= count;
+			return matchExactly ? n == count : n >= count;
 		}
 
 		static ExpectedNumTokens exactly( final int count )
@@ -284,13 +275,11 @@ public class SimiImporter
 		public Line match( final LineType expectedType, final ExpectedNumTokens expectedNumTokens, final String error ) throws ParseException
 		{
 			final Line line = next();
-			if ( ! ( line.type() == expectedType && expectedNumTokens.matches( line.size() ) ) )
+			if ( !( line.type() == expectedType && expectedNumTokens.matches( line.size() ) ) )
 			{
 				String msg = error;
 				if ( msg == null )
-					msg = "expected " + expectedType + " line with "
-							+ ( expectedNumTokens.matchExactly ? "" : "at least " )
-							+ expectedNumTokens.count + " tokens.";
+					msg = "expected " + expectedType + " line with " + ( expectedNumTokens.matchExactly ? "" : "at least " ) + expectedNumTokens.count + " tokens.";
 				throw new ParseException( msg, line.getLineNumber() );
 			}
 			return line;
@@ -355,7 +344,8 @@ public class SimiImporter
 		final ArrayDeque< SimiCell > stack = new ArrayDeque<>();
 
 		/**
-		 * Cells must be added in sequence as they appear in the {@code .sdb} file.
+		 * Cells must be added in sequence as they appear in the {@code .sdb}
+		 * file.
 		 */
 		SimiCell cell( final String generic_name, final String generation_name, final String name, final int cells_left_count, final int cells_right_count )
 		{
@@ -421,7 +411,7 @@ public class SimiImporter
 			Line line;
 			line = scanner.match( NORMAL, exactly( 2 ) );
 			final int start_cells_count = line.getAsInt( 0 );
-//			final int start_time = line.getAsInt( 1 );
+			// final int start_time = line.getAsInt( 1 );
 			for ( int i = 0; i < start_cells_count; ++i )
 				scanner.match( NORMAL ); // discard for now
 
@@ -432,29 +422,29 @@ public class SimiImporter
 				line = scanner.match( NORMAL, atleast( 4 ) );
 				final int cells_left_count = line.getAsInt( 0 );
 				final int cells_right_count = line.getAsInt( 1 );
-//				final int active_cell_left = line.getAsInt( 2 );
-//				final int active_cell_right = line.getAsInt( 3 );
+				// final int active_cell_left = line.getAsInt( 2 );
+				// final int active_cell_right = line.getAsInt( 3 );
 				final String generic_name = line.get( 4 );
 
 				line = scanner.match( NORMAL, atleast( 4 ) );
-//				final int generation_birth_time= line.getAsInt( 0 );
-//				final int generation_level = line.getAsInt( 1 );
-//				final String generation_wildtype = line.get( 2 );
-//				final String generation_color = line.get( 3 );
+				// final int generation_birth_time= line.getAsInt( 0 );
+				// final int generation_level = line.getAsInt( 1 );
+				// final String generation_wildtype = line.get( 2 );
+				// final String generation_color = line.get( 3 );
 				final String generation_name = line.get( 4 );
 
 				line = scanner.match( NORMAL, atleast( 5 ) );
-//				final int birth_frame = line.getAsInt( 0 );
-//				final int birth_level = line.getAsInt( 1 );
-//				final String wildtype = line.get( 2 );
-//				final String size = line.get( 3 );
-//				final String shape = line.get( 4 );
-//				final String color = line.get( 5 );
+				// final int birth_frame = line.getAsInt( 0 );
+				// final int birth_level = line.getAsInt( 1 );
+				// final String wildtype = line.get( 2 );
+				// final String size = line.get( 3 );
+				// final String shape = line.get( 4 );
+				// final String color = line.get( 5 );
 				final String name = line.get( 6 );
 
 				line = scanner.match( NORMAL, atleast( 1 ) );
 				final int coordinates_count = line.getAsInt( 0 );
-//				final String cell_comment = line.get( 1 );
+				// final String cell_comment = line.get( 1 );
 
 				final SimiCell cell = simi.cell( generic_name, generation_name, name, cells_left_count, cells_right_count );
 
@@ -465,9 +455,9 @@ public class SimiImporter
 					final int x = line.getAsInt( 1 );
 					final int y = line.getAsInt( 2 );
 					final int level = line.getAsInt( 3 );
-//					final String _size = line.get( 4 );
-//					final String _shape = line.get( 5 );
-//					final String coord_comment = line.get( 6 );
+					// final String _size = line.get( 4 );
+					// final String _shape = line.get( 5 );
+					// final String coord_comment = line.get( 6 );
 
 					cell.add( frame, x, y, level );
 				}
@@ -478,7 +468,6 @@ public class SimiImporter
 			return simi;
 		}
 	}
-
 
 	/*
 	 * ModelImporter from Simi
@@ -497,14 +486,7 @@ public class SimiImporter
 
 		private final ModelGraph graph;
 
-		Builder(
-				final Model model,
-				final Simi simi,
-				final IntUnaryOperator timepointIdFunction,
-				final LabelFunction labelFunction,
-				final BiFunction< Integer, double[], double[] > positionFunction,
-				final double radius,
-				final boolean interpolate )
+		Builder( final Model model, final Simi simi, final IntUnaryOperator timepointIdFunction, final LabelFunction labelFunction, final BiFunction< Integer, double[], double[] > positionFunction, final double radius, final boolean interpolate )
 		{
 			super( model );
 
@@ -585,39 +567,25 @@ public class SimiImporter
 }
 
 /*
-### Data v4.00 ####################################################
-
-# Header: # # # # # # #
-SIMI*BIOCELL
-400
----
-# # # # # # # # # # # #
-
-SIMI*BIOCELL = magic ID string
-400          = file version 4.00
----          = separator
-
-
-# Cell: # # # # # # # #
-<free 3D cells count>
-<start frame> <end frame> <x> <y> <level> <comment>     <= *count
----
-<start cells count> <start time>
-<start generation>                                      <= *count
----
-<cells left count> <"right> <active cell left> <"right> <gen.name1>
-<gen.time of birth sec.> <g.level> <g.wildtype> <g.color> <g.name2>
-<birth frm> <mitosis lvl> <wildtype> <size> <shape> <color> <name>
-<coordinates count> <cell comment>
-<frame> <x> <y> <level> <size> <shape> <coord.comment>  <= *count
----
-# # # # # # # # # # # #
-
-<start ...> values are not used yet (for later implementation)
-<color> is a real hexadecimal RGB value (e.g. 00ff00 for green)
-<size> and <shape> are internal values of BioCell
-<coordinates> are real pixels
-
-###################################################################
-*/
-
+ * ### Data v4.00 ####################################################
+ * 
+ * # Header: # # # # # # # SIMI*BIOCELL 400 --- # # # # # # # # # # # #
+ * 
+ * SIMI*BIOCELL = magic ID string 400 = file version 4.00 --- = separator
+ * 
+ * 
+ * # Cell: # # # # # # # # <free 3D cells count> <start frame> <end frame> <x>
+ * <y> <level> <comment> <= *count --- <start cells count> <start time> <start
+ * generation> <= *count --- <cells left count>
+ * <"right> <active cell left> <"right> <gen.name1> <gen.time of birth sec.>
+ * <g.level> <g.wildtype> <g.color> <g.name2> <birth frm> <mitosis lvl>
+ * <wildtype> <size> <shape> <color> <name> <coordinates count> <cell comment>
+ * <frame> <x> <y> <level> <size> <shape> <coord.comment> <= *count --- # # # #
+ * # # # # # # # #
+ * 
+ * <start ...> values are not used yet (for later implementation) <color> is a
+ * real hexadecimal RGB value (e.g. 00ff00 for green) <size> and <shape> are
+ * internal values of BioCell <coordinates> are real pixels
+ * 
+ * ###################################################################
+ */

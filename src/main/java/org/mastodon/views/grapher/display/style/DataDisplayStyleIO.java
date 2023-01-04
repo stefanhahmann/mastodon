@@ -101,11 +101,7 @@ public class DataDisplayStyleIO
 		public Node representData( final Object data )
 		{
 			final Color c = ( Color ) data;
-			final List< Integer > rgba = Arrays.asList(
-					c.getRed(),
-					c.getGreen(),
-					c.getBlue(),
-					c.getAlpha() );
+			final List< Integer > rgba = Arrays.asList( c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha() );
 			return representSequence( getTag(), rgba, FLOW );
 		}
 	}
@@ -124,11 +120,7 @@ public class DataDisplayStyleIO
 			{
 				@SuppressWarnings( "unchecked" )
 				final List< Integer > rgba = ( List< Integer > ) constructSequence( ( SequenceNode ) node );
-				return new Color(
-						rgba.get( 0 ),
-						rgba.get( 1 ),
-						rgba.get( 2 ),
-						rgba.get( 3 ) );
+				return new Color( rgba.get( 0 ), rgba.get( 1 ), rgba.get( 2 ), rgba.get( 3 ) );
 			}
 			catch ( final Exception e )
 			{}
@@ -353,7 +345,7 @@ public class DataDisplayStyleIO
 				s.vertexHighlightStroke( ( Stroke ) mapping.getOrDefault( "vertexHighlightStroke", df.getVertexHighlightStroke() ) );
 				s.focusStroke( ( Stroke ) mapping.getOrDefault( "focusStroke", df.getFocusStroke() ) );
 
-				s.drawVertexName( (boolean) mapping.getOrDefault( "drawVertexName", df.isDrawVertexName() ) );
+				s.drawVertexName( ( boolean ) mapping.getOrDefault( "drawVertexName", df.isDrawVertexName() ) );
 
 				return s;
 			}

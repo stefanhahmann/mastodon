@@ -60,30 +60,11 @@ public class TrackSchemeFrame extends ViewFrame
 
 	private final TrackSchemePanel trackschemePanel;
 
-	public TrackSchemeFrame(
-			final TrackSchemeGraph< ?, ? > graph,
-			final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight,
-			final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-			final TimepointModel timepoint,
-			final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection,
-			final RootsModel< TrackSchemeVertex > rootsModel,
-			final NavigationHandler< TrackSchemeVertex, TrackSchemeEdge > navigation,
-			final UndoPointMarker undoPointMarker,
-			final GroupHandle groupHandle,
-			final ContextChooser< ? > contextChooser,
-			final TrackSchemeOptions optional )
+	public TrackSchemeFrame( final TrackSchemeGraph< ?, ? > graph, final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight, final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus, final TimepointModel timepoint, final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection, final RootsModel< TrackSchemeVertex > rootsModel, final NavigationHandler< TrackSchemeVertex, TrackSchemeEdge > navigation, final UndoPointMarker undoPointMarker, final GroupHandle groupHandle, final ContextChooser< ? > contextChooser, final TrackSchemeOptions optional )
 	{
 		super( "TrackScheme" );
 
-		trackschemePanel = new TrackSchemePanel(
-				graph,
-				highlight,
-				focus,
-				timepoint,
-				selection,
-				rootsModel,
-				navigation,
-				optional );
+		trackschemePanel = new TrackSchemePanel( graph, highlight, focus, timepoint, selection, rootsModel, navigation, optional );
 		add( trackschemePanel, BorderLayout.CENTER );
 
 		final GroupLocksPanel navigationLocksPanel = new GroupLocksPanel( groupHandle );

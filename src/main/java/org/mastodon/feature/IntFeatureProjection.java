@@ -37,7 +37,8 @@ package org.mastodon.feature;
  *
  * @author Jean-Yves Tinevez
  *
- * @param <O> the type of objects for which the feature is defined.
+ * @param <O>
+ *            the type of objects for which the feature is defined.
  */
 public interface IntFeatureProjection< O > extends FeatureProjection< O >
 {}

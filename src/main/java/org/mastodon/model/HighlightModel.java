@@ -83,8 +83,7 @@ public interface HighlightModel< V extends Vertex< E >, E extends Edge< V > >
 	 *
 	 * @param ref
 	 *            an edge reference used for retrieval.
-	 * @return the highlighted edge, or {@code null} if no edge is
-	 *         highlighted.
+	 * @return the highlighted edge, or {@code null} if no edge is highlighted.
 	 */
 	public E getHighlightedEdge( final E ref );
 

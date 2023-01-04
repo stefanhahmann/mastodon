@@ -54,6 +54,7 @@ public class LineageTreeLayoutImpTest
 	/**
 	 * Tests if the {@link LineageTreeLayout} properly layouts a graph that is
 	 * shaped like this:
+	 * 
 	 * <pre>
 	 *   O
 	 *  / \
@@ -67,7 +68,7 @@ public class LineageTreeLayoutImpTest
 	{
 		// setup
 		ModelGraph graph = initDiamondModelGraph();
-		TrackSchemeGraph<Spot, Link> tsGraph = new TrackSchemeGraph<>( graph, graph.getGraphIdBimap(), new ModelGraphTrackSchemeProperties( graph ) );
+		TrackSchemeGraph< Spot, Link > tsGraph = new TrackSchemeGraph<>( graph, graph.getGraphIdBimap(), new ModelGraphTrackSchemeProperties( graph ) );
 		ScreenEntities screenEntities = new ScreenEntities( tsGraph );
 		ScreenTransform transform = initScreenTransform();
 		LineageTreeLayout layout = initLineageTreeLayout( graph, tsGraph );
@@ -76,9 +77,8 @@ public class LineageTreeLayoutImpTest
 		layout.cropAndScale( transform, screenEntities, 0, 0, new GraphColorGeneratorAdapter<>( tsGraph.getVertexMap(), tsGraph.getEdgeMap() ) );
 		// test
 		assertEquals( Arrays.asList( "a", "b", "c", "d" ), getVertexLabels( screenEntities ) );
-		assertEquals( Arrays.asList( "a->b", "a->c", "b->d", "c->d"), getEdges( screenEntities ) );
+		assertEquals( Arrays.asList( "a->b", "a->c", "b->d", "c->d" ), getEdges( screenEntities ) );
 	}
-
 
 	private ModelGraph initDiamondModelGraph()
 	{
@@ -94,11 +94,11 @@ public class LineageTreeLayoutImpTest
 		return graph;
 	}
 
-	private LineageTreeLayout initLineageTreeLayout( ModelGraph graph, TrackSchemeGraph<Spot, Link> tsGraph )
+	private LineageTreeLayout initLineageTreeLayout( ModelGraph graph, TrackSchemeGraph< Spot, Link > tsGraph )
 	{
-		SelectionModel<Spot, Link> selectionModel = new DefaultSelectionModel<>( graph, graph.getGraphIdBimap() );
-		SelectionModel<TrackSchemeVertex, TrackSchemeEdge> tsSelectionModel = new SelectionModelAdapter<>( selectionModel, tsGraph.getVertexMap(), tsGraph.getEdgeMap() );
-		RootsModel<TrackSchemeVertex> tsRootsModel = new DefaultRootsModel<>( graph, tsGraph );
+		SelectionModel< Spot, Link > selectionModel = new DefaultSelectionModel<>( graph, graph.getGraphIdBimap() );
+		SelectionModel< TrackSchemeVertex, TrackSchemeEdge > tsSelectionModel = new SelectionModelAdapter<>( selectionModel, tsGraph.getVertexMap(), tsGraph.getEdgeMap() );
+		RootsModel< TrackSchemeVertex > tsRootsModel = new DefaultRootsModel<>( graph, tsGraph );
 		LineageTreeLayout layout = new LineageTreeLayoutImp( tsRootsModel, tsGraph, tsSelectionModel );
 		return layout;
 	}
@@ -117,24 +117,23 @@ public class LineageTreeLayoutImpTest
 		return spot;
 	}
 
-	private List<String> getVertexLabels( ScreenEntities screenEntities )
+	private List< String > getVertexLabels( ScreenEntities screenEntities )
 	{
-		List<String> labels = new ArrayList<>();
+		List< String > labels = new ArrayList<>();
 		for ( ScreenVertex v : screenEntities.getVertices() )
 			labels.add( v.getLabel() );
 		labels.sort( String::compareTo );
 		return labels;
 	}
 
-	private List<String> getEdges( ScreenEntities screenEntities )
+	private List< String > getEdges( ScreenEntities screenEntities )
 	{
-		List<String> labels = new ArrayList<>();
+		List< String > labels = new ArrayList<>();
 		for ( ScreenVertex v : screenEntities.getVertices() )
 			labels.add( v.getLabel() );
-		List<String> edges = new ArrayList<>();
+		List< String > edges = new ArrayList<>();
 		for ( ScreenEdge e : screenEntities.getEdges() )
-			edges.add( labels.get( e.getSourceScreenVertexIndex() ) + "->" +
-					labels.get( e.getTargetScreenVertexIndex() ) );
+			edges.add( labels.get( e.getSourceScreenVertexIndex() ) + "->" + labels.get( e.getTargetScreenVertexIndex() ) );
 		edges.sort( String::compareTo );
 		return edges;
 	}

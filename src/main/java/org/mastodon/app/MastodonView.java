@@ -67,14 +67,7 @@ import org.mastodon.model.TimepointModel;
  *
  * @author Tobias Pietzsch
  */
-public class MastodonView<
-		M extends MastodonAppModel< ?, MV, ME >,
-		VG extends ViewGraph< MV, ME, V, E >,
-		MV extends AbstractSpot< MV, ME, ?, ?, ? >,
-		ME extends AbstractListenableEdge< ME, MV, ?, ? >,
-		V extends Vertex< E >,
-		E extends Edge< V > >
-	implements IMastodonView
+public class MastodonView< M extends MastodonAppModel< ?, MV, ME >, VG extends ViewGraph< MV, ME, V, E >, MV extends AbstractSpot< MV, ME, ?, ?, ? >, ME extends AbstractListenableEdge< ME, MV, ?, ? >, V extends Vertex< E >, E extends Edge< V > > implements IMastodonView
 {
 	protected final M appModel;
 
@@ -94,9 +87,7 @@ public class MastodonView<
 
 	protected final ArrayList< Runnable > runOnClose;
 
-	public MastodonView(
-			final M appModel,
-			final VG viewGraph )
+	public MastodonView( final M appModel, final VG viewGraph )
 	{
 		this.appModel = appModel;
 		this.viewGraph = viewGraph;
@@ -125,7 +116,7 @@ public class MastodonView<
 			focusModelAdapter.listeners().removeAll();
 			selectionModelAdapter.listeners().removeAll();
 			navigationHandlerAdapter.listeners().removeAll();
-		});
+		} );
 	}
 
 	/**

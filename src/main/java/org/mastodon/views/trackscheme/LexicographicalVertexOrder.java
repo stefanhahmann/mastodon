@@ -54,9 +54,7 @@ import gnu.trove.list.array.TIntArrayList;
  */
 public class LexicographicalVertexOrder
 {
-	public static RefList< TrackSchemeVertex > sort(
-			final TrackSchemeGraph< ?, ? > graph,
-			final RefCollection< TrackSchemeVertex > vertices )
+	public static RefList< TrackSchemeVertex > sort( final TrackSchemeGraph< ?, ? > graph, final RefCollection< TrackSchemeVertex > vertices )
 	{
 		final ArrayList< VertexKey > keys = new ArrayList<>( vertices.size() );
 		for ( final TrackSchemeVertex v : vertices )
@@ -73,9 +71,7 @@ public class LexicographicalVertexOrder
 
 	private static class VertexKey implements Comparable< VertexKey >
 	{
-		public static VertexKey build(
-				final TrackSchemeVertex v,
-				final TrackSchemeGraph< ?, ? > graph )
+		public static VertexKey build( final TrackSchemeVertex v, final TrackSchemeGraph< ?, ? > graph )
 		{
 			final VertexKey token;
 			if ( v.incomingEdges().isEmpty() )

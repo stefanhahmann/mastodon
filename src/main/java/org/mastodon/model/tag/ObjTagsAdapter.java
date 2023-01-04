@@ -37,10 +37,11 @@ import org.mastodon.model.tag.TagSetStructure.TagSet;
 
 /**
  * Adapts a {@code ObjTags<O>} as a {@code ObjTags<WO>}. The mapping between
- * source objects ({@code O}) and wrapped objects ({@code WI}) is established by a
- * {@link RefBimap}.
+ * source objects ({@code O}) and wrapped objects ({@code WI}) is established by
+ * a {@link RefBimap}.
  *
- * @param <O> object type of source {@code ObjTags}.
+ * @param <O>
+ *            object type of source {@code ObjTags}.
  *
  * @param <WO>
  *            object type of this wrapped {@code ObjTags}.

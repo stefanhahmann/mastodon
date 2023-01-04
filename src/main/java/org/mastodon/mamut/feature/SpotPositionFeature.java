@@ -59,7 +59,7 @@ public class SpotPositionFeature implements Feature< Spot >
 	static
 	{
 		for ( int d = 0; d < 3; d++ )
-			PROJECTION_SPECS.add( new FeatureProjectionSpec(  "" + ( char ) ( 'X' + d ), Dimension.POSITION ) );
+			PROJECTION_SPECS.add( new FeatureProjectionSpec( "" + ( char ) ( 'X' + d ), Dimension.POSITION ) );
 	}
 
 	public static final Spec SPEC = new Spec();
@@ -68,9 +68,7 @@ public class SpotPositionFeature implements Feature< Spot >
 	{
 		this.projections = new LinkedHashMap<>( 3 );
 		for ( int d = 0; d < 3; d++ )
-			projections.put(
-					FeatureProjectionKey.key( PROJECTION_SPECS.get( d ) ),
-					new MyProjection( d, units ) );
+			projections.put( FeatureProjectionKey.key( PROJECTION_SPECS.get( d ) ), new MyProjection( d, units ) );
 	}
 
 	@Plugin( type = FeatureSpec.class )
@@ -78,13 +76,7 @@ public class SpotPositionFeature implements Feature< Spot >
 	{
 		public Spec()
 		{
-			super(
-					KEY,
-					HELP_STRING,
-					SpotPositionFeature.class,
-					Spot.class,
-					Multiplicity.SINGLE,
-					PROJECTION_SPECS.toArray( new FeatureProjectionSpec[] {} ) );
+			super( KEY, HELP_STRING, SpotPositionFeature.class, Spot.class, Multiplicity.SINGLE, PROJECTION_SPECS.toArray( new FeatureProjectionSpec[] {} ) );
 		}
 	}
 

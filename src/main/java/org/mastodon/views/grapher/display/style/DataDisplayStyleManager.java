@@ -99,7 +99,8 @@ public class DataDisplayStyleManager extends AbstractStyleManager< DataDisplaySt
 	 * Returns a final {@link DataDisplayStyle} instance that always has the
 	 * same properties as the default style.
 	 *
-	 * @return a style instance that always has the same properties as the default style.
+	 * @return a style instance that always has the same properties as the
+	 *         default style.
 	 */
 	public DataDisplayStyle getForwardDefaultStyle()
 	{

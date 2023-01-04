@@ -88,13 +88,11 @@ public class SettingsPanelExample
 
 		@Override
 		public void cancel()
-		{
-		}
+		{}
 
 		@Override
 		public void apply()
-		{
-		}
+		{}
 	}
 
 	static class DefaultSettingsPage implements SettingsPage
@@ -161,28 +159,7 @@ public class SettingsPanelExample
 
 	private static InputTriggerConfig getDemoConfig()
 	{
-		final StringReader reader = new StringReader( "---\n" +
-				"- !mapping" + "\n" +
-				"  action: fluke" + "\n" +
-				"  contexts: [all]" + "\n" +
-				"  triggers: [F]" + "\n" +
-				"- !mapping" + "\n" +
-				"  action: drag1" + "\n" +
-				"  contexts: [all]" + "\n" +
-				"  triggers: [button1, win G]" + "\n" +
-				"- !mapping" + "\n" +
-				"  action: scroll1" + "\n" +
-				"  contexts: [all]" + "\n" +
-				"  triggers: [scroll]" + "\n" +
-				"- !mapping" + "\n" +
-				"  action: scroll1" + "\n" +
-				"  contexts: [trackscheme, mamut]" + "\n" +
-				"  triggers: [shift D]" + "\n" +
-				"- !mapping" + "\n" +
-				"  action: destroy the world" + "\n" +
-				"  contexts: [unknown context, mamut]" + "\n" +
-				"  triggers: [control A]" + "\n" +
-				"" );
+		final StringReader reader = new StringReader( "---\n" + "- !mapping" + "\n" + "  action: fluke" + "\n" + "  contexts: [all]" + "\n" + "  triggers: [F]" + "\n" + "- !mapping" + "\n" + "  action: drag1" + "\n" + "  contexts: [all]" + "\n" + "  triggers: [button1, win G]" + "\n" + "- !mapping" + "\n" + "  action: scroll1" + "\n" + "  contexts: [all]" + "\n" + "  triggers: [scroll]" + "\n" + "- !mapping" + "\n" + "  action: scroll1" + "\n" + "  contexts: [trackscheme, mamut]" + "\n" + "  triggers: [shift D]" + "\n" + "- !mapping" + "\n" + "  action: destroy the world" + "\n" + "  contexts: [unknown context, mamut]" + "\n" + "  triggers: [control A]" + "\n" + "" );
 		final List< InputTriggerDescription > triggers = YamlConfigIO.read( reader );
 		final InputTriggerConfig config = new InputTriggerConfig( triggers );
 		return config;

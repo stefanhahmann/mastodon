@@ -96,16 +96,7 @@ public class ColorTagTableDialogExample
 		{
 			super( owner, "tag sets configuration", false );
 
-			final ColorTagTable< MyElements, MyElement > tagTable = new ColorTagTable<>(
-					null,
-					MyElements::addElement,
-					MyElements::size,
-					(c, e ) -> c.remove( e ),
-					(c, i) -> c.get( i ),
-					MyElement::setName,
-					MyElement::getName,
-					MyElement::setColor,
-					MyElement::getColor );
+			final ColorTagTable< MyElements, MyElement > tagTable = new ColorTagTable<>( null, MyElements::addElement, MyElements::size, ( c, e ) -> c.remove( e ), ( c, i ) -> c.get( i ), MyElement::setName, MyElement::getName, MyElement::setColor, MyElement::getColor );
 			final JPanel tagSetPanel = new JPanel( new BorderLayout( 0, 0 ) );
 			tagSetPanel.add( tagTable.getTable(), BorderLayout.CENTER );
 

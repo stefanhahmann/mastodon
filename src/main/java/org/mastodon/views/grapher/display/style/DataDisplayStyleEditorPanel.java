@@ -208,8 +208,7 @@ public class DataDisplayStyleEditorPanel extends JPanel
 			}
 		} );
 
-		final DataDisplayPanel< DummyVertex, DummyEdge > previewPanel = new DataDisplayPanel<>(
-				graph, layout, highlight, focus, selection, navigation, options );
+		final DataDisplayPanel< DummyVertex, DummyEdge > previewPanel = new DataDisplayPanel<>( graph, layout, highlight, focus, selection, navigation, options );
 		previewPanel.getGraphOverlay().setXLabel( "Frame" );
 		previewPanel.getGraphOverlay().setYLabel( "Intensity (counts)" );
 
@@ -253,89 +252,88 @@ public class DataDisplayStyleEditorPanel extends JPanel
 
 		c.gridx = 0;
 
-		styleElements.forEach( element -> element.accept(
-				new StyleElementVisitor()
+		styleElements.forEach( element -> element.accept( new StyleElementVisitor()
+		{
+			@Override
+			public void visit( final Separator separator )
+			{
+				if ( c.gridx != 0 )
 				{
-					@Override
-					public void visit( final Separator separator )
-					{
-						if ( c.gridx != 0 )
-						{
-							c.gridx = 0;
-							++c.gridy;
-						}
-						c.gridwidth = 2;
-						editPanel.add( Box.createVerticalStrut( 10 ), c );
-						++c.gridy;
-						c.gridwidth = 1;
-					}
+					c.gridx = 0;
+					++c.gridy;
+				}
+				c.gridwidth = 2;
+				editPanel.add( Box.createVerticalStrut( 10 ), c );
+				++c.gridy;
+				c.gridwidth = 1;
+			}
 
-					@Override
-					public void visit( final ColorElement element )
-					{
-						final JButton button = linkedColorButton( element, element.getLabel(), colorChooser );
-						editPanel.add( button, c );
-						if ( ++c.gridx == numCols )
-						{
-							c.gridx = 0;
-							++c.gridy;
-						}
-					}
+			@Override
+			public void visit( final ColorElement element )
+			{
+				final JButton button = linkedColorButton( element, element.getLabel(), colorChooser );
+				editPanel.add( button, c );
+				if ( ++c.gridx == numCols )
+				{
+					c.gridx = 0;
+					++c.gridy;
+				}
+			}
 
-					@Override
-					public void visit( final BooleanElement element )
-					{
-						final JCheckBox checkbox = linkedCheckBox( element, element.getLabel() );
-						editPanel.add( checkbox, c );
-						if ( ++c.gridx == numCols )
-						{
-							c.gridx = 0;
-							++c.gridy;
-						}
-					}
+			@Override
+			public void visit( final BooleanElement element )
+			{
+				final JCheckBox checkbox = linkedCheckBox( element, element.getLabel() );
+				editPanel.add( checkbox, c );
+				if ( ++c.gridx == numCols )
+				{
+					c.gridx = 0;
+					++c.gridy;
+				}
+			}
 
-					@Override
-					public void visit( final DoubleElement doubleElement )
-					{
-						if ( c.gridx != 0 )
-						{
-							c.gridx = 0;
-							++c.gridy;
-						}
-						final JLabel label = new JLabel( doubleElement.getLabel() + ":" );
-						editPanel.add( label, c );
+			@Override
+			public void visit( final DoubleElement doubleElement )
+			{
+				if ( c.gridx != 0 )
+				{
+					c.gridx = 0;
+					++c.gridy;
+				}
+				final JLabel label = new JLabel( doubleElement.getLabel() + ":" );
+				editPanel.add( label, c );
 
-						c.gridx++;
-						final SliderPanelDouble slider = linkedSliderPanel( doubleElement, 3 );
-						editPanel.add( slider, c );
-						if ( ++c.gridx == numCols )
-						{
-							c.gridx = 0;
-							++c.gridy;
-						}
-					}
+				c.gridx++;
+				final SliderPanelDouble slider = linkedSliderPanel( doubleElement, 3 );
+				editPanel.add( slider, c );
+				if ( ++c.gridx == numCols )
+				{
+					c.gridx = 0;
+					++c.gridy;
+				}
+			}
 
-					@Override
-					public < E > void visit( final EnumElement< E > enumElement )
-					{
-						if ( c.gridx != 0 )
-						{
-							c.gridx = 0;
-							++c.gridy;
-						}
-						final JLabel label = new JLabel( enumElement.getLabel() + ":" );
-						editPanel.add( label, c );
+			@Override
+			public < E > void visit( final EnumElement< E > enumElement )
+			{
+				if ( c.gridx != 0 )
+				{
+					c.gridx = 0;
+					++c.gridy;
+				}
+				final JLabel label = new JLabel( enumElement.getLabel() + ":" );
+				editPanel.add( label, c );
 
-						c.gridx++;
-						final JComboBox< E > enumSelector = linkedComboBoxEnumSelector( enumElement );
-						editPanel.add( enumSelector, c );
-						if ( ++c.gridx == numCols )
-						{
-							c.gridx = 0;
-							++c.gridy;
-						}
-					}
-				} ) );
+				c.gridx++;
+				final JComboBox< E > enumSelector = linkedComboBoxEnumSelector( enumElement );
+				editPanel.add( enumSelector, c );
+				if ( ++c.gridx == numCols )
+				{
+					c.gridx = 0;
+					++c.gridy;
+				}
+			}
+		} ) );
 
 		previewPanel.setBorder( new LineBorder( Color.LIGHT_GRAY, 1 ) );
 		add( previewPanel, BorderLayout.CENTER );
@@ -350,8 +348,7 @@ public class DataDisplayStyleEditorPanel extends JPanel
 
 				separator(),
 
-				booleanElement( "auto vertex size", style::isAutoVertexSize, style::autoVertexSize ),
-				doubleElement( "vertex fixed size", 1, 100, style::getVertexFixedSize, style::vertexFixedSize ),
+				booleanElement( "auto vertex size", style::isAutoVertexSize, style::autoVertexSize ), doubleElement( "vertex fixed size", 1, 100, style::getVertexFixedSize, style::vertexFixedSize ),
 
 				separator(),
 
@@ -359,20 +356,11 @@ public class DataDisplayStyleEditorPanel extends JPanel
 
 				separator(),
 
-				colorElement( "vertex fill", style::getVertexFillColor, style::vertexFillColor ),
-				colorElement( "selected vertex fill", style::getSelectedVertexFillColor, style::selectedVertexFillColor ),
-				colorElement( "vertex contour", style::getVertexDrawColor, style::vertexDrawColor ),
-				colorElement( "selected vertex contour", style::getSelectedVertexDrawColor, style::selectedVertexDrawColor ),
-				colorElement( "simplified vertex fill", style::getSimplifiedVertexFillColor, style::simplifiedVertexFillColor ),
-				colorElement( "selected simplified vertex fill", style::getSelectedSimplifiedVertexFillColor, style::selectedSimplifiedVertexFillColor ),
-				colorElement( "edge", style::getEdgeColor, style::edgeColor ),
-				colorElement( "selected edge", style::getSelectedEdgeColor, style::selectedEdgeColor ),
+				colorElement( "vertex fill", style::getVertexFillColor, style::vertexFillColor ), colorElement( "selected vertex fill", style::getSelectedVertexFillColor, style::selectedVertexFillColor ), colorElement( "vertex contour", style::getVertexDrawColor, style::vertexDrawColor ), colorElement( "selected vertex contour", style::getSelectedVertexDrawColor, style::selectedVertexDrawColor ), colorElement( "simplified vertex fill", style::getSimplifiedVertexFillColor, style::simplifiedVertexFillColor ), colorElement( "selected simplified vertex fill", style::getSelectedSimplifiedVertexFillColor, style::selectedSimplifiedVertexFillColor ), colorElement( "edge", style::getEdgeColor, style::edgeColor ), colorElement( "selected edge", style::getSelectedEdgeColor, style::selectedEdgeColor ),
 
 				separator(),
 
-				colorElement( "axis color", style::getAxisColor, style::axisColor ),
-				colorElement( "background", style::getBackgroundColor, style::backgroundColor )
-		);
+				colorElement( "axis color", style::getAxisColor, style::axisColor ), colorElement( "background", style::getBackgroundColor, style::backgroundColor ) );
 	}
 
 	public static void main( final String[] args )

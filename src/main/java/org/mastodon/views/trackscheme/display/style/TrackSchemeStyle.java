@@ -139,13 +139,7 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 	public // TODO?
 	static Color mixGhostColor( final Color color, final Color backgroundColor )
 	{
-		return ( color == null || backgroundColor == null )
-				? null
-				: new Color(
-						( color.getRed() + backgroundColor.getRed() ) / 2,
-						( color.getGreen() + backgroundColor.getGreen() ) / 2,
-						( color.getBlue() + backgroundColor.getBlue() ) / 2,
-						color.getAlpha() );
+		return ( color == null || backgroundColor == null ) ? null : new Color( ( color.getRed() + backgroundColor.getRed() ) / 2, ( color.getGreen() + backgroundColor.getGreen() ) / 2, ( color.getBlue() + backgroundColor.getBlue() ) / 2, color.getAlpha() );
 	}
 
 	private void updateGhostColors()
@@ -335,27 +329,33 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return vertexStroke;
 	}
 
-	public Stroke getBranchGraphEdgeStroke() {
+	public Stroke getBranchGraphEdgeStroke()
+	{
 		return branchGraphEdgeStroke;
 	}
 
-	public Stroke getBranchGraphEdgeHighlightStroke() {
+	public Stroke getBranchGraphEdgeHighlightStroke()
+	{
 		return branchGraphEdgeHighlightStroke;
 	}
 
-	public Stroke getHierarchyEdgeStroke() {
+	public Stroke getHierarchyEdgeStroke()
+	{
 		return hierarchyEdgeStroke;
 	}
 
-	public Stroke getHierarchyEdgeHighlightStroke() {
+	public Stroke getHierarchyEdgeHighlightStroke()
+	{
 		return hierarchyEdgeHighlightStroke;
 	}
 
-	public Stroke getHierarchyVertexStroke() {
+	public Stroke getHierarchyVertexStroke()
+	{
 		return hierarchyVertexStroke;
 	}
 
-	public Stroke getHierarchyVertexHighlightStroke() {
+	public Stroke getHierarchyVertexHighlightStroke()
+	{
 		return hierarchyVertexHighlightStroke;
 	}
 
@@ -663,7 +663,8 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return this;
 	}
 
-	public TrackSchemeStyle branchGraphEdgeStroke( final Stroke stroke ) {
+	public TrackSchemeStyle branchGraphEdgeStroke( final Stroke stroke )
+	{
 		if ( !Objects.equals( this.branchGraphEdgeStroke, stroke ) )
 		{
 			this.branchGraphEdgeStroke = stroke;
@@ -672,7 +673,8 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return this;
 	}
 
-	public TrackSchemeStyle branchGraphEdgeHighlightStroke( final Stroke stroke ) {
+	public TrackSchemeStyle branchGraphEdgeHighlightStroke( final Stroke stroke )
+	{
 		if ( !Objects.equals( this.branchGraphEdgeHighlightStroke, stroke ) )
 		{
 			this.branchGraphEdgeHighlightStroke = stroke;
@@ -681,7 +683,8 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return this;
 	}
 
-	public TrackSchemeStyle hierarchyEdgeStroke( final Stroke stroke ) {
+	public TrackSchemeStyle hierarchyEdgeStroke( final Stroke stroke )
+	{
 		if ( !Objects.equals( this.hierarchyEdgeStroke, stroke ) )
 		{
 			this.hierarchyEdgeStroke = stroke;
@@ -690,7 +693,8 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return this;
 	}
 
-	public TrackSchemeStyle hierarchyEdgeHighlightStroke( final Stroke stroke ) {
+	public TrackSchemeStyle hierarchyEdgeHighlightStroke( final Stroke stroke )
+	{
 		if ( !Objects.equals( this.hierarchyEdgeHighlightStroke, stroke ) )
 		{
 			this.hierarchyEdgeHighlightStroke = stroke;
@@ -699,7 +703,8 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return this;
 	}
 
-	public TrackSchemeStyle hierarchyVertexStroke( final Stroke stroke ) {
+	public TrackSchemeStyle hierarchyVertexStroke( final Stroke stroke )
+	{
 		if ( !Objects.equals( this.hierarchyVertexStroke, stroke ) )
 		{
 			this.hierarchyVertexStroke = stroke;
@@ -708,7 +713,8 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return this;
 	}
 
-	public TrackSchemeStyle hierarchyVertexHighlightStroke( final Stroke stroke ) {
+	public TrackSchemeStyle hierarchyVertexHighlightStroke( final Stroke stroke )
+	{
 		if ( !Objects.equals( this.hierarchyVertexHighlightStroke, stroke ) )
 		{
 			this.hierarchyVertexHighlightStroke = stroke;
@@ -868,27 +874,9 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return copy( null );
 	}
 
-
-	private static TrackSchemeStyle basicStyle() {
-		return new TrackSchemeStyle().
-				edgeStroke( new BasicStroke() ).
-				edgeGhostStroke( DEFAULT_GHOST_STROKE ).
-				edgeHighlightStroke( new BasicStroke( 2f ) ).
-				vertexStroke( new BasicStroke() ).
-				vertexGhostStroke( DEFAULT_GHOST_STROKE ).
-				vertexHighlightStroke( new BasicStroke( 3f ) ).
-				focusStroke( DEFAULT_FOCUS_STROKE ).
-				decorationStroke( new BasicStroke() ).
-				branchGraphEdgeStroke( new BasicStroke(1.5f ) ).
-				branchGraphEdgeHighlightStroke( new BasicStroke( 3f ) ).
-				hierarchyEdgeStroke( new BasicStroke( 3f ) ).
-				hierarchyEdgeHighlightStroke( new BasicStroke( 5f ) ).
-				hierarchyVertexStroke( new BasicStroke( 3f ) ).
-				hierarchyVertexHighlightStroke( new BasicStroke( 5f ) ).
-				highlightCurrentTimepoint( true ).
-				paintRows( true ).
-				paintColumns( true ).
-				paintHeaderShadow( true );
+	private static TrackSchemeStyle basicStyle()
+	{
+		return new TrackSchemeStyle().edgeStroke( new BasicStroke() ).edgeGhostStroke( DEFAULT_GHOST_STROKE ).edgeHighlightStroke( new BasicStroke( 2f ) ).vertexStroke( new BasicStroke() ).vertexGhostStroke( DEFAULT_GHOST_STROKE ).vertexHighlightStroke( new BasicStroke( 3f ) ).focusStroke( DEFAULT_FOCUS_STROKE ).decorationStroke( new BasicStroke() ).branchGraphEdgeStroke( new BasicStroke( 1.5f ) ).branchGraphEdgeHighlightStroke( new BasicStroke( 3f ) ).hierarchyEdgeStroke( new BasicStroke( 3f ) ).hierarchyEdgeHighlightStroke( new BasicStroke( 5f ) ).hierarchyVertexStroke( new BasicStroke( 3f ) ).hierarchyVertexHighlightStroke( new BasicStroke( 5f ) ).highlightCurrentTimepoint( true ).paintRows( true ).paintColumns( true ).paintHeaderShadow( true );
 	}
 
 	/**
@@ -906,24 +894,14 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 	static
 	{
 		final Color fill = new Color( 128, 255, 128 );
-		df = basicStyle().name( "default" ).
-				backgroundColor( Color.LIGHT_GRAY ).
-				currentTimepointColor( new Color( 217, 217, 217 ) ).
-				vertexFillColor( Color.WHITE ).
-				selectedVertexFillColor( fill ).
-				simplifiedVertexFillColor( Color.BLACK ).
-				selectedSimplifiedVertexFillColor( new Color( 0, 128, 0 ) ).
-				vertexDrawColor( Color.BLACK ).
-				selectedVertexDrawColor( Color.BLACK ).
-				edgeColor( Color.BLACK ).
-				selectedEdgeColor( fill.darker() ).
-				decorationColor( Color.YELLOW.darker().darker() ).
-				vertexRangeColor( new Color( 128, 128, 128 ) ).
-				headerBackgroundColor( new Color( 217, 217, 217 ) ). // new Color( 238, 238, 238 ) ).
-				headerDecorationColor( Color.DARK_GRAY ).
-				headerCurrentTimepointColor( Color.WHITE ).
-				font( new Font( "SansSerif", Font.PLAIN, 9 ) ).
-				headerFont( new Font( "SansSerif", Font.PLAIN, 9 ) );
+		df = basicStyle().name( "default" ).backgroundColor( Color.LIGHT_GRAY ).currentTimepointColor( new Color( 217, 217, 217 ) ).vertexFillColor( Color.WHITE ).selectedVertexFillColor( fill ).simplifiedVertexFillColor( Color.BLACK ).selectedSimplifiedVertexFillColor( new Color( 0, 128, 0 ) ).vertexDrawColor( Color.BLACK ).selectedVertexDrawColor( Color.BLACK ).edgeColor( Color.BLACK ).selectedEdgeColor( fill.darker() ).decorationColor( Color.YELLOW.darker().darker() ).vertexRangeColor( new Color( 128, 128, 128 ) ).headerBackgroundColor( new Color( 217, 217, 217 ) ). // new
+																																																																																																																																																// Color(
+																																																																																																																																																// 238,
+																																																																																																																																																// 238,
+																																																																																																																																																// 238
+																																																																																																																																																// )
+																																																																																																																																																// ).
+				headerDecorationColor( Color.DARK_GRAY ).headerCurrentTimepointColor( Color.WHITE ).font( new Font( "SansSerif", Font.PLAIN, 9 ) ).headerFont( new Font( "SansSerif", Font.PLAIN, 9 ) );
 	}
 
 	/**
@@ -944,24 +922,7 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		final Color fill = new Color( 64, 106, 102 );
 		final Color selfill = new Color( 255, 128, 128 );
 		final Color currenttp = new Color( 38, 175, 185 );
-		modern = basicStyle().name( "modern" ).
-				backgroundColor( bg ).
-				currentTimepointColor( currenttp ).
-				vertexFillColor( fill ).
-				selectedVertexFillColor( selfill ).
-				simplifiedVertexFillColor( fill ).
-				selectedSimplifiedVertexFillColor( selfill ).
-				vertexDrawColor( Color.WHITE ).
-				selectedVertexDrawColor( Color.BLACK ).
-				edgeColor( Color.WHITE ).
-				selectedEdgeColor( selfill.darker() ).
-				decorationColor( bg.darker() ).
-				vertexRangeColor( Color.WHITE ).
-				headerBackgroundColor( bg.brighter() ).
-				headerDecorationColor( bg ).
-				headerCurrentTimepointColor( bg.darker() ).
-				font( new Font( "Calibri", Font.PLAIN, 12 ) ).
-				headerFont( new Font( "Calibri", Font.PLAIN, 12 ) );
+		modern = basicStyle().name( "modern" ).backgroundColor( bg ).currentTimepointColor( currenttp ).vertexFillColor( fill ).selectedVertexFillColor( selfill ).simplifiedVertexFillColor( fill ).selectedSimplifiedVertexFillColor( selfill ).vertexDrawColor( Color.WHITE ).selectedVertexDrawColor( Color.BLACK ).edgeColor( Color.WHITE ).selectedEdgeColor( selfill.darker() ).decorationColor( bg.darker() ).vertexRangeColor( Color.WHITE ).headerBackgroundColor( bg.brighter() ).headerDecorationColor( bg ).headerCurrentTimepointColor( bg.darker() ).font( new Font( "Calibri", Font.PLAIN, 12 ) ).headerFont( new Font( "Calibri", Font.PLAIN, 12 ) );
 	}
 
 	/**
@@ -983,24 +944,7 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		final Color selfill = new Color( 53, 107, 154 );
 		final Color seldraw = new Color( 230, 245, 255 );
 		final Color seledge = new Color( 91, 137, 158 );
-		hmdyk = basicStyle().name( "lorry" ).
-				backgroundColor( bg ).
-				currentTimepointColor( bg.brighter() ).
-				vertexFillColor( fill ).
-				selectedVertexFillColor( selfill ).
-				simplifiedVertexFillColor( Color.DARK_GRAY ).
-				selectedSimplifiedVertexFillColor( selfill ).
-				vertexDrawColor( Color.DARK_GRAY ).
-				selectedVertexDrawColor( seldraw ).
-				edgeColor( Color.DARK_GRAY ).
-				selectedEdgeColor( seledge ).
-				decorationColor( bg.darker() ).
-				vertexRangeColor( Color.DARK_GRAY ).
-				headerBackgroundColor( bg.brighter() ).
-				headerDecorationColor( bg ).
-				headerCurrentTimepointColor( bg.darker() ).
-				font( new Font( "Calibri", Font.PLAIN, 12 ) ).
-				headerFont( new Font( "Calibri", Font.PLAIN, 12 ) );
+		hmdyk = basicStyle().name( "lorry" ).backgroundColor( bg ).currentTimepointColor( bg.brighter() ).vertexFillColor( fill ).selectedVertexFillColor( selfill ).simplifiedVertexFillColor( Color.DARK_GRAY ).selectedSimplifiedVertexFillColor( selfill ).vertexDrawColor( Color.DARK_GRAY ).selectedVertexDrawColor( seldraw ).edgeColor( Color.DARK_GRAY ).selectedEdgeColor( seledge ).decorationColor( bg.darker() ).vertexRangeColor( Color.DARK_GRAY ).headerBackgroundColor( bg.brighter() ).headerDecorationColor( bg ).headerCurrentTimepointColor( bg.darker() ).font( new Font( "Calibri", Font.PLAIN, 12 ) ).headerFont( new Font( "Calibri", Font.PLAIN, 12 ) );
 	}
 
 	public static Collection< TrackSchemeStyle > defaults;

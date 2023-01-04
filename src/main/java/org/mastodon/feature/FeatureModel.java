@@ -115,8 +115,8 @@ public class FeatureModel
 	 *
 	 * @param key
 	 *            the {@link FeatureSpec} of the feature to retrieve.
-	 * @return the feature, or {@code null} if a feature with the specified
-	 *         key is not registered in this model.
+	 * @return the feature, or {@code null} if a feature with the specified key
+	 *         is not registered in this model.
 	 */
 	public Feature< ? > getFeature( final FeatureSpec< ?, ? > key )
 	{

@@ -66,10 +66,10 @@ public class KeymapManager extends AbstractStyleManager< KeymapManager, Keymap >
 	private static final String KEYMAPS_PATH = System.getProperty( "user.home" ) + "/.mastodon/keymaps/";
 
 	/**
-	 * A {@code Keymap} that has the same properties as the default
-	 * keymap. In contrast to defaultStyle this will always
-	 * refer to the same object, so a consumers can just use this one
-	 * RenderSettings to listen for changes and for painting.
+	 * A {@code Keymap} that has the same properties as the default keymap. In
+	 * contrast to defaultStyle this will always refer to the same object, so a
+	 * consumers can just use this one RenderSettings to listen for changes and
+	 * for painting.
 	 */
 	private final Keymap forwardDefaultKeymap;
 
@@ -93,9 +93,7 @@ public class KeymapManager extends AbstractStyleManager< KeymapManager, Keymap >
 			synchronized ( KeymapManager.class )
 			{
 				if ( loadedBuiltinStyles == null )
-					loadedBuiltinStyles = Arrays.asList(
-							loadBuiltinStyle( "Default", "keyconf_mastodon.yaml" ),
-							loadBuiltinStyle( "All BDV keys", "keyconf_fullbdv.yaml" ) );
+					loadedBuiltinStyles = Arrays.asList( loadBuiltinStyle( "Default", "keyconf_mastodon.yaml" ), loadBuiltinStyle( "All BDV keys", "keyconf_fullbdv.yaml" ) );
 			}
 			return loadedBuiltinStyles;
 		}
@@ -126,7 +124,8 @@ public class KeymapManager extends AbstractStyleManager< KeymapManager, Keymap >
 	 * Returns a final {@link Keymap} instance that always has the same
 	 * properties as the default keymap.
 	 *
-	 * @return a keymap instance that always has the same properties as the default keymap.
+	 * @return a keymap instance that always has the same properties as the
+	 *         default keymap.
 	 */
 	public Keymap getForwardDefaultKeymap()
 	{
@@ -202,9 +201,7 @@ public class KeymapManager extends AbstractStyleManager< KeymapManager, Keymap >
 		{
 			new File( directory ).mkdirs();
 
-			final KeymapsListIO keymapsList = new KeymapsListIO(
-					selectedStyle.getName(),
-					userStyles.stream().map( Keymap::getName ).collect( Collectors.toList() ) );
+			final KeymapsListIO keymapsList = new KeymapsListIO( selectedStyle.getName(), userStyles.stream().map( Keymap::getName ).collect( Collectors.toList() ) );
 
 			String filename = KEYMAPS_PATH + "/keymaps.yaml";
 			final FileWriter output = new FileWriter( filename );

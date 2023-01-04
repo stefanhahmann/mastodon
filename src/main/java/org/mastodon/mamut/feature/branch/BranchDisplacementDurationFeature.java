@@ -64,14 +64,7 @@ public class BranchDisplacementDurationFeature implements Feature< BranchSpot >
 	{
 		public Spec()
 		{
-			super(
-					KEY,
-					INFO_STRING,
-					BranchDisplacementDurationFeature.class,
-					BranchSpot.class,
-					Multiplicity.SINGLE,
-					DISPLACEMENT_PROJECTION_SPEC,
-					DURATION_PROJECTION_SPEC );
+			super( KEY, INFO_STRING, BranchDisplacementDurationFeature.class, BranchSpot.class, Multiplicity.SINGLE, DISPLACEMENT_PROJECTION_SPEC, DURATION_PROJECTION_SPEC );
 		}
 	}
 

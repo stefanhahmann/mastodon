@@ -48,14 +48,15 @@ import org.scijava.listeners.Listeners;
 /**
  * Default implementation of {@link TagSetModel}.
  * <p>
- * Assigns tags to vertices and edges of a graph, according to a {@link TagSetStructure}.
+ * Assigns tags to vertices and edges of a graph, according to a
+ * {@link TagSetStructure}.
  * <p>
  * Provides facilities for serialization and undo/redo.
  *
  * @param <V>
- * 		the type of the vertices in the graph.
+ *            the type of the vertices in the graph.
  * @param <E>
- * 		the type of the edges in the graph.
+ *            the type of the edges in the graph.
  *
  * @author Jean-Yves Tinevez
  * @author Tobias Pietzsch
@@ -193,9 +194,9 @@ public class DefaultTagSetModel< V extends Vertex< E >, E extends Edge< V > > im
 	 * undo/redo.
 	 *
 	 * @param <V>
-	 * 		the type of the vertices in the graph.
+	 *            the type of the vertices in the graph.
 	 * @param <E>
-	 * 		the type of the edges in the graph.
+	 *            the type of the edges in the graph.
 	 */
 	public static class SerialisationAccess< V extends Vertex< E >, E extends Edge< V > >
 	{

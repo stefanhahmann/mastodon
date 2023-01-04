@@ -118,14 +118,12 @@ public class DummySpimData
 		calib.set( sz, 2, 2 );
 
 		final File basePath = new File( "." );
-		final TimePoints timepoints = new TimePoints(
-				IntStream.range( 0, t ).mapToObj( TimePoint::new ).collect( Collectors.toList() ) );
+		final TimePoints timepoints = new TimePoints( IntStream.range( 0, t ).mapToObj( TimePoint::new ).collect( Collectors.toList() ) );
 		final Map< Integer, BasicViewSetup > setups = new HashMap<>();
 		setups.put( 0, new BasicViewSetup( 0, "dummy", null, null ) );
 		final BasicImgLoader imgLoader = new DummyImgLoader( new UnsignedShortType(), imageSize );
 		final SequenceDescriptionMinimal sequenceDescription = new SequenceDescriptionMinimal( timepoints, setups, imgLoader, null );
-		final ViewRegistrations viewRegistrations = new ViewRegistrations(
-				IntStream.range( 0, t ).mapToObj( tp -> new ViewRegistration( tp, 0, calib ) ).collect( Collectors.toList() ) );
+		final ViewRegistrations viewRegistrations = new ViewRegistrations( IntStream.range( 0, t ).mapToObj( tp -> new ViewRegistration( tp, 0, calib ) ).collect( Collectors.toList() ) );
 		return new SpimDataMinimal( basePath, sequenceDescription, viewRegistrations );
 
 	}
@@ -153,7 +151,7 @@ public class DummySpimData
 			this( new UnsignedShortType(), new FinalDimensions( 100, 100, 100 ) );
 		}
 
-		public < T extends RealType< T >> DummyImgLoader(final T type, final Dimensions dimensions )
+		public < T extends RealType< T > > DummyImgLoader( final T type, final Dimensions dimensions )
 		{
 			assert ( dimensions.numDimensions() == 3 );
 			final FinalInterval dimInterval = new FinalInterval( dimensions );
@@ -164,42 +162,51 @@ public class DummySpimData
 			setupImgLoader = new ViewerSetupImgLoader< T, Volatile< T > >()
 			{
 				@Override
-				public RandomAccessibleInterval<T> getImage(int timepointId, int level, ImgLoaderHint... hints) {
+				public RandomAccessibleInterval< T > getImage( int timepointId, int level, ImgLoaderHint... hints )
+				{
 					return img;
 				}
 
-				final double[][] resolution = new double[1][3];
-				final AffineTransform3D[] transform = new AffineTransform3D[1];
+				final double[][] resolution = new double[ 1 ][ 3 ];
+
+				final AffineTransform3D[] transform = new AffineTransform3D[ 1 ];
 				{
-					resolution[0][0] = 1.0; //TODO should be taken from 'calib' from our only-one caller code...
-					resolution[0][1] = 1.0;
-					resolution[0][2] = 1.0;
-					transform[0] = new AffineTransform3D();
-					transform[0].identity();
+					resolution[ 0 ][ 0 ] = 1.0; // TODO should be taken from
+												// 'calib' from our only-one
+												// caller code...
+					resolution[ 0 ][ 1 ] = 1.0;
+					resolution[ 0 ][ 2 ] = 1.0;
+					transform[ 0 ] = new AffineTransform3D();
+					transform[ 0 ].identity();
 				}
 
 				@Override
-				public double[][] getMipmapResolutions() {
+				public double[][] getMipmapResolutions()
+				{
 					return resolution;
 				}
 
 				@Override
-				public AffineTransform3D[] getMipmapTransforms() {
+				public AffineTransform3D[] getMipmapTransforms()
+				{
 					return transform;
 				}
 
 				@Override
-				public int numMipmapLevels() {
+				public int numMipmapLevels()
+				{
 					return 1;
 				}
 
 				@Override
-				public RandomAccessibleInterval< Volatile< T > > getVolatileImage(int timepointId, int level, ImgLoaderHint... hints) {
+				public RandomAccessibleInterval< Volatile< T > > getVolatileImage( int timepointId, int level, ImgLoaderHint... hints )
+				{
 					return volatileImg;
 				}
 
 				@Override
-				public Volatile<T> getVolatileImageType() {
+				public Volatile< T > getVolatileImageType()
+				{
 					return new VolatileRealType<>( type );
 				}
 
@@ -218,13 +225,14 @@ public class DummySpimData
 		}
 
 		@Override
-		public ViewerSetupImgLoader< ?, ? > getSetupImgLoader(final int setupId )
+		public ViewerSetupImgLoader< ?, ? > getSetupImgLoader( final int setupId )
 		{
 			return setupImgLoader;
 		}
 
 		@Override
-		public CacheControl getCacheControl() {
+		public CacheControl getCacheControl()
+		{
 			return new CacheControl.Dummy();
 		}
 	}

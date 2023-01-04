@@ -134,8 +134,8 @@ public interface SelectionModel< V extends Vertex< E >, E extends Edge< V > >
 	/**
 	 * Clears this selection.
 	 *
-	 * @return {@code true} if this selection was not empty prior to
-	 *         calling this method.
+	 * @return {@code true} if this selection was not empty prior to calling
+	 *         this method.
 	 */
 	public boolean clearSelection();
 

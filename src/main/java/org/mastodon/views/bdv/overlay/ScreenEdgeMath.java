@@ -72,8 +72,8 @@ public class ScreenEdgeMath< V extends OverlayVertex< V, E >, E extends OverlayE
 	private final double[] max = new double[ 3 ];
 
 	/**
-	 * edge position in viewer coordinate system. (center, between the
-	 * source and target position)
+	 * edge position in viewer coordinate system. (center, between the source
+	 * and target position)
 	 */
 	private final double[] c = new double[ 3 ];
 
@@ -124,6 +124,7 @@ public class ScreenEdgeMath< V extends OverlayVertex< V, E >, E extends OverlayE
 	{
 		return max;
 	}
+
 	/**
 	 * Get edge position in viewer coordinate system.
 	 *

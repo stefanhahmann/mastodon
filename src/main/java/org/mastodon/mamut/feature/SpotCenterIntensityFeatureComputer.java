@@ -141,12 +141,7 @@ public class SpotCenterIntensityFeatureComputer implements MamutFeatureComputer,
 					break;
 
 				final SpatialIndex< Spot > toProcess = model.getSpatioTemporalIndex().getSpatialIndex( timepoint );
-				final List< Callable< Void > > tasks = Collections.nCopies( numThreads, new SpotIntensityComputer(
-						source,
-						toProcess.iterator(),
-						getCalibration( source, timepoint ),
-						output.maps.get( iSource ),
-						recomputeAll ) );
+				final List< Callable< Void > > tasks = Collections.nCopies( numThreads, new SpotIntensityComputer( source, toProcess.iterator(), getCalibration( source, timepoint ), output.maps.get( iSource ), recomputeAll ) );
 				try
 				{
 					final List< Future< Void > > futures = executor.invokeAll( tasks );
@@ -197,12 +192,7 @@ public class SpotCenterIntensityFeatureComputer implements MamutFeatureComputer,
 
 		private final boolean recomputeAll;
 
-		public SpotIntensityComputer(
-				final Source< RealType< ? > > source,
-				final Iterator< Spot > iterator,
-				final double[] calibration,
-				final DoublePropertyMap< Spot > map,
-				final boolean recomputeAll )
+		public SpotIntensityComputer( final Source< RealType< ? > > source, final Iterator< Spot > iterator, final double[] calibration, final DoublePropertyMap< Spot > map, final boolean recomputeAll )
 		{
 			this.source = source;
 			this.iterator = iterator;

@@ -75,7 +75,7 @@ public class PaintBranchGraph extends PaintGraph
 	@Override
 	public boolean isInsidePaintedVertex( double x, double y, ScreenVertex vertex )
 	{
-		if( y >= vertex.getYStart() && y <= vertex.getY() && Math.abs( x - vertex.getX() ) <= 2 )
+		if ( y >= vertex.getYStart() && y <= vertex.getY() && Math.abs( x - vertex.getX() ) <= 2 )
 			return true;
 		return super.isInsidePaintedVertex( x, y, vertex );
 	}
@@ -84,7 +84,7 @@ public class PaintBranchGraph extends PaintGraph
 	protected void drawVertex( ScreenVertex vertex )
 	{
 		boolean resetStroke = setStroke( vertex );
-		g2.drawLine( (int) vertex.getX(), (int) vertex.getYStart(), (int) vertex.getX(), (int) vertex.getY());
+		g2.drawLine( ( int ) vertex.getX(), ( int ) vertex.getYStart(), ( int ) vertex.getX(), ( int ) vertex.getY() );
 		resetStroke( resetStroke );
 
 		super.drawVertex( vertex );
@@ -101,15 +101,14 @@ public class PaintBranchGraph extends PaintGraph
 		final boolean ghost = vertex.isGhost();
 		final int specifiedColor = vertex.getColor();
 
-		final Color drawColor = getColor( selected, ghost, transition, ratio, specifiedColor,
-				style.getVertexDrawColor(), style.getSelectedVertexDrawColor(),
-				style.getGhostVertexDrawColor(), style.getGhostSelectedVertexDrawColor() );
+		final Color drawColor = getColor( selected, ghost, transition, ratio, specifiedColor, style.getVertexDrawColor(), style.getSelectedVertexDrawColor(), style.getGhostVertexDrawColor(), style.getGhostSelectedVertexDrawColor() );
 
 		g2.setColor( drawColor );
 		if ( highlighted )
 			g2.setStroke( style.getVertexHighlightStroke() );
 		else if ( focused )
-			// An animation might be better for the focus, but for now this is it.
+			// An animation might be better for the focus, but for now this is
+			// it.
 			g2.setStroke( style.getFocusStroke() );
 		else if ( ghost )
 			g2.setStroke( style.getVertexGhostStroke() );

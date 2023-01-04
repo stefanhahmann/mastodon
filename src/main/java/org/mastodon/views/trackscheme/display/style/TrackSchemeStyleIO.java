@@ -101,11 +101,7 @@ public class TrackSchemeStyleIO
 		public Node representData( final Object data )
 		{
 			final Color c = ( Color ) data;
-			final List< Integer > rgba = Arrays.asList(
-					c.getRed(),
-					c.getGreen(),
-					c.getBlue(),
-					c.getAlpha() );
+			final List< Integer > rgba = Arrays.asList( c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha() );
 			return representSequence( getTag(), rgba, FLOW );
 		}
 	}
@@ -124,11 +120,7 @@ public class TrackSchemeStyleIO
 			{
 				@SuppressWarnings( "unchecked" )
 				final List< Integer > rgba = ( List< Integer > ) constructSequence( ( SequenceNode ) node );
-				return new Color(
-						rgba.get( 0 ),
-						rgba.get( 1 ),
-						rgba.get( 2 ),
-						rgba.get( 3 ) );
+				return new Color( rgba.get( 0 ), rgba.get( 1 ), rgba.get( 2 ), rgba.get( 3 ) );
 			}
 			catch ( final Exception e )
 			{}
@@ -362,12 +354,12 @@ public class TrackSchemeStyleIO
 				s.vertexGhostStroke( ( Stroke ) mapping.getOrDefault( "vertexGhostStroke", df.getVertexGhostStroke() ) );
 				s.vertexHighlightStroke( ( Stroke ) mapping.getOrDefault( "vertexHighlightStroke", df.getVertexHighlightStroke() ) );
 				s.focusStroke( ( Stroke ) mapping.getOrDefault( "focusStroke", df.getFocusStroke() ) );
-				s.branchGraphEdgeStroke( ( Stroke ) mapping.getOrDefault( "branchGraphEdgeStroke", df.getBranchGraphEdgeStroke() ));
-				s.branchGraphEdgeHighlightStroke( ( Stroke ) mapping.getOrDefault( "branchGraphEdgeHighlightStroke", df.getBranchGraphEdgeHighlightStroke() ));
-				s.hierarchyEdgeStroke( ( Stroke ) mapping.getOrDefault( "hierarchyEdgeStroke", df.getHierarchyEdgeStroke() ));
-				s.hierarchyEdgeHighlightStroke( ( Stroke ) mapping.getOrDefault( "hierarchyEdgeHighlightStroke", df.getHierarchyEdgeHighlightStroke() ));
-				s.hierarchyVertexStroke( ( Stroke ) mapping.getOrDefault( "hierarchyVertexStroke", df.getHierarchyVertexStroke() ));
-				s.hierarchyVertexHighlightStroke( ( Stroke ) mapping.getOrDefault( "hierarchyVertexHighlightStroke", df.getHierarchyVertexHighlightStroke() ));
+				s.branchGraphEdgeStroke( ( Stroke ) mapping.getOrDefault( "branchGraphEdgeStroke", df.getBranchGraphEdgeStroke() ) );
+				s.branchGraphEdgeHighlightStroke( ( Stroke ) mapping.getOrDefault( "branchGraphEdgeHighlightStroke", df.getBranchGraphEdgeHighlightStroke() ) );
+				s.hierarchyEdgeStroke( ( Stroke ) mapping.getOrDefault( "hierarchyEdgeStroke", df.getHierarchyEdgeStroke() ) );
+				s.hierarchyEdgeHighlightStroke( ( Stroke ) mapping.getOrDefault( "hierarchyEdgeHighlightStroke", df.getHierarchyEdgeHighlightStroke() ) );
+				s.hierarchyVertexStroke( ( Stroke ) mapping.getOrDefault( "hierarchyVertexStroke", df.getHierarchyVertexStroke() ) );
+				s.hierarchyVertexHighlightStroke( ( Stroke ) mapping.getOrDefault( "hierarchyVertexHighlightStroke", df.getHierarchyVertexHighlightStroke() ) );
 
 				s.hierarchyGraphCurvedLines( ( boolean ) mapping.getOrDefault( "hierarchyGraphCurvedLines", df.isHierarchyGraphCurvedLines() ) );
 				s.highlightCurrentTimepoint( ( boolean ) mapping.getOrDefault( "highlightCurrentTimepoint", df.isHighlightCurrentTimepoint() ) );

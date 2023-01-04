@@ -57,15 +57,11 @@ public class OverlayActions
 		@Override
 		public void getCommandDescriptions( final CommandDescriptions descriptions )
 		{
-			descriptions.add( CYCLE_VISIBILITY_MODE, CYCLE_VISIBILITY_MODE_KEYS,
-					"Cycle across the visibility modes for the overlay in BDV." );
+			descriptions.add( CYCLE_VISIBILITY_MODE, CYCLE_VISIBILITY_MODE_KEYS, "Cycle across the visibility modes for the overlay in BDV." );
 		}
 	}
 
-	public static void install(
-			final Actions actions,
-			final ViewerPanel viewerPanel,
-			final OverlayGraphRenderer< ?, ? > renderer )
+	public static void install( final Actions actions, final ViewerPanel viewerPanel, final OverlayGraphRenderer< ?, ? > renderer )
 	{
 		actions.runnableAction( () -> {
 			// Cycle mode.

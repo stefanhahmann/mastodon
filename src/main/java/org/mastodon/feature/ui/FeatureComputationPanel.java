@@ -78,9 +78,7 @@ public class FeatureComputationPanel extends JPanel
 
 	final JCheckBox chckbxForce;
 
-	public FeatureComputationPanel(
-			final FeatureComputationModel model,
-			final Collection< Class< ? > > targets )
+	public FeatureComputationPanel( final FeatureComputationModel model, final Collection< Class< ? > > targets )
 	{
 		setLayout( new BorderLayout( 0, 0 ) );
 
@@ -189,20 +187,9 @@ public class FeatureComputationPanel extends JPanel
 			headerPanel.setAlignmentX( Component.LEFT_ALIGNMENT );
 			panelFeatures.add( Box.createVerticalStrut( 5 ) );
 
-			final List< FeatureSpec< ?, ? > > featureSpecs = model.getFeatureSpecs( target )
-					.stream()
-					.filter( model::isVisible )
-					.collect( Collectors.toList() );
+			final List< FeatureSpec< ?, ? > > featureSpecs = model.getFeatureSpecs( target ).stream().filter( model::isVisible ).collect( Collectors.toList() );
 
-			final FeatureTable< List< FeatureSpec< ?, ? > >, FeatureSpec< ?, ? > > featureTable =
-					new FeatureTable<>(
-							featureSpecs,
-							List::size,
-							List::get,
-							FeatureSpec::getKey,
-							model::isSelected,
-							model::setSelected,
-							model::isUptodate );
+			final FeatureTable< List< FeatureSpec< ?, ? > >, FeatureSpec< ?, ? > > featureTable = new FeatureTable<>( featureSpecs, List::size, List::get, FeatureSpec::getKey, model::isSelected, model::setSelected, model::isUptodate );
 
 			featureTable.getComponent().setAlignmentX( Component.LEFT_ALIGNMENT );
 			featureTable.getComponent().setBackground( panelFeatures.getBackground() );
@@ -271,9 +258,7 @@ public class FeatureComputationPanel extends JPanel
 		infoPanel.add( multiplicityLbl, c );
 
 		final Set< FeatureProjectionSpec > projections = spec.getProjectionSpecs();
-		final StringBuilder projStr = new StringBuilder( ( projections.size() == 1 )
-				? "<html>Projection: <ul>"
-				: "<html>Projections: <ul>" );
+		final StringBuilder projStr = new StringBuilder( ( projections.size() == 1 ) ? "<html>Projection: <ul>" : "<html>Projections: <ul>" );
 		for ( final FeatureProjectionSpec projSpec : projections )
 		{
 			projStr.append( "<li>" + projSpec.projectionName );

@@ -52,11 +52,7 @@ public class SpotCenterIntensityFeature implements Feature< Spot >
 {
 	public static final String KEY = "Spot center intensity";
 
-	private static final String HELP_STRING =
-			"Computes the intensity at the center of spots by taking the mean of pixel intensity "
-					+ "weigthted by a gaussian. The gaussian weights are centered int the spot, "
-					+ "and have a sigma value equal to the minimal radius of the ellipsoid divided by "
-					+ SpotCenterIntensityFeatureComputer.SIGMA_FACTOR + ".";
+	private static final String HELP_STRING = "Computes the intensity at the center of spots by taking the mean of pixel intensity " + "weigthted by a gaussian. The gaussian weights are centered int the spot, " + "and have a sigma value equal to the minimal radius of the ellipsoid divided by " + SpotCenterIntensityFeatureComputer.SIGMA_FACTOR + ".";
 
 	public static final FeatureProjectionSpec PROJECTION_SPEC = new FeatureProjectionSpec( "Center", Dimension.INTENSITY );
 
@@ -67,13 +63,7 @@ public class SpotCenterIntensityFeature implements Feature< Spot >
 	{
 		public Spec()
 		{
-			super(
-					KEY,
-					HELP_STRING,
-					SpotCenterIntensityFeature.class,
-					Spot.class,
-					Multiplicity.ON_SOURCES,
-					PROJECTION_SPEC );
+			super( KEY, HELP_STRING, SpotCenterIntensityFeature.class, Spot.class, Multiplicity.ON_SOURCES, PROJECTION_SPEC );
 		}
 	}
 

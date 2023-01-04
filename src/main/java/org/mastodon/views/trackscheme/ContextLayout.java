@@ -37,9 +37,9 @@ import org.mastodon.views.context.Context;
  * <ol>
  * <li>Mark vertices in context with {@code mark}.
  * <li>Mark vertices attached to them with {@code ghostmark = mark - 1}.
- * <li>Use {@link LineageTreeLayoutImp#layout(java.util.Collection, int)} to layout
- * vertices that have been marked like this. (After that, all active (laid out)
- * vertices (also ghosts) will have been marked with the
+ * <li>Use {@link LineageTreeLayoutImp#layout(java.util.Collection, int)} to
+ * layout vertices that have been marked like this. (After that, all active
+ * (laid out) vertices (also ghosts) will have been marked with the
  * {@link LineageTreeLayoutImp#getCurrentLayoutTimestamp()}).
  * </ol>
  *
@@ -58,9 +58,7 @@ public class ContextLayout
 
 	private int previousMaxTimepoint;
 
-	public ContextLayout(
-			final TrackSchemeGraph< ?, ? > graph,
-			final LineageTreeLayout layout )
+	public ContextLayout( final TrackSchemeGraph< ?, ? > graph, final LineageTreeLayout layout )
 	{
 		this.graph = graph;
 		this.layout = layout;
@@ -86,10 +84,7 @@ public class ContextLayout
 	 *            method.
 	 * @return {@code true} if the layout was updated.
 	 */
-	public boolean buildContext(
-			final Context< TrackSchemeVertex > context,
-			final ScreenTransform transform,
-			final boolean forceUpdate )
+	public boolean buildContext( final Context< TrackSchemeVertex > context, final ScreenTransform transform, final boolean forceUpdate )
 	{
 		final int minTimepoint = ( int ) transform.getMinY();
 		final int maxTimepoint = ( int ) transform.getMaxY() + 1;
@@ -141,7 +136,7 @@ public class ContextLayout
 	 */
 	private void buildContextTraceParents( final TrackSchemeVertex tv, final int ghostmark, final int minTimepoint, final RefList< TrackSchemeVertex > roots )
 	{
-		if( tv.incomingEdges().isEmpty() )
+		if ( tv.incomingEdges().isEmpty() )
 			roots.add( tv );
 		else
 		{

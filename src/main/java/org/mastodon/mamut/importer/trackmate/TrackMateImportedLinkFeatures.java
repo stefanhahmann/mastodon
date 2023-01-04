@@ -43,8 +43,7 @@ public class TrackMateImportedLinkFeatures extends TrackMateImportedFeatures< Li
 
 	public static final String KEY = "TrackMate Link features";
 
-	private static final String HELP_STRING =
-			"Stores the link feature values imported from a TrackMate or MaMuT file.";
+	private static final String HELP_STRING = "Stores the link feature values imported from a TrackMate or MaMuT file.";
 
 	private final Spec spec = new Spec();
 
@@ -53,12 +52,7 @@ public class TrackMateImportedLinkFeatures extends TrackMateImportedFeatures< Li
 	{
 		public Spec()
 		{
-			super(
-					KEY,
-					HELP_STRING,
-					TrackMateImportedLinkFeatures.class,
-					Link.class,
-					Multiplicity.SINGLE );
+			super( KEY, HELP_STRING, TrackMateImportedLinkFeatures.class, Link.class, Multiplicity.SINGLE );
 		}
 	}
 

@@ -60,9 +60,11 @@ public class ConstrainScreenTransform
 	 * @param maxBoundX
 	 *            the X max bound of the layouted graph (in layout coordinates).
 	 * @param minBoundY
-	 *            the Y min bound of the layouted graph (in layout coordinates), ie, min timepoint.
+	 *            the Y min bound of the layouted graph (in layout coordinates),
+	 *            ie, min timepoint.
 	 * @param maxBoundY
-	 *            the Y max bound of the layouted graph (in layout coordinates), ie, max timepoint.
+	 *            the Y max bound of the layouted graph (in layout coordinates),
+	 *            ie, max timepoint.
 	 * @param borderRatioX
 	 *            contributes to X border as ratio of visible screen.
 	 * @param borderRatioY
@@ -74,20 +76,7 @@ public class ConstrainScreenTransform
 	 *            contributes to Y border (absolute value in screen
 	 *            coordinates).
 	 */
-	public static void constrainTransform(
-			final ScreenTransform transform,
-			final double minSizeX,
-			final double minSizeY,
-			final double maxSizeX,
-			final double maxSizeY,
-			final double minBoundX,
-			final double maxBoundX,
-			final double minBoundY,
-			final double maxBoundY,
-			final double borderRatioX,
-			final double borderRatioY,
-			final double borderAbsX,
-			final double borderAbsY )
+	public static void constrainTransform( final ScreenTransform transform, final double minSizeX, final double minSizeY, final double maxSizeX, final double maxSizeY, final double minBoundX, final double maxBoundX, final double minBoundY, final double maxBoundY, final double borderRatioX, final double borderRatioY, final double borderAbsX, final double borderAbsY )
 	{
 		double minX = transform.getMinX();
 		double maxX = transform.getMaxX();
@@ -157,7 +146,6 @@ public class ConstrainScreenTransform
 		transform.set( minX, maxX, minY, maxY, screenWidth, screenHeight );
 	}
 
-
 	/**
 	 * Zoom out in X to the maximally allowed width.
 	 *
@@ -175,13 +163,7 @@ public class ConstrainScreenTransform
 	 *            absolute value of the border in X to respect when unzooming in
 	 *            pixels.
 	 */
-	public static void zoomOutFullyX(
-			final ScreenTransform transform,
-			final double maxSizeX,
-			final double minBoundX,
-			final double maxBoundX,
-			final double borderRatioX,
-			final double borderAbsX )
+	public static void zoomOutFullyX( final ScreenTransform transform, final double maxSizeX, final double minBoundX, final double maxBoundX, final double borderRatioX, final double borderAbsX )
 	{
 		final int screenWidth = transform.getScreenWidth();
 		final double scaleX = maxSizeX / ( screenWidth - 1 );
@@ -213,13 +195,7 @@ public class ConstrainScreenTransform
 	 *            pixels.
 	 * 
 	 */
-	public static void zoomOutFullyY(
-			final ScreenTransform transform,
-			final double maxSizeY,
-			final double minBoundY,
-			final double maxBoundY,
-			final double borderRatioY,
-			final double borderAbsY )
+	public static void zoomOutFullyY( final ScreenTransform transform, final double maxSizeY, final double minBoundY, final double maxBoundY, final double borderRatioY, final double borderAbsY )
 	{
 		final int screenHeight = transform.getScreenHeight();
 		final double scaleY = maxSizeY / ( screenHeight - 1 );
@@ -244,15 +220,9 @@ public class ConstrainScreenTransform
 	 */
 	public static void removeJitter( final ScreenTransform transform, final ScreenTransform reference )
 	{
-		if ( Math.abs( transform.getMinX() - reference.getMinX() ) < JITTER_EPSILON &&
-				Math.abs( transform.getMaxX() - reference.getMaxX() ) < JITTER_EPSILON &&
-				Math.abs( transform.getMinY() - reference.getMinY() ) < JITTER_EPSILON &&
-				Math.abs( transform.getMaxY() - reference.getMaxY() ) < JITTER_EPSILON &&
-				transform.getScreenWidth() == reference.getScreenWidth() &&
-				transform.getScreenHeight() == reference.getScreenHeight() )
+		if ( Math.abs( transform.getMinX() - reference.getMinX() ) < JITTER_EPSILON && Math.abs( transform.getMaxX() - reference.getMaxX() ) < JITTER_EPSILON && Math.abs( transform.getMinY() - reference.getMinY() ) < JITTER_EPSILON && Math.abs( transform.getMaxY() - reference.getMaxY() ) < JITTER_EPSILON && transform.getScreenWidth() == reference.getScreenWidth() && transform.getScreenHeight() == reference.getScreenHeight() )
 			transform.set( reference );
 	}
-
 
 	/**
 	 * Checks whether the given {@link ScreenTransform} covers an area having
@@ -265,9 +235,7 @@ public class ConstrainScreenTransform
 	 * @return {@code true}, iff {@code transform} covers less than or equal to
 	 *         {@code minSizeX}.
 	 */
-	public static boolean hasMinSizeX(
-			final ScreenTransform transform,
-			final double minSizeX )
+	public static boolean hasMinSizeX( final ScreenTransform transform, final double minSizeX )
 	{
 		return transform.getMaxX() - transform.getMinX() <= minSizeX;
 	}
@@ -283,9 +251,7 @@ public class ConstrainScreenTransform
 	 * @return {@code true}, iff {@code transform} covers less than or equal to
 	 *         {@code minSizeY}.
 	 */
-	public static boolean hasMinSizeY(
-			final ScreenTransform transform,
-			final double minSizeY )
+	public static boolean hasMinSizeY( final ScreenTransform transform, final double minSizeY )
 	{
 		return transform.getMaxY() - transform.getMinY() <= minSizeY;
 	}
@@ -301,9 +267,7 @@ public class ConstrainScreenTransform
 	 * @return true, iff {@code transform} covers greater than or equal to
 	 *         {@code maxSizeX}.
 	 */
-	public static boolean hasMaxSizeX(
-			final ScreenTransform transform,
-			final double maxSizeX )
+	public static boolean hasMaxSizeX( final ScreenTransform transform, final double maxSizeX )
 	{
 		return transform.getMaxX() - transform.getMinX() >= maxSizeX;
 	}
@@ -319,9 +283,7 @@ public class ConstrainScreenTransform
 	 * @return true, iff {@code transform} covers greater than or equal to
 	 *         {@code maxSizeY}.
 	 */
-	public static boolean hasMaxSizeY(
-			final ScreenTransform transform,
-			final double maxSizeY )
+	public static boolean hasMaxSizeY( final ScreenTransform transform, final double maxSizeY )
 	{
 		return transform.getMaxY() - transform.getMinY() >= maxSizeY;
 	}

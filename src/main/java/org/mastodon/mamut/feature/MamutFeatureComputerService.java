@@ -85,10 +85,7 @@ public class MamutFeatureComputerService extends DefaultFeatureComputerService
 	}
 
 	@Override
-	protected void provideParameters(
-			final ModuleItem< ? > item,
-			final CommandModule module, final Class< ? > parameterClass,
-			final Map< FeatureSpec< ?, ? >, Feature< ? > > featureModel )
+	protected void provideParameters( final ModuleItem< ? > item, final CommandModule module, final Class< ? > parameterClass, final Map< FeatureSpec< ?, ? >, Feature< ? > > featureModel )
 	{
 
 		// Pass the model is required.

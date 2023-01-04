@@ -66,19 +66,31 @@ public class SelectionActions< V extends Vertex< E >, E extends Edge< V > >
 {
 
 	public static final String DELETE_SELECTION = "delete selection";
+
 	public static final String SELECT_WHOLE_TRACK = "select whole track";
+
 	public static final String SELECT_TRACK_DOWNWARD = "select track downward";
+
 	public static final String SELECT_TRACK_UPWARD = "select track upward";
+
 	public static final String SELECT_ALL = "select all";
+
 	public static final String SELECT_ALL_EDGES = "select all links";
+
 	public static final String SELECT_ALL_VERTICES = "select all spots";
 
 	public static final String[] DELETE_SELECTION_KEYS = new String[] { "shift DELETE" };
+
 	public static final String[] SELECT_WHOLE_TRACK_KEYS = new String[] { "shift SPACE" };
+
 	public static final String[] SELECT_TRACK_DOWNWARD_KEYS = new String[] { "shift PAGE_DOWN" };
+
 	public static final String[] SELECT_TRACK_UPWARD_KEYS = new String[] { "shift PAGE_UP" };
+
 	public static final String[] SELECT_ALL_KEYS = new String[] { "ctrl A", "meta A" };
+
 	public static final String[] SELECT_ALL_EDGES_KEYS = new String[] { "ctrl shift A", "meta shift A" };
+
 	public static final String[] SELECT_ALL_VERTICES_KEYS = new String[] { "ctrl alt  A", "meta alt A" };
 
 	/*
@@ -126,15 +138,10 @@ public class SelectionActions< V extends Vertex< E >, E extends Edge< V > >
 	 * @param selection
 	 *            the selection model.
 	 * @param undo
-	 *            used to set undo points after a batch of graph changes completes.
+	 *            used to set undo points after a batch of graph changes
+	 *            completes.
 	 */
-	public static < V extends Vertex< E >, E extends Edge< V > > void install(
-			final Actions actions,
-			final Graph< V, E > graph,
-			final ReentrantReadWriteLock lock,
-			final GraphChangeNotifier notify,
-			final SelectionModel< V, E > selection,
-			final UndoPointMarker undo )
+	public static < V extends Vertex< E >, E extends Edge< V > > void install( final Actions actions, final Graph< V, E > graph, final ReentrantReadWriteLock lock, final GraphChangeNotifier notify, final SelectionModel< V, E > selection, final UndoPointMarker undo )
 	{
 		final SelectionActions< V, E > sa = new SelectionActions<>( graph, lock, notify, selection, undo );
 		actions.namedAction( sa.deleteSelectionAction, DELETE_SELECTION_KEYS );
@@ -170,12 +177,7 @@ public class SelectionActions< V extends Vertex< E >, E extends Edge< V > >
 
 	private final SelectAllAction selectAllEdgesAction;
 
-	private SelectionActions(
-			final Graph< V, E > graph,
-			final ReentrantReadWriteLock lock,
-			final GraphChangeNotifier notify,
-			final SelectionModel< V, E > selection,
-			final UndoPointMarker undo )
+	private SelectionActions( final Graph< V, E > graph, final ReentrantReadWriteLock lock, final GraphChangeNotifier notify, final SelectionModel< V, E > selection, final UndoPointMarker undo )
 	{
 		this.graph = graph;
 		this.lock = lock;
@@ -186,12 +188,12 @@ public class SelectionActions< V extends Vertex< E >, E extends Edge< V > >
 		selectWholeTrackAction = new TrackSelectionAction( SELECT_WHOLE_TRACK, SearchDirection.UNDIRECTED );
 		selectTrackDownwardAction = new TrackSelectionAction( SELECT_TRACK_DOWNWARD, SearchDirection.DIRECTED );
 		selectTrackUpwardAction = new TrackSelectionAction( SELECT_TRACK_UPWARD, SearchDirection.REVERSED );
-		selectAllAction = new SelectAllAction( SELECT_ALL, true, true);
-		selectAllVerticesAction = new SelectAllAction( SELECT_ALL_VERTICES, true, false);
-		selectAllEdgesAction = new SelectAllAction( SELECT_ALL_EDGES, false, true);
+		selectAllAction = new SelectAllAction( SELECT_ALL, true, true );
+		selectAllVerticesAction = new SelectAllAction( SELECT_ALL_VERTICES, true, false );
+		selectAllEdgesAction = new SelectAllAction( SELECT_ALL_EDGES, false, true );
 	}
 
-	class DeleteSelectionAction	extends AbstractNamedAction
+	class DeleteSelectionAction extends AbstractNamedAction
 	{
 		private static final long serialVersionUID = 1L;
 
@@ -199,8 +201,7 @@ public class SelectionActions< V extends Vertex< E >, E extends Edge< V > >
 		{
 			super( name );
 			SwingUtilities.invokeLater( () -> setEnabled( !selection.isEmpty() ) );
-			selection.listeners().add( () -> SwingUtilities.invokeLater(
-					() -> setEnabled( !selection.isEmpty() ) ) );
+			selection.listeners().add( () -> SwingUtilities.invokeLater( () -> setEnabled( !selection.isEmpty() ) ) );
 		}
 
 		@Override
@@ -245,8 +246,7 @@ public class SelectionActions< V extends Vertex< E >, E extends Edge< V > >
 			super( name );
 			this.directivity = directivity;
 			SwingUtilities.invokeLater( () -> setEnabled( !selection.isEmpty() ) );
-			selection.listeners().add( () -> SwingUtilities.invokeLater(
-					() -> setEnabled( !selection.isEmpty() ) ) );
+			selection.listeners().add( () -> SwingUtilities.invokeLater( () -> setEnabled( !selection.isEmpty() ) ) );
 		}
 
 		@Override
@@ -335,9 +335,9 @@ public class SelectionActions< V extends Vertex< E >, E extends Edge< V > >
 			{
 				selection.pauseListeners();
 				selection.clearSelection();
-				if (selectVertices)
+				if ( selectVertices )
 					selection.setVerticesSelected( graph.vertices(), true );
-				if (selectEdges)
+				if ( selectEdges )
 					selection.setEdgesSelected( graph.edges(), true );
 
 			}

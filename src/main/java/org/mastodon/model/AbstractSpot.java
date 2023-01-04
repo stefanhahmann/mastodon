@@ -59,14 +59,7 @@ import org.mastodon.util.DelegateRealPositionable;
  * @author Jean-Yves Tinevez
  * @author Tobias Pietzsch
  */
-public class AbstractSpot<
-		V extends AbstractSpot< V, E, VP, T, G >,
-		E extends AbstractListenableEdge< E, V, ?, T >,
-		VP extends AbstractSpotPool< V, ?, T, G >,
-		T extends MappedElement,
-		G extends AbstractModelGraph< ?, ?, ?, V, E, T > >
-	extends AbstractListenableVertex< V, E, VP, T >
-	implements DelegateRealLocalizable, DelegateRealPositionable, HasTimepoint
+public class AbstractSpot< V extends AbstractSpot< V, E, VP, T, G >, E extends AbstractListenableEdge< E, V, ?, T >, VP extends AbstractSpotPool< V, ?, T, G >, T extends MappedElement, G extends AbstractModelGraph< ?, ?, ?, V, E, T > > extends AbstractListenableVertex< V, E, VP, T > implements DelegateRealLocalizable, DelegateRealPositionable, HasTimepoint
 {
 	protected final int n;
 
@@ -79,14 +72,16 @@ public class AbstractSpot<
 		super( pool );
 		n = pool.numDimensions();
 
-		@SuppressWarnings( "unchecked" ) final V self = ( V ) this;
+		@SuppressWarnings( "unchecked" )
+		final V self = ( V ) this;
 		position = pool.position.createAttributeValue( self );
 		timepoint = pool.timepoint.createQuietAttributeValue( self );
 	}
 
 	protected void partialInit( final int timepointId, final double[] pos )
 	{
-		@SuppressWarnings( "unchecked" ) final V self = ( V ) this;
+		@SuppressWarnings( "unchecked" )
+		final V self = ( V ) this;
 		pool.position.setPositionQuiet( self, pos );
 		pool.timepoint.setQuiet( self, timepointId );
 	}

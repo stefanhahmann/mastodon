@@ -153,16 +153,12 @@ public class MastodonLauncher extends JFrame
 					int tp = frame - frameOffset;
 					if ( tp < 0 )
 					{
-						gui.importSimiBioCellPanel.labelInfo.setText(
-								"<html>WARNING: simi frame " + frame + " translates to out-of-bounds "
-										+ "timepoint index " + tp + ". Clipping to 0.</html>" );
+						gui.importSimiBioCellPanel.labelInfo.setText( "<html>WARNING: simi frame " + frame + " translates to out-of-bounds " + "timepoint index " + tp + ". Clipping to 0.</html>" );
 						tp = 0;
 					}
 					else if ( tp > maxtp )
 					{
-						gui.importSimiBioCellPanel.labelInfo.setText(
-								"<html>WARNING: simi frame " + frame + " translates to out-of-bounds "
-										+ "timepoint index " + tp + ". Clipping to " + maxtp + ".</html>" );
+						gui.importSimiBioCellPanel.labelInfo.setText( "<html>WARNING: simi frame " + frame + " translates to out-of-bounds " + "timepoint index " + tp + ". Clipping to " + maxtp + ".</html>" );
 						tp = maxtp;
 					}
 					return tp;
@@ -193,20 +189,15 @@ public class MastodonLauncher extends JFrame
 			}
 			catch ( final IOException e )
 			{
-				gui.importSimiBioCellPanel.labelInfo.setText(
-						"<html>Problem reading the SimiBioCell file.<p>" +
-								LauncherUtil.toMessage( e ) + "</html>" );
+				gui.importSimiBioCellPanel.labelInfo.setText( "<html>Problem reading the SimiBioCell file.<p>" + LauncherUtil.toMessage( e ) + "</html>" );
 			}
 			catch ( final ParseException e )
 			{
-				gui.importSimiBioCellPanel.labelInfo.setText(
-						"<html>Problem parsing the SimiBioCell file.<p>" +
-								LauncherUtil.toMessage( e ) + "</html>" );
+				gui.importSimiBioCellPanel.labelInfo.setText( "<html>Problem parsing the SimiBioCell file.<p>" + LauncherUtil.toMessage( e ) + "</html>" );
 			}
 			catch ( final SpimDataException e )
 			{
-				gui.importSimiBioCellPanel.labelInfo.setText( "<html>Invalid BDV xml/h5 file.<p>" +
-						LauncherUtil.toMessage( e ) + "</html>" );
+				gui.importSimiBioCellPanel.labelInfo.setText( "<html>Invalid BDV xml/h5 file.<p>" + LauncherUtil.toMessage( e ) + "</html>" );
 			}
 			finally
 			{
@@ -266,18 +257,15 @@ public class MastodonLauncher extends JFrame
 			}
 			catch ( final ParseException e )
 			{
-				gui.importTGMMPanel.labelInfo.setText( "<html>Could not parse timepoint pattern.<p>" +
-						LauncherUtil.toMessage( e ) + "</html>" );
+				gui.importTGMMPanel.labelInfo.setText( "<html>Could not parse timepoint pattern.<p>" + LauncherUtil.toMessage( e ) + "</html>" );
 			}
 			catch ( JDOMException | IOException e )
 			{
-				gui.importTGMMPanel.labelInfo.setText( "<html>Malformed TGMM dataset.<p>" +
-						LauncherUtil.toMessage( e ) + "</html>" );
+				gui.importTGMMPanel.labelInfo.setText( "<html>Malformed TGMM dataset.<p>" + LauncherUtil.toMessage( e ) + "</html>" );
 			}
 			catch ( final SpimDataException e )
 			{
-				gui.importTGMMPanel.labelInfo.setText( "<html>Invalid BDV xml/h5 file.<p>" +
-						LauncherUtil.toMessage( e ) + "</html>" );
+				gui.importTGMMPanel.labelInfo.setText( "<html>Invalid BDV xml/h5 file.<p>" + LauncherUtil.toMessage( e ) + "</html>" );
 			}
 			disabler.reenable();
 		} ).start();
@@ -341,8 +329,7 @@ public class MastodonLauncher extends JFrame
 				}
 				catch ( IOException | SpimDataException e )
 				{
-					gui.newMastodonProjectPanel.labelInfo.setText( "<html>Invalid BDV xml/h5 file.<p>" +
-							LauncherUtil.toMessage( e ) + "</html>" );
+					gui.newMastodonProjectPanel.labelInfo.setText( "<html>Invalid BDV xml/h5 file.<p>" + LauncherUtil.toMessage( e ) + "</html>" );
 				}
 				finally
 				{
@@ -370,7 +357,7 @@ public class MastodonLauncher extends JFrame
 				{
 					final WindowManager windowManager = createWindowManager();
 					final MainWindow mainWindow = new MainWindow( windowManager );
-					
+
 					/*
 					 * Action when user closes source image plus.
 					 */
@@ -385,19 +372,7 @@ public class MastodonLauncher extends JFrame
 							@Override
 							public void windowClosing( final WindowEvent e )
 							{
-								final int val = JOptionPane.showConfirmDialog(
-										window,
-										"Warning.\n"
-												+ "\n"
-												+ "If you close this image, the Mastodon \n"
-												+ "instance that runs on it will be closed \n"
-												+ "as well.\n"
-												+ "\n"
-												+ "Are you sure you want to close this image?",
-										"Confirm closing image",
-										JOptionPane.YES_NO_OPTION,
-										JOptionPane.QUESTION_MESSAGE,
-										MastodonIcons.MASTODON_ICON_MEDIUM );
+								final int val = JOptionPane.showConfirmDialog( window, "Warning.\n" + "\n" + "If you close this image, the Mastodon \n" + "instance that runs on it will be closed \n" + "as well.\n" + "\n" + "Are you sure you want to close this image?", "Confirm closing image", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, MastodonIcons.MASTODON_ICON_MEDIUM );
 								if ( val == JOptionPane.YES_OPTION )
 								{
 									final ActionMap actionMap = windowManager.getAppModel().getAppActions().getActionMap();
@@ -408,26 +383,11 @@ public class MastodonLauncher extends JFrame
 							}
 						} );
 					}
-					
+
 					// Check whether the imp can be found on disk.
-					if ( imp.getOriginalFileInfo() == null ||
-							imp.getOriginalFileInfo().directory == null ||
-							imp.getOriginalFileInfo().fileName == null ||
-							!new File( imp.getOriginalFileInfo().directory, imp.getOriginalFileInfo().fileName ).exists() )
+					if ( imp.getOriginalFileInfo() == null || imp.getOriginalFileInfo().directory == null || imp.getOriginalFileInfo().fileName == null || !new File( imp.getOriginalFileInfo().directory, imp.getOriginalFileInfo().fileName ).exists() )
 					{
-						JOptionPane.showMessageDialog( gui,
-								"Warning.\n"
-										+ "\n"
-										+ "The image being used for this new \n"
-										+ "Mastodon project cannot be found \n"
-										+ "on disk.  \n"
-										+ "\n"
-										+ "Mastodon will not be able to reopen it \n"
-										+ "unless you resave the image as a BDV \n"
-										+ "file when saving the Mastodon project. ",
-								"Source image not saved",
-								JOptionPane.WARNING_MESSAGE,
-								MastodonIcons.MASTODON_ICON_MEDIUM );
+						JOptionPane.showMessageDialog( gui, "Warning.\n" + "\n" + "The image being used for this new \n" + "Mastodon project cannot be found \n" + "on disk.  \n" + "\n" + "Mastodon will not be able to reopen it \n" + "unless you resave the image as a BDV \n" + "file when saving the Mastodon project. ", "Source image not saved", JOptionPane.WARNING_MESSAGE, MastodonIcons.MASTODON_ICON_MEDIUM );
 					}
 
 					windowManager.getProjectManager().open( new MamutImagePlusProject( imp ) );
@@ -436,8 +396,7 @@ public class MastodonLauncher extends JFrame
 				}
 				catch ( IOException | SpimDataException e )
 				{
-					gui.newMastodonProjectPanel.labelInfo.setText( "<html>Invalid image.<p>" +
-							LauncherUtil.toMessage( e ) + "</html>" );
+					gui.newMastodonProjectPanel.labelInfo.setText( "<html>Invalid image.<p>" + LauncherUtil.toMessage( e ) + "</html>" );
 				}
 				finally
 				{
@@ -522,8 +481,7 @@ public class MastodonLauncher extends JFrame
 				catch ( final SpimDataException e )
 				{
 					gui.openRemoteURLPanel.log.setForeground( Color.RED );
-					gui.openRemoteURLPanel.log.setText( "<html>Problem save to BDV file.<p>" +
-							LauncherUtil.toMessage( e ) + "</html>" );
+					gui.openRemoteURLPanel.log.setText( "<html>Problem save to BDV file.<p>" + LauncherUtil.toMessage( e ) + "</html>" );
 				}
 
 				/*
@@ -543,8 +501,7 @@ public class MastodonLauncher extends JFrame
 			catch ( IOException | SpimDataException e )
 			{
 				gui.openRemoteURLPanel.log.setForeground( Color.RED );
-				gui.openRemoteURLPanel.log.setText( "<html>Problem creating project.<p>" +
-						LauncherUtil.toMessage( e ) + "</html>" );
+				gui.openRemoteURLPanel.log.setText( "<html>Problem creating project.<p>" + LauncherUtil.toMessage( e ) + "</html>" );
 			}
 			finally
 			{
@@ -557,12 +514,7 @@ public class MastodonLauncher extends JFrame
 	{
 		final EverythingDisablerAndReenabler disabler = new EverythingDisablerAndReenabler( gui, new Class[] { JLabel.class } );
 		disabler.disable();
-		final File file = FileChooser.chooseFile(
-				this,
-				null,
-				new XmlFileFilter(),
-				"Import MaMuT Project",
-				FileChooser.DialogType.LOAD );
+		final File file = FileChooser.chooseFile( this, null, new XmlFileFilter(), "Import MaMuT Project", FileChooser.DialogType.LOAD );
 		if ( file == null )
 		{
 			disabler.reenable();
@@ -608,14 +560,7 @@ public class MastodonLauncher extends JFrame
 					if ( projectPath == null )
 					{
 						// We have to use the JFileChooser to open folders.
-						file = FileChooser.chooseFile(
-								true,
-								this,
-								null,
-								new ExtensionFileFilter( "mastodon" ),
-								"Open Mastodon Project",
-								FileChooser.DialogType.LOAD,
-								SelectionMode.FILES_AND_DIRECTORIES );
+						file = FileChooser.chooseFile( true, this, null, new ExtensionFileFilter( "mastodon" ), "Open Mastodon Project", FileChooser.DialogType.LOAD, SelectionMode.FILES_AND_DIRECTORIES );
 						if ( file == null )
 							return;
 					}

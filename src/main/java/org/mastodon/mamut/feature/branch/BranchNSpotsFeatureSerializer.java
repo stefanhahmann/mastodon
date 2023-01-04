@@ -45,7 +45,7 @@ import org.mastodon.properties.IntPropertyMap;
 import org.scijava.plugin.Plugin;
 
 @Plugin( type = FeatureSerializer.class )
-public class BranchNSpotsFeatureSerializer implements BranchFeatureSerializer< BranchNSpotsFeature, BranchSpot, Spot>
+public class BranchNSpotsFeatureSerializer implements BranchFeatureSerializer< BranchNSpotsFeature, BranchSpot, Spot >
 {
 
 	@Override
@@ -55,11 +55,7 @@ public class BranchNSpotsFeatureSerializer implements BranchFeatureSerializer< B
 	}
 
 	@Override
-	public BranchNSpotsFeature deserialize(
-			final FileIdToObjectMap< Spot > idmap,
-			final ObjectInputStream ois,
-			final ModelBranchGraph branchGraph,
-			final ModelGraph graph ) throws ClassNotFoundException, IOException
+	public BranchNSpotsFeature deserialize( final FileIdToObjectMap< Spot > idmap, final ObjectInputStream ois, final ModelBranchGraph branchGraph, final ModelGraph graph ) throws ClassNotFoundException, IOException
 	{
 		// Read the map link -> val.
 		final IntPropertyMap< Spot > lmap = new IntPropertyMap<>( graph.vertices(), -1 );
@@ -71,12 +67,7 @@ public class BranchNSpotsFeatureSerializer implements BranchFeatureSerializer< B
 	}
 
 	@Override
-	public void serialize(
-			final BranchNSpotsFeature feature,
-			final ObjectToFileIdMap< Spot > idmap,
-			final ObjectOutputStream oos,
-			final ModelBranchGraph branchGraph,
-			final ModelGraph graph ) throws IOException
+	public void serialize( final BranchNSpotsFeature feature, final ObjectToFileIdMap< Spot > idmap, final ObjectOutputStream oos, final ModelBranchGraph branchGraph, final ModelGraph graph ) throws IOException
 	{
 		final IntPropertyMap< Spot > lmap = BranchFeatureSerializer.branchSpotMapToMap( feature.map, branchGraph, graph );
 		final IntPropertyMapSerializer< Spot > propertyMapSerializer = new IntPropertyMapSerializer<>( lmap );

@@ -45,7 +45,9 @@ import org.mastodon.views.trackscheme.display.style.TrackSchemeStyle;
 public class PaintHierarchicalGraph extends PaintBranchGraph
 {
 	private final int SIMPLIFIED_VERTEX_THRESHOLD_RADIUS = 3;
+
 	private final int SIMPLIFIED_VERTEX_SELECTION_RADIUS = 4;
+
 	private static final int ARC_RADIUS = 15;
 
 	private final ScreenTransform transform = new ScreenTransform();
@@ -56,7 +58,8 @@ public class PaintHierarchicalGraph extends PaintBranchGraph
 
 	private Color labelColor;
 
-	public PaintHierarchicalGraph() {
+	public PaintHierarchicalGraph()
+	{
 		super();
 	}
 
@@ -72,7 +75,7 @@ public class PaintHierarchicalGraph extends PaintBranchGraph
 	{
 		g2.setStroke( style.getHierarchyVertexStroke() );
 		calculateAverageLetterWidth();
-		spotRadius = Math.min(transform.getScaleX() * 0.25, transform.getScaleY() * 0.4);
+		spotRadius = Math.min( transform.getScaleX() * 0.25, transform.getScaleY() * 0.4 );
 		labelColor = textColorForBackground( style.getBackgroundColor() );
 	}
 
@@ -87,7 +90,7 @@ public class PaintHierarchicalGraph extends PaintBranchGraph
 	@Override
 	protected void drawVertex( ScreenVertex vertex )
 	{
-		if(spotRadius > SIMPLIFIED_VERTEX_THRESHOLD_RADIUS )
+		if ( spotRadius > SIMPLIFIED_VERTEX_THRESHOLD_RADIUS )
 			drawVertexFull( vertex );
 		else
 			drawVertexSimplified( vertex );
@@ -106,12 +109,8 @@ public class PaintHierarchicalGraph extends PaintBranchGraph
 		final boolean ghost = vertex.isGhost();
 		final int specifiedColor = vertex.getColor();
 
-		final Color fillColor = getColor( selected, ghost, transition, ratio, specifiedColor,
-				style.getVertexFillColor(), style.getSelectedVertexFillColor(),
-				style.getGhostVertexFillColor(), style.getGhostSelectedVertexFillColor() );
-		final Color drawColor = getColor( selected, ghost, transition, ratio, 0,
-				style.getVertexDrawColor(), style.getSelectedVertexDrawColor(),
-				style.getGhostVertexDrawColor(), style.getGhostSelectedVertexDrawColor() );
+		final Color fillColor = getColor( selected, ghost, transition, ratio, specifiedColor, style.getVertexFillColor(), style.getSelectedVertexFillColor(), style.getGhostVertexFillColor(), style.getGhostSelectedVertexFillColor() );
+		final Color drawColor = getColor( selected, ghost, transition, ratio, 0, style.getVertexDrawColor(), style.getSelectedVertexDrawColor(), style.getGhostVertexDrawColor(), style.getGhostSelectedVertexDrawColor() );
 
 		final double x = vertex.getX();
 		final double y = vertex.getY();
@@ -125,7 +124,8 @@ public class PaintHierarchicalGraph extends PaintBranchGraph
 		if ( highlighted )
 			g2.setStroke( style.getHierarchyVertexHighlightStroke() );
 		else if ( focused )
-			// An animation might be better for the focus, but for now this is it.
+			// An animation might be better for the focus, but for now this is
+			// it.
 			g2.setStroke( style.getFocusStroke() );
 		else if ( ghost )
 			g2.setStroke( style.getVertexGhostStroke() );
@@ -133,7 +133,7 @@ public class PaintHierarchicalGraph extends PaintBranchGraph
 		if ( highlighted || focused || ghost )
 			g2.setStroke( style.getHierarchyVertexStroke() );
 
-		final int maxLabelLength = (int) (transform.getScaleX() * 0.8 / averageLetterWidth );
+		final int maxLabelLength = ( int ) ( transform.getScaleX() * 0.8 / averageLetterWidth );
 		if ( maxLabelLength > 2 && !disappear )
 		{
 			String label = vertex.getLabel();
@@ -165,7 +165,7 @@ public class PaintHierarchicalGraph extends PaintBranchGraph
 	@Override
 	protected void drawEdgeLine( ScreenVertex vs, ScreenVertex vt )
 	{
-		if(style.isHierarchyGraphCurvedLines())
+		if ( style.isHierarchyGraphCurvedLines() )
 			drawCurvedLine( vs, vt );
 		else
 			drawHorizontalVerticalLine( vs, vt );
@@ -197,12 +197,7 @@ public class PaintHierarchicalGraph extends PaintBranchGraph
 			if ( dy > ARC_RADIUS )
 				g2.drawLine( tx, sy + ARC_RADIUS, tx, ty );
 
-			g2.drawArc(
-					tx - 2 * Math.min( dx, ARC_RADIUS ),
-					sy,
-					2 * Math.min( ARC_RADIUS, dx ),
-					2 * Math.min( ARC_RADIUS, dy ),
-					90, -90 );
+			g2.drawArc( tx - 2 * Math.min( dx, ARC_RADIUS ), sy, 2 * Math.min( ARC_RADIUS, dx ), 2 * Math.min( ARC_RADIUS, dy ), 90, -90 );
 		}
 		else
 		{
@@ -211,19 +206,14 @@ public class PaintHierarchicalGraph extends PaintBranchGraph
 			if ( dy > ARC_RADIUS )
 				g2.drawLine( tx, sy + ARC_RADIUS, tx, ty );
 
-			g2.drawArc(
-					tx,
-					sy,
-					2 * Math.min( ARC_RADIUS, -dx ),
-					2 * Math.min( ARC_RADIUS, dy ),
-					90, 90 );
+			g2.drawArc( tx, sy, 2 * Math.min( ARC_RADIUS, -dx ), 2 * Math.min( ARC_RADIUS, dy ), 90, 90 );
 		}
 	}
 
 	@Override
 	public boolean isInsidePaintedVertex( double x, double y, ScreenVertex vertex )
 	{
-		double radius = Math.max(spotRadius, SIMPLIFIED_VERTEX_SELECTION_RADIUS );
+		double radius = Math.max( spotRadius, SIMPLIFIED_VERTEX_SELECTION_RADIUS );
 		final double dx = x - vertex.getX();
 		final double dy = y - vertex.getY();
 		return ( dx * dx + dy * dy <= radius * radius );

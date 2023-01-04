@@ -38,15 +38,15 @@ import org.mastodon.views.context.ContextListener;
 
 /**
  * A {@link ContextListener} on vertice type {@code V} that wraps {@link Context
- * Context&lt;V&gt;} and forwards them to a {@link ContextListener ContextListener
- * &lt;TrackSchemeVertex&gt;}.
+ * Context&lt;V&gt;} and forwards them to a {@link ContextListener
+ * ContextListener &lt;TrackSchemeVertex&gt;}.
  *
  * @param <V>
  *            model vertex type.
  *
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  */
-public class TrackSchemeContextListener< V extends Vertex< ? > >  implements ContextListener< V >
+public class TrackSchemeContextListener< V extends Vertex< ? > > implements ContextListener< V >
 {
 	private final GraphIdBimap< V, ? > idmap;
 
@@ -73,9 +73,7 @@ public class TrackSchemeContextListener< V extends Vertex< ? > >  implements Con
 		if ( previousContext != context )
 		{
 			previousContext = context;
-			trackSchemeContext = ( context == null )
-					? null
-					: new TrackSchemeContext< >( idmap, graph, context );
+			trackSchemeContext = ( context == null ) ? null : new TrackSchemeContext<>( idmap, graph, context );
 		}
 		if ( listener != null )
 			listener.contextChanged( trackSchemeContext );
@@ -96,8 +94,7 @@ public class TrackSchemeContextListener< V extends Vertex< ? > >  implements Con
 	 *
 	 * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
 	 */
-	static class TrackSchemeContext< V > implements
-			Context< TrackSchemeVertex >
+	static class TrackSchemeContext< V > implements Context< TrackSchemeVertex >
 	{
 		private final GraphIdBimap< V, ? > idmap;
 
@@ -105,10 +102,7 @@ public class TrackSchemeContextListener< V extends Vertex< ? > >  implements Con
 
 		private final Context< V > context;
 
-		public TrackSchemeContext(
-				final GraphIdBimap< V, ? > idmap,
-				final TrackSchemeGraph< ?, ? > graph,
-				final Context< V > context )
+		public TrackSchemeContext( final GraphIdBimap< V, ? > idmap, final TrackSchemeGraph< ?, ? > graph, final Context< V > context )
 		{
 			this.idmap = idmap;
 			this.graph = graph;

@@ -89,7 +89,8 @@ public class FeatureColorModeManager extends AbstractStyleManager< FeatureColorM
 	{
 		try (final FileWriter output = new FileWriter( filename ))
 		{
-			new File( filename ).mkdirs(); // TODO pointless. FileWriter already opened or failed.
+			new File( filename ).mkdirs(); // TODO pointless. FileWriter already
+											// opened or failed.
 			final Yaml yaml = FeatureColorModeIO.createYaml();
 			final ArrayList< Object > objects = new ArrayList<>();
 			objects.add( selectedStyle.getName() );

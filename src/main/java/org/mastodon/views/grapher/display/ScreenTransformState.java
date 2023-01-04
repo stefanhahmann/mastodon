@@ -54,7 +54,7 @@ public class ScreenTransformState
 	 * Get the current transform.
 	 *
 	 * @param transform
-	 *     is set to the current transform
+	 *            is set to the current transform
 	 */
 	public synchronized void get( final ScreenTransform transform )
 	{

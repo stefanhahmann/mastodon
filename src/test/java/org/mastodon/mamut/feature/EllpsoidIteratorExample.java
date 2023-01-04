@@ -72,13 +72,7 @@ public class EllpsoidIteratorExample
 		final BdvStackSource< UnsignedByteType > bdv = BdvFunctions.show( img, "img", Bdv.options().sourceTransform( sourceTransform ) );
 
 		final ModelGraph graph = new ModelGraph();
-		final Spot spot = graph.addVertex().init( 0,
-				new double[] { 50, 50, 50 },
-				new double[][] {
-						{ 210, 100, 0 },
-						{ 100, 110, 10 },
-						{ 0, 10, 100 }
-				} );
+		final Spot spot = graph.addVertex().init( 0, new double[] { 50, 50, 50 }, new double[][] { { 210, 100, 0 }, { 100, 110, 10 }, { 0, 10, 100 } } );
 
 		final Source< UnsignedByteType > source = bdv.getSources().get( 0 ).getSpimSource();
 		final EllipsoidIterable< UnsignedByteType > ellipsoidIter = new EllipsoidIterable<>( source );
@@ -126,7 +120,6 @@ public class EllpsoidIteratorExample
 
 		BdvFunctions.showOverlay( overlay, "spot", Bdv.options().addTo( bdv ) );
 	}
-
 
 	// copy of ScreenVertexMath from BDV view using Spot instead of ScreenVertex
 	static class ScreenVertexMath
@@ -235,7 +228,8 @@ public class EllpsoidIteratorExample
 		private final double[][] vS = new double[ 3 ][ 3 ];
 
 		/**
-		 * precision of 2D ellipse obtained by projecting ellipsoid to z=0 plane.
+		 * precision of 2D ellipse obtained by projecting ellipsoid to z=0
+		 * plane.
 		 */
 		private final double[][] vP = new double[ 2 ][ 2 ];
 
@@ -293,19 +287,21 @@ public class EllpsoidIteratorExample
 		private final double[] diff2 = new double[ 2 ];
 
 		/**
-		 * covariance of 2D ellipse obtained by intersecting ellipsoid with z=0 plane.
+		 * covariance of 2D ellipse obtained by intersecting ellipsoid with z=0
+		 * plane.
 		 */
 		private final double[][] iS = new double[ 2 ][ 2 ];
 
 		/**
-		 * precision of 2D ellipse obtained by intersecting ellipsoid with z=0 plane.
+		 * precision of 2D ellipse obtained by intersecting ellipsoid with z=0
+		 * plane.
 		 */
 		private final double[][] iP = new double[ 2 ][ 2 ];
 
 		/**
-		 * (Re-)initialize for a new {@code vertex} and the given viewer transform.
-		 * Resets the state of this {@link ScreenVertexMath}, discarding all cached
-		 * computed values.
+		 * (Re-)initialize for a new {@code vertex} and the given viewer
+		 * transform. Resets the state of this {@link ScreenVertexMath},
+		 * discarding all cached computed values.
 		 *
 		 * @param vertex
 		 *            the vertex.
@@ -409,8 +405,8 @@ public class EllpsoidIteratorExample
 		}
 
 		/**
-		 * Test whether the given 2D point {@code p} in view coordinates lies within
-		 * the ellipse obtained by projecting ellipsoid to z=0 plane.
+		 * Test whether the given 2D point {@code p} in view coordinates lies
+		 * within the ellipse obtained by projecting ellipsoid to z=0 plane.
 		 *
 		 * @param p
 		 *            the point to test.
@@ -424,8 +420,8 @@ public class EllpsoidIteratorExample
 		}
 
 		/**
-		 * Test whether the given 2D point {@code p} in view coordinates lies within
-		 * the ellipse obtained by projecting ellipsoid to z=0 plane.
+		 * Test whether the given 2D point {@code p} in view coordinates lies
+		 * within the ellipse obtained by projecting ellipsoid to z=0 plane.
 		 *
 		 * @param p
 		 *            the point to test.
@@ -504,8 +500,8 @@ public class EllpsoidIteratorExample
 		 *            the y min bound of the rectangle.
 		 * @param maxY
 		 *            the y max bound of the rectangle.
-		 * @return {@code true} if the ellipsoid plane-intersection intersects with
-		 *         the rectangle.
+		 * @return {@code true} if the ellipsoid plane-intersection intersects
+		 *         with the rectangle.
 		 */
 		public boolean intersectionIntersectsViewInterval( final double minX, final double maxX, final double minY, final double maxY )
 		{
@@ -600,8 +596,8 @@ public class EllpsoidIteratorExample
 				}
 			}
 			/*
-			 * now T and TS^T transform from unit sphere to covariance ellipsoid and
-			 * vice versa
+			 * now T and TS^T transform from unit sphere to covariance ellipsoid
+			 * and vice versa
 			 */
 
 			final double[] vx = TS[ 0 ];
@@ -638,7 +634,8 @@ public class EllpsoidIteratorExample
 				iS[ 1 ][ 0 ] = iS[ 0 ][ 1 ];
 				iS[ 1 ][ 1 ] = radius2 / b2;
 				/*
-				 * now iS is the 2D covariance ellipsoid of transformed circle with radius
+				 * now iS is the 2D covariance ellipsoid of transformed circle
+				 * with radius
 				 */
 
 				eig2.decomposeSymmetric( iS );

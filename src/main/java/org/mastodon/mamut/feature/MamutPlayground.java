@@ -64,8 +64,7 @@ public class MamutPlayground
 		final MamutFeatureComputerService featureComputerService = context.getService( MamutFeatureComputerService.class );
 		featureComputerService.setModel( model );
 		featureComputerService.setSharedBdvData( windowManager.getAppModel().getSharedBdvData() );
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > features =
-				featureComputerService.compute( SpotCenterIntensityFeature.SPEC );
+		final Map< FeatureSpec< ?, ? >, Feature< ? > > features = featureComputerService.compute( SpotCenterIntensityFeature.SPEC );
 
 		final FeatureSpecsService specsService = context.getService( FeatureSpecsService.class );
 		printForTarget( Spot.class, model.getGraph().vertices(), specsService, features );
@@ -80,7 +79,7 @@ public class MamutPlayground
 		{
 			@SuppressWarnings( "unchecked" )
 			final Feature< T > feature = ( Feature< T > ) featureModel.get( spec );
-			if (null == feature)
+			if ( null == feature )
 			{
 				System.out.println( "\n - Feature " + spec.getKey() + " is not computed." );
 				continue;
@@ -88,7 +87,7 @@ public class MamutPlayground
 			final Set< FeatureProjection< T > > projections = feature.projections();
 			if ( null == projections )
 				continue;
-			System.out.println( "\n - Feature " + spec.getKey() +". Has " + projections.size() + " projections:" );
+			System.out.println( "\n - Feature " + spec.getKey() + ". Has " + projections.size() + " projections:" );
 			for ( final FeatureProjection< T > projection : projections )
 			{
 				System.out.println( "   - Projection " + projection.getKey() );

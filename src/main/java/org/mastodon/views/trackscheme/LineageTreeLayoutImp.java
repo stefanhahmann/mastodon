@@ -93,10 +93,11 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 	 * The roots to use when drawing the TrackScheme. If this list is empty
 	 * {@link TrackSchemeGraph#getRoots()}, will be used instead.
 	 */
-	private final RootsModel<TrackSchemeVertex> roots;
+	private final RootsModel< TrackSchemeVertex > roots;
 
 	/**
-	 * X coordinate that will be assigned to the next leaf in the current layout.
+	 * X coordinate that will be assigned to the next leaf in the current
+	 * layout.
 	 */
 	protected double rightmost;
 
@@ -119,6 +120,7 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 	protected int mark;
 
 	protected final TrackSchemeVertexTable vertexTable;
+
 	/**
 	 * the minimum layoutX coordinate assigned to any vertex in the current
 	 * layout.
@@ -146,10 +148,7 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 	 */
 	protected final RefList< TrackSchemeVertex > currentLayoutColumnRoot;
 
-	public LineageTreeLayoutImp(
-			final RootsModel<TrackSchemeVertex> rootsModel,
-			final TrackSchemeGraph< ?, ? > graph,
-			final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection )
+	public LineageTreeLayoutImp( final RootsModel< TrackSchemeVertex > rootsModel, final TrackSchemeGraph< ?, ? > graph, final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection )
 	{
 		this.graph = graph;
 		this.selection = selection;
@@ -165,14 +164,14 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 	/**
 	 * Layout graph in trackscheme coordinates starting from the graphs roots.
 	 * <p>
-	 * This calls {@link #layout(Collection, int)} with parameter {@code mark = -1},
-	 * that is, no vertices will me marked as ghosts.
+	 * This calls {@link #layout(Collection, int)} with parameter
+	 * {@code mark = -1}, that is, no vertices will me marked as ghosts.
 	 */
 	@Override
 	public void layout()
 	{
-		RefCollection<TrackSchemeVertex> roots = this.roots.getRoots();
-		if(roots.isEmpty())
+		RefCollection< TrackSchemeVertex > roots = this.roots.getRoots();
+		if ( roots.isEmpty() )
 			roots = LexicographicalVertexOrder.sort( graph, graph.getRoots() );
 		layout( roots, -1 );
 	}
@@ -180,14 +179,14 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 	/**
 	 * Layout graph in trackscheme coordinates starting from specified roots.
 	 * <p>
-	 * This calls {@link #layout(Collection, int)} with parameter {@code mark = -1},
-	 * that is, no vertices will me marked as ghosts.
+	 * This calls {@link #layout(Collection, int)} with parameter
+	 * {@code mark = -1}, that is, no vertices will me marked as ghosts.
 	 *
 	 * @param layoutRoots
 	 *            root vertices from which to start layout.
 	 */
 	@Override
-	public void layout( final Collection<TrackSchemeVertex> layoutRoots )
+	public void layout( final Collection< TrackSchemeVertex > layoutRoots )
 	{
 		layout( layoutRoots, -1 );
 	}
@@ -214,7 +213,7 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 	 *            (Ghost vertices were marked with {@code mark-1}.)
 	 */
 	@Override
-	public void layout( final Collection<TrackSchemeVertex> layoutRoots, final int mark )
+	public void layout( final Collection< TrackSchemeVertex > layoutRoots, final int mark )
 	{
 		++timestamp;
 		rightmost = 0;
@@ -273,8 +272,8 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 
 	/**
 	 * Get the timestamp that was used in the last layout (the timestamp which
-	 * was set in all vertices laid out during last {@link #layout(Collection)} resp.
-	 * {@link #layout(Collection, int)}.)
+	 * was set in all vertices laid out during last {@link #layout(Collection)}
+	 * resp. {@link #layout(Collection, int)}.)
 	 *
 	 * @return timestamp used in last layout.
 	 */
@@ -317,7 +316,7 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 	 *            the color generator used to generate vertex and edge colors.
 	 */
 	@Override
-	public void cropAndScale( final ScreenTransform transform, final ScreenEntities screenEntities, final int decorationsOffsetX, final int decorationsOffsetY, final GraphColorGenerator<TrackSchemeVertex, TrackSchemeEdge> colorGenerator )
+	public void cropAndScale( final ScreenTransform transform, final ScreenEntities screenEntities, final int decorationsOffsetX, final int decorationsOffsetY, final GraphColorGenerator< TrackSchemeVertex, TrackSchemeEdge > colorGenerator )
 	{
 		final double minX = transform.getMinX();
 		final double maxX = transform.getMaxX();
@@ -396,7 +395,7 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 						{
 							edge.getSource( v2 );
 
-							if(v2.getLayoutTimestamp() != timestamp)
+							if ( v2.getLayoutTimestamp() != timestamp )
 								continue;
 
 							int v2si = v2.getScreenVertexIndex();
@@ -425,7 +424,14 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 						nextRangeStart = riter.next();
 						i = rangeMaxIndex;
 						final double svMinX = ( vertexList.get( rangeMinIndex, v1 ).getLayoutX() - minX ) * xScale + decorationsOffsetX;
-						final double svMaxX = ( vertexList.get( rangeMaxIndex, v1 ).getLayoutX() - minX ) * xScale + decorationsOffsetX; // TODO: make minimum width (maybe only when painting...)
+						final double svMaxX = ( vertexList.get( rangeMaxIndex, v1 ).getLayoutX() - minX ) * xScale + decorationsOffsetX; // TODO:
+																																			// make
+																																			// minimum
+																																			// width
+																																			// (maybe
+																																			// only
+																																			// when
+																																			// painting...)
 						vertexRanges.add( screenRangePool.create( sr ).init( svMinX, svMaxX, prevY, y ) );
 						minVertexScreenDist = 0; // TODO: WHY = 0?
 					}
@@ -445,7 +451,7 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 		buildScreenColumns( screenEntities, decorationsOffsetX, minX, maxX, xScale );
 	}
 
-	protected void addScreenVertex( GraphColorGenerator<TrackSchemeVertex, TrackSchemeEdge> colorGenerator, RefList<ScreenVertex> screenVertices, ScreenVertexPool screenVertexPool, TrackSchemeVertex v1, ScreenVertex sv, double x, double y, double firstY )
+	protected void addScreenVertex( GraphColorGenerator< TrackSchemeVertex, TrackSchemeEdge > colorGenerator, RefList< ScreenVertex > screenVertices, ScreenVertexPool screenVertexPool, TrackSchemeVertex v1, ScreenVertex sv, double x, double y, double firstY )
 	{
 		final int v1si = screenVertices.size();
 		v1.setScreenVertexIndex( v1si );
@@ -517,10 +523,10 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 
 	/**
 	 * Of all active vertices in the rectangle with two corners
-	 * {@code (lx1, ly1)} and {@code (lx2, ly2)} in layout
-	 * coordinates, get the one with the minimal distance to {@code (lx2, ly2)}.
-	 * The distance is computed as the Euclidean distance in layout
-	 * space distorted by the specified aspect ratio.
+	 * {@code (lx1, ly1)} and {@code (lx2, ly2)} in layout coordinates, get the
+	 * one with the minimal distance to {@code (lx2, ly2)}. The distance is
+	 * computed as the Euclidean distance in layout space distorted by the
+	 * specified aspect ratio.
 	 *
 	 * @param lx1
 	 *            the x coordinate of the first corner.
@@ -546,8 +552,7 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 
 	/**
 	 * Returns the set of all active vertices in the rectangle with two corners
-	 * {@code (lx1, ly1)} and {@code (lx2, ly2)} in layout
-	 * coordinates.
+	 * {@code (lx1, ly1)} and {@code (lx2, ly2)} in layout coordinates.
 	 *
 	 * @param lx1
 	 *            the x coordinate of the first corner.
@@ -562,18 +567,18 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 	@Override
 	public RefSet< TrackSchemeVertex > getActiveVerticesWithin( final double lx1, final double ly1, final double lx2, final double ly2 )
 	{
-		return vertexTable.getVerticesWithin(lx1, ly1, lx2, ly2);
+		return vertexTable.getVerticesWithin( lx1, ly1, lx2, ly2 );
 	}
 
 	/**
 	 * Get the first active child of {@code vertex}.
 	 *
 	 * @param vertex
-	 * 			  query vertex.
+	 *            query vertex.
 	 * @param ref
 	 *            ref to store the result.
-	 * @return the first active child of {@code vertex}, or
-	 *         {@code null} if {@code vertex} has no active children.
+	 * @return the first active child of {@code vertex}, or {@code null} if
+	 *         {@code vertex} has no active children.
 	 */
 	@Override
 	public TrackSchemeVertex getFirstActiveChild( final TrackSchemeVertex vertex, final TrackSchemeVertex ref )
@@ -593,11 +598,11 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 	 * Get the first active parent of {@code vertex}.
 	 *
 	 * @param vertex
-	 * 			  query vertex.
+	 *            query vertex.
 	 * @param ref
 	 *            ref to store the result.
-	 * @return the first active parent of {@code vertex}, or
-	 *         {@code null} if {@code vertex} has no active parents.
+	 * @return the first active parent of {@code vertex}, or {@code null} if
+	 *         {@code vertex} has no active parents.
 	 */
 	@Override
 	public TrackSchemeVertex getFirstActiveParent( final TrackSchemeVertex vertex, final TrackSchemeVertex ref )
@@ -617,7 +622,7 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 	 * Get the active vertex laid out left of {@code vertex}.
 	 *
 	 * @param vertex
-	 * 			  query vertex.
+	 *            query vertex.
 	 * @param ref
 	 *            ref to store the result.
 	 * @return the active vertex laid out left of {@code vertex}, or
@@ -633,7 +638,7 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 	 * Get the active vertex laid out right of {@code vertex}.
 	 *
 	 * @param vertex
-	 * 			  query vertex.
+	 *            query vertex.
 	 * @param ref
 	 *            ref to store the result.
 	 * @return the active vertex laid out right of {@code vertex}, or
@@ -672,7 +677,7 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 		double[] firstX = new double[ 8 ];
 		double[] lastX = new double[ 8 ];
 		int[] numChildren = new int[ 8 ];
-		for ( DepthFirstIteration.Step<TrackSchemeVertex> step : DepthFirstIteration.forRoot( graph, root ) )
+		for ( DepthFirstIteration.Step< TrackSchemeVertex > step : DepthFirstIteration.forRoot( graph, root ) )
 		{
 
 			int depth = step.depth();
@@ -731,7 +736,7 @@ public class LineageTreeLayoutImp implements LineageTreeLayout
 	private void getGraphRoot( final TrackSchemeVertex v, final TrackSchemeVertex graphRoot )
 	{
 		graphRoot.refTo( v );
-		while ( ! graphRoot.incomingEdges().isEmpty() )
+		while ( !graphRoot.incomingEdges().isEmpty() )
 			graphRoot.incomingEdges().iterator().next().getSource( graphRoot );
 	}
 

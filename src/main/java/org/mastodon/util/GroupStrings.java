@@ -45,18 +45,13 @@ import java.util.Set;
  * For instance, the 3 strings:
  *
  * <pre>
- * -"Save Project"
- * -"Import TGMM tracks"
- * -"Import Simi BioCell tracks"
+ * -"Save Project" - "Import TGMM tracks" - "Import Simi BioCell tracks"
  * </pre>
  *
  * will be grouped in 2 groups:
  *
  * <pre>
- * -"Save Project"
- * -"Import"
- * 	+"TGMM tracks"
- * 	+"Simi BioCell tracks"
+ * -"Save Project" - "Import" + "TGMM tracks" + "Simi BioCell tracks"
  * </pre>
  *
  * Comparisons of common words are case insensitive.

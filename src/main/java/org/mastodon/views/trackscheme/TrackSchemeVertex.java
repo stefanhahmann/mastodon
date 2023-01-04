@@ -83,11 +83,7 @@ public class TrackSchemeVertex extends AbstractVertex< TrackSchemeVertex, TrackS
 	@Override
 	public String toString()
 	{
-		return String.format( "TrackSchemeVertex( ID=%d, LABEL=%s, X=%.2f, TIMEPOINT=%d )",
-				getModelVertexId(),
-				getLabel(),
-				getLayoutX(),
-				getTimepoint() );
+		return String.format( "TrackSchemeVertex( ID=%d, LABEL=%s, X=%.2f, TIMEPOINT=%d )", getModelVertexId(), getLabel(), getLayoutX(), getTimepoint() );
 	}
 
 	TrackSchemeVertex( final TrackSchemeVertexPool pool )
@@ -146,7 +142,6 @@ public class TrackSchemeVertex extends AbstractVertex< TrackSchemeVertex, TrackS
 	{
 		pool.firstTimepoint.setQuiet( this, timepoint );
 	}
-
 
 	/**
 	 * Internal pool index of last {@link ScreenVertex} that was created for

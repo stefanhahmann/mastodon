@@ -55,15 +55,25 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	public static class ScreenVertexLayout extends PoolObjectLayout
 	{
 		final IndexField origVertex = indexField();
+
 		final DoubleField xOffset = doubleField();
+
 		final DoubleField yOffset = doubleField();
+
 		final DoubleField yStart = doubleField();
+
 		final DoubleField vertexDist = doubleField();
+
 		final BooleanField selected = booleanField();
+
 		final BooleanField ghost = booleanField();
+
 		final ByteField transition = byteField();
+
 		final IndexField ipScreenVertex = indexField();
+
 		final DoubleField ipRatio = doubleField();
+
 		final IntField color = intField();
 	}
 
@@ -74,16 +84,27 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 		final RefPool< TrackSchemeVertex > trackSchemeVertexPool;
 
 		final IndexAttribute< ScreenVertex > origVertex = new IndexAttribute<>( layout.origVertex, this );
+
 		final DoubleAttribute< ScreenVertex > xOffset = new DoubleAttribute<>( layout.xOffset, this );
+
 		final DoubleAttribute< ScreenVertex > yOffset = new DoubleAttribute<>( layout.yOffset, this );
+
 		final DoubleAttribute< ScreenVertex > yStart = new DoubleAttribute<>( layout.yStart, this );
+
 		final DoubleAttribute< ScreenVertex > vertexDist = new DoubleAttribute<>( layout.vertexDist, this );
+
 		final BooleanAttribute< ScreenVertex > selected = new BooleanAttribute<>( layout.selected, this );
+
 		final BooleanAttribute< ScreenVertex > ghost = new BooleanAttribute<>( layout.ghost, this );
+
 		final ByteAttribute< ScreenVertex > transition = new ByteAttribute<>( layout.transition, this );
+
 		final IndexAttribute< ScreenVertex > ipScreenVertex = new IndexAttribute<>( layout.ipScreenVertex, this );
+
 		final DoubleAttribute< ScreenVertex > ipRatio = new DoubleAttribute<>( layout.ipRatio, this );
+
 		final ObjPropertyMap< ScreenVertex, String > label = new ObjPropertyMap<>( this );
+
 		final IntAttribute< ScreenVertex > color = new IntAttribute<>( layout.color, this );
 
 		public ScreenVertexPool( final int initialCapacity, final RefPool< TrackSchemeVertex > trackSchemeVertexPool )
@@ -113,11 +134,7 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 
 	public static enum Transition
 	{
-		NONE( 0 ),
-		APPEAR( 1 ),
-		DISAPPEAR( 2 ),
-		SELECTING( 3 ),
-		DESELECTING( 4 ), ;
+		NONE( 0 ), APPEAR( 1 ), DISAPPEAR( 2 ), SELECTING( 3 ), DESELECTING( 4 ),;
 
 		private final byte index;
 
@@ -137,14 +154,7 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 		super( pool );
 	}
 
-	public ScreenVertex init(
-			final int id,
-			final String label,
-			final double x,
-			final double y,
-			final boolean selected,
-			final boolean ghost,
-			final int color )
+	public ScreenVertex init( final int id, final String label, final double x, final double y, final boolean selected, final boolean ghost, final int color )
 	{
 		setTrackSchemeVertexId( id );
 		setLabel( label );
@@ -204,9 +214,9 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	}
 
 	/**
-	 * Get the Y screen coordinate of the first timepoint that
-	 * may be represented by the branch spot. NaN is this does
-	 * not represent a branch spot.
+	 * Get the Y screen coordinate of the first timepoint that may be
+	 * represented by the branch spot. NaN is this does not represent a branch
+	 * spot.
 	 *
 	 * @return Y screen coordinate.
 	 */
@@ -390,31 +400,23 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 		return this;
 	}
 
-// TODO REMOVE? should be covered by base class.
-//	@Override
-//	public boolean equals( final Object obj )
-//	{
-//		return obj instanceof ScreenVertex &&
-//				access.equals( ( ( ScreenVertex ) obj ).access );
-//	}
-//
-//	@Override
-//	public int hashCode()
-//	{
-//		return access.hashCode();
-//	}
+	// TODO REMOVE? should be covered by base class.
+	// @Override
+	// public boolean equals( final Object obj )
+	// {
+	// return obj instanceof ScreenVertex &&
+	// access.equals( ( ( ScreenVertex ) obj ).access );
+	// }
+	//
+	// @Override
+	// public int hashCode()
+	// {
+	// return access.hashCode();
+	// }
 
 	@Override
 	public String toString()
 	{
-		return String.format( "ScreenVertex(%d, sv=%d, \"%s\", (%.2f, %.2f), %s, isv=%d%s)",
-				getInternalPoolIndex(),
-				getTrackSchemeVertexId(),
-				getLabel(),
-				getX(),
-				getY(),
-				getTransition().toString(),
-				getInterpolatedScreenVertexIndex(),
-				isSelected() ? ", selected" : "" );
+		return String.format( "ScreenVertex(%d, sv=%d, \"%s\", (%.2f, %.2f), %s, isv=%d%s)", getInternalPoolIndex(), getTrackSchemeVertexId(), getLabel(), getX(), getY(), getTransition().toString(), getInterpolatedScreenVertexIndex(), isSelected() ? ", selected" : "" );
 	}
 }

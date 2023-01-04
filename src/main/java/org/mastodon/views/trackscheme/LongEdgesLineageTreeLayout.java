@@ -41,8 +41,8 @@ import gnu.trove.list.array.TIntArrayList;
 /**
  * A version of {@link LineageTreeLayoutImp} made specially for branch graphs.
  * <p>
- * {@link LineageTreeLayoutImp} generates Screen objects only for the vertices that
- * are in the visible rectangle specified in the transform when calling
+ * {@link LineageTreeLayoutImp} generates Screen objects only for the vertices
+ * that are in the visible rectangle specified in the transform when calling
  * {@link #cropAndScale(ScreenTransform, ScreenEntities, int, int, GraphColorGenerator)}.
  * This is ok when the TrackSchemeGraph is dense, as in for the core graph, but
  * not for the branch graph. Indeed, the branch graph has few vertices and long
@@ -53,21 +53,13 @@ import gnu.trove.list.array.TIntArrayList;
 public class LongEdgesLineageTreeLayout extends LineageTreeLayoutImp
 {
 
-	public LongEdgesLineageTreeLayout(
-			final RootsModel<TrackSchemeVertex> rootsModel,
-			final TrackSchemeGraph<?, ?> graph,
-			final SelectionModel<TrackSchemeVertex, TrackSchemeEdge> selection )
+	public LongEdgesLineageTreeLayout( final RootsModel< TrackSchemeVertex > rootsModel, final TrackSchemeGraph< ?, ? > graph, final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection )
 	{
 		super( rootsModel, graph, selection );
 	}
 
 	@Override
-	public void cropAndScale(
-			final ScreenTransform transform,
-			final ScreenEntities screenEntities,
-			final int decorationsOffsetX,
-			final int decorationsOffsetY,
-			final GraphColorGenerator< TrackSchemeVertex, TrackSchemeEdge > colorGenerator )
+	public void cropAndScale( final ScreenTransform transform, final ScreenEntities screenEntities, final int decorationsOffsetX, final int decorationsOffsetY, final GraphColorGenerator< TrackSchemeVertex, TrackSchemeEdge > colorGenerator )
 	{
 		final double minX = transform.getMinX();
 		final double maxX = transform.getMaxX();
@@ -137,7 +129,7 @@ public class LongEdgesLineageTreeLayout extends LineageTreeLayoutImp
 				{
 					edge.getSource( v2 );
 
-					if( v2.getLayoutTimestamp() != timestamp )
+					if ( v2.getLayoutTimestamp() != timestamp )
 						continue;
 
 					// Check if the edge has some parts on the screen.

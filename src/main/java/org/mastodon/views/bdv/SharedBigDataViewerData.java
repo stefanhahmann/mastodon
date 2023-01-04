@@ -129,15 +129,7 @@ public class SharedBigDataViewerData
 
 	private File proposedSettingsFile;
 
-	private SharedBigDataViewerData(
-			final AbstractSpimData< ? > spimData,
-			final ArrayList< SourceAndConverter< ? > > sources,
-			final ConverterSetups setups,
-			final SetupAssignments setupAssignments,
-			final CacheControl cache,
-			final int numTimepoints,
-			final ViewerOptions options,
-			final RequestRepaint requestRepaint )
+	private SharedBigDataViewerData( final AbstractSpimData< ? > spimData, final ArrayList< SourceAndConverter< ? > > sources, final ConverterSetups setups, final SetupAssignments setupAssignments, final CacheControl cache, final int numTimepoints, final ViewerOptions options, final RequestRepaint requestRepaint )
 	{
 		this.spimData = spimData;
 		this.sources = sources;
@@ -146,20 +138,14 @@ public class SharedBigDataViewerData
 		this.cache = cache;
 		this.numTimepoints = numTimepoints;
 
-		this.inputTriggerConfig = ( options.values.getInputTriggerConfig() != null )
-				? options.values.getInputTriggerConfig()
-				: new InputTriggerConfig();
+		this.inputTriggerConfig = ( options.values.getInputTriggerConfig() != null ) ? options.values.getInputTriggerConfig() : new InputTriggerConfig();
 
 		this.manualTransformation = new ManualTransformation( sources );
 
 		this.bookmarks = new Bookmarks();
 
 		this.is2D = computeIs2D();
-		this.options = options
-				.inputTriggerConfig( inputTriggerConfig )
-				.transformEventHandlerFactory( is2D
-						? TransformEventHandler2D::new
-						: TransformEventHandler3D::new );
+		this.options = options.inputTriggerConfig( inputTriggerConfig ).transformEventHandlerFactory( is2D ? TransformEventHandler2D::new : TransformEventHandler3D::new );
 
 		if ( WrapBasicImgLoader.wrapImgLoaderIfNecessary( spimData ) )
 			System.err.println( "WARNING:\nOpening <SpimData> dataset that is not suited for interactive browsing.\nConsider resaving as HDF5 for better performance." );
@@ -339,10 +325,7 @@ public class SharedBigDataViewerData
 		{
 			final Document doc = sax.build( xmlFilename );
 			final Element root = doc.getRootElement();
-			final String baseUrl = root
-					.getChild( XmlKeys.SEQUENCEDESCRIPTION_TAG )
-					.getChild( XmlKeys.IMGLOADER_TAG )
-					.getChildText( "baseUrl" );
+			final String baseUrl = root.getChild( XmlKeys.SEQUENCEDESCRIPTION_TAG ).getChild( XmlKeys.IMGLOADER_TAG ).getChildText( "baseUrl" );
 			return "Cannot reach host  " + host + " for the dataset URL: " + baseUrl;
 		}
 		catch ( final Exception e )
@@ -355,10 +338,7 @@ public class SharedBigDataViewerData
 	 * FROM BDV FILE OR URL.
 	 */
 
-	public static SharedBigDataViewerData fromSpimDataXmlFile(
-			String spimDataXmlFilename,
-			final ViewerOptions viewerOptions,
-			final RequestRepaint requestRepaint ) throws SpimDataException, IOException
+	public static SharedBigDataViewerData fromSpimDataXmlFile( String spimDataXmlFilename, final ViewerOptions viewerOptions, final RequestRepaint requestRepaint ) throws SpimDataException, IOException
 	{
 		// Load SpimData
 		spimDataXmlFilename = spimDataXmlFilename.replaceAll( "\\\\", "/" );
@@ -368,7 +348,7 @@ public class SharedBigDataViewerData
 		{
 			try
 			{
-				//trying to load the actual (not-dummy) data
+				// trying to load the actual (not-dummy) data
 				spimData = new XmlIoSpimDataMinimal().load( spimDataXmlFilename );
 			}
 			catch ( final SpimDataIOException | RuntimeException e )
@@ -383,26 +363,14 @@ public class SharedBigDataViewerData
 				{
 					System.err.println( "Could not open image data file: " + e.getMessage() );
 				}
-				System.err.println( "Despite that, still going to try to load the project but over a dummy\n"
-						+ "image dataset. Please fix the dataset path in the Mastodon project file afterwards\n"
-						+ "by using menu entry: Mastodon -> File -> Fix Image Path.");
+				System.err.println( "Despite that, still going to try to load the project but over a dummy\n" + "image dataset. Please fix the dataset path in the Mastodon project file afterwards\n" + "by using menu entry: Mastodon -> File -> Fix Image Path." );
 
-				JOptionPane.showConfirmDialog(
-						null,
-						"Failed opening the original image data.\n"
-								+ "\n"
-								+ "Despite that, still going to try to load\n"
-								+ "the project but over a dummy image dataset.\n"
-								+ "\n"
-								+ "Please fix the dataset path in the Mastodon\n"
-								+ "project file afterwards by using menu entry:\n"
-								+ "Mastodon -> File -> Fix Image Path.",
-						"Image data not accessible",
-						JOptionPane.CLOSED_OPTION,
-						JOptionPane.WARNING_MESSAGE );
+				JOptionPane.showConfirmDialog( null, "Failed opening the original image data.\n" + "\n" + "Despite that, still going to try to load\n" + "the project but over a dummy image dataset.\n" + "\n" + "Please fix the dataset path in the Mastodon\n" + "project file afterwards by using menu entry:\n" + "Mastodon -> File -> Fix Image Path.", "Image data not accessible", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE );
 
-				// Try to resurrect/figure-out as many parameters as possible from the .xml file,
-				// and build dummy data after it fails (it must fail, otherwise we wouldn't get here)
+				// Try to resurrect/figure-out as many parameters as possible
+				// from the .xml file,
+				// and build dummy data after it fails (it must fail, otherwise
+				// we wouldn't get here)
 				spimData = DatasetInfoParser.inspect( spimDataXmlFilename ).toDummySpimData();
 			}
 		}
@@ -429,15 +397,7 @@ public class SharedBigDataViewerData
 
 		WrapBasicImgLoader.removeWrapperIfPresent( spimData );
 
-		final SharedBigDataViewerData sbdv = new SharedBigDataViewerData(
-				spimData,
-				sources,
-				setups,
-				setupAssignments,
-				cache,
-				numTimepoints,
-				viewerOptions,
-				requestRepaint );
+		final SharedBigDataViewerData sbdv = new SharedBigDataViewerData( spimData, sources, setups, setupAssignments, cache, numTimepoints, viewerOptions, requestRepaint );
 
 		if ( !sbdv.tryLoadSettings( spimDataXmlFilename ) )
 		{
@@ -454,10 +414,7 @@ public class SharedBigDataViewerData
 	 * FROM IMAGEPLUS.
 	 */
 
-	public static SharedBigDataViewerData fromImagePlus(
-			final ImagePlus imp,
-			final ViewerOptions viewerOptions,
-			final RequestRepaint requestRepaint )
+	public static SharedBigDataViewerData fromImagePlus( final ImagePlus imp, final ViewerOptions viewerOptions, final RequestRepaint requestRepaint )
 	{
 		// check the image type
 		switch ( imp.getType() )
@@ -575,15 +532,7 @@ public class SharedBigDataViewerData
 
 		final SetupAssignments setupAssignments = new SetupAssignments( converterSetups, 0, 65535 );
 
-		final SharedBigDataViewerData sbdv = new SharedBigDataViewerData(
-				spimData,
-				sources,
-				css,
-				setupAssignments,
-				cache,
-				numTimepoints,
-				viewerOptions,
-				requestRepaint );
+		final SharedBigDataViewerData sbdv = new SharedBigDataViewerData( spimData, sources, css, setupAssignments, cache, numTimepoints, viewerOptions, requestRepaint );
 
 		// File info
 		final FileInfo fileInfo = imp.getOriginalFileInfo();
@@ -623,9 +572,7 @@ public class SharedBigDataViewerData
 	/**
 	 * @return number of setups that were set active.
 	 */
-	private static int transferChannelVisibility(
-			final ImagePlus imp,
-			final ViewerState state )
+	private static int transferChannelVisibility( final ImagePlus imp, final ViewerState state )
 	{
 		final int nChannels = imp.getNChannels();
 		final CompositeImage ci = imp.isComposite() ? ( CompositeImage ) imp : null;

@@ -81,14 +81,7 @@ public class TagTableDialogExample
 		{
 			super( owner, "tag sets configuration", false );
 
-			final TagTable< MyElements, MyElement > tagTable = new TagTable<>(
-					elements,
-					MyElements::addElement,
-					MyElements::size,
-					(c, e ) -> c.remove( e ),
-					(c, i) -> c.get( i ),
-					MyElement::setName,
-					MyElement::getName );
+			final TagTable< MyElements, MyElement > tagTable = new TagTable<>( elements, MyElements::addElement, MyElements::size, ( c, e ) -> c.remove( e ), ( c, i ) -> c.get( i ), MyElement::setName, MyElement::getName );
 
 			final JPanel tagSetPanel = new JPanel( new BorderLayout( 0, 0 ) );
 			tagSetPanel.add( tagTable.getTable(), BorderLayout.CENTER );

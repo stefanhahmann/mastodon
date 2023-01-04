@@ -33,6 +33,5 @@ import org.mastodon.feature.FeatureComputer;
 import org.mastodon.mamut.model.branch.BranchLink;
 import org.mastodon.model.AbstractModel;
 
-public abstract class BranchLinkFeatureComputer< K extends Feature< BranchLink >, AM extends AbstractModel< ?, ?, ? > >
-		implements FeatureComputer
+public abstract class BranchLinkFeatureComputer< K extends Feature< BranchLink >, AM extends AbstractModel< ?, ?, ? > > implements FeatureComputer
 {}

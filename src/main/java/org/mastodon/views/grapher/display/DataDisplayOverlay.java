@@ -58,10 +58,11 @@ public class DataDisplayOverlay implements OverlayRenderer, OffsetAxesListener
 	/**
 	 * {@link ScreenEntities} that have been previously
 	 * {@link #setScreenEntities(ScreenEntities) set} for painting. Whenever new
-	 * entities are set, these are stored here and marked {@link #pending}. Whenever
-	 * entities are painted and new entities are pending, the new entities are painted
-	 * to the screen. Before doing this, the entities previously used for painting
-	 * are swapped into {@link #pendingEntities}. This is used for double-buffering.
+	 * entities are set, these are stored here and marked {@link #pending}.
+	 * Whenever entities are painted and new entities are pending, the new
+	 * entities are painted to the screen. Before doing this, the entities
+	 * previously used for painting are swapped into {@link #pendingEntities}.
+	 * This is used for double-buffering.
 	 */
 	private ScreenEntities pendingEntities;
 
@@ -112,13 +113,7 @@ public class DataDisplayOverlay implements OverlayRenderer, OffsetAxesListener
 	 * @param options
 	 *            options for Data look.
 	 */
-	public DataDisplayOverlay(
-			final DataGraph< ?, ? > graph,
-			final HighlightModel< DataVertex, DataEdge > highlight,
-			final FocusModel< DataVertex, DataEdge > focus,
-			final PaintDecorations paintDecorations,
-			final PaintGraph paintGraph,
-			final DataDisplayOptions options )
+	public DataDisplayOverlay( final DataGraph< ?, ? > graph, final HighlightModel< DataVertex, DataEdge > highlight, final FocusModel< DataVertex, DataEdge > focus, final PaintDecorations paintDecorations, final PaintGraph paintGraph, final DataDisplayOptions options )
 	{
 		this.graph = graph;
 		this.highlight = highlight;
@@ -212,9 +207,7 @@ public class DataDisplayOverlay implements OverlayRenderer, OffsetAxesListener
 			vertices.releaseRef( vs );
 			vertices.releaseRef( vt );
 
-			return ( i >= 0 )
-					? graph.getEdgePool().getObjectIfExists( i, ref )
-					: null;
+			return ( i >= 0 ) ? graph.getEdgePool().getObjectIfExists( i, ref ) : null;
 		}
 	}
 
@@ -262,9 +255,7 @@ public class DataDisplayOverlay implements OverlayRenderer, OffsetAxesListener
 				}
 			}
 
-			return ( iBest >= 0 )
-					? graph.getVertexPool().getObjectIfExists( iBest, ref )
-					: null;
+			return ( iBest >= 0 ) ? graph.getVertexPool().getObjectIfExists( iBest, ref ) : null;
 		}
 	}
 
@@ -330,8 +321,8 @@ public class DataDisplayOverlay implements OverlayRenderer, OffsetAxesListener
 	}
 
 	/**
-	 * Provides subclass access to {@link ScreenEntities} to paint.
-	 * Implements double-buffering.
+	 * Provides subclass access to {@link ScreenEntities} to paint. Implements
+	 * double-buffering.
 	 *
 	 * @return current {@link ScreenEntities}.
 	 */
@@ -376,19 +367,9 @@ public class DataDisplayOverlay implements OverlayRenderer, OffsetAxesListener
 
 	public static class DataDisplayOverlayFactory
 	{
-		public DataDisplayOverlay create(
-				final DataGraph< ?, ? > graph,
-				final HighlightModel< DataVertex, DataEdge > highlight,
-				final FocusModel< DataVertex, DataEdge > focus,
-				final DataDisplayOptions options )
+		public DataDisplayOverlay create( final DataGraph< ?, ? > graph, final HighlightModel< DataVertex, DataEdge > highlight, final FocusModel< DataVertex, DataEdge > focus, final DataDisplayOptions options )
 		{
-			return new DataDisplayOverlay(
-					graph,
-					highlight,
-					focus,
-					new PaintDecorations(),
-					new PaintGraph(),
-					options );
+			return new DataDisplayOverlay( graph, highlight, focus, new PaintDecorations(), new PaintGraph(), options );
 		}
 	}
 
@@ -407,12 +388,7 @@ public class DataDisplayOverlay implements OverlayRenderer, OffsetAxesListener
 	 *            the edge target vertex.
 	 * @return the distance from the specified position to the edge.
 	 */
-	private static final double distanceToPaintedEdge(
-			final double x,
-			final double y,
-			final ScreenEdge edge,
-			final ScreenVertex source,
-			final ScreenVertex target )
+	private static final double distanceToPaintedEdge( final double x, final double y, final ScreenEdge edge, final ScreenVertex source, final ScreenVertex target )
 	{
 		final double x1 = source.getX();
 		final double y1 = source.getY();

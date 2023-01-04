@@ -72,8 +72,7 @@ public class ColumnGroup
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public Component getTableCellRendererComponent( final JTable table, final Object value,
-						final boolean isSelected, final boolean hasFocus, final int row, final int column )
+				public Component getTableCellRendererComponent( final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column )
 				{
 					final JTableHeader header = table.getTableHeader();
 					if ( header != null )
@@ -103,7 +102,8 @@ public class ColumnGroup
 	 */
 	public void add( final Object obj )
 	{
-		if ( obj == null ) { return; }
+		if ( obj == null )
+		{ return; }
 		v.addElement( obj );
 	}
 
@@ -126,8 +126,7 @@ public class ColumnGroup
 			if ( obj instanceof ColumnGroup )
 			{
 				@SuppressWarnings( "unchecked" )
-				final Vector< ColumnGroup > groups =
-						( ( ColumnGroup ) obj ).getColumnGroups( c, ( Vector< ColumnGroup > ) g.clone() );
+				final Vector< ColumnGroup > groups = ( ( ColumnGroup ) obj ).getColumnGroups( c, ( Vector< ColumnGroup > ) g.clone() );
 				if ( groups != null )
 					return groups;
 			}
@@ -155,8 +154,7 @@ public class ColumnGroup
 
 	public Dimension getSize( final JTable table )
 	{
-		final Component comp = renderer.getTableCellRendererComponent(
-				table, getHeaderValue(), false, false, -1, -1 );
+		final Component comp = renderer.getTableCellRendererComponent( table, getHeaderValue(), false, false, -1, -1 );
 		final int height = comp.getPreferredSize().height;
 		int width = 0;
 		final Enumeration< Object > en = v.elements();

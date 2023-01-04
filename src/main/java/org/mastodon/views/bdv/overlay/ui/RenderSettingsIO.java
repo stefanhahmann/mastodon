@@ -136,7 +136,7 @@ public class RenderSettingsIO
 		{
 			try
 			{
-				final Map< Object, Object > mapping = constructMapping( ( MappingNode  ) node );
+				final Map< Object, Object > mapping = constructMapping( ( MappingNode ) node );
 				final float width = ( ( Double ) mapping.get( "width" ) ).floatValue();
 				final int cap = ( Integer ) mapping.get( "cap" );
 				final int join = ( Integer ) mapping.get( "join" );
@@ -154,7 +154,7 @@ public class RenderSettingsIO
 				final float dash_phase = ( ( Double ) mapping.get( "dash_phase" ) ).floatValue();
 				return new BasicStroke( width, cap, join, miterlimit, dash, dash_phase );
 			}
-			catch( final Exception e )
+			catch ( final Exception e )
 			{
 				e.printStackTrace();
 			}
@@ -175,7 +175,7 @@ public class RenderSettingsIO
 		public Node representData( final Object data )
 		{
 			final RenderSettings s = ( RenderSettings ) data;
-			final Map< String, Object > mapping = new LinkedHashMap< >();
+			final Map< String, Object > mapping = new LinkedHashMap<>();
 
 			mapping.put( "name", s.getName() );
 
@@ -201,7 +201,6 @@ public class RenderSettingsIO
 			mapping.put( "colorSpot", s.getColorSpot() );
 			mapping.put( "colorPast", s.getColorPast() );
 			mapping.put( "colorFuture", s.getColorFuture() );
-			
 
 			final Node node = representMapping( getTag(), mapping, getDefaultFlowStyle() );
 			return node;

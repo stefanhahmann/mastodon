@@ -39,9 +39,11 @@ import org.scijava.ui.behaviour.util.Actions;
 public class BranchGraphUndoActions
 {
 	public static final String UNDO = "undo";
+
 	public static final String REDO = "redo";
 
 	static final String[] UNDO_KEYS = new String[] { "meta Z", "ctrl Z" };
+
 	static final String[] REDO_KEYS = new String[] { "meta shift Z", "ctrl shift Z" };
 
 	/*
@@ -66,7 +68,8 @@ public class BranchGraphUndoActions
 	/**
 	 * Create Undo/Redo actions and install them in the specified
 	 * {@link Actions}.
-	 *  @param actions
+	 * 
+	 * @param actions
 	 *            Actions are added here.
 	 * @param model
 	 *            Actions are targeted at this {@link Model}s {@code undo()} and

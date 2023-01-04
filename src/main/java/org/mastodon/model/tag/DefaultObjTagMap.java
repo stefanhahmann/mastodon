@@ -88,12 +88,10 @@ public class DefaultObjTagMap< O, T > implements ObjTagMap< O, T >
 	 * @param tags
 	 *            set of mutually exclusive {@code tags}.
 	 * @param tagToIdFunction
-	 *            maps tags to integer IDs (globally unique across all tag sets).
+	 *            maps tags to integer IDs (globally unique across all tag
+	 *            sets).
 	 */
-	public DefaultObjTagMap(
-			final LabelSets< O, Integer > idLabelSets,
-			final Collection< T > tags,
-			final Function< T, Integer > tagToIdFunction )
+	public DefaultObjTagMap( final LabelSets< O, Integer > idLabelSets, final Collection< T > tags, final Function< T, Integer > tagToIdFunction )
 	{
 		this.idLabelSets = idLabelSets;
 		this.tagToIdFunction = tagToIdFunction;
@@ -171,8 +169,6 @@ public class DefaultObjTagMap< O, T > implements ObjTagMap< O, T >
 			tagToId.put( tag, id );
 			idToTag.put( id, tag );
 		}
-		idToTag.keySet().forEach( id ->
-				idToOtherIds.put( id,
-						idToTag.keySet().stream().filter( oid -> oid != id ).collect( Collectors.toList() ) ) );
+		idToTag.keySet().forEach( id -> idToOtherIds.put( id, idToTag.keySet().stream().filter( oid -> oid != id ).collect( Collectors.toList() ) ) );
 	}
 }

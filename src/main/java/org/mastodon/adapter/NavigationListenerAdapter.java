@@ -30,8 +30,7 @@ package org.mastodon.adapter;
 
 import org.mastodon.model.NavigationListener;
 
-public class NavigationListenerAdapter< V, E, WV, WE >
-		implements NavigationListener< V, E >
+public class NavigationListenerAdapter< V, E, WV, WE > implements NavigationListener< V, E >
 {
 	private final NavigationListener< WV, WE > listener;
 
@@ -39,10 +38,7 @@ public class NavigationListenerAdapter< V, E, WV, WE >
 
 	private final RefBimap< E, WE > edgeMap;
 
-	public NavigationListenerAdapter(
-			final NavigationListener< WV, WE > listener,
-			final RefBimap< V, WV > vertexMap,
-			final RefBimap< E, WE > edgeMap )
+	public NavigationListenerAdapter( final NavigationListener< WV, WE > listener, final RefBimap< V, WV > vertexMap, final RefBimap< E, WE > edgeMap )
 	{
 		this.listener = listener;
 		this.vertexMap = vertexMap;
@@ -74,8 +70,6 @@ public class NavigationListenerAdapter< V, E, WV, WE >
 	@Override
 	public boolean equals( final Object obj )
 	{
-		return ( obj instanceof NavigationListenerAdapter )
-				? listener.equals( ( ( NavigationListenerAdapter< ?, ?, ?, ? > ) obj ).listener )
-				: false;
+		return ( obj instanceof NavigationListenerAdapter ) ? listener.equals( ( ( NavigationListenerAdapter< ?, ?, ?, ? > ) obj ).listener ) : false;
 	}
 }

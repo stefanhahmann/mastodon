@@ -85,11 +85,7 @@ public class LazyFeatureSerializer
 	 * @throws IOException
 	 *             if problems arise while writing the file.
 	 */
-	public static < O > void serialize(
-			final Feature< O > feature,
-			final Collection< O > objs,
-			final ObjectToFileIdMap< O > idmap,
-			final ObjectOutputStream oos ) throws IOException
+	public static < O > void serialize( final Feature< O > feature, final Collection< O > objs, final ObjectToFileIdMap< O > idmap, final ObjectOutputStream oos ) throws IOException
 	{
 		// NUMBER OF ENTRIES
 		oos.writeInt( objs.size() );

@@ -105,8 +105,8 @@ public class TrackSchemeVertexList extends RefArrayList< TrackSchemeVertex >
 	 * {@link TrackSchemeVertexList} is ordered by
 	 * {@link TrackSchemeVertex#getLayoutX() layoutX}.
 	 * <p>
-	 * For the returned index <em>i</em>, it holds that {@code fromIndex}
-	 * <em>- 1 &le; i &lt;</em> {@code toIndex}.
+	 * For the returned index <em>i</em>, it holds that {@code fromIndex} <em>-
+	 * 1 &le; i &lt;</em> {@code toIndex}.
 	 *
 	 * @param value
 	 *            the value to search for
@@ -142,13 +142,7 @@ public class TrackSchemeVertexList extends RefArrayList< TrackSchemeVertex >
 		return high;
 	}
 
-	protected TIntArrayList getDenseRanges(
-			final int fromIndex,
-			final int toIndex,
-			final double minLayoutX,
-			final double allowedMinD,
-			final int minSubDivSize,
-			final TrackSchemeVertex vref )
+	protected TIntArrayList getDenseRanges( final int fromIndex, final int toIndex, final double minLayoutX, final double allowedMinD, final int minSubDivSize, final TrackSchemeVertex vref )
 	{
 		if ( fromIndex < 0 )
 			throw new ArrayIndexOutOfBoundsException( fromIndex );
@@ -224,15 +218,15 @@ public class TrackSchemeVertexList extends RefArrayList< TrackSchemeVertex >
 
 	/**
 	 * Get minimal {@link TrackSchemeVertex#getLayoutX() layoutX} distance
-	 * between two neighboring vertices in the entire list. This assumes
-	 * that the {@link TrackSchemeVertexList} is ordered by
+	 * between two neighboring vertices in the entire list. This assumes that
+	 * the {@link TrackSchemeVertexList} is ordered by
 	 * {@link TrackSchemeVertex#getLayoutX() layoutX}.
 	 *
 	 * @return minimal layoutX distance between neighboring vertices.
 	 */
 	protected double getMinLayoutXDistance()
 	{
-		if ( ! cachedMinLayoutXDistanceValid )
+		if ( !cachedMinLayoutXDistanceValid )
 		{
 			cachedMinLayoutXDistance = getMinLayoutXDistance( 0, size() );
 			cachedMinLayoutXDistanceValid = true;

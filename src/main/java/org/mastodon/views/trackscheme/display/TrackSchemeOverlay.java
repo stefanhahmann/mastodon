@@ -90,10 +90,11 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	/**
 	 * {@link ScreenEntities} that have been previously
 	 * {@link #setScreenEntities(ScreenEntities) set} for painting. Whenever new
-	 * entities are set, these are stored here and marked {@link #pending}. Whenever
-	 * entities are painted and new entities are pending, the new entities are painted
-	 * to the screen. Before doing this, the entities previously used for painting
-	 * are swapped into {@link #pendingEntities}. This is used for double-buffering.
+	 * entities are set, these are stored here and marked {@link #pending}.
+	 * Whenever entities are painted and new entities are pending, the new
+	 * entities are painted to the screen. Before doing this, the entities
+	 * previously used for painting are swapped into {@link #pendingEntities}.
+	 * This is used for double-buffering.
 	 */
 	private ScreenEntities pendingEntities;
 
@@ -146,13 +147,7 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	 * @param options
 	 *            options for TrackScheme look.
 	 */
-	public TrackSchemeOverlay(
-			final TrackSchemeGraph< ?, ? > graph,
-			final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight,
-			final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-			final PaintDecorations paintDecorations,
-			final PaintGraph paintGraph,
-			final TrackSchemeOptions options )
+	public TrackSchemeOverlay( final TrackSchemeGraph< ?, ? > graph, final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight, final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus, final PaintDecorations paintDecorations, final PaintGraph paintGraph, final TrackSchemeOptions options )
 	{
 		this.graph = graph;
 		this.highlight = highlight;
@@ -248,9 +243,7 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 			vertices.releaseRef( vs );
 			vertices.releaseRef( vt );
 
-			return ( i >= 0 )
-					? graph.getEdgePool().getObjectIfExists( i, ref )
-					: null;
+			return ( i >= 0 ) ? graph.getEdgePool().getObjectIfExists( i, ref ) : null;
 		}
 	}
 
@@ -269,8 +262,8 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	 *            the y screen coordinate
 	 * @param ref
 	 *            a reference that will be used to retrieve the result.
-	 * @return the {@link TrackSchemeVertex} at
-	 *         {@code (x, y)}, or {@code null} if there is no vertex at this position.
+	 * @return the {@link TrackSchemeVertex} at {@code (x, y)}, or {@code null}
+	 *         if there is no vertex at this position.
 	 */
 	public TrackSchemeVertex getVertexAt( final int x, final int y, final TrackSchemeVertex ref )
 	{
@@ -297,9 +290,7 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 				}
 			}
 
-			return ( iBest >= 0 )
-					? graph.getVertexPool().getObjectIfExists( iBest, ref )
-					: null;
+			return ( iBest >= 0 ) ? graph.getVertexPool().getObjectIfExists( iBest, ref ) : null;
 		}
 	}
 
@@ -347,7 +338,7 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	 */
 	public void setCurrentTimepoint( final int timepoint )
 	{
-		this.currentTimepoint  = timepoint;
+		this.currentTimepoint = timepoint;
 	}
 
 	/**
@@ -376,8 +367,8 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	}
 
 	/**
-	 * Provides subclass access to {@link ScreenEntities} to paint.
-	 * Implements double-buffering.
+	 * Provides subclass access to {@link ScreenEntities} to paint. Implements
+	 * double-buffering.
 	 *
 	 * @return current {@link ScreenEntities}.
 	 */
@@ -422,11 +413,7 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 
 	public static class TrackSchemeOverlayFactory
 	{
-		public TrackSchemeOverlay create(
-				final TrackSchemeGraph< ?, ? > graph,
-				final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight,
-				final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-				final TrackSchemeOptions options )
+		public TrackSchemeOverlay create( final TrackSchemeGraph< ?, ? > graph, final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight, final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus, final TrackSchemeOptions options )
 		{
 			return new TrackSchemeOverlay( graph, highlight, focus, new PaintDecorations(), new PaintGraph(), options );
 		}

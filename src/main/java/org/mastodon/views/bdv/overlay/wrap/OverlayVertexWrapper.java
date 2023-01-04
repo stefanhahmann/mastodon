@@ -38,8 +38,7 @@ import org.mastodon.views.bdv.overlay.OverlayVertex;
 import net.imglib2.Localizable;
 import net.imglib2.RealLocalizable;
 
-public class OverlayVertexWrapper< V extends Vertex< E >, E extends Edge< V > >
-	implements OverlayVertex< OverlayVertexWrapper< V, E >, OverlayEdgeWrapper< V, E > >
+public class OverlayVertexWrapper< V extends Vertex< E >, E extends Edge< V > > implements OverlayVertex< OverlayVertexWrapper< V, E >, OverlayEdgeWrapper< V, E > >
 {
 	private final int n = 3;
 
@@ -144,14 +143,12 @@ public class OverlayVertexWrapper< V extends Vertex< E >, E extends Edge< V > >
 		return incomingEdges;
 	}
 
-
 	@Override
 	public Edges< OverlayEdgeWrapper< V, E > > outgoingEdges()
 	{
 		outgoingEdges.wrap( wv.outgoingEdges() );
 		return outgoingEdges;
 	}
-
 
 	@Override
 	public Edges< OverlayEdgeWrapper< V, E > > edges()
@@ -169,8 +166,7 @@ public class OverlayVertexWrapper< V extends Vertex< E >, E extends Edge< V > >
 	@Override
 	public boolean equals( final Object obj )
 	{
-		return obj instanceof OverlayVertexWrapper< ?, ? > &&
-				wv.equals( ( ( OverlayVertexWrapper< ?, ? > ) obj ).wv );
+		return obj instanceof OverlayVertexWrapper< ?, ? > && wv.equals( ( ( OverlayVertexWrapper< ?, ? > ) obj ).wv );
 	}
 
 	/**
@@ -290,7 +286,8 @@ public class OverlayVertexWrapper< V extends Vertex< E >, E extends Edge< V > >
 		overlayProperties.setPosition( wv, position, d );
 	}
 
-	// TODO: (almost?) all of the following should have default implementations in the RealPositionable interface
+	// TODO: (almost?) all of the following should have default implementations
+	// in the RealPositionable interface
 	@Override
 	public void move( final float distance, final int d )
 	{

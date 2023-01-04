@@ -49,8 +49,8 @@ import net.imglib2.realtransform.AffineTransform3D;
  * A model vertices {@link ContextProvider}. It provides a
  * {@link OverlayContextWrapper} (always the same) which wraps a
  * {@link OverlayContext} (always the same). It must be registered to
- * {@link ViewerPanel#renderTransformListeners()} to be updated with the
- * viewer transform.
+ * {@link ViewerPanel#renderTransformListeners()} to be updated with the viewer
+ * transform.
  *
  * @param <V>
  *            the type of vertices in the model.
@@ -58,8 +58,7 @@ import net.imglib2.realtransform.AffineTransform3D;
  *            the type of edges in the model.
  * @author Tobias Pietzsch
  */
-public class BdvContextProvider< V extends Vertex< E >, E extends Edge< V > >
-		implements ContextProvider< V >, TransformListener< AffineTransform3D >
+public class BdvContextProvider< V extends Vertex< E >, E extends Edge< V > > implements ContextProvider< V >, TransformListener< AffineTransform3D >
 {
 	private final String name;
 
@@ -69,9 +68,7 @@ public class BdvContextProvider< V extends Vertex< E >, E extends Edge< V > >
 
 	private Context< V > context;
 
-	public BdvContextProvider( final String name,
-			final OverlayGraph< OverlayVertexWrapper< V, E >, OverlayEdgeWrapper< V, E > > overlayGraph,
-			final OverlayGraphRenderer< OverlayVertexWrapper< V, E >, OverlayEdgeWrapper< V, E > > renderer )
+	public BdvContextProvider( final String name, final OverlayGraph< OverlayVertexWrapper< V, E >, OverlayEdgeWrapper< V, E > > overlayGraph, final OverlayGraphRenderer< OverlayVertexWrapper< V, E >, OverlayEdgeWrapper< V, E > > renderer )
 	{
 		this.name = name;
 		listeners = new Listeners.SynchronizedList<>( l -> l.contextChanged( context ) );

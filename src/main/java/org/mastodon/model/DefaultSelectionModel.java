@@ -57,8 +57,7 @@ import org.scijava.listeners.Listeners;
  * @param <E>
  *            the type of the edges.
  */
-public class DefaultSelectionModel< V extends Vertex< E >, E extends Edge< V > >
-		implements SelectionModel< V, E >, GraphListener< V, E >
+public class DefaultSelectionModel< V extends Vertex< E >, E extends Edge< V > > implements SelectionModel< V, E >, GraphListener< V, E >
 {
 	private final ListenableReadOnlyGraph< V, E > graph;
 
@@ -268,8 +267,8 @@ public class DefaultSelectionModel< V extends Vertex< E >, E extends Edge< V > >
 	/**
 	 * Clears this selection.
 	 *
-	 * @return {@code true} if this selection was not empty prior to
-	 *         calling this method.
+	 * @return {@code true} if this selection was not empty prior to calling
+	 *         this method.
 	 */
 	@Override
 	public synchronized boolean clearSelection()

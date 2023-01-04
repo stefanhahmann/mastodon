@@ -32,7 +32,8 @@ import org.mastodon.views.bdv.overlay.OverlayGraph;
 import org.mastodon.views.bdv.overlay.wrap.OverlayProperties;
 
 /**
- * Provides spot {@link OverlayProperties properties} for BDV {@link OverlayGraph}.
+ * Provides spot {@link OverlayProperties properties} for BDV
+ * {@link OverlayGraph}.
  *
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  */
@@ -42,9 +43,7 @@ public class ModelOverlayProperties implements OverlayProperties< Spot, Link >
 
 	private final BoundingSphereRadiusStatistics radiusStats;
 
-	public ModelOverlayProperties(
-			final ModelGraph modelGraph,
-			final BoundingSphereRadiusStatistics radiusStats )
+	public ModelOverlayProperties( final ModelGraph modelGraph, final BoundingSphereRadiusStatistics radiusStats )
 	{
 		this.modelGraph = modelGraph;
 		this.radiusStats = radiusStats;

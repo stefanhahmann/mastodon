@@ -57,10 +57,7 @@ public class DataDisplayStyleSettingsPage extends SelectAndEditProfileSettingsPa
 	 */
 	public DataDisplayStyleSettingsPage( final String treePath, final DataDisplayStyleManager styleManager )
 	{
-		super(
-				treePath,
-				new StyleProfileManager<>( styleManager, new DataDisplayStyleManager( false ) ),
-				new DataGraphProfileEditPanel( styleManager.getSelectedStyle() ) );
+		super( treePath, new StyleProfileManager<>( styleManager, new DataDisplayStyleManager( false ) ), new DataGraphProfileEditPanel( styleManager.getSelectedStyle() ) );
 	}
 
 	static class DataGraphProfileEditPanel implements DataDisplayStyle.UpdateListener, SelectAndEditProfileSettingsPage.ProfileEditPanel< StyleProfile< DataDisplayStyle > >

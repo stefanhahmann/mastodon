@@ -48,16 +48,10 @@ import org.mastodon.views.bdv.overlay.Visibilities.Visibility;
 
 import net.imglib2.realtransform.AffineTransform3D;
 
-public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE extends OverlayEdge< BE, BV >, V extends OverlayVertex< V, E >, E extends OverlayEdge< E, V > >
-		extends OverlayGraphRenderer< BV, BE >
+public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE extends OverlayEdge< BE, BV >, V extends OverlayVertex< V, E >, E extends OverlayEdge< E, V > > extends OverlayGraphRenderer< BV, BE >
 {
 
-	public OverlayBranchGraphRenderer(
-			final OverlayGraph< BV, BE > graph,
-			final HighlightModel< BV, BE > highlight,
-			final FocusModel< BV, BE > focus,
-			final SelectionModel< BV, BE > selection,
-			final GraphColorGenerator< BV, BE > coloring )
+	public OverlayBranchGraphRenderer( final OverlayGraph< BV, BE > graph, final HighlightModel< BV, BE > highlight, final FocusModel< BV, BE > focus, final SelectionModel< BV, BE > selection, final GraphColorGenerator< BV, BE > coloring )
 	{
 		super( graph, highlight, focus, selection, coloring );
 	}
@@ -77,9 +71,7 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 
 		final double maxDepth = getMaxDepth( transform );
 
-		final Object antialiasing = settings.getUseAntialiasing()
-				? RenderingHints.VALUE_ANTIALIAS_ON
-				: RenderingHints.VALUE_ANTIALIAS_OFF;
+		final Object antialiasing = settings.getUseAntialiasing() ? RenderingHints.VALUE_ANTIALIAS_ON : RenderingHints.VALUE_ANTIALIAS_OFF;
 		graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING, antialiasing );
 
 		final BV ref1 = graph.vertexRef();
@@ -114,30 +106,10 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 					edge.getSource( source );
 					edge.getTarget( target );
 					final int edgeColor = coloring.color( edge, source, target );
-					final Color c1 = getColor(
-							sd1,
-							td1,
-							sliceDistanceFade,
-							timepointDistanceFade,
-							selection.isSelected( edge ),
-							isHighlighted,
-							colorSpot,
-							colorPast,
-							colorFuture,
-							edgeColor );
+					final Color c1 = getColor( sd1, td1, sliceDistanceFade, timepointDistanceFade, selection.isSelected( edge ), isHighlighted, colorSpot, colorPast, colorFuture, edgeColor );
 					if ( useGradient )
 					{
-						final Color c0 = getColor(
-								sd0,
-								td0,
-								sliceDistanceFade,
-								timepointDistanceFade,
-								selection.isSelected( edge ),
-								isHighlighted,
-								colorSpot,
-								colorPast,
-								colorFuture,
-								edgeColor );
+						final Color c0 = getColor( sd0, td0, sliceDistanceFade, timepointDistanceFade, selection.isSelected( edge ), isHighlighted, colorSpot, colorPast, colorFuture, edgeColor );
 						graphics.setPaint( new GradientPaint( x0, y0, c0, x1, y1, c1 ) );
 					}
 					else
@@ -166,7 +138,7 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 
 					if ( isHighlighted )
 						graphics.setStroke( defaultEdgeStroke );
-				});
+				} );
 			}
 
 			if ( settings.getDrawSpots() )
@@ -178,7 +150,7 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 				final double pointFadeDepth = settings.getPointFadeDepth();
 				final boolean fillSpots = settings.getFillSpots();
 				final Visibility< BV, BE > visibility = visibilities.getVisibility();
-				
+
 				final BV highlighted = highlight.getHighlightedVertex( ref1 );
 				final BV focused = focus.getFocusedVertex( ref2 );
 
@@ -210,17 +182,7 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 						{
 							final Ellipse ellipse = screenVertexMath.getIntersectEllipse();
 
-							graphics.setColor( getColor(
-									0,
-									0,
-									ellipsoidFadeDepth,
-									timepointDistanceFade,
-									selection.isSelected( vertex ),
-									isHighlighted,
-									colorSpot,
-									colorPast,
-									colorFuture,
-									color ) );
+							graphics.setColor( getColor( 0, 0, ellipsoidFadeDepth, timepointDistanceFade, selection.isSelected( vertex ), isHighlighted, colorSpot, colorPast, colorFuture, color ) );
 							if ( isHighlighted )
 								graphics.setStroke( highlightedVertexStroke );
 							else if ( isFocused )
@@ -240,17 +202,7 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 						{
 							final Ellipse ellipse = screenVertexMath.getProjectEllipse();
 
-							graphics.setColor( getColor(
-									sd,
-									0,
-									ellipsoidFadeDepth,
-									timepointDistanceFade,
-									selection.isSelected( vertex ),
-									isHighlighted,
-									colorSpot,
-									colorPast,
-									colorFuture,
-									color ) );
+							graphics.setColor( getColor( sd, 0, ellipsoidFadeDepth, timepointDistanceFade, selection.isSelected( vertex ), isHighlighted, colorSpot, colorPast, colorFuture, color ) );
 							if ( isHighlighted )
 								graphics.setStroke( highlightedVertexStroke );
 							else if ( isFocused )
@@ -267,17 +219,7 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 
 						if ( drawPointsAlways || ( drawPointsMaybe && !screenVertexMath.intersectsViewPlane() ) )
 						{
-							graphics.setColor( getColor(
-									sd,
-									0,
-									pointFadeDepth,
-									timepointDistanceFade,
-									selection.isSelected( vertex ),
-									isHighlighted,
-									colorSpot,
-									colorPast,
-									colorFuture,
-									color ) );
+							graphics.setColor( getColor( sd, 0, pointFadeDepth, timepointDistanceFade, selection.isSelected( vertex ), isHighlighted, colorSpot, colorPast, colorFuture, color ) );
 							double radius = pointRadius;
 							if ( isHighlighted || isFocused )
 								radius *= 2;

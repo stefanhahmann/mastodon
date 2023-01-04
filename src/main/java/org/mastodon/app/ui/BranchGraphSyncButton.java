@@ -45,9 +45,7 @@ public class BranchGraphSyncButton extends JPanel
 	public BranchGraphSyncButton( final BranchGraphSynchronizer model )
 	{
 		final JButton btn = new JButton();
-		final UpdateListener l = () -> btn.setIcon( model.isUptodate()
-				? MastodonIcons.UP_TO_DATE_ICON
-				: MastodonIcons.NOT_UP_TO_DATE_ICON );
+		final UpdateListener l = () -> btn.setIcon( model.isUptodate() ? MastodonIcons.UP_TO_DATE_ICON : MastodonIcons.NOT_UP_TO_DATE_ICON );
 		model.updateListeners().add( l );
 		l.branchGraphSyncChanged();
 		btn.addActionListener( e -> new Thread( () -> model.sync(), "Branch-graph synchronizer" ).start() );

@@ -71,15 +71,7 @@ public class DatasetInfoParser
 
 	public final String xmlFilename;
 
-	private DatasetInfoParser(
-			final String xmlFilename,
-			final int width,
-			final int height,
-			final int depth,
-			final double dx,
-			final double dy,
-			final double dz,
-			final int nTimePoints )
+	private DatasetInfoParser( final String xmlFilename, final int width, final int height, final int depth, final double dx, final double dy, final double dz, final int nTimePoints )
 	{
 		this.xmlFilename = xmlFilename;
 		this.width = width;
@@ -116,17 +108,12 @@ public class DatasetInfoParser
 			final Document doc = sax.build( xmlFilename );
 			final Element root = doc.getRootElement();
 			// View setup dim and pixel size.
-			final Element vsel = root
-					.getChild( XmlKeys.SEQUENCEDESCRIPTION_TAG )
-					.getChild( XmlKeys.VIEWSETUPS_TAG )
-					.getChild( XmlKeys.VIEWSETUP_TAG );
+			final Element vsel = root.getChild( XmlKeys.SEQUENCEDESCRIPTION_TAG ).getChild( XmlKeys.VIEWSETUPS_TAG ).getChild( XmlKeys.VIEWSETUP_TAG );
 			final int[] imSize = XmlHelpers.getIntArray( vsel, XmlKeys.VIEWSETUP_SIZE_TAG );
 			final Element vxel = vsel.getChild( XmlKeys.VIEWSETUP_VOXELSIZE_TAG );
 			final double[] voxelSize = XmlHelpers.getDoubleArray( vxel, XmlKeys.VOXELDIMENSIONS_SIZE_TAG );
 			// Time-points.
-			final Element timePointsElement = root
-					.getChild( XmlKeys.SEQUENCEDESCRIPTION_TAG )
-					.getChild( XmlKeys.TIMEPOINTS_TAG );
+			final Element timePointsElement = root.getChild( XmlKeys.SEQUENCEDESCRIPTION_TAG ).getChild( XmlKeys.TIMEPOINTS_TAG );
 			final XmlIoTimePoints xmlIoTimePoints = new XmlIoTimePoints();
 			final TimePoints timePoints = xmlIoTimePoints.fromXml( timePointsElement );
 			final int nTimePoints = timePoints == null ? 10 : timePoints.size();
