@@ -62,10 +62,7 @@ public class KeymapSettingsPage extends SelectAndEditProfileSettingsPage< StyleP
 	 */
 	public KeymapSettingsPage( final String treePath, final KeymapManager styleManager, final CommandDescriptions commandDescriptions )
 	{
-		super(
-				treePath,
-				new StyleProfileManager<>( styleManager, new KeymapManager( false ) ),
-				new KeymapProfileEditPanel( styleManager.getSelectedStyle(), commandDescriptions ) );
+		super( treePath, new StyleProfileManager<>( styleManager, new KeymapManager( false ) ), new KeymapProfileEditPanel( styleManager.getSelectedStyle(), commandDescriptions ) );
 	}
 
 	static class KeymapProfileEditPanel implements VisualEditorPanel.ConfigChangeListener, ProfileEditPanel< StyleProfile< Keymap > >

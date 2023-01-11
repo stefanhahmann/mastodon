@@ -75,9 +75,7 @@ public class DataContextListener< V extends Vertex< ? > & HasTimepoint & HasLabe
 		if ( previousContext != context )
 		{
 			previousContext = context;
-			dataContext = ( context == null )
-					? null
-					: new DataContext<>( idmap, graph, context );
+			dataContext = ( context == null ) ? null : new DataContext<>( idmap, graph, context );
 		}
 		if ( listener != null )
 			listener.contextChanged( dataContext );
@@ -97,10 +95,7 @@ public class DataContextListener< V extends Vertex< ? > & HasTimepoint & HasLabe
 
 		private final Context< V > context;
 
-		public DataContext(
-				final GraphIdBimap< V, ? > idmap,
-				final DataGraph< ?, ? > graph,
-				final Context< V > context )
+		public DataContext( final GraphIdBimap< V, ? > idmap, final DataGraph< ?, ? > graph, final Context< V > context )
 		{
 			this.idmap = idmap;
 			this.graph = graph;

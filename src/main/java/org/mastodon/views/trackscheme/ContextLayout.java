@@ -58,9 +58,7 @@ public class ContextLayout
 
 	private int previousMaxTimepoint;
 
-	public ContextLayout(
-			final TrackSchemeGraph< ?, ? > graph,
-			final LineageTreeLayout layout )
+	public ContextLayout( final TrackSchemeGraph< ?, ? > graph, final LineageTreeLayout layout )
 	{
 		this.graph = graph;
 		this.layout = layout;
@@ -86,10 +84,7 @@ public class ContextLayout
 	 *            method.
 	 * @return {@code true} if the layout was updated.
 	 */
-	public boolean buildContext(
-			final Context< TrackSchemeVertex > context,
-			final ScreenTransform transform,
-			final boolean forceUpdate )
+	public boolean buildContext( final Context< TrackSchemeVertex > context, final ScreenTransform transform, final boolean forceUpdate )
 	{
 		final int minTimepoint = ( int ) transform.getMinY();
 		final int maxTimepoint = ( int ) transform.getMaxY() + 1;
@@ -141,7 +136,7 @@ public class ContextLayout
 	 */
 	private void buildContextTraceParents( final TrackSchemeVertex tv, final int ghostmark, final int minTimepoint, final RefList< TrackSchemeVertex > roots )
 	{
-		if( tv.incomingEdges().isEmpty() )
+		if ( tv.incomingEdges().isEmpty() )
 			roots.add( tv );
 		else
 		{

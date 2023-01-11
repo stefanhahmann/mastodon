@@ -33,8 +33,7 @@ import org.mastodon.graph.Vertex;
 import org.mastodon.model.HasLabel;
 import org.mastodon.spatial.HasTimepoint;
 
-public class DefaultModelGraphProperties< V extends Vertex< E > & HasTimepoint & HasLabel, E extends Edge< V > >
-		implements ModelGraphProperties< V, E >
+public class DefaultModelGraphProperties< V extends Vertex< E > & HasTimepoint & HasLabel, E extends Edge< V > > implements ModelGraphProperties< V, E >
 {
 	@Override
 	public int getTimepoint( final V v )

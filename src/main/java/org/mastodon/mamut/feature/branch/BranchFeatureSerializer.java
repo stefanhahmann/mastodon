@@ -70,18 +70,9 @@ import org.mastodon.properties.IntPropertyMap;
 public interface BranchFeatureSerializer< F extends Feature< O >, O, Q > extends FeatureSerializer< F, O >
 {
 
-	public F deserialize(
-			FileIdToObjectMap< Q > idmap,
-			ObjectInputStream ois,
-			ModelBranchGraph branchGraph,
-			ModelGraph graph ) throws ClassNotFoundException, IOException;
+	public F deserialize( FileIdToObjectMap< Q > idmap, ObjectInputStream ois, ModelBranchGraph branchGraph, ModelGraph graph ) throws ClassNotFoundException, IOException;
 
-	public void serialize( 
-			final F feature, 
-			final ObjectToFileIdMap< Q > idmap, 
-			final ObjectOutputStream oos,
-			ModelBranchGraph branchGraph,
-			final ModelGraph graph ) throws IOException;
+	public void serialize( final F feature, final ObjectToFileIdMap< Q > idmap, final ObjectOutputStream oos, ModelBranchGraph branchGraph, final ModelGraph graph ) throws IOException;
 
 	/*
 	 * Deserialization utils.

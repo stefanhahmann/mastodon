@@ -167,15 +167,7 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 
 	private final Listeners.List< SelectionListener< T > > selectionListeners;
 
-	protected AbstractTagTable(
-			final C elements,
-			final Function< C, T > addElement,
-			final ToIntFunction< C > size,
-			final BiConsumer< C, T > remove,
-			final BiFunction< C, Integer, T > get,
-			final BiConsumer< T, String > setName,
-			final Function< T, String > getName,
-			final int numAdditionalCols )
+	protected AbstractTagTable( final C elements, final Function< C, T > addElement, final ToIntFunction< C > size, final BiConsumer< C, T > remove, final BiFunction< C, Integer, T > get, final BiConsumer< T, String > setName, final Function< T, String > getName, final int numAdditionalCols )
 	{
 		this.addElement = addElement;
 		this.size = size;
@@ -184,7 +176,8 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 		this.setName = setName;
 		this.getName = getName;
 
-		columnCount = 2 + numAdditionalCols; // name, additional stuff ..., buttons
+		columnCount = 2 + numAdditionalCols; // name, additional stuff ...,
+												// buttons
 		buttonColumn = columnCount - 1; // buttons in last column
 
 		tableModel = new MyTableModel();
@@ -201,9 +194,7 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 			if ( e.getValueIsAdjusting() )
 				return;
 			final int row = table.getSelectedRow();
-			final T selected = ( this.elements != null && row >= 0 && row < this.elements.size() )
-					? this.elements.get( row ).wrapped
-					: null;
+			final T selected = ( this.elements != null && row >= 0 && row < this.elements.size() ) ? this.elements.get( row ).wrapped : null;
 			selectionListeners.list.forEach( l -> l.selectionChanged( selected ) );
 		} );
 		table.getColumnModel().getColumn( 0 ).setCellRenderer( new MyTagSetRenderer() );
@@ -212,7 +203,7 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 		table.getColumnModel().getColumn( buttonColumn ).setMaxWidth( 32 );
 		table.addMouseListener( new MyTableButtonMouseListener() );
 		table.setShowGrid( false );
-		table.setIntercellSpacing( new Dimension( 0,0 ) );
+		table.setIntercellSpacing( new Dimension( 0, 0 ) );
 		table.setSurrendersFocusOnKeystroke( true );
 		table.setFocusTraversalKeys( KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null );
 		table.setFocusTraversalKeys( KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null );
@@ -386,8 +377,7 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 		}
 
 		@Override
-		public Component getTableCellRendererComponent( final JTable table, final Object value,
-				final boolean isSelected, final boolean hasFocus, final int row, final int column )
+		public Component getTableCellRendererComponent( final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column )
 		{
 			if ( row == elements.size() )
 				setIcon( ADD_ICON );

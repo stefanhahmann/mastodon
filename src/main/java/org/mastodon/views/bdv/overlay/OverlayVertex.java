@@ -36,8 +36,7 @@ import org.mastodon.spatial.HasTimepoint;
 import net.imglib2.RealLocalizable;
 import net.imglib2.RealPositionable;
 
-public interface OverlayVertex< O extends OverlayVertex< O, E >, E extends OverlayEdge< E, ? > >
-		extends Vertex< E >, Ref< O >, RealLocalizable, RealPositionable, HasTimepoint, HasLabel
+public interface OverlayVertex< O extends OverlayVertex< O, E >, E extends OverlayEdge< E, ? > > extends Vertex< E >, Ref< O >, RealLocalizable, RealPositionable, HasTimepoint, HasLabel
 {
 	public void getCovariance( final double[][] mat );
 

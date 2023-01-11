@@ -112,14 +112,7 @@ import org.scijava.listeners.Listeners;
  *
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  */
-public class TrackSchemeGraph<
-		V extends Vertex< E >,
-		E extends Edge< V > >
-	extends GraphImp<
-				TrackSchemeGraph.TrackSchemeVertexPool,
-				TrackSchemeGraph.TrackSchemeEdgePool,
-				TrackSchemeVertex, TrackSchemeEdge, ByteMappedElement >
-	implements GraphListener< V, E >, GraphChangeNotifier, GraphChangeListener, ViewGraph< V, E, TrackSchemeVertex, TrackSchemeEdge >
+public class TrackSchemeGraph< V extends Vertex< E >, E extends Edge< V > > extends GraphImp< TrackSchemeGraph.TrackSchemeVertexPool, TrackSchemeGraph.TrackSchemeEdgePool, TrackSchemeVertex, TrackSchemeEdge, ByteMappedElement > implements GraphListener< V, E >, GraphChangeNotifier, GraphChangeListener, ViewGraph< V, E, TrackSchemeVertex, TrackSchemeEdge >
 {
 	private final ListenableReadOnlyGraph< V, E > modelGraph;
 
@@ -159,10 +152,7 @@ public class TrackSchemeGraph<
 	 * @param modelGraphProperties
 	 *            an accessor for properties of the model graph.
 	 */
-	public TrackSchemeGraph(
-			final ListenableReadOnlyGraph< V, E > modelGraph,
-			final GraphIdBimap< V, E > idmap,
-			final ModelGraphProperties< V, E > modelGraphProperties )
+	public TrackSchemeGraph( final ListenableReadOnlyGraph< V, E > modelGraph, final GraphIdBimap< V, E > idmap, final ModelGraphProperties< V, E > modelGraphProperties )
 	{
 		this( modelGraph, idmap, modelGraphProperties, new ReentrantReadWriteLock() );
 	}
@@ -179,11 +169,7 @@ public class TrackSchemeGraph<
 	 * @param lock
 	 *            read/write locks for the model graph
 	 */
-	public TrackSchemeGraph(
-			final ListenableReadOnlyGraph< V, E > modelGraph,
-			final GraphIdBimap< V, E > idmap,
-			final ModelGraphProperties< V, E > modelGraphProperties,
-			final ReentrantReadWriteLock lock )
+	public TrackSchemeGraph( final ListenableReadOnlyGraph< V, E > modelGraph, final GraphIdBimap< V, E > idmap, final ModelGraphProperties< V, E > modelGraphProperties, final ReentrantReadWriteLock lock )
 	{
 		this( modelGraph, idmap, modelGraphProperties, lock, 10000 );
 	}
@@ -204,23 +190,14 @@ public class TrackSchemeGraph<
 	 * @param initialCapacity
 	 *            the initial capacity for the graph storage.
 	 */
-	public TrackSchemeGraph(
-			final ListenableReadOnlyGraph< V, E > modelGraph,
-			final GraphIdBimap< V, E > idmap,
-			final ModelGraphProperties< V, E > modelGraphProperties,
-			final ReentrantReadWriteLock lock,
-			final int initialCapacity )
+	public TrackSchemeGraph( final ListenableReadOnlyGraph< V, E > modelGraph, final GraphIdBimap< V, E > idmap, final ModelGraphProperties< V, E > modelGraphProperties, final ReentrantReadWriteLock lock, final int initialCapacity )
 	{
-		super( new TrackSchemeEdgePool(
-				initialCapacity,
-				new TrackSchemeVertexPool(
-						initialCapacity,
-						new ModelGraphWrapper<>( idmap, modelGraphProperties ) ) ) );
+		super( new TrackSchemeEdgePool( initialCapacity, new TrackSchemeVertexPool( initialCapacity, new ModelGraphWrapper<>( idmap, modelGraphProperties ) ) ) );
 		this.modelGraph = modelGraph;
 		this.modelGraphProperties = modelGraphProperties;
 		this.lock = lock;
 		this.idmap = idmap;
-		idToTrackSchemeVertex =	new IntRefArrayMap<>( vertexPool );
+		idToTrackSchemeVertex = new IntRefArrayMap<>( vertexPool );
 		idToTrackSchemeEdge = new IntRefArrayMap<>( edgePool );
 		roots = new RefSetImp<>( vertexPool );
 		mv = modelGraph.vertexRef();
@@ -518,7 +495,8 @@ public class TrackSchemeGraph<
 		}
 	}
 
-//	@Override // TODO: should be implemented for some listener interface, or REMOVE? (vertices never change timepoint?)
+	// @Override // TODO: should be implemented for some listener interface, or
+	// REMOVE? (vertices never change timepoint?)
 	public void vertexTimepointChanged( final V vertex )
 	{
 		idToTrackSchemeVertex.get( idmap.getVertexId( vertex ), tsv ).updateTimepointFromModel();
@@ -553,12 +531,19 @@ public class TrackSchemeGraph<
 	static class TrackSchemeVertexLayout extends AbstractVertexLayout
 	{
 		final IndexField origVertexIndex = indexField();
+
 		final IntField layoutTimeStamp = intField();
+
 		final IndexField layoutInEdgeIndex = indexField();
+
 		final DoubleField layoutX = doubleField();
+
 		final IntField firstTimepoint = intField();
+
 		final IntField timepoint = intField();
+
 		final IndexField screenVertexIndex = indexField();
+
 		final BooleanField ghost = booleanField();
 	}
 
@@ -569,12 +554,19 @@ public class TrackSchemeGraph<
 		final ModelGraphWrapper< ?, ? > modelGraphWrapper;
 
 		final IndexAttribute< TrackSchemeVertex > origVertexIndex = new IndexAttribute<>( vertexLayout.origVertexIndex, this );
+
 		final IntAttribute< TrackSchemeVertex > layoutTimeStamp = new IntAttribute<>( vertexLayout.layoutTimeStamp, this );
+
 		final IndexAttribute< TrackSchemeVertex > layoutInEdgeIndex = new IndexAttribute<>( vertexLayout.layoutInEdgeIndex, this );
+
 		final DoubleAttribute< TrackSchemeVertex > layoutX = new DoubleAttribute<>( vertexLayout.layoutX, this );
+
 		final IntAttribute< TrackSchemeVertex > firstTimepoint = new IntAttribute<>( vertexLayout.firstTimepoint, this );
+
 		final IntAttribute< TrackSchemeVertex > timepoint = new IntAttribute<>( vertexLayout.timepoint, this );
+
 		final IndexAttribute< TrackSchemeVertex > screenVertexIndex = new IndexAttribute<>( vertexLayout.screenVertexIndex, this );
+
 		final BooleanAttribute< TrackSchemeVertex > ghost = new BooleanAttribute<>( vertexLayout.ghost, this );
 
 		private TrackSchemeVertexPool( final int initialCapacity, final ModelGraphWrapper< ?, ? > modelGraphWrapper )
@@ -593,6 +585,7 @@ public class TrackSchemeGraph<
 	static class TrackSchemeEdgeLayout extends AbstractEdgeLayout
 	{
 		final IndexField origEdgeIndex = indexField();
+
 		final IndexField screenEdgeIndex = indexField();
 	}
 
@@ -603,6 +596,7 @@ public class TrackSchemeGraph<
 		final ModelGraphWrapper< ?, ? > modelGraphWrapper;
 
 		final IndexAttribute< TrackSchemeEdge > origEdgeIndex = new IndexAttribute<>( edgeLayout.origEdgeIndex, this );
+
 		final IndexAttribute< TrackSchemeEdge > screenEdgeIndex = new IndexAttribute<>( edgeLayout.screenEdgeIndex, this );
 
 		private TrackSchemeEdgePool( final int initialCapacity, final TrackSchemeVertexPool vertexPool )

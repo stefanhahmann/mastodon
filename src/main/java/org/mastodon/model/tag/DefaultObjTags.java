@@ -53,9 +53,7 @@ public class DefaultObjTags< O > implements ObjTags< O >
 
 	private final Map< TagSet, DefaultObjTagMap< O, Tag > > tagSetToTagMap = new HashMap<>();
 
-	public DefaultObjTags(
-			final LabelSets< O, Integer > idLabelSets,
-			final TagSetStructure tagSetStructure )
+	public DefaultObjTags( final LabelSets< O, Integer > idLabelSets, final TagSetStructure tagSetStructure )
 	{
 		this.idLabelSets = idLabelSets;
 		update( tagSetStructure );

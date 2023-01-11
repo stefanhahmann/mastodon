@@ -61,14 +61,11 @@ class ModelSerializer implements GraphSerializer< Spot, Link >
 		return edgeSerializer;
 	}
 
-
 	static class SpotSerializer extends PoolObjectAttributeSerializer< Spot >
 	{
 		public SpotSerializer()
 		{
-			super(
-					AbstractVertexPool.layout.getSizeInBytes(),
-					SpotPool.layout.getSizeInBytes() - AbstractVertexPool.layout.getSizeInBytes() );
+			super( AbstractVertexPool.layout.getSizeInBytes(), SpotPool.layout.getSizeInBytes() - AbstractVertexPool.layout.getSizeInBytes() );
 		}
 
 		@Override
@@ -82,9 +79,7 @@ class ModelSerializer implements GraphSerializer< Spot, Link >
 	{
 		public LinkSerializer()
 		{
-			super(
-					AbstractEdgePool.layout.getSizeInBytes(),
-					LinkPool.layout.getSizeInBytes() - AbstractEdgePool.layout.getSizeInBytes() );
+			super( AbstractEdgePool.layout.getSizeInBytes(), LinkPool.layout.getSizeInBytes() - AbstractEdgePool.layout.getSizeInBytes() );
 		}
 
 		@Override

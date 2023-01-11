@@ -486,8 +486,8 @@ public class ScreenVertexMath
 			return;
 
 		/*
-		 * decompose the upper 2x2 sub-matrix of S, i.e., the spot
-		 * covariance in XY of the viewer coordinate system.
+		 * decompose the upper 2x2 sub-matrix of S, i.e., the spot covariance in
+		 * XY of the viewer coordinate system.
 		 */
 		eig2.decomposeSymmetric( vS );
 		final double[] eigVals2 = eig2.getRealEigenvalues();
@@ -560,7 +560,8 @@ public class ScreenVertexMath
 			iS[ 1 ][ 0 ] = iS[ 0 ][ 1 ];
 			iS[ 1 ][ 1 ] = radius2 / b2;
 			/*
-			 * now iS is the 2D covariance ellipsoid of transformed circle with radius
+			 * now iS is the 2D covariance ellipsoid of transformed circle with
+			 * radius
 			 */
 
 			eig2.decomposeSymmetric( iS );

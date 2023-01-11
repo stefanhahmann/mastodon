@@ -93,9 +93,7 @@ public class KeymapManager extends AbstractStyleManager< KeymapManager, Keymap >
 			synchronized ( KeymapManager.class )
 			{
 				if ( loadedBuiltinStyles == null )
-					loadedBuiltinStyles = Arrays.asList(
-							loadBuiltinStyle( "Default", "keyconf_mastodon.yaml" ),
-							loadBuiltinStyle( "All BDV keys", "keyconf_fullbdv.yaml" ) );
+					loadedBuiltinStyles = Arrays.asList( loadBuiltinStyle( "Default", "keyconf_mastodon.yaml" ), loadBuiltinStyle( "All BDV keys", "keyconf_fullbdv.yaml" ) );
 			}
 			return loadedBuiltinStyles;
 		}
@@ -202,9 +200,7 @@ public class KeymapManager extends AbstractStyleManager< KeymapManager, Keymap >
 		{
 			new File( directory ).mkdirs();
 
-			final KeymapsListIO keymapsList = new KeymapsListIO(
-					selectedStyle.getName(),
-					userStyles.stream().map( Keymap::getName ).collect( Collectors.toList() ) );
+			final KeymapsListIO keymapsList = new KeymapsListIO( selectedStyle.getName(), userStyles.stream().map( Keymap::getName ).collect( Collectors.toList() ) );
 
 			String filename = KEYMAPS_PATH + "/keymaps.yaml";
 			final FileWriter output = new FileWriter( filename );

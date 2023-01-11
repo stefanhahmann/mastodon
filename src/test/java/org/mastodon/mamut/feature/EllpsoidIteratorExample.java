@@ -72,13 +72,7 @@ public class EllpsoidIteratorExample
 		final BdvStackSource< UnsignedByteType > bdv = BdvFunctions.show( img, "img", Bdv.options().sourceTransform( sourceTransform ) );
 
 		final ModelGraph graph = new ModelGraph();
-		final Spot spot = graph.addVertex().init( 0,
-				new double[] { 50, 50, 50 },
-				new double[][] {
-						{ 210, 100, 0 },
-						{ 100, 110, 10 },
-						{ 0, 10, 100 }
-				} );
+		final Spot spot = graph.addVertex().init( 0, new double[] { 50, 50, 50 }, new double[][] { { 210, 100, 0 }, { 100, 110, 10 }, { 0, 10, 100 } } );
 
 		final Source< UnsignedByteType > source = bdv.getSources().get( 0 ).getSpimSource();
 		final EllipsoidIterable< UnsignedByteType > ellipsoidIter = new EllipsoidIterable<>( source );
@@ -126,7 +120,6 @@ public class EllpsoidIteratorExample
 
 		BdvFunctions.showOverlay( overlay, "spot", Bdv.options().addTo( bdv ) );
 	}
-
 
 	// copy of ScreenVertexMath from BDV view using Spot instead of ScreenVertex
 	static class ScreenVertexMath
@@ -600,8 +593,8 @@ public class EllpsoidIteratorExample
 				}
 			}
 			/*
-			 * now T and TS^T transform from unit sphere to covariance ellipsoid and
-			 * vice versa
+			 * now T and TS^T transform from unit sphere to covariance ellipsoid
+			 * and vice versa
 			 */
 
 			final double[] vx = TS[ 0 ];
@@ -638,7 +631,8 @@ public class EllpsoidIteratorExample
 				iS[ 1 ][ 0 ] = iS[ 0 ][ 1 ];
 				iS[ 1 ][ 1 ] = radius2 / b2;
 				/*
-				 * now iS is the 2D covariance ellipsoid of transformed circle with radius
+				 * now iS is the 2D covariance ellipsoid of transformed circle
+				 * with radius
 				 */
 
 				eig2.decomposeSymmetric( iS );

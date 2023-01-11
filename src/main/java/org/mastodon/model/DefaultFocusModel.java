@@ -43,8 +43,7 @@ import org.scijava.listeners.Listeners;
  * @param <E>
  *            the of model edges.
  */
-public class DefaultFocusModel< V extends Vertex< E >, E extends Edge< V > >
-		implements FocusModel< V, E >, GraphListener< V, E >
+public class DefaultFocusModel< V extends Vertex< E >, E extends Edge< V > > implements FocusModel< V, E >, GraphListener< V, E >
 {
 	private final GraphIdBimap< V, E > idmap;
 
@@ -62,7 +61,7 @@ public class DefaultFocusModel< V extends Vertex< E >, E extends Edge< V > >
 	@Override
 	public synchronized void focusVertex( final V vertex )
 	{
-		final int id = ( vertex == null ) ? - 1 : idmap.getVertexId( vertex );
+		final int id = ( vertex == null ) ? -1 : idmap.getVertexId( vertex );
 		if ( focusVertexId != id )
 		{
 			focusVertexId = id;
@@ -73,8 +72,7 @@ public class DefaultFocusModel< V extends Vertex< E >, E extends Edge< V > >
 	@Override
 	public synchronized V getFocusedVertex( final V ref )
 	{
-		return ( focusVertexId < 0 ) ?
-				null : idmap.getVertex( focusVertexId, ref );
+		return ( focusVertexId < 0 ) ? null : idmap.getVertex( focusVertexId, ref );
 	}
 
 	@Override
@@ -93,13 +91,15 @@ public class DefaultFocusModel< V extends Vertex< E >, E extends Edge< V > >
 	public void graphRebuilt()
 	{
 		focusVertex( null );
-// TODO: notifyListeners(); ? (This may change the layout and we might want to re-center on the focused vertex
+		// TODO: notifyListeners(); ? (This may change the layout and we might
+		// want to re-center on the focused vertex
 	}
 
 	@Override
 	public void vertexAdded( final V vertex )
 	{
-// TODO: notifyListeners(); ? (This may change the layout and we might want to re-center on the focused vertex
+		// TODO: notifyListeners(); ? (This may change the layout and we might
+		// want to re-center on the focused vertex
 	}
 
 	@Override
@@ -107,7 +107,8 @@ public class DefaultFocusModel< V extends Vertex< E >, E extends Edge< V > >
 	{
 		if ( focusVertexId == idmap.getVertexId( vertex ) )
 			focusVertex( null );
-// TODO: notifyListeners(); ? (This may change the layout and we might want to re-center on the focused vertex
+		// TODO: notifyListeners(); ? (This may change the layout and we might
+		// want to re-center on the focused vertex
 	}
 
 	@Override

@@ -28,7 +28,8 @@
  */
 package org.mastodon.views.bdv.overlay.wrap;
 
-public interface OverlayProperties< V, E > // TODO: rename to ModelGraphProperties ???
+public interface OverlayProperties< V, E > // TODO: rename to
+											// ModelGraphProperties ???
 {
 	public void localize( V v, final double[] position );
 

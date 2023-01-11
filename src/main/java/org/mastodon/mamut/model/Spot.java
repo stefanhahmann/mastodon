@@ -55,15 +55,15 @@ public final class Spot extends AbstractSpot< Spot, Link, SpotPool, ByteMappedEl
 
 	private void covarianceFromRadiusSquared( final double rsqu, final double[][] cov )
 	{
-		for( int row = 0; row < 3; ++row )
-			for( int col = 0; col < 3; ++col )
+		for ( int row = 0; row < 3; ++row )
+			for ( int col = 0; col < 3; ++col )
 				cov[ row ][ col ] = ( row == col ) ? rsqu : 0;
 	}
 
 	private void setCovarianceInternal( final double[][] cov )
 	{
 		int i = 0;
-		for( int row = 0; row < 3; ++row )
+		for ( int row = 0; row < 3; ++row )
 			for ( int col = row; col < 3; ++col )
 				pool.covariance.setQuiet( this, i++, cov[ row ][ col ] );
 	}
@@ -71,7 +71,7 @@ public final class Spot extends AbstractSpot< Spot, Link, SpotPool, ByteMappedEl
 	private void getCovarianceInternal( final double[][] cov )
 	{
 		int i = 0;
-		for( int row = 0; row < 3; ++row )
+		for ( int row = 0; row < 3; ++row )
 		{
 			cov[ row ][ row ] = pool.covariance.get( this, i++ );
 			for ( int col = row + 1; col < 3; ++col )
@@ -182,12 +182,7 @@ public final class Spot extends AbstractSpot< Spot, Link, SpotPool, ByteMappedEl
 	@Override
 	public String toString()
 	{
-		return String.format( "Spot( %d, X=%.2f, Y=%.2f, Z=%.2f, tp=%d )",
-				getInternalPoolIndex(),
-				getDoublePosition( 0 ),
-				getDoublePosition( 1 ),
-				getDoublePosition( 2 ),
-				getTimepoint() );
+		return String.format( "Spot( %d, X=%.2f, Y=%.2f, Z=%.2f, tp=%d )", getInternalPoolIndex(), getDoublePosition( 0 ), getDoublePosition( 1 ), getDoublePosition( 2 ), getTimepoint() );
 	}
 
 	Spot( final SpotPool pool )

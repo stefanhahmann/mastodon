@@ -315,11 +315,7 @@ public class MamutExporter
 		// Image attributes.
 		final Document document = getSAXParsedDocument( project.getDatasetXmlFile().getAbsolutePath() );
 
-		final List< Element > viewSetupsElements = document
-				.getRootElement()
-				.getChild( XmlKeys.SEQUENCEDESCRIPTION_TAG )
-				.getChild( XmlKeys.VIEWSETUPS_TAG )
-				.getChildren( XmlKeys.VIEWSETUP_TAG );
+		final List< Element > viewSetupsElements = document.getRootElement().getChild( XmlKeys.SEQUENCEDESCRIPTION_TAG ).getChild( XmlKeys.VIEWSETUPS_TAG ).getChildren( XmlKeys.VIEWSETUP_TAG );
 		double pixelWidth = 1.;
 		double pixelHeight = 1.0;
 		double voxelDepth = 1.0;
@@ -332,9 +328,7 @@ public class MamutExporter
 			if ( null != ( vs = vsEl.getChild( XmlKeys.VIEWSETUP_VOXELSIZE_TAG ) ) && null != ( uel = vs.getChild( XmlKeys.VOXELDIMENSIONS_SIZE_TAG ) ) )
 			{
 				final String val = uel.getContent( 0 ).getValue();
-				final double[] calibration = Arrays.stream( val.split( " " ) )
-						.mapToDouble( Double::parseDouble )
-						.toArray();
+				final double[] calibration = Arrays.stream( val.split( " " ) ).mapToDouble( Double::parseDouble ).toArray();
 				pixelWidth = calibration[ 0 ];
 				pixelHeight = calibration[ 1 ];
 				voxelDepth = calibration[ 2 ];
@@ -344,9 +338,7 @@ public class MamutExporter
 			if ( null != ( sel = vsEl.getChild( XmlKeys.VIEWSETUP_SIZE_TAG ) ) )
 			{
 				final String val = sel.getContent( 0 ).getValue();
-				final int[] sizes = Arrays.stream( val.split( " " ) )
-						.mapToInt( Integer::parseInt )
-						.toArray();
+				final int[] sizes = Arrays.stream( val.split( " " ) ).mapToInt( Integer::parseInt ).toArray();
 				width = sizes[ 0 ];
 				height = sizes[ 1 ];
 				nslices = sizes[ 2 ];
@@ -359,10 +351,7 @@ public class MamutExporter
 		attributes.add( new Attribute( PIXEL_HEIGHT_ATTRIBUTE, Double.toString( pixelHeight ) ) );
 		attributes.add( new Attribute( VOXEL_DEPTH_ATTRIBUTE, Double.toString( voxelDepth ) ) );
 
-		final Element timePointsElement = document
-				.getRootElement()
-				.getChild( XmlKeys.SEQUENCEDESCRIPTION_TAG )
-				.getChild( XmlKeys.TIMEPOINTS_TAG );
+		final Element timePointsElement = document.getRootElement().getChild( XmlKeys.SEQUENCEDESCRIPTION_TAG ).getChild( XmlKeys.TIMEPOINTS_TAG );
 		int nframes = 1;
 		final XmlIoTimePoints xmlIoTimePoints = new XmlIoTimePoints();
 		try
@@ -479,10 +468,7 @@ public class MamutExporter
 		try
 		{
 			final Document document = getSAXParsedDocument( project.getDatasetXmlFile().getAbsolutePath() );
-			final Element timePointsElement = document
-					.getRootElement()
-					.getChild( XmlKeys.SEQUENCEDESCRIPTION_TAG )
-					.getChild( XmlKeys.TIMEPOINTS_TAG );
+			final Element timePointsElement = document.getRootElement().getChild( XmlKeys.SEQUENCEDESCRIPTION_TAG ).getChild( XmlKeys.TIMEPOINTS_TAG );
 			final XmlIoTimePoints xmlIoTimePoints = new XmlIoTimePoints();
 			final TimePoints timePoints = xmlIoTimePoints.fromXml( timePointsElement );
 			tps = timePoints.getTimePointsOrdered();
@@ -520,9 +506,7 @@ public class MamutExporter
 		attributes.add( new Attribute( EDGE_TARGET_ATTRIBUTE, Integer.toString( targetSpotID ) ) );
 
 		// Link features.
-		linkFeatureProjections.forEach( p -> attributes.add( new Attribute(
-				p.attributeName,
-				Double.toString( p.projection.value( edge ) ) ) ) );
+		linkFeatureProjections.forEach( p -> attributes.add( new Attribute( p.attributeName, Double.toString( p.projection.value( edge ) ) ) ) );
 
 		final Element edgeElement = new Element( EDGE_TAG );
 		edgeElement.setAttributes( attributes );
@@ -575,9 +559,7 @@ public class MamutExporter
 		attributes.add( new Attribute( RADIUS_FEATURE_NAME, Double.toString( meanRadius ) ) );
 
 		// Spot features.
-		spotFeatureProjections.forEach( p -> attributes.add( new Attribute(
-				p.attributeName,
-				Double.toString( p.projection.value( spot ) ) ) ) );
+		spotFeatureProjections.forEach( p -> attributes.add( new Attribute( p.attributeName, Double.toString( p.projection.value( spot ) ) ) ) );
 
 		final Element spotElement = new Element( SPOT_ELEMENT_TAG );
 		spotElement.setAttributes( attributes );
@@ -608,9 +590,7 @@ public class MamutExporter
 		final Element classFeaturesElement = new Element( classFeatureDeclarationTag );
 		for ( final ExportFeatureProjection< T > p : projections )
 		{
-			final String isint = ( p.projection instanceof IntFeatureProjection )
-					? "true"
-					: "false";
+			final String isint = ( p.projection instanceof IntFeatureProjection ) ? "true" : "false";
 
 			final Element fel = new Element( FEATURE_TAG );
 			fel.setAttribute( FEATURE_ATTRIBUTE, p.attributeName );
@@ -692,10 +672,7 @@ public class MamutExporter
 	 *            the type of the data item.
 	 * @return a new list of exported feature projections.
 	 */
-	public static < T > List< ExportFeatureProjection< T > > getExportFeatureProjections(
-			final FeatureModel featureModel,
-			final Class< T > target,
-			final Class< ? > trackMateImporterFeatureClass )
+	public static < T > List< ExportFeatureProjection< T > > getExportFeatureProjections( final FeatureModel featureModel, final Class< T > target, final Class< ? > trackMateImporterFeatureClass )
 	{
 		/*
 		 * First iteration: collect all projection names that are NOT coming
@@ -719,9 +696,7 @@ public class MamutExporter
 				for ( final FeatureProjection< T > projection : feature.projections() )
 				{
 					final String pname = projection.getKey().getSpec().getKey();
-					final String name = isScalarFeature( fspec )
-							? getProjectionExportName( fname )
-							: getProjectionExportName( fname, pname, projection.getKey().getSourceIndices() );
+					final String name = isScalarFeature( fspec ) ? getProjectionExportName( fname ) : getProjectionExportName( fname, pname, projection.getKey().getSourceIndices() );
 					featureModelProjections.add( sanitize( name ) );
 				}
 			}
@@ -753,9 +728,7 @@ public class MamutExporter
 				{
 					final String pname = projection.getKey().getSpec().getKey();
 
-					final String name = isScalarFeature( fspec )
-							? getProjectionExportName( fname )
-							: getProjectionExportName( fname, pname, projection.getKey().getSourceIndices() );
+					final String name = isScalarFeature( fspec ) ? getProjectionExportName( fname ) : getProjectionExportName( fname, pname, projection.getKey().getSourceIndices() );
 
 					/*
 					 * Avoid re-exporting features that were imported from
@@ -768,9 +741,7 @@ public class MamutExporter
 					 * TrackMate_Spot_features_TrackMate_Spot_features_Track_N_spots
 					 * --> ...
 					 */
-					final String croppedName = reExport
-							? name.substring( 1 + TrackMateImportedSpotFeatures.KEY.length() )
-							: name;
+					final String croppedName = reExport ? name.substring( 1 + TrackMateImportedSpotFeatures.KEY.length() ) : name;
 
 					/*
 					 * To avoid name clash between re-imported feature and
@@ -827,7 +798,7 @@ public class MamutExporter
 	public static < T > Set< String > getLikelyExportedFeatureProjections( final FeatureSpecsService specsService, final int numSources, final Class< T > target )
 	{
 		final HashSet< String > names = new HashSet<>();
-		if (null == specsService)
+		if ( null == specsService )
 			return names;
 
 		final List< FeatureSpec< ?, T > > fspecs = specsService.getSpecs( target );
@@ -842,7 +813,7 @@ public class MamutExporter
 			for ( final FeatureProjectionSpec pspec : fspec.getProjectionSpecs() )
 			{
 				final String pname = pspec.getKey();
-				switch( fspec.getMultiplicity() )
+				switch ( fspec.getMultiplicity() )
 				{
 				case SINGLE:
 					names.add( sanitize( getProjectionExportName( fname, pname ) ) );

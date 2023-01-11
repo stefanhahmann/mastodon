@@ -78,9 +78,7 @@ public class CloseWindowActions
 	 * @param frame
 	 *            Actions are targeted at this window.
 	 */
-	public static void install(
-			final Actions actions,
-			final JFrame frame )
+	public static void install( final Actions actions, final JFrame frame )
 	{
 		actions.namedAction( new CloseWindowAction( frame, CLOSE_WINDOW ), CLOSE_WINDOW_KEYS );
 	}
@@ -94,9 +92,7 @@ public class CloseWindowActions
 	 * @param dialog
 	 *            Actions are targeted at this dialog.
 	 */
-	public static void install(
-			final Actions actions,
-			final JDialog dialog )
+	public static void install( final Actions actions, final JDialog dialog )
 	{
 		actions.namedAction( new CloseWindowAction( dialog, CLOSE_DIALOG ), CLOSE_DIALOG_KEYS );
 	}

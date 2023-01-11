@@ -197,13 +197,7 @@ public class TgmmImportDialog
 				@Override
 				public void actionPerformed( final ActionEvent e )
 				{
-					final File file = FileChooser.chooseFile(
-							Dialog.this,
-							pathTextField.getText(),
-							null,
-							null,
-							FileChooser.DialogType.LOAD,
-							FileChooser.SelectionMode.DIRECTORIES_ONLY );
+					final File file = FileChooser.chooseFile( Dialog.this, pathTextField.getText(), null, null, FileChooser.DialogType.LOAD, FileChooser.SelectionMode.DIRECTORIES_ONLY );
 					if ( file != null )
 						pathTextField.setText( file.getAbsolutePath() );
 				}

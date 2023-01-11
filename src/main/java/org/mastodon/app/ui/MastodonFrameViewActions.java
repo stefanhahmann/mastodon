@@ -45,9 +45,11 @@ import org.scijava.ui.behaviour.util.Actions;
 public class MastodonFrameViewActions
 {
 	public static final String TOGGLE_SETTINGS_PANEL = "toggle settings panel";
+
 	public static final String CLOSE_WINDOW = "close window";
 
 	static final String[] TOGGLE_SETTINGS_PANEL_KEYS = new String[] { "T" };
+
 	static final String[] CLOSE_WINDOW_KEYS = new String[] { "ctrl W", "meta W" };
 
 	/*
@@ -84,9 +86,7 @@ public class MastodonFrameViewActions
 	 * @param view
 	 *            Actions are targeted at this view.
 	 */
-	public static void install(
-			final Actions actions,
-			final IMastodonFrameView view )
+	public static void install( final Actions actions, final IMastodonFrameView view )
 	{
 		final MastodonFrameViewActions ba = new MastodonFrameViewActions( view );
 

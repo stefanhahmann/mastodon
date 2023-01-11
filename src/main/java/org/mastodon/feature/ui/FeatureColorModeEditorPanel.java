@@ -81,11 +81,7 @@ public class FeatureColorModeEditorPanel extends JPanel
 
 	private final Runnable update;
 
-	public FeatureColorModeEditorPanel(
-			final FeatureColorMode mode,
-			final FeatureRangeCalculator rangeCalculator,
-			final String vertexName,
-			final String edgeName )
+	public FeatureColorModeEditorPanel( final FeatureColorMode mode, final FeatureRangeCalculator rangeCalculator, final String vertexName, final String edgeName )
 	{
 		setPreferredSize( new Dimension( 400, 550 ) );
 		this.mode = mode;
@@ -167,11 +163,11 @@ public class FeatureColorModeEditorPanel extends JPanel
 		panelEdgeColoringTitle.setLayout( panelEdgeColoringTitleLayout );
 		final JLabel lbl2 = new JLabel( "Coloring " + edgeName + "s" );
 		lbl2.setFont( getFont().deriveFont( Font.BOLD ) );
-		
-		final JButton buttonCopy = new JButton( "Copy from " +vertexName + " settings" );
+
+		final JButton buttonCopy = new JButton( "Copy from " + vertexName + " settings" );
 		buttonCopy.setFont( getFont().deriveFont( getFont().getSize2D() - 2f ) );
 		buttonCopy.addActionListener( e -> copyFromVertexSettings() );
-		
+
 		panelEdgeColoringTitle.add( lbl2 );
 		panelEdgeColoringTitle.add( Box.createHorizontalGlue() );
 		panelEdgeColoringTitle.add( buttonCopy );

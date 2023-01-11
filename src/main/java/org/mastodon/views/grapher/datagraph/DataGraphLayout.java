@@ -91,9 +91,7 @@ public class DataGraphLayout< V extends Vertex< E > & HasTimepoint & HasLabel, E
 
 	private boolean paintEdges;
 
-	public DataGraphLayout(
-			final DataGraph< V, E > dataGraph,
-			final SelectionModel< DataVertex, DataEdge > selection )
+	public DataGraphLayout( final DataGraph< V, E > dataGraph, final SelectionModel< DataVertex, DataEdge > selection )
 	{
 		this.dataGraph = dataGraph;
 		this.selection = selection;
@@ -232,9 +230,7 @@ public class DataGraphLayout< V extends Vertex< E > & HasTimepoint & HasLabel, E
 
 		if ( xpe != null )
 		{
-			final Edges< E > edges = ( incomingEdge )
-					? v.incomingEdges()
-					: v.outgoingEdges();
+			final Edges< E > edges = ( incomingEdge ) ? v.incomingEdges() : v.outgoingEdges();
 			if ( edges.size() != 1 )
 				return Double.NaN;
 			return xpe.value( edges.iterator().next() );
@@ -331,12 +327,7 @@ public class DataGraphLayout< V extends Vertex< E > & HasTimepoint & HasLabel, E
 		return currentLayoutMaxY;
 	}
 
-	public void cropAndScale(
-			final ScreenTransform transform,
-			final ScreenEntities screenEntities,
-			final int decorationsOffsetX,
-			final int decorationsOffsetY,
-			final GraphColorGenerator< DataVertex, DataEdge > colorGenerator )
+	public void cropAndScale( final ScreenTransform transform, final ScreenEntities screenEntities, final int decorationsOffsetX, final int decorationsOffsetY, final GraphColorGenerator< DataVertex, DataEdge > colorGenerator )
 	{
 		if ( kdtree == null )
 			return;

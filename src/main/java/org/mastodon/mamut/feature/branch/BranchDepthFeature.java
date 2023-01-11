@@ -66,13 +66,7 @@ public class BranchDepthFeature implements Feature< BranchSpot >
 	{
 		public Spec()
 		{
-			super(
-					KEY,
-					HELP_STRING,
-					BranchDepthFeature.class,
-					BranchSpot.class,
-					Multiplicity.SINGLE,
-					PROJECTION_SPEC );
+			super( KEY, HELP_STRING, BranchDepthFeature.class, BranchSpot.class, Multiplicity.SINGLE, PROJECTION_SPEC );
 		}
 	}
 

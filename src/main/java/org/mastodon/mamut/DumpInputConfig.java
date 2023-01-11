@@ -84,11 +84,11 @@ public class DumpInputConfig
 		final CommandDescriptionsBuilder builder = new CommandDescriptionsBuilder();
 		context.inject( builder );
 
-		builder.addManually( new CloseWindowActions.Descriptions(), KeyConfigContexts.MASTODON);
-		builder.addManually( new ProjectManager.Descriptions(), KeyConfigContexts.MASTODON);
-		builder.addManually( new UndoActions.Descriptions(), KeyConfigContexts.MASTODON);
-		builder.addManually( new SelectionActions.Descriptions(), KeyConfigContexts.MASTODON);
-		builder.addManually( new WindowManager.Descriptions(), KeyConfigContexts.MASTODON);
+		builder.addManually( new CloseWindowActions.Descriptions(), KeyConfigContexts.MASTODON );
+		builder.addManually( new ProjectManager.Descriptions(), KeyConfigContexts.MASTODON );
+		builder.addManually( new UndoActions.Descriptions(), KeyConfigContexts.MASTODON );
+		builder.addManually( new SelectionActions.Descriptions(), KeyConfigContexts.MASTODON );
+		builder.addManually( new WindowManager.Descriptions(), KeyConfigContexts.MASTODON );
 
 		builder.addManually( new MastodonFrameViewActions.Descriptions(), KeyConfigContexts.BIGDATAVIEWER );
 		builder.addManually( new TransformEventHandler3DDescriptions(), KeyConfigContexts.BIGDATAVIEWER );

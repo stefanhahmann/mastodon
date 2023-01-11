@@ -49,11 +49,7 @@ public class FeatureGraphConfig
 
 	private final boolean connect;
 
-	public FeatureGraphConfig(
-			final FeatureSpecPair xFeature,
-			final FeatureSpecPair yFeature,
-			final GraphDataItemsSource itemSource,
-			final boolean connect )
+	public FeatureGraphConfig( final FeatureSpecPair xFeature, final FeatureSpecPair yFeature, final GraphDataItemsSource itemSource, final boolean connect )
 	{
 		this.xFeature = xFeature;
 		this.yFeature = yFeature;
@@ -84,10 +80,6 @@ public class FeatureGraphConfig
 	@Override
 	public String toString()
 	{
-		return super.toString() +
-				"\n - xFeature: " + xFeature +
-				"\n - yFeature: " + yFeature +
-				"\n - item source: " + itemSource +
-				"\n - show edge: " + connect;
+		return super.toString() + "\n - xFeature: " + xFeature + "\n - yFeature: " + yFeature + "\n - item source: " + itemSource + "\n - show edge: " + connect;
 	}
 }

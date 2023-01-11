@@ -38,9 +38,11 @@ import org.scijava.ui.behaviour.util.Actions;
 public class UndoActions
 {
 	public static final String UNDO = "undo";
+
 	public static final String REDO = "redo";
 
 	static final String[] UNDO_KEYS = new String[] { "meta Z", "ctrl Z" };
+
 	static final String[] REDO_KEYS = new String[] { "meta shift Z", "ctrl shift Z" };
 
 	/*
@@ -72,9 +74,7 @@ public class UndoActions
 	 *            Actions are targeted at this {@link Model}s {@code undo()} and
 	 *            {@code redo()} methods.
 	 */
-	public static void install(
-			final Actions actions,
-			final Model model )
+	public static void install( final Actions actions, final Model model )
 	{
 		actions.runnableAction( model::undo, UNDO, UNDO_KEYS );
 		actions.runnableAction( model::redo, REDO, REDO_KEYS );

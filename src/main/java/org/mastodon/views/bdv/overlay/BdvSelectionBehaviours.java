@@ -44,13 +44,19 @@ import org.scijava.ui.behaviour.util.Behaviours;
 public class BdvSelectionBehaviours< V extends OverlayVertex< V, E >, E extends OverlayEdge< E, V > >
 {
 	public static final String FOCUS_VERTEX = "bdv click focus vertex";
+
 	public static final String NAVIGATE_TO_VERTEX = "bdv click navigate to vertex";
+
 	public static final String SELECT = "bdv click select";
+
 	public static final String ADD_SELECT = "bdv click add to selection";
 
 	private static final String[] FOCUS_VERTEX_KEYS = new String[] { "button1", "shift button1" };
+
 	private static final String[] NAVIGATE_TO_VERTEX_KEYS = new String[] { "double-click button1", "shift double-click button1" };
+
 	private static final String[] SELECT_KEYS = new String[] { "button1" };
+
 	private static final String[] ADD_SELECT_KEYS = new String[] { "shift button1" };
 
 	/*
@@ -75,6 +81,7 @@ public class BdvSelectionBehaviours< V extends OverlayVertex< V, E >, E extends 
 	}
 
 	public static final double EDGE_SELECT_DISTANCE_TOLERANCE = 5.0;
+
 	public static final double POINT_SELECT_DISTANCE_TOLERANCE = 8.0;
 
 	private final ClickFocusBehaviour focusVertexBehaviour;
@@ -85,13 +92,7 @@ public class BdvSelectionBehaviours< V extends OverlayVertex< V, E >, E extends 
 
 	private final ClickSelectionBehaviour addSelectBehaviour;
 
-	public static < V extends OverlayVertex< V, E >, E extends OverlayEdge< E, V > > void install(
-			final Behaviours behaviours,
-			final OverlayGraph< V, E > overlayGraph,
-			final OverlayGraphRenderer< V, E > renderer,
-			final SelectionModel< V, E > selection,
-			final FocusModel< V, E > focus,
-			final NavigationHandler< V, E > navigation )
+	public static < V extends OverlayVertex< V, E >, E extends OverlayEdge< E, V > > void install( final Behaviours behaviours, final OverlayGraph< V, E > overlayGraph, final OverlayGraphRenderer< V, E > renderer, final SelectionModel< V, E > selection, final FocusModel< V, E > focus, final NavigationHandler< V, E > navigation )
 	{
 		final BdvSelectionBehaviours< V, E > sb = new BdvSelectionBehaviours<>( overlayGraph, renderer, selection, focus, navigation );
 
@@ -113,12 +114,7 @@ public class BdvSelectionBehaviours< V extends OverlayVertex< V, E >, E extends 
 
 	private final NavigationHandler< V, E > navigation;
 
-	private BdvSelectionBehaviours(
-			final OverlayGraph< V, E > overlayGraph,
-			final OverlayGraphRenderer< V, E > renderer,
-			final SelectionModel< V, E > selection,
-			final FocusModel< V, E > focus,
-			final NavigationHandler< V, E > navigation )
+	private BdvSelectionBehaviours( final OverlayGraph< V, E > overlayGraph, final OverlayGraphRenderer< V, E > renderer, final SelectionModel< V, E > selection, final FocusModel< V, E > focus, final NavigationHandler< V, E > navigation )
 	{
 		this.overlayGraph = overlayGraph;
 		this.lock = overlayGraph.getLock();
@@ -206,7 +202,15 @@ public class BdvSelectionBehaviours< V extends OverlayVertex< V, E >, E extends 
 		lock.readLock().lock();
 		try
 		{
-			focus.focusVertex( renderer.getVertexAt( x, y, POINT_SELECT_DISTANCE_TOLERANCE, vertex ) ); // if clicked outside, getVertexAt == null, clears the focus.
+			focus.focusVertex( renderer.getVertexAt( x, y, POINT_SELECT_DISTANCE_TOLERANCE, vertex ) ); // if
+																										// clicked
+																										// outside,
+																										// getVertexAt
+																										// ==
+																										// null,
+																										// clears
+																										// the
+																										// focus.
 		}
 		finally
 		{

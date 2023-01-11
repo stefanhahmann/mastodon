@@ -32,8 +32,7 @@ import org.mastodon.graph.Edge;
 import org.mastodon.graph.Vertex;
 import org.mastodon.views.bdv.overlay.OverlayEdge;
 
-public class OverlayEdgeWrapper< V extends Vertex< E >, E extends Edge< V > >
-	implements OverlayEdge< OverlayEdgeWrapper< V, E >, OverlayVertexWrapper< V, E > >
+public class OverlayEdgeWrapper< V extends Vertex< E >, E extends Edge< V > > implements OverlayEdge< OverlayEdgeWrapper< V, E >, OverlayVertexWrapper< V, E > >
 {
 	private final OverlayGraphWrapper< V, E > wrapper;
 
@@ -117,8 +116,7 @@ public class OverlayEdgeWrapper< V extends Vertex< E >, E extends Edge< V > >
 	@Override
 	public boolean equals( final Object obj )
 	{
-		return obj instanceof OverlayEdgeWrapper< ?, ? > &&
-				we.equals( ( ( OverlayEdgeWrapper< ?, ? > ) obj ).we );
+		return obj instanceof OverlayEdgeWrapper< ?, ? > && we.equals( ( ( OverlayEdgeWrapper< ?, ? > ) obj ).we );
 	}
 
 	/**

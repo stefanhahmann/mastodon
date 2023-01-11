@@ -45,12 +45,7 @@ public class PNGFolderBDVRecorder extends AbstractBDVRecorder
 
 	private final File targetFolder;
 
-	protected PNGFolderBDVRecorder(
-			final ViewerPanel viewer,
-			final OverlayGraphRenderer< ?, ? > tracksOverlay,
-			final ColorBarOverlay colorBarOverlay,
-			final ProgressWriter progressWriter,
-			final File targetFolder )
+	protected PNGFolderBDVRecorder( final ViewerPanel viewer, final OverlayGraphRenderer< ?, ? > tracksOverlay, final ColorBarOverlay colorBarOverlay, final ProgressWriter progressWriter, final File targetFolder )
 	{
 		super( viewer, tracksOverlay, colorBarOverlay, progressWriter );
 		this.targetFolder = targetFolder;

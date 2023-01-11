@@ -56,9 +56,7 @@ import org.mastodon.views.bdv.overlay.OverlayGraph;
  *
  * @author Tobias Pietzsch
  */
-public class OverlayGraphWrapper< V extends Vertex< E >, E extends Edge< V > > implements
-		OverlayGraph< OverlayVertexWrapper< V, E >, OverlayEdgeWrapper< V, E > >,
-		ViewGraph< V, E, OverlayVertexWrapper< V, E >, OverlayEdgeWrapper< V, E > >
+public class OverlayGraphWrapper< V extends Vertex< E >, E extends Edge< V > > implements OverlayGraph< OverlayVertexWrapper< V, E >, OverlayEdgeWrapper< V, E > >, ViewGraph< V, E, OverlayVertexWrapper< V, E >, OverlayEdgeWrapper< V, E > >
 {
 	final ReadOnlyGraph< V, E > wrappedGraph;
 
@@ -78,18 +76,13 @@ public class OverlayGraphWrapper< V extends Vertex< E >, E extends Edge< V > > i
 
 	private final RefBimap< E, OverlayEdgeWrapper< V, E > > edgeMap;
 
-	public OverlayGraphWrapper(
-			final ReadOnlyGraph< V, E > graph,
-			final GraphIdBimap< V, E > idmap,
-			final SpatioTemporalIndex< V > graphIndex,
-			final ReentrantReadWriteLock lock,
-			final OverlayProperties< V, E > overlayProperties )
+	public OverlayGraphWrapper( final ReadOnlyGraph< V, E > graph, final GraphIdBimap< V, E > idmap, final SpatioTemporalIndex< V > graphIndex, final ReentrantReadWriteLock lock, final OverlayProperties< V, E > overlayProperties )
 	{
 		this.wrappedGraph = graph;
 		this.idmap = idmap;
 		this.lock = lock;
 		this.overlayProperties = overlayProperties;
-		tmpVertexRefs =	new ConcurrentLinkedQueue<>();
+		tmpVertexRefs = new ConcurrentLinkedQueue<>();
 		tmpEdgeRefs = new ConcurrentLinkedQueue<>();
 		wrappedIndex = new SpatioTemporalIndexWrapper<>( this, graphIndex );
 		vertexMap = new OverlayVertexWrapperBimap<>( this );
@@ -135,12 +128,14 @@ public class OverlayGraphWrapper< V extends Vertex< E >, E extends Edge< V > > i
 		return edge.orNull();
 	}
 
-	@Override public Edges< OverlayEdgeWrapper< V, E > > getEdges( final OverlayVertexWrapper< V, E > source, final OverlayVertexWrapper< V, E > target )
+	@Override
+	public Edges< OverlayEdgeWrapper< V, E > > getEdges( final OverlayVertexWrapper< V, E > source, final OverlayVertexWrapper< V, E > target )
 	{
 		return getEdges( source, target, vertexRef() );
 	}
 
-	@Override public Edges< OverlayEdgeWrapper< V, E > > getEdges( final OverlayVertexWrapper< V, E > source, final OverlayVertexWrapper< V, E > target, final OverlayVertexWrapper< V, E > ref )
+	@Override
+	public Edges< OverlayEdgeWrapper< V, E > > getEdges( final OverlayVertexWrapper< V, E > source, final OverlayVertexWrapper< V, E > target, final OverlayVertexWrapper< V, E > ref )
 	{
 		final Edges< E > wes = wrappedGraph.getEdges( source.wv, target.wv, ref.wv );
 		ref.edges.wrap( wes );

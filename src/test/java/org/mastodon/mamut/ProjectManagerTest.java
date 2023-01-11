@@ -77,8 +77,9 @@ public class ProjectManagerTest
 		// 1. Open mastodon project and save it
 		openAndSaveMastodonProject( tinyExampleProject, projectA );
 		assertProjectContainsBackupDatasetXml( projectA );
-		// 2. Move mastodon project to new location, relative path to dataset.xml gets lost
-		Path newLocation = Files.createTempDirectory("mastodon-test");
+		// 2. Move mastodon project to new location, relative path to
+		// dataset.xml gets lost
+		Path newLocation = Files.createTempDirectory( "mastodon-test" );
 		Path projectB = newLocation.resolve( "moved-project.mastodon" );
 		Files.move( projectA, projectB );
 		assertProjectContainsBackupDatasetXml( projectB );
@@ -91,8 +92,7 @@ public class ProjectManagerTest
 		assertProjectContainsBackupDatasetXml( projectC );
 	}
 
-	private void openAndSaveMastodonProject( Path open, Path save )
-			throws IOException, SpimDataException
+	private void openAndSaveMastodonProject( Path open, Path save ) throws IOException, SpimDataException
 	{
 		WindowManager windowManager = new WindowManager( context );
 		MamutProject project = new MamutProjectIO().load( open.toFile().getAbsolutePath() );
@@ -100,23 +100,23 @@ public class ProjectManagerTest
 		windowManager.getProjectManager().saveProject( save.toFile() );
 	}
 
-	private void assertProjectContainsBackupDatasetXml( Path project )
-			throws IOException
+	private void assertProjectContainsBackupDatasetXml( Path project ) throws IOException
 	{
-		try ( ZipFile zipFile = new ZipFile( project.toFile() ) )
+		try (ZipFile zipFile = new ZipFile( project.toFile() ))
 		{
-			boolean containsBackupXml = zipFile.stream()
-					.anyMatch( entry -> "dataset.xml.backup".equals( entry.getName() ) );
+			boolean containsBackupXml = zipFile.stream().anyMatch( entry -> "dataset.xml.backup".equals( entry.getName() ) );
 			assertTrue( containsBackupXml );
 		}
 	}
 
 	private Path resourceAsFile( String resourceName )
 	{
-		try {
+		try
+		{
 			return Paths.get( ProjectManagerTest.class.getResource( resourceName ).toURI() );
 		}
-		catch ( URISyntaxException e ) {
+		catch ( URISyntaxException e )
+		{
 			throw new RuntimeException( e );
 		}
 	}

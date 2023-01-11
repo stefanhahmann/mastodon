@@ -35,8 +35,7 @@ import org.mastodon.graph.GraphChangeListener;
 import org.mastodon.graph.GraphChangeNotifier;
 import org.mastodon.spatial.SpatioTemporalIndex;
 
-public interface OverlayGraph< V extends OverlayVertex< V, E >, E extends OverlayEdge< E, V > >
-		extends Graph< V, E >, GraphChangeNotifier
+public interface OverlayGraph< V extends OverlayVertex< V, E >, E extends OverlayEdge< E, V > > extends Graph< V, E >, GraphChangeNotifier
 {
 	public SpatioTemporalIndex< V > getIndex();
 

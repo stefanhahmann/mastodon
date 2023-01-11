@@ -104,10 +104,7 @@ public class GraphFeatureUpdateListeners
 		}
 
 		@SuppressWarnings( "unchecked" )
-		private static < O > void featuresOfTarget(
-				final FeatureModel featureModel,
-				final Class< O > targetClass,
-				final List< Feature< O > > featureList )
+		private static < O > void featuresOfTarget( final FeatureModel featureModel, final Class< O > targetClass, final List< Feature< O > > featureList )
 		{
 			featureList.clear();
 			for ( final FeatureSpec< ?, ? > fs : featureModel.getFeatureSpecs() )

@@ -45,16 +45,13 @@ import org.mastodon.collection.RefSet;
  *
  * @author Tobias Pietzsch
  */
-public class RefSetAdapter< O, WO >
-		implements RefSet< WO >
+public class RefSetAdapter< O, WO > implements RefSet< WO >
 {
 	private final RefSet< O > set;
 
 	private final RefBimap< O, WO > map;
 
-	public RefSetAdapter(
-			final RefSet< O > set,
-			final RefBimap< O, WO > map )
+	public RefSetAdapter( final RefSet< O > set, final RefBimap< O, WO > map )
 	{
 		this.set = set;
 		this.map = map;

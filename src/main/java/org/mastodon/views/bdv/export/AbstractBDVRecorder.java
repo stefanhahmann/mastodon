@@ -64,11 +64,7 @@ public abstract class AbstractBDVRecorder
 
 	protected final ProgressWriter progressWriter;
 
-	protected AbstractBDVRecorder(
-			final ViewerPanel viewer,
-			final OverlayGraphRenderer< ?, ? > tracksOverlay,
-			final ColorBarOverlay colorBarOverlay,
-			final ProgressWriter progressWriter )
+	protected AbstractBDVRecorder( final ViewerPanel viewer, final OverlayGraphRenderer< ?, ? > tracksOverlay, final ColorBarOverlay colorBarOverlay, final ProgressWriter progressWriter )
 	{
 		this.viewer = viewer;
 		this.tracksOverlay = tracksOverlay;
@@ -76,11 +72,7 @@ public abstract class AbstractBDVRecorder
 		this.progressWriter = progressWriter;
 	}
 
-	public void recordMaxProjectionMovie(
-			final int width, final int height,
-			final int minTimepointIndex, final int maxTimepointIndex,
-			final double stepSize, final int numSteps,
-			final boolean projectOverlay )
+	public void recordMaxProjectionMovie( final int width, final int height, final int minTimepointIndex, final int maxTimepointIndex, final double stepSize, final int numSteps, final boolean projectOverlay )
 	{
 		initializeRecorder( width, height );
 
@@ -147,11 +139,7 @@ public abstract class AbstractBDVRecorder
 				{
 					final int current = acc.get();
 					final int in = c.next().get();
-					acc.set( ARGBType.rgba(
-							Math.max( ARGBType.red( in ), ARGBType.red( current ) ),
-							Math.max( ARGBType.green( in ), ARGBType.green( current ) ),
-							Math.max( ARGBType.blue( in ), ARGBType.blue( current ) ),
-							Math.max( ARGBType.alpha( in ), ARGBType.alpha( current ) ) ) );
+					acc.set( ARGBType.rgba( Math.max( ARGBType.red( in ), ARGBType.red( current ) ), Math.max( ARGBType.green( in ), ARGBType.green( current ) ), Math.max( ARGBType.blue( in ), ARGBType.blue( current ) ), Math.max( ARGBType.alpha( in ), ARGBType.alpha( current ) ) ) );
 				}
 			}
 
@@ -168,9 +156,7 @@ public abstract class AbstractBDVRecorder
 			}
 		}
 		final MyTarget target = new MyTarget();
-		final MultiResolutionRenderer renderer = new MultiResolutionRenderer(
-				target, () -> {}, new double[] { 1 }, 0, 1, null, false,
-				viewer.getOptionValues().getAccumulateProjectorFactory(), new CacheControl.Dummy() );
+		final MultiResolutionRenderer renderer = new MultiResolutionRenderer( target, () -> {}, new double[] { 1 }, 0, 1, null, false, viewer.getOptionValues().getAccumulateProjectorFactory(), new CacheControl.Dummy() );
 
 		// Mastodon overlays.
 		if ( tracksOverlay != null )
@@ -188,10 +174,7 @@ public abstract class AbstractBDVRecorder
 
 			for ( int step = 0; step < numSteps; ++step )
 			{
-				affine.set(
-						1, 0, 0, 0,
-						0, 1, 0, 0,
-						0, 0, 1, -dd * stepSize * ( step - numSteps / 2 ) );
+				affine.set( 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -dd * stepSize * ( step - numSteps / 2 ) );
 				affine.concatenate( tGV );
 				renderState.setViewerTransform( affine );
 				renderer.requestRepaint();
@@ -223,10 +206,7 @@ public abstract class AbstractBDVRecorder
 				{
 					for ( int step = 0; step < numSteps; ++step )
 					{
-						affine.set(
-								1, 0, 0, 0,
-								0, 1, 0, 0,
-								0, 0, 1, -dd * stepSize * ( step - numSteps / 2 ) );
+						affine.set( 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -dd * stepSize * ( step - numSteps / 2 ) );
 						affine.concatenate( tGV );
 
 						if ( tracksOverlay != null )
@@ -252,11 +232,7 @@ public abstract class AbstractBDVRecorder
 		closeRecorder();
 	}
 
-	public void record(
-			final int width,
-			final int height,
-			final int minTimepointIndex,
-			final int maxTimepointIndex )
+	public void record( final int width, final int height, final int minTimepointIndex, final int maxTimepointIndex )
 	{
 		initializeRecorder( width, height );
 
@@ -310,9 +286,7 @@ public abstract class AbstractBDVRecorder
 			}
 		}
 		final MyTarget target = new MyTarget();
-		final MultiResolutionRenderer renderer = new MultiResolutionRenderer(
-				target, () -> {}, new double[] { 1 }, 0, 1, null, false,
-				viewer.getOptionValues().getAccumulateProjectorFactory(), new CacheControl.Dummy() );
+		final MultiResolutionRenderer renderer = new MultiResolutionRenderer( target, () -> {}, new double[] { 1 }, 0, 1, null, false, viewer.getOptionValues().getAccumulateProjectorFactory(), new CacheControl.Dummy() );
 
 		// Mastodon overlays.
 		if ( tracksOverlay != null )

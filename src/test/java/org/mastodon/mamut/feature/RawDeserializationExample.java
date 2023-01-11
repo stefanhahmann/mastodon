@@ -101,8 +101,7 @@ public class RawDeserializationExample
 	private static void deserializeRawLinkVelocity( final String filename ) throws IOException
 	{
 		final StringBuilder str = new StringBuilder();
-		try (
-				final FileInputStream fis = new FileInputStream( filename );
+		try (final FileInputStream fis = new FileInputStream( filename );
 				final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( fis, 1024 * 1024 ) ))
 		{
 			// UNITS.
@@ -116,8 +115,7 @@ public class RawDeserializationExample
 	private static void deserializeRawSpotIntensity( final String filename ) throws FileNotFoundException, IOException
 	{
 		final StringBuilder str = new StringBuilder();
-		try (
-				final FileInputStream fis = new FileInputStream( filename );
+		try (final FileInputStream fis = new FileInputStream( filename );
 				final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( fis, 1024 * 1024 ) ))
 		{
 			// NUMBER OF SOURCES.
@@ -153,8 +151,7 @@ public class RawDeserializationExample
 	private static void deserializeRawSpotNLinks( final String filename ) throws FileNotFoundException, IOException
 	{
 		final StringBuilder str = new StringBuilder();
-		try (
-				final FileInputStream fis = new FileInputStream( filename );
+		try (final FileInputStream fis = new FileInputStream( filename );
 				final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( fis, 1024 * 1024 ) ))
 		{
 			// NUMBER OF ENTRIES.

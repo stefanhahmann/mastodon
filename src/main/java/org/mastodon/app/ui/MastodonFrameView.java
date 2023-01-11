@@ -67,15 +67,7 @@ import org.scijava.ui.behaviour.util.WrappedInputMap;
  *
  * @author Tobias Pietzsch
  */
-public class MastodonFrameView<
-		M extends MastodonAppModel< ?, MV, ME >,
-		VG extends ViewGraph< MV, ME, V, E >,
-		MV extends AbstractSpot< MV, ME, ?, ?, ? >,
-		ME extends AbstractListenableEdge< ME, MV, ?, ? >,
-		V extends Vertex< E >,
-		E extends Edge< V > >
-	extends MastodonView< M, VG, MV, ME, V, E >
-	implements IMastodonFrameView
+public class MastodonFrameView< M extends MastodonAppModel< ?, MV, ME >, VG extends ViewGraph< MV, ME, V, E >, MV extends AbstractSpot< MV, ME, ?, ?, ? >, ME extends AbstractListenableEdge< ME, MV, ?, ? >, V extends Vertex< E >, E extends Edge< V > > extends MastodonView< M, VG, MV, ME, V, E > implements IMastodonFrameView
 {
 	protected ViewFrame frame;
 
@@ -85,10 +77,7 @@ public class MastodonFrameView<
 
 	protected Behaviours viewBehaviours;
 
-	public MastodonFrameView(
-			final M appModel,
-			final VG viewGraph,
-			final String[] keyConfigContexts )
+	public MastodonFrameView( final M appModel, final VG viewGraph, final String[] keyConfigContexts )
 	{
 		super( appModel, viewGraph );
 

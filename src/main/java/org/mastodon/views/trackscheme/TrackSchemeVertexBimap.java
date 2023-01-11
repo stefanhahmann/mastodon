@@ -33,8 +33,7 @@ import org.mastodon.graph.Edge;
 import org.mastodon.graph.GraphIdBimap;
 import org.mastodon.graph.Vertex;
 
-public class TrackSchemeVertexBimap< V extends Vertex< E >, E extends Edge< V > >
-		implements RefBimap< V, TrackSchemeVertex >
+public class TrackSchemeVertexBimap< V extends Vertex< E >, E extends Edge< V > > implements RefBimap< V, TrackSchemeVertex >
 {
 	private final GraphIdBimap< V, E > idmap;
 

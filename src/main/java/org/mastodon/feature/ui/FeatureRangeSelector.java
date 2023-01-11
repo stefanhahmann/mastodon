@@ -126,10 +126,7 @@ public abstract class FeatureRangeSelector extends JPanel
 	{
 		final double l1 = ( ( Number ) min.getValue() ).doubleValue();
 		final double l2 = ( ( Number ) max.getValue() ).doubleValue();
-		final double[] val = new double[] {
-				Math.min( l1, l2 ),
-				Math.max( l1, l2 )
-		};
+		final double[] val = new double[] { Math.min( l1, l2 ), Math.max( l1, l2 ) };
 		listeners.forEach( c -> c.accept( val ) );
 	}
 

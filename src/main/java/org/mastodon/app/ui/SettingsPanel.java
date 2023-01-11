@@ -221,7 +221,6 @@ public class SettingsPanel extends JPanel
 		pages.repaint();
 	}
 
-
 	public SettingsPanel()
 	{
 		root = new DefaultMutableTreeNode( new SettingsNodeData( "root", null ) );
@@ -252,26 +251,25 @@ public class SettingsPanel extends JPanel
 		tree.setBackgroundSelectionColor( bg );
 		tree.setCellRenderer( renderer );
 
-		tree.getSelectionModel().addTreeSelectionListener(
-				new TreeSelectionListener()
+		tree.getSelectionModel().addTreeSelectionListener( new TreeSelectionListener()
+		{
+			@Override
+			public void valueChanged( final TreeSelectionEvent e )
+			{
+				final DefaultMutableTreeNode selectedNode = ( DefaultMutableTreeNode ) tree.getLastSelectedPathComponent();
+				if ( selectedNode != null )
 				{
-					@Override
-					public void valueChanged( final TreeSelectionEvent e )
-					{
-						final DefaultMutableTreeNode selectedNode = ( DefaultMutableTreeNode ) tree.getLastSelectedPathComponent();
-						if ( selectedNode != null )
-						{
-							setBreadCrumbs( selectedNode );
-							final SettingsNodeData data = ( SettingsNodeData ) selectedNode.getUserObject();
-							if ( data.page != null )
-								cardLayout.show( pages, data.page.getTreePath() );
-						}
-					}
-				} );
+					setBreadCrumbs( selectedNode );
+					final SettingsNodeData data = ( SettingsNodeData ) selectedNode.getUserObject();
+					if ( data.page != null )
+						cardLayout.show( pages, data.page.getTreePath() );
+				}
+			}
+		} );
 
-		final JButton cancel = new JButton("Cancel");
-		apply = new JButton("Apply");
-		final JButton ok = new JButton("OK");
+		final JButton cancel = new JButton( "Cancel" );
+		apply = new JButton( "Apply" );
+		final JButton ok = new JButton( "OK" );
 		final JPanel buttons = new JPanel();
 		buttons.setLayout( new BoxLayout( buttons, BoxLayout.LINE_AXIS ) );
 		buttons.add( Box.createHorizontalGlue() );

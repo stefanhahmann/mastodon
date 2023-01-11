@@ -53,9 +53,7 @@ public class DataDisplayAutoFocus implements FocusModel< DataVertex, DataEdge >,
 
 	private final RealPoint centerPos = new RealPoint( 2 );
 
-	public DataDisplayAutoFocus(
-			final DataGraphLayout< ?, ? > layout,
-			final FocusModel< DataVertex, DataEdge > focus )
+	public DataDisplayAutoFocus( final DataGraphLayout< ?, ? > layout, final FocusModel< DataVertex, DataEdge > focus )
 	{
 		this.layout = layout;
 		this.focus = focus;

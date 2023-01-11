@@ -225,23 +225,14 @@ public class DummyBdvPanel extends JPanel
 		 * Wrapped model.
 		 */
 
-		final OverlayGraphWrapper< Spot, Link > viewGraph = new OverlayGraphWrapper<>(
-				graph,
-				idmap,
-				spatioTemporalIndex,
-				graph.getLock(),
-				new ModelOverlayProperties( graph, radiusStats ) );
+		final OverlayGraphWrapper< Spot, Link > viewGraph = new OverlayGraphWrapper<>( graph, idmap, spatioTemporalIndex, graph.getLock(), new ModelOverlayProperties( graph, radiusStats ) );
 		final RefBimap< Spot, OverlayVertexWrapper< Spot, Link > > vertexMap = viewGraph.getVertexMap();
 		final RefBimap< Link, OverlayEdgeWrapper< Spot, Link > > edgeMap = viewGraph.getEdgeMap();
 
-		final SelectionModelAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > viewSelection =
-				new SelectionModelAdapter<>( selection, vertexMap, edgeMap );
-		final FocusModelAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > viewFocus =
-				new FocusModelAdapter<>( focus, vertexMap, edgeMap );
-		final HighlightModelAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > viewHighlight =
-				new HighlightModelAdapter<>( highlight, vertexMap, edgeMap );
-		final GraphColorGeneratorAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > viewColoring =
-				new GraphColorGeneratorAdapter<>( vertexMap, edgeMap );
+		final SelectionModelAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > viewSelection = new SelectionModelAdapter<>( selection, vertexMap, edgeMap );
+		final FocusModelAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > viewFocus = new FocusModelAdapter<>( focus, vertexMap, edgeMap );
+		final HighlightModelAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > viewHighlight = new HighlightModelAdapter<>( highlight, vertexMap, edgeMap );
+		final GraphColorGeneratorAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > viewColoring = new GraphColorGeneratorAdapter<>( vertexMap, edgeMap );
 		viewColoring.setColorGenerator( coloring );
 
 		/*

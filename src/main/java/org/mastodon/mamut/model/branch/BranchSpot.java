@@ -27,6 +27,7 @@
  * #L%
  */
 package org.mastodon.mamut.model.branch;
+
 import org.mastodon.RefPool;
 import org.mastodon.graph.ref.AbstractListenableVertex;
 import org.mastodon.mamut.model.Spot;
@@ -37,8 +38,7 @@ import org.mastodon.spatial.HasTimepoint;
 
 import net.imglib2.RealLocalizable;
 
-public class BranchSpot extends AbstractListenableVertex< BranchSpot, BranchLink, BranchSpotPool, ByteMappedElement >
-		implements HasTimepoint, HasLabel, RealLocalizable
+public class BranchSpot extends AbstractListenableVertex< BranchSpot, BranchLink, BranchSpotPool, ByteMappedElement > implements HasTimepoint, HasLabel, RealLocalizable
 {
 
 	private final RefPool< Spot > vertexBimap;

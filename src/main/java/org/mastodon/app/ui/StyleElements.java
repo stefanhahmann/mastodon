@@ -217,8 +217,7 @@ public class StyleElements
 	public interface StyleElement
 	{
 		public default void update()
-		{
-		}
+		{}
 
 		public void accept( StyleElementVisitor visitor );
 	}
