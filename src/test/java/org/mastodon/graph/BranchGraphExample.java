@@ -28,17 +28,16 @@
  */
 package org.mastodon.graph;
 
-import java.io.IOException;
-import java.util.Locale;
-
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
 import org.mastodon.mamut.MainWindow;
 import org.mastodon.mamut.WindowManager;
 import org.mastodon.mamut.project.MamutProject;
 import org.mastodon.mamut.project.MamutProjectIO;
 import org.scijava.Context;
+
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import java.io.IOException;
+import java.util.Locale;
 
 public class BranchGraphExample
 {
@@ -49,8 +48,8 @@ public class BranchGraphExample
 		try (final Context context = new Context())
 		{
 			final String projectPath = "samples/test_branchgraph.mastodon";
-//			final String projectPath = "samples/mette_e1.mastodon";
-//			final String projectPath = "samples/mette_e1_small.mastodon";
+			//			final String projectPath = "samples/mette_e1.mastodon";
+			//			final String projectPath = "samples/mette_e1_small.mastodon";
 			final MamutProject project = new MamutProjectIO().load( projectPath );
 
 			final WindowManager wm = new WindowManager( context );
@@ -71,7 +70,8 @@ public class BranchGraphExample
 		{
 			UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
 		}
-		catch ( ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e )
+		catch ( ClassNotFoundException | InstantiationException
+				| IllegalAccessException | UnsupportedLookAndFeelException e )
 		{
 			e.printStackTrace();
 		}

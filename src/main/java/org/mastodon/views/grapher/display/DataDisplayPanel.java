@@ -79,15 +79,7 @@ import bdv.viewer.OverlayRenderer;
 import bdv.viewer.TransformListener;
 import bdv.viewer.render.PainterThread;
 
-public class DataDisplayPanel< V extends Vertex< E > & HasTimepoint & HasLabel, E extends Edge< V > > extends JPanel implements
-		TransformListener< ScreenTransform >,
-		PainterThread.Paintable,
-		HighlightListener,
-		FocusListener,
-		GraphChangeListener,
-		SelectionListener,
-		NavigationListener< DataVertex, DataEdge >,
-		ContextListener< DataVertex >
+public class DataDisplayPanel< V extends Vertex< E > & HasTimepoint & HasLabel, E extends Edge< V > > extends JPanel implements TransformListener< ScreenTransform >, PainterThread.Paintable, HighlightListener, FocusListener, GraphChangeListener, SelectionListener, NavigationListener< DataVertex, DataEdge >, ContextListener< DataVertex >
 {
 	private static final long serialVersionUID = 1L;
 
@@ -197,14 +189,7 @@ public class DataDisplayPanel< V extends Vertex< E > & HasTimepoint & HasLabel, 
 	 */
 	private boolean trackContext;
 
-	public DataDisplayPanel(
-			final DataGraph< V, E > graph,
-			final DataGraphLayout< V, E > layout,
-			final HighlightModel< DataVertex, DataEdge > highlight,
-			final FocusModel< DataVertex, DataEdge > focus,
-			final SelectionModel< DataVertex, DataEdge > selection,
-			final NavigationHandler< DataVertex, DataEdge > navigation,
-			final DataDisplayOptions optional )
+	public DataDisplayPanel( final DataGraph< V, E > graph, final DataGraphLayout< V, E > layout, final HighlightModel< DataVertex, DataEdge > highlight, final FocusModel< DataVertex, DataEdge > focus, final SelectionModel< DataVertex, DataEdge > selection, final NavigationHandler< DataVertex, DataEdge > navigation, final DataDisplayOptions optional )
 	{
 		super( new BorderLayout(), false );
 		this.graph = graph;
@@ -562,8 +547,7 @@ public class DataDisplayPanel< V extends Vertex< E > & HasTimepoint & HasLabel, 
 		{
 			final double lx = v.getLayoutX();
 			final double ly = v.getLayoutY();
-			if ( currentTransform.getMaxX() < lx || currentTransform.getMinX() > lx
-					|| currentTransform.getMaxY() < ly || currentTransform.getMinY() > ly )
+			if ( currentTransform.getMaxX() < lx || currentTransform.getMinX() > lx || currentTransform.getMaxY() < ly || currentTransform.getMinY() > ly )
 			{
 				transformEventHandler.centerOn( lx, ly );
 			}
@@ -803,10 +787,7 @@ public class DataDisplayPanel< V extends Vertex< E > & HasTimepoint & HasLabel, 
 			{
 				layout.cropAndScale( transform, screenEntities, offsetAxes.getWidth(), offsetAxes.getHeight(), colorGenerator );
 				swapIpEnd();
-				interpolator = new ScreenEntitiesInterpolator(
-						screenEntitiesIpStart,
-						screenEntitiesIpEnd,
-						null );
+				interpolator = new ScreenEntitiesInterpolator( screenEntitiesIpStart, screenEntitiesIpEnd, null );
 			}
 			else
 			{
@@ -952,9 +933,7 @@ public class DataDisplayPanel< V extends Vertex< E > & HasTimepoint & HasLabel, 
 		return vertices;
 	}
 
-	private RefSet< DataVertex > fromTrackOfSelection(
-			final RefSet< DataVertex > selectedVertices,
-			final RefSet< DataEdge > selectedEdges )
+	private RefSet< DataVertex > fromTrackOfSelection( final RefSet< DataVertex > selectedVertices, final RefSet< DataEdge > selectedEdges )
 	{
 		final RefSet< DataVertex > toSearch = RefCollections.createRefSet( graph.vertices() );
 		toSearch.addAll( selectedVertices );

@@ -28,12 +28,7 @@
  */
 package org.mastodon.mamut.importer;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-
+import mpicbg.spim.data.SpimDataException;
 import org.jdom2.JDOMException;
 import org.mastodon.feature.Feature;
 import org.mastodon.feature.FeatureModel;
@@ -50,7 +45,11 @@ import org.mastodon.mamut.project.MamutProject;
 import org.mastodon.mamut.project.MamutProjectIO;
 import org.scijava.Context;
 
-import mpicbg.spim.data.SpimDataException;
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 
 public class MaMuTExportExample
 {
@@ -80,7 +79,6 @@ public class MaMuTExportExample
 		final Map< FeatureSpec< ?, ? >, Feature< ? > > features = featureComputerService.compute( featureKeys );
 		System.out.println( "Done." );
 
-
 		for ( final FeatureSpec< ?, ? > fs : features.keySet() )
 		{
 			System.out.println( " - " + fs.getKey() );
@@ -91,13 +89,12 @@ public class MaMuTExportExample
 				System.out.println( "   - " + projection.getKey() );
 		}
 
-
 		/*
 		 * 1.1b. Pass them to the feature model.
 		 */
 
 		featureModel.clear();
-		for ( final FeatureSpec< ?, ? > spec: features.keySet() )
+		for ( final FeatureSpec< ?, ? > spec : features.keySet() )
 			featureModel.declareFeature( features.get( spec ) );
 
 		System.out.println();
@@ -137,7 +134,7 @@ public class MaMuTExportExample
 		System.out.println( "Computing feature: " + TrackSizeFeature.SPEC );
 		final Map< FeatureSpec< ?, ? >, Feature< ? > > features2 = featureComputerService.compute( Collections.singleton( TrackSizeFeature.SPEC ) );
 		System.out.println( "Done." );
-		for ( final FeatureSpec< ?, ? > spec: features2.keySet() )
+		for ( final FeatureSpec< ?, ? > spec : features2.keySet() )
 			importedModel.getFeatureModel().declareFeature( features.get( spec ) );
 
 		System.out.println();

@@ -28,11 +28,8 @@
  */
 package org.mastodon.mamut.feature;
 
-import static org.mastodon.feature.FeatureProjectionKey.key;
-
-import java.io.IOException;
-import java.util.Map;
-
+import mpicbg.spim.data.SpimDataException;
+import net.imglib2.util.StopWatch;
 import org.jdom2.JDOMException;
 import org.mastodon.feature.Feature;
 import org.mastodon.feature.FeatureModel;
@@ -45,8 +42,10 @@ import org.mastodon.mamut.project.MamutProject;
 import org.mastodon.mamut.project.MamutProjectIO;
 import org.scijava.Context;
 
-import mpicbg.spim.data.SpimDataException;
-import net.imglib2.util.StopWatch;
+import java.io.IOException;
+import java.util.Map;
+
+import static org.mastodon.feature.FeatureProjectionKey.key;
 
 public class SpotIntensityUpdateExample
 {
@@ -76,8 +75,7 @@ public class SpotIntensityUpdateExample
 		featureComputerService.setSharedBdvData( windowManager.getAppModel().getSharedBdvData() );
 		System.out.println( "Computing spot intensity..." );
 		final StopWatch stopWatch = StopWatch.createAndStart();
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > features = featureComputerService.compute(
-				SpotCenterIntensityFeature.SPEC );
+		final Map< FeatureSpec< ?, ? >, Feature< ? > > features = featureComputerService.compute( SpotCenterIntensityFeature.SPEC );
 		stopWatch.stop();
 		System.out.println( String.format( "Done in %.1s.", stopWatch.nanoTime() / 1e9 ) );
 
@@ -89,8 +87,7 @@ public class SpotIntensityUpdateExample
 		features.values().forEach( featureModel::declareFeature );
 
 		@SuppressWarnings( "unchecked" )
-		final FeatureProjection< Spot > proj1 = ( FeatureProjection< Spot > ) model.getFeatureModel()
-				.getFeature( SpotCenterIntensityFeature.SPEC ).project( key( SpotCenterIntensityFeature.PROJECTION_SPEC, 0 ) );
+		final FeatureProjection< Spot > proj1 = ( FeatureProjection< Spot > ) model.getFeatureModel().getFeature( SpotCenterIntensityFeature.SPEC ).project( key( SpotCenterIntensityFeature.PROJECTION_SPEC, 0 ) );
 
 		System.out.println();
 		System.out.println( "Spot " + spot.getLabel() + " center intensity was " + proj1.value( spot ) );
@@ -108,8 +105,7 @@ public class SpotIntensityUpdateExample
 		 */
 
 		System.out.println( "Re-computing spot intensity..." );
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > features2 = featureComputerService.compute(
-				SpotCenterIntensityFeature.SPEC );
+		final Map< FeatureSpec< ?, ? >, Feature< ? > > features2 = featureComputerService.compute( SpotCenterIntensityFeature.SPEC );
 
 		featureModel.clear();
 		features2.values().forEach( featureModel::declareFeature );
@@ -123,8 +119,7 @@ public class SpotIntensityUpdateExample
 
 		System.out.println( "Full recalculation..." );
 		featureComputerService.setModel( model );
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > features3 = featureComputerService.compute(
-				SpotCenterIntensityFeature.SPEC );
+		final Map< FeatureSpec< ?, ? >, Feature< ? > > features3 = featureComputerService.compute( SpotCenterIntensityFeature.SPEC );
 
 		featureModel.clear();
 		features3.values().forEach( featureModel::declareFeature );
@@ -137,8 +132,7 @@ public class SpotIntensityUpdateExample
 		 */
 
 		System.out.println( "Update without changes..." );
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > features4 = featureComputerService.compute(
-				SpotCenterIntensityFeature.SPEC );
+		final Map< FeatureSpec< ?, ? >, Feature< ? > > features4 = featureComputerService.compute( SpotCenterIntensityFeature.SPEC );
 
 		featureModel.clear();
 		features4.values().forEach( featureModel::declareFeature );

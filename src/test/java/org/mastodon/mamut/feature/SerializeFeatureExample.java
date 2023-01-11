@@ -28,14 +28,8 @@
  */
 package org.mastodon.mamut.feature;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
+import mpicbg.spim.data.SpimDataException;
+import net.imglib2.util.StopWatch;
 import org.mastodon.feature.Feature;
 import org.mastodon.feature.FeatureModel;
 import org.mastodon.feature.FeatureSpec;
@@ -46,8 +40,12 @@ import org.mastodon.mamut.project.MamutProject;
 import org.mastodon.mamut.project.MamutProjectIO;
 import org.scijava.Context;
 
-import mpicbg.spim.data.SpimDataException;
-import net.imglib2.util.StopWatch;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
+import java.util.Map;
 
 public class SerializeFeatureExample
 {
@@ -70,13 +68,13 @@ public class SerializeFeatureExample
 		featureComputerService.setSharedBdvData( windowManager.getAppModel().getSharedBdvData() );
 		System.out.println( "\nComputing features..." );
 		final StopWatch stopWatch = StopWatch.createAndStart();
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > features = featureComputerService.compute(	featureComputerService.getFeatureSpecs() );
+		final Map< FeatureSpec< ?, ? >, Feature< ? > > features = featureComputerService.compute( featureComputerService.getFeatureSpecs() );
 		featureModel.clear();
 		features.values().forEach( featureModel::declareFeature );
 		stopWatch.stop();
 		System.out.println( String.format( "Done in %.1f s.", stopWatch.nanoTime() / 1e9 ) );
 
-		final File targetFile = new File("samples/featureserialized.mastodon");
+		final File targetFile = new File( "samples/featureserialized.mastodon" );
 
 		System.out.println( "\nResaving." );
 		windowManager.getProjectManager().saveProject( targetFile );

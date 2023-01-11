@@ -57,10 +57,7 @@ public class ProjectionsFromFeatureModel implements Projections
 		if ( id == null )
 			return null;
 
-		final FeatureSpec< ?, ? > featureSpec = featureModel.getFeatureSpecs().stream()
-				.filter( spec -> spec.getKey().equals( id.getFeatureKey() ) )
-				.findFirst()
-				.orElse( null );
+		final FeatureSpec< ?, ? > featureSpec = featureModel.getFeatureSpecs().stream().filter( spec -> spec.getKey().equals( id.getFeatureKey() ) ).findFirst().orElse( null );
 		return getFeatureProjection( id, featureSpec );
 	}
 
@@ -71,11 +68,7 @@ public class ProjectionsFromFeatureModel implements Projections
 			return null;
 
 		@SuppressWarnings( "unchecked" )
-		final FeatureSpec< ?, T > featureSpec = ( FeatureSpec< ?, T > ) featureModel.getFeatureSpecs().stream()
-				.filter( spec -> target.isAssignableFrom( spec.getTargetClass() ) )
-				.filter( spec -> spec.getKey().equals( id.getFeatureKey() ) )
-				.findFirst()
-				.orElse( null );
+		final FeatureSpec< ?, T > featureSpec = ( FeatureSpec< ?, T > ) featureModel.getFeatureSpecs().stream().filter( spec -> target.isAssignableFrom( spec.getTargetClass() ) ).filter( spec -> spec.getKey().equals( id.getFeatureKey() ) ).findFirst().orElse( null );
 		return getFeatureProjection( id, featureSpec );
 	}
 
@@ -89,10 +82,7 @@ public class ProjectionsFromFeatureModel implements Projections
 		if ( feature == null )
 			return null;
 
-		final FeatureProjectionSpec projectionSpec = featureSpec.getProjectionSpecs().stream()
-				.filter( spec -> spec.getKey().equals( id.getProjectionKey() ) )
-				.findFirst()
-				.orElse( null );
+		final FeatureProjectionSpec projectionSpec = featureSpec.getProjectionSpecs().stream().filter( spec -> spec.getKey().equals( id.getProjectionKey() ) ).findFirst().orElse( null );
 		if ( projectionSpec == null )
 			return null;
 

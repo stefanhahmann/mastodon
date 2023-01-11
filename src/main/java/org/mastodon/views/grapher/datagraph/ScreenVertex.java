@@ -47,13 +47,21 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	public static class ScreenVertexLayout extends PoolObjectLayout
 	{
 		final IndexField origVertex = indexField();
+
 		final DoubleField xOffset = doubleField();
+
 		final DoubleField yOffset = doubleField();
+
 		final DoubleField vertexDist = doubleField();
+
 		final BooleanField selected = booleanField();
+
 		final ByteField transition = byteField();
+
 		final IndexField ipScreenVertex = indexField();
+
 		final DoubleField ipRatio = doubleField();
+
 		final IntField color = intField();
 	}
 
@@ -64,13 +72,7 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 		super( pool );
 	}
 
-	public ScreenVertex init(
-			final int id,
-			final String label,
-			final double x,
-			final double y,
-			final boolean selected,
-			final int color )
+	public ScreenVertex init( final int id, final String label, final double x, final double y, final boolean selected, final int color )
 	{
 		setDataVertexId( id );
 		setLabel( label );
@@ -282,14 +284,7 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	@Override
 	public String toString()
 	{
-		return String.format( "ScreenVertex(%d, dvid=%d, \"%s\", (%.2f, %.2f), %s%s)",
-				getInternalPoolIndex(),
-				getDataVertexId(),
-				getLabel(),
-				getX(),
-				getY(),
-				getTransition().toString(),
-				isSelected() ? ", selected" : "" );
+		return String.format( "ScreenVertex(%d, dvid=%d, \"%s\", (%.2f, %.2f), %s%s)", getInternalPoolIndex(), getDataVertexId(), getLabel(), getX(), getY(), getTransition().toString(), isSelected() ? ", selected" : "" );
 	}
 
 	@Override

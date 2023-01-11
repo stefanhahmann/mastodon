@@ -56,9 +56,7 @@ public class ColoringMenu implements TagSetModel.TagSetModelListener, FeatureMod
 
 	private final ArrayList< Runnable > cleanup;
 
-	public ColoringMenu(
-			final JMenu menu,
-			final ColoringModel coloringModel )
+	public ColoringMenu( final JMenu menu, final ColoringModel coloringModel )
 	{
 		this.menu = menu;
 		this.coloringModel = coloringModel;
@@ -75,11 +73,7 @@ public class ColoringMenu implements TagSetModel.TagSetModelListener, FeatureMod
 		final TagSetStructure tss = coloringModel.getTagSetStructure();
 		final List< TagSetStructure.TagSet > tagSets = tss.getTagSets();
 		for ( final TagSetStructure.TagSet ts : tagSets )
-			addColorAction( new ColorAction(
-					ts.getName(),
-					() -> coloringModel.getTagSet() == ts,
-					() -> true,
-					() -> coloringModel.colorByTagSet( ts ) ) );
+			addColorAction( new ColorAction( ts.getName(), () -> coloringModel.getTagSet() == ts, () -> true, () -> coloringModel.colorByTagSet( ts ) ) );
 
 		if ( !tagSets.isEmpty() )
 			menu.add( new JSeparator() );
@@ -87,21 +81,12 @@ public class ColoringMenu implements TagSetModel.TagSetModelListener, FeatureMod
 		final FeatureColorModeManager featureColorModeManager = coloringModel.getFeatureColorModeManager();
 		final List< FeatureColorMode > l1 = featureColorModeManager.getBuiltinStyles();
 		final List< FeatureColorMode > l2 = featureColorModeManager.getUserStyles();
-		Stream.concat( l1.stream(), l2.stream() ).forEach( mode ->
-				addColorAction( new ColorAction(
-						mode.getName(),
-						() -> coloringModel.getFeatureColorMode() == mode,
-						() -> coloringModel.isValid( mode ),
-						() -> coloringModel.colorByFeature( mode ) ) ) );
+		Stream.concat( l1.stream(), l2.stream() ).forEach( mode -> addColorAction( new ColorAction( mode.getName(), () -> coloringModel.getFeatureColorMode() == mode, () -> coloringModel.isValid( mode ), () -> coloringModel.colorByFeature( mode ) ) ) );
 
 		if ( !( l1.isEmpty() && l2.isEmpty() ) )
 			menu.add( new JSeparator() );
 
-		addColorAction( new ColorAction(
-				"None",
-				() -> coloringModel.noColoring(),
-				() -> true,
-				() -> coloringModel.colorByNone() ) );
+		addColorAction( new ColorAction( "None", () -> coloringModel.noColoring(), () -> true, () -> coloringModel.colorByNone() ) );
 
 	}
 
@@ -147,11 +132,7 @@ public class ColoringMenu implements TagSetModel.TagSetModelListener, FeatureMod
 
 		private final BooleanSupplier isEnabled;
 
-		public ColorAction(
-				final String name,
-				final BooleanSupplier isSelected,
-				final BooleanSupplier isEnabled,
-				final Runnable onSelect )
+		public ColorAction( final String name, final BooleanSupplier isSelected, final BooleanSupplier isEnabled, final Runnable onSelect )
 		{
 			super( name );
 			this.isSelected = isSelected;

@@ -42,10 +42,7 @@ import org.mastodon.graph.ref.AbstractListenableEdge;
  * @param <E>
  *            the type of edges in the model-graph.
  */
-public class AbstractModel<
-		MG extends AbstractModelGraph< MG, ?, ?, V, E, ? >,
-		V extends AbstractSpot< V, E, ?, ?, MG >,
-		E extends AbstractListenableEdge< E, V, ?, ? > >
+public class AbstractModel< MG extends AbstractModelGraph< MG, ?, ?, V, E, ? >, V extends AbstractSpot< V, E, ?, ?, MG >, E extends AbstractListenableEdge< E, V, ?, ? > >
 {
 	/**
 	 * Exposes the graph managed by this model.

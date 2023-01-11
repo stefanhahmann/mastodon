@@ -53,10 +53,7 @@ public class PreferencesDialog extends JDialog
 
 	private final SettingsPanel settingsPanel;
 
-	public PreferencesDialog(
-			final Frame owner,
-			final Keymap keymap,
-			final String[] keyConfigContexts )
+	public PreferencesDialog( final Frame owner, final Keymap keymap, final String[] keyConfigContexts )
 	{
 		super( owner, "Preferences", false );
 		setLocationByPlatform( true );

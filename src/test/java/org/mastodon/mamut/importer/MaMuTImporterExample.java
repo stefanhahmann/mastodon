@@ -28,13 +28,7 @@
  */
 package org.mastodon.mamut.importer;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.Locale;
-
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
+import mpicbg.spim.data.SpimDataException;
 import org.mastodon.mamut.WindowManager;
 import org.mastodon.mamut.importer.trackmate.TrackMateImporter;
 import org.mastodon.mamut.model.Model;
@@ -42,7 +36,11 @@ import org.mastodon.mamut.model.ModelUtils;
 import org.mastodon.mamut.project.MamutProjectIO;
 import org.scijava.Context;
 
-import mpicbg.spim.data.SpimDataException;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import java.io.File;
+import java.io.IOException;
+import java.util.Locale;
 
 public class MaMuTImporterExample
 {
@@ -53,15 +51,15 @@ public class MaMuTImporterExample
 		UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
 
 		final File mamutFile = new File( "D:/Projects/JYTinevez/MaMuT/Mastodon-dataset/MaMuT_Parhyale_demo-mamut.xml" );
-//		final File mamutFile = new File( "/Users/tinevez/Projects/JYTinevez/MaMuT/Mastodon-dataset/MaMuT_Parhyale_demo-mamut.xml" );
-		final File targetMastodonFile = new File("samples/trackmateimported.mastodon");
+		//		final File mamutFile = new File( "/Users/tinevez/Projects/JYTinevez/MaMuT/Mastodon-dataset/MaMuT_Parhyale_demo-mamut.xml" );
+		final File targetMastodonFile = new File( "samples/trackmateimported.mastodon" );
 
 		importFromMaMuTAndSave( mamutFile, targetMastodonFile );
 
 		reloadAfterSave( targetMastodonFile );
 	}
 
-	private static void importFromMaMuTAndSave(final File mamutFile, final File targetMastodonFile)
+	private static void importFromMaMuTAndSave( final File mamutFile, final File targetMastodonFile )
 	{
 		final WindowManager windowManager = new WindowManager( new Context() );
 		try
@@ -84,7 +82,6 @@ public class MaMuTImporterExample
 			e.printStackTrace();
 		}
 	}
-
 
 	private static void reloadAfterSave( final File targetMastodonFile )
 	{

@@ -71,14 +71,10 @@ public class TagSetDialog extends JDialog
 		void setTagSetStructure( final TagSetStructure tagSetStructure );
 	}
 
-	public TagSetDialog(
-			final Frame owner,
-			final TagSetModel< ?, ? > model,
-			final UndoPointMarker undoPointMarker,
-			final Keymap keymap,
-			final String[] keyConfigContexts )
+	public TagSetDialog( final Frame owner, final TagSetModel< ?, ? > model, final UndoPointMarker undoPointMarker, final Keymap keymap, final String[] keyConfigContexts )
 	{
-		this( owner, new TagSetManager() {
+		this( owner, new TagSetManager()
+		{
 			@Override
 			public TagSetStructure getTagSetStructure()
 			{
@@ -115,9 +111,7 @@ public class TagSetDialog extends JDialog
 		super.dispose();
 	}
 
-	public TagSetDialog(
-			final Frame owner,
-			final TagSetManager manager )
+	public TagSetDialog( final Frame owner, final TagSetManager manager )
 	{
 		super( owner, "Configure Tag Sets", false );
 		this.manager = manager;

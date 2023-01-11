@@ -60,7 +60,6 @@ public class FeatureComputationModel
 
 	private final Map< FeatureSpec< ?, ? >, Collection< FeatureSpec< ?, ? > > > deps;
 
-
 	public FeatureComputationModel()
 	{
 		this.updateListeners = new Listeners.SynchronizedList<>();
@@ -90,9 +89,7 @@ public class FeatureComputationModel
 
 	public void setSelected( final FeatureSpec< ?, ? > spec, final boolean selected )
 	{
-		final boolean changed = selected
-				? selectedFeatures.add( spec )
-				: selectedFeatures.remove( spec );
+		final boolean changed = selected ? selectedFeatures.add( spec ) : selectedFeatures.remove( spec );
 		if ( changed )
 			notifyListeners();
 	}

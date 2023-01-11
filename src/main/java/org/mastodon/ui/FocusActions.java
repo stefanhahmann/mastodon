@@ -60,33 +60,59 @@ import org.scijava.ui.behaviour.util.RunnableAction;
 public class FocusActions< V extends Vertex< E > & Ref< V >, E extends Edge< V > & Ref< E > >
 {
 	public static final String NAVIGATE_CHILD = "navigate to child";
+
 	public static final String NAVIGATE_LAST_CHILD = "navigate to last child";
+
 	public static final String NAVIGATE_PARENT = "navigate to parent";
+
 	public static final String NAVIGATE_SIBLING = "navigate to sibling";
+
 	public static final String NAVIGATE_BRANCH_CHILD = "navigate to branch child";
+
 	public static final String NAVIGATE_LAST_BRANCH_CHILD = "navigate to last branch child";
+
 	public static final String NAVIGATE_BRANCH_PARENT = "navigate to branch parent";
+
 	public static final String SELECT_NAVIGATE_CHILD = "select navigate to child";
+
 	public static final String SELECT_NAVIGATE_LAST_CHILD = "select navigate to last child";
+
 	public static final String SELECT_NAVIGATE_PARENT = "select navigate to parent";
+
 	public static final String SELECT_NAVIGATE_SIBLING = "select navigate to sibling";
+
 	public static final String SELECT_NAVIGATE_BRANCH_CHILD = "select navigate to branch child";
+
 	public static final String SELECT_NAVIGATE_LAST_BRANCH_CHILD = "select navigate to last branch child";
+
 	public static final String SELECT_NAVIGATE_BRANCH_PARENT = "select navigate to branch parent";
 
 	private static final String[] NAVIGATE_CHILD_KEYS = new String[] { "ctrl DOWN" };
+
 	private static final String[] NAVIGATE_LAST_CHILD_KEYS = new String[] { "ctrl meta DOWN" };
+
 	private static final String[] NAVIGATE_PARENT_KEYS = new String[] { "ctrl UP" };
+
 	private static final String[] NAVIGATE_SIBLING_KEYS = new String[] { "ctrl LEFT", "ctrl RIGHT" };
+
 	private static final String[] NAVIGATE_BRANCH_CHILD_KEYS = new String[] { "ctrl alt DOWN" };
+
 	private static final String[] NAVIGATE_LAST_BRANCH_CHILD_KEYS = new String[] { "ctrl alt meta DOWN" };
+
 	private static final String[] NAVIGATE_BRANCH_PARENT_KEYS = new String[] { "ctrl alt UP" };
+
 	private static final String[] SELECT_NAVIGATE_CHILD_KEYS = new String[] { "shift ctrl DOWN" };
+
 	private static final String[] SELECT_NAVIGATE_LAST_CHILD_KEYS = new String[] { "shift ctrl meta DOWN" };
+
 	private static final String[] SELECT_NAVIGATE_PARENT_KEYS = new String[] { "shift ctrl UP" };
+
 	private static final String[] SELECT_NAVIGATE_SIBLING_KEYS = new String[] { "shift ctrl LEFT", "shift ctrl RIGHT" };
+
 	private static final String[] SELECT_NAVIGATE_BRANCH_CHILD_KEYS = new String[] { "shift ctrl alt DOWN" };
+
 	private static final String[] SELECT_NAVIGATE_LAST_BRANCH_CHILD_KEYS = new String[] { "shift ctrl alt meta DOWN" };
+
 	private static final String[] SELECT_NAVIGATE_BRANCH_PARENT_KEYS = new String[] { "shift ctrl alt UP" };
 
 	/*
@@ -148,12 +174,7 @@ public class FocusActions< V extends Vertex< E > & Ref< V >, E extends Edge< V >
 
 	private final RunnableAction selectNavigateToBranchParentAction;
 
-	public static < V extends Vertex< E > & Ref< V >, E extends Edge< V > & Ref< E > > void install(
-			final Actions actions,
-			final Graph< V, E > graph,
-			final ReentrantReadWriteLock lock,
-			final FocusModel< V, E > focus,
-			final SelectionModel< V, E > selection )
+	public static < V extends Vertex< E > & Ref< V >, E extends Edge< V > & Ref< E > > void install( final Actions actions, final Graph< V, E > graph, final ReentrantReadWriteLock lock, final FocusModel< V, E > focus, final SelectionModel< V, E > selection )
 	{
 		final FocusActions< V, E > fa = new FocusActions<>( graph, lock, focus, selection );
 
@@ -175,10 +196,7 @@ public class FocusActions< V extends Vertex< E > & Ref< V >, E extends Edge< V >
 
 	private enum Direction
 	{
-		CHILD,
-		LAST_CHILD,
-		PARENT,
-		SIBLING,
+		CHILD, LAST_CHILD, PARENT, SIBLING,
 	}
 
 	private final Graph< V, E > graph;
@@ -189,11 +207,7 @@ public class FocusActions< V extends Vertex< E > & Ref< V >, E extends Edge< V >
 
 	private final SelectionModel< V, E > selection;
 
-	public FocusActions(
-			final Graph< V, E > graph,
-			final ReentrantReadWriteLock lock,
-			final FocusModel< V, E > focus,
-			final SelectionModel< V, E > selection )
+	public FocusActions( final Graph< V, E > graph, final ReentrantReadWriteLock lock, final FocusModel< V, E > focus, final SelectionModel< V, E > selection )
 	{
 		this.graph = graph;
 		this.lock = lock;
@@ -425,9 +439,7 @@ public class FocusActions< V extends Vertex< E > & Ref< V >, E extends Edge< V >
 			{
 				if ( iter.next().getTarget( ref ).equals( child ) )
 				{
-					child = iter.hasNext()
-							? iter.next().getTarget( ref )
-							: outgoing.iterator().next().getTarget( ref );
+					child = iter.hasNext() ? iter.next().getTarget( ref ) : outgoing.iterator().next().getTarget( ref );
 
 					for ( ; d > 0 && child != null; --d )
 						child = firstChild( child, ref );

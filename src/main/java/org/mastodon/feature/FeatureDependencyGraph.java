@@ -245,9 +245,7 @@ public class FeatureDependencyGraph extends AbstractObjectGraph< FeatureDependen
 			return featureSpec;
 		}
 
-		public void setFeatureComputer(
-				final FeatureComputer featureComputer,
-				final CommandInfo featureComputerInfo )
+		public void setFeatureComputer( final FeatureComputer featureComputer, final CommandInfo featureComputerInfo )
 		{
 			this.featureComputer = featureComputer;
 			this.featureComputerInfo = featureComputerInfo;
@@ -266,10 +264,7 @@ public class FeatureDependencyGraph extends AbstractObjectGraph< FeatureDependen
 		@Override
 		public String toString()
 		{
-			return "Vertex{" +
-					"featureSpec=" + featureSpec.getKey() +
-					", featureComputer=" + ( featureComputer == null ? "null" : featureComputer.getClass().getSimpleName() ) +
-					'}';
+			return "Vertex{" + "featureSpec=" + featureSpec.getKey() + ", featureComputer=" + ( featureComputer == null ? "null" : featureComputer.getClass().getSimpleName() ) + '}';
 		}
 	}
 

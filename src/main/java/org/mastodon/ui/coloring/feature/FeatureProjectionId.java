@@ -53,7 +53,7 @@ public final class FeatureProjectionId
 
 	public FeatureProjectionId( final String featureKey, final String projectionKey, final TargetType targetType )
 	{
-		this( featureKey, projectionKey, targetType,-1, -1 );
+		this( featureKey, projectionKey, targetType, -1, -1 );
 	}
 
 	public FeatureProjectionId( final String featureKey, final String projectionKey, final TargetType targetType, final int i0 )

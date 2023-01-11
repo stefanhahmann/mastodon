@@ -123,15 +123,7 @@ public class SharedBigDataViewerData
 
 	private File proposedSettingsFile;
 
-	private SharedBigDataViewerData(
-			final AbstractSpimData< ? > spimData,
-			final ArrayList< SourceAndConverter< ? > > sources,
-			final ConverterSetups setups,
-			final SetupAssignments setupAssignments,
-			final CacheControl cache,
-			final int numTimepoints,
-			final ViewerOptions options,
-			final RequestRepaint requestRepaint )
+	private SharedBigDataViewerData( final AbstractSpimData< ? > spimData, final ArrayList< SourceAndConverter< ? > > sources, final ConverterSetups setups, final SetupAssignments setupAssignments, final CacheControl cache, final int numTimepoints, final ViewerOptions options, final RequestRepaint requestRepaint )
 	{
 		this.spimData = spimData;
 		this.sources = sources;
@@ -140,20 +132,14 @@ public class SharedBigDataViewerData
 		this.cache = cache;
 		this.numTimepoints = numTimepoints;
 
-		this.inputTriggerConfig = ( options.values.getInputTriggerConfig() != null )
-				? options.values.getInputTriggerConfig()
-				: new InputTriggerConfig();
+		this.inputTriggerConfig = ( options.values.getInputTriggerConfig() != null ) ? options.values.getInputTriggerConfig() : new InputTriggerConfig();
 
 		this.manualTransformation = new ManualTransformation( sources );
 
 		this.bookmarks = new Bookmarks();
 
 		this.is2D = computeIs2D();
-		this.options = options
-				.inputTriggerConfig( inputTriggerConfig )
-				.transformEventHandlerFactory( is2D
-						? TransformEventHandler2D::new
-						: TransformEventHandler3D::new );
+		this.options = options.inputTriggerConfig( inputTriggerConfig ).transformEventHandlerFactory( is2D ? TransformEventHandler2D::new : TransformEventHandler3D::new );
 
 		if ( WrapBasicImgLoader.wrapImgLoaderIfNecessary( spimData ) )
 			System.err.println( "WARNING:\nOpening <SpimData> dataset that is not suited for interactive browsing.\nConsider resaving as HDF5 for better performance." );
@@ -326,20 +312,13 @@ public class SharedBigDataViewerData
 		return true;
 	}
 
-	public static SharedBigDataViewerData fromSpimDataXmlFile(
-			final String spimDataXmlFilename,
-			final ViewerOptions viewerOptions,
-			final RequestRepaint requestRepaint ) throws SpimDataException
+	public static SharedBigDataViewerData fromSpimDataXmlFile( final String spimDataXmlFilename, final ViewerOptions viewerOptions, final RequestRepaint requestRepaint ) throws SpimDataException
 	{
 		final AbstractSpimData< ? > spimData = new XmlIoSpimDataMinimal().load( spimDataXmlFilename );
 		return formSpimData( spimDataXmlFilename, spimData, viewerOptions, requestRepaint );
 	}
 
-	public static
-			SharedBigDataViewerData fromDummyFilename(
-					final String spimDataXmlFilename,
-					final ViewerOptions viewerOptions,
-					final RequestRepaint requestRepaint )
+	public static SharedBigDataViewerData fromDummyFilename( final String spimDataXmlFilename, final ViewerOptions viewerOptions, final RequestRepaint requestRepaint )
 	{
 		final AbstractSpimData< ? > spimData = DummySpimData.tryCreate( spimDataXmlFilename );
 		return formSpimData( spimDataXmlFilename, spimData, viewerOptions, requestRepaint );
@@ -353,20 +332,13 @@ public class SharedBigDataViewerData
 	 * 
 	 * @return a "dummy" {@link SharedBigDataViewerData} object.
 	 */
-	public static SharedBigDataViewerData createDummyDataFromSpimDataXml(
-			final String spimDataXmlFilename,
-			final ViewerOptions viewerOptions,
-			final RequestRepaint requestRepaint ) throws SpimDataException
+	public static SharedBigDataViewerData createDummyDataFromSpimDataXml( final String spimDataXmlFilename, final ViewerOptions viewerOptions, final RequestRepaint requestRepaint ) throws SpimDataException
 	{
 		final AbstractSpimData< ? > spimData = DummySpimData.fromSpimDataXml( spimDataXmlFilename );
 		return formSpimData( spimDataXmlFilename, spimData, viewerOptions, requestRepaint );
 	}
 
-	private static SharedBigDataViewerData formSpimData(
-			final String spimDataXmlFilename,
-			final AbstractSpimData< ? > spimData,
-			final ViewerOptions viewerOptions,
-			final RequestRepaint requestRepaint )
+	private static SharedBigDataViewerData formSpimData( final String spimDataXmlFilename, final AbstractSpimData< ? > spimData, final ViewerOptions viewerOptions, final RequestRepaint requestRepaint )
 	{
 		final AbstractSequenceDescription< ?, ?, ? > seq = spimData.getSequenceDescription();
 		final int numTimepoints = seq.getTimePoints().size();
@@ -390,15 +362,7 @@ public class SharedBigDataViewerData
 
 		WrapBasicImgLoader.removeWrapperIfPresent( spimData );
 
-		final SharedBigDataViewerData sbdv = new SharedBigDataViewerData(
-				spimData,
-				sources,
-				setups,
-				setupAssignments,
-				cache,
-				numTimepoints,
-				viewerOptions,
-				requestRepaint );
+		final SharedBigDataViewerData sbdv = new SharedBigDataViewerData( spimData, sources, setups, setupAssignments, cache, numTimepoints, viewerOptions, requestRepaint );
 
 		if ( !sbdv.tryLoadSettings( spimDataXmlFilename ) )
 		{
@@ -415,10 +379,7 @@ public class SharedBigDataViewerData
 	 * FROM IMAGEPLUS.
 	 */
 
-	public static SharedBigDataViewerData fromImagePlus(
-			final ImagePlus imp,
-			final ViewerOptions viewerOptions,
-			final RequestRepaint requestRepaint )
+	public static SharedBigDataViewerData fromImagePlus( final ImagePlus imp, final ViewerOptions viewerOptions, final RequestRepaint requestRepaint )
 	{
 		// check the image type
 		switch ( imp.getType() )
@@ -536,15 +497,7 @@ public class SharedBigDataViewerData
 
 		final SetupAssignments setupAssignments = new SetupAssignments( converterSetups, 0, 65535 );
 
-		final SharedBigDataViewerData sbdv = new SharedBigDataViewerData(
-				spimData,
-				sources,
-				css,
-				setupAssignments,
-				cache,
-				numTimepoints,
-				viewerOptions,
-				requestRepaint );
+		final SharedBigDataViewerData sbdv = new SharedBigDataViewerData( spimData, sources, css, setupAssignments, cache, numTimepoints, viewerOptions, requestRepaint );
 
 		// File info
 		final FileInfo fileInfo = imp.getOriginalFileInfo();
@@ -584,9 +537,7 @@ public class SharedBigDataViewerData
 	/**
 	 * @return number of setups that were set active.
 	 */
-	private static int transferChannelVisibility(
-			final ImagePlus imp,
-			final ViewerState state )
+	private static int transferChannelVisibility( final ImagePlus imp, final ViewerState state )
 	{
 		final int nChannels = imp.getNChannels();
 		final CompositeImage ci = imp.isComposite() ? ( CompositeImage ) imp : null;

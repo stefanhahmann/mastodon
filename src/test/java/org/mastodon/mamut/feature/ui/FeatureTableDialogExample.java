@@ -28,14 +28,9 @@
  */
 package org.mastodon.mamut.feature.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Frame;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.mastodon.feature.ui.FeatureTable;
+import org.mastodon.mamut.model.Link;
+import org.mastodon.mamut.model.Spot;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -48,10 +43,14 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-
-import org.mastodon.feature.ui.FeatureTable;
-import org.mastodon.mamut.model.Link;
-import org.mastodon.mamut.model.Spot;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Frame;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class FeatureTableDialogExample
 {
@@ -90,10 +89,10 @@ public class FeatureTableDialogExample
 			return uptodate;
 		}
 
-//		public void setUptodate( final boolean uptodate )
-//		{
-//			this.uptodate = uptodate;
-//		}
+		//		public void setUptodate( final boolean uptodate )
+		//		{
+		//			this.uptodate = uptodate;
+		//		}
 
 		@Override
 		public String toString()
@@ -104,14 +103,7 @@ public class FeatureTableDialogExample
 
 	private static FeatureTable< List< MyElement >, MyElement > createFeatureTable()
 	{
-		final FeatureTable< List< MyElement >, MyElement > featureTable = new FeatureTable<>(
-				null,
-				List::size,
-				List::get,
-				MyElement::getName,
-				MyElement::isSelected,
-				MyElement::setSelected,
-				MyElement::isUptodate );
+		final FeatureTable< List< MyElement >, MyElement > featureTable = new FeatureTable<>( null, List::size, List::get, MyElement::getName, MyElement::isSelected, MyElement::setSelected, MyElement::isUptodate );
 		return featureTable;
 	}
 
@@ -136,8 +128,7 @@ public class FeatureTableDialogExample
 			tablePanel.setLayout( new BoxLayout( tablePanel, BoxLayout.PAGE_AXIS ) );
 			tablePanel.setBorder( BorderFactory.createEmptyBorder( 10, 10, 10, 10 ) );
 
-			final FeatureTable.SelectionListener< MyElement > sl = t ->
-			{
+			final FeatureTable.SelectionListener< MyElement > sl = t -> {
 				if ( t == null )
 					System.out.println();
 				System.out.println( "Element " + t + " changed." );

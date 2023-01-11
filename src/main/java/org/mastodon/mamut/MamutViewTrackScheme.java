@@ -109,13 +109,7 @@ public class MamutViewTrackScheme extends MamutView< TrackSchemeGraph< Spot, Lin
 
 	public MamutViewTrackScheme( final MamutAppModel appModel, final Map< String, Object > guiState )
 	{
-		super( appModel,
-				new TrackSchemeGraph<>(
-						appModel.getModel().getGraph(),
-						appModel.getModel().getGraphIdBimap(),
-						new ModelGraphTrackSchemeProperties( appModel.getModel().getGraph() ),
-						appModel.getModel().getGraph().getLock() ),
-				new String[] { KeyConfigContexts.TRACKSCHEME } );
+		super( appModel, new TrackSchemeGraph<>( appModel.getModel().getGraph(), appModel.getModel().getGraphIdBimap(), new ModelGraphTrackSchemeProperties( appModel.getModel().getGraph() ), appModel.getModel().getGraph().getLock() ), new String[] { KeyConfigContexts.TRACKSCHEME } );
 
 		/*
 		 * TrackScheme ContextChooser
@@ -131,39 +125,21 @@ public class MamutViewTrackScheme extends MamutView< TrackSchemeGraph< Spot, Lin
 		 */
 		final TrackSchemeStyle forwardDefaultStyle = appModel.getTrackSchemeStyleManager().getForwardDefaultStyle();
 		coloringAdapter = new GraphColorGeneratorAdapter<>( viewGraph.getVertexMap(), viewGraph.getEdgeMap() );
-		final TrackSchemeOptions options = TrackSchemeOptions.options()
-				.shareKeyPressedEvents( keyPressedManager )
-				.style( forwardDefaultStyle )
-				.graphColorGenerator( coloringAdapter );
+		final TrackSchemeOptions options = TrackSchemeOptions.options().shareKeyPressedEvents( keyPressedManager ).style( forwardDefaultStyle ).graphColorGenerator( coloringAdapter );
 
 		// Restore position
 		final int[] pos = ( int[] ) guiState.get( FRAME_POSITION_KEY );
 		if ( null != pos && pos.length == 4 )
-			options
-					.x( pos[ 0 ] )
-					.y( pos[ 1 ] )
-					.width( pos[ 2 ] )
-					.height( pos[ 3 ] );
+			options.x( pos[ 0 ] ).y( pos[ 1 ] ).width( pos[ 2 ] ).height( pos[ 3 ] );
 
 		// Restore group handle.
 		restoreGroupHandle( groupHandle, guiState );
 
 		final AutoNavigateFocusModel< TrackSchemeVertex, TrackSchemeEdge > navigateFocusModel = new AutoNavigateFocusModel<>( focusModel, navigationHandler, timepointModel );
 
-		final RootsModel<TrackSchemeVertex> rootsModel = new DefaultRootsModel<>( model.getGraph(), viewGraph );
+		final RootsModel< TrackSchemeVertex > rootsModel = new DefaultRootsModel<>( model.getGraph(), viewGraph );
 
-		final TrackSchemeFrame frame = new TrackSchemeFrame(
-				viewGraph,
-				highlightModel,
-				navigateFocusModel,
-				timepointModel,
-				selectionModel,
-				rootsModel,
-				navigationHandler,
-				model,
-				groupHandle,
-				contextChooser,
-				options );
+		final TrackSchemeFrame frame = new TrackSchemeFrame( viewGraph, highlightModel, navigateFocusModel, timepointModel, selectionModel, rootsModel, navigationHandler, model, groupHandle, contextChooser, options );
 
 		// Restore settings panel visibility.
 		final Boolean settingsPanelVisible = ( Boolean ) guiState.get( SETTINGS_PANEL_VISIBLE_KEY );
@@ -196,7 +172,7 @@ public class MamutViewTrackScheme extends MamutView< TrackSchemeGraph< Spot, Lin
 		FocusActions.install( viewActions, viewGraph, viewGraph.getLock(), navigateFocusModel, selectionModel );
 		TrackSchemeZoom.install( viewBehaviours, frame.getTrackschemePanel() );
 		EditTagActions.install( viewActions, frame.getKeybindings(), frame.getTriggerbindings(), model.getTagSetModel(), appModel.getSelectionModel(), viewGraph.getLock(), frame.getTrackschemePanel(), frame.getTrackschemePanel().getDisplay(), model );
-		ShowSelectedTracksActions.install(viewActions, viewGraph, selectionModel, rootsModel, frame.getTrackschemePanel());
+		ShowSelectedTracksActions.install( viewActions, viewGraph, selectionModel, rootsModel, frame.getTrackschemePanel() );
 
 		final JPanel searchPanel = SearchVertexLabel.install( viewActions, viewGraph, navigationHandler, selectionModel, focusModel, frame.getTrackschemePanel() );
 		frame.getSettingsPanel().add( searchPanel );
@@ -214,41 +190,10 @@ public class MamutViewTrackScheme extends MamutView< TrackSchemeGraph< Spot, Lin
 		final JMenuHandle colorbarMenuHandle = new JMenuHandle();
 
 		MainWindow.addMenus( menu, actionMap );
-		MamutMenuBuilder.build( menu, actionMap,
-				viewMenu(
-						colorMenu( coloringMenuHandle ),
-						colorbarMenu( colorbarMenuHandle ),
-						separator(),
-						item( ShowSelectedTracksActions.SHOW_TRACK_DOWNWARD ),
-						item( ShowSelectedTracksActions.SHOW_SELECTED_TRACKS ),
-						item( ShowSelectedTracksActions.SHOW_ALL_TRACKS ),
-						separator(),
-						item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL ) ),
-				editMenu(
-						item( UndoActions.UNDO ),
-						item( UndoActions.REDO ),
-						separator(),
-						item( SelectionActions.DELETE_SELECTION ),
-						item( SelectionActions.SELECT_WHOLE_TRACK ),
-						item( SelectionActions.SELECT_TRACK_DOWNWARD ),
-						item( SelectionActions.SELECT_TRACK_UPWARD ),
-						separator(),
-						item( TrackSchemeNavigationActions.SELECT_NAVIGATE_CHILD ),
-						item( TrackSchemeNavigationActions.SELECT_NAVIGATE_PARENT ),
-						item( TrackSchemeNavigationActions.SELECT_NAVIGATE_LEFT ),
-						item( TrackSchemeNavigationActions.SELECT_NAVIGATE_RIGHT ),
-						separator(),
-						item( TrackSchemeNavigationActions.NAVIGATE_CHILD ),
-						item( TrackSchemeNavigationActions.NAVIGATE_PARENT ),
-						item( TrackSchemeNavigationActions.NAVIGATE_LEFT ),
-						item( TrackSchemeNavigationActions.NAVIGATE_RIGHT ),
-						separator(),
-						item( EditFocusVertexLabelAction.EDIT_FOCUS_LABEL ),
-						tagSetMenu( tagSetMenuHandle ) ) );
+		MamutMenuBuilder.build( menu, actionMap, viewMenu( colorMenu( coloringMenuHandle ), colorbarMenu( colorbarMenuHandle ), separator(), item( ShowSelectedTracksActions.SHOW_TRACK_DOWNWARD ), item( ShowSelectedTracksActions.SHOW_SELECTED_TRACKS ), item( ShowSelectedTracksActions.SHOW_ALL_TRACKS ), separator(), item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL ) ), editMenu( item( UndoActions.UNDO ), item( UndoActions.REDO ), separator(), item( SelectionActions.DELETE_SELECTION ), item( SelectionActions.SELECT_WHOLE_TRACK ), item( SelectionActions.SELECT_TRACK_DOWNWARD ), item( SelectionActions.SELECT_TRACK_UPWARD ), separator(), item( TrackSchemeNavigationActions.SELECT_NAVIGATE_CHILD ), item( TrackSchemeNavigationActions.SELECT_NAVIGATE_PARENT ), item( TrackSchemeNavigationActions.SELECT_NAVIGATE_LEFT ), item( TrackSchemeNavigationActions.SELECT_NAVIGATE_RIGHT ), separator(), item( TrackSchemeNavigationActions.NAVIGATE_CHILD ), item( TrackSchemeNavigationActions.NAVIGATE_PARENT ), item( TrackSchemeNavigationActions.NAVIGATE_LEFT ), item( TrackSchemeNavigationActions.NAVIGATE_RIGHT ), separator(), item( EditFocusVertexLabelAction.EDIT_FOCUS_LABEL ), tagSetMenu( tagSetMenuHandle ) ) );
 		appModel.getPlugins().addMenus( menu );
 
-		coloringModel = registerColoring( coloringAdapter, coloringMenuHandle,
-				() -> frame.getTrackschemePanel().entitiesAttributesChanged() );
+		coloringModel = registerColoring( coloringAdapter, coloringMenuHandle, () -> frame.getTrackschemePanel().entitiesAttributesChanged() );
 		colorBarOverlay = new ColorBarOverlay( coloringModel, () -> frame.getTrackschemePanel().getBackground() );
 		frame.getTrackschemePanel().getOffsetHeaders().listeners().add( ( w, h ) -> colorBarOverlay.setInsets( h + 15, w + 15, 15, 15 ) );
 		registerColorbarOverlay( colorBarOverlay, colorbarMenuHandle, () -> frame.getTrackschemePanel().repaint() );

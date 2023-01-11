@@ -28,11 +28,10 @@
  */
 package org.mastodon.graph.revised;
 
+import net.imglib2.util.BenchmarkHelper;
 import org.mastodon.mamut.model.Model;
 import org.mastodon.mamut.model.Spot;
 import org.mastodon.properties.IntPropertyMap;
-
-import net.imglib2.util.BenchmarkHelper;
 
 public class PropertyMapBenchmark
 {

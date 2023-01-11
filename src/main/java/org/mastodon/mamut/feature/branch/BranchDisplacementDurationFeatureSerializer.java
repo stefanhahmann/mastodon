@@ -45,7 +45,7 @@ import org.mastodon.properties.DoublePropertyMap;
 import org.scijava.plugin.Plugin;
 
 @Plugin( type = FeatureSerializer.class )
-public class BranchDisplacementDurationFeatureSerializer implements BranchFeatureSerializer< BranchDisplacementDurationFeature, BranchSpot, Spot>
+public class BranchDisplacementDurationFeatureSerializer implements BranchFeatureSerializer< BranchDisplacementDurationFeature, BranchSpot, Spot >
 {
 
 	@Override
@@ -55,11 +55,7 @@ public class BranchDisplacementDurationFeatureSerializer implements BranchFeatur
 	}
 
 	@Override
-	public BranchDisplacementDurationFeature deserialize(
-			final FileIdToObjectMap< Spot > idmap,
-			final ObjectInputStream ois,
-			final ModelBranchGraph branchGraph,
-			final ModelGraph graph ) throws ClassNotFoundException, IOException
+	public BranchDisplacementDurationFeature deserialize( final FileIdToObjectMap< Spot > idmap, final ObjectInputStream ois, final ModelBranchGraph branchGraph, final ModelGraph graph ) throws ClassNotFoundException, IOException
 	{
 		// Read the map link -> val.
 		final DoublePropertyMap< Spot > dispLMap = new DoublePropertyMap<>( graph.vertices(), Double.NaN );
@@ -71,19 +67,11 @@ public class BranchDisplacementDurationFeatureSerializer implements BranchFeatur
 		durPms.readPropertyMap( idmap, ois );
 
 		// Map to branch-link -> val.
-		return new BranchDisplacementDurationFeature(
-				BranchFeatureSerializer.mapToBranchSpotMap( dispLMap, branchGraph ),
-				BranchFeatureSerializer.mapToBranchSpotMap( durLMap, branchGraph ),
-				lengthUnits );
+		return new BranchDisplacementDurationFeature( BranchFeatureSerializer.mapToBranchSpotMap( dispLMap, branchGraph ), BranchFeatureSerializer.mapToBranchSpotMap( durLMap, branchGraph ), lengthUnits );
 	}
 
 	@Override
-	public void serialize(
-			final BranchDisplacementDurationFeature feature,
-			final ObjectToFileIdMap< Spot > idmap,
-			final ObjectOutputStream oos,
-			final ModelBranchGraph branchGraph,
-			final ModelGraph graph ) throws IOException
+	public void serialize( final BranchDisplacementDurationFeature feature, final ObjectToFileIdMap< Spot > idmap, final ObjectOutputStream oos, final ModelBranchGraph branchGraph, final ModelGraph graph ) throws IOException
 	{
 		final DoublePropertyMap< Spot > dispLMap = BranchFeatureSerializer.branchSpotMapToMap( feature.dispMap, branchGraph, graph );
 		final DoublePropertyMap< Spot > durLMap = BranchFeatureSerializer.branchSpotMapToMap( feature.durMap, branchGraph, graph );

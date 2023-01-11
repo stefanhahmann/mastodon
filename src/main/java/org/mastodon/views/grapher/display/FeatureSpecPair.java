@@ -145,13 +145,9 @@ public class FeatureSpecPair implements Comparable< FeatureSpecPair >
 
 		final int size = featureSpec.getProjectionSpecs().size();
 		if ( featureSpec.getMultiplicity().equals( Multiplicity.SINGLE ) && size == 1 )
-			return featureSpec.getKey() + ( isEdgeFeature
-					? incoming ? " - incoming" : " - outgoing"
-					: "" );
+			return featureSpec.getKey() + ( isEdgeFeature ? incoming ? " - incoming" : " - outgoing" : "" );
 
-		return featureSpec.getKey() + " - " + projectionKey() + ( isEdgeFeature
-				? incoming ? " - incoming" : " - outgoing"
-				: "" );
+		return featureSpec.getKey() + " - " + projectionKey() + ( isEdgeFeature ? incoming ? " - incoming" : " - outgoing" : "" );
 	}
 
 	public FeatureProjectionKey projectionKey()

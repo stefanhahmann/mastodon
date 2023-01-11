@@ -135,18 +135,9 @@ public class RecordMovieDialog extends DelayedPackDialog implements OverlayRende
 	 * @return a runnable that should be executed when the BDV window is closed,
 	 *         and that closes this dialog and de-registers its listeners.
 	 */
-	public static Runnable install(
-			final Actions actions,
-			final BigDataViewerMamut bdv,
-			final OverlayGraphRenderer< ?, ? > tracksOverlay,
-			final ColorBarOverlay colorBarOverlay,
-			final Keymap keymap )
+	public static Runnable install( final Actions actions, final BigDataViewerMamut bdv, final OverlayGraphRenderer< ?, ? > tracksOverlay, final ColorBarOverlay colorBarOverlay, final Keymap keymap )
 	{
-		final RecordMovieDialog dialog = new RecordMovieDialog(
-				bdv.getViewerFrame(),
-				bdv.getViewer(),
-				tracksOverlay,
-				colorBarOverlay );
+		final RecordMovieDialog dialog = new RecordMovieDialog( bdv.getViewerFrame(), bdv.getViewer(), tracksOverlay, colorBarOverlay );
 		dialog.setTitle( "Record movie on " + bdv.getViewerFrame().getTitle() );
 		bdv.getViewer().getDisplay().overlays().add( dialog );
 		actions.namedAction( new MyToggleDialogAction( RECORD_MOVIE_DIALOG, dialog ), RECORD_MOVIE_DIALOG_KEYS );
@@ -172,7 +163,7 @@ public class RecordMovieDialog extends DelayedPackDialog implements OverlayRende
 			dialogActions.namedAction( new MyToggleDialogAction( RECORD_MOVIE_DIALOG, dialog ), RECORD_MOVIE_DIALOG_KEYS );
 			return onClose;
 		}
-		
+
 		return () -> {
 			dialog.setVisible( false );
 			dialog.dispose();
@@ -182,8 +173,11 @@ public class RecordMovieDialog extends DelayedPackDialog implements OverlayRende
 	private static final long serialVersionUID = 1L;
 
 	private static final String EXPORT_TO_MOVIE_KEY = "ExportToMovie";
+
 	private static final String PNG_EXPORT_PATH_KEY = "PNGExportPath";
+
 	private static final String MOVIE_EXPORT_PATH_KEY = "MovieExportPath";
+
 	private static final String FPS_KEY = "FPS";
 
 	private final int maxTimepoint;
@@ -200,11 +194,7 @@ public class RecordMovieDialog extends DelayedPackDialog implements OverlayRende
 
 	private JTextField tfPathMovie;
 
-	public RecordMovieDialog(
-			final Frame owner,
-			final ViewerPanel viewer,
-			final OverlayGraphRenderer< ?, ? > tracksOverlay,
-			final ColorBarOverlay colorBarOverlay )
+	public RecordMovieDialog( final Frame owner, final ViewerPanel viewer, final OverlayGraphRenderer< ?, ? > tracksOverlay, final ColorBarOverlay colorBarOverlay )
 	{
 		super( owner, "Record BDV movie", false );
 		maxTimepoint = ( null == viewer ) ? 10 : viewer.state().getNumTimepoints() - 1;
@@ -449,17 +439,8 @@ public class RecordMovieDialog extends DelayedPackDialog implements OverlayRende
 			}
 		} );
 
-
 		btnBrowsePNGs.addActionListener( e -> {
-			final File file = FileChooser.chooseFile(
-					FileChooser.useJFileChooser,
-					RecordMovieDialog.this,
-					tfPathPNGs.getText(),
-					null,
-					"Browse to a folder to save the PNGs to",
-					DialogType.SAVE,
-					SelectionMode.DIRECTORIES_ONLY,
-					MastodonIcons.BDV_ICON_MEDIUM.getImage() );
+			final File file = FileChooser.chooseFile( FileChooser.useJFileChooser, RecordMovieDialog.this, tfPathPNGs.getText(), null, "Browse to a folder to save the PNGs to", DialogType.SAVE, SelectionMode.DIRECTORIES_ONLY, MastodonIcons.BDV_ICON_MEDIUM.getImage() );
 			if ( file != null )
 			{
 				tfPathPNGs.setText( file.getAbsolutePath() );
@@ -468,15 +449,7 @@ public class RecordMovieDialog extends DelayedPackDialog implements OverlayRende
 		} );
 
 		btnBrowseMovie.addActionListener( e -> {
-			final File file = FileChooser.chooseFile(
-					FileChooser.useJFileChooser,
-					RecordMovieDialog.this,
-					tfPathMovie.getText(),
-					null,
-					"Save to movie file (MP4, MOV, AVI, ...)",
-					DialogType.SAVE,
-					SelectionMode.FILES_ONLY,
-					MastodonIcons.BDV_ICON_MEDIUM.getImage() );
+			final File file = FileChooser.chooseFile( FileChooser.useJFileChooser, RecordMovieDialog.this, tfPathMovie.getText(), null, "Save to movie file (MP4, MOV, AVI, ...)", DialogType.SAVE, SelectionMode.FILES_ONLY, MastodonIcons.BDV_ICON_MEDIUM.getImage() );
 			if ( file != null )
 			{
 				tfPathMovie.setText( file.getAbsolutePath() );

@@ -30,8 +30,7 @@ package org.mastodon.adapter;
 
 import java.util.Iterator;
 
-public class IteratorAdapter< O, WO >
-		implements Iterator< WO >
+public class IteratorAdapter< O, WO > implements Iterator< WO >
 {
 	private final Iterator< O > iterator;
 
@@ -39,9 +38,7 @@ public class IteratorAdapter< O, WO >
 
 	private final WO ref;
 
-	public IteratorAdapter(
-			final Iterator< O > iterator,
-			final RefBimap< O, WO > map )
+	public IteratorAdapter( final Iterator< O > iterator, final RefBimap< O, WO > map )
 	{
 		this.iterator = iterator;
 		this.map = map;

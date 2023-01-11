@@ -28,24 +28,22 @@
  */
 package org.mastodon.app.ui.settings;
 
-import java.awt.BorderLayout;
-import java.awt.Frame;
-import java.io.StringReader;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-
+import bdv.ui.settings.ModificationListener;
+import bdv.ui.settings.SettingsPage;
+import bdv.ui.settings.SettingsPanel;
 import org.scijava.listeners.Listeners;
 import org.scijava.ui.behaviour.io.InputTriggerConfig;
 import org.scijava.ui.behaviour.io.InputTriggerDescription;
 import org.scijava.ui.behaviour.io.gui.VisualEditorPanel;
 import org.scijava.ui.behaviour.io.yaml.YamlConfigIO;
 
-import bdv.ui.settings.ModificationListener;
-import bdv.ui.settings.SettingsPage;
-import bdv.ui.settings.SettingsPanel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.awt.Frame;
+import java.io.StringReader;
+import java.util.List;
 
 public class SettingsPanelExample
 {
@@ -88,13 +86,11 @@ public class SettingsPanelExample
 
 		@Override
 		public void cancel()
-		{
-		}
+		{}
 
 		@Override
 		public void apply()
-		{
-		}
+		{}
 	}
 
 	static class DefaultSettingsPage implements SettingsPage
@@ -161,28 +157,7 @@ public class SettingsPanelExample
 
 	private static InputTriggerConfig getDemoConfig()
 	{
-		final StringReader reader = new StringReader( "---\n" +
-				"- !mapping" + "\n" +
-				"  action: fluke" + "\n" +
-				"  contexts: [all]" + "\n" +
-				"  triggers: [F]" + "\n" +
-				"- !mapping" + "\n" +
-				"  action: drag1" + "\n" +
-				"  contexts: [all]" + "\n" +
-				"  triggers: [button1, win G]" + "\n" +
-				"- !mapping" + "\n" +
-				"  action: scroll1" + "\n" +
-				"  contexts: [all]" + "\n" +
-				"  triggers: [scroll]" + "\n" +
-				"- !mapping" + "\n" +
-				"  action: scroll1" + "\n" +
-				"  contexts: [trackscheme, mamut]" + "\n" +
-				"  triggers: [shift D]" + "\n" +
-				"- !mapping" + "\n" +
-				"  action: destroy the world" + "\n" +
-				"  contexts: [unknown context, mamut]" + "\n" +
-				"  triggers: [control A]" + "\n" +
-				"" );
+		final StringReader reader = new StringReader( "---\n" + "- !mapping" + "\n" + "  action: fluke" + "\n" + "  contexts: [all]" + "\n" + "  triggers: [F]" + "\n" + "- !mapping" + "\n" + "  action: drag1" + "\n" + "  contexts: [all]" + "\n" + "  triggers: [button1, win G]" + "\n" + "- !mapping" + "\n" + "  action: scroll1" + "\n" + "  contexts: [all]" + "\n" + "  triggers: [scroll]" + "\n" + "- !mapping" + "\n" + "  action: scroll1" + "\n" + "  contexts: [trackscheme, mamut]" + "\n" + "  triggers: [shift D]" + "\n" + "- !mapping" + "\n" + "  action: destroy the world" + "\n" + "  contexts: [unknown context, mamut]" + "\n" + "  triggers: [control A]" + "\n" + "" );
 		final List< InputTriggerDescription > triggers = YamlConfigIO.read( reader );
 		final InputTriggerConfig config = new InputTriggerConfig( triggers );
 		return config;

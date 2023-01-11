@@ -57,8 +57,7 @@ import org.scijava.listeners.Listeners;
  * @param <E>
  *            the type of the edges.
  */
-public class DefaultSelectionModel< V extends Vertex< E >, E extends Edge< V > >
-		implements SelectionModel< V, E >, GraphListener< V, E >
+public class DefaultSelectionModel< V extends Vertex< E >, E extends Edge< V > > implements SelectionModel< V, E >, GraphListener< V, E >
 {
 	private final ListenableReadOnlyGraph< V, E > graph;
 

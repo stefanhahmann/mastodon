@@ -40,11 +40,7 @@ import org.mastodon.io.labels.LabelSetsSerializer;
 
 public class RawTagSetModelIO
 {
-	public static < V extends Vertex< E >, E extends Edge< V > > void read(
-			final DefaultTagSetModel< V, E > tagSetModel,
-			final FileIdToGraphMap< V, E > idmap,
-			final ObjectInputStream ois )
-			throws IOException
+	public static < V extends Vertex< E >, E extends Edge< V > > void read( final DefaultTagSetModel< V, E > tagSetModel, final FileIdToGraphMap< V, E > idmap, final ObjectInputStream ois ) throws IOException
 	{
 		new DefaultTagSetModel.SerialisationAccess< V, E >( tagSetModel )
 		{
@@ -58,11 +54,7 @@ public class RawTagSetModelIO
 		}.read();
 	}
 
-	public static < V extends Vertex< E >, E extends Edge< V > > void write(
-			final DefaultTagSetModel< V, E > tagSetModel,
-			final GraphToFileIdMap< V, E > idmap,
-			final ObjectOutputStream oos )
-			throws IOException
+	public static < V extends Vertex< E >, E extends Edge< V > > void write( final DefaultTagSetModel< V, E > tagSetModel, final GraphToFileIdMap< V, E > idmap, final ObjectOutputStream oos ) throws IOException
 	{
 		new DefaultTagSetModel.SerialisationAccess< V, E >( tagSetModel )
 		{

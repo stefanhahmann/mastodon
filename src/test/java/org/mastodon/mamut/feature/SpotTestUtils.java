@@ -28,13 +28,12 @@
  */
 package org.mastodon.mamut.feature;
 
-import java.util.function.Predicate;
-
-import org.mastodon.mamut.model.Spot;
-
 import net.imglib2.Localizable;
 import net.imglib2.realtransform.AffineTransform3D;
 import net.imglib2.util.LinAlgHelpers;
+import org.mastodon.mamut.model.Spot;
+
+import java.util.function.Predicate;
 
 /**
  * Static utilities to help building test on

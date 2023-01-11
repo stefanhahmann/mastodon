@@ -28,15 +28,15 @@
  */
 package org.mastodon;
 
-import javax.swing.JFileChooser;
-import javax.swing.WindowConstants;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import mpicbg.spim.data.SpimDataException;
 import org.mastodon.mamut.MainWindow;
 import org.mastodon.mamut.WindowManager;
 import org.mastodon.mamut.project.MamutProjectIO;
 import org.scijava.Context;
 
+import javax.swing.JFileChooser;
+import javax.swing.WindowConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.IOException;
 
 /**

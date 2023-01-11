@@ -28,18 +28,8 @@
  */
 package org.mastodon.mamut.feature;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
+import mpicbg.spim.data.SpimDataException;
+import net.imglib2.util.StopWatch;
 import org.mastodon.feature.Feature;
 import org.mastodon.feature.FeatureModel;
 import org.mastodon.feature.FeatureSpec;
@@ -49,8 +39,16 @@ import org.mastodon.mamut.project.MamutProject;
 import org.mastodon.mamut.project.MamutProjectIO;
 import org.scijava.Context;
 
-import mpicbg.spim.data.SpimDataException;
-import net.imglib2.util.StopWatch;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.Locale;
+import java.util.Map;
 
 public class RawDeserializationExample
 {
@@ -101,8 +99,7 @@ public class RawDeserializationExample
 	private static void deserializeRawLinkVelocity( final String filename ) throws IOException
 	{
 		final StringBuilder str = new StringBuilder();
-		try (
-				final FileInputStream fis = new FileInputStream( filename );
+		try (final FileInputStream fis = new FileInputStream( filename );
 				final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( fis, 1024 * 1024 ) ))
 		{
 			// UNITS.
@@ -116,8 +113,7 @@ public class RawDeserializationExample
 	private static void deserializeRawSpotIntensity( final String filename ) throws FileNotFoundException, IOException
 	{
 		final StringBuilder str = new StringBuilder();
-		try (
-				final FileInputStream fis = new FileInputStream( filename );
+		try (final FileInputStream fis = new FileInputStream( filename );
 				final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( fis, 1024 * 1024 ) ))
 		{
 			// NUMBER OF SOURCES.
@@ -153,8 +149,7 @@ public class RawDeserializationExample
 	private static void deserializeRawSpotNLinks( final String filename ) throws FileNotFoundException, IOException
 	{
 		final StringBuilder str = new StringBuilder();
-		try (
-				final FileInputStream fis = new FileInputStream( filename );
+		try (final FileInputStream fis = new FileInputStream( filename );
 				final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( fis, 1024 * 1024 ) ))
 		{
 			// NUMBER OF ENTRIES.

@@ -77,16 +77,7 @@ import bdv.viewer.OverlayRenderer;
 import bdv.viewer.TransformListener;
 import bdv.viewer.render.PainterThread;
 
-public class TrackSchemePanel extends JPanel implements
-		TransformListener< ScreenTransform >,
-		PainterThread.Paintable,
-		HighlightListener,
-		FocusListener,
-		TimepointListener,
-		GraphChangeListener,
-		SelectionListener,
-		NavigationListener< TrackSchemeVertex, TrackSchemeEdge >,
-		ContextListener< TrackSchemeVertex >
+public class TrackSchemePanel extends JPanel implements TransformListener< ScreenTransform >, PainterThread.Paintable, HighlightListener, FocusListener, TimepointListener, GraphChangeListener, SelectionListener, NavigationListener< TrackSchemeVertex, TrackSchemeEdge >, ContextListener< TrackSchemeVertex >
 {
 	private static final long serialVersionUID = 1L;
 
@@ -193,15 +184,7 @@ public class TrackSchemePanel extends JPanel implements
 
 	private NavigationBehaviour navigationBehaviour;
 
-	public TrackSchemePanel(
-			final TrackSchemeGraph< ?, ? > graph,
-			final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight,
-			final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-			final TimepointModel timepoint,
-			final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection,
-			final RootsModel<TrackSchemeVertex> rootsModel,
-			final NavigationHandler< TrackSchemeVertex, TrackSchemeEdge > navigation,
-			final TrackSchemeOptions optional )
+	public TrackSchemePanel( final TrackSchemeGraph< ?, ? > graph, final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight, final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus, final TimepointModel timepoint, final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection, final RootsModel< TrackSchemeVertex > rootsModel, final NavigationHandler< TrackSchemeVertex, TrackSchemeEdge > navigation, final TrackSchemeOptions optional )
 	{
 		super( new BorderLayout(), false );
 		this.graph = graph;
@@ -370,7 +353,7 @@ public class TrackSchemePanel extends JPanel implements
 			final Flags flags = this.flags.clear();
 			if ( flags.graphChanged )
 			{
-//				System.out.println( "paint: graphChanged" );
+				//				System.out.println( "paint: graphChanged" );
 				layout.layout();
 				layoutMinX = layout.getCurrentLayoutMinX();
 				layoutMaxX = layout.getCurrentLayoutMaxX();
@@ -378,8 +361,8 @@ public class TrackSchemePanel extends JPanel implements
 			}
 			else if ( flags.transformChanged )
 			{
-//				System.out.println( "paint: transformChanged" );
-//				entityAnimator.startAnimation( transform, 0 );
+				//				System.out.println( "paint: transformChanged" );
+				//				entityAnimator.startAnimation( transform, 0 );
 				if ( context != null && contextLayout.buildContext( context, transform, false ) )
 				{
 					layoutMinX = layout.getCurrentLayoutMinX();
@@ -388,17 +371,17 @@ public class TrackSchemePanel extends JPanel implements
 				}
 				else
 					entityAnimator.continueAnimation( transform, 0 );
-//					entityAnimator.startAnimation( transform, 0 );
-//				entityAnimator.startAnimation( transform, ANIMATION_MILLISECONDS );
+				//					entityAnimator.startAnimation( transform, 0 );
+				//				entityAnimator.startAnimation( transform, ANIMATION_MILLISECONDS );
 			}
 			else if ( flags.selectionChanged )
 			{
-//				System.out.println( "paint: selectionChanged" );
+				//				System.out.println( "paint: selectionChanged" );
 				entityAnimator.startAnimation( transform, ANIMATION_MILLISECONDS );
 			}
 			else if ( flags.contextChanged )
 			{
-//				System.out.println( "paint: contextChanged" );
+				//				System.out.println( "paint: contextChanged" );
 				if ( context == null )
 				{
 					layout.layout();
@@ -414,7 +397,7 @@ public class TrackSchemePanel extends JPanel implements
 			}
 			else if ( flags.entitiesAttributesChanged )
 			{
-//				System.out.println( "paint: entitiesAttributesChanged" ); // DEBUG
+				//				System.out.println( "paint: entitiesAttributesChanged" ); // DEBUG
 				entityAnimator.continueAnimation( transform, 0 );
 			}
 
@@ -518,7 +501,7 @@ public class TrackSchemePanel extends JPanel implements
 	public void setNavigationEtiquette( final NavigationEtiquette navigationEtiquette )
 	{
 		this.navigationEtiquette = navigationEtiquette;
-		switch( navigationEtiquette )
+		switch ( navigationEtiquette )
 		{
 		case MINIMAL:
 			navigationBehaviour = new MinimalNavigationBehaviour( transformEventHandler, 100, 100 );
@@ -607,8 +590,7 @@ public class TrackSchemePanel extends JPanel implements
 		{
 			final double lx = v.getLayoutX();
 			final double ly = v.getTimepoint();
-			if ( currentTransform.getMaxX() < lx || currentTransform.getMinX() > lx
-					|| currentTransform.getMaxY() < ly || currentTransform.getMinY() > ly )
+			if ( currentTransform.getMaxX() < lx || currentTransform.getMinX() > lx || currentTransform.getMaxY() < ly || currentTransform.getMinY() > ly )
 			{
 				transformEventHandler.centerOn( lx, ly );
 			}
@@ -649,8 +631,8 @@ public class TrackSchemePanel extends JPanel implements
 			 * screenHeight. Fall back to CENTER_IF_INVISIBLE if screen size too
 			 * small.
 			 */
-//			final int screenWidth = currentTransform.getScreenWidth();
-//			final int screenHeight = currentTransform.getScreenHeight();
+			//			final int screenWidth = currentTransform.getScreenWidth();
+			//			final int screenHeight = currentTransform.getScreenHeight();
 
 			final double minX = currentTransform.getMinX();
 			final double maxX = currentTransform.getMaxX();
@@ -686,8 +668,8 @@ public class TrackSchemePanel extends JPanel implements
 			 * screenHeight. Fall back to CENTER_IF_INVISIBLE if screen size too
 			 * small.
 			 */
-//			final int screenWidth = currentTransform.getScreenWidth();
-//			final int screenHeight = currentTransform.getScreenHeight();
+			//			final int screenWidth = currentTransform.getScreenWidth();
+			//			final int screenHeight = currentTransform.getScreenHeight();
 
 			final double minX = currentTransform.getMinX();
 			final double maxX = currentTransform.getMaxX();
@@ -744,7 +726,7 @@ public class TrackSchemePanel extends JPanel implements
 	// TODO remove??? revise TrackSchemePanel / TrackSchemeFrame construction.
 	public void setTrackSchemeStyle( final TrackSchemeStyle s )
 	{
-		throw new UnsupportedOperationException("TODO: this shouldn't be called. Should go through TrackSchemeOptions.getTrackSchemeOverlayFactory.");
+		throw new UnsupportedOperationException( "TODO: this shouldn't be called. Should go through TrackSchemeOptions.getTrackSchemeOverlayFactory." );
 	}
 
 	public OffsetHeaders getOffsetHeaders()
@@ -857,7 +839,7 @@ public class TrackSchemePanel extends JPanel implements
 		public void startAnimation( final ScreenTransform transform, final long duration )
 		{
 			reset( duration );
-			if (duration > 0 )
+			if ( duration > 0 )
 			{
 				copyIpStart();
 				layout.cropAndScale( transform, screenEntities, offsetHeaders.getWidth(), offsetHeaders.getHeight(), colorGenerator );
@@ -879,17 +861,14 @@ public class TrackSchemePanel extends JPanel implements
 			{
 				layout.cropAndScale( transform, screenEntities, offsetHeaders.getWidth(), offsetHeaders.getHeight(), colorGenerator );
 				swapIpEnd();
-				interpolator = new ScreenEntitiesInterpolator(
-						screenEntitiesIpStart,
-						screenEntitiesIpEnd,
-						ScreenEntitiesInterpolator.getIncrementalY( screenEntitiesIpStart, screenEntitiesIpEnd ) );
+				interpolator = new ScreenEntitiesInterpolator( screenEntitiesIpStart, screenEntitiesIpEnd, ScreenEntitiesInterpolator.getIncrementalY( screenEntitiesIpStart, screenEntitiesIpEnd ) );
 			}
 			else
 			{
 				startAnimation( transform, duration );
-//				swapPools();
-//				layout.cropAndScale( transform, screenEntities );
-//				lastComputedScreenEntities = screenEntities;
+				//				swapPools();
+				//				layout.cropAndScale( transform, screenEntities );
+				//				lastComputedScreenEntities = screenEntities;
 			}
 		}
 
@@ -939,9 +918,13 @@ public class TrackSchemePanel extends JPanel implements
 	static class Flags
 	{
 		private boolean transformChanged;
+
 		private boolean selectionChanged;
+
 		private boolean graphChanged;
+
 		private boolean contextChanged;
+
 		private boolean entitiesAttributesChanged;
 
 		public Flags()
@@ -1001,7 +984,7 @@ public class TrackSchemePanel extends JPanel implements
 		@Override
 		public String toString()
 		{
-			final StringBuilder str = new StringBuilder(super.toString());
+			final StringBuilder str = new StringBuilder( super.toString() );
 			str.append( '\n' );
 			str.append( "  - transformChanged: " + transformChanged + "\n" );
 			str.append( "  - selectionChanged: " + selectionChanged + "\n" );

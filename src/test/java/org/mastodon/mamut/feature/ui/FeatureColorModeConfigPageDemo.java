@@ -28,10 +28,6 @@
  */
 package org.mastodon.mamut.feature.ui;
 
-import java.util.Locale;
-
-import javax.swing.UIManager;
-
 import org.mastodon.feature.FeatureSpecsService;
 import org.mastodon.feature.ui.FeatureColorModeConfigPage;
 import org.mastodon.mamut.PreferencesDialog;
@@ -43,6 +39,9 @@ import org.mastodon.ui.coloring.feature.FeatureColorModeManager;
 import org.mastodon.ui.keymap.KeyConfigContexts;
 import org.mastodon.ui.keymap.Keymap;
 import org.scijava.Context;
+
+import javax.swing.UIManager;
+import java.util.Locale;
 
 public class FeatureColorModeConfigPageDemo
 {
@@ -57,15 +56,10 @@ public class FeatureColorModeConfigPageDemo
 		{
 
 			final FeatureColorModeManager featureColorModeManager = new FeatureColorModeManager();
-			final MamutFeatureProjectionsManager featureProjectionsManager = new MamutFeatureProjectionsManager(
-					context.getService( FeatureSpecsService.class ),
-					featureColorModeManager );
+			final MamutFeatureProjectionsManager featureProjectionsManager = new MamutFeatureProjectionsManager( context.getService( FeatureSpecsService.class ), featureColorModeManager );
 
 			final PreferencesDialog settings = new PreferencesDialog( null, new Keymap(), new String[] { KeyConfigContexts.MASTODON } );
-			settings.addPage( new FeatureColorModeConfigPage( FEATURECOLORMODE_SETTINGSPAGE_TREEPATH,
-					featureColorModeManager,
-					featureProjectionsManager,
-					"Spot", "Link" ) );
+			settings.addPage( new FeatureColorModeConfigPage( FEATURECOLORMODE_SETTINGSPAGE_TREEPATH, featureColorModeManager, featureProjectionsManager, "Spot", "Link" ) );
 
 			final MamutProject project = new MamutProjectIO().load( "samples/drosophila_crop.mastodon" );
 			final Model model = new Model();

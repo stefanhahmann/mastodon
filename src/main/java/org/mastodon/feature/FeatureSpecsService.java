@@ -141,8 +141,6 @@ public class FeatureSpecsService extends AbstractService implements SciJavaServi
 	public < T > List< FeatureSpec< ?, T > > getSpecs( final Class< T > target )
 	{
 		final List< ? > list = targetToSpecs.get( target );
-		return list == null
-				? Collections.emptyList()
-				: Collections.unmodifiableList( ( List< FeatureSpec< ?, T > > ) list );
+		return list == null ? Collections.emptyList() : Collections.unmodifiableList( ( List< FeatureSpec< ?, T > > ) list );
 	}
 }

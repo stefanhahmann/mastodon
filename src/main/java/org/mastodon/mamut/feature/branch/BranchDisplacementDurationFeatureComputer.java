@@ -54,10 +54,7 @@ public class BranchDisplacementDurationFeatureComputer implements MamutFeatureCo
 	{
 		final ModelBranchGraph branchGraph = model.getBranchGraph();
 		if ( null == output )
-			output = new BranchDisplacementDurationFeature(
-					new DoublePropertyMap<>( branchGraph.vertices().getRefPool(), Double.NaN ),
-					new DoublePropertyMap<>( branchGraph.vertices().getRefPool(), Double.NaN ),
-					model.getSpaceUnits() );
+			output = new BranchDisplacementDurationFeature( new DoublePropertyMap<>( branchGraph.vertices().getRefPool(), Double.NaN ), new DoublePropertyMap<>( branchGraph.vertices().getRefPool(), Double.NaN ), model.getSpaceUnits() );
 	}
 
 	@Override
@@ -85,7 +82,7 @@ public class BranchDisplacementDurationFeatureComputer implements MamutFeatureCo
 
 		// get source spot
 		Spot source = branchGraph.getFirstLinkedVertex( branchSpot, ref1 );
-		if(source.incomingEdges().size() == 1)
+		if ( source.incomingEdges().size() == 1 )
 			source = source.incomingEdges().iterator().next().getSource( ref1 );
 
 		// get target spot

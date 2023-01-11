@@ -28,16 +28,15 @@
  */
 package org.mastodon.model.tag.ui;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.util.ArrayList;
-
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Frame;
+import java.util.ArrayList;
 
 public class TagTableDialogExample
 {
@@ -81,14 +80,7 @@ public class TagTableDialogExample
 		{
 			super( owner, "tag sets configuration", false );
 
-			final TagTable< MyElements, MyElement > tagTable = new TagTable<>(
-					elements,
-					MyElements::addElement,
-					MyElements::size,
-					(c, e ) -> c.remove( e ),
-					(c, i) -> c.get( i ),
-					MyElement::setName,
-					MyElement::getName );
+			final TagTable< MyElements, MyElement > tagTable = new TagTable<>( elements, MyElements::addElement, MyElements::size, ( c, e ) -> c.remove( e ), ( c, i ) -> c.get( i ), MyElement::setName, MyElement::getName );
 
 			final JPanel tagSetPanel = new JPanel( new BorderLayout( 0, 0 ) );
 			tagSetPanel.add( tagTable.getTable(), BorderLayout.CENTER );

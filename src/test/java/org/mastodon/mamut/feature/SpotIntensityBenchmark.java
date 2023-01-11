@@ -28,8 +28,8 @@
  */
 package org.mastodon.mamut.feature;
 
-import java.io.IOException;
-
+import mpicbg.spim.data.SpimDataException;
+import net.imglib2.util.StopWatch;
 import org.jdom2.JDOMException;
 import org.mastodon.mamut.WindowManager;
 import org.mastodon.mamut.model.Model;
@@ -38,8 +38,7 @@ import org.mastodon.mamut.project.MamutProject;
 import org.mastodon.mamut.project.MamutProjectIO;
 import org.scijava.Context;
 
-import mpicbg.spim.data.SpimDataException;
-import net.imglib2.util.StopWatch;
+import java.io.IOException;
 
 public class SpotIntensityBenchmark
 {
@@ -66,7 +65,6 @@ public class SpotIntensityBenchmark
 				model.getGraph().remove( spot );
 		}
 		System.out.println( "Done." );
-
 
 		/*
 		 * 1.1a. Compute spot intensity feature for all.

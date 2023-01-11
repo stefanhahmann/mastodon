@@ -85,10 +85,7 @@ public class ColorBarOverlay implements OverlayRenderer
 	 */
 	public static enum Position
 	{
-		TOP_LEFT( "Top-left" ),
-		TOP_RIGHT( "Top-right" ),
-		BOTTOM_LEFT( "Bottom-left" ),
-		BOTTOM_RIGHT( "Bottom-right" );
+		TOP_LEFT( "Top-left" ), TOP_RIGHT( "Top-right" ), BOTTOM_LEFT( "Bottom-left" ), BOTTOM_RIGHT( "Bottom-right" );
 
 		private final String str;
 
@@ -203,7 +200,7 @@ public class ColorBarOverlay implements OverlayRenderer
 
 		y += VINSET;
 		x += HINSET;
-		
+
 		y += ascent;
 		g.setColor( Color.BLACK );
 		g.drawString( tagSet.getName(), x, y );
@@ -271,7 +268,7 @@ public class ColorBarOverlay implements OverlayRenderer
 	{
 		if ( !featureColorMode.getVertexColorMap().equals( featureColorMode.getEdgeColorMap() ) )
 			return false;
-		if ( !Objects.equals(featureColorMode.getVertexFeatureProjection(), featureColorMode.getEdgeFeatureProjection()) )
+		if ( !Objects.equals( featureColorMode.getVertexFeatureProjection(), featureColorMode.getEdgeFeatureProjection() ) )
 			return false;
 		if ( featureColorMode.getVertexRangeMin() != featureColorMode.getEdgeRangeMin() )
 			return false;
@@ -283,7 +280,7 @@ public class ColorBarOverlay implements OverlayRenderer
 
 	private static String toString( final FeatureProjectionId featureProjectionId )
 	{
-		if(featureProjectionId == null)
+		if ( featureProjectionId == null )
 			return "null";
 		final StringBuilder sb = new StringBuilder( featureProjectionId.getProjectionKey() );
 		final int[] sourceIndices;
@@ -309,15 +306,7 @@ public class ColorBarOverlay implements OverlayRenderer
 		return sb.toString();
 	}
 
-	private int draw(
-			final int xOrigin,
-			final int yOrigin,
-			final String strCmap,
-			final String header,
-			final String featureName,
-			final double rangeMin,
-			final double rangeMax,
-			final Graphics g )
+	private int draw( final int xOrigin, final int yOrigin, final String strCmap, final String header, final String featureName, final double rangeMin, final double rangeMax, final Graphics g )
 	{
 		final FontMetrics fm = g.getFontMetrics();
 		final int localWidth = Math.max( minWidth, fm.stringWidth( featureName ) );

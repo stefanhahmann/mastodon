@@ -63,10 +63,7 @@ public class MouseHighlightHandler implements MouseMotionListener, MouseListener
 	 */
 	private int screenHeight;
 
-	public MouseHighlightHandler(
-			final DataDisplayOverlay graphOverlay,
-			final HighlightModel< DataVertex, DataEdge > highlight,
-			final DataGraph< ?, ? > graph )
+	public MouseHighlightHandler( final DataDisplayOverlay graphOverlay, final HighlightModel< DataVertex, DataEdge > highlight, final DataGraph< ?, ? > graph )
 	{
 		this.graphOverlay = graphOverlay;
 		this.highlight = highlight;

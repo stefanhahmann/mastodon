@@ -55,12 +55,7 @@ public abstract class AbstractBranchVertexColorGenerator< V extends Vertex< E >,
 
 	protected final BranchGraph< BV, BE, V, E > branchGraph;
 
-	public AbstractBranchVertexColorGenerator(
-			final FeatureProjection< BV > featureProjection,
-			final BranchGraph< BV, BE, V, E > branchGraph,
-			final ColorMap colorMap,
-			final double min,
-			final double max )
+	public AbstractBranchVertexColorGenerator( final FeatureProjection< BV > featureProjection, final BranchGraph< BV, BE, V, E > branchGraph, final ColorMap colorMap, final double min, final double max )
 	{
 		this.branchGraph = branchGraph;
 		this.colorGenerator = new FeatureColorGenerator<>( featureProjection, colorMap, min, max );
@@ -69,7 +64,8 @@ public abstract class AbstractBranchVertexColorGenerator< V extends Vertex< E >,
 	protected int branchVertexColor( V v )
 	{
 		BV bvRef = branchGraph.vertexRef();
-		try {
+		try
+		{
 			BV branchVertex = branchGraph.getBranchVertex( v, bvRef );
 			return colorGenerator.color( branchVertex );
 		}

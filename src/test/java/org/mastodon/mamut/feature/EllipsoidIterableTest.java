@@ -28,19 +28,6 @@
  */
 package org.mastodon.mamut.feature;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
-import org.junit.Test;
-import org.mastodon.mamut.model.ModelGraph;
-
 import bdv.util.RandomAccessibleIntervalSource;
 import bdv.viewer.Source;
 import net.imglib2.Cursor;
@@ -50,6 +37,18 @@ import net.imglib2.img.array.ArrayImgs;
 import net.imglib2.realtransform.AffineTransform3D;
 import net.imglib2.type.numeric.integer.UnsignedByteType;
 import net.imglib2.util.Util;
+import org.junit.Test;
+import org.mastodon.mamut.model.ModelGraph;
+
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class EllipsoidIterableTest
 {
@@ -65,10 +64,7 @@ public class EllipsoidIterableTest
 		 * Creates an anisotropic calibration transform.
 		 */
 		final AffineTransform3D transform = new AffineTransform3D();
-		transform.set(
-				1., 0, 0, 0,
-				0, 1., 0, 0,
-				0, 0, 2., 0 );
+		transform.set( 1., 0, 0, 0, 0, 1., 0, 0, 0, 0, 2., 0 );
 
 		/*
 		 * An empty source.
@@ -82,27 +78,9 @@ public class EllipsoidIterableTest
 		 * Now create a model graph with a few test spots (non overlapping).
 		 */
 		final ModelGraph graph = new ModelGraph();
-		graph.addVertex().init( 0,
-				new double[] { 50, 50, 50 },
-				new double[][] {
-						{ 210, 100, 0 },
-						{ 100, 110, 10 },
-						{ 0, 10, 100 }
-				} );
-		graph.addVertex().init( 0,
-				new double[] { 20, 80, 40 },
-				new double[][] {
-						{ 90, 0, 0 },
-						{ 0, 90, 0 },
-						{ 0, 0, 500 }
-				} );
-		graph.addVertex().init( 0,
-				new double[] { 40, 10, 40 },
-				new double[][] {
-						{ 90, -80, 0 },
-						{ -80, 90, 0 },
-						{ 0, 0, 90 }
-				} );
+		graph.addVertex().init( 0, new double[] { 50, 50, 50 }, new double[][] { { 210, 100, 0 }, { 100, 110, 10 }, { 0, 10, 100 } } );
+		graph.addVertex().init( 0, new double[] { 20, 80, 40 }, new double[][] { { 90, 0, 0 }, { 0, 90, 0 }, { 0, 0, 500 } } );
+		graph.addVertex().init( 0, new double[] { 40, 10, 40 }, new double[][] { { 90, -80, 0 }, { -80, 90, 0 }, { 0, 0, 90 } } );
 
 		/*
 		 * We now create an EllipsoidIterable and re-use it for each spot. For
@@ -144,10 +122,7 @@ public class EllipsoidIterableTest
 		 * Creates an anisotropic calibration transform.
 		 */
 		final AffineTransform3D transform = new AffineTransform3D();
-		transform.set(
-				1., 0, 0, 0,
-				0, 1., 0, 0,
-				0, 0, 2., 0 );
+		transform.set( 1., 0, 0, 0, 0, 1., 0, 0, 0, 0, 2., 0 );
 
 		/*
 		 * An empty source.
@@ -161,27 +136,9 @@ public class EllipsoidIterableTest
 		 * Now create a model graph with a few test spots (non overlapping).
 		 */
 		final ModelGraph graph = new ModelGraph();
-		graph.addVertex().init( 0,
-				new double[] { 50, 50, 50 },
-				new double[][] {
-						{ 210, 100, 0 },
-						{ 100, 110, 10 },
-						{ 0, 10, 100 }
-				} );
-		graph.addVertex().init( 0,
-				new double[] { 20, 80, 40 },
-				new double[][] {
-						{ 90, 0, 0 },
-						{ 0, 90, 0 },
-						{ 0, 0, 500 }
-				} );
-		graph.addVertex().init( 0,
-				new double[] { 40, 10, 40 },
-				new double[][] {
-						{ 90, -80, 0 },
-						{ -80, 90, 0 },
-						{ 0, 0, 90 }
-				} );
+		graph.addVertex().init( 0, new double[] { 50, 50, 50 }, new double[][] { { 210, 100, 0 }, { 100, 110, 10 }, { 0, 10, 100 } } );
+		graph.addVertex().init( 0, new double[] { 20, 80, 40 }, new double[][] { { 90, 0, 0 }, { 0, 90, 0 }, { 0, 0, 500 } } );
+		graph.addVertex().init( 0, new double[] { 40, 10, 40 }, new double[][] { { 90, -80, 0 }, { -80, 90, 0 }, { 0, 0, 90 } } );
 
 		/*
 		 * We now create an EllipsoidIterable and re-use it for each spot. For
@@ -199,10 +156,7 @@ public class EllipsoidIterableTest
 		 * 1 that we are inside a spot.
 		 */
 
-		final List< Predicate< Localizable > > testers = graph.vertices()
-				.stream()
-				.map( spot -> SpotTestUtils.isInsideTest( spot, transform ) )
-				.collect( Collectors.toList() );
+		final List< Predicate< Localizable > > testers = graph.vertices().stream().map( spot -> SpotTestUtils.isInsideTest( spot, transform ) ).collect( Collectors.toList() );
 
 		final Cursor< UnsignedByteType > cursor = img.localizingCursor();
 		while ( cursor.hasNext() )
@@ -222,8 +176,7 @@ public class EllipsoidIterableTest
 			{
 				// Test that we are outside any spot.
 				for ( final Predicate< Localizable > tester : testers )
-					assertFalse( "Found position " + Util.printCoordinates( cursor ) + ", to be inside a spot, expected it to be outside",
-							tester.test( cursor ) );
+					assertFalse( "Found position " + Util.printCoordinates( cursor ) + ", to be inside a spot, expected it to be outside", tester.test( cursor ) );
 			}
 			else if ( val == 1 )
 			{
@@ -232,8 +185,7 @@ public class EllipsoidIterableTest
 				for ( final Predicate< Localizable > tester : testers )
 					inside = inside || tester.test( cursor );
 
-				assertTrue( "Found position " + Util.printCoordinates( cursor ) + ", to be outside a spot, expected it to be inside",
-						inside );
+				assertTrue( "Found position " + Util.printCoordinates( cursor ) + ", to be outside a spot, expected it to be inside", inside );
 			}
 		}
 	}

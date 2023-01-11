@@ -159,47 +159,46 @@ public class TrackSchemeStyleEditorPanel extends JPanel
 
 		c.gridx = 0;
 
-		styleElements.forEach( element -> element.accept(
-				new StyleElementVisitor()
+		styleElements.forEach( element -> element.accept( new StyleElementVisitor()
+		{
+			@Override
+			public void visit( final Separator separator )
+			{
+				if ( c.gridx != 0 )
 				{
-					@Override
-					public void visit( final Separator separator )
-					{
-						if ( c.gridx != 0 )
-						{
-							c.gridx = 0;
-							++c.gridy;
-						}
-						c.gridwidth = 2;
-						editPanel.add( Box.createVerticalStrut( 10 ), c );
-						++c.gridy;
-						c.gridwidth = 1;
-					}
+					c.gridx = 0;
+					++c.gridy;
+				}
+				c.gridwidth = 2;
+				editPanel.add( Box.createVerticalStrut( 10 ), c );
+				++c.gridy;
+				c.gridwidth = 1;
+			}
 
-					@Override
-					public void visit( final ColorElement element )
-					{
-						final JButton button = linkedColorButton( element, element.getLabel(), colorChooser );
-						editPanel.add( button, c );
-						if ( ++c.gridx == numCols )
-						{
-							c.gridx = 0;
-							++c.gridy;
-						}
-					}
+			@Override
+			public void visit( final ColorElement element )
+			{
+				final JButton button = linkedColorButton( element, element.getLabel(), colorChooser );
+				editPanel.add( button, c );
+				if ( ++c.gridx == numCols )
+				{
+					c.gridx = 0;
+					++c.gridy;
+				}
+			}
 
-					@Override
-					public void visit( final BooleanElement element )
-					{
-						final JCheckBox checkbox = linkedCheckBox( element, element.getLabel() );
-						editPanel.add( checkbox, c );
-						if ( ++c.gridx == numCols )
-						{
-							c.gridx = 0;
-							++c.gridy;
-						}
-					}
-				} ) );
+			@Override
+			public void visit( final BooleanElement element )
+			{
+				final JCheckBox checkbox = linkedCheckBox( element, element.getLabel() );
+				editPanel.add( checkbox, c );
+				if ( ++c.gridx == numCols )
+				{
+					c.gridx = 0;
+					++c.gridy;
+				}
+			}
+		} ) );
 
 		previewPanel.setBorder( new LineBorder( Color.LIGHT_GRAY, 1 ) );
 		add( previewPanel, BorderLayout.CENTER );
@@ -208,15 +207,7 @@ public class TrackSchemeStyleEditorPanel extends JPanel
 
 	private List< StyleElement > styleElements( final TrackSchemeStyle style )
 	{
-		return Arrays.asList(
-				colorElement( "edge", style::getEdgeColor, style::edgeColor ),
-				colorElement( "selected edge", style::getSelectedEdgeColor, style::selectedEdgeColor ),
-				colorElement( "vertex fill", style::getVertexFillColor, style::vertexFillColor ),
-				colorElement( "selected vertex fill", style::getSelectedVertexFillColor, style::selectedVertexFillColor ),
-				colorElement( "vertex draw", style::getVertexDrawColor, style::vertexDrawColor ),
-				colorElement( "selected vertex draw", style::getSelectedVertexDrawColor, style::selectedVertexDrawColor ),
-				colorElement( "simplified vertex fill", style::getSimplifiedVertexFillColor, style::simplifiedVertexFillColor ),
-				colorElement( "selected simplified vertex fill", style::getSelectedSimplifiedVertexFillColor, style::selectedSimplifiedVertexFillColor ),
+		return Arrays.asList( colorElement( "edge", style::getEdgeColor, style::edgeColor ), colorElement( "selected edge", style::getSelectedEdgeColor, style::selectedEdgeColor ), colorElement( "vertex fill", style::getVertexFillColor, style::vertexFillColor ), colorElement( "selected vertex fill", style::getSelectedVertexFillColor, style::selectedVertexFillColor ), colorElement( "vertex draw", style::getVertexDrawColor, style::vertexDrawColor ), colorElement( "selected vertex draw", style::getSelectedVertexDrawColor, style::selectedVertexDrawColor ), colorElement( "simplified vertex fill", style::getSimplifiedVertexFillColor, style::simplifiedVertexFillColor ), colorElement( "selected simplified vertex fill", style::getSelectedSimplifiedVertexFillColor, style::selectedSimplifiedVertexFillColor ),
 
 				separator(),
 
@@ -224,24 +215,15 @@ public class TrackSchemeStyleEditorPanel extends JPanel
 
 				separator(),
 
-				colorElement( "background", style::getBackgroundColor, style::backgroundColor ),
-				colorElement( "header background", style::getHeaderBackgroundColor, style::headerBackgroundColor ),
-				colorElement( "decoration", style::getDecorationColor, style::decorationColor ),
-				colorElement( "header decoration", style::getHeaderDecorationColor, style::headerDecorationColor ),
-				colorElement( "current timepoint", style::getCurrentTimepointColor, style::currentTimepointColor ),
-				colorElement( "header current timepoint", style::getHeaderCurrentTimepointColor, style::headerCurrentTimepointColor ),
+				colorElement( "background", style::getBackgroundColor, style::backgroundColor ), colorElement( "header background", style::getHeaderBackgroundColor, style::headerBackgroundColor ), colorElement( "decoration", style::getDecorationColor, style::decorationColor ), colorElement( "header decoration", style::getHeaderDecorationColor, style::headerDecorationColor ), colorElement( "current timepoint", style::getCurrentTimepointColor, style::currentTimepointColor ), colorElement( "header current timepoint", style::getHeaderCurrentTimepointColor, style::headerCurrentTimepointColor ),
 
 				separator(),
 
-				booleanElement( "paint rows", style::isPaintRows, style::paintRows ),
-				booleanElement( "highlight current timepoint", style::isHighlightCurrentTimepoint, style::highlightCurrentTimepoint ),
-				booleanElement( "paint columns", style::isPaintColumns, style::paintColumns ),
-				booleanElement( "paint header shadow", style::isPaintHeaderShadow, style::paintHeaderShadow ),
+				booleanElement( "paint rows", style::isPaintRows, style::paintRows ), booleanElement( "highlight current timepoint", style::isHighlightCurrentTimepoint, style::highlightCurrentTimepoint ), booleanElement( "paint columns", style::isPaintColumns, style::paintColumns ), booleanElement( "paint header shadow", style::isPaintHeaderShadow, style::paintHeaderShadow ),
 
 				separator(),
 
-				booleanElement( "hierarchy graph use curved lines", style::isHierarchyGraphCurvedLines, style::hierarchyGraphCurvedLines )
-		);
+				booleanElement( "hierarchy graph use curved lines", style::isHierarchyGraphCurvedLines, style::hierarchyGraphCurvedLines ) );
 	}
 
 	public static void main( final String[] args )

@@ -107,34 +107,19 @@ public class MamutBranchViewTrackScheme extends MamutBranchView< TrackSchemeGrap
 		this( appModel, guiState, new BranchTimeTrackSchemeFactory(), new BranchTrackSchemeOverlayFactory(), LongEdgesLineageTreeLayout::new, null );
 	}
 
-	protected MamutBranchViewTrackScheme(
-			final MamutAppModel appModel,
-			final Map< String, Object > guiState,
-			final BranchTrackSchemeFactory trackSchemeGraphFactory,
-			final TrackSchemeOverlayFactory overlayFactory,
-			final LineageTreeLayout.LineageTreeLayoutFactory layoutFactory,
-			final TimepointModel timepointModel)
+	protected MamutBranchViewTrackScheme( final MamutAppModel appModel, final Map< String, Object > guiState, final BranchTrackSchemeFactory trackSchemeGraphFactory, final TrackSchemeOverlayFactory overlayFactory, final LineageTreeLayout.LineageTreeLayoutFactory layoutFactory, final TimepointModel timepointModel )
 	{
 		super( appModel, trackSchemeGraphFactory.createViewGraph( appModel ), new String[] { KeyConfigContexts.TRACKSCHEME } );
 
 		// TrackScheme options.
-		final GraphColorGeneratorAdapter< BranchSpot, BranchLink, TrackSchemeVertex, TrackSchemeEdge > coloringAdapter =
-				new GraphColorGeneratorAdapter<>( viewGraph.getVertexMap(), viewGraph.getEdgeMap() );
+		final GraphColorGeneratorAdapter< BranchSpot, BranchLink, TrackSchemeVertex, TrackSchemeEdge > coloringAdapter = new GraphColorGeneratorAdapter<>( viewGraph.getVertexMap(), viewGraph.getEdgeMap() );
 		final TrackSchemeStyle forwardDefaultStyle = appModel.getTrackSchemeStyleManager().getForwardDefaultStyle();
-		final TrackSchemeOptions options = TrackSchemeOptions.options()
-				.trackSchemeOverlayFactory( overlayFactory )
-				.lineageTreeLayoutFactory( layoutFactory )
-				.style( forwardDefaultStyle )
-				.graphColorGenerator( coloringAdapter );
+		final TrackSchemeOptions options = TrackSchemeOptions.options().trackSchemeOverlayFactory( overlayFactory ).lineageTreeLayoutFactory( layoutFactory ).style( forwardDefaultStyle ).graphColorGenerator( coloringAdapter );
 
 		// Restore position
 		final int[] pos = ( int[] ) guiState.get( FRAME_POSITION_KEY );
 		if ( null != pos && pos.length == 4 )
-			options
-					.x( pos[ 0 ] )
-					.y( pos[ 1 ] )
-					.width( pos[ 2 ] )
-					.height( pos[ 3 ] );
+			options.x( pos[ 0 ] ).y( pos[ 1 ] ).width( pos[ 2 ] ).height( pos[ 3 ] );
 
 		// Restore group handle.
 		MamutView.restoreGroupHandle( groupHandle, guiState );
@@ -142,19 +127,8 @@ public class MamutBranchViewTrackScheme extends MamutBranchView< TrackSchemeGrap
 		// Show TrackSchemeFrame.
 		final Model model = appModel.getModel();
 		final AutoNavigateFocusModel< TrackSchemeVertex, TrackSchemeEdge > navigateFocusModel = new AutoNavigateFocusModel<>( focusModel, navigationHandler );
-		final RootsModel< TrackSchemeVertex > rootsModel = new BranchTrackSchemeRootsModel( model.getGraph(), model.getBranchGraph(), viewGraph);
-		final TrackSchemeFrame frame = new TrackSchemeFrame(
-				viewGraph,
-				highlightModel,
-				navigateFocusModel,
-				(timepointModel == null) ? this.timepointModel : timepointModel,
-				selectionModel,
-				rootsModel,
-				navigationHandler,
-				model,
-				groupHandle,
-				null,
-				options );
+		final RootsModel< TrackSchemeVertex > rootsModel = new BranchTrackSchemeRootsModel( model.getGraph(), model.getBranchGraph(), viewGraph );
+		final TrackSchemeFrame frame = new TrackSchemeFrame( viewGraph, highlightModel, navigateFocusModel, ( timepointModel == null ) ? this.timepointModel : timepointModel, selectionModel, rootsModel, navigationHandler, model, groupHandle, null, options );
 		frame.setTitle( "TrackScheme Branch" );
 		setFrame( frame );
 
@@ -218,40 +192,10 @@ public class MamutBranchViewTrackScheme extends MamutBranchView< TrackSchemeGrap
 		final JMenuHandle colorbarMenuHandle = new JMenuHandle();
 
 		MainWindow.addMenus( menu, actionMap );
-		MamutMenuBuilder.build( menu, actionMap,
-				viewMenu(
-						branchColorMenu( coloringMenuHandle ),
-						colorbarMenu( colorbarMenuHandle ),
-						separator(),
-						item( ShowSelectedTracksActions.SHOW_TRACK_DOWNWARD ),
-						item( ShowSelectedTracksActions.SHOW_SELECTED_TRACKS ),
-						item( ShowSelectedTracksActions.SHOW_ALL_TRACKS ),
-						separator(),
-						item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL ) ),
-				editMenu(
-						item( BranchGraphUndoActions.UNDO ),
-						item( BranchGraphUndoActions.REDO ),
-						separator(),
-						item( SelectionActions.SELECT_WHOLE_TRACK ),
-						item( SelectionActions.SELECT_TRACK_DOWNWARD ),
-						item( SelectionActions.SELECT_TRACK_UPWARD ),
-						separator(),
-						item( TrackSchemeNavigationActions.SELECT_NAVIGATE_CHILD ),
-						item( TrackSchemeNavigationActions.SELECT_NAVIGATE_PARENT ),
-						item( TrackSchemeNavigationActions.SELECT_NAVIGATE_LEFT ),
-						item( TrackSchemeNavigationActions.SELECT_NAVIGATE_RIGHT ),
-						separator(),
-						item( TrackSchemeNavigationActions.NAVIGATE_CHILD ),
-						item( TrackSchemeNavigationActions.NAVIGATE_PARENT ),
-						item( TrackSchemeNavigationActions.NAVIGATE_LEFT ),
-						item( TrackSchemeNavigationActions.NAVIGATE_RIGHT ),
-						separator(),
-						item( EditFocusVertexLabelAction.EDIT_FOCUS_LABEL ),
-						tagSetMenu( tagSetMenuHandle ) ) );
+		MamutMenuBuilder.build( menu, actionMap, viewMenu( branchColorMenu( coloringMenuHandle ), colorbarMenu( colorbarMenuHandle ), separator(), item( ShowSelectedTracksActions.SHOW_TRACK_DOWNWARD ), item( ShowSelectedTracksActions.SHOW_SELECTED_TRACKS ), item( ShowSelectedTracksActions.SHOW_ALL_TRACKS ), separator(), item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL ) ), editMenu( item( BranchGraphUndoActions.UNDO ), item( BranchGraphUndoActions.REDO ), separator(), item( SelectionActions.SELECT_WHOLE_TRACK ), item( SelectionActions.SELECT_TRACK_DOWNWARD ), item( SelectionActions.SELECT_TRACK_UPWARD ), separator(), item( TrackSchemeNavigationActions.SELECT_NAVIGATE_CHILD ), item( TrackSchemeNavigationActions.SELECT_NAVIGATE_PARENT ), item( TrackSchemeNavigationActions.SELECT_NAVIGATE_LEFT ), item( TrackSchemeNavigationActions.SELECT_NAVIGATE_RIGHT ), separator(), item( TrackSchemeNavigationActions.NAVIGATE_CHILD ), item( TrackSchemeNavigationActions.NAVIGATE_PARENT ), item( TrackSchemeNavigationActions.NAVIGATE_LEFT ), item( TrackSchemeNavigationActions.NAVIGATE_RIGHT ), separator(), item( EditFocusVertexLabelAction.EDIT_FOCUS_LABEL ), tagSetMenu( tagSetMenuHandle ) ) );
 		appModel.getPlugins().addMenus( menu );
 
-		coloringModel = registerBranchColoring( coloringAdapter, coloringMenuHandle,
-				() -> frame.getTrackschemePanel().entitiesAttributesChanged() );
+		coloringModel = registerBranchColoring( coloringAdapter, coloringMenuHandle, () -> frame.getTrackschemePanel().entitiesAttributesChanged() );
 		colorBarOverlay = new ColorBarOverlay( coloringModel, () -> frame.getTrackschemePanel().getBackground() );
 		frame.getTrackschemePanel().getOffsetHeaders().listeners().add( ( w, h ) -> colorBarOverlay.setInsets( h + 15, w + 15, 15, 15 ) );
 		registerColorbarOverlay( colorBarOverlay, colorbarMenuHandle, () -> frame.getTrackschemePanel().repaint() );
@@ -306,11 +250,7 @@ public class MamutBranchViewTrackScheme extends MamutBranchView< TrackSchemeGrap
 	public static class BranchTrackSchemeOverlayFactory extends TrackSchemeOverlayFactory
 	{
 		@Override
-		public TrackSchemeOverlay create(
-				final TrackSchemeGraph< ?, ? > graph,
-				final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight,
-				final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-				final TrackSchemeOptions options )
+		public TrackSchemeOverlay create( final TrackSchemeGraph< ?, ? > graph, final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight, final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus, final TrackSchemeOptions options )
 		{
 			return new TrackSchemeOverlay( graph, highlight, focus, new PaintDecorations(), new PaintBranchGraph(), options );
 		}
@@ -339,22 +279,22 @@ public class MamutBranchViewTrackScheme extends MamutBranchView< TrackSchemeGrap
 			final Model model = appModel.getModel();
 			final ModelBranchGraph graph = model.getBranchGraph();
 			final GraphIdBimap< BranchSpot, BranchLink > idmap = graph.getGraphIdBimap();
-			final ModelGraphProperties< BranchSpot, BranchLink > properties =
-					new DefaultModelGraphProperties<BranchSpot, BranchLink>() {
+			final ModelGraphProperties< BranchSpot, BranchLink > properties = new DefaultModelGraphProperties< BranchSpot, BranchLink >()
+			{
 
-						@Override
-						public String getFirstLabel( BranchSpot branchSpot ) {
-							return branchSpot.getFirstLabel();
-						}
+				@Override
+				public String getFirstLabel( BranchSpot branchSpot )
+				{
+					return branchSpot.getFirstLabel();
+				}
 
-						@Override
-						public int getFirstTimePoint( BranchSpot branchSpot )
-						{
-							return branchSpot.getFirstTimePoint();
-						}
-					};
-			final TrackSchemeGraph< BranchSpot, BranchLink > trackSchemeGraph =
-					new TrackSchemeGraph<>( graph, idmap, properties );
+				@Override
+				public int getFirstTimePoint( BranchSpot branchSpot )
+				{
+					return branchSpot.getFirstTimePoint();
+				}
+			};
+			final TrackSchemeGraph< BranchSpot, BranchLink > trackSchemeGraph = new TrackSchemeGraph<>( graph, idmap, properties );
 			return trackSchemeGraph;
 		}
 	}

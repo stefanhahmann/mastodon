@@ -142,13 +142,7 @@ public class TrackSchemeVertexList extends RefArrayList< TrackSchemeVertex >
 		return high;
 	}
 
-	protected TIntArrayList getDenseRanges(
-			final int fromIndex,
-			final int toIndex,
-			final double minLayoutX,
-			final double allowedMinD,
-			final int minSubDivSize,
-			final TrackSchemeVertex vref )
+	protected TIntArrayList getDenseRanges( final int fromIndex, final int toIndex, final double minLayoutX, final double allowedMinD, final int minSubDivSize, final TrackSchemeVertex vref )
 	{
 		if ( fromIndex < 0 )
 			throw new ArrayIndexOutOfBoundsException( fromIndex );
@@ -232,7 +226,7 @@ public class TrackSchemeVertexList extends RefArrayList< TrackSchemeVertex >
 	 */
 	protected double getMinLayoutXDistance()
 	{
-		if ( ! cachedMinLayoutXDistanceValid )
+		if ( !cachedMinLayoutXDistanceValid )
 		{
 			cachedMinLayoutXDistance = getMinLayoutXDistance( 0, size() );
 			cachedMinLayoutXDistanceValid = true;

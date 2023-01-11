@@ -48,22 +48,15 @@ public class BranchTrackSchemeEditLabelAction
 
 	private static final String[] EDIT_FOCUS_LABEL_KEYS = new String[] { "ENTER" };
 
-	public static < BV extends Vertex< BE >, BE extends Edge< BV >, V extends Vertex< E > & HasLabel, E extends Edge< V > > void install(
-			final Actions actions,
-			final TrackSchemePanel panel,
-			final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-			final UndoPointMarker undoPointMarker,
-			final BranchGraph< BV, BE, V, E > branchGraph )
+	public static < BV extends Vertex< BE >, BE extends Edge< BV >, V extends Vertex< E > & HasLabel, E extends Edge< V > > void install( final Actions actions, final TrackSchemePanel panel, final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus, final UndoPointMarker undoPointMarker, final BranchGraph< BV, BE, V, E > branchGraph )
 	{
-		final BranchTrackSchemeEditLabelActionImp< BV, BE, V, E > editBranchVerticesLabelAction =
-				new BranchTrackSchemeEditLabelActionImp<>( focus, undoPointMarker, panel, branchGraph );
+		final BranchTrackSchemeEditLabelActionImp< BV, BE, V, E > editBranchVerticesLabelAction = new BranchTrackSchemeEditLabelActionImp<>( focus, undoPointMarker, panel, branchGraph );
 		panel.getScreenTransform().listeners().add( editBranchVerticesLabelAction );
 		panel.getOffsetHeaders().listeners().add( editBranchVerticesLabelAction );
 		actions.namedAction( editBranchVerticesLabelAction, EDIT_FOCUS_LABEL_KEYS );
 	}
 
-	private static class BranchTrackSchemeEditLabelActionImp< BV extends Vertex< BE >, BE extends Edge< BV >, V extends Vertex< E > & HasLabel, E extends Edge< V > >
-			extends EditFocusVertexLabelAction
+	private static class BranchTrackSchemeEditLabelActionImp< BV extends Vertex< BE >, BE extends Edge< BV >, V extends Vertex< E > & HasLabel, E extends Edge< V > > extends EditFocusVertexLabelAction
 	{
 
 		private static final long serialVersionUID = 1L;
@@ -72,11 +65,7 @@ public class BranchTrackSchemeEditLabelAction
 
 		private final BranchGraph< BV, BE, V, E > branchGraph;
 
-		protected BranchTrackSchemeEditLabelActionImp(
-				final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-				final UndoPointMarker undoPointMarker,
-				final TrackSchemePanel panel,
-				final BranchGraph< BV, BE, V, E > branchGraph )
+		protected BranchTrackSchemeEditLabelActionImp( final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus, final UndoPointMarker undoPointMarker, final TrackSchemePanel panel, final BranchGraph< BV, BE, V, E > branchGraph )
 		{
 			super( focus, undoPointMarker, panel );
 			this.branchGraph = branchGraph;

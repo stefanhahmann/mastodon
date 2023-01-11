@@ -124,12 +124,7 @@ class LauncherUtil
 		disabler.disable();
 		try
 		{
-			final File file = FileChooser.chooseFile(
-					parent,
-					suggestedFile,
-					new XmlFileFilter(),
-					"Open BigDataViewer File",
-					FileChooser.DialogType.LOAD );
+			final File file = FileChooser.chooseFile( parent, suggestedFile, new XmlFileFilter(), "Open BigDataViewer File", FileChooser.DialogType.LOAD );
 			if ( file == null )
 				return;
 

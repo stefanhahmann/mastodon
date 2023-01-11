@@ -28,14 +28,14 @@
  */
 package org.mastodon.mamut;
 
+import net.miginfocom.swing.MigLayout;
+import org.mastodon.mamut.project.MamutProjectIO;
+import org.scijava.Context;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.WindowConstants;
-
-import net.miginfocom.swing.MigLayout;
-import org.mastodon.mamut.project.MamutProjectIO;
-import org.scijava.Context;
 
 /**
  * Demonstrate how Mastodon can still be started if the image data is missing.
@@ -44,10 +44,11 @@ import org.scijava.Context;
  */
 public class StartMastodonWithMissingImageDemo extends JFrame
 {
-	private StartMastodonWithMissingImageDemo() {
-		super("Start Mastodon With Missing Image Demo");
-		setLayout( new MigLayout("fill, wrap") );
-		add(new JLabel("This is how Mastodon starts:"));
+	private StartMastodonWithMissingImageDemo()
+	{
+		super( "Start Mastodon With Missing Image Demo" );
+		setLayout( new MigLayout( "fill, wrap" ) );
+		add( new JLabel( "This is how Mastodon starts:" ) );
 		addButton( "... without dataset XML", "/org/mastodon/mamut/examples/tiny-no-image/tiny-project-no-dataset-xml.mastodon" );
 		addButton( "... from backup dataset XML", "/org/mastodon/mamut/examples/tiny-no-image/tiny-project-backup-dataset-xml.mastodon" );
 		addButton( "... without HDF5 file", "/org/mastodon/mamut/examples/tiny-missing-hdf5/tiny-project.mastodon" );
@@ -61,7 +62,8 @@ public class StartMastodonWithMissingImageDemo extends JFrame
 		add( button, "grow" );
 	}
 
-	private void openProjectFromResources( String resourceName ) {
+	private void openProjectFromResources( String resourceName )
+	{
 		String file = StartMastodonWithMissingImageDemo.class.getResource( resourceName ).getPath();
 		try
 		{
@@ -78,7 +80,8 @@ public class StartMastodonWithMissingImageDemo extends JFrame
 		}
 	}
 
-	public static void main(String... args) {
+	public static void main( String... args )
+	{
 		JFrame frame = new StartMastodonWithMissingImageDemo();
 		frame.pack();
 		frame.setVisible( true );

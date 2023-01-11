@@ -28,15 +28,15 @@
  */
 package org.mastodon.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.Test;
+import org.mastodon.util.GroupStrings.Group;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.Test;
-import org.mastodon.util.GroupStrings.Group;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class GroupStringsTest
 {
@@ -134,8 +134,8 @@ public class GroupStringsTest
 			gs.add( string );
 
 		final Collection< Group > groups = gs.group();
-//		for ( final Group group : groups )
-//			System.out.println( group ); // DEBUG
+		//		for ( final Group group : groups )
+		//			System.out.println( group ); // DEBUG
 
 		assertEquals( "Did not group into the right numbers of groups.", 18, groups.size() );
 	}

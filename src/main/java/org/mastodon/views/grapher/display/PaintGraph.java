@@ -90,10 +90,15 @@ public class PaintGraph
 	 */
 
 	private static final double simplifiedVertexRadius = 2.5;
+
 	private static final double simplifiedVertexSelectTolerance = 3.5;
+
 	private static final double minDisplayVertexDist = 17.0;
+
 	private static final double maxDisplayVertexSize = 20.0;
+
 	private static final double minDisplaySimplifiedVertexDist = 0.0;
+
 	private static final double avgLabelLetterWidth = 5.0;
 
 	/*
@@ -110,13 +115,7 @@ public class PaintGraph
 
 	protected DataDisplayStyle style;
 
-	public void paintGraph(
-			final Graphics2D g2,
-			final ScreenEntities entities,
-			final int highlightedVertexId,
-			final int highlightedEdgeId,
-			final int focusedVertexId,
-			final DataDisplayStyle style )
+	public void paintGraph( final Graphics2D g2, final ScreenEntities entities, final int highlightedVertexId, final int highlightedEdgeId, final int focusedVertexId, final DataDisplayStyle style )
 	{
 		this.g2 = g2;
 		this.highlightedVertexId = highlightedVertexId;
@@ -246,8 +245,7 @@ public class PaintGraph
 		final boolean highlighted = ( highlightedEdgeId >= 0 ) && ( edge.getDataEdgeId() == highlightedEdgeId );
 		final boolean selected = edge.isSelected();
 		final int specifiedColor = edge.getColor();
-		final Color drawColor = getColor( selected, transition, ratio, specifiedColor,
-				style.getEdgeColor(), style.getSelectedEdgeColor() );
+		final Color drawColor = getColor( selected, transition, ratio, specifiedColor, style.getEdgeColor(), style.getSelectedEdgeColor() );
 		g2.setColor( drawColor );
 		if ( highlighted )
 			g2.setStroke( style.getEdgeHighlightStroke() );
@@ -274,9 +272,7 @@ public class PaintGraph
 		if ( highlighted || focused )
 			spotradius *= 1.5;
 
-		final Color fillColor = getColor( selected, transition, ratio, specifiedColor,
-				disappear ? style.getSelectedSimplifiedVertexFillColor() : style.getSimplifiedVertexFillColor(),
-				style.getSelectedSimplifiedVertexFillColor() );
+		final Color fillColor = getColor( selected, transition, ratio, specifiedColor, disappear ? style.getSelectedSimplifiedVertexFillColor() : style.getSimplifiedVertexFillColor(), style.getSelectedSimplifiedVertexFillColor() );
 
 		final double x = vertex.getX();
 		final double y = vertex.getY();
@@ -308,9 +304,7 @@ public class PaintGraph
 			if ( disappear )
 				spotradius *= ( 1 + 3 * ratio );
 
-			final Color fillColor = getColor( selected, transition, ratio, specifiedColor,
-					disappear ? style.getSelectedSimplifiedVertexFillColor() : style.getSimplifiedVertexFillColor(),
-					style.getSelectedSimplifiedVertexFillColor() );
+			final Color fillColor = getColor( selected, transition, ratio, specifiedColor, disappear ? style.getSelectedSimplifiedVertexFillColor() : style.getSimplifiedVertexFillColor(), style.getSelectedSimplifiedVertexFillColor() );
 
 			final double x = vertex.getX();
 			final double y = vertex.getY();
@@ -355,15 +349,13 @@ public class PaintGraph
 			spotdiameter *= ( 1 + ratio );
 		final double spotradius = spotdiameter / 2;
 
-		final Color fillColor = getColor( selected, transition, ratio, specifiedColor,
-				style.getVertexFillColor(), style.getSelectedVertexFillColor() );
-		final Color drawColor = getColor( selected, transition, ratio, 0,
-				style.getVertexDrawColor(), style.getSelectedVertexDrawColor() );
+		final Color fillColor = getColor( selected, transition, ratio, specifiedColor, style.getVertexFillColor(), style.getSelectedVertexFillColor() );
+		final Color drawColor = getColor( selected, transition, ratio, 0, style.getVertexDrawColor(), style.getSelectedVertexDrawColor() );
 
 		final double x = vertex.getX();
 		final double y = vertex.getY();
-		final double ox =  x -  spotradius;
-		final double oy =  y -  spotradius;
+		final double ox = x - spotradius;
+		final double oy = y - spotradius;
 		final double sd = 2 * spotradius;
 		final Shape shape = style.getVertexDrawShape().shape( ox, oy, sd );
 		g2.setColor( fillColor );
@@ -415,13 +407,7 @@ public class PaintGraph
 		return spotdiameter;
 	}
 
-	protected Color getColor(
-			final boolean isSelected,
-			final Transition transition,
-			final double completionRatio,
-			final int specifiedColor,
-			final Color normalColor,
-			final Color selectedColor )
+	protected Color getColor( final boolean isSelected, final Transition transition, final double completionRatio, final int specifiedColor, final Color normalColor, final Color selectedColor )
 	{
 		if ( transition == NONE )
 		{
@@ -434,9 +420,7 @@ public class PaintGraph
 		}
 		else
 		{
-			final double ratio = ( transition == APPEAR || transition == SELECTING )
-					? 1 - completionRatio
-					: completionRatio;
+			final double ratio = ( transition == APPEAR || transition == SELECTING ) ? 1 - completionRatio : completionRatio;
 			final boolean fade = ( transition == APPEAR || transition == DISAPPEAR );
 			int r, g, b, a;
 			if ( specifiedColor == 0 )
@@ -478,9 +462,7 @@ public class PaintGraph
 	 */
 	private static Color textColorForBackground( final Color backgroundColor )
 	{
-		if ( ( backgroundColor.getRed() * 0.299
-				+ backgroundColor.getGreen() * 0.587
-				+ backgroundColor.getBlue() * 0.114 ) > 150 )
+		if ( ( backgroundColor.getRed() * 0.299 + backgroundColor.getGreen() * 0.587 + backgroundColor.getBlue() * 0.114 ) > 150 )
 			return Color.BLACK;
 		else
 			return Color.WHITE;

@@ -28,16 +28,6 @@
  */
 package org.mastodon.mamut.feature;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-
-import org.mastodon.mamut.feature.EllpsoidIteratorExample.ScreenVertexMath.Ellipse;
-import org.mastodon.mamut.model.ModelGraph;
-import org.mastodon.mamut.model.Spot;
-import org.mastodon.views.bdv.overlay.util.JamaEigenvalueDecomposition;
-
 import bdv.util.Bdv;
 import bdv.util.BdvFunctions;
 import bdv.util.BdvOverlay;
@@ -50,6 +40,15 @@ import net.imglib2.img.array.ArrayImgs;
 import net.imglib2.realtransform.AffineTransform3D;
 import net.imglib2.type.numeric.integer.UnsignedByteType;
 import net.imglib2.util.LinAlgHelpers;
+import org.mastodon.mamut.feature.EllpsoidIteratorExample.ScreenVertexMath.Ellipse;
+import org.mastodon.mamut.model.ModelGraph;
+import org.mastodon.mamut.model.Spot;
+import org.mastodon.views.bdv.overlay.util.JamaEigenvalueDecomposition;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 
 public class EllpsoidIteratorExample
 {
@@ -72,13 +71,7 @@ public class EllpsoidIteratorExample
 		final BdvStackSource< UnsignedByteType > bdv = BdvFunctions.show( img, "img", Bdv.options().sourceTransform( sourceTransform ) );
 
 		final ModelGraph graph = new ModelGraph();
-		final Spot spot = graph.addVertex().init( 0,
-				new double[] { 50, 50, 50 },
-				new double[][] {
-						{ 210, 100, 0 },
-						{ 100, 110, 10 },
-						{ 0, 10, 100 }
-				} );
+		final Spot spot = graph.addVertex().init( 0, new double[] { 50, 50, 50 }, new double[][] { { 210, 100, 0 }, { 100, 110, 10 }, { 0, 10, 100 } } );
 
 		final Source< UnsignedByteType > source = bdv.getSources().get( 0 ).getSpimSource();
 		final EllipsoidIterable< UnsignedByteType > ellipsoidIter = new EllipsoidIterable<>( source );
@@ -126,7 +119,6 @@ public class EllpsoidIteratorExample
 
 		BdvFunctions.showOverlay( overlay, "spot", Bdv.options().addTo( bdv ) );
 	}
-
 
 	// copy of ScreenVertexMath from BDV view using Spot instead of ScreenVertex
 	static class ScreenVertexMath

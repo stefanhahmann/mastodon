@@ -28,8 +28,11 @@
  */
 package org.mastodon.mamut;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assume.assumeFalse;
+import mpicbg.spim.data.SpimDataException;
+import org.junit.Test;
+import org.mastodon.mamut.project.MamutProject;
+import org.mastodon.mamut.project.MamutProjectIO;
+import org.scijava.Context;
 
 import java.awt.GraphicsEnvironment;
 import java.io.IOException;
@@ -39,11 +42,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.zip.ZipFile;
 
-import mpicbg.spim.data.SpimDataException;
-import org.junit.Test;
-import org.mastodon.mamut.project.MamutProject;
-import org.mastodon.mamut.project.MamutProjectIO;
-import org.scijava.Context;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeFalse;
 
 /**
  * Tests {@link ProjectManager}.
@@ -78,7 +78,7 @@ public class ProjectManagerTest
 		openAndSaveMastodonProject( tinyExampleProject, projectA );
 		assertProjectContainsBackupDatasetXml( projectA );
 		// 2. Move mastodon project to new location, relative path to dataset.xml gets lost
-		Path newLocation = Files.createTempDirectory("mastodon-test");
+		Path newLocation = Files.createTempDirectory( "mastodon-test" );
 		Path projectB = newLocation.resolve( "moved-project.mastodon" );
 		Files.move( projectA, projectB );
 		assertProjectContainsBackupDatasetXml( projectB );
@@ -91,8 +91,7 @@ public class ProjectManagerTest
 		assertProjectContainsBackupDatasetXml( projectC );
 	}
 
-	private void openAndSaveMastodonProject( Path open, Path save )
-			throws IOException, SpimDataException
+	private void openAndSaveMastodonProject( Path open, Path save ) throws IOException, SpimDataException
 	{
 		WindowManager windowManager = new WindowManager( context );
 		MamutProject project = new MamutProjectIO().load( open.toFile().getAbsolutePath() );
@@ -100,23 +99,23 @@ public class ProjectManagerTest
 		windowManager.getProjectManager().saveProject( save.toFile() );
 	}
 
-	private void assertProjectContainsBackupDatasetXml( Path project )
-			throws IOException
+	private void assertProjectContainsBackupDatasetXml( Path project ) throws IOException
 	{
-		try ( ZipFile zipFile = new ZipFile( project.toFile() ) )
+		try (ZipFile zipFile = new ZipFile( project.toFile() ))
 		{
-			boolean containsBackupXml = zipFile.stream()
-					.anyMatch( entry -> "dataset.xml.backup".equals( entry.getName() ) );
+			boolean containsBackupXml = zipFile.stream().anyMatch( entry -> "dataset.xml.backup".equals( entry.getName() ) );
 			assertTrue( containsBackupXml );
 		}
 	}
 
 	private Path resourceAsFile( String resourceName )
 	{
-		try {
+		try
+		{
 			return Paths.get( ProjectManagerTest.class.getResource( resourceName ).toURI() );
 		}
-		catch ( URISyntaxException e ) {
+		catch ( URISyntaxException e )
+		{
 			throw new RuntimeException( e );
 		}
 	}

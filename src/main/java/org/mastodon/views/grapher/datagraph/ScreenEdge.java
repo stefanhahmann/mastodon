@@ -45,11 +45,17 @@ public class ScreenEdge extends PoolObject< ScreenEdge, ScreenEdgePool, ByteMapp
 	public static class ScreenEdgeLayout extends PoolObjectLayout
 	{
 		final IndexField origEdge = indexField();
+
 		final IndexField sourceScreenVertex = indexField();
+
 		final IndexField targetScreenVertex = indexField();
+
 		final BooleanField selected = booleanField();
+
 		final ByteField transition = byteField();
+
 		final DoubleField ipRatio = doubleField();
+
 		final IntField color = intField();
 	}
 
@@ -60,12 +66,7 @@ public class ScreenEdge extends PoolObject< ScreenEdge, ScreenEdgePool, ByteMapp
 		super( pool );
 	}
 
-	public ScreenEdge init(
-			final int id,
-			final int sourceScreenVertexIndex,
-			final int targetScreenVertexIndex,
-			final boolean selected,
-			final int color )
+	public ScreenEdge init( final int id, final int sourceScreenVertexIndex, final int targetScreenVertexIndex, final boolean selected, final int color )
 	{
 		setDataEdgeId( id );
 		setSourceScreenVertexIndex( sourceScreenVertexIndex );
@@ -227,12 +228,6 @@ public class ScreenEdge extends PoolObject< ScreenEdge, ScreenEdgePool, ByteMapp
 	@Override
 	public String toString()
 	{
-		return String.format( "ScreenEdge(%d, deid=%d, %d->%d %s%s)",
-				getInternalPoolIndex(),
-				getDataEdgeId(),
-				getSourceScreenVertexIndex(),
-				getTargetScreenVertexIndex(),
-				getTransition().toString(),
-				isSelected() ? ", selected" : "" );
+		return String.format( "ScreenEdge(%d, deid=%d, %d->%d %s%s)", getInternalPoolIndex(), getDataEdgeId(), getSourceScreenVertexIndex(), getTargetScreenVertexIndex(), getTransition().toString(), isSelected() ? ", selected" : "" );
 	}
 }

@@ -68,19 +68,7 @@ public class DataDisplayFrame< V extends Vertex< E > & HasTimepoint & HasLabel, 
 
 	private final GrapherSidePanel sidePanel;
 
-	public DataDisplayFrame(
-			final DataGraph< V, E > graph,
-			final FeatureModel featureModel,
-			final int nSources,
-			final DataGraphLayout< V, E > layout,
-			final HighlightModel< DataVertex, DataEdge > highlight,
-			final FocusModel< DataVertex, DataEdge > focus,
-			final SelectionModel< DataVertex, DataEdge > selection,
-			final NavigationHandler< DataVertex, DataEdge > navigation,
-			final UndoPointMarker undoPointMarker,
-			final GroupHandle groupHandle,
-			final ContextChooser< V > contextChooser,
-			final DataDisplayOptions optional )
+	public DataDisplayFrame( final DataGraph< V, E > graph, final FeatureModel featureModel, final int nSources, final DataGraphLayout< V, E > layout, final HighlightModel< DataVertex, DataEdge > highlight, final FocusModel< DataVertex, DataEdge > focus, final SelectionModel< DataVertex, DataEdge > selection, final NavigationHandler< DataVertex, DataEdge > navigation, final UndoPointMarker undoPointMarker, final GroupHandle groupHandle, final ContextChooser< V > contextChooser, final DataDisplayOptions optional )
 	{
 		super( "Grapher" );
 
@@ -88,14 +76,7 @@ public class DataDisplayFrame< V extends Vertex< E > & HasTimepoint & HasLabel, 
 		 * Plot panel.
 		 */
 
-		dataDisplayPanel = new DataDisplayPanel<>(
-				graph,
-				layout,
-				highlight,
-				focus,
-				selection,
-				navigation,
-				optional );
+		dataDisplayPanel = new DataDisplayPanel<>( graph, layout, highlight, focus, selection, navigation, optional );
 
 		/*
 		 * Get the classes of the model vertices and edges. We need them to
@@ -112,9 +93,7 @@ public class DataDisplayFrame< V extends Vertex< E > & HasTimepoint & HasLabel, 
 		sidePanel = new GrapherSidePanel( nSources, contextChooser );
 		sidePanel.btnPlot.addActionListener( e -> dataDisplayPanel.plot( sidePanel.getGraphConfig(), featureModel ) );
 
-		final FeatureModelListener featureModelListener = () -> sidePanel.setFeatures(
-				FeatureUtils.collectFeatureMap( featureModel, vertexClass ),
-				FeatureUtils.collectFeatureMap( featureModel, edgeClass ) );
+		final FeatureModelListener featureModelListener = () -> sidePanel.setFeatures( FeatureUtils.collectFeatureMap( featureModel, vertexClass ), FeatureUtils.collectFeatureMap( featureModel, edgeClass ) );
 		featureModel.listeners().add( featureModelListener );
 		featureModelListener.featureModelChanged();
 
@@ -122,8 +101,7 @@ public class DataDisplayFrame< V extends Vertex< E > & HasTimepoint & HasLabel, 
 		 * Main panel is a split pane.
 		 */
 
-		final JSplitPane mainPanel = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT,
-				sidePanel, dataDisplayPanel );
+		final JSplitPane mainPanel = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT, sidePanel, dataDisplayPanel );
 		mainPanel.setOneTouchExpandable( true );
 		mainPanel.setBorder( null );
 		mainPanel.setDividerLocation( 250 );
@@ -138,8 +116,8 @@ public class DataDisplayFrame< V extends Vertex< E > & HasTimepoint & HasLabel, 
 		settingsPanel.add( navigationLocksPanel );
 		settingsPanel.add( Box.createHorizontalGlue() );
 
-//		final ContextChooserPanel< ? > contextChooserPanel = new ContextChooserPanel<>( contextChooser );
-//		settingsPanel.add( contextChooserPanel );
+		//		final ContextChooserPanel< ? > contextChooserPanel = new ContextChooserPanel<>( contextChooser );
+		//		settingsPanel.add( contextChooserPanel );
 
 		pack();
 		setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );

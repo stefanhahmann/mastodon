@@ -111,8 +111,7 @@ public class MamutBranchViewTrackSchemeHierarchy extends MamutBranchViewTrackSch
 			final ModelBranchGraph graph = model.getBranchGraph();
 			final GraphIdBimap< BranchSpot, BranchLink > idmap = graph.getGraphIdBimap();
 			final ModelGraphProperties< BranchSpot, BranchLink > properties = new MyModelGraphProperties( graph );
-			final TrackSchemeGraph< BranchSpot, BranchLink > trackSchemeGraph =
-					new TrackSchemeGraph<>( graph, idmap, properties );
+			final TrackSchemeGraph< BranchSpot, BranchLink > trackSchemeGraph = new TrackSchemeGraph<>( graph, idmap, properties );
 			return trackSchemeGraph;
 		}
 
@@ -152,11 +151,7 @@ public class MamutBranchViewTrackSchemeHierarchy extends MamutBranchViewTrackSch
 	private static class HierarchyTrackSchemeOverlayFactory extends TrackSchemeOverlayFactory
 	{
 		@Override
-		public TrackSchemeOverlay create(
-				final TrackSchemeGraph< ?, ? > graph,
-				final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight,
-				final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-				final TrackSchemeOptions options )
+		public TrackSchemeOverlay create( final TrackSchemeGraph< ?, ? > graph, final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight, final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus, final TrackSchemeOptions options )
 		{
 			return new TrackSchemeOverlay( graph, highlight, focus, new PaintDecorations(), new PaintHierarchicalGraph(), options );
 		}
