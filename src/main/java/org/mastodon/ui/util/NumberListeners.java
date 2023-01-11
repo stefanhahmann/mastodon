@@ -114,12 +114,7 @@ public class NumberListeners
 
 		private final boolean acceptSign;
 
-		public NumberListener(
-				final ActionMap actionMap,
-				final InputMap inputMap,
-				final DoubleConsumer notify,
-				final boolean acceptDot,
-				final boolean acceptSign )
+		public NumberListener( final ActionMap actionMap, final InputMap inputMap, final DoubleConsumer notify, final boolean acceptDot, final boolean acceptSign )
 		{
 			this.actionMap = actionMap;
 			this.inputMap = inputMap;
@@ -226,11 +221,7 @@ public class NumberListeners
 			}
 
 			// Commit keys.
-			final int[] commitKeyCodes = new int[] {
-					KeyEvent.VK_ENTER,
-					KeyEvent.VK_SPACE,
-					KeyEvent.VK_TAB
-			};
+			final int[] commitKeyCodes = new int[] { KeyEvent.VK_ENTER, KeyEvent.VK_SPACE, KeyEvent.VK_TAB };
 			for ( final int commitKeyCode : commitKeyCodes )
 			{
 				final String actionName = "commit with " + KeyEvent.getKeyText( commitKeyCode );

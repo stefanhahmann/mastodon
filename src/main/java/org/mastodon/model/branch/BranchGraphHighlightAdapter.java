@@ -37,22 +37,12 @@ import org.mastodon.model.HighlightListener;
 import org.mastodon.model.HighlightModel;
 import org.scijava.listeners.Listeners;
 
-public class BranchGraphHighlightAdapter<
-	V extends Vertex< E >,
-	E extends Edge< V >,
-	BV extends Vertex< BE >,
-	BE extends Edge< BV > >
-		extends AbstractBranchGraphAdapter< V, E, BV, BE >
-		implements HighlightModel< BV, BE >
+public class BranchGraphHighlightAdapter< V extends Vertex< E >, E extends Edge< V >, BV extends Vertex< BE >, BE extends Edge< BV > > extends AbstractBranchGraphAdapter< V, E, BV, BE > implements HighlightModel< BV, BE >
 {
 
 	private final HighlightModel< V, E > highlight;
 
-	public BranchGraphHighlightAdapter(
-			final BranchGraph< BV, BE, V, E > branchGraph,
-			final ReadOnlyGraph< V, E > graph,
-			final GraphIdBimap< V, E > idmap,
-			final HighlightModel< V, E > highlight )
+	public BranchGraphHighlightAdapter( final BranchGraph< BV, BE, V, E > branchGraph, final ReadOnlyGraph< V, E > graph, final GraphIdBimap< V, E > idmap, final HighlightModel< V, E > highlight )
 	{
 		super( branchGraph, graph, idmap );
 		this.highlight = highlight;
@@ -104,25 +94,27 @@ public class BranchGraphHighlightAdapter<
 			return null;
 
 		}
-		finally {
+		finally
+		{
 			graph.releaseRef( vRef );
 			graph.releaseRef( eRef );
 		}
 	}
 
-
 	@Override
 	public BE getHighlightedEdge( final BE ref )
 	{
 		final E eRef = graph.edgeRef();
-		try {
+		try
+		{
 			final E highlightedEdge = highlight.getHighlightedEdge( eRef );
 			if ( highlightedEdge == null )
 				return null;
 
 			return branchGraph.getBranchEdge( highlightedEdge, ref );
 		}
-		finally {
+		finally
+		{
 			graph.releaseRef( eRef );
 		}
 	}

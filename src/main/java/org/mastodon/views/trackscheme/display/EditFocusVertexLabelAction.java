@@ -113,11 +113,7 @@ public class EditFocusVertexLabelAction extends AbstractNamedAction implements T
 	 */
 	private int headerHeight;
 
-	public static void install(
-			final Actions actions,
-			final TrackSchemePanel panel,
-			final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-			final UndoPointMarker undoPointMarker )
+	public static void install( final Actions actions, final TrackSchemePanel panel, final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus, final UndoPointMarker undoPointMarker )
 	{
 		final EditFocusVertexLabelAction editFocusVertexLabelAction = new EditFocusVertexLabelAction( focus, undoPointMarker, panel );
 		panel.getScreenTransform().listeners().add( editFocusVertexLabelAction );
@@ -125,10 +121,7 @@ public class EditFocusVertexLabelAction extends AbstractNamedAction implements T
 		actions.namedAction( editFocusVertexLabelAction, EDIT_FOCUS_LABEL_KEYS );
 	}
 
-	protected EditFocusVertexLabelAction(
-			final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-			final UndoPointMarker undoPointMarker,
-			final TrackSchemePanel panel )
+	protected EditFocusVertexLabelAction( final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus, final UndoPointMarker undoPointMarker, final TrackSchemePanel panel )
 	{
 		super( EDIT_FOCUS_LABEL );
 		this.focus = focus;

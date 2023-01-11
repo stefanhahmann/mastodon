@@ -67,7 +67,6 @@ public class SpotIntensityBenchmark
 		}
 		System.out.println( "Done." );
 
-
 		/*
 		 * 1.1a. Compute spot intensity feature for all.
 		 */

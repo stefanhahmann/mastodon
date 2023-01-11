@@ -72,20 +72,10 @@ public class BigDataViewerMamut
 	 * @param groupHandle
 	 *            the group handle to manage view synchronization.
 	 */
-	public BigDataViewerMamut(
-			final SharedBigDataViewerData shared,
-			final String windowTitle,
-			final GroupHandle groupHandle )
+	public BigDataViewerMamut( final SharedBigDataViewerData shared, final String windowTitle, final GroupHandle groupHandle )
 	{
 		this.shared = shared;
-		viewerFrame = new ViewerFrameMamut(
-				windowTitle,
-				shared.getSources(),
-				shared.getConverterSetups(),
-				shared.getNumTimepoints(),
-				shared.getCache(),
-				groupHandle,
-				shared.getOptions() );
+		viewerFrame = new ViewerFrameMamut( windowTitle, shared.getSources(), shared.getConverterSetups(), shared.getNumTimepoints(), shared.getCache(), groupHandle, shared.getOptions() );
 		viewer = viewerFrame.getViewerPanel();
 		splitPanel = viewerFrame.getSplitPanel();
 
@@ -182,7 +172,7 @@ public class BigDataViewerMamut
 
 	protected void loadSettings()
 	{
-		fileChooser.setSelectedFile( shared.getProposedSettingsFile()  );
+		fileChooser.setSelectedFile( shared.getProposedSettingsFile() );
 		final int returnVal = fileChooser.showOpenDialog( null );
 		if ( returnVal == JFileChooser.APPROVE_OPTION )
 		{

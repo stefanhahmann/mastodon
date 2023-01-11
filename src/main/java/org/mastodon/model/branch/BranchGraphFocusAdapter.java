@@ -37,22 +37,12 @@ import org.mastodon.model.FocusListener;
 import org.mastodon.model.FocusModel;
 import org.scijava.listeners.Listeners;
 
-public class BranchGraphFocusAdapter<
-	V extends Vertex< E >,
-	E extends Edge< V >,
-	BV extends Vertex< BE >,
-	BE extends Edge< BV > >
-		extends AbstractBranchGraphAdapter< V, E, BV, BE >
-		implements FocusModel< BV, BE >
+public class BranchGraphFocusAdapter< V extends Vertex< E >, E extends Edge< V >, BV extends Vertex< BE >, BE extends Edge< BV > > extends AbstractBranchGraphAdapter< V, E, BV, BE > implements FocusModel< BV, BE >
 {
 
 	private final FocusModel< V, E > focus;
 
-	public BranchGraphFocusAdapter(
-			final BranchGraph< BV, BE, V, E > branchGraph,
-			final ReadOnlyGraph< V, E > graph,
-			final GraphIdBimap< V, E > idmap,
-			final FocusModel< V, E > focus )
+	public BranchGraphFocusAdapter( final BranchGraph< BV, BE, V, E > branchGraph, final ReadOnlyGraph< V, E > graph, final GraphIdBimap< V, E > idmap, final FocusModel< V, E > focus )
 	{
 		super( branchGraph, graph, idmap );
 		this.focus = focus;

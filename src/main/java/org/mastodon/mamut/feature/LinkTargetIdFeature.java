@@ -51,11 +51,9 @@ public class LinkTargetIdFeature implements Feature< Link >
 
 	public static final String KEY = "Link target IDs";
 
-	private static final FeatureProjectionSpec SOURCE_PROJECTION_SPEC =
-			new FeatureProjectionSpec( "Source spot id", Dimension.NONE );
+	private static final FeatureProjectionSpec SOURCE_PROJECTION_SPEC = new FeatureProjectionSpec( "Source spot id", Dimension.NONE );
 
-	private static final FeatureProjectionSpec TARGET_PROJECTION_SPEC =
-			new FeatureProjectionSpec( "Target spot id", Dimension.NONE );
+	private static final FeatureProjectionSpec TARGET_PROJECTION_SPEC = new FeatureProjectionSpec( "Target spot id", Dimension.NONE );
 
 	public static final Spec SPEC = new Spec();
 
@@ -68,14 +66,7 @@ public class LinkTargetIdFeature implements Feature< Link >
 	{
 		public Spec()
 		{
-			super(
-					KEY,
-					HELP_STRING,
-					LinkTargetIdFeature.class,
-					Link.class,
-					Multiplicity.SINGLE,
-					SOURCE_PROJECTION_SPEC,
-					TARGET_PROJECTION_SPEC );
+			super( KEY, HELP_STRING, LinkTargetIdFeature.class, Link.class, Multiplicity.SINGLE, SOURCE_PROJECTION_SPEC, TARGET_PROJECTION_SPEC );
 		}
 	}
 
@@ -89,11 +80,10 @@ public class LinkTargetIdFeature implements Feature< Link >
 	{
 		if ( key( SOURCE_PROJECTION_SPEC ).equals( key ) )
 			return new SourceIdProjection( graph.vertexRef() );
-		if ( key(TARGET_PROJECTION_SPEC ).equals( key ) )
+		if ( key( TARGET_PROJECTION_SPEC ).equals( key ) )
 			return new TargetIdProjection( graph.vertexRef() );
 		return null;
 	}
-
 
 	@Override
 	public FeatureSpec< ? extends Feature< Link >, Link > getSpec()

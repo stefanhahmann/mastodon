@@ -42,22 +42,12 @@ import org.mastodon.model.SelectionListener;
 import org.mastodon.model.SelectionModel;
 import org.scijava.listeners.Listeners;
 
-public class BranchGraphSelectionAdapter< 
-	V extends Vertex< E >, 
-	E extends Edge< V >, 
-	BV extends Vertex< BE >, 
-	BE extends Edge< BV > >
-		extends AbstractBranchGraphAdapter< V, E, BV, BE >
-		implements SelectionModel< BV, BE >
+public class BranchGraphSelectionAdapter< V extends Vertex< E >, E extends Edge< V >, BV extends Vertex< BE >, BE extends Edge< BV > > extends AbstractBranchGraphAdapter< V, E, BV, BE > implements SelectionModel< BV, BE >
 {
 
 	private final SelectionModel< V, E > selection;
 
-	public BranchGraphSelectionAdapter(
-			final BranchGraph< BV, BE, V, E > branchGraph,
-			final ReadOnlyGraph< V, E > graph,
-			final GraphIdBimap< V, E > idmap,
-			final SelectionModel< V, E > selection )
+	public BranchGraphSelectionAdapter( final BranchGraph< BV, BE, V, E > branchGraph, final ReadOnlyGraph< V, E > graph, final GraphIdBimap< V, E > idmap, final SelectionModel< V, E > selection )
 	{
 		super( branchGraph, graph, idmap );
 		this.selection = selection;
@@ -78,8 +68,8 @@ public class BranchGraphSelectionAdapter<
 	@Override
 	public boolean isSelected( final BV vertex )
 	{
-		Iterator<V> vIter = branchGraph.vertexBranchIterator( vertex );
-		Iterator<E> eIter = branchGraph.edgeBranchIterator( vertex );
+		Iterator< V > vIter = branchGraph.vertexBranchIterator( vertex );
+		Iterator< E > eIter = branchGraph.edgeBranchIterator( vertex );
 		try
 		{
 			while ( vIter.hasNext() )
@@ -130,8 +120,8 @@ public class BranchGraphSelectionAdapter<
 
 	private boolean setVertexSelected( final BV branchVertex, final boolean selected )
 	{
-		Iterator<V> vertices = branchGraph.vertexBranchIterator( branchVertex );
-		Iterator<E> edges = branchGraph.edgeBranchIterator( branchVertex );
+		Iterator< V > vertices = branchGraph.vertexBranchIterator( branchVertex );
+		Iterator< E > edges = branchGraph.edgeBranchIterator( branchVertex );
 		try
 		{
 			boolean changed = false;
@@ -165,7 +155,7 @@ public class BranchGraphSelectionAdapter<
 		try
 		{
 			E e = branchGraph.getLinkedEdge( edge, eRef );
-			if( e != null )
+			if ( e != null )
 				selection.setSelected( e, selected );
 		}
 		finally
@@ -243,9 +233,9 @@ public class BranchGraphSelectionAdapter<
 	public RefSet< BE > getSelectedEdges()
 	{
 		final BE beRef = branchGraph.edgeRef();
-		try {
-			final RefSet< BE > branchEdges =
-					RefCollections.createRefSet( branchGraph.edges() );
+		try
+		{
+			final RefSet< BE > branchEdges = RefCollections.createRefSet( branchGraph.edges() );
 
 			for ( final E edges : selection.getSelectedEdges() )
 			{
@@ -256,7 +246,8 @@ public class BranchGraphSelectionAdapter<
 
 			return branchEdges;
 		}
-		finally {
+		finally
+		{
 			branchGraph.releaseRef( beRef );
 		}
 	}
@@ -267,7 +258,7 @@ public class BranchGraphSelectionAdapter<
 		final BV bvRef = branchGraph.vertexRef();
 		try
 		{
-			final RefSet<BV> branchVertices = RefCollections.createRefSet( branchGraph.vertices() );
+			final RefSet< BV > branchVertices = RefCollections.createRefSet( branchGraph.vertices() );
 
 			for ( final V v : selection.getSelectedVertices() )
 			{
@@ -278,7 +269,8 @@ public class BranchGraphSelectionAdapter<
 
 			return branchVertices;
 		}
-		finally {
+		finally
+		{
 			branchGraph.releaseRef( bvRef );
 		}
 	}
@@ -292,7 +284,7 @@ public class BranchGraphSelectionAdapter<
 	@Override
 	public boolean isEmpty()
 	{
-		if( selection.isEmpty() )
+		if ( selection.isEmpty() )
 			return true;
 		return getSelectedEdges().isEmpty() && getSelectedVertices().isEmpty();
 	}

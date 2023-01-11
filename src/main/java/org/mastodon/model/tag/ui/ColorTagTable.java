@@ -73,16 +73,7 @@ public class ColorTagTable< C, T > extends AbstractTagTable< C, T, ColorTagTable
 
 	private final Function< T, Color > getColor;
 
-	public ColorTagTable(
-			final C elements,
-			final Function< C, T > addElement,
-			final ToIntFunction< C > size,
-			final BiConsumer< C, T > remove,
-			final BiFunction< C, Integer, T > get,
-			final BiConsumer< T, String > setName,
-			final Function< T, String > getName,
-			final BiConsumer< T, Color > setColor,
-			final Function< T, Color > getColor )
+	public ColorTagTable( final C elements, final Function< C, T > addElement, final ToIntFunction< C > size, final BiConsumer< C, T > remove, final BiFunction< C, Integer, T > get, final BiConsumer< T, String > setName, final Function< T, String > getName, final BiConsumer< T, Color > setColor, final Function< T, Color > getColor )
 	{
 		super( elements, addElement, size, remove, get, setName, getName, 1 );
 		this.setColor = setColor;
@@ -98,7 +89,8 @@ public class ColorTagTable< C, T > extends AbstractTagTable< C, T, ColorTagTable
 	@Override
 	protected Elements wrap( final C wrapped )
 	{
-		return new Elements( wrapped ) {
+		return new Elements( wrapped )
+		{
 			@Override
 			protected Element wrap( final T wrapped )
 			{
@@ -137,8 +129,7 @@ public class ColorTagTable< C, T > extends AbstractTagTable< C, T, ColorTagTable
 		}
 
 		@Override
-		public Component getTableCellRendererComponent( final JTable table, final Object value,
-				final boolean isSelected, final boolean hasFocus, final int row, final int column )
+		public Component getTableCellRendererComponent( final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column )
 		{
 			if ( row == elements.size() )
 				setIcon( null );

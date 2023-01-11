@@ -65,10 +65,7 @@ public class EllipsoidIterableTest
 		 * Creates an anisotropic calibration transform.
 		 */
 		final AffineTransform3D transform = new AffineTransform3D();
-		transform.set(
-				1., 0, 0, 0,
-				0, 1., 0, 0,
-				0, 0, 2., 0 );
+		transform.set( 1., 0, 0, 0, 0, 1., 0, 0, 0, 0, 2., 0 );
 
 		/*
 		 * An empty source.
@@ -82,32 +79,12 @@ public class EllipsoidIterableTest
 		 * Now create a model graph with a few test spots (non overlapping).
 		 */
 		final ModelGraph graph = new ModelGraph();
-		graph.addVertex().init( 0,
-				new double[] { 50, 50, 50 },
-				new double[][] {
-						{ 210, 100, 0 },
-						{ 100, 110, 10 },
-						{ 0, 10, 100 }
-				} );
-		graph.addVertex().init( 0,
-				new double[] { 20, 80, 40 },
-				new double[][] {
-						{ 90, 0, 0 },
-						{ 0, 90, 0 },
-						{ 0, 0, 500 }
-				} );
-		graph.addVertex().init( 0,
-				new double[] { 40, 10, 40 },
-				new double[][] {
-						{ 90, -80, 0 },
-						{ -80, 90, 0 },
-						{ 0, 0, 90 }
-				} );
+		graph.addVertex().init( 0, new double[] { 50, 50, 50 }, new double[][] { { 210, 100, 0 }, { 100, 110, 10 }, { 0, 10, 100 } } );
+		graph.addVertex().init( 0, new double[] { 20, 80, 40 }, new double[][] { { 90, 0, 0 }, { 0, 90, 0 }, { 0, 0, 500 } } );
+		graph.addVertex().init( 0, new double[] { 40, 10, 40 }, new double[][] { { 90, -80, 0 }, { -80, 90, 0 }, { 0, 0, 90 } } );
 
 		/*
-		 * We now create an EllipsoidIterable and re-use it for each spot. For
-		 * each spot, we iterate inside pixels and **increment** their value by
-		 * 1.
+		 * We now create an EllipsoidIterable and re-use it for each spot. For each spot, we iterate inside pixels and **increment** their value by 1.
 		 */
 		final EllipsoidIterable< UnsignedByteType > ellipsoidIter = new EllipsoidIterable<>( source );
 		final double[] realpos = new double[ 3 ];
@@ -144,10 +121,7 @@ public class EllipsoidIterableTest
 		 * Creates an anisotropic calibration transform.
 		 */
 		final AffineTransform3D transform = new AffineTransform3D();
-		transform.set(
-				1., 0, 0, 0,
-				0, 1., 0, 0,
-				0, 0, 2., 0 );
+		transform.set( 1., 0, 0, 0, 0, 1., 0, 0, 0, 0, 2., 0 );
 
 		/*
 		 * An empty source.
@@ -161,32 +135,12 @@ public class EllipsoidIterableTest
 		 * Now create a model graph with a few test spots (non overlapping).
 		 */
 		final ModelGraph graph = new ModelGraph();
-		graph.addVertex().init( 0,
-				new double[] { 50, 50, 50 },
-				new double[][] {
-						{ 210, 100, 0 },
-						{ 100, 110, 10 },
-						{ 0, 10, 100 }
-				} );
-		graph.addVertex().init( 0,
-				new double[] { 20, 80, 40 },
-				new double[][] {
-						{ 90, 0, 0 },
-						{ 0, 90, 0 },
-						{ 0, 0, 500 }
-				} );
-		graph.addVertex().init( 0,
-				new double[] { 40, 10, 40 },
-				new double[][] {
-						{ 90, -80, 0 },
-						{ -80, 90, 0 },
-						{ 0, 0, 90 }
-				} );
+		graph.addVertex().init( 0, new double[] { 50, 50, 50 }, new double[][] { { 210, 100, 0 }, { 100, 110, 10 }, { 0, 10, 100 } } );
+		graph.addVertex().init( 0, new double[] { 20, 80, 40 }, new double[][] { { 90, 0, 0 }, { 0, 90, 0 }, { 0, 0, 500 } } );
+		graph.addVertex().init( 0, new double[] { 40, 10, 40 }, new double[][] { { 90, -80, 0 }, { -80, 90, 0 }, { 0, 0, 90 } } );
 
 		/*
-		 * We now create an EllipsoidIterable and re-use it for each spot. For
-		 * each spot, we iterate inside pixels and **increment** their value by
-		 * 1.
+		 * We now create an EllipsoidIterable and re-use it for each spot. For each spot, we iterate inside pixels and **increment** their value by 1.
 		 */
 		final EllipsoidIterable< UnsignedByteType > ellipsoidIter = new EllipsoidIterable<>( source );
 		graph.vertices().forEach( spot -> {
@@ -195,14 +149,10 @@ public class EllipsoidIterableTest
 		} );
 
 		/*
-		 * Now we iterate the image and make sure we have 0 or 1, and if we have
-		 * 1 that we are inside a spot.
+		 * Now we iterate the image and make sure we have 0 or 1, and if we have 1 that we are inside a spot.
 		 */
 
-		final List< Predicate< Localizable > > testers = graph.vertices()
-				.stream()
-				.map( spot -> SpotTestUtils.isInsideTest( spot, transform ) )
-				.collect( Collectors.toList() );
+		final List< Predicate< Localizable > > testers = graph.vertices().stream().map( spot -> SpotTestUtils.isInsideTest( spot, transform ) ).collect( Collectors.toList() );
 
 		final Cursor< UnsignedByteType > cursor = img.localizingCursor();
 		while ( cursor.hasNext() )
@@ -213,17 +163,14 @@ public class EllipsoidIterableTest
 				fail( "Expected values to be 0 or 1, but found " + val + " at location " + Util.printCoordinates( cursor ) );
 
 			/*
-			 * This part of the test if a bit circular, since we test whether a
-			 * coordinate is inside a spot with a code taken from the code we
-			 * test. This test is therefore no more than a regression test.
+			 * This part of the test if a bit circular, since we test whether a coordinate is inside a spot with a code taken from the code we test. This test is therefore no more than a regression test.
 			 */
 
 			if ( val == 0 )
 			{
 				// Test that we are outside any spot.
 				for ( final Predicate< Localizable > tester : testers )
-					assertFalse( "Found position " + Util.printCoordinates( cursor ) + ", to be inside a spot, expected it to be outside",
-							tester.test( cursor ) );
+					assertFalse( "Found position " + Util.printCoordinates( cursor ) + ", to be inside a spot, expected it to be outside", tester.test( cursor ) );
 			}
 			else if ( val == 1 )
 			{
@@ -232,8 +179,7 @@ public class EllipsoidIterableTest
 				for ( final Predicate< Localizable > tester : testers )
 					inside = inside || tester.test( cursor );
 
-				assertTrue( "Found position " + Util.printCoordinates( cursor ) + ", to be outside a spot, expected it to be inside",
-						inside );
+				assertTrue( "Found position " + Util.printCoordinates( cursor ) + ", to be outside a spot, expected it to be inside", inside );
 			}
 		}
 	}

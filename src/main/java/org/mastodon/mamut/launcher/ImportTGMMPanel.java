@@ -218,11 +218,7 @@ class ImportTGMMPanel extends JPanel
 		 */
 
 		btnHelp.addActionListener( l -> LauncherUtil.showHelp( HELP_URL, "Help for the TGMM importer", this ) );
-		btnBrowseBDV.addActionListener( l -> LauncherUtil.browseToBDVFile(
-				suggestedFile,
-				textAreaBDVFile,
-				() -> checkBDVFile( true ),
-				this ) );
+		btnBrowseBDV.addActionListener( l -> LauncherUtil.browseToBDVFile( suggestedFile, textAreaBDVFile, () -> checkBDVFile( true ), this ) );
 		LauncherUtil.decorateJComponent( textAreaBDVFile, () -> checkBDVFile( true ) );
 		LauncherUtil.decorateJComponent( timepointPatternTextField, () -> checkTGMMFolder() );
 		btnBrowseTGMM.addActionListener( l -> browseToTGMMFolder() );
@@ -307,13 +303,7 @@ class ImportTGMMPanel extends JPanel
 	{
 		final EverythingDisablerAndReenabler disabler = new EverythingDisablerAndReenabler( this, new Class[] { JLabel.class } );
 		disabler.disable();
-		final File file = FileChooser.chooseFile(
-				this,
-				suggestedFile,
-				null,
-				"Browse to a TGMM folder",
-				FileChooser.DialogType.LOAD,
-				FileChooser.SelectionMode.DIRECTORIES_ONLY );
+		final File file = FileChooser.chooseFile( this, suggestedFile, null, "Browse to a TGMM folder", FileChooser.DialogType.LOAD, FileChooser.SelectionMode.DIRECTORIES_ONLY );
 		if ( file == null )
 		{
 			disabler.reenable();

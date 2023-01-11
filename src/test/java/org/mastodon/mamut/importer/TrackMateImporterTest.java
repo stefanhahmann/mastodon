@@ -79,63 +79,11 @@ public class TrackMateImporterTest
 
 	private static final int EXPECTED_N_TRACKS = 2;
 
-	private static final List< String > EXPECTED_SPOT_FEATURE_PROJECTIONS = Arrays.asList( new String[] {
-			"QUALITY",
-			"POSITION_X",
-			"POSITION_Y",
-			"POSITION_Z",
-			"POSITION_T",
-			"FRAME",
-			"RADIUS",
-			"VISIBILITY",
-			"MANUAL_SPOT_COLOR",
-			"MEAN_INTENSITY_CH1",
-			"MEDIAN_INTENSITY_CH1",
-			"MIN_INTENSITY_CH1",
-			"MAX_INTENSITY_CH1",
-			"TOTAL_INTENSITY_CH1",
-			"STD_INTENSITY_CH1",
-			"CONTRAST_CH1",
-			"SNR_CH1"
-	} );
+	private static final List< String > EXPECTED_SPOT_FEATURE_PROJECTIONS = Arrays.asList( new String[] { "QUALITY", "POSITION_X", "POSITION_Y", "POSITION_Z", "POSITION_T", "FRAME", "RADIUS", "VISIBILITY", "MANUAL_SPOT_COLOR", "MEAN_INTENSITY_CH1", "MEDIAN_INTENSITY_CH1", "MIN_INTENSITY_CH1", "MAX_INTENSITY_CH1", "TOTAL_INTENSITY_CH1", "STD_INTENSITY_CH1", "CONTRAST_CH1", "SNR_CH1" } );
 
-	private static final List< Dimension > EXPECTED_SPOT_PROJECTION_DIMENSIONS = Arrays.asList( new Dimension[] {
-			Dimension.QUALITY,
-			Dimension.POSITION,
-			Dimension.POSITION,
-			Dimension.POSITION,
-			Dimension.TIME,
-			Dimension.NONE,
-			Dimension.LENGTH,
-			Dimension.NONE,
-			Dimension.NONE,
-			Dimension.INTENSITY,
-			Dimension.INTENSITY,
-			Dimension.INTENSITY,
-			Dimension.INTENSITY,
-			Dimension.INTENSITY,
-			Dimension.INTENSITY,
-			Dimension.NONE,
-			Dimension.NONE } );
+	private static final List< Dimension > EXPECTED_SPOT_PROJECTION_DIMENSIONS = Arrays.asList( new Dimension[] { Dimension.QUALITY, Dimension.POSITION, Dimension.POSITION, Dimension.POSITION, Dimension.TIME, Dimension.NONE, Dimension.LENGTH, Dimension.NONE, Dimension.NONE, Dimension.INTENSITY, Dimension.INTENSITY, Dimension.INTENSITY, Dimension.INTENSITY, Dimension.INTENSITY, Dimension.INTENSITY, Dimension.NONE, Dimension.NONE } );
 
-	private static final boolean[] EXPECTED_SPOT_ISINT = new boolean[] {
-			false,
-			false,
-			false,
-			false,
-			false,
-			true,
-			false,
-			true,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false };
+	private static final boolean[] EXPECTED_SPOT_ISINT = new boolean[] { false, false, false, false, false, true, false, true, false, false, false, false, false, false, false, false, false };
 
 	private static final String TARGET_SPOT_LABEL = "ID7931";
 
@@ -160,33 +108,11 @@ public class TrackMateImporterTest
 		EXPECTED_SPOT_FEATURE_VALUES.put( "MAX_INTENSITY_CH1", 254.0 );
 	}
 
-	private static final List< String > EXPECTED_LINK_FEATURE_PROJECTIONS = Arrays.asList( new String[] {
-			"SPOT_SOURCE_ID",
-			"SPOT_TARGET_ID",
-			"LINK_COST",
-			"DIRECTIONAL_CHANGE_RATE",
-			"SPEED",
-			"DISPLACEMENT",
-			"EDGE_TIME",
-			"EDGE_X_LOCATION",
-			"EDGE_Y_LOCATION",
-			"EDGE_Z_LOCATION",
-			"MANUAL_EGE_COLOR" } );
+	private static final List< String > EXPECTED_LINK_FEATURE_PROJECTIONS = Arrays.asList( new String[] { "SPOT_SOURCE_ID", "SPOT_TARGET_ID", "LINK_COST", "DIRECTIONAL_CHANGE_RATE", "SPEED", "DISPLACEMENT", "EDGE_TIME", "EDGE_X_LOCATION", "EDGE_Y_LOCATION", "EDGE_Z_LOCATION", "MANUAL_EGE_COLOR" } );
 
 	private static final int TARGET_LINK_SOURCE_ID = 19398;
 
-	private static final List< Dimension > EXPECTED_LINK_PROJECTION_DIMENSIONS = Arrays.asList( new Dimension[] {
-			Dimension.NONE,
-			Dimension.NONE,
-			Dimension.COST,
-			Dimension.ANGLE_RATE,
-			Dimension.VELOCITY,
-			Dimension.LENGTH,
-			Dimension.TIME,
-			Dimension.POSITION,
-			Dimension.POSITION,
-			Dimension.POSITION,
-			Dimension.NONE } );
+	private static final List< Dimension > EXPECTED_LINK_PROJECTION_DIMENSIONS = Arrays.asList( new Dimension[] { Dimension.NONE, Dimension.NONE, Dimension.COST, Dimension.ANGLE_RATE, Dimension.VELOCITY, Dimension.LENGTH, Dimension.TIME, Dimension.POSITION, Dimension.POSITION, Dimension.POSITION, Dimension.NONE } );
 
 	private static final Map< String, Double > EXPECTED_LINK_FEATURE_VALUES = new HashMap<>();
 	static
@@ -203,18 +129,7 @@ public class TrackMateImporterTest
 		EXPECTED_LINK_FEATURE_VALUES.put( "EDGE_Z_LOCATION", 0.0 );
 	}
 
-	private static final boolean[] EXPECTED_LINK_ISINT = new boolean[] {
-			true,
-			true,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			false,
-			true };
+	private static final boolean[] EXPECTED_LINK_ISINT = new boolean[] { true, true, false, false, false, false, false, false, false, false, true };
 
 	@Test
 	public void test() throws Exception
@@ -222,7 +137,7 @@ public class TrackMateImporterTest
 		try (final Context context = new Context())
 		{
 			final FeatureSpecsService featureSpecsService = context.getService( FeatureSpecsService.class );
-//			final WindowManager windowManager = new WindowManager( context );
+			// final WindowManager windowManager = new WindowManager( context );
 			final TrackMateImporter importer = new TrackMateImporter( new File( TRACKMATE_FILE ) );
 			final MamutProject project = importer.createProject();
 			final Model model = new Model( project.getSpaceUnits(), project.getTimeUnits() );
@@ -240,11 +155,9 @@ public class TrackMateImporterTest
 			final Collection< FeatureSpec< ?, ? > > specs = featureModel.getFeatureSpecs();
 
 			final Spec specSpots = new TrackMateImportedSpotFeatures.Spec();
-			assertTrue( "The feature model should contain the specs for TrackMateImportedSpotFeatures.",
-					specs.contains( specSpots ) );
+			assertTrue( "The feature model should contain the specs for TrackMateImportedSpotFeatures.", specs.contains( specSpots ) );
 			final org.mastodon.mamut.importer.trackmate.TrackMateImportedLinkFeatures.Spec specLinks = new TrackMateImportedLinkFeatures.Spec();
-			assertTrue( "The feature model should contain the specs for TrackMateImportedLinkFeatures.",
-					specs.contains( specLinks ) );
+			assertTrue( "The feature model should contain the specs for TrackMateImportedLinkFeatures.", specs.contains( specLinks ) );
 
 			// Inspect spot feature projections.
 			@SuppressWarnings( "unchecked" )
@@ -269,10 +182,7 @@ public class TrackMateImporterTest
 			assertTrue( "Did not test spot feature values: could not find spot with label " + TARGET_SPOT_LABEL, tested );
 
 			// Check some link values.
-			final FeatureProjectionSpec specSourceID = linkFeature.getSpec().getProjectionSpecs().stream()
-					.filter( fs -> fs.projectionName.equals( "SPOT_SOURCE_ID" ) )
-					.findFirst()
-					.get();
+			final FeatureProjectionSpec specSourceID = linkFeature.getSpec().getProjectionSpecs().stream().filter( fs -> fs.projectionName.equals( "SPOT_SOURCE_ID" ) ).findFirst().get();
 
 			tested = false;
 			for ( final Link link : graph.edges() )
@@ -303,20 +213,14 @@ public class TrackMateImporterTest
 		}
 	}
 
-	private static void inspectFeatureProjections(
-			final Feature< ? > feature,
-			final List< String > expectedProjectionKeys,
-			final List< Dimension > expectedProjectionDimensions,
-			final boolean[] expectedProjectionIsint )
+	private static void inspectFeatureProjections( final Feature< ? > feature, final List< String > expectedProjectionKeys, final List< Dimension > expectedProjectionDimensions, final boolean[] expectedProjectionIsint )
 	{
 		final Set< ? > sp = feature.projections();
 		@SuppressWarnings( "unchecked" )
 		final Set< FeatureProjection< ? > > projections = ( Set< FeatureProjection< ? > > ) sp;
 		assertEquals( "Unexpected number of spot feature projections.", expectedProjectionKeys.size(), projections.size() );
 		for ( final FeatureProjection< ? > projection : projections )
-			assertTrue( "Unexpected projection spec: " + projection.getKey(),
-					expectedProjectionKeys.contains( projection.getKey().toString() ) );
-
+			assertTrue( "Unexpected projection spec: " + projection.getKey(), expectedProjectionKeys.contains( projection.getKey().toString() ) );
 
 		// Inspect feature projection units and multiplicity.
 		for ( final FeatureProjectionSpec projSpec : feature.getSpec().getProjectionSpecs() )
@@ -325,11 +229,9 @@ public class TrackMateImporterTest
 			final int index = expectedProjectionKeys.indexOf( key );
 			assertTrue( "Feature projection spec is unexpected: " + key, index >= 0 );
 
-			assertEquals( "Unexpected dimension for projection " + key + ".",
-					expectedProjectionDimensions.get( index ), projSpec.projectionDimension );
+			assertEquals( "Unexpected dimension for projection " + key + ".", expectedProjectionDimensions.get( index ), projSpec.projectionDimension );
 
-			assertEquals( "Unexpected name for projection " + key + ".",
-					expectedProjectionKeys.get( index ), projSpec.projectionName );
+			assertEquals( "Unexpected name for projection " + key + ".", expectedProjectionKeys.get( index ), projSpec.projectionName );
 
 			// Int or Double?
 			final FeatureProjection< ? > projection = feature.project( FeatureProjectionKey.key( projSpec ) );

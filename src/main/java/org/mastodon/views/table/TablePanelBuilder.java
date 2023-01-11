@@ -92,13 +92,7 @@ public class TablePanelBuilder< O >
 	{
 		if ( pool == null )
 			throw new IllegalArgumentException( "The object pool cannot be null." );
-		final FeatureTagTablePanel< O > tablePanel = new FeatureTagTablePanel<>(
-				tags,
-				pool,
-				labelGenerator,
-				labelSetter,
-				undo,
-				coloring );
+		final FeatureTagTablePanel< O > tablePanel = new FeatureTagTablePanel<>( tags, pool, labelGenerator, labelSetter, undo, coloring );
 		return tablePanel;
 	}
 

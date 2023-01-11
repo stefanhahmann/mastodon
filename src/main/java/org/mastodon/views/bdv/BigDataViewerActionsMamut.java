@@ -75,7 +75,7 @@ public class BigDataViewerActionsMamut
 			descriptions.add( SET_BOOKMARK, SET_BOOKMARK_KEYS, "Set a labeled bookmark at the current location." );
 			descriptions.add( GO_TO_BOOKMARK, GO_TO_BOOKMARK_KEYS, "Retrieve a labeled bookmark location." );
 			descriptions.add( GO_TO_BOOKMARK_ROTATION, GO_TO_BOOKMARK_ROTATION_KEYS, "Retrieve a labeled bookmark, set only the orientation." );
-			descriptions.add( BRIGHTNESS_SETTINGS,BRIGHTNESS_SETTINGS_KEYS, "Show the Brightness&Colors dialog." );
+			descriptions.add( BRIGHTNESS_SETTINGS, BRIGHTNESS_SETTINGS_KEYS, "Show the Brightness&Colors dialog." );
 			descriptions.add( SAVE_SETTINGS, SAVE_SETTINGS_KEYS, "Save the BigDataViewer settings to a settings.xml file." );
 			descriptions.add( LOAD_SETTINGS, LOAD_SETTINGS_KEYS, "Load the BigDataViewer settings from a settings.xml file." );
 			descriptions.add( EXPAND_CARDS, EXPAND_CARDS_KEYS, "Expand and focus the BigDataViewer card panel" );
@@ -92,9 +92,7 @@ public class BigDataViewerActionsMamut
 	 * @param bdv
 	 *            Actions are targeted at this BDV window.
 	 */
-	public static void install(
-			final Actions actions,
-			final BigDataViewerMamut bdv )
+	public static void install( final Actions actions, final BigDataViewerMamut bdv )
 	{
 		BigDataViewerActions.toggleDialogAction( actions, bdv.getVisibilityAndGroupingDialog(), VISIBILITY_AND_GROUPING, VISIBILITY_AND_GROUPING_KEYS );
 		BigDataViewerActions.bookmarks( actions, bdv.getBookmarksEditor() );
@@ -102,8 +100,7 @@ public class BigDataViewerActionsMamut
 		/*
 		 * TODO: move to app actions
 		 *
-		 * This requires modifications in bigdataviewer-core: The group setup
-		 * should be shared between multiple windows.
+		 * This requires modifications in bigdataviewer-core: The group setup should be shared between multiple windows.
 		 */
 		BigDataViewerActions.toggleDialogAction( actions, bdv.getBrightnessDialog(), BRIGHTNESS_SETTINGS, BRIGHTNESS_SETTINGS_KEYS );
 

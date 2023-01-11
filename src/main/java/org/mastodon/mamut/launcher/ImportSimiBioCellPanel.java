@@ -199,11 +199,7 @@ class ImportSimiBioCellPanel extends JPanel
 		 */
 
 		btnHelp.addActionListener( l -> LauncherUtil.showHelp( HELP_URL, "Help for the Simie-BioCell importer", this ) );
-		btnBrowseBDV.addActionListener( l -> LauncherUtil.browseToBDVFile(
-				suggestedFile,
-				textAreaBDVFile,
-				() -> checkBDVFile(),
-				this ) );
+		btnBrowseBDV.addActionListener( l -> LauncherUtil.browseToBDVFile( suggestedFile, textAreaBDVFile, () -> checkBDVFile(), this ) );
 		btnBrowseSimi.addActionListener( l -> browseToSimiFile() );
 		LauncherUtil.decorateJComponent( textAreaBDVFile, () -> checkBDVFile() );
 	}
@@ -212,13 +208,7 @@ class ImportSimiBioCellPanel extends JPanel
 	{
 		final EverythingDisablerAndReenabler disabler = new EverythingDisablerAndReenabler( this, new Class[] { JLabel.class } );
 		disabler.disable();
-		final File file = FileChooser.chooseFile(
-				this,
-				suggestedFile,
-				new ExtensionFileFilter( "sbd" ),
-				"Browse to a Simi-BioCell file (.sbd)",
-				FileChooser.DialogType.LOAD,
-				FileChooser.SelectionMode.FILES_ONLY );
+		final File file = FileChooser.chooseFile( this, suggestedFile, new ExtensionFileFilter( "sbd" ), "Browse to a Simi-BioCell file (.sbd)", FileChooser.DialogType.LOAD, FileChooser.SelectionMode.FILES_ONLY );
 		if ( file == null )
 		{
 			disabler.reenable();

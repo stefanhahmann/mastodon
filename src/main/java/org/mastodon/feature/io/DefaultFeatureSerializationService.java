@@ -73,10 +73,8 @@ public class DefaultFeatureSerializationService extends AbstractService implemen
 			catch ( final InstantiableException e )
 			{
 				/*
-				 * TODO: instead of printing the messages, they should be
-				 * collected into one big message that can then be obtained from
-				 * the Service and presented to the user in some way (the
-				 * "presenting to the user" part we can decide on later...).
+				 * TODO: instead of printing the messages, they should be collected into one big message that can then be obtained from the Service and presented to the user in some way (the "presenting to the user"
+				 * part we can decide on later...).
 				 */
 				System.out.println( e.getMessage() );
 			}

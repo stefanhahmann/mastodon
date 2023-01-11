@@ -99,7 +99,7 @@ public class ScreenEntitiesInterpolator
 	public static ScreenTransform getIncrementalY( final ScreenEntities start, final ScreenEntities end )
 	{
 		final ScreenTransform t = end.screenTransform().concatenate( start.screenTransform().inverse() );
-		t.set( 0, t.getScreenWidth() -1, t.getMinY(), t.getMaxY(), t.getScreenWidth(), t.getScreenHeight() );
+		t.set( 0, t.getScreenWidth() - 1, t.getMinY(), t.getMaxY(), t.getScreenWidth(), t.getScreenHeight() );
 		return t;
 	}
 
@@ -150,12 +150,7 @@ public class ScreenEntitiesInterpolator
 			final int sourceIndex = end.getVertices().get( e.getSourceScreenVertexIndex(), vEnd ).getInterpolatedScreenVertexIndex();
 			final int targetIndex = end.getVertices().get( e.getTargetScreenVertexIndex(), vEnd ).getInterpolatedScreenVertexIndex();
 			final boolean endSelected = e.isSelected();
-			current.getEdges().add( current.getEdgePool().create( eCurrent ).init(
-					e.getTrackSchemeEdgeId(),
-					sourceIndex,
-					targetIndex,
-					endSelected,
-					e.getColor() ) );
+			current.getEdges().add( current.getEdgePool().create( eCurrent ).init( e.getTrackSchemeEdgeId(), sourceIndex, targetIndex, endSelected, e.getColor() ) );
 			if ( idToStartEdge.get( e.getTrackSchemeEdgeId(), eStart ) != null )
 			{
 				// changing selection state?
@@ -215,12 +210,7 @@ public class ScreenEntitiesInterpolator
 		vCurrent.setX( ratio * vEnd.getX() + ( 1 - ratio ) * startX );
 		vCurrent.setY( ratio * vEnd.getY() + ( 1 - ratio ) * startY );
 		vCurrent.setYStart( ratio * vEnd.getYStart() + ( 1 - ratio ) * startYStart );
-		vCurrent.setTransition(
-				( vStart.isSelected() == endSelected )
-						? NONE
-						: ( endSelected
-								? SELECTING
-								: DESELECTING ) );
+		vCurrent.setTransition( ( vStart.isSelected() == endSelected ) ? NONE : ( endSelected ? SELECTING : DESELECTING ) );
 		vCurrent.setColor( vEnd.getColor() );
 		vCurrent.setInterpolationCompletionRatio( ratio );
 		vEnd.setInterpolatedScreenVertexIndex( vCurrent.getInternalPoolIndex() );

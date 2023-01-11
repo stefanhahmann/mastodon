@@ -121,12 +121,7 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 
 	public MamutViewGrapher( final MamutAppModel appModel, final Map< String, Object > guiState )
 	{
-		super( appModel,
-				new DataGraph< Spot, Link >(
-						appModel.getModel().getGraph(),
-						appModel.getModel().getGraphIdBimap(),
-						appModel.getModel().getGraph().getLock() ),
-				new String[] { KeyConfigContexts.GRAPHER } );
+		super( appModel, new DataGraph< Spot, Link >( appModel.getModel().getGraph(), appModel.getModel().getGraphIdBimap(), appModel.getModel().getGraph().getLock() ), new String[] { KeyConfigContexts.GRAPHER } );
 
 		final KeyPressedManager keyPressedManager = appModel.getKeyPressedManager();
 		final Model model = appModel.getModel();
@@ -135,7 +130,6 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 		 * The layout.
 		 */
 		final DataGraphLayout< Spot, Link > layout = new DataGraphLayout<>( viewGraph, selectionModel );
-
 
 		/*
 		 * ContextChooser
@@ -149,25 +143,10 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 
 		final DataDisplayStyle forwardDefaultStyle = appModel.getDataDisplayStyleManager().getForwardDefaultStyle();
 		coloringAdapter = new GraphColorGeneratorAdapter<>( viewGraph.getVertexMap(), viewGraph.getEdgeMap() );
-		final DataDisplayOptions options = DataDisplayOptions.options()
-				.shareKeyPressedEvents( keyPressedManager )
-				.style( forwardDefaultStyle )
-				.graphColorGenerator( coloringAdapter );
+		final DataDisplayOptions options = DataDisplayOptions.options().shareKeyPressedEvents( keyPressedManager ).style( forwardDefaultStyle ).graphColorGenerator( coloringAdapter );
 		final AutoNavigateFocusModel< DataVertex, DataEdge > navigateFocusModel = new AutoNavigateFocusModel<>( focusModel, navigationHandler );
 
-		final DataDisplayFrame< Spot, Link > frame = new DataDisplayFrame< Spot, Link >(
-				viewGraph,
-				appModel.getModel().getFeatureModel(),
-				appModel.getSharedBdvData().getSources().size(),
-				layout,
-				highlightModel,
-				navigateFocusModel,
-				selectionModel,
-				navigationHandler,
-				model,
-				groupHandle,
-				contextChooser,
-				options );
+		final DataDisplayFrame< Spot, Link > frame = new DataDisplayFrame< Spot, Link >( viewGraph, appModel.getModel().getFeatureModel(), appModel.getSharedBdvData().getSources().size(), layout, highlightModel, navigateFocusModel, selectionModel, navigationHandler, model, groupHandle, contextChooser, options );
 		dataDisplayPanel = frame.getDataDisplayPanel();
 
 		// If they are available, set some sensible defaults for the feature.
@@ -233,31 +212,14 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 		final JMenuHandle colorbarMenuHandle = new JMenuHandle();
 
 		MainWindow.addMenus( menu, actionMap );
-		MamutMenuBuilder.build( menu, actionMap,
-				viewMenu(
-						colorMenu( coloringMenuHandle ),
-						colorbarMenu( colorbarMenuHandle ),
-						separator(),
-						item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL ) ),
-				editMenu(
-						item( UndoActions.UNDO ),
-						item( UndoActions.REDO ),
-						separator(),
-						item( SelectionActions.DELETE_SELECTION ),
-						item( SelectionActions.SELECT_WHOLE_TRACK ),
-						item( SelectionActions.SELECT_TRACK_DOWNWARD ),
-						item( SelectionActions.SELECT_TRACK_UPWARD ),
-						separator(),
-						tagSetMenu( tagSetMenuHandle ) ) );
+		MamutMenuBuilder.build( menu, actionMap, viewMenu( colorMenu( coloringMenuHandle ), colorbarMenu( colorbarMenuHandle ), separator(), item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL ) ), editMenu( item( UndoActions.UNDO ), item( UndoActions.REDO ), separator(), item( SelectionActions.DELETE_SELECTION ), item( SelectionActions.SELECT_WHOLE_TRACK ), item( SelectionActions.SELECT_TRACK_DOWNWARD ), item( SelectionActions.SELECT_TRACK_UPWARD ), separator(), tagSetMenu( tagSetMenuHandle ) ) );
 		appModel.getPlugins().addMenus( menu );
 
 		/*
 		 * Coloring & colobar.
 		 */
-		coloringModel = registerColoring( coloringAdapter, coloringMenuHandle,
-				() -> dataDisplayPanel.entitiesAttributesChanged() );
-		registerTagSetMenu( tagSetMenuHandle,
-				() -> dataDisplayPanel.entitiesAttributesChanged() );
+		coloringModel = registerColoring( coloringAdapter, coloringMenuHandle, () -> dataDisplayPanel.entitiesAttributesChanged() );
+		registerTagSetMenu( tagSetMenuHandle, () -> dataDisplayPanel.entitiesAttributesChanged() );
 		colorbarOverlay = new ColorBarOverlay( coloringModel, () -> dataDisplayPanel.getBackground() );
 		final OffsetAxes offset = dataDisplayPanel.getOffsetAxes();
 		offset.listeners().add( ( w, h ) -> colorbarOverlay.setInsets( 15, w + 15, h + 15, 15 ) );

@@ -97,119 +97,82 @@ public class RenderSettingsPanel extends JPanel
 		c.gridx = 0;
 		c.gridy = 0;
 
-		styleElements.forEach( element -> element.accept(
-				new StyleElementVisitor()
-				{
-					@Override
-					public void visit( final Separator element )
-					{
-						add( Box.createVerticalStrut( 10 ), c );
-						++c.gridy;
-					}
+		styleElements.forEach( element -> element.accept( new StyleElementVisitor()
+		{
+			@Override
+			public void visit( final Separator element )
+			{
+				add( Box.createVerticalStrut( 10 ), c );
+				++c.gridy;
+			}
 
-					@Override
-					public void visit( final BooleanElement element )
-					{
-						final JCheckBox checkbox = linkedCheckBox( element, "" );
-						checkbox.setHorizontalAlignment( SwingConstants.TRAILING );
-						addToLayout(
-								checkbox,
-								new JLabel( element.getLabel() ) );
-					}
+			@Override
+			public void visit( final BooleanElement element )
+			{
+				final JCheckBox checkbox = linkedCheckBox( element, "" );
+				checkbox.setHorizontalAlignment( SwingConstants.TRAILING );
+				addToLayout( checkbox, new JLabel( element.getLabel() ) );
+			}
 
-					@Override
-					public void visit( final DoubleElement element )
-					{
-						final SliderPanelDouble slider = linkedSliderPanel( element, tfCols );
-						slider.setPreferredSize( SLIDER_PREFERRED_DIM );
-						addToLayout(
-								slider,
-								new JLabel( element.getLabel() ) );
-					}
+			@Override
+			public void visit( final DoubleElement element )
+			{
+				final SliderPanelDouble slider = linkedSliderPanel( element, tfCols );
+				slider.setPreferredSize( SLIDER_PREFERRED_DIM );
+				addToLayout( slider, new JLabel( element.getLabel() ) );
+			}
 
-					@Override
-					public void visit( final IntElement element )
-					{
-						final SliderPanel slider = linkedSliderPanel( element, tfCols );
-						slider.setPreferredSize( SLIDER_PREFERRED_DIM );
-						addToLayout(
-								slider,
-								new JLabel( element.getLabel() ) );
-					}
+			@Override
+			public void visit( final IntElement element )
+			{
+				final SliderPanel slider = linkedSliderPanel( element, tfCols );
+				slider.setPreferredSize( SLIDER_PREFERRED_DIM );
+				addToLayout( slider, new JLabel( element.getLabel() ) );
+			}
 
-					@Override
-					public void visit( final ColorElement element )
-					{
-						final JButton button = linkedColorButton( element, null, colorChooser );
-						button.setHorizontalAlignment( SwingConstants.RIGHT );
-						addToLayout(
-								button,
-								new JLabel( element.getLabel() ) );
-					}
+			@Override
+			public void visit( final ColorElement element )
+			{
+				final JButton button = linkedColorButton( element, null, colorChooser );
+				button.setHorizontalAlignment( SwingConstants.RIGHT );
+				addToLayout( button, new JLabel( element.getLabel() ) );
+			}
 
-					private void addToLayout( final JComponent comp1, final JComponent comp2 )
-					{
-						c.anchor = GridBagConstraints.LINE_END;
-						add( comp1, c );
-						c.gridx++;
-						c.weightx = 0.0;
-						c.anchor = GridBagConstraints.LINE_START;
-						add( comp2, c );
-						c.gridx = 0;
-						c.weightx = 1.0;
-						c.gridy++;
-					}
-				} ) );
+			private void addToLayout( final JComponent comp1, final JComponent comp2 )
+			{
+				c.anchor = GridBagConstraints.LINE_END;
+				add( comp1, c );
+				c.gridx++;
+				c.weightx = 0.0;
+				c.anchor = GridBagConstraints.LINE_START;
+				add( comp2, c );
+				c.gridx = 0;
+				c.weightx = 1.0;
+				c.gridy++;
+			}
+		} ) );
 	}
 
 	private List< StyleElement > styleElements( final RenderSettings style )
 	{
-		return Arrays.asList(
-				booleanElement( "anti-aliasing", style::getUseAntialiasing, style::setUseAntialiasing ),
+		return Arrays.asList( booleanElement( "anti-aliasing", style::getUseAntialiasing, style::setUseAntialiasing ),
 
 				separator(),
 
-				colorElement(
-						"spot color",
-						() -> new Color( style.getColorSpot(), true ),
-						( c ) -> style.setColorSpot( c.getRGB() ) ),
-				colorElement(
-						"links backward in time",
-						() -> new Color( style.getColorPast(), true ),
-						( c ) -> style.setColorPast( c.getRGB() ) ),
-				colorElement(
-						"links ahead in time",
-						() -> new Color( style.getColorFuture(), true ),
-						( c ) -> style.setColorFuture( c.getRGB() ) ),
+				colorElement( "spot color", () -> new Color( style.getColorSpot(), true ), ( c ) -> style.setColorSpot( c.getRGB() ) ), colorElement( "links backward in time", () -> new Color( style.getColorPast(), true ), ( c ) -> style.setColorPast( c.getRGB() ) ), colorElement( "links ahead in time", () -> new Color( style.getColorFuture(), true ), ( c ) -> style.setColorFuture( c.getRGB() ) ),
 
 				separator(),
 
-				booleanElement( "draw links", style::getDrawLinks, style::setDrawLinks ),
-				intElement( "time range for links", 0, 100, style::getTimeLimit, style::setTimeLimit ),
-				booleanElement( "gradients for links", style::getUseGradient, style::setUseGradient ),
-				booleanElement( "arrow heads", style::getDrawArrowHeads, style::setDrawArrowHeads ),
-				booleanElement( "draw links ahead in time", style::getDrawLinksAheadInTime, style::setDrawLinksAheadInTime ),
-				doubleElement( "link stroke width", 1, 100, style::getLinkStrokeWidth, style::setLinkStrokeWidth ),
+				booleanElement( "draw links", style::getDrawLinks, style::setDrawLinks ), intElement( "time range for links", 0, 100, style::getTimeLimit, style::setTimeLimit ), booleanElement( "gradients for links", style::getUseGradient, style::setUseGradient ), booleanElement( "arrow heads", style::getDrawArrowHeads, style::setDrawArrowHeads ), booleanElement( "draw links ahead in time", style::getDrawLinksAheadInTime, style::setDrawLinksAheadInTime ), doubleElement( "link stroke width", 1, 100, style::getLinkStrokeWidth, style::setLinkStrokeWidth ),
 
 				separator(),
 
-				booleanElement( "draw spots", style::getDrawSpots, style::setDrawSpots ),
-				booleanElement( "ellipsoid intersection", style::getDrawEllipsoidSliceIntersection, style::setDrawEllipsoidSliceIntersection ),
-				booleanElement( "ellipsoid projection", style::getDrawEllipsoidSliceProjection, style::setDrawEllipsoidSliceProjection ),
-				booleanElement( "draw spot centers", style::getDrawSpotCenters, style::setDrawSpotCenters ),
-				booleanElement( "draw spot centers for ellipses", style::getDrawSpotCentersForEllipses, style::setDrawSpotCentersForEllipses ),
-				booleanElement( "draw spot labels", style::getDrawSpotLabels, style::setDrawSpotLabels ),
-				doubleElement( "spot stroke width", 1, 100, style::getSpotStrokeWidth, style::setSpotStrokeWidth ),
-				booleanElement( "fill spots", style::getFillSpots, style::setFillSpots ),
+				booleanElement( "draw spots", style::getDrawSpots, style::setDrawSpots ), booleanElement( "ellipsoid intersection", style::getDrawEllipsoidSliceIntersection, style::setDrawEllipsoidSliceIntersection ), booleanElement( "ellipsoid projection", style::getDrawEllipsoidSliceProjection, style::setDrawEllipsoidSliceProjection ), booleanElement( "draw spot centers", style::getDrawSpotCenters, style::setDrawSpotCenters ), booleanElement( "draw spot centers for ellipses", style::getDrawSpotCentersForEllipses, style::setDrawSpotCentersForEllipses ), booleanElement( "draw spot labels", style::getDrawSpotLabels, style::setDrawSpotLabels ), doubleElement( "spot stroke width", 1, 100, style::getSpotStrokeWidth, style::setSpotStrokeWidth ), booleanElement( "fill spots", style::getFillSpots, style::setFillSpots ),
 
 				separator(),
 
-				doubleElement( "focus limit (max dist to view plane)", 0, 2000, style::getFocusLimit, style::setFocusLimit ),
-				booleanElement( "view relative focus limit", style::getFocusLimitViewRelative, style::setFocusLimitViewRelative ),
+				doubleElement( "focus limit (max dist to view plane)", 0, 2000, style::getFocusLimit, style::setFocusLimit ), booleanElement( "view relative focus limit", style::getFocusLimitViewRelative, style::setFocusLimitViewRelative ),
 
-				separator(),
-				doubleElement( "ellipsoid fade depth", 0, 1, style::getEllipsoidFadeDepth, style::setEllipsoidFadeDepth ),
-				doubleElement( "center point fade depth", 0, 1, style::getPointFadeDepth, style::setPointFadeDepth )
-		);
+				separator(), doubleElement( "ellipsoid fade depth", 0, 1, style::getEllipsoidFadeDepth, style::setEllipsoidFadeDepth ), doubleElement( "center point fade depth", 0, 1, style::getPointFadeDepth, style::setPointFadeDepth ) );
 	}
 }

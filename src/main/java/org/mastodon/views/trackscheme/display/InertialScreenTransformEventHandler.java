@@ -49,22 +49,26 @@ import org.scijava.ui.behaviour.util.Behaviours;
 
 import bdv.TransformEventHandler;
 
-public class InertialScreenTransformEventHandler
-	implements
-		TransformEventHandler,
-		LayoutListener,
-		OffsetHeadersListener
+public class InertialScreenTransformEventHandler implements TransformEventHandler, LayoutListener, OffsetHeadersListener
 {
 	public static final String DRAG_TRANSLATE = "drag translate";
+
 	public static final String SCROLL_TRANSLATE = "scroll translate";
+
 	public static final String ZOOM_X = "zoom horizontal";
+
 	public static final String ZOOM_Y = "zoom vertical";
+
 	public static final String ZOOM_XY = "zoom";
 
 	private static final String[] DRAG_TRANSLATE_KEYS = new String[] { "button2", "button3" };
+
 	private static final String[] SCROLL_TRANSLATE_KEYS = new String[] { "scroll" };
+
 	private static final String[] ZOOM_X_KEYS = new String[] { "shift scroll" };
+
 	private static final String[] ZOOM_Y_KEYS = new String[] { "ctrl scroll", "alt scroll" };
+
 	private static final String[] ZOOM_XY_KEYS = new String[] { "meta scroll", "ctrl shift scroll" };
 
 	/*
@@ -90,9 +94,13 @@ public class InertialScreenTransformEventHandler
 	}
 
 	private final TranslateDragBehaviour translateDragBehaviour;
+
 	private final TranslateScrollBehaviour translateScrollBehaviour;
+
 	private final ZoomScrollBehaviour zoomScrollBehaviourX;
+
 	private final ZoomScrollBehaviour zoomScrollBehaviourY;
+
 	private final ZoomScrollBehaviour zoomScrollBehaviourXY;
 
 	/*
@@ -123,30 +131,37 @@ public class InertialScreenTransformEventHandler
 	private static final double EPSILON = 0.0000000001;
 
 	// ...JY settings...
-//	private static final double borderRatioX = 0.5;
-//	private static final double borderRatioY = 0.5;
-//	private static final double maxSizeFactorX = 8;
-//	private static final double maxSizeFactorY = 8;
-//	private static final double boundXLayoutBorder = 0;
-//	private static final double boundYLayoutBorder = 0;
+	// private static final double borderRatioX = 0.5;
+	// private static final double borderRatioY = 0.5;
+	// private static final double maxSizeFactorX = 8;
+	// private static final double maxSizeFactorY = 8;
+	// private static final double boundXLayoutBorder = 0;
+	// private static final double boundYLayoutBorder = 0;
 
 	// ...TP settings...
 	private static final double borderRatioX = 0;
+
 	private static final double borderRatioY = 0;
+
 	private static final double borderAbsX = 10;
+
 	private static final double borderAbsY = 10;
+
 	private static final double maxSizeFactorX = 1;
+
 	private static final double maxSizeFactorY = 1;
+
 	static final double boundXLayoutBorder = 0.5;
+
 	static final double boundYLayoutBorder = 0.5;
 
 	// ...still something else...
-//	private static final double borderRatioX = 0.1;
-//	private static final double borderRatioY = 0.1;
-//	private static final double maxSizeFactorX = 1 / 0.8;
-//	private static final double maxSizeFactorY = 1 / 0.8;
-//	private static final double boundXLayoutBorder = 0;
-//	private static final double boundYLayoutBorder = 0;
+	// private static final double borderRatioX = 0.1;
+	// private static final double borderRatioY = 0.1;
+	// private static final double maxSizeFactorX = 1 / 0.8;
+	// private static final double maxSizeFactorY = 1 / 0.8;
+	// private static final double boundXLayoutBorder = 0;
+	// private static final double boundYLayoutBorder = 0;
 
 	/**
 	 * A zoom command to a window smaller than this value (in layout
@@ -255,9 +270,7 @@ public class InertialScreenTransformEventHandler
 	private void updateTransformScreenSize()
 	{
 		final ScreenTransform transform = transformState.get();
-		transform.setScreenSize(
-				Math.max( canvasWidth - headerWidth, 1 ),
-				Math.max( canvasHeight - headerHeight, 1 ) );
+		transform.setScreenSize( Math.max( canvasWidth - headerWidth, 1 ), Math.max( canvasHeight - headerHeight, 1 ) );
 		updateMaxSizeX( transform.getScreenWidth() );
 		updateMaxSizeY( transform.getScreenHeight() );
 		transformState.set( transform );
@@ -306,7 +319,7 @@ public class InertialScreenTransformEventHandler
 
 		if ( boundYMax - boundYMin < MIN_TIMEPOINTS_ON_CANVAS )
 		{
-			final double c = (boundYMax + boundYMin) / 2;
+			final double c = ( boundYMax + boundYMin ) / 2;
 			boundYMin = c - MIN_TIMEPOINTS_ON_CANVAS / 2;
 			boundYMax = c + MIN_TIMEPOINTS_ON_CANVAS / 2;
 		}
@@ -316,33 +329,17 @@ public class InertialScreenTransformEventHandler
 
 	private void constrainTransform( final ScreenTransform transform )
 	{
-		ConstrainScreenTransform.constrainTransform(
-				transform,
-				MIN_SIBLINGS_ON_CANVAS, MIN_TIMEPOINTS_ON_CANVAS,
-				maxSizeX, maxSizeY,
-				boundXMin, boundXMax, boundYMin, boundYMax,
-				borderRatioX, borderRatioY,
-				borderAbsX, borderAbsY );
+		ConstrainScreenTransform.constrainTransform( transform, MIN_SIBLINGS_ON_CANVAS, MIN_TIMEPOINTS_ON_CANVAS, maxSizeX, maxSizeY, boundXMin, boundXMax, boundYMin, boundYMax, borderRatioX, borderRatioY, borderAbsX, borderAbsY );
 	}
 
 	private void zoomOutFullyX( final ScreenTransform transform )
 	{
-		ConstrainScreenTransform.zoomOutFullyX(
-				transform,
-				maxSizeX,
-				boundXMin, boundXMax,
-				borderRatioX,
-				borderAbsX );
+		ConstrainScreenTransform.zoomOutFullyX( transform, maxSizeX, boundXMin, boundXMax, borderRatioX, borderAbsX );
 	}
 
 	private void zoomOutFullyY( final ScreenTransform transform )
 	{
-		ConstrainScreenTransform.zoomOutFullyY(
-				transform,
-				maxSizeY,
-				boundYMin, boundYMax,
-				borderRatioY,
-				borderAbsY );
+		ConstrainScreenTransform.zoomOutFullyY( transform, maxSizeY, boundYMin, boundYMax, borderRatioY, borderAbsY );
 	}
 
 	private boolean hasMinSizeX( final ScreenTransform transform )
@@ -400,8 +397,8 @@ public class InertialScreenTransformEventHandler
 			final ScreenTransform transform = transformState.get();
 
 			// TODO: Revise?
-			//  This seems a quite noisy way to estimate current motion speed.
-			//  Instead, it would be better to average over dXY/dt over last few updates?
+			// This seems a quite noisy way to estimate current motion speed.
+			// Instead, it would be better to average over dXY/dt over last few updates?
 			final long t = System.currentTimeMillis();
 			if ( t > previousTime )
 			{
@@ -459,7 +456,6 @@ public class InertialScreenTransformEventHandler
 			double dScale = 1.0 + Math.abs( wheelRotation ) * zoomScrollSensitivity;
 			if ( zoomIn )
 				dScale = 1.0 / dScale;
-
 
 			final ScreenTransform transform = transformState.get();
 			final ScreenTransform previousTransform = transform.copy();
@@ -582,8 +578,7 @@ public class InertialScreenTransformEventHandler
 		final double xmax = Math.max( lx1, lx2 );
 		final double ymin = Math.min( ly1, ly2 );
 		final double ymax = Math.max( ly1, ly2 );
-		if ( hasMinSizeX( tstart ) && hasMinSizeY( tstart )
-				&& Math.max( xmax - xmin, ymax - ymin ) < ZOOM_LIMIT )
+		if ( hasMinSizeX( tstart ) && hasMinSizeY( tstart ) && Math.max( xmax - xmin, ymax - ymin ) < ZOOM_LIMIT )
 		{
 			// Unzoom fully.
 			tend.set( tstart );
@@ -605,7 +600,8 @@ public class InertialScreenTransformEventHandler
 		}
 	}
 
-	public void zoomOutFully() {
+	public void zoomOutFully()
+	{
 		transformState.get( tstart );
 		tend.set( tstart );
 		zoomOutFullyX( tend );

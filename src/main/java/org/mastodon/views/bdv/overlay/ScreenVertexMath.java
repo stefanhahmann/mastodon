@@ -486,8 +486,7 @@ public class ScreenVertexMath
 			return;
 
 		/*
-		 * decompose the upper 2x2 sub-matrix of S, i.e., the spot
-		 * covariance in XY of the viewer coordinate system.
+		 * decompose the upper 2x2 sub-matrix of S, i.e., the spot covariance in XY of the viewer coordinate system.
 		 */
 		eig2.decomposeSymmetric( vS );
 		final double[] eigVals2 = eig2.getRealEigenvalues();
@@ -522,8 +521,7 @@ public class ScreenVertexMath
 			}
 		}
 		/*
-		 * now T and TS^T transform from unit sphere to covariance ellipsoid and
-		 * vice versa
+		 * now T and TS^T transform from unit sphere to covariance ellipsoid and vice versa
 		 */
 
 		final double[] vx = TS[ 0 ];

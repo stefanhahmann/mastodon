@@ -49,9 +49,7 @@ public class SpotRadiusFeature implements Feature< Spot >
 
 	private static final String KEY = "Spot radius";
 
-	private static final String HELP_STRING = "Computes the spot equivalent radius. "
-			+ "This is the radius of the sphere that would have the same volume "
-			+ "that of the spot.";
+	private static final String HELP_STRING = "Computes the spot equivalent radius. " + "This is the radius of the sphere that would have the same volume " + "that of the spot.";
 
 	private static final FeatureProjectionSpec PROJECTION_SPEC = new FeatureProjectionSpec( KEY, Dimension.LENGTH );
 
@@ -69,13 +67,7 @@ public class SpotRadiusFeature implements Feature< Spot >
 	{
 		public Spec()
 		{
-			super(
-					KEY,
-					HELP_STRING,
-					SpotRadiusFeature.class,
-					Spot.class,
-					Multiplicity.SINGLE,
-					PROJECTION_SPEC );
+			super( KEY, HELP_STRING, SpotRadiusFeature.class, Spot.class, Multiplicity.SINGLE, PROJECTION_SPEC );
 		}
 	}
 

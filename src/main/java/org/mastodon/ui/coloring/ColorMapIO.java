@@ -108,8 +108,7 @@ public class ColorMapIO
 		}
 
 		/*
-		 * So we use color as ints internally, but we still want to save them as
-		 * RGBA channels, for human readability.
+		 * So we use color as ints internally, but we still want to save them as RGBA channels, for human readability.
 		 */
 		@Override
 		public Node representData( final Object data )
@@ -290,10 +289,7 @@ public class ColorMapIO
 			for ( int i = 0; i < alphas.length; i++ )
 			{
 				alphas[ i ] = ( double ) i / nColors;
-				final int rgba = new Color(
-						r[ i ] & 0xff,
-						g[ i ] & 0xff,
-						b[ i ] & 0xff ).getRGB();
+				final int rgba = new Color( r[ i ] & 0xff, g[ i ] & 0xff, b[ i ] & 0xff ).getRGB();
 				colors[ i ] = rgba;
 			}
 			return new ColorMap( name, colors, alphas, naColor );

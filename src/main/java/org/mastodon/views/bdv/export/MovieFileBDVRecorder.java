@@ -64,13 +64,7 @@ public class MovieFileBDVRecorder extends AbstractBDVRecorder
 
 	private MediaPacket packet;
 
-	protected MovieFileBDVRecorder(
-			final ViewerPanel viewer,
-			final OverlayGraphRenderer< ?, ? > tracksOverlay,
-			final ColorBarOverlay colorBarOverlay,
-			final ProgressWriter progressWriter,
-			final String filename,
-			final int fps )
+	protected MovieFileBDVRecorder( final ViewerPanel viewer, final OverlayGraphRenderer< ?, ? > tracksOverlay, final ColorBarOverlay colorBarOverlay, final ProgressWriter progressWriter, final String filename, final int fps )
 	{
 		super( viewer, tracksOverlay, colorBarOverlay, progressWriter );
 		this.filename = filename;
@@ -87,8 +81,7 @@ public class MovieFileBDVRecorder extends AbstractBDVRecorder
 		final int height = Math.round( h / 2 ) * 2;
 
 		/*
-		 * First we create a muxer using the filename to determine code and
-		 * format.
+		 * First we create a muxer using the filename to determine code and format.
 		 */
 		final Rational framerate = Rational.make( 1, fps );
 		this.muxer = Muxer.make( filename, null, null );
@@ -126,10 +119,7 @@ public class MovieFileBDVRecorder extends AbstractBDVRecorder
 			e.printStackTrace();
 		}
 
-		this.picture = MediaPicture.make(
-				encoder.getWidth(),
-				encoder.getHeight(),
-				pixelformat );
+		this.picture = MediaPicture.make( encoder.getWidth(), encoder.getHeight(), pixelformat );
 		picture.setTimeBase( framerate );
 
 		packet = MediaPacket.make();

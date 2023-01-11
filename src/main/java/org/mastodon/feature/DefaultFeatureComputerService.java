@@ -96,8 +96,7 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 		dependencies.clear();
 
 		/*
-		 * Build the dependency graph. Potentially with cycles and potentially
-		 * with features whose computers are missing.
+		 * Build the dependency graph. Potentially with cycles and potentially with features whose computers are missing.
 		 */
 		discover();
 
@@ -131,27 +130,23 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 				for ( final ModuleItem< ? > item : info.outputs() )
 				{
 					if ( !Feature.class.isAssignableFrom( item.getType() ) )
-						throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName()
-								+ " because output " + item + " is not of type Feature." );
+						throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName() + " because output " + item + " is not of type Feature." );
 
 					if ( featureSpec != null )
-						throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName()
-								+ " because it defines more than one output." );
+						throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName() + " because it defines more than one output." );
 
 					@SuppressWarnings( "unchecked" )
 					final Class< ? extends Feature< ? > > type = ( Class< ? extends Feature< ? > > ) item.getType();
 					featureSpec = featureSpecs.getSpec( type );
 				}
 				if ( featureSpec == null )
-					throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName()
-							+ " because it does not define an output." );
+					throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName() + " because it does not define an output." );
 
 				FeatureDependencyGraph.Vertex v = dependencies.get( featureSpec );
 				if ( v == null )
 					v = dependencies.addVertex( featureSpec );
 				if ( v.getFeatureComputer() != null )
-					throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName()
-							+ " because it computes " + featureSpec + " which is already computed by " + v.getFeatureComputer() );
+					throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName() + " because it computes " + featureSpec + " which is already computed by " + v.getFeatureComputer() );
 				v.setFeatureComputer( fc, info );
 
 				for ( final ModuleItem< ? > item : info.inputs() )
@@ -172,11 +167,8 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 			catch ( InstantiableException | IllegalArgumentException e )
 			{
 				/*
-				 * TODO: instead of printing the messages, they should be
-				 * collected into one big message that can then be obtained from
-				 * the FeatureComputerService and presented to the user in some
-				 * way (the "presenting to the user" part we can decide on
-				 * later...).
+				 * TODO: instead of printing the messages, they should be collected into one big message that can then be obtained from the FeatureComputerService and presented to the user in some way (the
+				 * "presenting to the user" part we can decide on later...).
 				 */
 				System.out.println( e.getMessage() );
 			}
@@ -186,9 +178,7 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 	@Override
 	public FeatureComputer getFeatureComputerFor( final FeatureSpec< ?, ? > spec )
 	{
-		return null == dependencies.get( spec )
-				? null
-				: dependencies.get( spec ).getFeatureComputer();
+		return null == dependencies.get( spec ) ? null : dependencies.get( spec ).getFeatureComputer();
 	}
 
 	@Override
@@ -201,10 +191,10 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 	public Collection< FeatureSpec< ?, ? > > getDependencies( final FeatureSpec< ?, ? > spec )
 	{
 		final Vertex vertex = dependencies.get( spec );
-		if (null == vertex)
+		if ( null == vertex )
 			return Collections.emptyList();
 
-		final List<FeatureSpec< ?, ? >> deps = new ArrayList<>();
+		final List< FeatureSpec< ?, ? > > deps = new ArrayList<>();
 		for ( final Edge edge : vertex.outgoingEdges() )
 		{
 			final Vertex target = edge.getTarget();
@@ -295,7 +285,7 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 		}
 
 		// FeatureComputationStatus.
-		if (FeatureComputationStatus.class.isAssignableFrom( parameterClass ))
+		if ( FeatureComputationStatus.class.isAssignableFrom( parameterClass ) )
 		{
 			@SuppressWarnings( "unchecked" )
 			final ModuleItem< FeatureComputationStatus > statusModule = ( ModuleItem< FeatureComputationStatus > ) item;

@@ -219,9 +219,7 @@ public class AvailableFeatureProjectionsImp implements AvailableFeatureProjectio
 			System.err.println( "trying to add to existing feature with different multiplicity." );
 			return;
 		}
-		spec.getProjectionSpecs().stream()
-				.map( FeatureProjectionSpec::getKey )
-				.forEach( fp.projectionKeys::add );
+		spec.getProjectionSpecs().stream().map( FeatureProjectionSpec::getKey ).forEach( fp.projectionKeys::add );
 	}
 
 	/**
@@ -324,20 +322,10 @@ public class AvailableFeatureProjectionsImp implements AvailableFeatureProjectio
 	}
 
 	/*
-	 * Below this: Everything required to generate a comprehensive set of
-	 * feature specs, from 3 sources: - discoverable feature specs; - feature
-	 * model; - unknown feature specs mentioned in color modes.
+	 * Below this: Everything required to generate a comprehensive set of feature specs, from 3 sources: - discoverable feature specs; - feature model; - unknown feature specs mentioned in color modes.
 	 */
 
-	public static AvailableFeatureProjections createAvailableFeatureProjections(
-			final FeatureSpecsService featureSpecsService,
-			final int numSources,
-			final FeatureModel featureModel,
-			final FeatureColorModeManager featureColorModeManager,
-			final Class< ? > vertexClass,
-			final Class< ? > edgeClass,
-			final Class< ? > branchVertexClass,
-			final Class< ? > branchEdgeClass )
+	public static AvailableFeatureProjections createAvailableFeatureProjections( final FeatureSpecsService featureSpecsService, final int numSources, final FeatureModel featureModel, final FeatureColorModeManager featureColorModeManager, final Class< ? > vertexClass, final Class< ? > edgeClass, final Class< ? > branchVertexClass, final Class< ? > branchEdgeClass )
 	{
 		final AvailableFeatureProjectionsImp projections = new AvailableFeatureProjectionsImp( vertexClass, edgeClass, branchVertexClass, branchEdgeClass );
 

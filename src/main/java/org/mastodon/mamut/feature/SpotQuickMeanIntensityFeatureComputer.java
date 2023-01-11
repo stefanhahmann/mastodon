@@ -131,8 +131,7 @@ public class SpotQuickMeanIntensityFeatureComputer implements MamutFeatureComput
 						break MAIN_LOOP;
 
 					/*
-					 * Skip if we are not force to recompute all and if a value
-					 * is already computed.
+					 * Skip if we are not force to recompute all and if a value is already computed.
 					 */
 					if ( !recomputeAll && output.means.get( iSource ).isSet( spot ) )
 						continue;

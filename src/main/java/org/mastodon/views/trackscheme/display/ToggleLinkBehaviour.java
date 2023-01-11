@@ -67,9 +67,7 @@ import org.scijava.ui.behaviour.util.Behaviours;
  * @author Jean-Yves Tinevez
  * @author Tobias Pietzsch
  */
-public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extends Edge< V > >
-		extends AbstractNamedBehaviour
-		implements DragBehaviour
+public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extends Edge< V > > extends AbstractNamedBehaviour implements DragBehaviour
 {
 	public static final String TOGGLE_LINK = "toggle link";
 
@@ -117,24 +115,13 @@ public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extend
 
 	private boolean editing;
 
-	public static < V extends Vertex< E > & HasTimepoint, E extends Edge< V > > void install(
-			final Behaviours behaviours,
-			final TrackSchemePanel panel,
-			final TrackSchemeGraph< V, E > graph,
-			final ReentrantReadWriteLock lock,
-			final GraphChangeNotifier notify,
-			final UndoPointMarker undo )
+	public static < V extends Vertex< E > & HasTimepoint, E extends Edge< V > > void install( final Behaviours behaviours, final TrackSchemePanel panel, final TrackSchemeGraph< V, E > graph, final ReentrantReadWriteLock lock, final GraphChangeNotifier notify, final UndoPointMarker undo )
 	{
 		final ToggleLinkBehaviour< V, E > toggleLinkBehaviour = new ToggleLinkBehaviour<>( panel, graph, lock, notify, undo );
 		behaviours.namedBehaviour( toggleLinkBehaviour, TOGGLE_LINK_KEYS );
 	}
 
-	private ToggleLinkBehaviour(
-			final TrackSchemePanel panel,
-			final TrackSchemeGraph< V, E > graph,
-			final ReentrantReadWriteLock lock,
-			final GraphChangeNotifier notify,
-			final UndoPointMarker undo )
+	private ToggleLinkBehaviour( final TrackSchemePanel panel, final TrackSchemeGraph< V, E > graph, final ReentrantReadWriteLock lock, final GraphChangeNotifier notify, final UndoPointMarker undo )
 	{
 		super( TOGGLE_LINK );
 		this.panel = panel;
@@ -212,8 +199,7 @@ public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extend
 					overlay.to[ 1 ] = endVertex.getTimepoint();
 
 					/*
-					 * Prevent the creation of links between vertices in the
-					 * same time-point.
+					 * Prevent the creation of links between vertices in the same time-point.
 					 */
 					final int tStart = startVertex.getTimepoint();
 					final int tEnd = endVertex.getTimepoint();
@@ -221,8 +207,7 @@ public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extend
 						return;
 
 					/*
-					 * Careful with directed graphs. We always check and create
-					 * links forward in time.
+					 * Careful with directed graphs. We always check and create links forward in time.
 					 */
 					final TrackSchemeVertex source = tStart > tEnd ? endVertex : startVertex;
 					final TrackSchemeVertex target = tStart > tEnd ? startVertex : endVertex;
@@ -289,11 +274,7 @@ public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extend
 				graphics.setStroke( EDIT_GRAPH_OVERLAY_STROKE );
 			screenTransform.apply( from, vFrom );
 			screenTransform.apply( to, vTo );
-			g.drawLine(
-					( int ) vFrom[ 0 ] + panel.getOffsetHeaders().getWidth(),
-					( int ) vFrom[ 1 ] + panel.getOffsetHeaders().getHeight(),
-					( int ) vTo[ 0 ] + panel.getOffsetHeaders().getWidth(),
-					( int ) vTo[ 1 ] + panel.getOffsetHeaders().getHeight() );
+			g.drawLine( ( int ) vFrom[ 0 ] + panel.getOffsetHeaders().getWidth(), ( int ) vFrom[ 1 ] + panel.getOffsetHeaders().getHeight(), ( int ) vTo[ 0 ] + panel.getOffsetHeaders().getWidth(), ( int ) vTo[ 1 ] + panel.getOffsetHeaders().getHeight() );
 		}
 
 		@Override

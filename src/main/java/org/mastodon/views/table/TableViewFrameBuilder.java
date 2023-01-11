@@ -174,14 +174,7 @@ public class TableViewFrameBuilder
 	 * @param <VV>
 	 * @param <EE>
 	 */
-	private final class GraphTableBundle< VV extends Vertex< EE >, EE extends Edge< VV > >
-			implements
-			ContextListener< VV >,
-			SelectionListener,
-			org.mastodon.model.FocusListener,
-			HighlightListener,
-			TagSetModel.TagSetModelListener,
-			FeatureModelListener
+	private final class GraphTableBundle< VV extends Vertex< EE >, EE extends Edge< VV > > implements ContextListener< VV >, SelectionListener, org.mastodon.model.FocusListener, HighlightListener, TagSetModel.TagSetModelListener, FeatureModelListener
 	{
 
 		private final SelectionModel< VV, EE > selectionModel;
@@ -216,10 +209,7 @@ public class TableViewFrameBuilder
 
 		private ContextChooser< VV > contextChooser;
 
-		public GraphTableBundle(
-				final GraphTableBuilder< VV, EE > graphBuilder,
-				final UndoPointMarker undo,
-				final JPanel settingsPanel )
+		public GraphTableBundle( final GraphTableBuilder< VV, EE > graphBuilder, final UndoPointMarker undo, final JPanel settingsPanel )
 		{
 			this.selectionModel = graphBuilder.selectionModel;
 			this.focusModel = graphBuilder.focusModel;
@@ -238,12 +228,7 @@ public class TableViewFrameBuilder
 			 */
 
 			final RefPool< VV > vertices = RefCollections.tryGetRefPool( graphBuilder.graph.vertices() );
-			final TablePanelBuilder< VV > vertexTableBuilder = TablePanelBuilder
-					.create( vertices )
-					.labelSetter( graphBuilder.vertexLabelSetter )
-					.labelGetter( graphBuilder.vertexLabelGenerator )
-					.coloring( v -> graphBuilder.coloring.color( v ) )
-					.undo( undo );
+			final TablePanelBuilder< VV > vertexTableBuilder = TablePanelBuilder.create( vertices ).labelSetter( graphBuilder.vertexLabelSetter ).labelGetter( graphBuilder.vertexLabelGenerator ).coloring( v -> graphBuilder.coloring.color( v ) ).undo( undo );
 			if ( graphBuilder.tagSetModel != null )
 				vertexTableBuilder.tags( graphBuilder.tagSetModel.getVertexTags() );
 			this.vertexTable = vertexTableBuilder.get();
@@ -297,8 +282,7 @@ public class TableViewFrameBuilder
 			{
 				@SuppressWarnings( "unchecked" )
 				final Class< VV > vertexClass = ( Class< VV > ) graphBuilder.graph.vertexRef().getClass();
-				final Map< FeatureSpec< ?, VV >, Feature< VV > > vertexFeatures =
-						FeatureUtils.collectFeatureMap( graphBuilder.featureModel, vertexClass );
+				final Map< FeatureSpec< ?, VV >, Feature< VV > > vertexFeatures = FeatureUtils.collectFeatureMap( graphBuilder.featureModel, vertexClass );
 				vertexTable.setFeatures( vertexFeatures );
 			}
 
@@ -329,12 +313,7 @@ public class TableViewFrameBuilder
 					return graphBuilder.coloring.color( edge, vTmpS, vTmpT );
 				}
 			};
-			final TablePanelBuilder< EE > edgeTableBuilder = TablePanelBuilder
-					.create( edges )
-					.labelGetter( graphBuilder.edgeLabelGenerator )
-					.labelSetter( graphBuilder.edgeLabelSetter )
-					.coloring( edgeColorGenerator )
-					.undo( undo );
+			final TablePanelBuilder< EE > edgeTableBuilder = TablePanelBuilder.create( edges ).labelGetter( graphBuilder.edgeLabelGenerator ).labelSetter( graphBuilder.edgeLabelSetter ).coloring( edgeColorGenerator ).undo( undo );
 			if ( graphBuilder.tagSetModel != null )
 				edgeTableBuilder.tags( graphBuilder.tagSetModel.getEdgeTags() );
 			this.edgeTable = edgeTableBuilder.get();
@@ -424,8 +403,7 @@ public class TableViewFrameBuilder
 			{
 				@SuppressWarnings( "unchecked" )
 				final Class< EE > edgeClass = ( Class< EE > ) graphBuilder.graph.edgeRef().getClass();
-				final Map< FeatureSpec< ?, EE >, Feature< EE > > edgeFeatures =
-						FeatureUtils.collectFeatureMap( graphBuilder.featureModel, edgeClass );
+				final Map< FeatureSpec< ?, EE >, Feature< EE > > edgeFeatures = FeatureUtils.collectFeatureMap( graphBuilder.featureModel, edgeClass );
 				edgeTable.setFeatures( edgeFeatures );
 			}
 
@@ -437,8 +415,7 @@ public class TableViewFrameBuilder
 			}
 
 			/*
-			 * Move the table so that it receives the navigation events
-			 * properly.
+			 * Move the table so that it receives the navigation events properly.
 			 */
 
 			if ( graphBuilder.navigationHandler != null )
@@ -474,8 +451,7 @@ public class TableViewFrameBuilder
 			}
 
 			/*
-			 * Wire listeners, so that the tables in this bundle are informed
-			 * when something changes outside.
+			 * Wire listeners, so that the tables in this bundle are informed when something changes outside.
 			 */
 
 			if ( selectionModel != null )
@@ -777,7 +753,6 @@ public class TableViewFrameBuilder
 	public static class MyTableViewFrame extends ViewFrame
 	{
 
-
 		private static final long serialVersionUID = 1L;
 
 		public final List< ContextChooser< ? > > contextChoosers;
@@ -815,8 +790,8 @@ public class TableViewFrameBuilder
 		public List< FeatureTagTablePanel< ? > > getTables()
 		{
 			final int nTabs = pane.getTabCount();
-			final ArrayList< FeatureTagTablePanel< ? > > tables = new ArrayList<>(nTabs);
-			for(int i = 0; i < nTabs; i++)
+			final ArrayList< FeatureTagTablePanel< ? > > tables = new ArrayList<>( nTabs );
+			for ( int i = 0; i < nTabs; i++ )
 			{
 				final FeatureTagTablePanel< ? > table = ( FeatureTagTablePanel< ? > ) pane.getComponentAt( i );
 				tables.add( table );

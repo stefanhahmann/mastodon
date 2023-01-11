@@ -53,9 +53,7 @@ public class SpotQuickMeanIntensityFeature implements Feature< Spot >
 
 	public static final String KEY = "Spot quick mean";
 
-	private static final String HELP_STRING =
-			"Computes the mean intensity of spots using the highest resolution level to speedup calculation."
-					+ "It is recommended to use the 'Spot intensity' feature when the best accuracy is required.";
+	private static final String HELP_STRING = "Computes the mean intensity of spots using the highest resolution level to speedup calculation." + "It is recommended to use the 'Spot intensity' feature when the best accuracy is required.";
 
 	public static final FeatureProjectionSpec PROJECTION_SPEC = new FeatureProjectionSpec( "Mean", Dimension.INTENSITY );
 
@@ -66,13 +64,7 @@ public class SpotQuickMeanIntensityFeature implements Feature< Spot >
 	{
 		public Spec()
 		{
-			super(
-					KEY,
-					HELP_STRING,
-					SpotQuickMeanIntensityFeature.class,
-					Spot.class,
-					Multiplicity.ON_SOURCES,
-					PROJECTION_SPEC );
+			super( KEY, HELP_STRING, SpotQuickMeanIntensityFeature.class, Spot.class, Multiplicity.ON_SOURCES, PROJECTION_SPEC );
 		}
 	}
 

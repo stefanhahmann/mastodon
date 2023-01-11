@@ -35,8 +35,7 @@ import bdv.viewer.ViewerPanel;
 import bdv.viewer.animate.TranslationAnimator;
 import net.imglib2.realtransform.AffineTransform3D;
 
-public class OverlayNavigation< V extends OverlayVertex< V, E >, E extends OverlayEdge< E, V > >
-	implements NavigationListener< V, E >
+public class OverlayNavigation< V extends OverlayVertex< V, E >, E extends OverlayEdge< E, V > > implements NavigationListener< V, E >
 {
 	private final ViewerPanel panel;
 
@@ -46,9 +45,7 @@ public class OverlayNavigation< V extends OverlayVertex< V, E >, E extends Overl
 
 	private NavigationBehaviour< V, E > navigationBehaviour;
 
-	public OverlayNavigation(
-			final ViewerPanel panel,
-			final OverlayGraph< V, E > graph )
+	public OverlayNavigation( final ViewerPanel panel, final OverlayGraph< V, E > graph )
 	{
 		this.panel = panel;
 		this.graph = graph;
@@ -64,7 +61,7 @@ public class OverlayNavigation< V extends OverlayVertex< V, E >, E extends Overl
 	{
 		this.navigationEtiquette = navigationEtiquette;
 
-		switch( navigationEtiquette )
+		switch ( navigationEtiquette )
 		{
 		case MINIMAL:
 			navigationBehaviour = new MinimalNavigationBehaviour( 100, 100 );
@@ -241,7 +238,7 @@ public class OverlayNavigation< V extends OverlayVertex< V, E >, E extends Overl
 			final int width = panel.getWidth();
 			final int height = panel.getHeight();
 			final int edgeMaxWidth = width - 2 * screenBorderX;
-			final int edgeMaxHeight = height- 2 * screenBorderY;
+			final int edgeMaxHeight = height - 2 * screenBorderY;
 
 			screenEdgeMath.init( edge, t );
 			final double[] min = screenEdgeMath.getViewMin();

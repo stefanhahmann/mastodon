@@ -72,8 +72,7 @@ public class MamutActions
 		@Override
 		public void getCommandDescriptions( final CommandDescriptions descriptions )
 		{
-			descriptions.add( LINK_SELECTED_SPOTS, LINK_SELECTED_SPOTS_KEYS, "Link the spots currently selected. "
-					+ "If there are more than one spot in a frame, only one of them is linked." );
+			descriptions.add( LINK_SELECTED_SPOTS, LINK_SELECTED_SPOTS_KEYS, "Link the spots currently selected. " + "If there are more than one spot in a frame, only one of them is linked." );
 		}
 	}
 
@@ -81,22 +80,17 @@ public class MamutActions
 
 	private final LinkSpotsInSelection linkSpotsInSelection;
 
-
 	public MamutActions( final MamutAppModel appModel )
 	{
 		this.appModel = appModel;
 		this.linkSpotsInSelection = new LinkSpotsInSelection( LINK_SELECTED_SPOTS );
 	}
 
-
-	public static void install(
-			final Actions actions,
-			final MamutAppModel appModel)
+	public static void install( final Actions actions, final MamutAppModel appModel )
 	{
-		final MamutActions mamutActions = new MamutActions(appModel);
+		final MamutActions mamutActions = new MamutActions( appModel );
 		actions.namedAction( mamutActions.linkSpotsInSelection, LINK_SELECTED_SPOTS_KEYS );
 	}
-
 
 	private class LinkSpotsInSelection extends AbstractNamedAction
 	{
@@ -117,8 +111,7 @@ public class MamutActions
 			final SelectionModel< Spot, Link > selection = appModel.getSelectionModel();
 
 			/*
-			 * Put all the selected vertices in a map frame -> vertex, so that
-			 * we have at most one vertex per time-point. We ignore the rest.
+			 * Put all the selected vertices in a map frame -> vertex, so that we have at most one vertex per time-point. We ignore the rest.
 			 */
 			final IntRefMap< Spot > SpotMap = RefMaps.createIntRefMap( graph.vertices(), -1 );
 			lock.readLock().lock();

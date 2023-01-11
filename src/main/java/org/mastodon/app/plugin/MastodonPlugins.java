@@ -65,9 +65,7 @@ public class MastodonPlugins< PL extends MastodonPlugin< M >, M extends Mastodon
 			plugins.add( plugin );
 
 			/*
-			 * TODO: prefix action names with unique string? Maybe better leave
-			 * that to plugin implementors to make it easy to call actions
-			 * across plugins?
+			 * TODO: prefix action names with unique string? Maybe better leave that to plugin implementors to make it easy to call actions across plugins?
 			 */
 			menuItems.addAll( plugin.getMenuItems() );
 

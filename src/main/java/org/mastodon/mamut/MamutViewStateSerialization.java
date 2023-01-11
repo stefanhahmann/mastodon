@@ -273,26 +273,12 @@ class MamutViewStateSerialization
 		else if ( value instanceof ScreenTransform )
 		{
 			final ScreenTransform t = ( ScreenTransform ) value;
-			el = XmlHelpers.doubleArrayElement( key, new double[] {
-					t.getMinX(),
-					t.getMaxX(),
-					t.getMinY(),
-					t.getMaxY(),
-					t.getScreenWidth(),
-					t.getScreenHeight()
-			} );
+			el = XmlHelpers.doubleArrayElement( key, new double[] { t.getMinX(), t.getMaxX(), t.getMinY(), t.getMaxY(), t.getScreenWidth(), t.getScreenHeight() } );
 		}
 		else if ( value instanceof org.mastodon.views.grapher.datagraph.ScreenTransform )
 		{
 			final org.mastodon.views.grapher.datagraph.ScreenTransform t = ( org.mastodon.views.grapher.datagraph.ScreenTransform ) value;
-			el = XmlHelpers.doubleArrayElement( key, new double[] {
-					t.getMinX(),
-					t.getMaxX(),
-					t.getMinY(),
-					t.getMaxY(),
-					t.getScreenWidth(),
-					t.getScreenHeight()
-			} );
+			el = XmlHelpers.doubleArrayElement( key, new double[] { t.getMinX(), t.getMaxX(), t.getMinY(), t.getMaxY(), t.getScreenWidth(), t.getScreenHeight() } );
 		}
 		else if ( value instanceof Position )
 		{
@@ -343,11 +329,7 @@ class MamutViewStateSerialization
 
 		// Frame position and size.
 		final Rectangle bounds = view.getFrame().getBounds();
-		guiState.put( FRAME_POSITION_KEY, new int[] {
-				( int ) bounds.getMinX(),
-				( int ) bounds.getMinY(),
-				( int ) bounds.getWidth(),
-				( int ) bounds.getHeight() } );
+		guiState.put( FRAME_POSITION_KEY, new int[] { ( int ) bounds.getMinX(), ( int ) bounds.getMinY(), ( int ) bounds.getWidth(), ( int ) bounds.getHeight() } );
 
 		// Lock groups.
 		guiState.put( GROUP_HANDLE_ID_KEY, view.getGroupHandle().getGroupId() );
@@ -426,9 +408,7 @@ class MamutViewStateSerialization
 
 			final LinkedHashMap< String, Object > tableGuiState = new LinkedHashMap<>();
 			tableGuiState.put( TABLE_NAME, name );
-			tableGuiState.put( TABLE_VISIBLE_POS, new int[] {
-					tableRect.x,
-					tableRect.y } );
+			tableGuiState.put( TABLE_VISIBLE_POS, new int[] { tableRect.x, tableRect.y } );
 
 			tableGuiStates.add( tableGuiState );
 		}
@@ -464,11 +444,7 @@ class MamutViewStateSerialization
 		// Edit position to reflect the fact that we store the TrackScheme panel
 		// width and height.
 		final Point point = view.getFrame().getLocation();
-		guiState.put( FRAME_POSITION_KEY, new int[] {
-				point.x,
-				point.y,
-				trackschemePanel.getDisplay().getWidth(),
-				trackschemePanel.getDisplay().getHeight() } );
+		guiState.put( FRAME_POSITION_KEY, new int[] { point.x, point.y, trackschemePanel.getDisplay().getWidth(), trackschemePanel.getDisplay().getHeight() } );
 
 		// Transform.
 		final ScreenTransform t = trackschemePanel.getScreenTransform().get();
@@ -502,11 +478,7 @@ class MamutViewStateSerialization
 		// Edit position to reflect the fact that we store the TrackScheme panel
 		// width and height.
 		final Point point = view.getFrame().getLocation();
-		guiState.put( FRAME_POSITION_KEY, new int[] {
-				point.x,
-				point.y,
-				trackschemePanel.getDisplay().getWidth(),
-				trackschemePanel.getDisplay().getHeight() } );
+		guiState.put( FRAME_POSITION_KEY, new int[] { point.x, point.y, trackschemePanel.getDisplay().getWidth(), trackschemePanel.getDisplay().getHeight() } );
 
 		// Transform.
 		final ScreenTransform t = trackschemePanel.getScreenTransform().get();
@@ -619,15 +591,16 @@ class MamutViewStateSerialization
 			{
 			case "MamutViewBdv":
 			{
-				try {
+				try
+				{
 					final MamutViewBdv bdv = windowManager.createBigDataViewer( guiState );
 
 					// Store context provider.
 					contextProviders.put( bdv.getContextProvider().getName(), bdv.getContextProvider() );
 				}
-				catch (final IllegalArgumentException iae) {
-					System.err.println( "Info: Failed restoring state of a BigDataViewer window, thus not showing it.\n"
-							+ "      You may want to resave your project to replace the previous (failing) state with the current (okay) state." );
+				catch ( final IllegalArgumentException iae )
+				{
+					System.err.println( "Info: Failed restoring state of a BigDataViewer window, thus not showing it.\n" + "      You may want to resave your project to replace the previous (failing) state with the current (okay) state." );
 				}
 				break;
 			}
@@ -690,8 +663,7 @@ class MamutViewStateSerialization
 		}
 
 		/*
-		 * Loop again on context choosers and try to give them their desired
-		 * context provider.
+		 * Loop again on context choosers and try to give them their desired context provider.
 		 */
 
 		for ( final ContextChooser< Spot > contextChooser : contextChosers.keySet() )
@@ -826,15 +798,13 @@ class MamutViewStateSerialization
 			if ( bounds.contains( pos[ 0 ], pos[ 1 ] ) )
 			{
 				/*
-				 * This window is on this screen, but exits it. First resize it
-				 * so that it is not bigger than the screen.
+				 * This window is on this screen, but exits it. First resize it so that it is not bigger than the screen.
 				 */
 				pos[ 2 ] = Math.min( bounds.width, pos[ 2 ] );
 				pos[ 3 ] = Math.min( bounds.height, pos[ 3 ] );
 
 				/*
-				 * Then move it back so that its bottom right corner is in the
-				 * screen.
+				 * Then move it back so that its bottom right corner is in the screen.
 				 */
 				if ( pos[ 0 ] + pos[ 2 ] > bounds.x + bounds.width )
 					pos[ 0 ] -= ( pos[ 0 ] - bounds.x + pos[ 2 ] - bounds.width );
@@ -847,22 +817,18 @@ class MamutViewStateSerialization
 		}
 
 		/*
-		 * Ok we did not find a screen in which this window is. So we will put
-		 * it in the first screen.
+		 * Ok we did not find a screen in which this window is. So we will put it in the first screen.
 		 */
 		final Rectangle bounds = sd[ 0 ].getDefaultConfiguration().getBounds();
-		pos[ 0 ] = Math.max( bounds.x,
-				Math.min( bounds.x + bounds.width - pos[ 2 ], pos[ 0 ] ) );
-		pos[ 1 ] = Math.max( bounds.y,
-				Math.min( bounds.y + bounds.height - pos[ 3 ], pos[ 1 ] ) );
+		pos[ 0 ] = Math.max( bounds.x, Math.min( bounds.x + bounds.width - pos[ 2 ], pos[ 0 ] ) );
+		pos[ 1 ] = Math.max( bounds.y, Math.min( bounds.y + bounds.height - pos[ 3 ], pos[ 1 ] ) );
 
 		if ( bounds.contains( pos[ 0 ], pos[ 1 ], pos[ 2 ], pos[ 3 ] ) )
 			// Fully in a screen, nothing to do.
 			return pos;
 
 		/*
-		 * This window is on this screen, but exits it. First resize it so that
-		 * it is not bigger than the screen.
+		 * This window is on this screen, but exits it. First resize it so that it is not bigger than the screen.
 		 */
 		pos[ 2 ] = Math.min( bounds.width, pos[ 2 ] );
 		pos[ 3 ] = Math.min( bounds.height, pos[ 3 ] );

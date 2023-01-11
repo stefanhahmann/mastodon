@@ -85,10 +85,7 @@ public class MamutFeatureComputerService extends DefaultFeatureComputerService
 	}
 
 	@Override
-	protected void provideParameters(
-			final ModuleItem< ? > item,
-			final CommandModule module, final Class< ? > parameterClass,
-			final Map< FeatureSpec< ?, ? >, Feature< ? > > featureModel )
+	protected void provideParameters( final ModuleItem< ? > item, final CommandModule module, final Class< ? > parameterClass, final Map< FeatureSpec< ?, ? >, Feature< ? > > featureModel )
 	{
 
 		// Pass the model is required.
@@ -172,19 +169,13 @@ public class MamutFeatureComputerService extends DefaultFeatureComputerService
 		/*
 		 * Listen to graph changes to support incremental computation.
 		 *
-		 * Every-time a spot or a link is modified, they are removed from all
-		 * the features of the feature model. That way we limit (but don't
-		 * eliminate) the problem of features being out-of-sync after model
+		 * Every-time a spot or a link is modified, they are removed from all the features of the feature model. That way we limit (but don't eliminate) the problem of features being out-of-sync after model
 		 * modification.
 		 *
-		 * Feature computer that want and can support incremental computation
-		 * can then only compute values for objects not present in the feature
-		 * map(s). Unless the #shoudRecomputeAll flag is set.
+		 * Feature computer that want and can support incremental computation can then only compute values for objects not present in the feature map(s). Unless the #shoudRecomputeAll flag is set.
 		 *
-		 * This does not eliminate out-of-sync values for all possibilities.
-		 * Indeed, there might be feature values that depend on the neighbor
-		 * values. If a neighbor of an object is changed, a feature value of the
-		 * object that depends on the neighbors will become out of sync.
+		 * This does not eliminate out-of-sync values for all possibilities. Indeed, there might be feature values that depend on the neighbor values. If a neighbor of an object is changed, a feature value of
+		 * the object that depends on the neighbors will become out of sync.
 		 */
 
 		this.model = model;

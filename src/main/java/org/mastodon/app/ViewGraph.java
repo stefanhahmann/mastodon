@@ -46,8 +46,7 @@ import org.mastodon.graph.Vertex;
  * @param <E>
  *            view edge type
  */
-public interface ViewGraph< MV extends Vertex< ME >, ME extends Edge< MV >, V extends Vertex< E >, E extends Edge< V > >
-		extends ReadOnlyGraph< V, E >
+public interface ViewGraph< MV extends Vertex< ME >, ME extends Edge< MV >, V extends Vertex< E >, E extends Edge< V > > extends ReadOnlyGraph< V, E >
 {
 	/**
 	 * Get bidirectional mapping between model vertices and view vertices.

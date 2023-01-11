@@ -129,8 +129,7 @@ public class Model extends AbstractModel< ModelGraph, Spot, Link > implements Un
 		this.timeUnits = timeUnits;
 		final SpatioTemporalIndexImp< Spot, Link > theIndex = new SpatioTemporalIndexImp<>( modelGraph, modelGraph.idmap().vertexIdBimap() );
 		/*
-		 * Every 1 second, rebuild spatial indices with more than 100
-		 * modifications
+		 * Every 1 second, rebuild spatial indices with more than 100 modifications
 		 */
 		new SpatioTemporalIndexImpRebuilderThread( "Rebuild spatial indices", theIndex, 100, 1000, true ).start();
 		index = theIndex;
@@ -150,33 +149,24 @@ public class Model extends AbstractModel< ModelGraph, Spot, Link > implements Un
 		featureModel = new FeatureModel();
 		declareDefaultFeatures();
 		tagSetModel = new DefaultTagSetModel<>( getGraph() );
-		vertexUndoableProperties.add(
-				new DefaultTagSetModel.SerialisationAccess< Spot, Link >( tagSetModel )
-				{
-					@Override
-					protected LabelSets< Spot, Integer > getVertexIdLabelSets()
-					{
-						return super.getVertexIdLabelSets();
-					}
-				}.getVertexIdLabelSets() );
-		edgeUndoableProperties.add(
-				new DefaultTagSetModel.SerialisationAccess< Spot, Link >( tagSetModel )
-				{
-					@Override
-					protected LabelSets< Link, Integer > getEdgeIdLabelSets()
-					{
-						return super.getEdgeIdLabelSets();
-					}
-				}.getEdgeIdLabelSets() );
+		vertexUndoableProperties.add( new DefaultTagSetModel.SerialisationAccess< Spot, Link >( tagSetModel )
+		{
+			@Override
+			protected LabelSets< Spot, Integer > getVertexIdLabelSets()
+			{
+				return super.getVertexIdLabelSets();
+			}
+		}.getVertexIdLabelSets() );
+		edgeUndoableProperties.add( new DefaultTagSetModel.SerialisationAccess< Spot, Link >( tagSetModel )
+		{
+			@Override
+			protected LabelSets< Link, Integer > getEdgeIdLabelSets()
+			{
+				return super.getEdgeIdLabelSets();
+			}
+		}.getEdgeIdLabelSets() );
 
-		undoRecorder = new GraphUndoRecorder<>(
-				initialCapacity,
-				modelGraph,
-				modelGraph.idmap(),
-				ModelSerializer.getInstance().getVertexSerializer(),
-				ModelSerializer.getInstance().getEdgeSerializer(),
-				vertexUndoableProperties,
-				edgeUndoableProperties );
+		undoRecorder = new GraphUndoRecorder<>( initialCapacity, modelGraph, modelGraph.idmap(), ModelSerializer.getInstance().getVertexSerializer(), ModelSerializer.getInstance().getEdgeSerializer(), vertexUndoableProperties, edgeUndoableProperties );
 
 		final Recorder< DefaultTagSetModel.SetTagSetStructureUndoableEdit > recorder = undoRecorder.createGenericUndoableEditRecorder();
 		tagSetModel.setUndoRecorder( recorder );
@@ -214,8 +204,7 @@ public class Model extends AbstractModel< ModelGraph, Spot, Link > implements Un
 
 		tagSetModel.pauseListeners();
 		tagSetModel.clear();
-		try (
-				final InputStream tis = reader.getRawTagsInputStream();
+		try (final InputStream tis = reader.getRawTagsInputStream();
 				final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( tis, 1024 * 1024 ) ))
 		{
 			RawTagSetModelIO.read( tagSetModel, idmap, ois );
@@ -241,8 +230,7 @@ public class Model extends AbstractModel< ModelGraph, Spot, Link > implements Un
 	{
 		final GraphToFileIdMap< Spot, Link > idmap = modelGraph.saveRaw( writer.getRawModelOutputStream(), ModelSerializer.getInstance() );
 
-		try (
-				final OutputStream fos = writer.getRawTagsOutputStream();
+		try (final OutputStream fos = writer.getRawTagsOutputStream();
 				final ObjectOutputStream oos = new ObjectOutputStream( new BufferedOutputStream( fos, 1024 * 1024 ) ))
 		{
 			RawTagSetModelIO.write( tagSetModel, idmap, oos );

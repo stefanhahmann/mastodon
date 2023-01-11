@@ -55,9 +55,7 @@ public class TrackSchemeAutoFocus implements FocusModel< TrackSchemeVertex, Trac
 
 	private double ratioXtoY = 1;
 
-	public TrackSchemeAutoFocus(
-			final LineageTreeLayout layout,
-			final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus )
+	public TrackSchemeAutoFocus( final LineageTreeLayout layout, final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus )
 	{
 		this.layout = layout;
 		this.focus = focus;

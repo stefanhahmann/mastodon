@@ -55,12 +55,7 @@ public abstract class AbstractBranchEdgeColorGenerator< V extends Vertex< E >, E
 
 	protected final BranchGraph< BV, BE, V, E > branchGraph;
 
-	public AbstractBranchEdgeColorGenerator(
-			final FeatureProjection< BE > featureProjection,
-			final BranchGraph< BV, BE, V, E > branchGraph,
-			final ColorMap colorMap,
-			final double min,
-			final double max )
+	public AbstractBranchEdgeColorGenerator( final FeatureProjection< BE > featureProjection, final BranchGraph< BV, BE, V, E > branchGraph, final ColorMap colorMap, final double min, final double max )
 	{
 		this.branchGraph = branchGraph;
 		this.colorGenerator = new FeatureEdgeColorGenerator<>( featureProjection, colorMap, min, max );

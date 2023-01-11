@@ -80,7 +80,6 @@ public class MaMuTExportExample
 		final Map< FeatureSpec< ?, ? >, Feature< ? > > features = featureComputerService.compute( featureKeys );
 		System.out.println( "Done." );
 
-
 		for ( final FeatureSpec< ?, ? > fs : features.keySet() )
 		{
 			System.out.println( " - " + fs.getKey() );
@@ -91,13 +90,12 @@ public class MaMuTExportExample
 				System.out.println( "   - " + projection.getKey() );
 		}
 
-
 		/*
 		 * 1.1b. Pass them to the feature model.
 		 */
 
 		featureModel.clear();
-		for ( final FeatureSpec< ?, ? > spec: features.keySet() )
+		for ( final FeatureSpec< ?, ? > spec : features.keySet() )
 			featureModel.declareFeature( features.get( spec ) );
 
 		System.out.println();
@@ -108,9 +106,7 @@ public class MaMuTExportExample
 		/*
 		 * 2. Export it to a MaMuT file.
 		 *
-		 * This will export also setup assignments and bookmarks, as well as
-		 * feature values when possible. Of course, we loose the ellipsoid
-		 * information, and the MaMuT spots have a radius equal to the mean of
+		 * This will export also setup assignments and bookmarks, as well as feature values when possible. Of course, we loose the ellipsoid information, and the MaMuT spots have a radius equal to the mean of
 		 * the ellipsoid semi-axes.
 		 */
 
@@ -128,8 +124,7 @@ public class MaMuTExportExample
 		System.out.println( ModelUtils.dump( importedModel, 10 ) );
 
 		/*
-		 * Test for name clash: recompute a feature that we already imported,
-		 * and try to re-export both.
+		 * Test for name clash: recompute a feature that we already imported, and try to re-export both.
 		 */
 
 		featureComputerService.setModel( importedModel );
@@ -137,7 +132,7 @@ public class MaMuTExportExample
 		System.out.println( "Computing feature: " + TrackSizeFeature.SPEC );
 		final Map< FeatureSpec< ?, ? >, Feature< ? > > features2 = featureComputerService.compute( Collections.singleton( TrackSizeFeature.SPEC ) );
 		System.out.println( "Done." );
-		for ( final FeatureSpec< ?, ? > spec: features2.keySet() )
+		for ( final FeatureSpec< ?, ? > spec : features2.keySet() )
 			importedModel.getFeatureModel().declareFeature( features.get( spec ) );
 
 		System.out.println();

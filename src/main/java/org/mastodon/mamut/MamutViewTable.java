@@ -109,8 +109,7 @@ public class MamutViewTable extends MamutView< ViewGraph< Spot, Link, Spot, Link
 
 	public MamutViewTable( final MamutAppModel appModel, final boolean selectionOnly )
 	{
-		this( appModel, Collections.singletonMap(
-				TABLE_SELECTION_ONLY, Boolean.valueOf( selectionOnly ) ) );
+		this( appModel, Collections.singletonMap( TABLE_SELECTION_ONLY, Boolean.valueOf( selectionOnly ) ) );
 	}
 
 	public MamutViewTable( final MamutAppModel appModel, final Map< String, Object > guiState )
@@ -135,35 +134,7 @@ public class MamutViewTable extends MamutView< ViewGraph< Spot, Link, Spot, Link
 
 		// Create tables.
 		final TableViewFrameBuilder builder = new TableViewFrameBuilder();
-		final MyTableViewFrame frame = builder
-				.groupHandle( groupHandle )
-				.undo( model )
-				.addGraph( model.getGraph() )
-					.selectionModel( selectionModel )
-					.highlightModel( highlightModel )
-					.focusModel( focusModel )
-					.featureModel( featureModel )
-					.tagSetModel( tagSetModel )
-					.navigationHandler( navigationHandler )
-					.coloring( coloringAdapter )
-					.vertexLabelGetter( s -> s.getLabel() )
-					.vertexLabelSetter( ( s, label ) -> s.setLabel( label ) )
-					.listenToContext( true )
-					.selectionTable( selectionTable )
-					.done()
-				.addGraph( model.getBranchGraph() )
-					.vertexLabelGetter( s -> s.getLabel() )
-					.vertexLabelSetter( ( s, label ) -> s.setLabel( label ) )
-					.featureModel( featureModel )
-					.tagSetModel( branchTagSetModel( appModel ) )
-					.selectionModel( branchSelectionModel( appModel ) )
-					.highlightModel( branchHighlightModel( appModel ) )
-					.coloring( branchColoringAdapter )
-					.focusModel( branchFocusfocusModel( appModel ) )
-					.navigationHandler( branchGraphNavigation( appModel, navigationHandler ) )
-					.done()
-				.title( selectionTable ? "Selection table" : "Data table" )
-				.get();
+		final MyTableViewFrame frame = builder.groupHandle( groupHandle ).undo( model ).addGraph( model.getGraph() ).selectionModel( selectionModel ).highlightModel( highlightModel ).focusModel( focusModel ).featureModel( featureModel ).tagSetModel( tagSetModel ).navigationHandler( navigationHandler ).coloring( coloringAdapter ).vertexLabelGetter( s -> s.getLabel() ).vertexLabelSetter( ( s, label ) -> s.setLabel( label ) ).listenToContext( true ).selectionTable( selectionTable ).done().addGraph( model.getBranchGraph() ).vertexLabelGetter( s -> s.getLabel() ).vertexLabelSetter( ( s, label ) -> s.setLabel( label ) ).featureModel( featureModel ).tagSetModel( branchTagSetModel( appModel ) ).selectionModel( branchSelectionModel( appModel ) ).highlightModel( branchHighlightModel( appModel ) ).coloring( branchColoringAdapter ).focusModel( branchFocusfocusModel( appModel ) ).navigationHandler( branchGraphNavigation( appModel, navigationHandler ) ).done().title( selectionTable ? "Selection table" : "Data table" ).get();
 		setFrame( frame );
 
 		// Restore position.
@@ -190,31 +161,7 @@ public class MamutViewTable extends MamutView< ViewGraph< Spot, Link, Spot, Link
 		final JMenuHandle colorBranchMenuHandle = new JMenuHandle();
 		final JMenuHandle tagSetMenuHandle = new JMenuHandle();
 		MainWindow.addMenus( menu, actionMap );
-		MamutMenuBuilder.build( menu, actionMap,
-				fileMenu(
-						separator(),
-						item( TableViewActions.EXPORT_TO_CSV ) ),
-				viewMenu(
-						MamutMenuBuilder.colorMenu( colorMenuHandle ),
-						ViewMenuBuilder.menu( "Branch coloring", colorBranchMenuHandle ),
-						separator(),
-						item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL ) ),
-				editMenu(
-						item( UndoActions.UNDO ),
-						item( UndoActions.REDO ),
-						separator(),
-						item( SelectionActions.DELETE_SELECTION ),
-						item( SelectionActions.SELECT_WHOLE_TRACK ),
-						item( SelectionActions.SELECT_TRACK_DOWNWARD ),
-						item( SelectionActions.SELECT_TRACK_UPWARD ),
-						separator(),
-						tagSetMenu( tagSetMenuHandle ),
-						separator(),
-						item( TableViewActions.EDIT_LABEL ),
-						item( TableViewActions.TOGGLE_TAG ) ),
-				ViewMenuBuilder.menu( "Settings",
-						item( BigDataViewerActions.BRIGHTNESS_SETTINGS ),
-						item( BigDataViewerActions.VISIBILITY_AND_GROUPING ) ) );
+		MamutMenuBuilder.build( menu, actionMap, fileMenu( separator(), item( TableViewActions.EXPORT_TO_CSV ) ), viewMenu( MamutMenuBuilder.colorMenu( colorMenuHandle ), ViewMenuBuilder.menu( "Branch coloring", colorBranchMenuHandle ), separator(), item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL ) ), editMenu( item( UndoActions.UNDO ), item( UndoActions.REDO ), separator(), item( SelectionActions.DELETE_SELECTION ), item( SelectionActions.SELECT_WHOLE_TRACK ), item( SelectionActions.SELECT_TRACK_DOWNWARD ), item( SelectionActions.SELECT_TRACK_UPWARD ), separator(), tagSetMenu( tagSetMenuHandle ), separator(), item( TableViewActions.EDIT_LABEL ), item( TableViewActions.TOGGLE_TAG ) ), ViewMenuBuilder.menu( "Settings", item( BigDataViewerActions.BRIGHTNESS_SETTINGS ), item( BigDataViewerActions.VISIBILITY_AND_GROUPING ) ) );
 		appModel.getPlugins().addMenus( menu );
 
 		coloringModel = registerColoring( coloringAdapter, colorMenuHandle, () -> frame.repaint() );
@@ -229,8 +176,7 @@ public class MamutViewTable extends MamutView< ViewGraph< Spot, Link, Spot, Link
 		restoreColoring( branchColoringModel, branchGraphGuiState );
 
 		/*
-		 * Register a listener to vertex label property changes, will update the
-		 * table-view when the label change.
+		 * Register a listener to vertex label property changes, will update the table-view when the label change.
 		 */
 		final SpotPool spotPool = ( SpotPool ) appModel.getModel().getGraph().vertices().getRefPool();
 		final PropertyChangeListener< Spot > labelChangedRefresher = v -> frame.repaint();
@@ -254,9 +200,7 @@ public class MamutViewTable extends MamutView< ViewGraph< Spot, Link, Spot, Link
 			if ( viewPos != null )
 			{
 				final FeatureTagTablePanel< ? > table = tables.get( i );
-				table.getScrollPane().getViewport().setViewPosition( new Point(
-						viewPos[ 0 ],
-						viewPos[ 1 ] ) );
+				table.getScrollPane().getViewport().setViewPosition( new Point( viewPos[ 0 ], viewPos[ 1 ] ) );
 			}
 		}
 
@@ -267,12 +211,7 @@ public class MamutViewTable extends MamutView< ViewGraph< Spot, Link, Spot, Link
 		frame.setVisible( true );
 	}
 
-	private static final ColoringModel registerBranchColoring(
-			final MamutAppModel appModel,
-			final GraphColorGeneratorAdapter< BranchSpot, BranchLink, BranchSpot, BranchLink > colorGeneratorAdapter,
-			final JMenuHandle menuHandle,
-			final Runnable refresh,
-			final List< Runnable > runOnClose )
+	private static final ColoringModel registerBranchColoring( final MamutAppModel appModel, final GraphColorGeneratorAdapter< BranchSpot, BranchLink, BranchSpot, BranchLink > colorGeneratorAdapter, final JMenuHandle menuHandle, final Runnable refresh, final List< Runnable > runOnClose )
 	{
 		final TagSetModel< Spot, Link > tagSetModel = appModel.getModel().getTagSetModel();
 		final FeatureModel featureModel = appModel.getModel().getFeatureModel();
@@ -313,8 +252,7 @@ public class MamutViewTable extends MamutView< ViewGraph< Spot, Link, Spot, Link
 		final ModelGraph graph = appModel.getModel().getGraph();
 		final ModelBranchGraph branchGraph = appModel.getModel().getBranchGraph();
 		final TagSetModel< Spot, Link > tagSetModel = appModel.getModel().getTagSetModel();
-		final BranchGraphTagSetAdapter< Spot, Link, BranchSpot, BranchLink > branchGraphTagSetModel =
-				new BranchGraphTagSetAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), tagSetModel );
+		final BranchGraphTagSetAdapter< Spot, Link, BranchSpot, BranchLink > branchGraphTagSetModel = new BranchGraphTagSetAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), tagSetModel );
 		return branchGraphTagSetModel;
 	}
 
@@ -322,8 +260,7 @@ public class MamutViewTable extends MamutView< ViewGraph< Spot, Link, Spot, Link
 	{
 		final ModelGraph graph = appModel.getModel().getGraph();
 		final ModelBranchGraph branchGraph = appModel.getModel().getBranchGraph();
-		final NavigationHandler< BranchSpot, BranchLink > branchGraphNavigation =
-				new BranchGraphNavigationHandlerAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), navigationHandler );
+		final NavigationHandler< BranchSpot, BranchLink > branchGraphNavigation = new BranchGraphNavigationHandlerAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), navigationHandler );
 		return branchGraphNavigation;
 	}
 
@@ -332,8 +269,7 @@ public class MamutViewTable extends MamutView< ViewGraph< Spot, Link, Spot, Link
 		final ModelGraph graph = appModel.getModel().getGraph();
 		final ModelBranchGraph branchGraph = appModel.getModel().getBranchGraph();
 		final HighlightModel< Spot, Link > graphHighlightModel = appModel.getHighlightModel();
-		final HighlightModel< BranchSpot, BranchLink > branchHighlightModel =
-				new BranchGraphHighlightAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphHighlightModel );
+		final HighlightModel< BranchSpot, BranchLink > branchHighlightModel = new BranchGraphHighlightAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphHighlightModel );
 		return branchHighlightModel;
 	}
 
@@ -342,8 +278,7 @@ public class MamutViewTable extends MamutView< ViewGraph< Spot, Link, Spot, Link
 		final ModelGraph graph = appModel.getModel().getGraph();
 		final ModelBranchGraph branchGraph = appModel.getModel().getBranchGraph();
 		final FocusModel< Spot, Link > graphFocusModel = appModel.getFocusModel();
-		final FocusModel< BranchSpot, BranchLink > branchFocusfocusModel =
-				new BranchGraphFocusAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphFocusModel );
+		final FocusModel< BranchSpot, BranchLink > branchFocusfocusModel = new BranchGraphFocusAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphFocusModel );
 		return branchFocusfocusModel;
 	}
 
@@ -352,8 +287,7 @@ public class MamutViewTable extends MamutView< ViewGraph< Spot, Link, Spot, Link
 		final ModelGraph graph = appModel.getModel().getGraph();
 		final ModelBranchGraph branchGraph = appModel.getModel().getBranchGraph();
 		final SelectionModel< Spot, Link > graphSelectionModel = appModel.getSelectionModel();
-		final SelectionModel< BranchSpot, BranchLink > branchSelectionModel =
-				new BranchGraphSelectionAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphSelectionModel );
+		final SelectionModel< BranchSpot, BranchLink > branchSelectionModel = new BranchGraphSelectionAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphSelectionModel );
 		return branchSelectionModel;
 	}
 
@@ -369,8 +303,7 @@ public class MamutViewTable extends MamutView< ViewGraph< Spot, Link, Spot, Link
 	ContextChooser< Spot > getContextChooser()
 	{
 		/*
-		 * We configured the table creator so that only the first table pair,
-		 * for the core graph, has a context.
+		 * We configured the table creator so that only the first table pair, for the core graph, has a context.
 		 */
 		return ( ContextChooser< Spot > ) getFrame().getContextChoosers().get( 0 );
 	}

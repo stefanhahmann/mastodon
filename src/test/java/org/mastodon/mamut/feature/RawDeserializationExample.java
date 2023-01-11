@@ -87,9 +87,7 @@ public class RawDeserializationExample
 		System.out.println( "----------------------------------\n\n" );
 
 		/*
-		 * Now access the .raw files directly. A method is required for each
-		 * file, as we cannot use the generic feature serializer. We need to
-		 * know how the feature was serialized.
+		 * Now access the .raw files directly. A method is required for each file, as we cannot use the generic feature serializer. We need to know how the feature was serialized.
 		 */
 		deserializeRawSpotNLinks( "samples/featureserialized-folder/features/Spot N links.raw" );
 		System.out.println( "----------------------------------\n\n" );
@@ -101,8 +99,7 @@ public class RawDeserializationExample
 	private static void deserializeRawLinkVelocity( final String filename ) throws IOException
 	{
 		final StringBuilder str = new StringBuilder();
-		try (
-				final FileInputStream fis = new FileInputStream( filename );
+		try (final FileInputStream fis = new FileInputStream( filename );
 				final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( fis, 1024 * 1024 ) ))
 		{
 			// UNITS.
@@ -116,8 +113,7 @@ public class RawDeserializationExample
 	private static void deserializeRawSpotIntensity( final String filename ) throws FileNotFoundException, IOException
 	{
 		final StringBuilder str = new StringBuilder();
-		try (
-				final FileInputStream fis = new FileInputStream( filename );
+		try (final FileInputStream fis = new FileInputStream( filename );
 				final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( fis, 1024 * 1024 ) ))
 		{
 			// NUMBER OF SOURCES.
@@ -153,8 +149,7 @@ public class RawDeserializationExample
 	private static void deserializeRawSpotNLinks( final String filename ) throws FileNotFoundException, IOException
 	{
 		final StringBuilder str = new StringBuilder();
-		try (
-				final FileInputStream fis = new FileInputStream( filename );
+		try (final FileInputStream fis = new FileInputStream( filename );
 				final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( fis, 1024 * 1024 ) ))
 		{
 			// NUMBER OF ENTRIES.

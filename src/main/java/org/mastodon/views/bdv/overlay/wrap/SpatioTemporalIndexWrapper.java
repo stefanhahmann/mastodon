@@ -36,8 +36,7 @@ import org.mastodon.graph.Vertex;
 import org.mastodon.spatial.SpatialIndex;
 import org.mastodon.spatial.SpatioTemporalIndex;
 
-public class SpatioTemporalIndexWrapper< V extends Vertex< E >, E extends Edge< V > >
-	implements SpatioTemporalIndex< OverlayVertexWrapper< V, E > >
+public class SpatioTemporalIndexWrapper< V extends Vertex< E >, E extends Edge< V > > implements SpatioTemporalIndex< OverlayVertexWrapper< V, E > >
 {
 	private final OverlayGraphWrapper< V, E > graphWrapper;
 

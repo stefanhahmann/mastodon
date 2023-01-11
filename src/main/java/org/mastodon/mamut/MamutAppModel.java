@@ -73,26 +73,9 @@ public class MamutAppModel extends MastodonAppModel< Model, Spot, Link >
 
 	private final BranchGraphSynchronizer branchGraphSync;
 
-	public MamutAppModel(
-			final Model model,
-			final SharedBigDataViewerData sharedBdvData,
-			final KeyPressedManager keyPressedManager,
-			final TrackSchemeStyleManager trackSchemeStyleManager,
-			final DataDisplayStyleManager dataDisplayStyleManager,
-			final RenderSettingsManager renderSettingsManager,
-			final FeatureColorModeManager featureColorModeManager,
-			final KeymapManager keymapManager,
-			final MamutPlugins plugins,
-			final Actions globalActions )
+	public MamutAppModel( final Model model, final SharedBigDataViewerData sharedBdvData, final KeyPressedManager keyPressedManager, final TrackSchemeStyleManager trackSchemeStyleManager, final DataDisplayStyleManager dataDisplayStyleManager, final RenderSettingsManager renderSettingsManager, final FeatureColorModeManager featureColorModeManager, final KeymapManager keymapManager, final MamutPlugins plugins, final Actions globalActions )
 	{
-		super(
-				NUM_GROUPS,
-				model,
-				keyPressedManager,
-				keymapManager,
-				plugins,
-				globalActions,
-				new String[] { KeyConfigContexts.MASTODON } );
+		super( NUM_GROUPS, model, keyPressedManager, keymapManager, plugins, globalActions, new String[] { KeyConfigContexts.MASTODON } );
 
 		this.radiusStats = new BoundingSphereRadiusStatistics( model );
 		this.sharedBdvData = sharedBdvData;
@@ -105,10 +88,8 @@ public class MamutAppModel extends MastodonAppModel< Model, Spot, Link >
 		this.branchGraphSync = new BranchGraphSynchronizer( model.getBranchGraph(), model.getGraph().getLock().readLock() );
 		model.getGraph().addGraphChangeListener( branchGraphSync );
 		/*
-		 * TODO: (?) For now, we use timepoint indices in MaMuT model, instead
-		 * of IDs/names. This is because BDV also displays timepoint index, and
-		 * it would be confusing to have different labels in TrackScheme. If
-		 * this is changed in the future, then probably only in the model files.
+		 * TODO: (?) For now, we use timepoint indices in MaMuT model, instead of IDs/names. This is because BDV also displays timepoint index, and it would be confusing to have different labels in
+		 * TrackScheme. If this is changed in the future, then probably only in the model files.
 		 */
 	}
 

@@ -94,15 +94,12 @@ public class MaMuTExporterTest
 	 * TrackMate features that are automatically added by TrackMate during
 	 * export.
 	 */
-	private static final Collection< String > SPOT_FEATURES_TO_IGNORE = Arrays.asList(
-			"QUALITY", "POSITION_X", "POSITION_Y", "POSITION_Z", "POSITION_T", "FRAME", "RADIUS", "VISIBILITY" );
+	private static final Collection< String > SPOT_FEATURES_TO_IGNORE = Arrays.asList( "QUALITY", "POSITION_X", "POSITION_Y", "POSITION_Z", "POSITION_T", "FRAME", "RADIUS", "VISIBILITY" );
 
-	private static final Collection< String > EDGE_FEATURES_TO_IGNORE = Arrays.asList(
-			"LINK_COST", "SPOT_SOURCE_ID", "SPOT_TARGET_ID" );
+	private static final Collection< String > EDGE_FEATURES_TO_IGNORE = Arrays.asList( "LINK_COST", "SPOT_SOURCE_ID", "SPOT_TARGET_ID" );
 
 	// track features added when exporting to TrackMate.
-	private static final Collection< String > TRACK_FEATURES_ADDED = Arrays.asList(
-			"TRACK_INDEX", "TRACK_ID" );
+	private static final Collection< String > TRACK_FEATURES_ADDED = Arrays.asList( "TRACK_INDEX", "TRACK_ID" );
 
 	@Test
 	public void test() throws IOException, SpimDataException
@@ -129,8 +126,7 @@ public class MaMuTExporterTest
 		final fiji.plugin.trackmate.Model exportedModel = reader.getModel();
 
 		// Check number of spots in whole model.
-		assertEquals( "Unexpected number of spots in the exported model.",
-				sourceModel.getGraph().vertices().size(), exportedModel.getSpots().getNSpots( false ) );
+		assertEquals( "Unexpected number of spots in the exported model.", sourceModel.getGraph().vertices().size(), exportedModel.getSpots().getNSpots( false ) );
 
 		final NavigableSet< Integer > timepoints = exportedModel.getSpots().keySet();
 		for ( final Integer tp : timepoints )
@@ -141,37 +137,24 @@ public class MaMuTExporterTest
 		}
 
 		// Check number of links in whole model.
-		assertEquals( "Unexpected number of links in the exported model.",
-				sourceModel.getGraph().edges().size(), exportedModel.getTrackModel().edgeSet().size() );
+		assertEquals( "Unexpected number of links in the exported model.", sourceModel.getGraph().edges().size(), exportedModel.getTrackModel().edgeSet().size() );
 
 		/*
-		 * Check number of tracks. Careful, in TrackMate a track with less than
-		 * 2 spots is not a track.
+		 * Check number of tracks. Careful, in TrackMate a track with less than 2 spots is not a track.
 		 */
 		final Set< RefSet< Spot > > tracks = new ConnectedComponents<>( sourceModel.getGraph(), 2 ).get();
-		assertEquals( "Unexpected number of tracks in the exported model.",
-				tracks.size(), exportedModel.getTrackModel().nTracks( false ) );
+		assertEquals( "Unexpected number of tracks in the exported model.", tracks.size(), exportedModel.getTrackModel().nTracks( false ) );
 
 		// Check spot features.
 		final FeatureModel featureModel = sourceModel.getFeatureModel();
-		checkFeatures(
-				featureModel,
-				Spot.class,
-				SPOT_FEATURES_TO_IGNORE,
-				exportedModel.getFeatureModel().getSpotFeatures() );
+		checkFeatures( featureModel, Spot.class, SPOT_FEATURES_TO_IGNORE, exportedModel.getFeatureModel().getSpotFeatures() );
 
 		// Check link features.
-		checkFeatures(
-				featureModel,
-				Link.class,
-				EDGE_FEATURES_TO_IGNORE,
-				exportedModel.getFeatureModel().getEdgeFeatures() );
+		checkFeatures( featureModel, Link.class, EDGE_FEATURES_TO_IGNORE, exportedModel.getFeatureModel().getEdgeFeatures() );
 
 		// Check tracks features.
 
-		assertTrue( exportedModel.getFeatureModel().getTrackFeatures().size() == TRACK_FEATURES_ADDED.size()
-				&& exportedModel.getFeatureModel().getTrackFeatures().containsAll( TRACK_FEATURES_ADDED )
-				&& TRACK_FEATURES_ADDED.containsAll( exportedModel.getFeatureModel().getTrackFeatures() ) );
+		assertTrue( exportedModel.getFeatureModel().getTrackFeatures().size() == TRACK_FEATURES_ADDED.size() && exportedModel.getFeatureModel().getTrackFeatures().containsAll( TRACK_FEATURES_ADDED ) && TRACK_FEATURES_ADDED.containsAll( exportedModel.getFeatureModel().getTrackFeatures() ) );
 
 		// Check all spot values.
 		int ntested = 0;
@@ -186,15 +169,11 @@ public class MaMuTExporterTest
 					ntested++;
 
 					for ( int d = 0; d < 3; d++ )
-						assertEquals( "Spot position " + ( 'X' + d ) + " does not match exported value.",
-								spot.getDoublePosition( d ), tmSpot.getDoublePosition( d ), 1e-9 );
+						assertEquals( "Spot position " + ( 'X' + d ) + " does not match exported value.", spot.getDoublePosition( d ), tmSpot.getDoublePosition( d ), 1e-9 );
 
-					assertEquals( "Spot frame does not match exported value.",
-							spot.getTimepoint(), tmSpot.getFeature( fiji.plugin.trackmate.Spot.FRAME ).intValue() );
+					assertEquals( "Spot frame does not match exported value.", spot.getTimepoint(), tmSpot.getFeature( fiji.plugin.trackmate.Spot.FRAME ).intValue() );
 
-					final List< FeatureSpec< ?, ? > > spotFeatures = sourceModel.getFeatureModel().getFeatureSpecs().stream()
-							.filter( f -> f.getTargetClass().isAssignableFrom( Spot.class ) )
-							.collect( Collectors.toList() );
+					final List< FeatureSpec< ?, ? > > spotFeatures = sourceModel.getFeatureModel().getFeatureSpecs().stream().filter( f -> f.getTargetClass().isAssignableFrom( Spot.class ) ).collect( Collectors.toList() );
 					for ( final FeatureSpec< ?, ? > featureSpec : spotFeatures )
 					{
 						final Feature< ? > feature = sourceModel.getFeatureModel().getFeature( featureSpec );
@@ -206,15 +185,13 @@ public class MaMuTExporterTest
 							@SuppressWarnings( "unchecked" )
 							final FeatureProjection< Spot > fp = ( FeatureProjection< Spot > ) projection;
 							final String name = getSanitizedFeatureKey( feature, projection );
-							assertEquals( "Unexpected feature value for " + spot + " for feature " + name,
-									fp.value( spot ), tmSpot.getFeatures().get( name ), 1e-9 );
+							assertEquals( "Unexpected feature value for " + spot + " for feature " + name, fp.value( spot ), tmSpot.getFeatures().get( name ), 1e-9 );
 						}
 					}
 				}
 			}
 		}
-		assertEquals( "Could not test all spots in the source model.",
-				sourceModel.getGraph().vertices().size(), ntested );
+		assertEquals( "Could not test all spots in the source model.", sourceModel.getGraph().vertices().size(), ntested );
 
 		// Check some link values.
 		ntested = 0;
@@ -224,14 +201,11 @@ public class MaMuTExporterTest
 			for ( final DefaultWeightedEdge tmLink : exportedModel.getTrackModel().edgeSet() )
 			{
 				// Inefficient but hey.
-				if ( exportedModel.getTrackModel().getEdgeSource( tmLink ).getName().equals( link.getSource().getLabel() )
-						&& exportedModel.getTrackModel().getEdgeTarget( tmLink ).getName().equals( link.getTarget().getLabel() ) )
+				if ( exportedModel.getTrackModel().getEdgeSource( tmLink ).getName().equals( link.getSource().getLabel() ) && exportedModel.getTrackModel().getEdgeTarget( tmLink ).getName().equals( link.getTarget().getLabel() ) )
 				{
 					ntested++;
 
-					final List< FeatureSpec< ?, ? > > linkFeatures = sourceModel.getFeatureModel().getFeatureSpecs().stream()
-							.filter( f -> f.getTargetClass().isAssignableFrom( Link.class ) )
-							.collect( Collectors.toList() );
+					final List< FeatureSpec< ?, ? > > linkFeatures = sourceModel.getFeatureModel().getFeatureSpecs().stream().filter( f -> f.getTargetClass().isAssignableFrom( Link.class ) ).collect( Collectors.toList() );
 					for ( final FeatureSpec< ?, ? > featureSpec : linkFeatures )
 					{
 						final Feature< ? > feature = sourceModel.getFeatureModel().getFeature( featureSpec );
@@ -243,20 +217,17 @@ public class MaMuTExporterTest
 							@SuppressWarnings( "unchecked" )
 							final FeatureProjection< Link > fp = ( FeatureProjection< Link > ) projection;
 							final String name = getSanitizedFeatureKey( feature, projection );
-							assertEquals( "Unexpected feature value for " + link + " for feature " + name,
-									fp.value( link ), exportedModel.getFeatureModel().getEdgeFeature( tmLink, name ), 1e-9 );
+							assertEquals( "Unexpected feature value for " + link + " for feature " + name, fp.value( link ), exportedModel.getFeatureModel().getEdgeFeature( tmLink, name ), 1e-9 );
 
 						}
 					}
 				}
 			}
 		}
-		assertEquals( "Could not test all links in the source model.",
-				sourceModel.getGraph().edges().size(), ntested );
+		assertEquals( "Could not test all links in the source model.", sourceModel.getGraph().edges().size(), ntested );
 
 		/*
-		 * Test whether MaMuT can open the image data. We retrieve the image
-		 * file path from the exported MaMuT file.
+		 * Test whether MaMuT can open the image data. We retrieve the image file path from the exported MaMuT file.
 		 */
 
 		final File file = new File( EXPORT_FILE );
@@ -269,13 +240,11 @@ public class MaMuTExporterTest
 		}
 		catch ( final JDOMException e )
 		{
-			fail( "Problem parsing " + file.getName() + ", it is not a valid TrackMate XML file.\nError message is:\n"
-					+ e.getLocalizedMessage() );
+			fail( "Problem parsing " + file.getName() + ", it is not a valid TrackMate XML file.\nError message is:\n" + e.getLocalizedMessage() );
 		}
 		catch ( final IOException e )
 		{
-			fail( "Problem reading " + file.getName()
-					+ ".\nError message is:\n" + e.getLocalizedMessage() );
+			fail( "Problem reading " + file.getName() + ".\nError message is:\n" + e.getLocalizedMessage() );
 		}
 
 		final Element settingsElement = root.getChild( SETTINGS_ELEMENT_KEY );
@@ -297,8 +266,7 @@ public class MaMuTExporterTest
 			// Then try relative path
 			imageFile = new File( new File( EXPORT_FILE ).getParent(), settings.imageFileName );
 		}
-		assertNotNull( "Cannot find the image data file: " + settings.imageFileName
-				+ " in " + settings.imageFolder + " nor in " + new File( EXPORT_FILE ), imageFile );
+		assertNotNull( "Cannot find the image data file: " + settings.imageFileName + " in " + settings.imageFolder + " nor in " + new File( EXPORT_FILE ), imageFile );
 
 		// And the bookmarks.
 		reader.readBookmarks( new Bookmarks() );
@@ -306,7 +274,7 @@ public class MaMuTExporterTest
 
 	private static void loadProject( final Context context, final MamutProject project, final Model model ) throws IOException
 	{
-		try ( final MamutProject.ProjectReader reader = project.openForReading() )
+		try (final MamutProject.ProjectReader reader = project.openForReading())
 		{
 			final RawGraphIO.FileIdToGraphMap< Spot, Link > idmap = model.loadRaw( reader );
 			MamutRawFeatureModelIO.deserialize( context, model, idmap, reader );
@@ -316,7 +284,6 @@ public class MaMuTExporterTest
 			throw new RuntimeException( e );
 		}
 	}
-
 
 	private Model export() throws IOException, SpimDataException
 	{
@@ -364,16 +331,10 @@ public class MaMuTExporterTest
 		return model;
 	}
 
-	private static final void checkFeatures(
-			final FeatureModel featureModel,
-			final Class< ? > targetClass,
-			final Collection< String > featuresToIgnore,
-			final Collection< String > exportedFeatures )
+	private static final void checkFeatures( final FeatureModel featureModel, final Class< ? > targetClass, final Collection< String > featuresToIgnore, final Collection< String > exportedFeatures )
 	{
 		final Collection< FeatureSpec< ?, ? > > featureSpecs = featureModel.getFeatureSpecs();
-		final List< FeatureSpec< ?, ? > > filteredFeatureSpecs = featureSpecs.stream()
-				.filter( fs -> fs.getTargetClass().isAssignableFrom( targetClass ) )
-				.collect( Collectors.toList() );
+		final List< FeatureSpec< ?, ? > > filteredFeatureSpecs = featureSpecs.stream().filter( fs -> fs.getTargetClass().isAssignableFrom( targetClass ) ).collect( Collectors.toList() );
 
 		// Build names of expected feature keys.
 		final List< String > featureDeclaration = new ArrayList<>();
@@ -389,8 +350,7 @@ public class MaMuTExporterTest
 
 		// Check that we have the TrackMate basic features.
 		for ( final String featureKey : featuresToIgnore )
-			assertTrue( "Export is missing basic TrackMate feature " + featureKey + ".",
-					exportedFeatures.contains( featureKey ) );
+			assertTrue( "Export is missing basic TrackMate feature " + featureKey + ".", exportedFeatures.contains( featureKey ) );
 
 		// Remove them.
 		exportedFeatures.removeAll( featuresToIgnore );
@@ -398,17 +358,14 @@ public class MaMuTExporterTest
 		// Check that we also have the Mastodon features.
 		assertEquals( "Unexpected number of spot features.", featureDeclaration.size(), exportedFeatures.size() );
 		for ( final String featureKey : featureDeclaration )
-			assertTrue( "Could not retrieve feature with key " + featureKey + " in the exported model.",
-					exportedFeatures.contains( featureKey ) );
+			assertTrue( "Could not retrieve feature with key " + featureKey + " in the exported model.", exportedFeatures.contains( featureKey ) );
 	}
 
 	private static final String getSanitizedFeatureKey( final Feature< ? > feature, final FeatureProjection< ? > projection )
 	{
 		final String pname = projection.getKey().getSpec().projectionName;
 		final String fname = feature.getSpec().getKey();
-		final String name = MamutExporter.isScalarFeature( feature.getSpec() )
-				? MamutExporter.getProjectionExportName( fname )
-				: MamutExporter.getProjectionExportName( fname, pname, projection.getKey().getSourceIndices() );
+		final String name = MamutExporter.isScalarFeature( feature.getSpec() ) ? MamutExporter.getProjectionExportName( fname ) : MamutExporter.getProjectionExportName( fname, pname, projection.getKey().getSourceIndices() );
 		return MamutExporter.sanitize( name );
 	}
 }

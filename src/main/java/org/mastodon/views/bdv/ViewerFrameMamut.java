@@ -88,14 +88,7 @@ public class ViewerFrameMamut extends ViewFrame
 	 * @param optional
 	 *            optional parameters. See {@link ViewerOptions#options()}.
 	 */
-	public ViewerFrameMamut(
-			final String windowTitle,
-			final List< SourceAndConverter< ? > > sources,
-			final ConverterSetups setups,
-			final int numTimepoints,
-			final CacheControl cacheControl,
-			final GroupHandle groupHandle,
-			final ViewerOptions optional )
+	public ViewerFrameMamut( final String windowTitle, final List< SourceAndConverter< ? > > sources, final ConverterSetups setups, final int numTimepoints, final CacheControl cacheControl, final GroupHandle groupHandle, final ViewerOptions optional )
 	{
 		super( windowTitle );
 

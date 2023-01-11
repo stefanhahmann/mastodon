@@ -60,13 +60,7 @@ public class BranchNDivisionsFeature implements Feature< BranchSpot >
 	{
 		public Spec()
 		{
-			super(
-					KEY,
-					HELP_STRING,
-					BranchNDivisionsFeature.class,
-					BranchSpot.class,
-					Multiplicity.SINGLE,
-					PROJECTION_SPEC );
+			super( KEY, HELP_STRING, BranchNDivisionsFeature.class, BranchSpot.class, Multiplicity.SINGLE, PROJECTION_SPEC );
 		}
 	}
 

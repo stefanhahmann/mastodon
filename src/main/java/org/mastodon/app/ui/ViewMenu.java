@@ -87,9 +87,10 @@ public class ViewMenu
 	public void addSeparator( final String path )
 	{
 		final JMenu menu = menu( path );
-		if ( menu.getItemCount() != 0 ) {
+		if ( menu.getItemCount() != 0 )
+		{
 			final JPopupMenu popup = menu.getPopupMenu();
-			if ( ! ( popup.getComponent( popup.getComponentCount() - 1 ) instanceof JSeparator ) )
+			if ( !( popup.getComponent( popup.getComponentCount() - 1 ) instanceof JSeparator ) )
 				menu.addSeparator();
 		}
 	}
@@ -104,9 +105,7 @@ public class ViewMenu
 		for ( int i = 0; i < n; ++i )
 			if ( menu.getItem( i ) != null && menu.getItem( i ).getText().equals( name ) )
 				return false; // item with that name already exists
-		final JMenuItem item = ( action instanceof HasSelectedState )
-				? new JCheckBoxMenuItem( action )
-				: new JMenuItem( action );
+		final JMenuItem item = ( action instanceof HasSelectedState ) ? new JCheckBoxMenuItem( action ) : new JMenuItem( action );
 		item.setText( name );
 
 		if ( USE_ACCELERATORS )
@@ -182,7 +181,7 @@ public class ViewMenu
 			final String text = part.trim();
 
 			JMenuItem next = null;
-A:			for ( final MenuElement me : root.getSubElements() )
+			A: for ( final MenuElement me : root.getSubElements() )
 			{
 				if ( me instanceof JPopupMenu )
 				{

@@ -74,9 +74,7 @@ public class MamutFeatureProjectionsManager implements FeatureProjectionsManager
 
 	private int numSources = 1;
 
-	public MamutFeatureProjectionsManager(
-			final FeatureSpecsService featureSpecsService,
-			final FeatureColorModeManager featureColorModeManager )
+	public MamutFeatureProjectionsManager( final FeatureSpecsService featureSpecsService, final FeatureColorModeManager featureColorModeManager )
 	{
 		this.featureSpecsService = featureSpecsService;
 		this.featureColorModeManager = featureColorModeManager;
@@ -132,15 +130,7 @@ public class MamutFeatureProjectionsManager implements FeatureProjectionsManager
 	public AvailableFeatureProjections getAvailableFeatureProjections()
 	{
 		final FeatureModel featureModel = ( model != null ) ? model.getFeatureModel() : null;
-		return createAvailableFeatureProjections(
-				featureSpecsService,
-				numSources,
-				featureModel,
-				featureColorModeManager,
-				Spot.class,
-				Link.class,
-				BranchSpot.class,
-				BranchLink.class );
+		return createAvailableFeatureProjections( featureSpecsService, numSources, featureModel, featureColorModeManager, Spot.class, Link.class, BranchSpot.class, BranchLink.class );
 	}
 
 	private void notifyAvailableFeatureProjectionsChanged()
@@ -168,21 +158,13 @@ public class MamutFeatureProjectionsManager implements FeatureProjectionsManager
 			switch ( projection.getTargetType() )
 			{
 			case VERTEX:
-				return vertexCalculator == null
-						? null
-						: vertexCalculator.computeMinMax( projection );
+				return vertexCalculator == null ? null : vertexCalculator.computeMinMax( projection );
 			case EDGE:
-				return edgeCalculator == null
-						? null
-						: edgeCalculator.computeMinMax( projection );
+				return edgeCalculator == null ? null : edgeCalculator.computeMinMax( projection );
 			case BRANCH_VERTEX:
-				return branchVertexCalculator == null
-						? null
-						: branchVertexCalculator.computeMinMax( projection );
+				return branchVertexCalculator == null ? null : branchVertexCalculator.computeMinMax( projection );
 			case BRANCH_EDGE:
-				return branchEdgeCalculator == null
-						? null
-						: branchEdgeCalculator.computeMinMax( projection );
+				return branchEdgeCalculator == null ? null : branchEdgeCalculator.computeMinMax( projection );
 			default:
 				throw new IllegalArgumentException( "Unknown target type: " + projection.getTargetType() + " of projection " + projection );
 			}

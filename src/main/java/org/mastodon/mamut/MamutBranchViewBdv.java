@@ -92,10 +92,7 @@ import bdv.viewer.NavigationActions;
 import bdv.viewer.ViewerPanel;
 import net.imglib2.realtransform.AffineTransform3D;
 
-public class MamutBranchViewBdv extends MamutBranchView< 
-	OverlayGraphWrapper< BranchSpot, BranchLink >,
-	OverlayVertexWrapper< BranchSpot, BranchLink >, 
-	OverlayEdgeWrapper< BranchSpot, BranchLink > >
+public class MamutBranchViewBdv extends MamutBranchView< OverlayGraphWrapper< BranchSpot, BranchLink >, OverlayVertexWrapper< BranchSpot, BranchLink >, OverlayEdgeWrapper< BranchSpot, BranchLink > >
 {
 
 	private static int bdvName = 1;
@@ -114,7 +111,7 @@ public class MamutBranchViewBdv extends MamutBranchView<
 	public MamutBranchViewBdv( final MamutAppModel appModel, final Map< String, Object > guiState )
 	{
 		super( appModel, createViewBranchGraph( appModel ), new String[] { KeyConfigContexts.BIGDATAVIEWER } );
-		
+
 		// Image data.
 		final SharedBigDataViewerData sharedBdvData = appModel.getSharedBdvData();
 
@@ -142,40 +139,19 @@ public class MamutBranchViewBdv extends MamutBranchView<
 		final JMenuHandle tagSetMenuHandle = new JMenuHandle();
 		final JMenuHandle colorbarMenuHandle = new JMenuHandle();
 		MainWindow.addMenus( menu, actionMap );
-		MamutMenuBuilder.build( menu, actionMap,
-				fileMenu(
-						separator(),
-						item( BigDataViewerActions.LOAD_SETTINGS ),
-						item( BigDataViewerActions.SAVE_SETTINGS ) ),
-				viewMenu(
-						branchColorMenu( coloringMenuHandle ),
-						colorbarMenu( colorbarMenuHandle ),
-						separator(),
-						item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL ) ),
-				editMenu(
-						item( SelectionActions.SELECT_WHOLE_TRACK ),
-						item( SelectionActions.SELECT_TRACK_DOWNWARD ),
-						item( SelectionActions.SELECT_TRACK_UPWARD ),
-						separator(),
-						tagSetMenu( tagSetMenuHandle ) ),
-				ViewMenuBuilder.menu( "Settings",
-						item( BigDataViewerActions.BRIGHTNESS_SETTINGS ),
-						item( BigDataViewerActions.VISIBILITY_AND_GROUPING ) ) );
+		MamutMenuBuilder.build( menu, actionMap, fileMenu( separator(), item( BigDataViewerActions.LOAD_SETTINGS ), item( BigDataViewerActions.SAVE_SETTINGS ) ), viewMenu( branchColorMenu( coloringMenuHandle ), colorbarMenu( colorbarMenuHandle ), separator(), item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL ) ), editMenu( item( SelectionActions.SELECT_WHOLE_TRACK ), item( SelectionActions.SELECT_TRACK_DOWNWARD ), item( SelectionActions.SELECT_TRACK_UPWARD ), separator(), tagSetMenu( tagSetMenuHandle ) ), ViewMenuBuilder.menu( "Settings", item( BigDataViewerActions.BRIGHTNESS_SETTINGS ), item( BigDataViewerActions.VISIBILITY_AND_GROUPING ) ) );
 		appModel.getPlugins().addMenus( menu );
 
 		// Register coloring and tag-sets.
 
 		// Coloring.
-		final GraphColorGeneratorAdapter< BranchSpot, BranchLink, OverlayVertexWrapper< BranchSpot, BranchLink >, OverlayEdgeWrapper< BranchSpot, BranchLink > > coloring =
-				new GraphColorGeneratorAdapter<>( vertexMap, edgeMap );
+		final GraphColorGeneratorAdapter< BranchSpot, BranchLink, OverlayVertexWrapper< BranchSpot, BranchLink >, OverlayEdgeWrapper< BranchSpot, BranchLink > > coloring = new GraphColorGeneratorAdapter<>( vertexMap, edgeMap );
 
-		coloringModel = registerBranchColoring( coloring, coloringMenuHandle,
-				() -> viewer.getDisplay().repaint() );
+		coloringModel = registerBranchColoring( coloring, coloringMenuHandle, () -> viewer.getDisplay().repaint() );
 		colorBarOverlay = new ColorBarOverlay( coloringModel, () -> viewer.getBackground() );
 		registerColorbarOverlay( colorBarOverlay, colorbarMenuHandle, () -> viewer.getDisplay().repaint() );
 
-		registerTagSetMenu( tagSetMenuHandle,
-				() -> viewer.getDisplay().repaint() );
+		registerTagSetMenu( tagSetMenuHandle, () -> viewer.getDisplay().repaint() );
 
 		// Restore coloring.
 		MamutView.restoreColoring( coloringModel, guiState );
@@ -197,13 +173,7 @@ public class MamutBranchViewBdv extends MamutBranchView<
 			viewer.state().setViewerTransform( tLoaded );
 
 		// Renderer.
-		final OverlayGraphRenderer< OverlayVertexWrapper< BranchSpot, BranchLink >, OverlayEdgeWrapper< BranchSpot, BranchLink > > tracksOverlay =
-				new OverlayBranchGraphRenderer<>(
-						viewGraph,
-						highlightModel,
-						focusModel,
-						selectionModel,
-						coloring );
+		final OverlayGraphRenderer< OverlayVertexWrapper< BranchSpot, BranchLink >, OverlayEdgeWrapper< BranchSpot, BranchLink > > tracksOverlay = new OverlayBranchGraphRenderer<>( viewGraph, highlightModel, focusModel, selectionModel, coloring );
 
 		viewer.getDisplay().overlays().add( tracksOverlay );
 		viewer.renderTransformListeners().add( tracksOverlay );
@@ -221,8 +191,7 @@ public class MamutBranchViewBdv extends MamutBranchView<
 		graph.addVertexPositionListener( ( v ) -> viewer.getDisplay().repaint() );
 
 		// Forward navigation to view.
-		final OverlayNavigation< OverlayVertexWrapper< BranchSpot, BranchLink >, OverlayEdgeWrapper< BranchSpot, BranchLink > > overlayNavigation =
-				new OverlayNavigation<>( viewer, viewGraph );
+		final OverlayNavigation< OverlayVertexWrapper< BranchSpot, BranchLink >, OverlayEdgeWrapper< BranchSpot, BranchLink > > overlayNavigation = new OverlayNavigation<>( viewer, viewGraph );
 		navigationHandler.listeners().add( overlayNavigation );
 
 		final BdvHighlightHandler< ?, ? > highlightHandler = new BdvHighlightHandler<>( viewGraph, tracksOverlay, highlightModel );
@@ -240,18 +209,10 @@ public class MamutBranchViewBdv extends MamutBranchView<
 		OverlayActions.install( viewActions, viewer, tracksOverlay );
 
 		/*
-		 * We must make a search action using the underlying model graph,
-		 * because we cannot iterate over the OverlayGraphWrapper properly
-		 * (vertices are object vertices that wrap a pool vertex...)
+		 * We must make a search action using the underlying model graph, because we cannot iterate over the OverlayGraphWrapper properly (vertices are object vertices that wrap a pool vertex...)
 		 */
 		final NavigationHandler< Spot, Link > navigationHandlerAdapter = groupHandle.getModel( appModel.NAVIGATION );
-		final JPanel searchField = SearchVertexLabel.install(
-				viewActions,
-				appModel.getModel().getGraph(),
-				navigationHandlerAdapter,
-				appModel.getSelectionModel(),
-				appModel.getFocusModel(),
-				viewer );
+		final JPanel searchField = SearchVertexLabel.install( viewActions, appModel.getModel().getGraph(), navigationHandlerAdapter, appModel.getSelectionModel(), appModel.getFocusModel(), viewer );
 		frame.getSettingsPanel().add( searchField );
 
 		// Moving in the BDV.
@@ -290,7 +251,7 @@ public class MamutBranchViewBdv extends MamutBranchView<
 		return viewer;
 	}
 
-	private static OverlayGraphWrapper<BranchSpot, BranchLink> createViewBranchGraph( final MamutAppModel appModel )
+	private static OverlayGraphWrapper< BranchSpot, BranchLink > createViewBranchGraph( final MamutAppModel appModel )
 	{
 		// Model.
 		final Model model = appModel.getModel();
@@ -303,14 +264,8 @@ public class MamutBranchViewBdv extends MamutBranchView<
 		final ModelGraph graph = model.getGraph();
 		final BoundingSphereRadiusStatistics radiusStats = appModel.getRadiusStats();
 
-		final OverlayProperties< BranchSpot, BranchLink > properties =
-				new BranchGraphModelOverlayProperties( branchGraph, graph, radiusStats );
-		final OverlayGraphWrapper< BranchSpot, BranchLink > overlayBranchGraph = new OverlayGraphWrapper<>(
-				branchGraph,
-				branchGraphIdBimap,
-				model.getBranchGraphSpatioTemporalIndex(),
-				graph.getLock(),
-				properties );
+		final OverlayProperties< BranchSpot, BranchLink > properties = new BranchGraphModelOverlayProperties( branchGraph, graph, radiusStats );
+		final OverlayGraphWrapper< BranchSpot, BranchLink > overlayBranchGraph = new OverlayGraphWrapper<>( branchGraph, branchGraphIdBimap, model.getBranchGraphSpatioTemporalIndex(), graph.getLock(), properties );
 		return overlayBranchGraph;
 	}
 }

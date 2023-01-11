@@ -90,7 +90,7 @@ public class CommandDescriptionsBuilder extends AbstractContextual
 	 * @param contexts
 	 *            the list of contexts to add to.
 	 */
-	public void addManually( final CommandDescriptionProvider provider, final String ... contexts )
+	public void addManually( final CommandDescriptionProvider provider, final String... contexts )
 	{
 		Arrays.stream( contexts ).forEachOrdered( context -> addManually( provider, context ) );
 	}

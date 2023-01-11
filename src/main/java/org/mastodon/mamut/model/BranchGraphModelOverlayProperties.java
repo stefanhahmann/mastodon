@@ -49,10 +49,7 @@ public class BranchGraphModelOverlayProperties implements OverlayProperties< Bra
 
 	private final ModelGraph graph;
 
-	public BranchGraphModelOverlayProperties(
-			final ModelBranchGraph branchGraph,
-			final ModelGraph graph,
-			final BoundingSphereRadiusStatistics radiusStats )
+	public BranchGraphModelOverlayProperties( final ModelBranchGraph branchGraph, final ModelGraph graph, final BoundingSphereRadiusStatistics radiusStats )
 	{
 		this.branchGraph = branchGraph;
 		this.graph = graph;

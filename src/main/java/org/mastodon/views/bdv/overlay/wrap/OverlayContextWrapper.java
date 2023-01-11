@@ -49,8 +49,7 @@ import org.mastodon.views.context.ContextListener;
  *
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  */
-public class OverlayContextWrapper< V extends Vertex< E >, E extends Edge< V > >
-		implements Context< V >
+public class OverlayContextWrapper< V extends Vertex< E >, E extends Edge< V > > implements Context< V >
 {
 	private final OverlayContext< OverlayVertexWrapper< V, E > > context;
 
@@ -61,9 +60,7 @@ public class OverlayContextWrapper< V extends Vertex< E >, E extends Edge< V > >
 	 *            {@code contextChanged} of {@code context} are translated an
 	 *            send to this listeners.
 	 */
-	public OverlayContextWrapper(
-			final OverlayContext< OverlayVertexWrapper< V, E > > context,
-			final ContextListener< V > contextListener )
+	public OverlayContextWrapper( final OverlayContext< OverlayVertexWrapper< V, E > > context, final ContextListener< V > contextListener )
 	{
 		this.context = context;
 		context.setContextListener( c -> contextListener.contextChanged( this ) );

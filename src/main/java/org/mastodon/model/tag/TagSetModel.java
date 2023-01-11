@@ -49,9 +49,7 @@ public interface TagSetModel< V, E >
 	ObjTags< E > getEdgeTags();
 
 	/*
-	 TODO: It is very confusing that one can get a TagSetStructure from TagSetModel
-	       and modify it, but this does not work as expected.
-	       Solutions(?): Get only a copy of TSS, or get a read-only TSS.
+	 * TODO: It is very confusing that one can get a TagSetStructure from TagSetModel and modify it, but this does not work as expected. Solutions(?): Get only a copy of TSS, or get a read-only TSS.
 	 */
 	TagSetStructure getTagSetStructure();
 

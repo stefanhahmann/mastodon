@@ -43,8 +43,7 @@ public class TrackMateImportedSpotFeatures extends TrackMateImportedFeatures< Sp
 
 	public static final String KEY = "TrackMate Spot features";
 
-	private static final String HELP_STRING =
-			"Stores the spot feature values imported from a TrackMate or MaMuT file.";
+	private static final String HELP_STRING = "Stores the spot feature values imported from a TrackMate or MaMuT file.";
 
 	private final Spec spec = new Spec();
 
@@ -53,12 +52,7 @@ public class TrackMateImportedSpotFeatures extends TrackMateImportedFeatures< Sp
 	{
 		public Spec()
 		{
-			super(
-					KEY,
-					HELP_STRING,
-					TrackMateImportedSpotFeatures.class,
-					Spot.class,
-					Multiplicity.SINGLE );
+			super( KEY, HELP_STRING, TrackMateImportedSpotFeatures.class, Spot.class, Multiplicity.SINGLE );
 		}
 	}
 

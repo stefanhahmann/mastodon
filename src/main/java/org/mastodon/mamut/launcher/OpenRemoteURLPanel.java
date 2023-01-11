@@ -167,11 +167,7 @@ public class OpenRemoteURLPanel extends JPanel
 
 		btnOpen.addActionListener( l -> parseURL( taURL.getText() ) );
 		LauncherUtil.decorateJComponent( taURL, () -> parseURL( taURL.getText() ) );
-		btnBrowse.addActionListener( l -> browseSaveToBDVFile(
-				null,
-				taFileSave,
-				() -> {},
-				this ) );
+		btnBrowse.addActionListener( l -> browseSaveToBDVFile( null, taFileSave, () -> {}, this ) );
 		LauncherUtil.decorateJComponent( taFileSave, () -> {} );
 	}
 
@@ -276,12 +272,7 @@ public class OpenRemoteURLPanel extends JPanel
 		disabler.disable();
 		try
 		{
-			final File file = FileChooser.chooseFile(
-					parent,
-					suggestedFile,
-					new XmlFileFilter(),
-					"Save to a BigDataViewer File",
-					FileChooser.DialogType.SAVE );
+			final File file = FileChooser.chooseFile( parent, suggestedFile, new XmlFileFilter(), "Save to a BigDataViewer File", FileChooser.DialogType.SAVE );
 			if ( file == null )
 				return;
 

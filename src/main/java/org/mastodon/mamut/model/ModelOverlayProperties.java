@@ -42,9 +42,7 @@ public class ModelOverlayProperties implements OverlayProperties< Spot, Link >
 
 	private final BoundingSphereRadiusStatistics radiusStats;
 
-	public ModelOverlayProperties(
-			final ModelGraph modelGraph,
-			final BoundingSphereRadiusStatistics radiusStats )
+	public ModelOverlayProperties( final ModelGraph modelGraph, final BoundingSphereRadiusStatistics radiusStats )
 	{
 		this.modelGraph = modelGraph;
 		this.radiusStats = radiusStats;

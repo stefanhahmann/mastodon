@@ -47,6 +47,7 @@ public class SpotPool extends AbstractSpotPool< Spot, Link, ByteMappedElement, M
 		}
 
 		final DoubleArrayField covariance = doubleArrayField( 6 );
+
 		final DoubleField boundingSphereRadiusSqu = doubleField();
 	}
 

@@ -40,7 +40,5 @@ package org.mastodon.ui;
  */
 public enum NavigationEtiquette
 {
-	CENTERING,
-	CENTER_IF_INVISIBLE,
-	MINIMAL;
+	CENTERING, CENTER_IF_INVISIBLE, MINIMAL;
 }

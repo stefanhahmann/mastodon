@@ -108,15 +108,8 @@ public class TableViewActions
 
 		// Ask for filename.
 		final String klass = obj.getClass().getSimpleName();
-		final String filename = ( csvExportPath == null )
-				? new File( System.getProperty( "user.home" ), "MastodonTable.csv" ).getAbsolutePath()
-				: csvExportPath;
-		final File file = FileChooser.chooseFile(
-				table,
-				filename,
-				new ExtensionFileFilter( "csv" ),
-				"Export " + klass + " table as CSV file",
-				FileChooser.DialogType.SAVE );
+		final String filename = ( csvExportPath == null ) ? new File( System.getProperty( "user.home" ), "MastodonTable.csv" ).getAbsolutePath() : csvExportPath;
+		final File file = FileChooser.chooseFile( table, filename, new ExtensionFileFilter( "csv" ), "Export " + klass + " table as CSV file", FileChooser.DialogType.SAVE );
 		if ( file == null )
 			return;
 		csvExportPath = file.getAbsolutePath();
@@ -129,26 +122,17 @@ public class TableViewActions
 		}
 		catch ( final IOException e )
 		{
-			JOptionPane.showMessageDialog( table,
-					"Could not save to file " + path + ":\n" + e.getMessage(),
-					"Error exporting vertices to CSV",
-					JOptionPane.ERROR_MESSAGE );
+			JOptionPane.showMessageDialog( table, "Could not save to file " + path + ":\n" + e.getMessage(), "Error exporting vertices to CSV", JOptionPane.ERROR_MESSAGE );
 			e.printStackTrace();
 		}
 	}
 
 	public static < O > void export( final String path, final FeatureTagTablePanel< O > table, final char separator ) throws IOException
 	{
-		try (CSVWriter writer = new CSVWriter( new FileWriter( new File( path ) ),
-				separator,
-				CSVWriter.DEFAULT_QUOTE_CHARACTER,
-				CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-				CSVWriter.DEFAULT_LINE_END ))
+		try (CSVWriter writer = new CSVWriter( new FileWriter( new File( path ) ), separator, CSVWriter.DEFAULT_QUOTE_CHARACTER, CSVWriter.DEFAULT_ESCAPE_CHARACTER, CSVWriter.DEFAULT_LINE_END ))
 		{
 			/*
-			 * Headers are complicated: The first 2 columns are label and id,
-			 * and they are not in column group. All the rest is, and have an
-			 * extra line for units.
+			 * Headers are complicated: The first 2 columns are label and id, and they are not in column group. All the rest is, and have an extra line for units.
 			 */
 			final GroupableTableHeader header = ( GroupableTableHeader ) table.getTable().getTableHeader();
 			final int nCols = table.getTable().getColumnCount();

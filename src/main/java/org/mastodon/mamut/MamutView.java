@@ -75,8 +75,7 @@ import org.mastodon.ui.coloring.feature.FeatureColorModeManager;
 import org.mastodon.views.trackscheme.display.ColorBarOverlay;
 import org.mastodon.views.trackscheme.display.ColorBarOverlay.Position;
 
-public class MamutView< VG extends ViewGraph< Spot, Link, V, E >, V extends Vertex< E >, E extends Edge< V > >
-		extends MastodonFrameView< MamutAppModel, VG, Spot, Link, V, E >
+public class MamutView< VG extends ViewGraph< Spot, Link, V, E >, V extends Vertex< E >, E extends Edge< V > > extends MastodonFrameView< MamutAppModel, VG, Spot, Link, V, E >
 {
 	public MamutView( final MamutAppModel appModel, final VG viewGraph, final String[] keyConfigContexts )
 	{
@@ -100,10 +99,7 @@ public class MamutView< VG extends ViewGraph< Spot, Link, V, E >, V extends Vert
 	 *
 	 * @return reference on the underlying {@code ColoringModel}
 	 */
-	protected ColoringModelMain< Spot, Link, BranchSpot, BranchLink > registerColoring(
-			final GraphColorGeneratorAdapter< Spot, Link, V, E > colorGeneratorAdapter,
-			final JMenuHandle menuHandle,
-			final Runnable refresh )
+	protected ColoringModelMain< Spot, Link, BranchSpot, BranchLink > registerColoring( final GraphColorGeneratorAdapter< Spot, Link, V, E > colorGeneratorAdapter, final JMenuHandle menuHandle, final Runnable refresh )
 	{
 		final TagSetModel< Spot, Link > tagSetModel = appModel.getModel().getTagSetModel();
 		final FeatureModel featureModel = appModel.getModel().getFeatureModel();
@@ -139,10 +135,7 @@ public class MamutView< VG extends ViewGraph< Spot, Link, V, E >, V extends Vert
 		return coloringModel;
 	}
 
-	protected void registerColorbarOverlay(
-			final ColorBarOverlay colorBarOverlay,
-			final JMenuHandle menuHandle,
-			final Runnable refresh )
+	protected void registerColorbarOverlay( final ColorBarOverlay colorBarOverlay, final JMenuHandle menuHandle, final Runnable refresh )
 	{
 		menuHandle.getMenu().add( new JSeparator() );
 		final JCheckBoxMenuItem toggleOverlay = new JCheckBoxMenuItem( "Show colorbar", ColorBarOverlay.DEFAULT_VISIBLE );
@@ -174,14 +167,12 @@ public class MamutView< VG extends ViewGraph< Spot, Link, V, E >, V extends Vert
 		}
 	}
 
-	protected void registerTagSetMenu(
-			final JMenuHandle menuHandle,
-			final Runnable refresh )
+	protected void registerTagSetMenu( final JMenuHandle menuHandle, final Runnable refresh )
 	{
 		final SelectionModel< Spot, Link > selectionModel = appModel.getSelectionModel();
 		final Model model = appModel.getModel();
 		final TagSetModel< Spot, Link > tagSetModel = model.getTagSetModel();
-		final TagSetMenu< Spot, Link > tagSetMenu = new TagSetMenu< >( menuHandle.getMenu(), tagSetModel, selectionModel, model.getGraph().getLock(), model );
+		final TagSetMenu< Spot, Link > tagSetMenu = new TagSetMenu<>( menuHandle.getMenu(), tagSetModel, selectionModel, model.getGraph().getLock(), model );
 		tagSetModel.listeners().add( tagSetMenu );
 		onClose( () -> tagSetModel.listeners().remove( tagSetMenu ) );
 	}

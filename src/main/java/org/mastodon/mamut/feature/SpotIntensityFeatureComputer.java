@@ -156,8 +156,7 @@ public class SpotIntensityFeatureComputer implements MamutFeatureComputer, Cance
 						break MAIN_LOOP;
 
 					/*
-					 * Skip if we are not force to recompute all and if a value
-					 * is already computed.
+					 * Skip if we are not force to recompute all and if a value is already computed.
 					 */
 					if ( !recomputeAll && output.means.get( iSource ).isSet( spot ) )
 						continue;
@@ -181,7 +180,7 @@ public class SpotIntensityFeatureComputer implements MamutFeatureComputer, Cance
 						output.sums.get( iSource ).set( spot, array[ 0 ] );
 						continue;
 					}
-					
+
 					double sum = 0.;
 					for ( int i = 0; i < size; i++ )
 						sum += array[ i ];

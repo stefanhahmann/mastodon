@@ -251,9 +251,7 @@ public class GrapherSidePanel extends JPanel
 		rdbtnContext.addChangeListener( e -> contextEnabler.setEnabled( rdbtnContext.isSelected() ) );
 	}
 
-	public < V, E > void setFeatures(
-			final Map< FeatureSpec< ?, V >, Feature< V > > vertexFeatures,
-			final Map< FeatureSpec< ?, E >, Feature< E > > edgeFeatures )
+	public < V, E > void setFeatures( final Map< FeatureSpec< ?, V >, Feature< V > > vertexFeatures, final Map< FeatureSpec< ?, E >, Feature< E > > edgeFeatures )
 	{
 		specs.clear();
 		if ( vertexFeatures != null )
@@ -283,7 +281,7 @@ public class GrapherSidePanel extends JPanel
 				case SINGLE:
 					for ( final FeatureProjectionSpec ps : fs.getProjectionSpecs() )
 					{
-						specs.add(  new FeatureSpecPair( fs, ps, false, false ) );
+						specs.add( new FeatureSpecPair( fs, ps, false, false ) );
 					}
 					break;
 				default:
@@ -341,18 +339,8 @@ public class GrapherSidePanel extends JPanel
 	{
 		final FeatureSpecPair xFeature = ( FeatureSpecPair ) cmbboxXFeature.getSelectedItem();
 		final FeatureSpecPair yFeature = ( FeatureSpecPair ) cmbboxYFeature.getSelectedItem();
-		final GraphDataItemsSource itemSource = rdbtnContext.isSelected()
-				? GraphDataItemsSource.CONTEXT
-				: rdbtnKeepCurrent.isSelected()
-						? GraphDataItemsSource.KEEP_CURRENT
-						: rdbtnSelection.isSelected()
-								? GraphDataItemsSource.SELECTION
-								: GraphDataItemsSource.TRACK_OF_SELECTION;
-		return new FeatureGraphConfig(
-				xFeature,
-				yFeature,
-				itemSource,
-				chkboxConnect.isSelected() );
+		final GraphDataItemsSource itemSource = rdbtnContext.isSelected() ? GraphDataItemsSource.CONTEXT : rdbtnKeepCurrent.isSelected() ? GraphDataItemsSource.KEEP_CURRENT : rdbtnSelection.isSelected() ? GraphDataItemsSource.SELECTION : GraphDataItemsSource.TRACK_OF_SELECTION;
+		return new FeatureGraphConfig( xFeature, yFeature, itemSource, chkboxConnect.isSelected() );
 	}
 
 	public void setGraphConfig( final FeatureGraphConfig gc )
@@ -402,11 +390,7 @@ public class GrapherSidePanel extends JPanel
 
 			final FileIdToGraphMap< Spot, Link > idmap = model.loadRaw( reader );
 			// Load features.
-			MamutRawFeatureModelIO.deserialize(
-					new Context(),
-					model,
-					idmap,
-					reader );
+			MamutRawFeatureModelIO.deserialize( new Context(), model, idmap, reader );
 		}
 		catch ( final IOException | ClassNotFoundException e )
 		{

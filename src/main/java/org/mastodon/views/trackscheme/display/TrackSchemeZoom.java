@@ -57,9 +57,7 @@ import org.scijava.ui.behaviour.util.Behaviours;
  * @param <E>
  *            the type of edges in the graph.
  */
-public class TrackSchemeZoom< V extends Vertex< E > & HasTimepoint, E extends Edge< V > >
-		extends AbstractNamedBehaviour
-		implements DragBehaviour, OffsetHeadersListener, TransformListener< ScreenTransform >
+public class TrackSchemeZoom< V extends Vertex< E > & HasTimepoint, E extends Edge< V > > extends AbstractNamedBehaviour implements DragBehaviour, OffsetHeadersListener, TransformListener< ScreenTransform >
 {
 	private static final String TOGGLE_ZOOM = "box zoom";
 
@@ -184,11 +182,7 @@ public class TrackSchemeZoom< V extends Vertex< E > & HasTimepoint, E extends Ed
 
 			screenTransform.applyInverse( layout1, screen1 );
 			screenTransform.applyInverse( layout2, screen2 );
-			transformEventHandler.zoomTo(
-					layout1[ 0 ],
-					layout2[ 0 ],
-					layout1[ 1 ],
-					layout2[ 1 ] );
+			transformEventHandler.zoomTo( layout1[ 0 ], layout2[ 0 ], layout1[ 1 ], layout2[ 1 ] );
 		}
 	}
 

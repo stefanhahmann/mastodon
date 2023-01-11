@@ -103,21 +103,17 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI
 	{
 		final TableColumn aColumn = header.getColumnModel().getColumn( columnIndex );
 		final TableCellRenderer renderer = getRenderer( columnIndex );
-		final Component component = renderer.getTableCellRendererComponent(
-				header.getTable(), aColumn.getHeaderValue(), false, false, -1, columnIndex );
+		final Component component = renderer.getTableCellRendererComponent( header.getTable(), aColumn.getHeaderValue(), false, false, -1, columnIndex );
 		rendererPane.add( component );
-		rendererPane.paintComponent( g, component, header, cellRect.x, cellRect.y,
-				cellRect.width, cellRect.height, true );
+		rendererPane.paintComponent( g, component, header, cellRect.x, cellRect.y, cellRect.width, cellRect.height, true );
 	}
 
 	private void paintCell( final Graphics g, final Rectangle cellRect, final ColumnGroup cGroup )
 	{
 		final TableCellRenderer renderer = cGroup.getHeaderRenderer();
-		final Component component = renderer.getTableCellRendererComponent(
-				header.getTable(), cGroup.getHeaderValue(), false, false, -1, -1 );
+		final Component component = renderer.getTableCellRendererComponent( header.getTable(), cGroup.getHeaderValue(), false, false, -1, -1 );
 		rendererPane.add( component );
-		rendererPane.paintComponent( g, component, header, cellRect.x, cellRect.y,
-				cellRect.width, cellRect.height, true );
+		rendererPane.paintComponent( g, component, header, cellRect.x, cellRect.y, cellRect.width, cellRect.height, true );
 	}
 
 	private int getHeaderHeight()
@@ -128,8 +124,7 @@ public class GroupableTableHeaderUI extends BasicTableHeaderUI
 		{
 			final TableColumn aColumn = columnModel.getColumn( column );
 			final TableCellRenderer renderer = getRenderer( column );
-			final Component comp = renderer.getTableCellRendererComponent(
-					header.getTable(), aColumn.getHeaderValue(), false, false, -1, column );
+			final Component comp = renderer.getTableCellRendererComponent( header.getTable(), aColumn.getHeaderValue(), false, false, -1, column );
 			int cHeight = comp.getPreferredSize().height;
 			final Enumeration< ? > en = ( ( GroupableTableHeader ) header ).getColumnGroups( aColumn );
 			if ( en != null )

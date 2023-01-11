@@ -79,11 +79,7 @@ public class DataVertex extends AbstractVertex< DataVertex, DataEdge, DataVertex
 	@Override
 	public String toString()
 	{
-		return String.format( "DataVertex( ID=%d, LABEL=%s, X=%.2f, Y=%.2f )",
-				getModelVertexId(),
-				getLabel(),
-				getLayoutX(),
-				getLayoutY() );
+		return String.format( "DataVertex( ID=%d, LABEL=%s, X=%.2f, Y=%.2f )", getModelVertexId(), getLabel(), getLayoutX(), getLayoutY() );
 	}
 
 	DataVertex( final DataVertexPool pool )

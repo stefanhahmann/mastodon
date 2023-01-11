@@ -37,24 +37,14 @@ import org.mastodon.model.NavigationHandler;
 import org.mastodon.model.NavigationListener;
 import org.scijava.listeners.Listeners;
 
-public class BranchGraphNavigationHandlerAdapter< 
-	V extends Vertex< E >, 
-	E extends Edge< V >, 
-	BV extends Vertex< BE >, 
-	BE extends Edge< BV > >
-		extends AbstractBranchGraphAdapter< V, E, BV, BE >
-		implements NavigationHandler< BV, BE >
+public class BranchGraphNavigationHandlerAdapter< V extends Vertex< E >, E extends Edge< V >, BV extends Vertex< BE >, BE extends Edge< BV > > extends AbstractBranchGraphAdapter< V, E, BV, BE > implements NavigationHandler< BV, BE >
 {
 
 	private final NavigationHandler< V, E > navigation;
 
 	private final Listeners< NavigationListener< BV, BE > > listeners;
 
-	public BranchGraphNavigationHandlerAdapter(
-			final BranchGraph< BV, BE, V, E > branchGraph,
-			final ReadOnlyGraph< V, E > graph,
-			final GraphIdBimap< V, E > idBimap,
-			final NavigationHandler< V, E > navigation )
+	public BranchGraphNavigationHandlerAdapter( final BranchGraph< BV, BE, V, E > branchGraph, final ReadOnlyGraph< V, E > graph, final GraphIdBimap< V, E > idBimap, final NavigationHandler< V, E > navigation )
 	{
 		super( branchGraph, graph, idBimap );
 		this.navigation = navigation;

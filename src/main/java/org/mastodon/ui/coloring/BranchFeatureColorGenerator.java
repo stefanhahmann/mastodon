@@ -33,17 +33,10 @@ import org.mastodon.graph.Edge;
 import org.mastodon.graph.Vertex;
 import org.mastodon.graph.branch.BranchGraph;
 
-public class BranchFeatureColorGenerator< V extends Vertex< E >, E extends Edge< V >, BV extends Vertex< BE >, BE extends Edge< BV > >
-		extends AbstractBranchVertexColorGenerator< V, E, BV, BE >
-		implements ColorGenerator< V >
+public class BranchFeatureColorGenerator< V extends Vertex< E >, E extends Edge< V >, BV extends Vertex< BE >, BE extends Edge< BV > > extends AbstractBranchVertexColorGenerator< V, E, BV, BE > implements ColorGenerator< V >
 {
 
-	public BranchFeatureColorGenerator(
-			final FeatureProjection< BV > featureProjection,
-			final BranchGraph< BV, BE, V, E > branchGraph,
-			final ColorMap colorMap,
-			final double min,
-			final double max )
+	public BranchFeatureColorGenerator( final FeatureProjection< BV > featureProjection, final BranchGraph< BV, BE, V, E > branchGraph, final ColorMap colorMap, final double min, final double max )
 	{
 		super( featureProjection, branchGraph, colorMap, min, max );
 	}

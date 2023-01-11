@@ -76,8 +76,7 @@ public class SpotIntensityUpdateExample
 		featureComputerService.setSharedBdvData( windowManager.getAppModel().getSharedBdvData() );
 		System.out.println( "Computing spot intensity..." );
 		final StopWatch stopWatch = StopWatch.createAndStart();
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > features = featureComputerService.compute(
-				SpotCenterIntensityFeature.SPEC );
+		final Map< FeatureSpec< ?, ? >, Feature< ? > > features = featureComputerService.compute( SpotCenterIntensityFeature.SPEC );
 		stopWatch.stop();
 		System.out.println( String.format( "Done in %.1s.", stopWatch.nanoTime() / 1e9 ) );
 
@@ -89,8 +88,7 @@ public class SpotIntensityUpdateExample
 		features.values().forEach( featureModel::declareFeature );
 
 		@SuppressWarnings( "unchecked" )
-		final FeatureProjection< Spot > proj1 = ( FeatureProjection< Spot > ) model.getFeatureModel()
-				.getFeature( SpotCenterIntensityFeature.SPEC ).project( key( SpotCenterIntensityFeature.PROJECTION_SPEC, 0 ) );
+		final FeatureProjection< Spot > proj1 = ( FeatureProjection< Spot > ) model.getFeatureModel().getFeature( SpotCenterIntensityFeature.SPEC ).project( key( SpotCenterIntensityFeature.PROJECTION_SPEC, 0 ) );
 
 		System.out.println();
 		System.out.println( "Spot " + spot.getLabel() + " center intensity was " + proj1.value( spot ) );
@@ -108,8 +106,7 @@ public class SpotIntensityUpdateExample
 		 */
 
 		System.out.println( "Re-computing spot intensity..." );
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > features2 = featureComputerService.compute(
-				SpotCenterIntensityFeature.SPEC );
+		final Map< FeatureSpec< ?, ? >, Feature< ? > > features2 = featureComputerService.compute( SpotCenterIntensityFeature.SPEC );
 
 		featureModel.clear();
 		features2.values().forEach( featureModel::declareFeature );
@@ -123,8 +120,7 @@ public class SpotIntensityUpdateExample
 
 		System.out.println( "Full recalculation..." );
 		featureComputerService.setModel( model );
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > features3 = featureComputerService.compute(
-				SpotCenterIntensityFeature.SPEC );
+		final Map< FeatureSpec< ?, ? >, Feature< ? > > features3 = featureComputerService.compute( SpotCenterIntensityFeature.SPEC );
 
 		featureModel.clear();
 		features3.values().forEach( featureModel::declareFeature );
@@ -137,8 +133,7 @@ public class SpotIntensityUpdateExample
 		 */
 
 		System.out.println( "Update without changes..." );
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > features4 = featureComputerService.compute(
-				SpotCenterIntensityFeature.SPEC );
+		final Map< FeatureSpec< ?, ? >, Feature< ? > > features4 = featureComputerService.compute( SpotCenterIntensityFeature.SPEC );
 
 		featureModel.clear();
 		features4.values().forEach( featureModel::declareFeature );

@@ -54,15 +54,7 @@ import org.mastodon.properties.PropertyMap;
 import org.mastodon.spatial.VertexPositionChangeProvider;
 import org.mastodon.spatial.VertexPositionListener;
 
-public class AbstractModelGraph<
-		G extends AbstractModelGraph< G, VP, EP, V, E, T >,
-		VP extends AbstractSpotPool< V, E, T, G >,
-		EP extends AbstractListenableEdgePool< E, V, T >,
-		V extends AbstractSpot< V, E, VP, T, G >,
-		E extends AbstractListenableEdge< E, V, EP, T >,
-		T extends MappedElement >
-	extends ListenableGraphImp< VP, EP, V, E, T >
-	implements VertexPositionChangeProvider< V >, GraphChangeNotifier
+public class AbstractModelGraph< G extends AbstractModelGraph< G, VP, EP, V, E, T >, VP extends AbstractSpotPool< V, E, T, G >, EP extends AbstractListenableEdgePool< E, V, T >, V extends AbstractSpot< V, E, VP, T, G >, E extends AbstractListenableEdge< E, V, EP, T >, T extends MappedElement > extends ListenableGraphImp< VP, EP, V, E, T > implements VertexPositionChangeProvider< V >, GraphChangeNotifier
 {
 	protected final GraphIdBimap< V, E > idmap;
 
@@ -109,10 +101,7 @@ public class AbstractModelGraph<
 	 * @throws IOException
 	 *             if an I/O error occurs while reading the file.
 	 */
-	public FileIdToGraphMap< V, E > loadRaw(
-			final InputStream is,
-			final GraphSerializer< V, E > serializer )
-					throws IOException
+	public FileIdToGraphMap< V, E > loadRaw( final InputStream is, final GraphSerializer< V, E > serializer ) throws IOException
 	{
 		final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( is, 1024 * 1024 ) );
 		pauseListeners();
@@ -120,8 +109,8 @@ public class AbstractModelGraph<
 		final FileIdToGraphMap< V, E > fileIdMap = RawGraphIO.read( this, idmap, serializer, ois );
 		RawPropertyIO.readPropertyMaps( fileIdMap.vertices(), vertexPropertySerializers, ois );
 		// TODO: edge properties
-//		RawFeatureIO.readFeatureMaps( fileIdMap.vertices(), vertexFeatures, ois );
-//		RawFeatureIO.readFeatureMaps( fileIdMap.edges(), edgeFeatures, ois );
+		// RawFeatureIO.readFeatureMaps( fileIdMap.vertices(), vertexFeatures, ois );
+		// RawFeatureIO.readFeatureMaps( fileIdMap.edges(), edgeFeatures, ois );
 		ois.close();
 		resumeListeners();
 
@@ -137,25 +126,22 @@ public class AbstractModelGraph<
 	 *            The stream will be closed when done!
 	 * @param serializer
 	 *            the serializer used for writing individual vertices.
-//	 * @param vertexFeaturesToSerialize
-//	 *            the vertex features to serialize.
-//	 * @param edgeFeaturesToSerialize
-//	 *            the edge features to serialize.
+	//	 * @param vertexFeaturesToSerialize
+	//	 *            the vertex features to serialize.
+	//	 * @param edgeFeaturesToSerialize
+	//	 *            the edge features to serialize.
 	 * @return the map from vertices/edges to IDs used in the raw file.
 	 * @throws IOException
 	 *             if an I/O error occurs while writing the file.
 	 */
-	public GraphToFileIdMap< V, E > saveRaw(
-			final OutputStream os,
-			final GraphSerializer< V, E > serializer )
-					throws IOException
+	public GraphToFileIdMap< V, E > saveRaw( final OutputStream os, final GraphSerializer< V, E > serializer ) throws IOException
 	{
 		final ObjectOutputStream oos = new ObjectOutputStream( new BufferedOutputStream( os, 1024 * 1024 ) );
 		final GraphToFileIdMap< V, E > fileIdMap = RawGraphIO.write( this, idmap, serializer, oos );
 		RawPropertyIO.writePropertyMaps( fileIdMap.vertices(), vertexPropertySerializers, oos );
 		// TODO: edge properties
-//		RawFeatureIO.writeFeatureMaps( fileIdMap.vertices(), vertexFeatures, vertexFeaturesToSerialize, oos );
-//		RawFeatureIO.writeFeatureMaps( fileIdMap.edges(), edgeFeatures, edgeFeaturesToSerialize, oos );
+		// RawFeatureIO.writeFeatureMaps( fileIdMap.vertices(), vertexFeatures, vertexFeaturesToSerialize, oos );
+		// RawFeatureIO.writeFeatureMaps( fileIdMap.edges(), edgeFeatures, edgeFeaturesToSerialize, oos );
 		oos.close();
 
 		return fileIdMap;
@@ -254,8 +240,7 @@ public class AbstractModelGraph<
 		@Override
 		public boolean equals( final Object obj )
 		{
-			return ( obj instanceof VertexPositionListenerWrapper )
-					&& l.equals( ( ( VertexPositionListenerWrapper< V > ) obj ).l );
+			return ( obj instanceof VertexPositionListenerWrapper ) && l.equals( ( ( VertexPositionListenerWrapper< V > ) obj ).l );
 		}
 	}
 }

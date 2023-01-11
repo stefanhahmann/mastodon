@@ -53,16 +53,12 @@ public class AutoNavigateFocusModel< V extends Vertex< E > & HasTimepoint, E ext
 
 	private final TimepointModel timepointModel;
 
-	public AutoNavigateFocusModel(
-			final FocusModel< V, E > focus,
-			final NavigationHandler< V, E > navigation )
+	public AutoNavigateFocusModel( final FocusModel< V, E > focus, final NavigationHandler< V, E > navigation )
 	{
 		this( focus, navigation, null );
 	}
-	public AutoNavigateFocusModel(
-			final FocusModel< V, E > focus,
-			final NavigationHandler< V, E > navigation,
-			final TimepointModel timepointModel )
+
+	public AutoNavigateFocusModel( final FocusModel< V, E > focus, final NavigationHandler< V, E > navigation, final TimepointModel timepointModel )
 	{
 		this.focus = focus;
 		this.navigation = navigation;

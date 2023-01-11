@@ -53,15 +53,15 @@ public class MaMuTImporterExample
 		UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
 
 		final File mamutFile = new File( "D:/Projects/JYTinevez/MaMuT/Mastodon-dataset/MaMuT_Parhyale_demo-mamut.xml" );
-//		final File mamutFile = new File( "/Users/tinevez/Projects/JYTinevez/MaMuT/Mastodon-dataset/MaMuT_Parhyale_demo-mamut.xml" );
-		final File targetMastodonFile = new File("samples/trackmateimported.mastodon");
+		// final File mamutFile = new File( "/Users/tinevez/Projects/JYTinevez/MaMuT/Mastodon-dataset/MaMuT_Parhyale_demo-mamut.xml" );
+		final File targetMastodonFile = new File( "samples/trackmateimported.mastodon" );
 
 		importFromMaMuTAndSave( mamutFile, targetMastodonFile );
 
 		reloadAfterSave( targetMastodonFile );
 	}
 
-	private static void importFromMaMuTAndSave(final File mamutFile, final File targetMastodonFile)
+	private static void importFromMaMuTAndSave( final File mamutFile, final File targetMastodonFile )
 	{
 		final WindowManager windowManager = new WindowManager( new Context() );
 		try
@@ -84,7 +84,6 @@ public class MaMuTImporterExample
 			e.printStackTrace();
 		}
 	}
-
 
 	private static void reloadAfterSave( final File targetMastodonFile )
 	{
