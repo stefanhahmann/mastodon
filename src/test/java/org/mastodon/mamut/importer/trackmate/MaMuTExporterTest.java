@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -203,8 +203,7 @@ public class MaMuTExporterTest
 
 						for ( final FeatureProjection< ? > projection : feature.projections() )
 						{
-							@SuppressWarnings( "unchecked" )
-							final FeatureProjection< Spot > fp = ( FeatureProjection< Spot > ) projection;
+							@SuppressWarnings("unchecked") final FeatureProjection< Spot > fp = ( FeatureProjection< Spot > ) projection;
 							final String name = getSanitizedFeatureKey( feature, projection );
 							assertEquals( "Unexpected feature value for " + spot + " for feature " + name,
 									fp.value( spot ), tmSpot.getFeatures().get( name ), 1e-9 );
@@ -240,8 +239,7 @@ public class MaMuTExporterTest
 
 						for ( final FeatureProjection< ? > projection : feature.projections() )
 						{
-							@SuppressWarnings( "unchecked" )
-							final FeatureProjection< Link > fp = ( FeatureProjection< Link > ) projection;
+							@SuppressWarnings("unchecked") final FeatureProjection< Link > fp = ( FeatureProjection< Link > ) projection;
 							final String name = getSanitizedFeatureKey( feature, projection );
 							assertEquals( "Unexpected feature value for " + link + " for feature " + name,
 									fp.value( link ), exportedModel.getFeatureModel().getEdgeFeature( tmLink, name ), 1e-9 );
@@ -306,7 +304,7 @@ public class MaMuTExporterTest
 
 	private static void loadProject( final Context context, final MamutProject project, final Model model ) throws IOException
 	{
-		try ( final MamutProject.ProjectReader reader = project.openForReading() )
+		try (final MamutProject.ProjectReader reader = project.openForReading())
 		{
 			final RawGraphIO.FileIdToGraphMap< Spot, Link > idmap = model.loadRaw( reader );
 			MamutRawFeatureModelIO.deserialize( context, model, idmap, reader );
@@ -316,7 +314,6 @@ public class MaMuTExporterTest
 			throw new RuntimeException( e );
 		}
 	}
-
 
 	private Model export() throws IOException, SpimDataException
 	{
@@ -389,7 +386,8 @@ public class MaMuTExporterTest
 
 		// Check that we have the TrackMate basic features.
 		for ( final String featureKey : featuresToIgnore )
-			assertTrue( "Export is missing basic TrackMate feature " + featureKey + ".",
+			assertTrue(
+					"Export is missing basic TrackMate feature " + featureKey + ".",
 					exportedFeatures.contains( featureKey ) );
 
 		// Remove them.
@@ -398,7 +396,8 @@ public class MaMuTExporterTest
 		// Check that we also have the Mastodon features.
 		assertEquals( "Unexpected number of spot features.", featureDeclaration.size(), exportedFeatures.size() );
 		for ( final String featureKey : featureDeclaration )
-			assertTrue( "Could not retrieve feature with key " + featureKey + " in the exported model.",
+			assertTrue(
+					"Could not retrieve feature with key " + featureKey + " in the exported model.",
 					exportedFeatures.contains( featureKey ) );
 	}
 

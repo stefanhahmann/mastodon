@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -166,7 +166,7 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 
 					if ( isHighlighted )
 						graphics.setStroke( defaultEdgeStroke );
-				});
+				} );
 			}
 
 			if ( settings.getDrawSpots() )
@@ -178,7 +178,7 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 				final double pointFadeDepth = settings.getPointFadeDepth();
 				final boolean fillSpots = settings.getFillSpots();
 				final Visibility< BV, BE > visibility = visibilities.getVisibility();
-				
+
 				final BV highlighted = highlight.getHighlightedVertex( ref1 );
 				final BV focused = focus.getFocusedVertex( ref2 );
 
@@ -329,7 +329,8 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 					ref.refTo( edge );
 				}
 			}
-		};
+		}
+		;
 		final Op op = new Op();
 
 		index.readLock().lock();

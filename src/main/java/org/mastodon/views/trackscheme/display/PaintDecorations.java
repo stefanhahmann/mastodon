@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -284,7 +284,7 @@ public class PaintDecorations
 				final int boundedMin = Math.max( headerWidth, column.xLeft );
 				final int boundedMax = Math.min( column.xLeft + column.width, width );
 				final int boundedWidth = boundedMax - boundedMin;
-				if ( boundedWidth >= stringWidth + 5  )
+				if ( boundedWidth >= stringWidth + 5 )
 				{
 					final int xtext = ( boundedMin + boundedMax - stringWidth ) / 2;
 					g2.drawString( str, xtext, headerHeight / 2 );

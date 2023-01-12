@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -92,10 +92,10 @@ import bdv.viewer.NavigationActions;
 import bdv.viewer.ViewerPanel;
 import net.imglib2.realtransform.AffineTransform3D;
 
-public class MamutBranchViewBdv extends MamutBranchView< 
-	OverlayGraphWrapper< BranchSpot, BranchLink >,
-	OverlayVertexWrapper< BranchSpot, BranchLink >, 
-	OverlayEdgeWrapper< BranchSpot, BranchLink > >
+public class MamutBranchViewBdv extends MamutBranchView<
+		OverlayGraphWrapper< BranchSpot, BranchLink >,
+		OverlayVertexWrapper< BranchSpot, BranchLink >,
+		OverlayEdgeWrapper< BranchSpot, BranchLink > >
 {
 
 	private static int bdvName = 1;
@@ -114,7 +114,7 @@ public class MamutBranchViewBdv extends MamutBranchView<
 	public MamutBranchViewBdv( final MamutAppModel appModel, final Map< String, Object > guiState )
 	{
 		super( appModel, createViewBranchGraph( appModel ), new String[] { KeyConfigContexts.BIGDATAVIEWER } );
-		
+
 		// Image data.
 		final SharedBigDataViewerData sharedBdvData = appModel.getSharedBdvData();
 
@@ -158,7 +158,8 @@ public class MamutBranchViewBdv extends MamutBranchView<
 						item( SelectionActions.SELECT_TRACK_UPWARD ),
 						separator(),
 						tagSetMenu( tagSetMenuHandle ) ),
-				ViewMenuBuilder.menu( "Settings",
+				ViewMenuBuilder.menu(
+						"Settings",
 						item( BigDataViewerActions.BRIGHTNESS_SETTINGS ),
 						item( BigDataViewerActions.VISIBILITY_AND_GROUPING ) ) );
 		appModel.getPlugins().addMenus( menu );
@@ -174,7 +175,8 @@ public class MamutBranchViewBdv extends MamutBranchView<
 		colorBarOverlay = new ColorBarOverlay( coloringModel, () -> viewer.getBackground() );
 		registerColorbarOverlay( colorBarOverlay, colorbarMenuHandle, () -> viewer.getDisplay().repaint() );
 
-		registerTagSetMenu( tagSetMenuHandle,
+		registerTagSetMenu(
+				tagSetMenuHandle,
 				() -> viewer.getDisplay().repaint() );
 
 		// Restore coloring.
@@ -290,7 +292,7 @@ public class MamutBranchViewBdv extends MamutBranchView<
 		return viewer;
 	}
 
-	private static OverlayGraphWrapper<BranchSpot, BranchLink> createViewBranchGraph( final MamutAppModel appModel )
+	private static OverlayGraphWrapper< BranchSpot, BranchLink > createViewBranchGraph( final MamutAppModel appModel )
 	{
 		// Model.
 		final Model model = appModel.getModel();

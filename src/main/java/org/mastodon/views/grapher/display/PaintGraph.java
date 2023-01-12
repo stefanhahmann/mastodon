@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -90,10 +90,15 @@ public class PaintGraph
 	 */
 
 	private static final double simplifiedVertexRadius = 2.5;
+
 	private static final double simplifiedVertexSelectTolerance = 3.5;
+
 	private static final double minDisplayVertexDist = 17.0;
+
 	private static final double maxDisplayVertexSize = 20.0;
+
 	private static final double minDisplaySimplifiedVertexDist = 0.0;
+
 	private static final double avgLabelLetterWidth = 5.0;
 
 	/*
@@ -362,8 +367,8 @@ public class PaintGraph
 
 		final double x = vertex.getX();
 		final double y = vertex.getY();
-		final double ox =  x -  spotradius;
-		final double oy =  y -  spotradius;
+		final double ox = x - spotradius;
+		final double oy = y - spotradius;
 		final double sd = 2 * spotradius;
 		final Shape shape = style.getVertexDrawShape().shape( ox, oy, sd );
 		g2.setColor( fillColor );

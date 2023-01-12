@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -96,10 +96,15 @@ public class PaintGraph
 	 */
 
 	private static final double simplifiedVertexRadius = 2.5;
+
 	private static final double simplifiedVertexSelectTolerance = 3.5;
+
 	private static final double minDisplayVertexDist = 17.0;
+
 	private static final double maxDisplayVertexSize = 100.0;
+
 	private static final double minDisplaySimplifiedVertexDist = 5.0;
+
 	private static final double avgLabelLetterWidth = 5.0;
 
 	/*
@@ -448,7 +453,7 @@ public class PaintGraph
 
 	private void drawTextCentered( double x, double y, String label, Font font )
 	{
-		if( ! g2.getClipBounds( tmpRectangle ).contains( x, y ) )
+		if ( !g2.getClipBounds( tmpRectangle ).contains( x, y ) )
 			return;
 
 		final FontRenderContext frc = g2.getFontRenderContext();

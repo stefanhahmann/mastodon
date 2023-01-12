@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -89,7 +89,7 @@ public class OverlayGraphWrapper< V extends Vertex< E >, E extends Edge< V > > i
 		this.idmap = idmap;
 		this.lock = lock;
 		this.overlayProperties = overlayProperties;
-		tmpVertexRefs =	new ConcurrentLinkedQueue<>();
+		tmpVertexRefs = new ConcurrentLinkedQueue<>();
 		tmpEdgeRefs = new ConcurrentLinkedQueue<>();
 		wrappedIndex = new SpatioTemporalIndexWrapper<>( this, graphIndex );
 		vertexMap = new OverlayVertexWrapperBimap<>( this );
@@ -135,12 +135,14 @@ public class OverlayGraphWrapper< V extends Vertex< E >, E extends Edge< V > > i
 		return edge.orNull();
 	}
 
-	@Override public Edges< OverlayEdgeWrapper< V, E > > getEdges( final OverlayVertexWrapper< V, E > source, final OverlayVertexWrapper< V, E > target )
+	@Override
+	public Edges< OverlayEdgeWrapper< V, E > > getEdges( final OverlayVertexWrapper< V, E > source, final OverlayVertexWrapper< V, E > target )
 	{
 		return getEdges( source, target, vertexRef() );
 	}
 
-	@Override public Edges< OverlayEdgeWrapper< V, E > > getEdges( final OverlayVertexWrapper< V, E > source, final OverlayVertexWrapper< V, E > target, final OverlayVertexWrapper< V, E > ref )
+	@Override
+	public Edges< OverlayEdgeWrapper< V, E > > getEdges( final OverlayVertexWrapper< V, E > source, final OverlayVertexWrapper< V, E > target, final OverlayVertexWrapper< V, E > ref )
 	{
 		final Edges< E > wes = wrappedGraph.getEdges( source.wv, target.wv, ref.wv );
 		ref.edges.wrap( wes );
@@ -290,7 +292,7 @@ public class OverlayGraphWrapper< V extends Vertex< E >, E extends Edge< V > > i
 			return idmap.getVertexId( v.wv );
 		}
 
-		@SuppressWarnings( { "unchecked", "rawtypes" } )
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
 		public Class< OverlayVertexWrapper< V, E > > getRefClass()
 		{
@@ -347,7 +349,7 @@ public class OverlayGraphWrapper< V extends Vertex< E >, E extends Edge< V > > i
 			return idmap.getEdgeId( e.we );
 		}
 
-		@SuppressWarnings( { "unchecked", "rawtypes" } )
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
 		public Class< OverlayEdgeWrapper< V, E > > getRefClass()
 		{

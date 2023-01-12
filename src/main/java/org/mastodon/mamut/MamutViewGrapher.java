@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -121,7 +121,8 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 
 	public MamutViewGrapher( final MamutAppModel appModel, final Map< String, Object > guiState )
 	{
-		super( appModel,
+		super(
+				appModel,
 				new DataGraph< Spot, Link >(
 						appModel.getModel().getGraph(),
 						appModel.getModel().getGraphIdBimap(),
@@ -256,7 +257,8 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 		 */
 		coloringModel = registerColoring( coloringAdapter, coloringMenuHandle,
 				() -> dataDisplayPanel.entitiesAttributesChanged() );
-		registerTagSetMenu( tagSetMenuHandle,
+		registerTagSetMenu(
+				tagSetMenuHandle,
 				() -> dataDisplayPanel.entitiesAttributesChanged() );
 		colorbarOverlay = new ColorBarOverlay( coloringModel, () -> dataDisplayPanel.getBackground() );
 		final OffsetAxes offset = dataDisplayPanel.getOffsetAxes();

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -157,7 +157,6 @@ public class ConstrainScreenTransform
 		transform.set( minX, maxX, minY, maxY, screenWidth, screenHeight );
 	}
 
-
 	/**
 	 * Zoom out in X to the maximally allowed width.
 	 *
@@ -211,7 +210,7 @@ public class ConstrainScreenTransform
 	 * @param borderAbsY
 	 *            absolute value of the border in Y to respect when unzooming in
 	 *            pixels.
-	 * 
+	 *
 	 */
 	public static void zoomOutFullyY(
 			final ScreenTransform transform,
@@ -252,7 +251,6 @@ public class ConstrainScreenTransform
 				transform.getScreenHeight() == reference.getScreenHeight() )
 			transform.set( reference );
 	}
-
 
 	/**
 	 * Checks whether the given {@link ScreenTransform} covers an area having

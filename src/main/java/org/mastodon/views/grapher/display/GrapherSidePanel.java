@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -74,7 +74,7 @@ import org.scijava.Context;
 /**
  * Panel that lets the user specifies what to plot. The user specifications are
  * bundled as a {@link FeatureGraphConfig} object.
- * 
+ *
  * @author Jean-Yves Tinevez
  */
 public class GrapherSidePanel extends JPanel
@@ -283,7 +283,7 @@ public class GrapherSidePanel extends JPanel
 				case SINGLE:
 					for ( final FeatureProjectionSpec ps : fs.getProjectionSpecs() )
 					{
-						specs.add(  new FeatureSpecPair( fs, ps, false, false ) );
+						specs.add( new FeatureSpecPair( fs, ps, false, false ) );
 					}
 					break;
 				default:
@@ -344,10 +344,10 @@ public class GrapherSidePanel extends JPanel
 		final GraphDataItemsSource itemSource = rdbtnContext.isSelected()
 				? GraphDataItemsSource.CONTEXT
 				: rdbtnKeepCurrent.isSelected()
-						? GraphDataItemsSource.KEEP_CURRENT
-						: rdbtnSelection.isSelected()
-								? GraphDataItemsSource.SELECTION
-								: GraphDataItemsSource.TRACK_OF_SELECTION;
+				? GraphDataItemsSource.KEEP_CURRENT
+				: rdbtnSelection.isSelected()
+				? GraphDataItemsSource.SELECTION
+				: GraphDataItemsSource.TRACK_OF_SELECTION;
 		return new FeatureGraphConfig(
 				xFeature,
 				yFeature,

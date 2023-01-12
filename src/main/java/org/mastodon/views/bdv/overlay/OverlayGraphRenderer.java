@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -587,7 +587,7 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 		index.readLock().lock();
 		try
 		{
-			if ( settings.getDrawLinks())
+			if ( settings.getDrawLinks() )
 			{
 				final E highlighted = highlight.getHighlightedEdge( ref3 );
 				graphics.setStroke( defaultEdgeStroke );
@@ -807,7 +807,7 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 			final Color color = graphics.getColor();
 			graphics.setColor( Color.BLACK );
 			graphics.draw( ellipse2D );
-			graphics.setColor( color );	
+			graphics.setColor( color );
 		}
 		else
 		{
@@ -893,7 +893,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 					ref.refTo( edge );
 				}
 			}
-		};
+		}
+		;
 		final Op op = new Op();
 
 		index.readLock().lock();

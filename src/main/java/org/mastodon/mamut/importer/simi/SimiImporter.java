@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -98,7 +98,7 @@ public class SimiImporter
 			final double radius,
 			final boolean interpolateMissingSpots,
 			final Model model )
-					throws IOException, ParseException
+			throws IOException, ParseException
 	{
 		final Simi simi = readSDB( new File( sbdFilename ) );
 		new Builder( model, simi, timepointIdFunction, labelFunction, positionFunction, radius, interpolateMissingSpots );
@@ -284,7 +284,7 @@ public class SimiImporter
 		public Line match( final LineType expectedType, final ExpectedNumTokens expectedNumTokens, final String error ) throws ParseException
 		{
 			final Line line = next();
-			if ( ! ( line.type() == expectedType && expectedNumTokens.matches( line.size() ) ) )
+			if ( !( line.type() == expectedType && expectedNumTokens.matches( line.size() ) ) )
 			{
 				String msg = error;
 				if ( msg == null )
@@ -421,7 +421,7 @@ public class SimiImporter
 			Line line;
 			line = scanner.match( NORMAL, exactly( 2 ) );
 			final int start_cells_count = line.getAsInt( 0 );
-//			final int start_time = line.getAsInt( 1 );
+			//			final int start_time = line.getAsInt( 1 );
 			for ( int i = 0; i < start_cells_count; ++i )
 				scanner.match( NORMAL ); // discard for now
 
@@ -432,29 +432,29 @@ public class SimiImporter
 				line = scanner.match( NORMAL, atleast( 4 ) );
 				final int cells_left_count = line.getAsInt( 0 );
 				final int cells_right_count = line.getAsInt( 1 );
-//				final int active_cell_left = line.getAsInt( 2 );
-//				final int active_cell_right = line.getAsInt( 3 );
+				//				final int active_cell_left = line.getAsInt( 2 );
+				//				final int active_cell_right = line.getAsInt( 3 );
 				final String generic_name = line.get( 4 );
 
 				line = scanner.match( NORMAL, atleast( 4 ) );
-//				final int generation_birth_time= line.getAsInt( 0 );
-//				final int generation_level = line.getAsInt( 1 );
-//				final String generation_wildtype = line.get( 2 );
-//				final String generation_color = line.get( 3 );
+				//				final int generation_birth_time= line.getAsInt( 0 );
+				//				final int generation_level = line.getAsInt( 1 );
+				//				final String generation_wildtype = line.get( 2 );
+				//				final String generation_color = line.get( 3 );
 				final String generation_name = line.get( 4 );
 
 				line = scanner.match( NORMAL, atleast( 5 ) );
-//				final int birth_frame = line.getAsInt( 0 );
-//				final int birth_level = line.getAsInt( 1 );
-//				final String wildtype = line.get( 2 );
-//				final String size = line.get( 3 );
-//				final String shape = line.get( 4 );
-//				final String color = line.get( 5 );
+				//				final int birth_frame = line.getAsInt( 0 );
+				//				final int birth_level = line.getAsInt( 1 );
+				//				final String wildtype = line.get( 2 );
+				//				final String size = line.get( 3 );
+				//				final String shape = line.get( 4 );
+				//				final String color = line.get( 5 );
 				final String name = line.get( 6 );
 
 				line = scanner.match( NORMAL, atleast( 1 ) );
 				final int coordinates_count = line.getAsInt( 0 );
-//				final String cell_comment = line.get( 1 );
+				//				final String cell_comment = line.get( 1 );
 
 				final SimiCell cell = simi.cell( generic_name, generation_name, name, cells_left_count, cells_right_count );
 
@@ -465,9 +465,9 @@ public class SimiImporter
 					final int x = line.getAsInt( 1 );
 					final int y = line.getAsInt( 2 );
 					final int level = line.getAsInt( 3 );
-//					final String _size = line.get( 4 );
-//					final String _shape = line.get( 5 );
-//					final String coord_comment = line.get( 6 );
+					//					final String _size = line.get( 4 );
+					//					final String _shape = line.get( 5 );
+					//					final String coord_comment = line.get( 6 );
 
 					cell.add( frame, x, y, level );
 				}
@@ -478,7 +478,6 @@ public class SimiImporter
 			return simi;
 		}
 	}
-
 
 	/*
 	 * ModelImporter from Simi

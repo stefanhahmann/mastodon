@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -114,23 +114,39 @@ import mpicbg.spim.data.generic.sequence.BasicViewSetup;
 public class ProjectManager
 {
 	public static final String CREATE_PROJECT = "create new project";
+
 	public static final String CREATE_PROJECT_FROM_URL = "create new project from url";
+
 	public static final String LOAD_PROJECT = "load project";
+
 	public static final String SAVE_PROJECT = "save project";
+
 	public static final String SAVE_PROJECT_AS = "save project as";
+
 	public static final String IMPORT_TGMM = "import tgmm";
+
 	public static final String IMPORT_SIMI = "import simi";
+
 	public static final String IMPORT_MAMUT = "import mamut";
+
 	public static final String EXPORT_MAMUT = "export mamut";
 
 	static final String[] CREATE_PROJECT_KEYS = new String[] { "not mapped" };
+
 	static final String[] CREATE_PROJECT_FROM_URL_KEYS = new String[] { "not mapped" };
+
 	static final String[] LOAD_PROJECT_KEYS = new String[] { "not mapped" };
+
 	static final String[] SAVE_PROJECT_KEYS = new String[] { "not mapped" };
+
 	static final String[] SAVE_PROJECT_AS_KEYS = new String[] { "not mapped" };
+
 	static final String[] IMPORT_TGMM_KEYS = new String[] { "not mapped" };
+
 	static final String[] IMPORT_SIMI_KEYS = new String[] { "not mapped" };
+
 	static final String[] IMPORT_MAMUT_KEYS = new String[] { "not mapped" };
+
 	static final String[] EXPORT_MAMUT_KEYS = new String[] { "not mapped" };
 
 	private static final String GUI_TAG = "MamutGui";
@@ -140,7 +156,7 @@ public class ProjectManager
 	/*
 	 * Command descriptions for all provided commands
 	 */
-	@Plugin( type = CommandDescriptionProvider.class )
+	@Plugin(type = CommandDescriptionProvider.class)
 	public static class Descriptions extends CommandDescriptionProvider
 	{
 		public Descriptions()
@@ -435,7 +451,7 @@ public class ProjectManager
 							np.setSpaceUnits( project.getSpaceUnits() );
 							np.setTimeUnits( project.getTimeUnits() );
 							project = np;
-							
+
 							// Export the settings file with what we can put in.
 							final Element root = new Element( "Settings" );
 							final SharedBigDataViewerData sbdv = appModel.getSharedBdvData();
@@ -494,7 +510,8 @@ public class ProjectManager
 						@Override
 						public void run()
 						{
-							final File file = FileChooser.chooseFile( true,
+							final File file = FileChooser.chooseFile(
+									true,
 									parent,
 									projectRoot,
 									new ExtensionFileFilter( "mastodon" ),
@@ -519,7 +536,8 @@ public class ProjectManager
 						}
 					} );
 				}
-				catch ( final InterruptedException | InvocationTargetException | SpimDataException | IOException e )
+				catch ( final InterruptedException | InvocationTargetException |
+						SpimDataException | IOException e )
 				{
 					e.printStackTrace();
 				}
@@ -646,7 +664,7 @@ public class ProjectManager
 
 		// Check whether the project points to a BDV file.
 		final String canonicalPath = project.getDatasetXmlFile().getAbsolutePath();
-		if ( !canonicalPath.endsWith( ".xml" )  && !canonicalPath.endsWith( DummySpimData.DUMMY ) )
+		if ( !canonicalPath.endsWith( ".xml" ) && !canonicalPath.endsWith( DummySpimData.DUMMY ) )
 		{
 			final ImagePlus imp;
 
@@ -974,14 +992,15 @@ public class ProjectManager
 
 		// Open dummy data string?
 		String spimDataXmlFilename = project.getDatasetXmlFile().getPath();
-		if( DummySpimData.isDummyString( spimDataXmlFilename ) )
+		if ( DummySpimData.isDummyString( spimDataXmlFilename ) )
 			return SharedBigDataViewerData.fromDummyFilename( spimDataXmlFilename, options, requestRepaint );
 
 		// Open dummy data flag?
-		if( dummyData )
-			return openDummyImageData(project, options, requestRepaint);
+		if ( dummyData )
+			return openDummyImageData( project, options, requestRepaint );
 
-		return SharedBigDataViewerData.fromSpimDataXmlFile( project.getDatasetXmlFile().getAbsolutePath(),
+		return SharedBigDataViewerData.fromSpimDataXmlFile(
+				project.getDatasetXmlFile().getAbsolutePath(),
 				options,
 				requestRepaint );
 	}
@@ -993,7 +1012,7 @@ public class ProjectManager
 			String backupDatasetXml = originalOrBackupDatasetXml( project ).getAbsolutePath();
 			return SharedBigDataViewerData.createDummyDataFromSpimDataXml( backupDatasetXml, options, requestRepaint );
 		}
-		catch( Throwable e )
+		catch ( Throwable e )
 		{
 			return simpleDummyData( project, options, requestRepaint );
 		}
@@ -1020,23 +1039,25 @@ public class ProjectManager
 		double x = 0;
 		double y = 0;
 		double z = 0;
-		for(Spot spot : model.getGraph().vertices()) {
+		for ( Spot spot : model.getGraph().vertices() )
+		{
 			time = Math.max( time, spot.getTimepoint() );
 			double radius = Math.sqrt( spot.getBoundingSphereRadiusSquared() );
 			x = Math.max( x, spot.getDoublePosition( 0 ) + radius );
 			y = Math.max( y, spot.getDoublePosition( 1 ) + radius );
 			z = Math.max( z, spot.getDoublePosition( 2 ) + radius );
 		}
-		return String.format( "x=%s y=%s z=%s t=%s.dummy",
-				roundUp(x) + 1,
-				roundUp(y) + 1,
-				roundUp(z) + 1,
-				time + 1);
+		return String.format(
+				"x=%s y=%s z=%s t=%s.dummy",
+				roundUp( x ) + 1,
+				roundUp( y ) + 1,
+				roundUp( z ) + 1,
+				time + 1 );
 	}
 
 	private static long roundUp( double x )
 	{
-		return (long) Math.ceil( x );
+		return ( long ) Math.ceil( x );
 	}
 
 	private static File originalOrBackupDatasetXml( MamutProject project )
@@ -1057,8 +1078,10 @@ public class ProjectManager
 
 	private static File copyBackupDatasetXmlToTmpFile( MamutProject project ) throws IOException
 	{
-		try ( final MamutProject.ProjectReader reader = project.openForReading();
-				final InputStream is = reader.getBackupDatasetXmlInputStream() )
+		try (
+				final MamutProject.ProjectReader reader = project.openForReading();
+				final InputStream is = reader.getBackupDatasetXmlInputStream()
+		)
 		{
 			File tmp = File.createTempFile( "mastodon-dataset-xml-backup", ".xml" );
 			tmp.deleteOnExit();
@@ -1072,10 +1095,10 @@ public class ProjectManager
 	 */
 	private void saveBackupDatasetXml( final File tmpDatasetXml, final ProjectWriter projectWriter )
 	{
-		if( tmpDatasetXml == null )
+		if ( tmpDatasetXml == null )
 			return;
 
-		try ( OutputStream out = projectWriter.getBackupDatasetXmlOutputStream() )
+		try (OutputStream out = projectWriter.getBackupDatasetXmlOutputStream())
 		{
 			Files.copy( tmpDatasetXml.toPath(), out );
 		}
@@ -1115,7 +1138,7 @@ public class ProjectManager
 	private static String getProblemDescription( MamutProject project, Exception e )
 	{
 		File datasetXml = project.getDatasetXmlFile();
-		if( !datasetXml.exists() )
+		if ( !datasetXml.exists() )
 			return "The image data XML was not found:\n" + datasetXml;
 		final Throwable cause = e.getCause();
 		if ( cause instanceof UnknownHostException )

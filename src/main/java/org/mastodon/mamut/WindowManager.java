@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -102,40 +102,60 @@ import net.imglib2.realtransform.AffineTransform3D;
  * opened views. It has a {@link #getProjectManager()} instance that can be used
  * to open or create Mastodon projects. It has also the main app-model for the
  * session.
- * 
+ *
  * @author Tobias Pietzsch
  * @author Jean-Yves Tinevez
  *
  */
 public class WindowManager
 {
-	
+
 	public static final String NEW_BDV_VIEW = "new bdv view";
+
 	public static final String NEW_TRACKSCHEME_VIEW = "new trackscheme view";
+
 	public static final String NEW_TABLE_VIEW = "new full table view";
+
 	public static final String NEW_SELECTION_TABLE_VIEW = "new selection table view";
+
 	public static final String NEW_GRAPHER_VIEW = "new grapher view";
+
 	public static final String PREFERENCES_DIALOG = "Preferences";
+
 	public static final String TAGSETS_DIALOG = "edit tag sets";
+
 	public static final String COMPUTE_FEATURE_DIALOG = "compute features";
+
 	public static final String OPEN_ONLINE_DOCUMENTATION = "open online documentation";
 
 	static final String[] NEW_BDV_VIEW_KEYS = new String[] { "not mapped" };
+
 	static final String[] NEW_TRACKSCHEME_VIEW_KEYS = new String[] { "not mapped" };
+
 	static final String[] NEW_TABLE_VIEW_KEYS = new String[] { "not mapped" };
+
 	static final String[] NEW_SELECTION_TABLE_VIEW_KEYS = new String[] { "not mapped" };
+
 	static final String[] NEW_GRAPHER_VIEW_KEYS = new String[] { "not mapped" };
+
 	static final String[] PREFERENCES_DIALOG_KEYS = new String[] { "meta COMMA", "ctrl COMMA" };
+
 	static final String[] TAGSETS_DIALOG_KEYS = new String[] { "not mapped" };
+
 	static final String[] COMPUTE_FEATURE_DIALOG_KEYS = new String[] { "not mapped" };
+
 	static final String[] OPEN_ONLINE_DOCUMENTATION_KEYS = new String[] { "not mapped" };
 
 	static final String NEW_BRANCH_BDV_VIEW = "new branch bdv view";
+
 	static final String NEW_BRANCH_TRACKSCHEME_VIEW = "new branch trackscheme view";
+
 	static final String NEW_HIERARCHY_TRACKSCHEME_VIEW = "new hierarchy trackscheme view";
 
 	static final String[] NEW_BRANCH_BDV_VIEW_KEYS = new String[] { "not mapped" };
+
 	static final String[] NEW_BRANCH_TRACKSCHEME_VIEW_KEYS = new String[] { "not mapped" };
+
 	static final String[] NEW_HIERARCHY_TRACKSCHEME_VIEW_KEYS = new String[] { "not mapped" };
 
 	public static final String DOCUMENTATION_URL = "https://mastodon.readthedocs.io/en/latest/";
@@ -143,7 +163,7 @@ public class WindowManager
 	/*
 	 * Command descriptions for all provided commands
 	 */
-	@Plugin( type = CommandDescriptionProvider.class )
+	@Plugin(type = CommandDescriptionProvider.class)
 	public static class Descriptions extends CommandDescriptionProvider
 	{
 		public Descriptions()
@@ -248,7 +268,7 @@ public class WindowManager
 
 	/**
 	 * Creates a new, empty WindowManager instance using the specified context.
-	 * 
+	 *
 	 * @param context
 	 *            the context to use. Cannot be <code>null</code>.
 	 */
@@ -462,7 +482,7 @@ public class WindowManager
 
 	/**
 	 * Executes the specified action for all the currently opened BDV views.
-	 * 
+	 *
 	 * @param action
 	 *            the action to execute.
 	 */
@@ -473,7 +493,7 @@ public class WindowManager
 
 	/**
 	 * Executes the specified action for all the currently opened Table views.
-	 * 
+	 *
 	 * @param action
 	 *            the action to execute.
 	 */
@@ -484,7 +504,7 @@ public class WindowManager
 
 	/**
 	 * Executes the specified action for all the currently opened Grapher views.
-	 * 
+	 *
 	 * @param action
 	 *            the action to execute.
 	 */
@@ -496,7 +516,7 @@ public class WindowManager
 	/**
 	 * Executes the specified action for all the currently opened TrackScheme
 	 * views.
-	 * 
+	 *
 	 * @param action
 	 *            the action to execute.
 	 */
@@ -508,7 +528,7 @@ public class WindowManager
 	/**
 	 * Executes the specified action for all the currently opened
 	 * Branch-TrackScheme views.
-	 * 
+	 *
 	 * @param action
 	 *            the action to execute.
 	 */
@@ -516,11 +536,11 @@ public class WindowManager
 	{
 		btsWindows.forEach( action );
 	}
-	
+
 	/**
 	 * Executes the specified action for all the currently opened Branch-BDV
 	 * views.
-	 * 
+	 *
 	 * @param action
 	 *            the action to execute.
 	 */
@@ -531,7 +551,7 @@ public class WindowManager
 
 	/**
 	 * Executes the specified action for all the currently opened views.
-	 * 
+	 *
 	 * @param action
 	 *            the action to execute.
 	 */
@@ -546,7 +566,7 @@ public class WindowManager
 	/**
 	 * Executes the specified action for all the currently opened branch-graph
 	 * views.
-	 * 
+	 *
 	 * @param action
 	 *            the action to execute.
 	 */
@@ -595,7 +615,7 @@ public class WindowManager
 	 * <li><code>'ColorbarPosition'</code> &rarr; a {@link Position} specifying
 	 * the position of the colorbar.
 	 * </ul>
-	 * 
+	 *
 	 * @param guiState
 	 *            the map of settings.
 	 */
@@ -650,7 +670,7 @@ public class WindowManager
 	 * <li><code>'ColorbarPosition'</code> &rarr; a {@link Position} specifying
 	 * the position of the colorbar.
 	 * </ul>
-	 * 
+	 *
 	 * @param guiState
 	 *            the map of settings.
 	 */
@@ -699,7 +719,7 @@ public class WindowManager
 	 * <li><code>'ColorbarPosition'</code> &rarr; a {@link Position} specifying
 	 * the position of the colorbar.
 	 * </ul>
-	 * 
+	 *
 	 * @param guiState
 	 *            the map of settings.
 	 */
@@ -771,9 +791,9 @@ public class WindowManager
 	 * <li><code>'GrapherTransform'</code> &rarr; a
 	 * {@link org.mastodon.views.grapher.datagraph.ScreenTransform} specifying
 	 * the region to initially zoom on the XY plot.
-	 * 
+	 *
 	 * </ul>
-	 * 
+	 *
 	 * @param guiState
 	 *            the map of settings.
 	 */
@@ -801,7 +821,7 @@ public class WindowManager
 	/**
 	 * Creates and displays a new Branch-BDV view, using a map to specify the
 	 * display settings.
-	 * 
+	 *
 	 * @see #createBigDataViewer(Map)
 	 * @param guiState
 	 *            the settings map.
@@ -830,7 +850,7 @@ public class WindowManager
 	/**
 	 * Creates and displays a new Branch-TrackScheme view, using a map to
 	 * specify the display settings.
-	 * 
+	 *
 	 * @see #createTrackScheme(Map)
 	 * @param guiState
 	 *            the settings map.
@@ -859,7 +879,7 @@ public class WindowManager
 	/**
 	 * Creates and displays a new Hierarchy-TrackScheme view, using a map to
 	 * specify the display settings.
-	 * 
+	 *
 	 * @see #createTrackScheme(Map)
 	 * @param guiState
 	 *            the settings map.

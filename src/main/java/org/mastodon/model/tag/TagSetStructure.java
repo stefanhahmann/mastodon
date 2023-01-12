@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -70,10 +70,12 @@ public class TagSetStructure
 
 	public void saveRaw( final File file ) throws IOException
 	{
-		try (ObjectOutputStream oos = new ObjectOutputStream(
-				new BufferedOutputStream(
-						new FileOutputStream( file ),
-						1024 * 1024 ) ))
+		try (
+				ObjectOutputStream oos = new ObjectOutputStream(
+						new BufferedOutputStream(
+								new FileOutputStream( file ),
+								1024 * 1024 ) )
+		)
 		{
 			saveRaw( oos );
 		}
@@ -97,10 +99,12 @@ public class TagSetStructure
 
 	public void loadRaw( final File file ) throws IOException
 	{
-		try (final ObjectInputStream ois = new ObjectInputStream(
-				new BufferedInputStream(
-						new FileInputStream( file ),
-						1024 * 1024 ) ))
+		try (
+				final ObjectInputStream ois = new ObjectInputStream(
+						new BufferedInputStream(
+								new FileInputStream( file ),
+								1024 * 1024 ) )
+		)
 		{
 			loadRaw( ois );
 		}
@@ -116,7 +120,7 @@ public class TagSetStructure
 		{
 			// TagSet id.
 			final int tagSetId = ois.readInt();
-			if (tagSetId >= tagSetIDgenerator.get())
+			if ( tagSetId >= tagSetIDgenerator.get() )
 				tagSetIDgenerator.set( tagSetId + 1 );
 			// TagSet name.
 			final String tagSetName = ois.readUTF();

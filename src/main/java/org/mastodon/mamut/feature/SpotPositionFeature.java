@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -56,10 +56,11 @@ public class SpotPositionFeature implements Feature< Spot >
 	private final LinkedHashMap< FeatureProjectionKey, FeatureProjection< Spot > > projections;
 
 	private static final List< FeatureProjectionSpec > PROJECTION_SPECS = new ArrayList<>( 3 );
+
 	static
 	{
 		for ( int d = 0; d < 3; d++ )
-			PROJECTION_SPECS.add( new FeatureProjectionSpec(  "" + ( char ) ( 'X' + d ), Dimension.POSITION ) );
+			PROJECTION_SPECS.add( new FeatureProjectionSpec( "" + ( char ) ( 'X' + d ), Dimension.POSITION ) );
 	}
 
 	public static final Spec SPEC = new Spec();
@@ -73,7 +74,7 @@ public class SpotPositionFeature implements Feature< Spot >
 					new MyProjection( d, units ) );
 	}
 
-	@Plugin( type = FeatureSpec.class )
+	@Plugin(type = FeatureSpec.class)
 	public static class Spec extends FeatureSpec< SpotPositionFeature, Spot >
 	{
 		public Spec()
@@ -108,7 +109,8 @@ public class SpotPositionFeature implements Feature< Spot >
 
 	@Override
 	public void invalidate( final Spot spot )
-	{}
+	{
+	}
 
 	private static final class MyProjection implements FeatureProjection< Spot >
 	{

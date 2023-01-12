@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -182,16 +182,14 @@ public class ColorMapIO
 			{
 				final Map< Object, Object > mapping = constructMapping( ( MappingNode ) node );
 				final String name = ( String ) mapping.get( "name" );
-				@SuppressWarnings( "unchecked" )
-				final Map< String, Double > notApplicableColor = ( Map< String, Double > ) mapping.get( "notApplicableColor" );
+				@SuppressWarnings("unchecked") final Map< String, Double > notApplicableColor = ( Map< String, Double > ) mapping.get( "notApplicableColor" );
 				final float rna = notApplicableColor.get( R_KEY ).floatValue();
 				final float gna = notApplicableColor.get( G_KEY ).floatValue();
 				final float bna = notApplicableColor.get( B_KEY ).floatValue();
 				final float ana = notApplicableColor.get( A_KEY ).floatValue();
 				final int naColor = new Color( rna, gna, bna, ana ).getRGB();
 
-				@SuppressWarnings( "unchecked" )
-				final List< Map< String, Double > > cs = ( List< Map< String, Double > > ) mapping.get( "colors" );
+				@SuppressWarnings("unchecked") final List< Map< String, Double > > cs = ( List< Map< String, Double > > ) mapping.get( "colors" );
 				final int[] colors = new int[ cs.size() ];
 				final double[] alphas = new double[ cs.size() ];
 				for ( int i = 0; i < alphas.length; i++ )
@@ -229,12 +227,12 @@ public class ColorMapIO
 		{
 			try
 			{
-				@SuppressWarnings( "unchecked" )
-				final List< Float > rgba = ( List< Float > ) constructSequence( ( SequenceNode ) node );
+				@SuppressWarnings("unchecked") final List< Float > rgba = ( List< Float > ) constructSequence( ( SequenceNode ) node );
 				return new Color( rgba.get( 0 ), rgba.get( 1 ), rgba.get( 2 ), rgba.get( 3 ) ).getRGB();
 			}
 			catch ( final Exception e )
-			{}
+			{
+			}
 			return null;
 		}
 	}

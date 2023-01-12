@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -72,7 +72,8 @@ public class ColumnGroup
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public Component getTableCellRendererComponent( final JTable table, final Object value,
+				public Component getTableCellRendererComponent(
+						final JTable table, final Object value,
 						final boolean isSelected, final boolean hasFocus, final int row, final int column )
 				{
 					final JTableHeader header = table.getTableHeader();
@@ -103,7 +104,10 @@ public class ColumnGroup
 	 */
 	public void add( final Object obj )
 	{
-		if ( obj == null ) { return; }
+		if ( obj == null )
+		{
+			return;
+		}
 		v.addElement( obj );
 	}
 
@@ -125,8 +129,7 @@ public class ColumnGroup
 			final Object obj = en.nextElement();
 			if ( obj instanceof ColumnGroup )
 			{
-				@SuppressWarnings( "unchecked" )
-				final Vector< ColumnGroup > groups =
+				@SuppressWarnings("unchecked") final Vector< ColumnGroup > groups =
 						( ( ColumnGroup ) obj ).getColumnGroups( c, ( Vector< ColumnGroup > ) g.clone() );
 				if ( groups != null )
 					return groups;
@@ -177,5 +180,6 @@ public class ColumnGroup
 	}
 
 	public void setColumnMargin( final int margin )
-	{}
+	{
+	}
 }

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -127,7 +127,8 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 
 	public MamutViewBdv( final MamutAppModel appModel, final Map< String, Object > guiState )
 	{
-		super( appModel,
+		super(
+				appModel,
 				new OverlayGraphWrapper<>(
 						appModel.getModel().getGraph(),
 						appModel.getModel().getGraphIdBimap(),
@@ -155,7 +156,7 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 		MastodonFrameViewActions.install( viewActions, this );
 		BigDataViewerActionsMamut.install( viewActions, bdv );
 
-		
+
 		/*
 		 * We have to build the coloring menu handles now. But the other actions
 		 * need to be included in the menus later, after they have been
@@ -212,7 +213,6 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 
 		final Model model = appModel.getModel();
 		final ModelGraph modelGraph = model.getGraph();
-
 
 		highlightModel.listeners().add( () -> viewer.getDisplay().repaint() );
 		focusModel.listeners().add( () -> viewer.getDisplay().repaint() );
@@ -305,12 +305,14 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 						item( SelectionActions.SELECT_TRACK_UPWARD ),
 						separator(),
 						tagSetMenu( tagSetMenuHandle ) ),
-				ViewMenuBuilder.menu( "Settings",
+				ViewMenuBuilder.menu(
+						"Settings",
 						item( BigDataViewerActions.BRIGHTNESS_SETTINGS ),
 						item( BigDataViewerActions.VISIBILITY_AND_GROUPING ) ) );
 		appModel.getPlugins().addMenus( menu );
 
-		registerTagSetMenu( tagSetMenuHandle,
+		registerTagSetMenu(
+				tagSetMenuHandle,
 				() -> viewer.getDisplay().repaint() );
 
 		// Restore coloring.

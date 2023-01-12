@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -105,7 +105,7 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		 */
 		INCOMING_BRANCH_EDGE( "Branch-edge up", TargetType.BRANCH_EDGE,
 				"Edges have a color determined by a numerical feature of the branch-edge they are linked to."
-						+ "Or the color of the incoming edge of the branch-vertex they are linked to. "),
+						+ "Or the color of the incoming edge of the branch-vertex they are linked to. " ),
 		/**
 		 * Edges have a color determined by a numerical feature of the
 		 * branch-link they are linked to. Or the color of the outgoing edge of
@@ -113,7 +113,7 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		 */
 		OUTGOING_BRANCH_EDGE( "Branch-edge down", TargetType.BRANCH_EDGE,
 				"Edges have a color determined by a numerical feature of the branch-edge they are linked to."
-						+ "Or the color of the outgoing edge of the branch-vertex they are linked to. ");
+						+ "Or the color of the outgoing edge of the branch-vertex they are linked to. " );
 
 		private final String label;
 
@@ -426,7 +426,6 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		}
 	}
 
-
 	public synchronized void setEdgeColorMap( final String edgeColorMap )
 	{
 		if ( this.edgeColorMap != edgeColorMap )
@@ -517,6 +516,7 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 	 */
 
 	private static final FeatureColorMode N_LINKS;
+
 	static
 	{
 		N_LINKS = new FeatureColorMode();
@@ -534,6 +534,7 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 	}
 
 	public static final Collection< FeatureColorMode > defaults;
+
 	static
 	{
 		defaults = new ArrayList<>( 1 );

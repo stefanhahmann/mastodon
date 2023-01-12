@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -242,7 +242,8 @@ public class DataDisplayPanel< V extends Vertex< E > & HasTimepoint & HasLabel, 
 		{
 			@Override
 			public void setCanvasSize( final int width, final int height )
-			{}
+			{
+			}
 
 			@Override
 			public void drawOverlays( final Graphics g )
@@ -973,7 +974,8 @@ public class DataDisplayPanel< V extends Vertex< E > & HasTimepoint & HasLabel, 
 		{
 			@Override
 			public void processVertexLate( final DataVertex vertex, final DepthFirstSearch< DataVertex, DataEdge > search )
-			{}
+			{
+			}
 
 			@Override
 			public void processVertexEarly( final DataVertex vertex, final DepthFirstSearch< DataVertex, DataEdge > search )
@@ -983,11 +985,13 @@ public class DataDisplayPanel< V extends Vertex< E > & HasTimepoint & HasLabel, 
 
 			@Override
 			public void processEdge( final DataEdge edge, final DataVertex from, final DataVertex to, final DepthFirstSearch< DataVertex, DataEdge > search )
-			{}
+			{
+			}
 
 			@Override
 			public void crossComponent( final DataVertex from, final DataVertex to, final DepthFirstSearch< DataVertex, DataEdge > search )
-			{}
+			{
+			}
 		} );
 
 		for ( final DataVertex v : toSearch )

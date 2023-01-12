@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -78,8 +78,7 @@ public class ModelUtils
 		for ( final FeatureSpec< ?, ? > featureSpec : featureSpecs )
 			if ( featureSpec.getTargetClass().equals( Spot.class ) )
 			{
-				@SuppressWarnings( "unchecked" )
-				final Feature< Spot > spotFeature = ( Feature< Spot > ) featureModel.getFeature( featureSpec );
+				@SuppressWarnings("unchecked") final Feature< Spot > spotFeature = ( Feature< Spot > ) featureModel.getFeature( featureSpec );
 				spotFeatures.add( spotFeature );
 			}
 
@@ -131,11 +130,11 @@ public class ModelUtils
 		 * Sort spots.
 		 */
 
-		final RefArrayList< Spot > spots = new RefArrayList<Spot>( graph.vertices().getRefPool(), graph.vertices().size() );
+		final RefArrayList< Spot > spots = new RefArrayList< Spot >( graph.vertices().getRefPool(), graph.vertices().size() );
 		spots.addAll( graph.vertices() );
 
 		// Do we have track id?
-		if (featureSpecs.contains( SpotTrackIDFeature.SPEC ))
+		if ( featureSpecs.contains( SpotTrackIDFeature.SPEC ) )
 		{
 			final SpotTrackIDFeature trackID = ( SpotTrackIDFeature ) featureModel.getFeature( SpotTrackIDFeature.SPEC );
 			spots.sort( new Comparator< Spot >()
@@ -146,7 +145,7 @@ public class ModelUtils
 				{
 					final int track1 = trackID.get( o1 );
 					final int track2 = trackID.get( o2 );
-					if (track1 == track2)
+					if ( track1 == track2 )
 						return o1.getTimepoint() - o2.getTimepoint();
 
 					return track1 - track2;
@@ -157,7 +156,6 @@ public class ModelUtils
 		{
 			spots.sort( Comparator.comparingInt( Spot::getTimepoint ) );
 		}
-
 
 		long n = 0;
 		for ( final Spot spot : spots )
@@ -194,8 +192,7 @@ public class ModelUtils
 		for ( final FeatureSpec< ?, ? > featureSpec : featureSpecs )
 			if ( featureSpec.getTargetClass().equals( Link.class ) )
 			{
-				@SuppressWarnings( "unchecked" )
-				final Feature< Link > linkFeature = ( Feature< Link > ) featureModel.getFeature( featureSpec );
+				@SuppressWarnings("unchecked") final Feature< Link > linkFeature = ( Feature< Link > ) featureModel.getFeature( featureSpec );
 				linkFeatures.add( linkFeature );
 			}
 

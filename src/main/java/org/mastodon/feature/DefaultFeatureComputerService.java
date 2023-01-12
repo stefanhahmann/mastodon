@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -52,7 +52,7 @@ import org.scijava.plugin.Plugin;
 import org.scijava.plugin.PluginService;
 import org.scijava.service.AbstractService;
 
-@Plugin( type = FeatureComputerService.class )
+@Plugin(type = FeatureComputerService.class)
 public class DefaultFeatureComputerService extends AbstractService implements FeatureComputerService
 {
 	@Parameter
@@ -138,8 +138,7 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 						throw new IllegalArgumentException( "Ignoring FeatureComputer " + info.getClassName()
 								+ " because it defines more than one output." );
 
-					@SuppressWarnings( "unchecked" )
-					final Class< ? extends Feature< ? > > type = ( Class< ? extends Feature< ? > > ) item.getType();
+					@SuppressWarnings("unchecked") final Class< ? extends Feature< ? > > type = ( Class< ? extends Feature< ? > > ) item.getType();
 					featureSpec = featureSpecs.getSpec( type );
 				}
 				if ( featureSpec == null )
@@ -158,10 +157,8 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 				{
 					if ( Feature.class.isAssignableFrom( item.getType() ) )
 					{
-						@SuppressWarnings( "unchecked" )
-						final Class< ? extends Feature< ? > > type = ( Class< ? extends Feature< ? > > ) item.getType();
-						@SuppressWarnings( "rawtypes" )
-						final FeatureSpec dependencySpec = featureSpecs.getSpec( type );
+						@SuppressWarnings("unchecked") final Class< ? extends Feature< ? > > type = ( Class< ? extends Feature< ? > > ) item.getType();
+						@SuppressWarnings("rawtypes") final FeatureSpec dependencySpec = featureSpecs.getSpec( type );
 						FeatureDependencyGraph.Vertex dependency = dependencies.get( dependencySpec );
 						if ( dependency == null )
 							dependency = dependencies.addVertex( dependencySpec );
@@ -201,10 +198,10 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 	public Collection< FeatureSpec< ?, ? > > getDependencies( final FeatureSpec< ?, ? > spec )
 	{
 		final Vertex vertex = dependencies.get( spec );
-		if (null == vertex)
+		if ( null == vertex )
 			return Collections.emptyList();
 
-		final List<FeatureSpec< ?, ? >> deps = new ArrayList<>();
+		final List< FeatureSpec< ?, ? > > deps = new ArrayList<>();
 		for ( final Edge edge : vertex.outgoingEdges() )
 		{
 			final Vertex target = edge.getTarget();
@@ -286,19 +283,16 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 		// Feature dependencies.
 		if ( Feature.class.isAssignableFrom( parameterClass ) )
 		{
-			@SuppressWarnings( "unchecked" )
-			final Class< ? extends Feature< ? > > featureClass = ( Class< ? extends Feature< ? > > ) parameterClass;
-			@SuppressWarnings( "unchecked" )
-			final ModuleItem< Feature< ? > > featureItem = ( ModuleItem< Feature< ? > > ) item;
+			@SuppressWarnings("unchecked") final Class< ? extends Feature< ? > > featureClass = ( Class< ? extends Feature< ? > > ) parameterClass;
+			@SuppressWarnings("unchecked") final ModuleItem< Feature< ? > > featureItem = ( ModuleItem< Feature< ? > > ) item;
 			featureItem.setValue( module, featureModel.get( featureSpecs.getSpec( featureClass ) ) );
 			return;
 		}
 
 		// FeatureComputationStatus.
-		if (FeatureComputationStatus.class.isAssignableFrom( parameterClass ))
+		if ( FeatureComputationStatus.class.isAssignableFrom( parameterClass ) )
 		{
-			@SuppressWarnings( "unchecked" )
-			final ModuleItem< FeatureComputationStatus > statusModule = ( ModuleItem< FeatureComputationStatus > ) item;
+			@SuppressWarnings("unchecked") final ModuleItem< FeatureComputationStatus > statusModule = ( ModuleItem< FeatureComputationStatus > ) item;
 			statusModule.setValue( module, status );
 			return;
 		}

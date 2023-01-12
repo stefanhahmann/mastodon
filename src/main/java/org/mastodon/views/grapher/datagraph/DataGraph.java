@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -59,11 +59,11 @@ import org.scijava.listeners.Listeners;
 public class DataGraph<
 		V extends Vertex< E > & HasTimepoint & HasLabel,
 		E extends Edge< V > >
-	extends GraphImp<
-				DataGraph.DataVertexPool,
-				DataGraph.DataEdgePool,
-				DataVertex, DataEdge, ByteMappedElement >
-	implements GraphListener< V, E >, GraphChangeListener, ViewGraph< V, E, DataVertex, DataEdge >
+		extends GraphImp<
+		DataGraph.DataVertexPool,
+		DataGraph.DataEdgePool,
+		DataVertex, DataEdge, ByteMappedElement >
+		implements GraphListener< V, E >, GraphChangeListener, ViewGraph< V, E, DataVertex, DataEdge >
 {
 
 	final ListenableReadOnlyGraph< V, E > modelGraph;
@@ -145,7 +145,8 @@ public class DataGraph<
 	{
 		super( new DataEdgePool(
 				initialCapacity,
-				new DataVertexPool( initialCapacity,
+				new DataVertexPool(
+						initialCapacity,
 						new ModelGraphWrapper<>( idmap ) ) ) );
 		this.modelGraph = modelGraph;
 		this.lock = lock;
@@ -172,7 +173,6 @@ public class DataGraph<
 			lock.writeLock().unlock();
 		}
 	}
-
 
 	/**
 	 * Exposes the {@link RefPool} for the Data vertices of this DataGraph.
@@ -404,10 +404,15 @@ public class DataGraph<
 	static class DataVertexLayout extends AbstractVertexLayout
 	{
 		final IndexField origVertexIndex = indexField();
+
 		final IntField modelTimepoint = intField();
+
 		final IndexField layoutInEdgeIndex = indexField();
+
 		final DoubleField layoutX = doubleField();
+
 		final DoubleField layoutY = doubleField();
+
 		final IndexField screenVertexIndex = indexField();
 	}
 
@@ -418,10 +423,15 @@ public class DataGraph<
 		final ModelGraphWrapper< ?, ? > modelGraphWrapper;
 
 		final IndexAttribute< DataVertex > origVertexIndex = new IndexAttribute<>( vertexLayout.origVertexIndex, this );
+
 		final IntAttribute< DataVertex > modelTimepoint = new IntAttribute<>( vertexLayout.modelTimepoint, this );
+
 		final IndexAttribute< DataVertex > layoutInEdgeIndex = new IndexAttribute<>( vertexLayout.layoutInEdgeIndex, this );
+
 		final DoubleAttribute< DataVertex > layoutX = new DoubleAttribute<>( vertexLayout.layoutX, this );
+
 		final DoubleAttribute< DataVertex > layoutY = new DoubleAttribute<>( vertexLayout.layoutY, this );
+
 		final IndexAttribute< DataVertex > screenVertexIndex = new IndexAttribute<>( vertexLayout.screenVertexIndex, this );
 
 		private DataVertexPool( final int initialCapacity, final ModelGraphWrapper< ?, ? > modelGraphWrapper )
@@ -440,6 +450,7 @@ public class DataGraph<
 	static class DataEdgeLayout extends AbstractEdgeLayout
 	{
 		final IndexField origEdgeIndex = indexField();
+
 		final IndexField screenEdgeIndex = indexField();
 	}
 
@@ -450,6 +461,7 @@ public class DataGraph<
 		final ModelGraphWrapper< ?, ? > modelGraphWrapper;
 
 		final IndexAttribute< DataEdge > origEdgeIndex = new IndexAttribute<>( edgeLayout.origEdgeIndex, this );
+
 		final IndexAttribute< DataEdge > screenEdgeIndex = new IndexAttribute<>( edgeLayout.screenEdgeIndex, this );
 
 		private DataEdgePool( final int initialCapacity, final DataVertexPool vertexPool )

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -36,7 +36,7 @@ import bdv.viewer.animate.TranslationAnimator;
 import net.imglib2.realtransform.AffineTransform3D;
 
 public class OverlayNavigation< V extends OverlayVertex< V, E >, E extends OverlayEdge< E, V > >
-	implements NavigationListener< V, E >
+		implements NavigationListener< V, E >
 {
 	private final ViewerPanel panel;
 
@@ -64,7 +64,7 @@ public class OverlayNavigation< V extends OverlayVertex< V, E >, E extends Overl
 	{
 		this.navigationEtiquette = navigationEtiquette;
 
-		switch( navigationEtiquette )
+		switch ( navigationEtiquette )
 		{
 		case MINIMAL:
 			navigationBehaviour = new MinimalNavigationBehaviour( 100, 100 );
@@ -241,7 +241,7 @@ public class OverlayNavigation< V extends OverlayVertex< V, E >, E extends Overl
 			final int width = panel.getWidth();
 			final int height = panel.getHeight();
 			final int edgeMaxWidth = width - 2 * screenBorderX;
-			final int edgeMaxHeight = height- 2 * screenBorderY;
+			final int edgeMaxHeight = height - 2 * screenBorderY;
 
 			screenEdgeMath.init( edge, t );
 			final double[] min = screenEdgeMath.getViewMin();

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -77,8 +77,7 @@ public class CollectionAdapterReverse< O, WO >
 	public boolean contains( final Object o )
 	{
 		final O ref = map.reusableRightRef();
-		@SuppressWarnings( "unchecked" )
-		final boolean result = collection.contains( map.getRight( ( WO ) o, ref ) );
+		@SuppressWarnings("unchecked") final boolean result = collection.contains( map.getRight( ( WO ) o, ref ) );
 		map.releaseRef( ref );
 		return result;
 	}
@@ -87,7 +86,8 @@ public class CollectionAdapterReverse< O, WO >
 	public Iterator< WO > iterator()
 	{
 		final Iterator< O > iter = collection.iterator();
-		return new Iterator< WO >() {
+		return new Iterator< WO >()
+		{
 			@Override
 			public boolean hasNext()
 			{
@@ -127,8 +127,7 @@ public class CollectionAdapterReverse< O, WO >
 	public boolean remove( final Object o )
 	{
 		final O ref = map.reusableRightRef();
-		@SuppressWarnings( "unchecked" )
-		final boolean result = collection.remove( map.getRight( ( WO ) o, ref ) );
+		@SuppressWarnings("unchecked") final boolean result = collection.remove( map.getRight( ( WO ) o, ref ) );
 		map.releaseRef( ref );
 		return result;
 	}

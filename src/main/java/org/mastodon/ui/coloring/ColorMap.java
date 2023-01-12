@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -72,6 +72,7 @@ public class ColorMap
 	private static final String COLORMAP_FILE = System.getProperty( "user.home" ) + "/.mastodon/colormaps.yaml";
 
 	private static final List< URI > LUT_FOLDERS = new ArrayList<>();
+
 	static
 	{
 		try
@@ -119,6 +120,7 @@ public class ColorMap
 	public static final ColorMap SEISMIC;
 
 	private static Map< String, ColorMap > colorMaps = new LinkedHashMap<>();
+
 	static
 	{
 		JET = ColorMap.jet();
@@ -352,7 +354,7 @@ public class ColorMap
 		}
 		catch ( final FileNotFoundException e )
 		{
-//			System.out.println( "ColorMap file " + COLORMAP_FILE + " not found. Using builtin colormaps." );
+			//			System.out.println( "ColorMap file " + COLORMAP_FILE + " not found. Using builtin colormaps." );
 		}
 		catch ( final IOException e1 )
 		{
@@ -438,7 +440,7 @@ public class ColorMap
 							throw new IOException();
 						cms.add( cm );
 					}
-					catch (IOException e)
+					catch ( IOException e )
 					{
 						System.err.println( "Could not read LUT file: " + path + ". Skipping." );
 					}

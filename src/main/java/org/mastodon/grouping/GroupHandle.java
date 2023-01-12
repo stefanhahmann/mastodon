@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -112,14 +112,13 @@ public class GroupHandle
 
 	< T > ModelData< T > getModelData( final GroupableModelFactory< T > factory )
 	{
-		@SuppressWarnings( "unchecked" )
+		@SuppressWarnings("unchecked")
 		ModelData< T > data = ( ModelData< T > ) models.get( factory );
 		if ( data == null )
 		{
 			data = new ModelData<>( factory );
 			models.put( factory, data );
-			@SuppressWarnings( "unchecked" )
-			final GroupManager.ModelType< T > modelType = ( GroupManager.ModelType< T > ) manager.models.get( factory );
+			@SuppressWarnings("unchecked") final GroupManager.ModelType< T > modelType = ( GroupManager.ModelType< T > ) manager.models.get( factory );
 			modelType.moveTo( GroupHandle.this, groupId, false );
 		}
 		return data;

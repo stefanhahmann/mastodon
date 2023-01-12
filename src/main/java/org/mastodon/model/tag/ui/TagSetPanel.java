@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -71,19 +71,21 @@ public class TagSetPanel extends JPanel
 		this.tagSetStructure = tagSetStructure;
 		updateListeners = new Listeners.SynchronizedList<>();
 
-		tagSetTable = new TagTable<>( tagSetStructure,
+		tagSetTable = new TagTable<>(
+				tagSetStructure,
 				tss -> tss.createTagSet( makeNewName( "Tag set" ) ),
 				tss -> tss.getTagSets().size(),
 				TagSetStructure::remove,
-				(tss, i) -> tss.getTagSets().get( i ),
+				( tss, i ) -> tss.getTagSets().get( i ),
 				TagSet::setName,
 				TagSet::getName );
 
-		tagTable = new ColorTagTable<>( null,
+		tagTable = new ColorTagTable<>(
+				null,
 				ts -> ts.createTag( "Tag", colorGenerator.next() ),
 				ts -> ts.getTags().size(),
 				TagSet::removeTag,
-				(ts, i) -> ts.getTags().get( i ),
+				( ts, i ) -> ts.getTags().get( i ),
 				Tag::setLabel,
 				Tag::label,
 				( t, color ) -> t.setColor( color.getRGB() ),
@@ -99,7 +101,7 @@ public class TagSetPanel extends JPanel
 		splitPane.setDividerSize( 10 );
 		splitPane.setDividerLocation( 300 );
 		splitPane.setBorder( new MatteBorder( 0, 0, 1, 0, Color.LIGHT_GRAY ) );
-//		splitPane.setBorder( new EmptyBorder( 0, 0, 0, 0 ) );
+		//		splitPane.setBorder( new EmptyBorder( 0, 0, 0, 0 ) );
 
 		this.add( splitPane, BorderLayout.CENTER );
 	}
@@ -147,7 +149,8 @@ public class TagSetPanel extends JPanel
 	{
 		int n = 0;
 		String newName;
-		INCREMENT: while ( true )
+		INCREMENT:
+		while ( true )
 		{
 			newName = prefix + " (" + ( ++n ) + ")";
 			for ( int j = 0; j < tagSetStructure.getTagSets().size(); j++ )
@@ -173,7 +176,7 @@ public class TagSetPanel extends JPanel
 		@Override
 		public Integer next()
 		{
-			return ran.nextInt() | 0xFF000000 ;
+			return ran.nextInt() | 0xFF000000;
 		}
 	};
 }

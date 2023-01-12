@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -86,7 +86,6 @@ public class TrackSchemeStyleManager extends AbstractStyleManager< TrackSchemeSt
 		return Collections.unmodifiableList( new ArrayList<>( TrackSchemeStyle.defaults ) );
 	}
 
-
 	@Override
 	public synchronized void setSelectedStyle( final TrackSchemeStyle style )
 	{
@@ -127,8 +126,8 @@ public class TrackSchemeStyleManager extends AbstractStyleManager< TrackSchemeSt
 				if ( obj instanceof String )
 				{
 					defaultStyleName = ( String ) obj;
-//					System.out.println( "TrackSchemeStyleManager.loadStyles" );
-//					System.out.println( defaultStyleName );
+					//					System.out.println( "TrackSchemeStyleManager.loadStyles" );
+					//					System.out.println( defaultStyleName );
 				}
 				else if ( obj instanceof TrackSchemeStyle )
 				{
@@ -140,7 +139,7 @@ public class TrackSchemeStyleManager extends AbstractStyleManager< TrackSchemeSt
 							userStyles.add( ts );
 						else
 						{
-//							System.out.println( "Discarded style with duplicate name \"" + ts.getName() + "\"." );
+							//							System.out.println( "Discarded style with duplicate name \"" + ts.getName() + "\"." );
 						}
 					}
 				}
@@ -149,7 +148,7 @@ public class TrackSchemeStyleManager extends AbstractStyleManager< TrackSchemeSt
 		}
 		catch ( final FileNotFoundException e )
 		{
-//			System.out.println( "TrackScheme style file " + filename + " not found. Using builtin styles." );
+			//			System.out.println( "TrackScheme style file " + filename + " not found. Using builtin styles." );
 		}
 	}
 

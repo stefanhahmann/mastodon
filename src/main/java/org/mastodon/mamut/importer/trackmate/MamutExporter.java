@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -309,7 +309,8 @@ public class MamutExporter
 			folder = datasetXmlFile.getParentFile().getCanonicalPath();
 		}
 		catch ( final IOException e )
-		{}
+		{
+		}
 		attributes.add( new Attribute( FOLDER_ATTRIBUTE, folder ) );
 
 		// Image attributes.
@@ -429,7 +430,8 @@ public class MamutExporter
 
 				@Override
 				public void processVertexEarly( final Spot vertex, final DepthFirstSearch< Spot, Link > search )
-				{}
+				{
+				}
 
 				@Override
 				public void processEdge( final Link edge, final Spot from, final Spot to, final DepthFirstSearch< Spot, Link > search )
@@ -441,7 +443,8 @@ public class MamutExporter
 
 				@Override
 				public void crossComponent( final Spot from, final Spot to, final DepthFirstSearch< Spot, Link > search )
-				{}
+				{
+				}
 			};
 			search.setTraversalListener( searchListener );
 			search.start( root );
@@ -594,7 +597,7 @@ public class MamutExporter
 		return featuresElement;
 	}
 
-	@SuppressWarnings( { "unchecked", "rawtypes" } )
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private < T > void appendFeaturesDeclarationOfClass( final Class< T > clazz, final Element featuresElement, final String classFeatureDeclarationTag )
 	{
 		final List< ExportFeatureProjection< T > > projections;
@@ -707,8 +710,7 @@ public class MamutExporter
 		{
 			if ( fspec.getTargetClass().equals( target ) )
 			{
-				@SuppressWarnings( "unchecked" )
-				final Feature< T > feature = ( Feature< T > ) featureModel.getFeature( fspec );
+				@SuppressWarnings("unchecked") final Feature< T > feature = ( Feature< T > ) featureModel.getFeature( fspec );
 				final String fname = fspec.getKey();
 				if ( null == feature.projections() )
 					continue;
@@ -737,8 +739,7 @@ public class MamutExporter
 		{
 			if ( fspec.getTargetClass().equals( target ) )
 			{
-				@SuppressWarnings( "unchecked" )
-				final Feature< T > feature = ( Feature< T > ) featureModel.getFeature( fspec );
+				@SuppressWarnings("unchecked") final Feature< T > feature = ( Feature< T > ) featureModel.getFeature( fspec );
 				final String fname = fspec.getKey();
 				if ( null == feature.projections() )
 					continue;
@@ -827,7 +828,7 @@ public class MamutExporter
 	public static < T > Set< String > getLikelyExportedFeatureProjections( final FeatureSpecsService specsService, final int numSources, final Class< T > target )
 	{
 		final HashSet< String > names = new HashSet<>();
-		if (null == specsService)
+		if ( null == specsService )
 			return names;
 
 		final List< FeatureSpec< ?, T > > fspecs = specsService.getSpecs( target );
@@ -842,7 +843,7 @@ public class MamutExporter
 			for ( final FeatureProjectionSpec pspec : fspec.getProjectionSpecs() )
 			{
 				final String pname = pspec.getKey();
-				switch( fspec.getMultiplicity() )
+				switch ( fspec.getMultiplicity() )
 				{
 				case SINGLE:
 					names.add( sanitize( getProjectionExportName( fname, pname ) ) );

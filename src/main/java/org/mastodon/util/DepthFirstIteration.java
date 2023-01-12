@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -60,7 +60,7 @@ import net.imglib2.util.Cast;
  * and call {@link Step#truncate()})
  * <p>
  * Let us look at a small example. Lets consider this small graph:
- * 
+ *
  * <pre>
  *  a -&gt; b -&gt; c
  *   \    \
@@ -70,7 +70,7 @@ import net.imglib2.util.Cast;
  * </pre>
  *
  * An depth first iteration can be executed using this code:
- * 
+ *
  * <pre>
  * {@code
  * for ( DepthFirstIteration.Step<Spot> step : DepthFirstIteration.forRoot( graph, root ) )
@@ -85,10 +85,10 @@ import net.imglib2.util.Cast;
  * }
  * }
  * </pre>
- * 
+ *
  * It will print the following on the console:
  * <p>
- * 
+ *
  * <pre>
  * first visit a
  * first visit b
@@ -104,7 +104,8 @@ import net.imglib2.util.Cast;
 public class DepthFirstIteration
 {
 
-	public interface Step<V extends Vertex<?>> {
+	public interface Step< V extends Vertex< ? > >
+	{
 
 		/*
 		 * @returns the node that is currently visited by the iterator.
@@ -142,12 +143,13 @@ public class DepthFirstIteration
 		void truncate();
 	}
 
-	public static <V extends Vertex<?>> Iterable<Step<V>> forRoot( final Graph<V, ?> graph, final V root )
+	public static < V extends Vertex< ? > > Iterable< Step< V > > forRoot( final Graph< V, ? > graph, final V root )
 	{
 		return () -> new DFIterator<>( graph, root );
 	}
 
-	private DepthFirstIteration( ) {
+	private DepthFirstIteration()
+	{
 	}
 
 	private enum Stage
@@ -155,16 +157,21 @@ public class DepthFirstIteration
 		INIT, FIRST_VISIT, SECOND_VISIT, LEAF;
 	}
 
-	private static class DFIterator<V extends Vertex<?>> implements Iterator<Step<V>>, Step<V>
+	private static class DFIterator< V extends Vertex< ? > > implements Iterator< Step< V > >, Step< V >
 	{
-		private final Graph<V, ?> graph;
-		private Stage stage = Stage.INIT;
-		private V node = null;
-		private boolean truncate = false;
-		private int depth = -1;
-		private final List<Entry<V>> stack = new ArrayList<>();
+		private final Graph< V, ? > graph;
 
-		public DFIterator( final Graph<V, ?> graph, final V root )
+		private Stage stage = Stage.INIT;
+
+		private V node = null;
+
+		private boolean truncate = false;
+
+		private int depth = -1;
+
+		private final List< Entry< V > > stack = new ArrayList<>();
+
+		public DFIterator( final Graph< V, ? > graph, final V root )
 		{
 			this.graph = graph;
 			push( root );
@@ -174,30 +181,31 @@ public class DepthFirstIteration
 		public boolean hasNext()
 		{
 			return depth > 0 ||
-					(stage == Stage.FIRST_VISIT && !truncate) ||
+					( stage == Stage.FIRST_VISIT && !truncate ) ||
 					stage == Stage.INIT;
 		}
 
 		@Override
-		public Step<V> next()
+		public Step< V > next()
 		{
-			if( stage == Stage.INIT) {
-				final Entry<V> entry = stack.get( depth );
+			if ( stage == Stage.INIT )
+			{
+				final Entry< V > entry = stack.get( depth );
 				this.node = entry.node;
 				this.stage = entry.edges.hasNext() ? Stage.FIRST_VISIT : Stage.LEAF;
 				this.truncate = false;
 				return this;
 			}
 
-			if(stage == Stage.FIRST_VISIT && !truncate )
+			if ( stage == Stage.FIRST_VISIT && !truncate )
 			{
 				gotoNextChild();
 				return this;
 			}
-			graph.releaseRef( stack.get(depth).node );
+			graph.releaseRef( stack.get( depth ).node );
 			depth--;
-			final Entry<V> entry = stack.get( depth );
-			if(entry.edges.hasNext())
+			final Entry< V > entry = stack.get( depth );
+			if ( entry.edges.hasNext() )
 			{
 				gotoNextChild();
 				return this;
@@ -208,10 +216,10 @@ public class DepthFirstIteration
 			return this;
 		}
 
-		private DFIterator<V> gotoNextChild()
+		private DFIterator< V > gotoNextChild()
 		{
-			Entry<V> entry = stack.get( depth );
-			final Edge<V> edge = entry.edges.next();
+			Entry< V > entry = stack.get( depth );
+			final Edge< V > edge = entry.edges.next();
 			final V child = edge.getTarget( graph.vertexRef() );
 			push( child );
 			entry = stack.get( depth );
@@ -259,20 +267,23 @@ public class DepthFirstIteration
 
 		private void push( final V root )
 		{
-			Entry<V> entry;
+			Entry< V > entry;
 			depth++;
-			if( stack.size() <= depth ) {
-				entry = new Entry<V>();
+			if ( stack.size() <= depth )
+			{
+				entry = new Entry< V >();
 				stack.add( entry );
 			}
-			entry = stack.get(depth);
+			entry = stack.get( depth );
 			entry.node = root;
 			entry.edges = Cast.unchecked( root.outgoingEdges().iterator() );
 		}
 
-		private static class Entry<V extends Vertex<?>> {
+		private static class Entry< V extends Vertex< ? > >
+		{
 			private V node;
-			private Iterator<Edge<V>> edges;
+
+			private Iterator< Edge< V > > edges;
 		}
 
 	}

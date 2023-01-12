@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -136,13 +136,12 @@ public class RenderSettingsIO
 		{
 			try
 			{
-				final Map< Object, Object > mapping = constructMapping( ( MappingNode  ) node );
+				final Map< Object, Object > mapping = constructMapping( ( MappingNode ) node );
 				final float width = ( ( Double ) mapping.get( "width" ) ).floatValue();
 				final int cap = ( Integer ) mapping.get( "cap" );
 				final int join = ( Integer ) mapping.get( "join" );
 				final float miterlimit = ( ( Double ) mapping.get( "miterlimit" ) ).floatValue();
-				@SuppressWarnings( "unchecked" )
-				final List< Double > list = ( List< Double > ) mapping.get( "dash" );
+				@SuppressWarnings("unchecked") final List< Double > list = ( List< Double > ) mapping.get( "dash" );
 				float[] dash = null;
 				if ( list != null && !list.isEmpty() )
 				{
@@ -154,7 +153,7 @@ public class RenderSettingsIO
 				final float dash_phase = ( ( Double ) mapping.get( "dash_phase" ) ).floatValue();
 				return new BasicStroke( width, cap, join, miterlimit, dash, dash_phase );
 			}
-			catch( final Exception e )
+			catch ( final Exception e )
 			{
 				e.printStackTrace();
 			}
@@ -175,7 +174,7 @@ public class RenderSettingsIO
 		public Node representData( final Object data )
 		{
 			final RenderSettings s = ( RenderSettings ) data;
-			final Map< String, Object > mapping = new LinkedHashMap< >();
+			final Map< String, Object > mapping = new LinkedHashMap<>();
 
 			mapping.put( "name", s.getName() );
 
@@ -201,7 +200,6 @@ public class RenderSettingsIO
 			mapping.put( "colorSpot", s.getColorSpot() );
 			mapping.put( "colorPast", s.getColorPast() );
 			mapping.put( "colorFuture", s.getColorFuture() );
-			
 
 			final Node node = representMapping( getTag(), mapping, getDefaultFlowStyle() );
 			return node;

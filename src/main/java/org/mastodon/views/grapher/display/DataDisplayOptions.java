@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -53,7 +53,7 @@ public class DataDisplayOptions
 	/**
 	 * Sets the X position of the top-left corner of the
 	 * {@link TrackSchemeFrame}.
-	 * 
+	 *
 	 * @param x
 	 *            the X position.
 	 * @return this instance.
@@ -67,7 +67,7 @@ public class DataDisplayOptions
 	/**
 	 * Sets the Y position of the top-left corner of the
 	 * {@link TrackSchemeFrame}.
-	 * 
+	 *
 	 * @param y
 	 *            the Y position.
 	 * @return this instance.
@@ -136,6 +136,7 @@ public class DataDisplayOptions
 		values.keyPressedManager = manager;
 		return this;
 	}
+
 	/**
 	 * Sets the navigation etiquette.
 	 *
@@ -217,15 +218,15 @@ public class DataDisplayOptions
 		public DataDisplayOptions optionsFromValues()
 		{
 			return new DataDisplayOptions().
-				x( x ).
-				y( y ).
-				width( width ).
-				height( height ).
-				animationDurationMillis( animationDurationMillis ).
-				navigationEtiquette( navigationEtiquette ).
-				style( style ).
-				dataDisplayOverlayFactory( dataDisplayOverlayFactory ).
-				graphColorGenerator( graphColorGenerator );
+					x( x ).
+					y( y ).
+					width( width ).
+					height( height ).
+					animationDurationMillis( animationDurationMillis ).
+					navigationEtiquette( navigationEtiquette ).
+					style( style ).
+					dataDisplayOverlayFactory( dataDisplayOverlayFactory ).
+					graphColorGenerator( graphColorGenerator );
 		}
 
 		public int getX()
