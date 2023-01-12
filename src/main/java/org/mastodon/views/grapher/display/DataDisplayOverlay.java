@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -118,7 +118,8 @@ public class DataDisplayOverlay implements OverlayRenderer, OffsetAxesListener
 			final FocusModel< DataVertex, DataEdge > focus,
 			final PaintDecorations paintDecorations,
 			final PaintGraph paintGraph,
-			final DataDisplayOptions options )
+			final DataDisplayOptions options
+	)
 	{
 		this.graph = graph;
 		this.highlight = highlight;
@@ -380,7 +381,8 @@ public class DataDisplayOverlay implements OverlayRenderer, OffsetAxesListener
 				final DataGraph< ?, ? > graph,
 				final HighlightModel< DataVertex, DataEdge > highlight,
 				final FocusModel< DataVertex, DataEdge > focus,
-				final DataDisplayOptions options )
+				final DataDisplayOptions options
+		)
 		{
 			return new DataDisplayOverlay(
 					graph,
@@ -388,7 +390,8 @@ public class DataDisplayOverlay implements OverlayRenderer, OffsetAxesListener
 					focus,
 					new PaintDecorations(),
 					new PaintGraph(),
-					options );
+					options
+			);
 		}
 	}
 
@@ -412,7 +415,8 @@ public class DataDisplayOverlay implements OverlayRenderer, OffsetAxesListener
 			final double y,
 			final ScreenEdge edge,
 			final ScreenVertex source,
-			final ScreenVertex target )
+			final ScreenVertex target
+	)
 	{
 		final double x1 = source.getX();
 		final double y1 = source.getY();

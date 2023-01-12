@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -82,7 +82,8 @@ public class ColorTagTable< C, T > extends AbstractTagTable< C, T, ColorTagTable
 			final BiConsumer< T, String > setName,
 			final Function< T, String > getName,
 			final BiConsumer< T, Color > setColor,
-			final Function< T, Color > getColor )
+			final Function< T, Color > getColor
+	)
 	{
 		super( elements, addElement, size, remove, get, setName, getName, 1 );
 		this.setColor = setColor;
@@ -98,7 +99,8 @@ public class ColorTagTable< C, T > extends AbstractTagTable< C, T, ColorTagTable
 	@Override
 	protected Elements wrap( final C wrapped )
 	{
-		return new Elements( wrapped ) {
+		return new Elements( wrapped )
+		{
 			@Override
 			protected Element wrap( final T wrapped )
 			{
@@ -137,8 +139,10 @@ public class ColorTagTable< C, T > extends AbstractTagTable< C, T, ColorTagTable
 		}
 
 		@Override
-		public Component getTableCellRendererComponent( final JTable table, final Object value,
-				final boolean isSelected, final boolean hasFocus, final int row, final int column )
+		public Component getTableCellRendererComponent(
+				final JTable table, final Object value,
+				final boolean isSelected, final boolean hasFocus, final int row, final int column
+		)
 		{
 			if ( row == elements.size() )
 				setIcon( null );

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -83,11 +83,13 @@ public class TrackSchemeVertex extends AbstractVertex< TrackSchemeVertex, TrackS
 	@Override
 	public String toString()
 	{
-		return String.format( "TrackSchemeVertex( ID=%d, LABEL=%s, X=%.2f, TIMEPOINT=%d )",
+		return String.format(
+				"TrackSchemeVertex( ID=%d, LABEL=%s, X=%.2f, TIMEPOINT=%d )",
 				getModelVertexId(),
 				getLabel(),
 				getLayoutX(),
-				getTimepoint() );
+				getTimepoint()
+		);
 	}
 
 	TrackSchemeVertex( final TrackSchemeVertexPool pool )
@@ -146,7 +148,6 @@ public class TrackSchemeVertex extends AbstractVertex< TrackSchemeVertex, TrackS
 	{
 		pool.firstTimepoint.setQuiet( this, timepoint );
 	}
-
 
 	/**
 	 * Internal pool index of last {@link ScreenVertex} that was created for

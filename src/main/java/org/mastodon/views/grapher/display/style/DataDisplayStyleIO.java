@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -105,7 +105,8 @@ public class DataDisplayStyleIO
 					c.getRed(),
 					c.getGreen(),
 					c.getBlue(),
-					c.getAlpha() );
+					c.getAlpha()
+			);
 			return representSequence( getTag(), rgba, FLOW );
 		}
 	}
@@ -122,16 +123,17 @@ public class DataDisplayStyleIO
 		{
 			try
 			{
-				@SuppressWarnings( "unchecked" )
-				final List< Integer > rgba = ( List< Integer > ) constructSequence( ( SequenceNode ) node );
+				@SuppressWarnings("unchecked") final List< Integer > rgba = ( List< Integer > ) constructSequence( ( SequenceNode ) node );
 				return new Color(
 						rgba.get( 0 ),
 						rgba.get( 1 ),
 						rgba.get( 2 ),
-						rgba.get( 3 ) );
+						rgba.get( 3 )
+				);
 			}
 			catch ( final Exception e )
-			{}
+			{
+			}
 			return null;
 		}
 	}
@@ -186,8 +188,7 @@ public class DataDisplayStyleIO
 				final int cap = ( Integer ) mapping.get( "cap" );
 				final int join = ( Integer ) mapping.get( "join" );
 				final float miterlimit = ( ( Double ) mapping.get( "miterlimit" ) ).floatValue();
-				@SuppressWarnings( "unchecked" )
-				final List< Double > list = ( List< Double > ) mapping.get( "dash" );
+				@SuppressWarnings("unchecked") final List< Double > list = ( List< Double > ) mapping.get( "dash" );
 				float[] dash = null;
 				if ( list != null && !list.isEmpty() )
 				{
@@ -353,7 +354,7 @@ public class DataDisplayStyleIO
 				s.vertexHighlightStroke( ( Stroke ) mapping.getOrDefault( "vertexHighlightStroke", df.getVertexHighlightStroke() ) );
 				s.focusStroke( ( Stroke ) mapping.getOrDefault( "focusStroke", df.getFocusStroke() ) );
 
-				s.drawVertexName( (boolean) mapping.getOrDefault( "drawVertexName", df.isDrawVertexName() ) );
+				s.drawVertexName( ( boolean ) mapping.getOrDefault( "drawVertexName", df.isDrawVertexName() ) );
 
 				return s;
 			}

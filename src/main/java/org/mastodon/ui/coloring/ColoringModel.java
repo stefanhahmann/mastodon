@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -77,7 +77,8 @@ public abstract class ColoringModel
 	public ColoringModel(
 			final TagSetModel< ?, ? > tagSetModel,
 			final FeatureColorModeManager featureColorModeManager,
-			final FeatureModel featureModel )
+			final FeatureModel featureModel
+	)
 	{
 		this.tagSetModel = tagSetModel;
 		this.featureColorModeManager = featureColorModeManager;
@@ -146,8 +147,9 @@ public abstract class ColoringModel
 		{
 			final String name = featureColorMode.getName();
 			final Optional< FeatureColorMode > mode = Stream.concat(
-					featureColorModeManager.getBuiltinStyles().stream(),
-					featureColorModeManager.getUserStyles().stream() )
+							featureColorModeManager.getBuiltinStyles().stream(),
+							featureColorModeManager.getUserStyles().stream()
+					)
 					.filter( m -> m.getName().equals( name ) && isValid( m ) )
 					.findFirst();
 			if ( mode.isPresent() )
@@ -185,7 +187,7 @@ public abstract class ColoringModel
 	 * The {@link #isValid(FeatureColorMode)} method must return
 	 * <code>true</code> only for the modes that are defined for the graph
 	 * objects to color with this model.
-	 * 
+	 *
 	 * @return a {@link GraphColorGenerator}.
 	 */
 	public abstract GraphColorGenerator< ?, ? > getFeatureGraphColorGenerator();

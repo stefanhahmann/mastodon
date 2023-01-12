@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -58,7 +58,8 @@ public class ColoringMenu implements TagSetModel.TagSetModelListener, FeatureMod
 
 	public ColoringMenu(
 			final JMenu menu,
-			final ColoringModel coloringModel )
+			final ColoringModel coloringModel
+	)
 	{
 		this.menu = menu;
 		this.coloringModel = coloringModel;
@@ -79,7 +80,8 @@ public class ColoringMenu implements TagSetModel.TagSetModelListener, FeatureMod
 					ts.getName(),
 					() -> coloringModel.getTagSet() == ts,
 					() -> true,
-					() -> coloringModel.colorByTagSet( ts ) ) );
+					() -> coloringModel.colorByTagSet( ts )
+			) );
 
 		if ( !tagSets.isEmpty() )
 			menu.add( new JSeparator() );
@@ -92,7 +94,8 @@ public class ColoringMenu implements TagSetModel.TagSetModelListener, FeatureMod
 						mode.getName(),
 						() -> coloringModel.getFeatureColorMode() == mode,
 						() -> coloringModel.isValid( mode ),
-						() -> coloringModel.colorByFeature( mode ) ) ) );
+						() -> coloringModel.colorByFeature( mode )
+				) ) );
 
 		if ( !( l1.isEmpty() && l2.isEmpty() ) )
 			menu.add( new JSeparator() );
@@ -101,7 +104,8 @@ public class ColoringMenu implements TagSetModel.TagSetModelListener, FeatureMod
 				"None",
 				() -> coloringModel.noColoring(),
 				() -> true,
-				() -> coloringModel.colorByNone() ) );
+				() -> coloringModel.colorByNone()
+		) );
 
 	}
 
@@ -151,7 +155,8 @@ public class ColoringMenu implements TagSetModel.TagSetModelListener, FeatureMod
 				final String name,
 				final BooleanSupplier isSelected,
 				final BooleanSupplier isEnabled,
-				final Runnable onSelect )
+				final Runnable onSelect
+		)
 		{
 			super( name );
 			this.isSelected = isSelected;

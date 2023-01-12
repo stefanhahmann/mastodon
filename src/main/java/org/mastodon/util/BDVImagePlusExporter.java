@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -74,7 +74,7 @@ import net.imglib2.util.Intervals;
 /**
  * Function to export the current image to xml/hdf5. Taken and adapted from
  * BDV-core fiji.
- * 
+ *
  * @see <a href=
  *      "https://github.com/bigdataviewer/bigdataviewer_fiji/blob/master/src/main/java/bdv/ij/ExportImagePlusPlugIn.java">ExportImagePlusPlugIn</a>
  *
@@ -123,7 +123,8 @@ public class BDVImagePlusExporter
 				imp.getDisplayRangeMin(),
 				imp.getDisplayRangeMax(),
 				autoMipmapSettings,
-				targetPath );
+				targetPath
+		);
 		if ( params == null )
 			return null;
 
@@ -300,7 +301,8 @@ public class BDVImagePlusExporter
 				final boolean setMipmapManual, final int[][] resolutions, final int[][] subdivisions,
 				final File seqFile, final File hdf5File,
 				final MinMaxOption minMaxOption, final double rangeMin, final double rangeMax, final boolean deflate,
-				final boolean split, final int timepointsPerPartition, final int setupsPerPartition )
+				final boolean split, final int timepointsPerPartition, final int setupsPerPartition
+		)
 		{
 			this.setMipmapManual = setMipmapManual;
 			this.resolutions = resolutions;
@@ -341,7 +343,8 @@ public class BDVImagePlusExporter
 			final double impMin,
 			final double impMax,
 			final ExportMipmapInfo autoMipmapSettings,
-			final String defaultPath )
+			final String defaultPath
+	)
 	{
 		if ( lastMinMaxChoice == 0 ) // use ImageJs...
 		{
@@ -366,11 +369,11 @@ public class BDVImagePlusExporter
 					"Compute min/max of the (hyper-)stack",
 					"Use values specified below" };
 			gd.addChoice( "Value_range", minMaxChoices, minMaxChoices[ lastMinMaxChoice ] );
-			final Choice cMinMaxChoices = (Choice) gd.getChoices().lastElement();
+			final Choice cMinMaxChoices = ( Choice ) gd.getChoices().lastElement();
 			gd.addNumericField( "Min", lastMin, 0 );
-			final TextField tfMin = (TextField) gd.getNumericFields().lastElement();
+			final TextField tfMin = ( TextField ) gd.getNumericFields().lastElement();
 			gd.addNumericField( "Max", lastMax, 0 );
-			final TextField tfMax = (TextField) gd.getNumericFields().lastElement();
+			final TextField tfMax = ( TextField ) gd.getNumericFields().lastElement();
 
 			gd.addMessage( "" );
 			gd.addCheckbox( "split_hdf5", lastSplit );
@@ -502,6 +505,7 @@ public class BDVImagePlusExporter
 			final String hdf5Filename = seqFilename.substring( 0, seqFilename.length() - 4 ) + ".h5";
 			final File hdf5File = new File( hdf5Filename );
 
-			return new Parameters( lastSetMipmapManual, resolutions, subdivisions, seqFile, hdf5File, minMaxOption, lastMin, lastMax, lastDeflate, lastSplit, lastTimepointsPerPartition, lastSetupsPerPartition );		}
+			return new Parameters( lastSetMipmapManual, resolutions, subdivisions, seqFile, hdf5File, minMaxOption, lastMin, lastMax, lastDeflate, lastSplit, lastTimepointsPerPartition, lastSetupsPerPartition );
+		}
 	}
 }

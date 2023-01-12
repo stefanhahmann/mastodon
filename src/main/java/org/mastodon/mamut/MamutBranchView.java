@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -87,10 +87,10 @@ import org.scijava.ui.behaviour.util.Behaviours;
 import org.scijava.ui.behaviour.util.WrappedActionMap;
 import org.scijava.ui.behaviour.util.WrappedInputMap;
 
-public class MamutBranchView< 
-	VG extends ViewGraph< BranchSpot, BranchLink, V, E >, 
-	V extends Vertex< E >, 
-	E extends Edge< V > >
+public class MamutBranchView<
+		VG extends ViewGraph< BranchSpot, BranchLink, V, E >,
+		V extends Vertex< E >,
+		E extends Edge< V > >
 		implements IMastodonFrameView, IMastodonView
 {
 
@@ -233,7 +233,8 @@ public class MamutBranchView<
 	protected final ColoringModel registerBranchColoring(
 			final GraphColorGeneratorAdapter< BranchSpot, BranchLink, V, E > colorGeneratorAdapter,
 			final JMenuHandle menuHandle,
-			final Runnable refresh )
+			final Runnable refresh
+	)
 	{
 		final FeatureModel featureModel = appModel.getModel().getFeatureModel();
 		final FeatureColorModeManager featureColorModeManager = appModel.getFeatureColorModeManager();
@@ -253,8 +254,7 @@ public class MamutBranchView<
 		featureModel.listeners().add( coloringMenu );
 		onClose( () -> featureModel.listeners().remove( coloringMenu ) );
 
-		@SuppressWarnings( "unchecked" )
-		final ColoringModelMain.ColoringChangedListener coloringChangedListener = () -> {
+		@SuppressWarnings("unchecked") final ColoringModelMain.ColoringChangedListener coloringChangedListener = () -> {
 			if ( coloringModel.noColoring() )
 				colorGeneratorAdapter.setColorGenerator( null );
 			else if ( coloringModel.getTagSet() != null )
@@ -271,7 +271,8 @@ public class MamutBranchView<
 	protected void registerColorbarOverlay(
 			final ColorBarOverlay colorBarOverlay,
 			final JMenuHandle menuHandle,
-			final Runnable refresh )
+			final Runnable refresh
+	)
 	{
 		menuHandle.getMenu().add( new JSeparator() );
 		final JCheckBoxMenuItem toggleOverlay = new JCheckBoxMenuItem( "Show colorbar", ColorBarOverlay.DEFAULT_VISIBLE );
@@ -305,14 +306,16 @@ public class MamutBranchView<
 
 	protected void registerTagSetMenu(
 			final JMenuHandle menuHandle,
-			final Runnable refresh )
+			final Runnable refresh
+	)
 	{
 		final Model model = appModel.getModel();
 		final TagSetMenu< Spot, Link > tagSetMenu = new TagSetMenu<>(
 				menuHandle.getMenu(),
 				model.getTagSetModel(),
 				appModel.getSelectionModel(),
-				model.getGraph().getLock(), model );
+				model.getGraph().getLock(), model
+		);
 		tagSetModel.listeners().add( tagSetMenu );
 		onClose( () -> tagSetModel.listeners().remove( tagSetMenu ) );
 	}

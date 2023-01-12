@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -29,6 +29,7 @@
 package org.mastodon.views.bdv.overlay;
 
 import bdv.viewer.TransformListener;
+
 import java.util.concurrent.locks.Lock;
 
 import org.mastodon.spatial.SpatioTemporalIndex;
@@ -51,7 +52,8 @@ public class OverlayContext< V extends OverlayVertex< V, ? > > implements
 
 	public OverlayContext(
 			final OverlayGraph< V, ? > overlayGraph,
-			final OverlayGraphRenderer< V, ? > renderer )
+			final OverlayGraphRenderer< V, ? > renderer
+	)
 	{
 		this.graph = overlayGraph;
 		this.index = graph.getIndex();
@@ -67,10 +69,10 @@ public class OverlayContext< V extends OverlayVertex< V, ? > > implements
 	@Override
 	public Iterable< V > getInsideVertices( final int timepoint )
 	{
-//		final ConvexPolytope visiblePolytope = renderer.getVisiblePolytopeGlobal( transform, timepoint );
-//		final ClipConvexPolytope< V > ccp = index.getSpatialIndex( timepoint ).getClipConvexPolytope();
-//		ccp.clip( visiblePolytope );
-//		return ccp.getInsideValues();
+		//		final ConvexPolytope visiblePolytope = renderer.getVisiblePolytopeGlobal( transform, timepoint );
+		//		final ClipConvexPolytope< V > ccp = index.getSpatialIndex( timepoint ).getClipConvexPolytope();
+		//		ccp.clip( visiblePolytope );
+		//		return ccp.getInsideValues();
 		return renderer.getVisibleVertices( transform, timepoint );
 	}
 

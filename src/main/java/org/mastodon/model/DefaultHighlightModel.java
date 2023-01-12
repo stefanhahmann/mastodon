@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -83,7 +83,7 @@ public class DefaultHighlightModel< V extends Vertex< E >, E extends Edge< V > >
 	@Override
 	public synchronized void highlightVertex( final V vertex )
 	{
-		final int id = ( vertex == null ) ? - 1 : idmap.getVertexId( vertex );
+		final int id = ( vertex == null ) ? -1 : idmap.getVertexId( vertex );
 		if ( id < 0 )
 			clearHighlight();
 		else if ( highlightedVertexId != id )
@@ -103,7 +103,7 @@ public class DefaultHighlightModel< V extends Vertex< E >, E extends Edge< V > >
 	@Override
 	public synchronized void highlightEdge( final E edge )
 	{
-		final int id = ( edge == null ) ? - 1 : idmap.getEdgeId( edge );
+		final int id = ( edge == null ) ? -1 : idmap.getEdgeId( edge );
 		if ( id < 0 )
 			clearHighlight();
 		else if ( highlightedEdgeId != id )
@@ -185,7 +185,8 @@ public class DefaultHighlightModel< V extends Vertex< E >, E extends Edge< V > >
 
 	@Override
 	public void vertexAdded( final V vertex )
-	{}
+	{
+	}
 
 	@Override
 	public synchronized void vertexRemoved( final V vertex )
@@ -196,7 +197,8 @@ public class DefaultHighlightModel< V extends Vertex< E >, E extends Edge< V > >
 
 	@Override
 	public void edgeAdded( final E edge )
-	{}
+	{
+	}
 
 	@Override
 	public synchronized void edgeRemoved( final E edge )

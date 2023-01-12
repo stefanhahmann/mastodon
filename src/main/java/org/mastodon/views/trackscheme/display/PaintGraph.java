@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -96,10 +96,15 @@ public class PaintGraph
 	 */
 
 	private static final double simplifiedVertexRadius = 2.5;
+
 	private static final double simplifiedVertexSelectTolerance = 3.5;
+
 	private static final double minDisplayVertexDist = 17.0;
+
 	private static final double maxDisplayVertexSize = 100.0;
+
 	private static final double minDisplaySimplifiedVertexDist = 5.0;
+
 	private static final double avgLabelLetterWidth = 5.0;
 
 	/*
@@ -130,7 +135,8 @@ public class PaintGraph
 			final int highlightedVertexId,
 			final int highlightedEdgeId,
 			final int focusedVertexId,
-			final TrackSchemeStyle style )
+			final TrackSchemeStyle style
+	)
 	{
 		this.g2 = g2;
 		this.highlightedVertexId = highlightedVertexId;
@@ -315,7 +321,8 @@ public class PaintGraph
 		final int specifiedColor = edge.getColor();
 		final Color drawColor = getColor( selected, ghost, transition, ratio, specifiedColor,
 				style.getEdgeColor(), style.getSelectedEdgeColor(),
-				style.getGhostEdgeColor(), style.getGhostSelectedEdgeColor() );
+				style.getGhostEdgeColor(), style.getGhostSelectedEdgeColor()
+		);
 		g2.setColor( drawColor );
 		if ( highlighted )
 			g2.setStroke( edgeHighlightStroke );
@@ -367,7 +374,8 @@ public class PaintGraph
 				disappear ? style.getSelectedSimplifiedVertexFillColor() : style.getSimplifiedVertexFillColor(),
 				style.getSelectedSimplifiedVertexFillColor(),
 				disappear ? style.getGhostSelectedSimplifiedVertexFillColor() : style.getGhostSimplifiedVertexFillColor(),
-				style.getGhostSelectedSimplifiedVertexFillColor() );
+				style.getGhostSelectedSimplifiedVertexFillColor()
+		);
 
 		final double x = vertex.getX();
 		final double y = vertex.getY();
@@ -403,10 +411,12 @@ public class PaintGraph
 
 		final Color fillColor = getColor( selected, ghost, transition, ratio, specifiedColor,
 				style.getVertexFillColor(), style.getSelectedVertexFillColor(),
-				style.getGhostVertexFillColor(), style.getGhostSelectedVertexFillColor() );
+				style.getGhostVertexFillColor(), style.getGhostSelectedVertexFillColor()
+		);
 		final Color drawColor = getColor( selected, ghost, transition, ratio, 0,
 				style.getVertexDrawColor(), style.getSelectedVertexDrawColor(),
-				style.getGhostVertexDrawColor(), style.getGhostSelectedVertexDrawColor() );
+				style.getGhostVertexDrawColor(), style.getGhostSelectedVertexDrawColor()
+		);
 
 		final double x = vertex.getX();
 		final double y = vertex.getY();
@@ -448,7 +458,7 @@ public class PaintGraph
 
 	private void drawTextCentered( double x, double y, String label, Font font )
 	{
-		if( ! g2.getClipBounds( tmpRectangle ).contains( x, y ) )
+		if ( !g2.getClipBounds( tmpRectangle ).contains( x, y ) )
 			return;
 
 		final FontRenderContext frc = g2.getFontRenderContext();
@@ -468,7 +478,8 @@ public class PaintGraph
 			final Color normalColor,
 			final Color selectedColor,
 			final Color ghostNormalColor,
-			final Color ghostSelectedColor )
+			final Color ghostSelectedColor
+	)
 	{
 		if ( transition == NONE )
 		{

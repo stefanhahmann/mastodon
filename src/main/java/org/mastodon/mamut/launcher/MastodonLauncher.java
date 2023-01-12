@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -313,7 +313,8 @@ public class MastodonLauncher extends JFrame
 			}
 		}
 		catch ( final Exception e )
-		{}
+		{
+		}
 		return null;
 	}
 
@@ -370,7 +371,7 @@ public class MastodonLauncher extends JFrame
 				{
 					final WindowManager windowManager = createWindowManager();
 					final MainWindow mainWindow = new MainWindow( windowManager );
-					
+
 					/*
 					 * Action when user closes source image plus.
 					 */
@@ -397,7 +398,8 @@ public class MastodonLauncher extends JFrame
 										"Confirm closing image",
 										JOptionPane.YES_NO_OPTION,
 										JOptionPane.QUESTION_MESSAGE,
-										MastodonIcons.MASTODON_ICON_MEDIUM );
+										MastodonIcons.MASTODON_ICON_MEDIUM
+								);
 								if ( val == JOptionPane.YES_OPTION )
 								{
 									final ActionMap actionMap = windowManager.getAppModel().getAppActions().getActionMap();
@@ -408,14 +410,15 @@ public class MastodonLauncher extends JFrame
 							}
 						} );
 					}
-					
+
 					// Check whether the imp can be found on disk.
 					if ( imp.getOriginalFileInfo() == null ||
 							imp.getOriginalFileInfo().directory == null ||
 							imp.getOriginalFileInfo().fileName == null ||
 							!new File( imp.getOriginalFileInfo().directory, imp.getOriginalFileInfo().fileName ).exists() )
 					{
-						JOptionPane.showMessageDialog( gui,
+						JOptionPane.showMessageDialog(
+								gui,
 								"Warning.\n"
 										+ "\n"
 										+ "The image being used for this new \n"
@@ -427,7 +430,8 @@ public class MastodonLauncher extends JFrame
 										+ "file when saving the Mastodon project. ",
 								"Source image not saved",
 								JOptionPane.WARNING_MESSAGE,
-								MastodonIcons.MASTODON_ICON_MEDIUM );
+								MastodonIcons.MASTODON_ICON_MEDIUM
+						);
 					}
 
 					windowManager.getProjectManager().open( new MamutImagePlusProject( imp ) );
@@ -562,7 +566,8 @@ public class MastodonLauncher extends JFrame
 				null,
 				new XmlFileFilter(),
 				"Import MaMuT Project",
-				FileChooser.DialogType.LOAD );
+				FileChooser.DialogType.LOAD
+		);
 		if ( file == null )
 		{
 			disabler.reenable();
@@ -615,7 +620,8 @@ public class MastodonLauncher extends JFrame
 								new ExtensionFileFilter( "mastodon" ),
 								"Open Mastodon Project",
 								FileChooser.DialogType.LOAD,
-								SelectionMode.FILES_AND_DIRECTORIES );
+								SelectionMode.FILES_AND_DIRECTORIES
+						);
 						if ( file == null )
 							return;
 					}

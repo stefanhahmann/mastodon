@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -42,9 +42,9 @@ public interface LineageTreeLayout
 {
 	void layout();
 
-	void layout( Collection<TrackSchemeVertex> layoutRoots );
+	void layout( Collection< TrackSchemeVertex > layoutRoots );
 
-	void layout( Collection<TrackSchemeVertex> layoutRoots, int mark );
+	void layout( Collection< TrackSchemeVertex > layoutRoots, int mark );
 
 	double getCurrentLayoutMinX();
 
@@ -54,7 +54,7 @@ public interface LineageTreeLayout
 
 	int nextLayoutTimestamp();
 
-	void cropAndScale( ScreenTransform transform, ScreenEntities screenEntities, int decorationsOffsetX, int decorationsOffsetY, GraphColorGenerator<TrackSchemeVertex, TrackSchemeEdge> colorGenerator );
+	void cropAndScale( ScreenTransform transform, ScreenEntities screenEntities, int decorationsOffsetX, int decorationsOffsetY, GraphColorGenerator< TrackSchemeVertex, TrackSchemeEdge > colorGenerator );
 
 	TrackSchemeVertex getClosestActiveVertex( RealLocalizable layoutPos, double aspectRatioXtoY, TrackSchemeVertex ref );
 
@@ -86,8 +86,10 @@ public interface LineageTreeLayout
 
 	interface LineageTreeLayoutFactory
 	{
-		LineageTreeLayout create( final RootsModel<TrackSchemeVertex> rootsModel,
+		LineageTreeLayout create(
+				final RootsModel< TrackSchemeVertex > rootsModel,
 				final TrackSchemeGraph< ?, ? > graph,
-				final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection );
+				final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection
+		);
 	}
 }

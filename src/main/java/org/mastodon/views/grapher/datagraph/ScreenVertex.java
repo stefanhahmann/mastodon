@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -47,13 +47,21 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	public static class ScreenVertexLayout extends PoolObjectLayout
 	{
 		final IndexField origVertex = indexField();
+
 		final DoubleField xOffset = doubleField();
+
 		final DoubleField yOffset = doubleField();
+
 		final DoubleField vertexDist = doubleField();
+
 		final BooleanField selected = booleanField();
+
 		final ByteField transition = byteField();
+
 		final IndexField ipScreenVertex = indexField();
+
 		final DoubleField ipRatio = doubleField();
+
 		final IntField color = intField();
 	}
 
@@ -70,7 +78,8 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 			final double x,
 			final double y,
 			final boolean selected,
-			final int color )
+			final int color
+	)
 	{
 		setDataVertexId( id );
 		setLabel( label );
@@ -252,7 +261,8 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 
 	@Override
 	protected void setToUninitializedState()
-	{}
+	{
+	}
 
 	/**
 	 * Set all fields as in specified {@link ScreenVertex} (which is possibly
@@ -282,14 +292,16 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	@Override
 	public String toString()
 	{
-		return String.format( "ScreenVertex(%d, dvid=%d, \"%s\", (%.2f, %.2f), %s%s)",
+		return String.format(
+				"ScreenVertex(%d, dvid=%d, \"%s\", (%.2f, %.2f), %s%s)",
 				getInternalPoolIndex(),
 				getDataVertexId(),
 				getLabel(),
 				getX(),
 				getY(),
 				getTransition().toString(),
-				isSelected() ? ", selected" : "" );
+				isSelected() ? ", selected" : ""
+		);
 	}
 
 	@Override

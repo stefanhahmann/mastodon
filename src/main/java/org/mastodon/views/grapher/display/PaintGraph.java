@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -90,10 +90,15 @@ public class PaintGraph
 	 */
 
 	private static final double simplifiedVertexRadius = 2.5;
+
 	private static final double simplifiedVertexSelectTolerance = 3.5;
+
 	private static final double minDisplayVertexDist = 17.0;
+
 	private static final double maxDisplayVertexSize = 20.0;
+
 	private static final double minDisplaySimplifiedVertexDist = 0.0;
+
 	private static final double avgLabelLetterWidth = 5.0;
 
 	/*
@@ -116,7 +121,8 @@ public class PaintGraph
 			final int highlightedVertexId,
 			final int highlightedEdgeId,
 			final int focusedVertexId,
-			final DataDisplayStyle style )
+			final DataDisplayStyle style
+	)
 	{
 		this.g2 = g2;
 		this.highlightedVertexId = highlightedVertexId;
@@ -247,7 +253,8 @@ public class PaintGraph
 		final boolean selected = edge.isSelected();
 		final int specifiedColor = edge.getColor();
 		final Color drawColor = getColor( selected, transition, ratio, specifiedColor,
-				style.getEdgeColor(), style.getSelectedEdgeColor() );
+				style.getEdgeColor(), style.getSelectedEdgeColor()
+		);
 		g2.setColor( drawColor );
 		if ( highlighted )
 			g2.setStroke( style.getEdgeHighlightStroke() );
@@ -276,7 +283,8 @@ public class PaintGraph
 
 		final Color fillColor = getColor( selected, transition, ratio, specifiedColor,
 				disappear ? style.getSelectedSimplifiedVertexFillColor() : style.getSimplifiedVertexFillColor(),
-				style.getSelectedSimplifiedVertexFillColor() );
+				style.getSelectedSimplifiedVertexFillColor()
+		);
 
 		final double x = vertex.getX();
 		final double y = vertex.getY();
@@ -310,7 +318,8 @@ public class PaintGraph
 
 			final Color fillColor = getColor( selected, transition, ratio, specifiedColor,
 					disappear ? style.getSelectedSimplifiedVertexFillColor() : style.getSimplifiedVertexFillColor(),
-					style.getSelectedSimplifiedVertexFillColor() );
+					style.getSelectedSimplifiedVertexFillColor()
+			);
 
 			final double x = vertex.getX();
 			final double y = vertex.getY();
@@ -356,14 +365,16 @@ public class PaintGraph
 		final double spotradius = spotdiameter / 2;
 
 		final Color fillColor = getColor( selected, transition, ratio, specifiedColor,
-				style.getVertexFillColor(), style.getSelectedVertexFillColor() );
+				style.getVertexFillColor(), style.getSelectedVertexFillColor()
+		);
 		final Color drawColor = getColor( selected, transition, ratio, 0,
-				style.getVertexDrawColor(), style.getSelectedVertexDrawColor() );
+				style.getVertexDrawColor(), style.getSelectedVertexDrawColor()
+		);
 
 		final double x = vertex.getX();
 		final double y = vertex.getY();
-		final double ox =  x -  spotradius;
-		final double oy =  y -  spotradius;
+		final double ox = x - spotradius;
+		final double oy = y - spotradius;
 		final double sd = 2 * spotradius;
 		final Shape shape = style.getVertexDrawShape().shape( ox, oy, sd );
 		g2.setColor( fillColor );
@@ -421,7 +432,8 @@ public class PaintGraph
 			final double completionRatio,
 			final int specifiedColor,
 			final Color normalColor,
-			final Color selectedColor )
+			final Color selectedColor
+	)
 	{
 		if ( transition == NONE )
 		{

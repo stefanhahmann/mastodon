@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -121,12 +121,15 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 
 	public MamutViewGrapher( final MamutAppModel appModel, final Map< String, Object > guiState )
 	{
-		super( appModel,
+		super(
+				appModel,
 				new DataGraph< Spot, Link >(
 						appModel.getModel().getGraph(),
 						appModel.getModel().getGraphIdBimap(),
-						appModel.getModel().getGraph().getLock() ),
-				new String[] { KeyConfigContexts.GRAPHER } );
+						appModel.getModel().getGraph().getLock()
+				),
+				new String[] { KeyConfigContexts.GRAPHER }
+		);
 
 		final KeyPressedManager keyPressedManager = appModel.getKeyPressedManager();
 		final Model model = appModel.getModel();
@@ -167,7 +170,8 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 				model,
 				groupHandle,
 				contextChooser,
-				options );
+				options
+		);
 		dataDisplayPanel = frame.getDataDisplayPanel();
 
 		// If they are available, set some sensible defaults for the feature.
@@ -238,7 +242,8 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 						colorMenu( coloringMenuHandle ),
 						colorbarMenu( colorbarMenuHandle ),
 						separator(),
-						item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL ) ),
+						item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL )
+				),
 				editMenu(
 						item( UndoActions.UNDO ),
 						item( UndoActions.REDO ),
@@ -248,16 +253,21 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 						item( SelectionActions.SELECT_TRACK_DOWNWARD ),
 						item( SelectionActions.SELECT_TRACK_UPWARD ),
 						separator(),
-						tagSetMenu( tagSetMenuHandle ) ) );
+						tagSetMenu( tagSetMenuHandle )
+				)
+		);
 		appModel.getPlugins().addMenus( menu );
 
 		/*
 		 * Coloring & colobar.
 		 */
 		coloringModel = registerColoring( coloringAdapter, coloringMenuHandle,
-				() -> dataDisplayPanel.entitiesAttributesChanged() );
-		registerTagSetMenu( tagSetMenuHandle,
-				() -> dataDisplayPanel.entitiesAttributesChanged() );
+				() -> dataDisplayPanel.entitiesAttributesChanged()
+		);
+		registerTagSetMenu(
+				tagSetMenuHandle,
+				() -> dataDisplayPanel.entitiesAttributesChanged()
+		);
 		colorbarOverlay = new ColorBarOverlay( coloringModel, () -> dataDisplayPanel.getBackground() );
 		final OffsetAxes offset = dataDisplayPanel.getOffsetAxes();
 		offset.listeners().add( ( w, h ) -> colorbarOverlay.setInsets( 15, w + 15, h + 15, 15 ) );

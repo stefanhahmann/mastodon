@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -60,39 +60,65 @@ import org.scijava.ui.behaviour.util.RunnableAction;
 public class FocusActions< V extends Vertex< E > & Ref< V >, E extends Edge< V > & Ref< E > >
 {
 	public static final String NAVIGATE_CHILD = "navigate to child";
+
 	public static final String NAVIGATE_LAST_CHILD = "navigate to last child";
+
 	public static final String NAVIGATE_PARENT = "navigate to parent";
+
 	public static final String NAVIGATE_SIBLING = "navigate to sibling";
+
 	public static final String NAVIGATE_BRANCH_CHILD = "navigate to branch child";
+
 	public static final String NAVIGATE_LAST_BRANCH_CHILD = "navigate to last branch child";
+
 	public static final String NAVIGATE_BRANCH_PARENT = "navigate to branch parent";
+
 	public static final String SELECT_NAVIGATE_CHILD = "select navigate to child";
+
 	public static final String SELECT_NAVIGATE_LAST_CHILD = "select navigate to last child";
+
 	public static final String SELECT_NAVIGATE_PARENT = "select navigate to parent";
+
 	public static final String SELECT_NAVIGATE_SIBLING = "select navigate to sibling";
+
 	public static final String SELECT_NAVIGATE_BRANCH_CHILD = "select navigate to branch child";
+
 	public static final String SELECT_NAVIGATE_LAST_BRANCH_CHILD = "select navigate to last branch child";
+
 	public static final String SELECT_NAVIGATE_BRANCH_PARENT = "select navigate to branch parent";
 
 	private static final String[] NAVIGATE_CHILD_KEYS = new String[] { "ctrl DOWN" };
+
 	private static final String[] NAVIGATE_LAST_CHILD_KEYS = new String[] { "ctrl meta DOWN" };
+
 	private static final String[] NAVIGATE_PARENT_KEYS = new String[] { "ctrl UP" };
+
 	private static final String[] NAVIGATE_SIBLING_KEYS = new String[] { "ctrl LEFT", "ctrl RIGHT" };
+
 	private static final String[] NAVIGATE_BRANCH_CHILD_KEYS = new String[] { "ctrl alt DOWN" };
+
 	private static final String[] NAVIGATE_LAST_BRANCH_CHILD_KEYS = new String[] { "ctrl alt meta DOWN" };
+
 	private static final String[] NAVIGATE_BRANCH_PARENT_KEYS = new String[] { "ctrl alt UP" };
+
 	private static final String[] SELECT_NAVIGATE_CHILD_KEYS = new String[] { "shift ctrl DOWN" };
+
 	private static final String[] SELECT_NAVIGATE_LAST_CHILD_KEYS = new String[] { "shift ctrl meta DOWN" };
+
 	private static final String[] SELECT_NAVIGATE_PARENT_KEYS = new String[] { "shift ctrl UP" };
+
 	private static final String[] SELECT_NAVIGATE_SIBLING_KEYS = new String[] { "shift ctrl LEFT", "shift ctrl RIGHT" };
+
 	private static final String[] SELECT_NAVIGATE_BRANCH_CHILD_KEYS = new String[] { "shift ctrl alt DOWN" };
+
 	private static final String[] SELECT_NAVIGATE_LAST_BRANCH_CHILD_KEYS = new String[] { "shift ctrl alt meta DOWN" };
+
 	private static final String[] SELECT_NAVIGATE_BRANCH_PARENT_KEYS = new String[] { "shift ctrl alt UP" };
 
 	/*
 	 * Command descriptions for all provided commands
 	 */
-	@Plugin( type = CommandDescriptionProvider.class )
+	@Plugin(type = CommandDescriptionProvider.class)
 	public static class Descriptions extends CommandDescriptionProvider
 	{
 		public Descriptions()
@@ -153,7 +179,8 @@ public class FocusActions< V extends Vertex< E > & Ref< V >, E extends Edge< V >
 			final Graph< V, E > graph,
 			final ReentrantReadWriteLock lock,
 			final FocusModel< V, E > focus,
-			final SelectionModel< V, E > selection )
+			final SelectionModel< V, E > selection
+	)
 	{
 		final FocusActions< V, E > fa = new FocusActions<>( graph, lock, focus, selection );
 
@@ -193,7 +220,8 @@ public class FocusActions< V extends Vertex< E > & Ref< V >, E extends Edge< V >
 			final Graph< V, E > graph,
 			final ReentrantReadWriteLock lock,
 			final FocusModel< V, E > focus,
-			final SelectionModel< V, E > selection )
+			final SelectionModel< V, E > selection
+	)
 	{
 		this.graph = graph;
 		this.lock = lock;

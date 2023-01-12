@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -78,8 +78,7 @@ public class ModelUtils
 		for ( final FeatureSpec< ?, ? > featureSpec : featureSpecs )
 			if ( featureSpec.getTargetClass().equals( Spot.class ) )
 			{
-				@SuppressWarnings( "unchecked" )
-				final Feature< Spot > spotFeature = ( Feature< Spot > ) featureModel.getFeature( featureSpec );
+				@SuppressWarnings("unchecked") final Feature< Spot > spotFeature = ( Feature< Spot > ) featureModel.getFeature( featureSpec );
 				spotFeatures.add( spotFeature );
 			}
 
@@ -100,12 +99,14 @@ public class ModelUtils
 		str.append( "Spots:\n" );
 		// Name line
 		final String h1a = String.format( "%9s  %9s  %6s  %9s  %9s  %9s",
-				"Id", "Label", "Frame", "X", "Y", "Z" );
+				"Id", "Label", "Frame", "X", "Y", "Z"
+		);
 		str.append( h1a );
 		// Unit line
 		final StringBuilder unitLineSpots = new StringBuilder();
 		unitLineSpots.append( String.format( "%9s  %9s  %6s  %9s  %9s  %9s",
-				"", "", "", bracket( spaceUnits ), bracket( spaceUnits ), bracket( spaceUnits ) ) );
+				"", "", "", bracket( spaceUnits ), bracket( spaceUnits ), bracket( spaceUnits )
+		) );
 
 		final int[] spotColumnHeaderWidth = new int[ sfs.size() ];
 		int i = 0;
@@ -131,11 +132,11 @@ public class ModelUtils
 		 * Sort spots.
 		 */
 
-		final RefArrayList< Spot > spots = new RefArrayList<Spot>( graph.vertices().getRefPool(), graph.vertices().size() );
+		final RefArrayList< Spot > spots = new RefArrayList< Spot >( graph.vertices().getRefPool(), graph.vertices().size() );
 		spots.addAll( graph.vertices() );
 
 		// Do we have track id?
-		if (featureSpecs.contains( SpotTrackIDFeature.SPEC ))
+		if ( featureSpecs.contains( SpotTrackIDFeature.SPEC ) )
 		{
 			final SpotTrackIDFeature trackID = ( SpotTrackIDFeature ) featureModel.getFeature( SpotTrackIDFeature.SPEC );
 			spots.sort( new Comparator< Spot >()
@@ -146,7 +147,7 @@ public class ModelUtils
 				{
 					final int track1 = trackID.get( o1 );
 					final int track2 = trackID.get( o2 );
-					if (track1 == track2)
+					if ( track1 == track2 )
 						return o1.getTimepoint() - o2.getTimepoint();
 
 					return track1 - track2;
@@ -158,7 +159,6 @@ public class ModelUtils
 			spots.sort( Comparator.comparingInt( Spot::getTimepoint ) );
 		}
 
-
 		long n = 0;
 		for ( final Spot spot : spots )
 		{
@@ -167,7 +167,8 @@ public class ModelUtils
 
 			final String h1b = String.format( "%9d  %9s  %6d  %9.1f  %9.1f  %9.1f",
 					spot.getInternalPoolIndex(), spot.getLabel(), spot.getTimepoint(),
-					spot.getDoublePosition( 0 ), spot.getDoublePosition( 1 ), spot.getDoublePosition( 2 ) );
+					spot.getDoublePosition( 0 ), spot.getDoublePosition( 1 ), spot.getDoublePosition( 2 )
+			);
 
 			str.append( h1b );
 			i = 0;
@@ -194,8 +195,7 @@ public class ModelUtils
 		for ( final FeatureSpec< ?, ? > featureSpec : featureSpecs )
 			if ( featureSpec.getTargetClass().equals( Link.class ) )
 			{
-				@SuppressWarnings( "unchecked" )
-				final Feature< Link > linkFeature = ( Feature< Link > ) featureModel.getFeature( featureSpec );
+				@SuppressWarnings("unchecked") final Feature< Link > linkFeature = ( Feature< Link > ) featureModel.getFeature( featureSpec );
 				linkFeatures.add( linkFeature );
 			}
 
@@ -243,7 +243,8 @@ public class ModelUtils
 				break;
 
 			final String h1b = String.format( "%9d  %9d  %9d", link.getInternalPoolIndex(),
-					link.getSource( ref ).getInternalPoolIndex(), link.getTarget( ref ).getInternalPoolIndex() );
+					link.getSource( ref ).getInternalPoolIndex(), link.getTarget( ref ).getInternalPoolIndex()
+			);
 			str.append( h1b );
 			i = 0;
 			for ( final FeatureProjectionKey pk : lfs.keySet() )

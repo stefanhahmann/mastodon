@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -75,7 +75,7 @@ public class PaintBranchGraph extends PaintGraph
 	@Override
 	public boolean isInsidePaintedVertex( double x, double y, ScreenVertex vertex )
 	{
-		if( y >= vertex.getYStart() && y <= vertex.getY() && Math.abs( x - vertex.getX() ) <= 2 )
+		if ( y >= vertex.getYStart() && y <= vertex.getY() && Math.abs( x - vertex.getX() ) <= 2 )
 			return true;
 		return super.isInsidePaintedVertex( x, y, vertex );
 	}
@@ -84,7 +84,7 @@ public class PaintBranchGraph extends PaintGraph
 	protected void drawVertex( ScreenVertex vertex )
 	{
 		boolean resetStroke = setStroke( vertex );
-		g2.drawLine( (int) vertex.getX(), (int) vertex.getYStart(), (int) vertex.getX(), (int) vertex.getY());
+		g2.drawLine( ( int ) vertex.getX(), ( int ) vertex.getYStart(), ( int ) vertex.getX(), ( int ) vertex.getY() );
 		resetStroke( resetStroke );
 
 		super.drawVertex( vertex );
@@ -103,7 +103,8 @@ public class PaintBranchGraph extends PaintGraph
 
 		final Color drawColor = getColor( selected, ghost, transition, ratio, specifiedColor,
 				style.getVertexDrawColor(), style.getSelectedVertexDrawColor(),
-				style.getGhostVertexDrawColor(), style.getGhostSelectedVertexDrawColor() );
+				style.getGhostVertexDrawColor(), style.getGhostSelectedVertexDrawColor()
+		);
 
 		g2.setColor( drawColor );
 		if ( highlighted )

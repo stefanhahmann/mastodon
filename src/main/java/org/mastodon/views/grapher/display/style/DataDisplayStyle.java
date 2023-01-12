@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -92,7 +92,7 @@ public class DataDisplayStyle implements Style< DataDisplayStyle >
 	private Stroke axisStroke;
 
 	private boolean drawVertexName;
-	
+
 	/*
 	 * GETTERS for non public fields.
 	 */
@@ -212,6 +212,7 @@ public class DataDisplayStyle implements Style< DataDisplayStyle >
 	{
 		return vertexHighlightStroke;
 	}
+
 	public Stroke getVertexStroke()
 	{
 		return vertexStroke;
@@ -357,7 +358,6 @@ public class DataDisplayStyle implements Style< DataDisplayStyle >
 		return this;
 	}
 
-
 	public DataDisplayStyle selectedEdgeColor( final Color color )
 	{
 		if ( !Objects.equals( this.selectedEdgeColor, color ) )
@@ -469,7 +469,7 @@ public class DataDisplayStyle implements Style< DataDisplayStyle >
 	}
 
 	/*
-	 * 
+	 *
 	 */
 
 	public interface UpdateListener
@@ -564,6 +564,7 @@ public class DataDisplayStyle implements Style< DataDisplayStyle >
 	}
 
 	private static final DataDisplayStyle df;
+
 	static
 	{
 		final Color fill = new Color( 128, 255, 128 );
@@ -594,21 +595,23 @@ public class DataDisplayStyle implements Style< DataDisplayStyle >
 	}
 
 	private static final DataDisplayStyle discreet;
+
 	static
 	{
 		final Color mainColor = new Color( 0, 83, 140 );
 		discreet = df.copy( "discreet" ).
 				autoVertexSize( false ).
 				drawVertexName( false ).
-				edgeColor(mainColor ).
+				edgeColor( mainColor ).
 				vertexFixedSize( 7. ).
 				edgeStroke( new BasicStroke( 0.5f ) ).
 				vertexDrawColor( df.getBackgroundColor() ).
 				vertexDrawShape( VertexDrawShape.SQUARE ).
 				vertexFillColor( mainColor );
-		}
+	}
 
 	public static Collection< DataDisplayStyle > defaults;
+
 	static
 	{
 		defaults = new ArrayList<>( 2 );

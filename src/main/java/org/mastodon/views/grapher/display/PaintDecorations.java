@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -86,7 +86,8 @@ public class PaintDecorations
 			final int axesWidth,
 			final int axesHeight,
 			final ScreenEntities screenEntities,
-			final DataDisplayStyle style )
+			final DataDisplayStyle style
+	)
 	{
 		g2.setColor( style.getBackgroundColor() );
 		g2.fillRect( 0, 0, width, height );
@@ -95,7 +96,7 @@ public class PaintDecorations
 	/**
 	 * Paint axes of the data graph plot. Specifics depend on the
 	 * {@link DataDisplayStyle} settings.
-	 * 
+	 *
 	 * @param g2
 	 *            {@code Graphics2D} context to paint to.
 	 * @param width
@@ -121,7 +122,8 @@ public class PaintDecorations
 			final int axesWidth,
 			final int axesHeight,
 			final ScreenEntities screenEntities,
-			final DataDisplayStyle style )
+			final DataDisplayStyle style
+	)
 	{
 		final ScreenTransform screenTransform = new ScreenTransform();
 		screenEntities.getScreenTransform( screenTransform );
@@ -129,7 +131,7 @@ public class PaintDecorations
 		final double maxX = screenTransform.getMaxX();
 		final double minY = screenTransform.getMinY();
 		final double maxY = screenTransform.getMaxY();
-		
+
 		double xScale = screenTransform.getScaleX();
 		double yScale = screenTransform.getScaleY();
 		xScale = Double.isNaN( xScale ) ? 1. : xScale;
@@ -195,11 +197,13 @@ public class PaintDecorations
 			// 3. Y label
 			g2.setFont( style.getAxisLabelFont() );
 			final int yLabelWidth = fm.stringWidth( yLabel );
-			drawStringRotated( g2,
+			drawStringRotated(
+					g2,
 					axesWidth - tickWidth - 2 - maxStringWidth - 5,
 					height / 2 + yLabelWidth / 2,
 					-90.,
-					yLabel );
+					yLabel
+			);
 		}
 
 		if ( isVisibleXAxis )
@@ -243,9 +247,11 @@ public class PaintDecorations
 			// 3. X label
 			g2.setFont( style.getAxisLabelFont() );
 			final int xLabelWidth = fm.stringWidth( xLabel );
-			g2.drawString( xLabel,
+			g2.drawString(
+					xLabel,
 					axesWidth + ( width - axesWidth ) / 2 - xLabelWidth / 2,
-					ytop + tickWidth + 2 + 2 * fontAscent + 5 );
+					ytop + tickWidth + 2 + 2 * fontAscent + 5
+			);
 		}
 
 		if ( isVisibleYAxis && isVisibleXAxis )

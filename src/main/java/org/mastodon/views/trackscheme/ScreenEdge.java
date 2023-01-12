@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -54,11 +54,17 @@ public class ScreenEdge extends PoolObject< ScreenEdge, ScreenEdgePool, ByteMapp
 	public static class ScreenEdgeLayout extends PoolObjectLayout
 	{
 		final IndexField origEdge = indexField();
+
 		final IndexField sourceScreenVertex = indexField();
+
 		final IndexField targetScreenVertex = indexField();
+
 		final BooleanField selected = booleanField();
+
 		final ByteField transition = byteField();
+
 		final DoubleField ipRatio = doubleField();
+
 		final IntField color = intField();
 	}
 
@@ -67,11 +73,17 @@ public class ScreenEdge extends PoolObject< ScreenEdge, ScreenEdgePool, ByteMapp
 	public static class ScreenEdgePool extends Pool< ScreenEdge, ByteMappedElement >
 	{
 		final IndexAttribute< ScreenEdge > origEdge = new IndexAttribute<>( layout.origEdge, this );
+
 		final IndexAttribute< ScreenEdge > sourceScreenVertex = new IndexAttribute<>( layout.sourceScreenVertex, this );
+
 		final IndexAttribute< ScreenEdge > targetScreenVertex = new IndexAttribute<>( layout.targetScreenVertex, this );
+
 		final BooleanAttribute< ScreenEdge > selected = new BooleanAttribute<>( layout.selected, this );
+
 		final ByteAttribute< ScreenEdge > transition = new ByteAttribute<>( layout.transition, this );
+
 		final DoubleAttribute< ScreenEdge > ipRatio = new DoubleAttribute<>( layout.ipRatio, this );
+
 		final IntAttribute< ScreenEdge > color = new IntAttribute<>( layout.color, this );
 
 		public ScreenEdgePool( final int initialCapacity )
@@ -108,7 +120,8 @@ public class ScreenEdge extends PoolObject< ScreenEdge, ScreenEdgePool, ByteMapp
 			final int sourceScreenVertexIndex,
 			final int targetScreenVertexIndex,
 			final boolean selected,
-			final int color )
+			final int color
+	)
 	{
 		setTrackSchemeEdgeId( id );
 		setSourceScreenVertexIndex( sourceScreenVertexIndex );
@@ -245,7 +258,8 @@ public class ScreenEdge extends PoolObject< ScreenEdge, ScreenEdgePool, ByteMapp
 
 	@Override
 	protected void setToUninitializedState()
-	{}
+	{
+	}
 
 	/**
 	 * Set all fields as in specified {@link ScreenEdge} (which is possibly
@@ -268,17 +282,17 @@ public class ScreenEdge extends PoolObject< ScreenEdge, ScreenEdgePool, ByteMapp
 		return this;
 	}
 
-// TODO REMOVE? should be covered by base class.
-//	@Override
-//	public boolean equals( final Object obj )
-//	{
-//		return obj instanceof ScreenEdge &&
-//				access.equals( ( ( ScreenEdge ) obj ).access );
-//	}
-//
-//	@Override
-//	public int hashCode()
-//	{
-//		return access.hashCode();
-//	}
+	// TODO REMOVE? should be covered by base class.
+	//	@Override
+	//	public boolean equals( final Object obj )
+	//	{
+	//		return obj instanceof ScreenEdge &&
+	//				access.equals( ( ( ScreenEdge ) obj ).access );
+	//	}
+	//
+	//	@Override
+	//	public int hashCode()
+	//	{
+	//		return access.hashCode();
+	//	}
 }

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -54,7 +54,8 @@ public class ColoringModelBranchGraph< V extends Vertex< E >, E extends Edge< V 
 	public ColoringModelBranchGraph(
 			final TagSetModel< ?, ? > tagSetModel,
 			final FeatureColorModeManager featureColorModeManager,
-			final FeatureModel featureModel )
+			final FeatureModel featureModel
+	)
 	{
 		super( tagSetModel, featureColorModeManager, featureModel );
 	}
@@ -92,7 +93,7 @@ public class ColoringModelBranchGraph< V extends Vertex< E >, E extends Edge< V 
 	}
 
 	@Override
-	@SuppressWarnings( "unchecked" )
+	@SuppressWarnings("unchecked")
 	public GraphColorGenerator< V, E > getFeatureGraphColorGenerator()
 	{
 		final FeatureColorMode fcm = featureColorMode;
@@ -117,21 +118,24 @@ public class ColoringModelBranchGraph< V extends Vertex< E >, E extends Edge< V 
 				vertexColorGenerator = new FeatureColorGeneratorIncomingEdge<>(
 						( FeatureProjection< E > ) vertexProjection,
 						ColorMap.getColorMap( vertexColorMap ),
-						vertexRangeMin, vertexRangeMax );
+						vertexRangeMin, vertexRangeMax
+				);
 				break;
 			case OUTGOING_EDGE:
 			case OUTGOING_BRANCH_EDGE:
 				vertexColorGenerator = new FeatureColorGeneratorOutgoingEdge<>(
 						( FeatureProjection< E > ) vertexProjection,
 						ColorMap.getColorMap( vertexColorMap ),
-						vertexRangeMin, vertexRangeMax );
+						vertexRangeMin, vertexRangeMax
+				);
 				break;
 			case VERTEX:
 			case BRANCH_VERTEX:
 				vertexColorGenerator = new FeatureColorGenerator<>(
 						( FeatureProjection< V > ) vertexProjection,
 						ColorMap.getColorMap( vertexColorMap ),
-						vertexRangeMin, vertexRangeMax );
+						vertexRangeMin, vertexRangeMax
+				);
 				break;
 			case NONE:
 				vertexColorGenerator = new DefaultColorGenerator<>();
@@ -158,14 +162,16 @@ public class ColoringModelBranchGraph< V extends Vertex< E >, E extends Edge< V 
 				edgeColorGenerator = new FeatureColorGeneratorSourceVertex<>(
 						( FeatureProjection< V > ) edgeProjection,
 						ColorMap.getColorMap( edgeColorMap ),
-						edgeRangeMin, edgeRangeMax );
+						edgeRangeMin, edgeRangeMax
+				);
 				break;
 			case TARGET_VERTEX:
 			case TARGET_BRANCH_VERTEX:
 				edgeColorGenerator = new FeatureColorGeneratorTargetVertex<>(
 						( FeatureProjection< V > ) edgeProjection,
 						ColorMap.getColorMap( edgeColorMap ),
-						edgeRangeMin, edgeRangeMax );
+						edgeRangeMin, edgeRangeMax
+				);
 				break;
 			case EDGE:
 			case INCOMING_BRANCH_EDGE:
@@ -173,7 +179,8 @@ public class ColoringModelBranchGraph< V extends Vertex< E >, E extends Edge< V 
 				edgeColorGenerator = new FeatureEdgeColorGenerator<>(
 						( FeatureProjection< E > ) edgeProjection,
 						ColorMap.getColorMap( edgeColorMap ),
-						edgeRangeMin, edgeRangeMax );
+						edgeRangeMin, edgeRangeMax
+				);
 				break;
 			case NONE:
 				edgeColorGenerator = new DefaultEdgeColorGenerator<>();

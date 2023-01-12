@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -93,7 +93,8 @@ public class DataGraphLayout< V extends Vertex< E > & HasTimepoint & HasLabel, E
 
 	public DataGraphLayout(
 			final DataGraph< V, E > dataGraph,
-			final SelectionModel< DataVertex, DataEdge > selection )
+			final SelectionModel< DataVertex, DataEdge > selection
+	)
 	{
 		this.dataGraph = dataGraph;
 		this.selection = selection;
@@ -129,7 +130,7 @@ public class DataGraphLayout< V extends Vertex< E > & HasTimepoint & HasLabel, E
 
 	/**
 	 * Specify what vertices to layout.
-	 * 
+	 *
 	 * @param vertices
 	 *            the vertices to layout.
 	 */
@@ -140,7 +141,7 @@ public class DataGraphLayout< V extends Vertex< E > & HasTimepoint & HasLabel, E
 
 	/**
 	 * Sets whether the screen edges will be generated.
-	 * 
+	 *
 	 * @param paintEdges
 	 *            if <code>true</code> the screen edges will be generated.
 	 */
@@ -249,7 +250,7 @@ public class DataGraphLayout< V extends Vertex< E > & HasTimepoint & HasLabel, E
 	}
 
 	/**
-	 * 
+	 *
 	 * @param centerPos
 	 *            in screen coordinates.
 	 * @param ref
@@ -265,7 +266,7 @@ public class DataGraphLayout< V extends Vertex< E > & HasTimepoint & HasLabel, E
 	/**
 	 * Returns the set of data vertices that are painted according to this
 	 * layout instance, within the specified <b>screen coordinates</b>.
-	 * 
+	 *
 	 * @param x1
 	 *            x min in screen coordinates.
 	 * @param y1
@@ -336,7 +337,8 @@ public class DataGraphLayout< V extends Vertex< E > & HasTimepoint & HasLabel, E
 			final ScreenEntities screenEntities,
 			final int decorationsOffsetX,
 			final int decorationsOffsetY,
-			final GraphColorGenerator< DataVertex, DataEdge > colorGenerator )
+			final GraphColorGenerator< DataVertex, DataEdge > colorGenerator
+	)
 	{
 		if ( kdtree == null )
 			return;

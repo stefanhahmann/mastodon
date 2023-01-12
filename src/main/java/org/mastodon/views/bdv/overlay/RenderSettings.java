@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -44,27 +44,49 @@ public class RenderSettings implements Style< RenderSettings >
 	 */
 
 	public static final int DEFAULT_LIMIT_TIME_RANGE = 20;
+
 	public static final double DEFAULT_LIMIT_FOCUS_RANGE = 100.;
+
 	public static final boolean DEFAULT_USE_ANTI_ALIASING = true;
+
 	public static final boolean DEFAULT_USE_GRADIENT = false;
+
 	public static final boolean DEFAULT_DRAW_SPOTS = true;
+
 	public static final boolean DEFAULT_DRAW_LINKS = true;
+
 	public static final boolean DEFAULT_DRAW_LINKS_AHEAD_IN_TIME = false;
+
 	public static final boolean DEFAULT_DRAW_ARROW_HEADS = false;
+
 	public static final boolean DEFAULT_DRAW_ELLIPSE = true;
+
 	public static final boolean DEFAULT_DRAW_SLICE_INTERSECTION = true;
+
 	public static final boolean DEFAULT_DRAW_SLICE_PROJECTION = !DEFAULT_DRAW_SLICE_INTERSECTION;
-	public static final boolean DEFAULT_DRAW_POINTS = !DEFAULT_DRAW_ELLIPSE || (DEFAULT_DRAW_ELLIPSE && DEFAULT_DRAW_SLICE_INTERSECTION);
+
+	public static final boolean DEFAULT_DRAW_POINTS = !DEFAULT_DRAW_ELLIPSE || ( DEFAULT_DRAW_ELLIPSE && DEFAULT_DRAW_SLICE_INTERSECTION );
+
 	public static final boolean DEFAULT_DRAW_POINTS_FOR_ELLIPSE = false;
+
 	public static final boolean DEFAULT_DRAW_SPOT_LABELS = false;
+
 	public static final boolean DEFAULT_FILL_SPOTS = false;
+
 	public static final boolean DEFAULT_IS_FOCUS_LIMIT_RELATIVE = true;
+
 	public static final double DEFAULT_ELLIPSOID_FADE_DEPTH = 0.2;
+
 	public static final double DEFAULT_POINT_FADE_DEPTH = 0.;
+
 	public static final double DEFAULT_SPOT_STROKE_WIDTH = 1.0;
+
 	public static final double DEFAULT_LINK_STROKE_WIDTH = 1.0;
+
 	public static final int DEFAULT_COLOR_SPOT_AND_PRESENT = Color.GREEN.getRGB();
+
 	public static final int DEFAULT_COLOR_PAST = Color.RED.getRGB();
+
 	public static final int DEFAULT_COLOR_FUTURE = Color.BLUE.getRGB();
 
 	public interface UpdateListener
@@ -272,7 +294,7 @@ public class RenderSettings implements Style< RenderSettings >
 	 * The stroke with of spots.
 	 */
 	private double spotStrokeWidth;
-	
+
 	/**
 	 * The stroke with of links.
 	 */
@@ -416,7 +438,7 @@ public class RenderSettings implements Style< RenderSettings >
 	/**
 	 * Gets whether to draw links ahead in time. They are otherwise drawn only
 	 * backward in time.
-	 * 
+	 *
 	 * @return {@code true} if links are drawn ahead in time.
 	 */
 	public boolean getDrawLinksAheadInTime()
@@ -889,7 +911,7 @@ public class RenderSettings implements Style< RenderSettings >
 	/**
 	 * Returns the color used to paint spots and links in the current
 	 * time-point.
-	 * 
+	 *
 	 * @return the color used to paint spots and links in the current
 	 *         time-point.
 	 */
@@ -900,7 +922,7 @@ public class RenderSettings implements Style< RenderSettings >
 
 	/**
 	 * Sets the color used to paint spots and links in the current time-point.
-	 * 
+	 *
 	 * @param colorSpot
 	 *            the color used to paint spots and links in the current
 	 *            time-point.
@@ -916,7 +938,7 @@ public class RenderSettings implements Style< RenderSettings >
 
 	/**
 	 * Returns the color used to paint links in the past time-points.
-	 * 
+	 *
 	 * @return the color used to paint links in the past time-points.
 	 */
 	public int getColorPast()
@@ -926,7 +948,7 @@ public class RenderSettings implements Style< RenderSettings >
 
 	/**
 	 * Sets the color used to paint links in the past time-points.
-	 * 
+	 *
 	 * @param colorPast
 	 *            the color used to paint links in the past time-points.
 	 */
@@ -941,7 +963,7 @@ public class RenderSettings implements Style< RenderSettings >
 
 	/**
 	 * Returns the color used to paint links in the future time-points.
-	 * 
+	 *
 	 * @return the color used to paint links in the future time-points.
 	 */
 	public int getColorFuture()
@@ -951,7 +973,7 @@ public class RenderSettings implements Style< RenderSettings >
 
 	/**
 	 * Sets the color used to paint links in the future time-points.
-	 * 
+	 *
 	 * @param colorFuture
 	 *            the color used to paint links in the future time-points.
 	 */
@@ -969,6 +991,7 @@ public class RenderSettings implements Style< RenderSettings >
 	 */
 
 	private static final RenderSettings df;
+
 	static
 	{
 		df = new RenderSettings();
@@ -998,6 +1021,7 @@ public class RenderSettings implements Style< RenderSettings >
 	}
 
 	private static final RenderSettings POINT_CLOUD;
+
 	static
 	{
 		POINT_CLOUD = df.copy( "Point cloud" );
@@ -1007,6 +1031,7 @@ public class RenderSettings implements Style< RenderSettings >
 	}
 
 	private static final RenderSettings NONE;
+
 	static
 	{
 		NONE = df.copy( "No overlay" );
@@ -1015,6 +1040,7 @@ public class RenderSettings implements Style< RenderSettings >
 	}
 
 	public static final Collection< RenderSettings > defaults;
+
 	static
 	{
 		defaults = new ArrayList<>( 4 );
