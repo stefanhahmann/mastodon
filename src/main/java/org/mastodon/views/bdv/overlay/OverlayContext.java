@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.bdv.overlay;
 
 import bdv.viewer.TransformListener;
@@ -37,21 +38,22 @@ import org.mastodon.views.context.ContextListener;
 
 import net.imglib2.realtransform.AffineTransform3D;
 
-public class OverlayContext< V extends OverlayVertex< V, ? > > implements
-		Context< V >,
-		TransformListener< AffineTransform3D >
+public class OverlayContext<V extends OverlayVertex<V, ?>> implements
+	Context<V>,
+	TransformListener<AffineTransform3D>
 {
-	private final OverlayGraph< V, ? > graph;
 
-	private final SpatioTemporalIndex< V > index;
+	private final OverlayGraph<V, ?> graph;
 
-	private final OverlayGraphRenderer< V, ? > renderer;
+	private final SpatioTemporalIndex<V> index;
 
-	private ContextListener< V > contextListener = null;
+	private final OverlayGraphRenderer<V, ?> renderer;
+
+	private ContextListener<V> contextListener = null;
 
 	public OverlayContext(
-			final OverlayGraph< V, ? > overlayGraph,
-			final OverlayGraphRenderer< V, ? > renderer )
+		final OverlayGraph<V, ?> overlayGraph,
+		final OverlayGraphRenderer<V, ?> renderer)
 	{
 		this.graph = overlayGraph;
 		this.index = graph.getIndex();
@@ -59,39 +61,34 @@ public class OverlayContext< V extends OverlayVertex< V, ? > > implements
 	}
 
 	@Override
-	public Lock readLock()
-	{
+	public Lock readLock() {
 		return index.readLock();
 	}
 
 	@Override
-	public Iterable< V > getInsideVertices( final int timepoint )
-	{
+	public Iterable<V> getInsideVertices(final int timepoint) {
 //		final ConvexPolytope visiblePolytope = renderer.getVisiblePolytopeGlobal( transform, timepoint );
 //		final ClipConvexPolytope< V > ccp = index.getSpatialIndex( timepoint ).getClipConvexPolytope();
 //		ccp.clip( visiblePolytope );
 //		return ccp.getInsideValues();
-		return renderer.getVisibleVertices( transform, timepoint );
+		return renderer.getVisibleVertices(transform, timepoint);
 	}
 
 	@Override
-	public int getTimepoint()
-	{
+	public int getTimepoint() {
 		return renderer.getCurrentTimepoint();
 	}
 
 	private final AffineTransform3D transform = new AffineTransform3D();
 
 	@Override
-	public void transformChanged( final AffineTransform3D t )
-	{
-		transform.set( t );
-		if ( contextListener != null )
-			contextListener.contextChanged( this );
+	public void transformChanged(final AffineTransform3D t) {
+		transform.set(t);
+		if (contextListener != null)
+			contextListener.contextChanged(this);
 	}
 
-	public void setContextListener( final ContextListener< V > contextListener )
-	{
+	public void setContextListener(final ContextListener<V> contextListener) {
 		this.contextListener = contextListener;
 	}
 }

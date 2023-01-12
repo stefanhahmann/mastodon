@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme.display;
 
 import java.awt.BorderLayout;
@@ -54,72 +55,77 @@ import org.mastodon.views.trackscheme.TrackSchemeGraph;
 import org.mastodon.views.trackscheme.TrackSchemeVertex;
 import org.scijava.ui.behaviour.MouseAndKeyHandler;
 
-public class TrackSchemeFrame extends ViewFrame
-{
+public class TrackSchemeFrame extends ViewFrame {
+
 	private static final long serialVersionUID = 1L;
 
 	private final TrackSchemePanel trackschemePanel;
 
 	public TrackSchemeFrame(
-			final TrackSchemeGraph< ?, ? > graph,
-			final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight,
-			final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-			final TimepointModel timepoint,
-			final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection,
-			final RootsModel< TrackSchemeVertex > rootsModel,
-			final NavigationHandler< TrackSchemeVertex, TrackSchemeEdge > navigation,
-			final UndoPointMarker undoPointMarker,
-			final GroupHandle groupHandle,
-			final ContextChooser< ? > contextChooser,
-			final TrackSchemeOptions optional )
+		final TrackSchemeGraph<?, ?> graph,
+		final HighlightModel<TrackSchemeVertex, TrackSchemeEdge> highlight,
+		final FocusModel<TrackSchemeVertex, TrackSchemeEdge> focus,
+		final TimepointModel timepoint,
+		final SelectionModel<TrackSchemeVertex, TrackSchemeEdge> selection,
+		final RootsModel<TrackSchemeVertex> rootsModel,
+		final NavigationHandler<TrackSchemeVertex, TrackSchemeEdge> navigation,
+		final UndoPointMarker undoPointMarker,
+		final GroupHandle groupHandle,
+		final ContextChooser<?> contextChooser,
+		final TrackSchemeOptions optional)
 	{
-		super( "TrackScheme" );
+		super("TrackScheme");
 
 		trackschemePanel = new TrackSchemePanel(
-				graph,
-				highlight,
-				focus,
-				timepoint,
-				selection,
-				rootsModel,
-				navigation,
-				optional );
-		add( trackschemePanel, BorderLayout.CENTER );
+			graph,
+			highlight,
+			focus,
+			timepoint,
+			selection,
+			rootsModel,
+			navigation,
+			optional);
+		add(trackschemePanel, BorderLayout.CENTER);
 
-		final GroupLocksPanel navigationLocksPanel = new GroupLocksPanel( groupHandle );
-		settingsPanel.add( navigationLocksPanel );
-		settingsPanel.add( Box.createHorizontalGlue() );
+		final GroupLocksPanel navigationLocksPanel = new GroupLocksPanel(
+			groupHandle);
+		settingsPanel.add(navigationLocksPanel);
+		settingsPanel.add(Box.createHorizontalGlue());
 
-		if ( contextChooser != null )
-		{
-			final ContextChooserPanel< ? > contextChooserPanel = new ContextChooserPanel<>( contextChooser );
-			settingsPanel.add( contextChooserPanel );
+		if (contextChooser != null) {
+			final ContextChooserPanel<?> contextChooserPanel =
+				new ContextChooserPanel<>(contextChooser);
+			settingsPanel.add(contextChooserPanel);
 		}
 
 		pack();
-		setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
-		addWindowListener( new WindowAdapter()
-		{
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+
 			@Override
-			public void windowClosing( final WindowEvent e )
-			{
+			public void windowClosing(final WindowEvent e) {
 				trackschemePanel.stop();
 			}
-		} );
+		});
 
-		SwingUtilities.replaceUIActionMap( trackschemePanel, keybindings.getConcatenatedActionMap() );
-		SwingUtilities.replaceUIInputMap( trackschemePanel, JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, keybindings.getConcatenatedInputMap() );
+		SwingUtilities.replaceUIActionMap(trackschemePanel, keybindings
+			.getConcatenatedActionMap());
+		SwingUtilities.replaceUIInputMap(trackschemePanel,
+			JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, keybindings
+				.getConcatenatedInputMap());
 
 		final MouseAndKeyHandler mouseAndKeyHandler = new MouseAndKeyHandler();
-		mouseAndKeyHandler.setInputMap( triggerbindings.getConcatenatedInputTriggerMap() );
-		mouseAndKeyHandler.setBehaviourMap( triggerbindings.getConcatenatedBehaviourMap() );
-		mouseAndKeyHandler.setKeypressManager( optional.values.getKeyPressedManager(), trackschemePanel.getDisplay() );
-		trackschemePanel.getDisplay().addHandler( mouseAndKeyHandler );
-		setLocation( optional.values.getX(), optional.values.getY() );
+		mouseAndKeyHandler.setInputMap(triggerbindings
+			.getConcatenatedInputTriggerMap());
+		mouseAndKeyHandler.setBehaviourMap(triggerbindings
+			.getConcatenatedBehaviourMap());
+		mouseAndKeyHandler.setKeypressManager(optional.values
+			.getKeyPressedManager(), trackschemePanel.getDisplay());
+		trackschemePanel.getDisplay().addHandler(mouseAndKeyHandler);
+		setLocation(optional.values.getX(), optional.values.getY());
 	}
 
-	public TrackSchemePanel getTrackschemePanel()
-	{
+	public TrackSchemePanel getTrackschemePanel() {
 		return trackschemePanel;
 	}
 }

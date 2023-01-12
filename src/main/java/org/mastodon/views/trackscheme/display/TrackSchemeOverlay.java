@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme.display;
 
 import bdv.viewer.OverlayRenderer;
@@ -80,8 +81,10 @@ import org.mastodon.views.trackscheme.display.style.TrackSchemeStyle;
  *
  * @author Tobias Pietzsch
  */
-public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListener
+public class TrackSchemeOverlay implements OverlayRenderer,
+	OffsetHeadersListener
 {
+
 	/**
 	 * The {@link ScreenEntities} that are actually drawn on the canvas.
 	 */
@@ -90,10 +93,11 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	/**
 	 * {@link ScreenEntities} that have been previously
 	 * {@link #setScreenEntities(ScreenEntities) set} for painting. Whenever new
-	 * entities are set, these are stored here and marked {@link #pending}. Whenever
-	 * entities are painted and new entities are pending, the new entities are painted
-	 * to the screen. Before doing this, the entities previously used for painting
-	 * are swapped into {@link #pendingEntities}. This is used for double-buffering.
+	 * entities are set, these are stored here and marked {@link #pending}.
+	 * Whenever entities are painted and new entities are pending, the new
+	 * entities are painted to the screen. Before doing this, the entities
+	 * previously used for painting are swapped into {@link #pendingEntities}.
+	 * This is used for double-buffering.
 	 */
 	private ScreenEntities pendingEntities;
 
@@ -102,11 +106,11 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	 */
 	private boolean pending;
 
-	private final TrackSchemeGraph< ?, ? > graph;
+	private final TrackSchemeGraph<?, ?> graph;
 
-	private final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight;
+	private final HighlightModel<TrackSchemeVertex, TrackSchemeEdge> highlight;
 
-	private final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus;
+	private final FocusModel<TrackSchemeVertex, TrackSchemeEdge> focus;
 
 	private int currentTimepoint = 0;
 
@@ -127,32 +131,26 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	/**
 	 * The {@link OverlayRenderer}s that draw above the background
 	 */
-	private final CopyOnWriteArrayList< OverlayRenderer > overlayRenderers;
+	private final CopyOnWriteArrayList<OverlayRenderer> overlayRenderers;
 
 	/**
 	 * Creates a new overlay for the specified TrackScheme graph.
 	 *
-	 * @param graph
-	 *            the graph to paint.
-	 * @param highlight
-	 *            the highlight model that indicates which vertex is
-	 *            highlighted.
-	 * @param focus
-	 *            the focus model that indicates which vertex is focused.
-	 * @param paintDecorations
-	 *            for painting background and headers
-	 * @param paintGraph
-	 *            for painting vertices and edges
-	 * @param options
-	 *            options for TrackScheme look.
+	 * @param graph the graph to paint.
+	 * @param highlight the highlight model that indicates which vertex is
+	 *          highlighted.
+	 * @param focus the focus model that indicates which vertex is focused.
+	 * @param paintDecorations for painting background and headers
+	 * @param paintGraph for painting vertices and edges
+	 * @param options options for TrackScheme look.
 	 */
 	public TrackSchemeOverlay(
-			final TrackSchemeGraph< ?, ? > graph,
-			final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight,
-			final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-			final PaintDecorations paintDecorations,
-			final PaintGraph paintGraph,
-			final TrackSchemeOptions options )
+		final TrackSchemeGraph<?, ?> graph,
+		final HighlightModel<TrackSchemeVertex, TrackSchemeEdge> highlight,
+		final FocusModel<TrackSchemeVertex, TrackSchemeEdge> focus,
+		final PaintDecorations paintDecorations,
+		final PaintGraph paintGraph,
+		final TrackSchemeOptions options)
 	{
 		this.graph = graph;
 		this.highlight = highlight;
@@ -162,46 +160,51 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 		style = options.values.getStyle();
 		width = options.values.getWidth();
 		height = options.values.getHeight();
-		entities = new ScreenEntities( graph );
+		entities = new ScreenEntities(graph);
 		overlayRenderers = new CopyOnWriteArrayList<>();
 	}
 
 	@Override
-	public void drawOverlays( final Graphics g )
-	{
-		final Graphics2D g2 = ( Graphics2D ) g;
-		g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
+	public void drawOverlays(final Graphics g) {
+		final Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+			RenderingHints.VALUE_ANTIALIAS_ON);
 
 		swapScreenEntities();
 
 		final TrackSchemeVertex ref = graph.vertexRef();
 		final TrackSchemeEdge eref = graph.edgeRef();
 
-		final TrackSchemeVertex h = highlight.getHighlightedVertex( ref );
-		final int highlightedVertexId = ( h == null ) ? -1 : h.getInternalPoolIndex();
+		final TrackSchemeVertex h = highlight.getHighlightedVertex(ref);
+		final int highlightedVertexId = (h == null) ? -1 : h.getInternalPoolIndex();
 
-		final TrackSchemeEdge he = highlight.getHighlightedEdge( eref );
-		final int highlightedEdgeId = ( he == null ) ? -1 : he.getInternalPoolIndex();
+		final TrackSchemeEdge he = highlight.getHighlightedEdge(eref);
+		final int highlightedEdgeId = (he == null) ? -1 : he.getInternalPoolIndex();
 
-		final TrackSchemeVertex f = focus.getFocusedVertex( ref );
-		final int focusedVertexId = ( f == null ) ? -1 : f.getInternalPoolIndex();
+		final TrackSchemeVertex f = focus.getFocusedVertex(ref);
+		final int focusedVertexId = (f == null) ? -1 : f.getInternalPoolIndex();
 
-		graph.releaseRef( ref );
+		graph.releaseRef(ref);
 
-		paintDecorations.paintBackground( g2, width, height, headerWidth, headerHeight, entities, currentTimepoint, style );
+		paintDecorations.paintBackground(g2, width, height, headerWidth,
+			headerHeight, entities, currentTimepoint, style);
 
 		// Paint extra overlay if any.
-		for ( final OverlayRenderer or : overlayRenderers )
-			or.drawOverlays( g );
+		for (final OverlayRenderer or : overlayRenderers)
+			or.drawOverlays(g);
 
 		final boolean antialiasOffForGraph = entities.getVertices().size() > 10000;
-		if ( antialiasOffForGraph )
-			g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF );
-		paintGraph.paintGraph( g2, entities, highlightedVertexId, highlightedEdgeId, focusedVertexId, style );
-		if ( antialiasOffForGraph )
-			g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
+		if (antialiasOffForGraph)
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_OFF);
+		paintGraph.paintGraph(g2, entities, highlightedVertexId, highlightedEdgeId,
+			focusedVertexId, style);
+		if (antialiasOffForGraph)
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 
-		paintDecorations.paintHeaders( g2, width, height, headerWidth, headerHeight, entities, currentTimepoint, style );
+		paintDecorations.paintHeaders(g2, width, height, headerWidth, headerHeight,
+			entities, currentTimepoint, style);
 	}
 
 	/**
@@ -211,85 +214,72 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	 * <p>
 	 * This method exists to facilitate writing mouse handlers.
 	 * <p>
-	 * Note that this really only looks at edges that are individually painted
-	 * on the screen. Edges inside dense ranges are ignored.
+	 * Note that this really only looks at edges that are individually painted on
+	 * the screen. Edges inside dense ranges are ignored.
 	 *
-	 * @param x
-	 *            the x screen coordinate
-	 * @param y
-	 *            the y screen coordinate
-	 * @param tolerance
-	 *            the maximal distance to the closest edge.
-	 * @param ref
-	 *            a reference that will be used to retrieve the result.
+	 * @param x the x screen coordinate
+	 * @param y the y screen coordinate
+	 * @param tolerance the maximal distance to the closest edge.
+	 * @param ref a reference that will be used to retrieve the result.
 	 * @return the {@link TrackSchemeEdge} at {@code (x, y)}, or {@code null} if
 	 *         there is no edge within the distance tolerance.
 	 */
-	public TrackSchemeEdge getEdgeAt( final int x, final int y, final double tolerance, final TrackSchemeEdge ref )
+	public TrackSchemeEdge getEdgeAt(final int x, final int y,
+		final double tolerance, final TrackSchemeEdge ref)
 	{
-		synchronized ( entities )
-		{
-			final RefList< ScreenVertex > vertices = entities.getVertices();
+		synchronized (entities) {
+			final RefList<ScreenVertex> vertices = entities.getVertices();
 			final ScreenVertex vt = vertices.createRef();
 			final ScreenVertex vs = vertices.createRef();
 
 			int i = -1;
-			for ( final ScreenEdge e : entities.getEdges() )
-			{
-				vertices.get( e.getSourceScreenVertexIndex(), vs );
-				vertices.get( e.getTargetScreenVertexIndex(), vt );
-				if ( paintGraph.distanceToPaintedEdge( x, y, e, vs, vt ) <= tolerance )
-				{
+			for (final ScreenEdge e : entities.getEdges()) {
+				vertices.get(e.getSourceScreenVertexIndex(), vs);
+				vertices.get(e.getTargetScreenVertexIndex(), vt);
+				if (paintGraph.distanceToPaintedEdge(x, y, e, vs, vt) <= tolerance) {
 					i = e.getTrackSchemeEdgeId();
 					break;
 				}
 			}
 
-			vertices.releaseRef( vs );
-			vertices.releaseRef( vt );
+			vertices.releaseRef(vs);
+			vertices.releaseRef(vt);
 
-			return ( i >= 0 )
-					? graph.getEdgePool().getObjectIfExists( i, ref )
-					: null;
+			return (i >= 0)
+				? graph.getEdgePool().getObjectIfExists(i, ref)
+				: null;
 		}
 	}
 
 	/**
-	 * Returns the {@link TrackSchemeVertex} currently painted on this display
-	 * at screen coordinates specified by {@code x} and {@code y}.
+	 * Returns the {@link TrackSchemeVertex} currently painted on this display at
+	 * screen coordinates specified by {@code x} and {@code y}.
 	 * <p>
 	 * This method exists to facilitate writing mouse handlers.
 	 * <p>
-	 * Note that this really only looks at vertices that are individually
-	 * painted on the screen. Vertices inside dense ranges are ignored.
+	 * Note that this really only looks at vertices that are individually painted
+	 * on the screen. Vertices inside dense ranges are ignored.
 	 *
-	 * @param x
-	 *            the x screen coordinate
-	 * @param y
-	 *            the y screen coordinate
-	 * @param ref
-	 *            a reference that will be used to retrieve the result.
-	 * @return the {@link TrackSchemeVertex} at
-	 *         {@code (x, y)}, or {@code null} if there is no vertex at this position.
+	 * @param x the x screen coordinate
+	 * @param y the y screen coordinate
+	 * @param ref a reference that will be used to retrieve the result.
+	 * @return the {@link TrackSchemeVertex} at {@code (x, y)}, or {@code null} if
+	 *         there is no vertex at this position.
 	 */
-	public TrackSchemeVertex getVertexAt( final int x, final int y, final TrackSchemeVertex ref )
+	public TrackSchemeVertex getVertexAt(final int x, final int y,
+		final TrackSchemeVertex ref)
 	{
-		synchronized ( entities )
-		{
+		synchronized (entities) {
 			double d2Best = Double.POSITIVE_INFINITY;
 			int iBest = -1;
-			for ( final ScreenVertex v : entities.getVertices() )
-			{
-				if ( paintGraph.isInsidePaintedVertex( x, y, v ) )
-				{
+			for (final ScreenVertex v : entities.getVertices()) {
+				if (paintGraph.isInsidePaintedVertex(x, y, v)) {
 					final int i = v.getTrackSchemeVertexId();
-					if ( i >= 0 )
-					{
+					if (i >= 0) {
 						final double dx = v.getX() - x;
 						final double dy = v.getY() - y;
 						final double d2 = dx * dx + dy * dy;
-						if ( d2 < d2Best )
-						{
+						if (d2 < d2Best) {
 							d2Best = d2;
 							iBest = i;
 						}
@@ -297,24 +287,22 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 				}
 			}
 
-			return ( iBest >= 0 )
-					? graph.getVertexPool().getObjectIfExists( iBest, ref )
-					: null;
+			return (iBest >= 0)
+				? graph.getVertexPool().getObjectIfExists(iBest, ref)
+				: null;
 		}
 	}
 
 	@Override
-	public void setCanvasSize( final int width, final int height )
-	{
+	public void setCanvasSize(final int width, final int height) {
 		this.width = width;
 		this.height = height;
-		for ( final OverlayRenderer overlay : overlayRenderers )
-			overlay.setCanvasSize( width, height );
+		for (final OverlayRenderer overlay : overlayRenderers)
+			overlay.setCanvasSize(width, height);
 	}
 
 	@Override
-	public void updateHeaderSize( final int width, final int height )
-	{
+	public void updateHeaderSize(final int width, final int height) {
 		headerWidth = width;
 		headerHeight = height;
 	}
@@ -324,8 +312,7 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	 *
 	 * @return the width.
 	 */
-	protected int getWidth()
-	{
+	protected int getWidth() {
 		return width;
 	}
 
@@ -334,20 +321,17 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	 *
 	 * @return the height.
 	 */
-	protected int getHeight()
-	{
+	protected int getHeight() {
 		return height;
 	}
 
 	/**
 	 * Sets the current timepoint.
 	 *
-	 * @param timepoint
-	 *            the current timepoint.
+	 * @param timepoint the current timepoint.
 	 */
-	public void setCurrentTimepoint( final int timepoint )
-	{
-		this.currentTimepoint  = timepoint;
+	public void setCurrentTimepoint(final int timepoint) {
+		this.currentTimepoint = timepoint;
 	}
 
 	/**
@@ -355,19 +339,18 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	 *
 	 * @return the current timepoint.
 	 */
-	protected int getCurrentTimepoint()
-	{
+	protected int getCurrentTimepoint() {
 		return currentTimepoint;
 	}
 
 	/**
 	 * Set the {@link ScreenEntities} to paint.
 	 *
-	 * @param entities
-	 *            {@link ScreenEntities} to paint.
+	 * @param entities {@link ScreenEntities} to paint.
 	 * @return the previous {@link ScreenEntities}.
 	 */
-	public synchronized ScreenEntities setScreenEntities( final ScreenEntities entities )
+	public synchronized ScreenEntities setScreenEntities(
+		final ScreenEntities entities)
 	{
 		final ScreenEntities tmp = pendingEntities;
 		pendingEntities = entities;
@@ -376,18 +359,15 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	}
 
 	/**
-	 * Provides subclass access to {@link ScreenEntities} to paint.
-	 * Implements double-buffering.
+	 * Provides subclass access to {@link ScreenEntities} to paint. Implements
+	 * double-buffering.
 	 *
 	 * @return current {@link ScreenEntities}.
 	 */
-	private synchronized ScreenEntities swapScreenEntities()
-	{
-		if ( pending )
-		{
-			synchronized ( entities )
-			{
-				entities.set( pendingEntities );
+	private synchronized ScreenEntities swapScreenEntities() {
+		if (pending) {
+			synchronized (entities) {
+				entities.set(pendingEntities);
 				pending = false;
 			}
 		}
@@ -396,39 +376,36 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 
 	/**
 	 * Adds an extra overlay that will be painted along with this one. Overlays
-	 * added by this method will be painted after background has been painted,
-	 * but before the graph and decoration are painted, so that they "lay below"
-	 * the graph and decoration renderings.
+	 * added by this method will be painted after background has been painted, but
+	 * before the graph and decoration are painted, so that they "lay below" the
+	 * graph and decoration renderings.
 	 *
-	 * @param overlay
-	 *            the overlay to paint.
+	 * @param overlay the overlay to paint.
 	 */
-	public void addOverlayRenderer( final OverlayRenderer overlay )
-	{
-		overlayRenderers.add( overlay );
-		setCanvasSize( getWidth(), getHeight() );
+	public void addOverlayRenderer(final OverlayRenderer overlay) {
+		overlayRenderers.add(overlay);
+		setCanvasSize(getWidth(), getHeight());
 	}
 
 	/**
 	 * Remove an {@link OverlayRenderer}.
 	 *
-	 * @param renderer
-	 *            overlay renderer to remove.
+	 * @param renderer overlay renderer to remove.
 	 */
-	public void removeOverlayRenderer( final OverlayRenderer renderer )
-	{
-		overlayRenderers.remove( renderer );
+	public void removeOverlayRenderer(final OverlayRenderer renderer) {
+		overlayRenderers.remove(renderer);
 	}
 
-	public static class TrackSchemeOverlayFactory
-	{
+	public static class TrackSchemeOverlayFactory {
+
 		public TrackSchemeOverlay create(
-				final TrackSchemeGraph< ?, ? > graph,
-				final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight,
-				final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-				final TrackSchemeOptions options )
+			final TrackSchemeGraph<?, ?> graph,
+			final HighlightModel<TrackSchemeVertex, TrackSchemeEdge> highlight,
+			final FocusModel<TrackSchemeVertex, TrackSchemeEdge> focus,
+			final TrackSchemeOptions options)
 		{
-			return new TrackSchemeOverlay( graph, highlight, focus, new PaintDecorations(), new PaintGraph(), options );
+			return new TrackSchemeOverlay(graph, highlight, focus,
+				new PaintDecorations(), new PaintGraph(), options);
 		}
 	}
 }

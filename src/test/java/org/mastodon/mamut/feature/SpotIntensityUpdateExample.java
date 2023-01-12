@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature;
 
 import static org.mastodon.feature.FeatureProjectionKey.key;
@@ -48,18 +49,19 @@ import org.scijava.Context;
 import mpicbg.spim.data.SpimDataException;
 import net.imglib2.util.StopWatch;
 
-public class SpotIntensityUpdateExample
-{
+public class SpotIntensityUpdateExample {
 
-	public static void main( final String[] args ) throws IOException, JDOMException, SpimDataException
+	public static void main(final String[] args) throws IOException,
+		JDOMException, SpimDataException
 	{
 		/*
 		 * 1. Load a regular Mastodon project.
 		 */
 
-		final MamutProject project = new MamutProjectIO().load( "samples/mamutproject.mastodon" );
-		final WindowManager windowManager = new WindowManager( new Context() );
-		windowManager.getProjectManager().open( project );
+		final MamutProject project = new MamutProjectIO().load(
+			"samples/mamutproject.mastodon");
+		final WindowManager windowManager = new WindowManager(new Context());
+		windowManager.getProjectManager().open(project);
 		final Model model = windowManager.getAppModel().getModel();
 		final FeatureModel featureModel = model.getFeatureModel();
 
@@ -71,76 +73,88 @@ public class SpotIntensityUpdateExample
 		 */
 
 		final Context context = windowManager.getContext();
-		final MamutFeatureComputerService featureComputerService = context.getService( MamutFeatureComputerService.class );
-		featureComputerService.setModel( model );
-		featureComputerService.setSharedBdvData( windowManager.getAppModel().getSharedBdvData() );
-		System.out.println( "Computing spot intensity..." );
+		final MamutFeatureComputerService featureComputerService = context
+			.getService(MamutFeatureComputerService.class);
+		featureComputerService.setModel(model);
+		featureComputerService.setSharedBdvData(windowManager.getAppModel()
+			.getSharedBdvData());
+		System.out.println("Computing spot intensity...");
 		final StopWatch stopWatch = StopWatch.createAndStart();
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > features = featureComputerService.compute(
-				SpotCenterIntensityFeature.SPEC );
+		final Map<FeatureSpec<?, ?>, Feature<?>> features = featureComputerService
+			.compute(
+				SpotCenterIntensityFeature.SPEC);
 		stopWatch.stop();
-		System.out.println( String.format( "Done in %.1s.", stopWatch.nanoTime() / 1e9 ) );
+		System.out.println(String.format("Done in %.1s.", stopWatch.nanoTime() /
+			1e9));
 
 		/*
 		 * 1.1b. Pass them to the feature model.
 		 */
 
 		featureModel.clear();
-		features.values().forEach( featureModel::declareFeature );
+		features.values().forEach(featureModel::declareFeature);
 
-		@SuppressWarnings( "unchecked" )
-		final FeatureProjection< Spot > proj1 = ( FeatureProjection< Spot > ) model.getFeatureModel()
-				.getFeature( SpotCenterIntensityFeature.SPEC ).project( key( SpotCenterIntensityFeature.PROJECTION_SPEC, 0 ) );
+		@SuppressWarnings("unchecked")
+		final FeatureProjection<Spot> proj1 = (FeatureProjection<Spot>) model
+			.getFeatureModel()
+			.getFeature(SpotCenterIntensityFeature.SPEC).project(key(
+				SpotCenterIntensityFeature.PROJECTION_SPEC, 0));
 
 		System.out.println();
-		System.out.println( "Spot " + spot.getLabel() + " center intensity was " + proj1.value( spot ) );
+		System.out.println("Spot " + spot.getLabel() + " center intensity was " +
+			proj1.value(spot));
 		System.out.println();
 
 		/*
 		 * 2. Modify a spot.
 		 */
 
-		spot.move( 10., 0 );
-		System.out.println( "Moved spot " + spot.getLabel() );
+		spot.move(10., 0);
+		System.out.println("Moved spot " + spot.getLabel());
 
 		/*
 		 * 3. Re-calculate.
 		 */
 
-		System.out.println( "Re-computing spot intensity..." );
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > features2 = featureComputerService.compute(
-				SpotCenterIntensityFeature.SPEC );
+		System.out.println("Re-computing spot intensity...");
+		final Map<FeatureSpec<?, ?>, Feature<?>> features2 = featureComputerService
+			.compute(
+				SpotCenterIntensityFeature.SPEC);
 
 		featureModel.clear();
-		features2.values().forEach( featureModel::declareFeature );
+		features2.values().forEach(featureModel::declareFeature);
 
-		System.out.println( "Spot " + spot.getLabel() + " center intensity is now " + proj1.value( spot ) );
+		System.out.println("Spot " + spot.getLabel() + " center intensity is now " +
+			proj1.value(spot));
 		System.out.println();
 
 		/*
 		 * 4. Trigger full recalculation to compare.
 		 */
 
-		System.out.println( "Full recalculation..." );
-		featureComputerService.setModel( model );
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > features3 = featureComputerService.compute(
-				SpotCenterIntensityFeature.SPEC );
+		System.out.println("Full recalculation...");
+		featureComputerService.setModel(model);
+		final Map<FeatureSpec<?, ?>, Feature<?>> features3 = featureComputerService
+			.compute(
+				SpotCenterIntensityFeature.SPEC);
 
 		featureModel.clear();
-		features3.values().forEach( featureModel::declareFeature );
+		features3.values().forEach(featureModel::declareFeature);
 
-		System.out.println( "Spot " + spot.getLabel() + " center intensity is to be compared with " + proj1.value( spot ) );
+		System.out.println("Spot " + spot.getLabel() +
+			" center intensity is to be compared with " + proj1.value(spot));
 		System.out.println();
 
 		/*
 		 * 4. Re-calculate without changes.
 		 */
 
-		System.out.println( "Update without changes..." );
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > features4 = featureComputerService.compute(
-				SpotCenterIntensityFeature.SPEC );
+		System.out.println("Update without changes...");
+		final Map<FeatureSpec<?, ?>, Feature<?>> features4 = featureComputerService
+			.compute(
+				SpotCenterIntensityFeature.SPEC);
 
 		featureModel.clear();
-		features4.values().forEach( featureModel::declareFeature );
+		features4.values().forEach(featureModel::declareFeature);
 	}
 }

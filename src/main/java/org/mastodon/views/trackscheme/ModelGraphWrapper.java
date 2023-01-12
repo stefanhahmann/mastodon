@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme;
 
 import org.mastodon.graph.Edge;
@@ -33,92 +34,80 @@ import org.mastodon.graph.GraphIdBimap;
 import org.mastodon.graph.Vertex;
 import org.mastodon.views.trackscheme.wrap.ModelGraphProperties;
 
-public class ModelGraphWrapper< V extends Vertex< E >, E extends Edge< V > >
-{
-	final GraphIdBimap< V, E > idmap;
+public class ModelGraphWrapper<V extends Vertex<E>, E extends Edge<V>> {
 
-	final ModelGraphProperties< V, E > modelGraphProperties;
+	final GraphIdBimap<V, E> idmap;
+
+	final ModelGraphProperties<V, E> modelGraphProperties;
 
 	ModelGraphWrapper(
-			final GraphIdBimap< V, E > idmap,
-			final ModelGraphProperties< V, E > modelGraphProperties )
+		final GraphIdBimap<V, E> idmap,
+		final ModelGraphProperties<V, E> modelGraphProperties)
 	{
 		this.idmap = idmap;
 		this.modelGraphProperties = modelGraphProperties;
 	}
 
-	ModelVertexWrapper createVertexWrapper( final TrackSchemeVertex vertex )
-	{
-		return new ModelVertexWrapper( idmap.vertexIdBimap().createRef(), vertex );
+	ModelVertexWrapper createVertexWrapper(final TrackSchemeVertex vertex) {
+		return new ModelVertexWrapper(idmap.vertexIdBimap().createRef(), vertex);
 	}
 
-	ModelEdgeWrapper createEdgeWrapper( final TrackSchemeEdge edge )
-	{
-		return new ModelEdgeWrapper( idmap.edgeIdBimap().createRef(), edge );
+	ModelEdgeWrapper createEdgeWrapper(final TrackSchemeEdge edge) {
+		return new ModelEdgeWrapper(idmap.edgeIdBimap().createRef(), edge);
 	}
 
-	class ModelVertexWrapper
-	{
+	class ModelVertexWrapper {
+
 		private final V ref;
 
 		private final TrackSchemeVertex vertex;
 
-		public ModelVertexWrapper( final V ref, final TrackSchemeVertex vertex )
-		{
+		public ModelVertexWrapper(final V ref, final TrackSchemeVertex vertex) {
 			this.ref = ref;
 			this.vertex = vertex;
 		}
 
-		public int getTimepoint()
-		{
-			return modelGraphProperties.getTimepoint( getModelVertex() );
+		public int getTimepoint() {
+			return modelGraphProperties.getTimepoint(getModelVertex());
 		}
 
-		public String getLabel()
-		{
-			return modelGraphProperties.getLabel( getModelVertex() );
+		public String getLabel() {
+			return modelGraphProperties.getLabel(getModelVertex());
 		}
 
-		public void setLabel( final String label )
-		{
-			modelGraphProperties.setLabel( getModelVertex(), label );
+		public void setLabel(final String label) {
+			modelGraphProperties.setLabel(getModelVertex(), label);
 		}
 
-		public V getReusableRef()
-		{
+		public V getReusableRef() {
 			return ref;
 		}
 
-		private V getModelVertex()
-		{
-			return idmap.getVertex( vertex.getModelVertexId(), ref );
+		private V getModelVertex() {
+			return idmap.getVertex(vertex.getModelVertexId(), ref);
 		}
 
-		public int getFirstTimepoint()
-		{
-			return modelGraphProperties.getFirstTimePoint( getModelVertex() );
+		public int getFirstTimepoint() {
+			return modelGraphProperties.getFirstTimePoint(getModelVertex());
 		}
 
-		public String getRootLabel()
-		{
-			return modelGraphProperties.getFirstLabel( getModelVertex() );
+		public String getRootLabel() {
+			return modelGraphProperties.getFirstLabel(getModelVertex());
 		}
 	}
 
-	class ModelEdgeWrapper
-	{
+	class ModelEdgeWrapper {
+
 		private final E ref;
 
 //		private final TrackSchemeEdge edge;
 
-		public ModelEdgeWrapper( final E ref, final TrackSchemeEdge edge )
-		{
+		public ModelEdgeWrapper(final E ref, final TrackSchemeEdge edge) {
 			this.ref = ref;
 //			this.edge = edge;
 		}
 
-		public E getReusableRef()
-		{
+		public E getReusableRef() {
 			return ref;
 		}
 

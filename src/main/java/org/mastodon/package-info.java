@@ -27,16 +27,11 @@
  * #L%
  */
 /**
- * <h1>Mastodon class hierarchy</h1>
- *
- * In this repository, we distinguish <b>two levels</b> for the class hierarchy:
- *
- *
- * <h2>1. Mastodon base classes.</h2>
- *
- * The base classes and interfaces to derive and implement to create an
- * application (or 'app') specific to a topic. What we call 'topic' could be
- * 'segment, track and lineage cells objects in 2D'.
+ * <h1>Mastodon class hierarchy</h1> In this repository, we distinguish <b>two
+ * levels</b> for the class hierarchy:
+ * <h2>1. Mastodon base classes.</h2> The base classes and interfaces to derive
+ * and implement to create an application (or 'app') specific to a topic. What
+ * we call 'topic' could be 'segment, track and lineage cells objects in 2D'.
  * <p>
  * The name of these classes is normally prefixed with
  * <code>MastodonSomething</code>
@@ -46,13 +41,8 @@
  * model for instance from a {@link org.mastodon.app.MastodonAppModel} and
  * derive an {@link org.mastodon.model.AbstractSpot} to store location of
  * objects.
- *
- *
- *
- * <h2>2. The MaMuT application.</h2>
- *
- * The classes of an app, whose topic is 'tracking and lineaging cells, with
- * cells represented as ellipsoids'.
+ * <h2>2. The MaMuT application.</h2> The classes of an app, whose topic is
+ * 'tracking and lineaging cells, with cells represented as ellipsoids'.
  * <p>
  * This app is the final and central application of Mastodon. When end-users and
  * us speak of Mastodon, we mean this one. It is based on the
@@ -65,4 +55,5 @@
  * <code>org.mastodon.mamut</code> package. The Mastodon base classes should not
  * depend on these classes, but the opposite is good.
  */
+
 package org.mastodon;

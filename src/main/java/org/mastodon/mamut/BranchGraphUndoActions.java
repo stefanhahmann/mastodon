@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut;
 
 import org.mastodon.mamut.model.Model;
@@ -36,52 +37,52 @@ import org.mastodon.ui.keymap.KeyConfigContexts;
 import org.scijava.plugin.Plugin;
 import org.scijava.ui.behaviour.util.Actions;
 
-public class BranchGraphUndoActions
-{
+public class BranchGraphUndoActions {
+
 	public static final String UNDO = "undo";
 	public static final String REDO = "redo";
 
 	static final String[] UNDO_KEYS = new String[] { "meta Z", "ctrl Z" };
-	static final String[] REDO_KEYS = new String[] { "meta shift Z", "ctrl shift Z" };
+	static final String[] REDO_KEYS = new String[] { "meta shift Z",
+		"ctrl shift Z" };
 
 	/*
 	 * Command descriptions for all provided commands
 	 */
-	@Plugin( type = CommandDescriptionProvider.class )
-	public static class Descriptions extends CommandDescriptionProvider
-	{
-		public Descriptions()
-		{
-			super( KeyConfigContexts.MASTODON );
+	@Plugin(type = CommandDescriptionProvider.class)
+	public static class Descriptions extends CommandDescriptionProvider {
+
+		public Descriptions() {
+			super(KeyConfigContexts.MASTODON);
 		}
 
 		@Override
-		public void getCommandDescriptions( final CommandDescriptions descriptions )
-		{
-			descriptions.add( UNDO, UNDO_KEYS, "Undo last edit and sync branch graph." );
-			descriptions.add( REDO, REDO_KEYS, "Redo last undone edit and sync branch graph." );
+		public void getCommandDescriptions(final CommandDescriptions descriptions) {
+			descriptions.add(UNDO, UNDO_KEYS,
+				"Undo last edit and sync branch graph.");
+			descriptions.add(REDO, REDO_KEYS,
+				"Redo last undone edit and sync branch graph.");
 		}
 	}
 
 	/**
-	 * Create Undo/Redo actions and install them in the specified
-	 * {@link Actions}.
-	 *  @param actions
-	 *            Actions are added here.
-	 * @param model
-	 *            Actions are targeted at this {@link Model}s {@code undo()} and
-	 *            {@code redo()} methods.
+	 * Create Undo/Redo actions and install them in the specified {@link Actions}.
+	 * 
+	 * @param actions Actions are added here.
+	 * @param model Actions are targeted at this {@link Model}s {@code undo()} and
+	 *          {@code redo()} methods.
 	 * @param branchGraphSync
 	 */
-	public static void install( final Actions actions, final Model model, BranchGraphSynchronizer branchGraphSync )
+	public static void install(final Actions actions, final Model model,
+		BranchGraphSynchronizer branchGraphSync)
 	{
-		actions.runnableAction( () -> {
+		actions.runnableAction(() -> {
 			model.undo();
 			branchGraphSync.sync();
-		}, UNDO, UNDO_KEYS );
-		actions.runnableAction( () -> {
+		}, UNDO, UNDO_KEYS);
+		actions.runnableAction(() -> {
 			model.redo();
 			branchGraphSync.sync();
-		}, REDO, REDO_KEYS );
+		}, REDO, REDO_KEYS);
 	}
 }

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature.ui;
 
 import java.util.Locale;
@@ -44,37 +45,41 @@ import org.mastodon.ui.keymap.KeyConfigContexts;
 import org.mastodon.ui.keymap.Keymap;
 import org.scijava.Context;
 
-public class FeatureColorModeConfigPageDemo
-{
-	private static final String FEATURECOLORMODE_SETTINGSPAGE_TREEPATH = "Feature Color Modes";
+public class FeatureColorModeConfigPageDemo {
 
-	public static void main( final String[] args ) throws Exception
-	{
-		Locale.setDefault( Locale.US );
-		UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
+	private static final String FEATURECOLORMODE_SETTINGSPAGE_TREEPATH =
+		"Feature Color Modes";
 
-		try (final Context context = new Context( FeatureSpecsService.class ))
-		{
+	public static void main(final String[] args) throws Exception {
+		Locale.setDefault(Locale.US);
+		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
-			final FeatureColorModeManager featureColorModeManager = new FeatureColorModeManager();
-			final MamutFeatureProjectionsManager featureProjectionsManager = new MamutFeatureProjectionsManager(
-					context.getService( FeatureSpecsService.class ),
-					featureColorModeManager );
+		try (final Context context = new Context(FeatureSpecsService.class)) {
 
-			final PreferencesDialog settings = new PreferencesDialog( null, new Keymap(), new String[] { KeyConfigContexts.MASTODON } );
-			settings.addPage( new FeatureColorModeConfigPage( FEATURECOLORMODE_SETTINGSPAGE_TREEPATH,
-					featureColorModeManager,
-					featureProjectionsManager,
-					"Spot", "Link" ) );
+			final FeatureColorModeManager featureColorModeManager =
+				new FeatureColorModeManager();
+			final MamutFeatureProjectionsManager featureProjectionsManager =
+				new MamutFeatureProjectionsManager(
+					context.getService(FeatureSpecsService.class),
+					featureColorModeManager);
 
-			final MamutProject project = new MamutProjectIO().load( "samples/drosophila_crop.mastodon" );
+			final PreferencesDialog settings = new PreferencesDialog(null,
+				new Keymap(), new String[] { KeyConfigContexts.MASTODON });
+			settings.addPage(new FeatureColorModeConfigPage(
+				FEATURECOLORMODE_SETTINGSPAGE_TREEPATH,
+				featureColorModeManager,
+				featureProjectionsManager,
+				"Spot", "Link"));
+
+			final MamutProject project = new MamutProjectIO().load(
+				"samples/drosophila_crop.mastodon");
 			final Model model = new Model();
-			model.loadRaw( project.openForReading() );
-			featureProjectionsManager.setModel( model, 3 );
+			model.loadRaw(project.openForReading());
+			featureProjectionsManager.setModel(model, 3);
 
 			settings.pack();
-			settings.setLocationRelativeTo( null );
-			settings.setVisible( true );
+			settings.setLocationRelativeTo(null);
+			settings.setVisible(true);
 
 		}
 	}

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.ui.coloring.feature;
 
 import java.io.StringReader;
@@ -46,74 +47,74 @@ import bdv.ui.settings.style.Style;
  *
  * @author Jean-Yves Tinevez
  */
-public class FeatureColorMode implements Style< FeatureColorMode >
-{
+public class FeatureColorMode implements Style<FeatureColorMode> {
 
 	/**
-	 * Constant for the key of a feature that builds the default color mode.
-	 * We hardcode it here is that we do not have to depend on concrete implementations.
+	 * Constant for the key of a feature that builds the default color mode. We
+	 * hardcode it here is that we do not have to depend on concrete
+	 * implementations.
 	 */
 	private static final String DEFAULT_KEY = "Spot N links";
 
 	/**
 	 * Supported modes for edge coloring.
 	 */
-	public enum EdgeColorMode
-	{
-		/**
-		 * Each edge has a color that depends on a numerical feature defined for
-		 * this edge.
-		 */
-		EDGE( "Edge", TargetType.EDGE,
-				"Each edge has a color that depends on a numerical feature defined for this edge." ),
-		/**
-		 * Edges have a color determined by a numerical feature of their source
-		 * vertex.
-		 */
-		SOURCE_VERTEX( "Source vertex", TargetType.VERTEX,
-				"Edges have a color determined by a numerical feature of their source vertex." ),
-		/**
-		 * Edges have a color determined by a numerical feature of their target
-		 * vertex.
-		 */
-		TARGET_VERTEX( "Target vertex", TargetType.VERTEX,
-				"Edges have a color determined by a numerical feature of their target vertex." ),
-		/**
-		 * Edges are painted with a default color.
-		 */
-		NONE( "Default", null, "Edges are painted with a default color." ),
-		/**
-		 * Edges have a color determined by a numerical feature of the branch
-		 * vertex in the branch 'up' (backward in time) that is linked to their
-		 * source vertex.
-		 */
-		SOURCE_BRANCH_VERTEX( "Source branch-vertex", TargetType.BRANCH_VERTEX,
-				"Edges have a color determined by a numerical feature of the branch-"
-						+ "vertex that is linked to their source vertex." ),
-		/**
-		 * Edges have a color determined by a numerical feature of the branch
-		 * vertex in the branch 'up' (backward in time) that is linked to their
-		 * target vertex.
-		 */
-		TARGET_BRANCH_VERTEX( "Target branch-vertex", TargetType.BRANCH_VERTEX,
-				"Edges have a color determined by a numerical feature of the branch-"
-						+ "vertex that is linked to their target vertex." ),
-		/**
-		 * Edges have a color determined by a numerical feature of the
-		 * branch-link they are linked to. Or the color of the incoming edge of
-		 * the branch-vertex they are linked to.
-		 */
-		INCOMING_BRANCH_EDGE( "Branch-edge up", TargetType.BRANCH_EDGE,
-				"Edges have a color determined by a numerical feature of the branch-edge they are linked to."
-						+ "Or the color of the incoming edge of the branch-vertex they are linked to. "),
-		/**
-		 * Edges have a color determined by a numerical feature of the
-		 * branch-link they are linked to. Or the color of the outgoing edge of
-		 * the branch-vertex they are linked to.
-		 */
-		OUTGOING_BRANCH_EDGE( "Branch-edge down", TargetType.BRANCH_EDGE,
-				"Edges have a color determined by a numerical feature of the branch-edge they are linked to."
-						+ "Or the color of the outgoing edge of the branch-vertex they are linked to. ");
+	public enum EdgeColorMode {
+
+			/**
+			 * Each edge has a color that depends on a numerical feature defined for
+			 * this edge.
+			 */
+			EDGE("Edge", TargetType.EDGE,
+				"Each edge has a color that depends on a numerical feature defined for this edge."),
+			/**
+			 * Edges have a color determined by a numerical feature of their source
+			 * vertex.
+			 */
+			SOURCE_VERTEX("Source vertex", TargetType.VERTEX,
+				"Edges have a color determined by a numerical feature of their source vertex."),
+			/**
+			 * Edges have a color determined by a numerical feature of their target
+			 * vertex.
+			 */
+			TARGET_VERTEX("Target vertex", TargetType.VERTEX,
+				"Edges have a color determined by a numerical feature of their target vertex."),
+			/**
+			 * Edges are painted with a default color.
+			 */
+			NONE("Default", null, "Edges are painted with a default color."),
+			/**
+			 * Edges have a color determined by a numerical feature of the branch
+			 * vertex in the branch 'up' (backward in time) that is linked to their
+			 * source vertex.
+			 */
+			SOURCE_BRANCH_VERTEX("Source branch-vertex", TargetType.BRANCH_VERTEX,
+				"Edges have a color determined by a numerical feature of the branch-" +
+					"vertex that is linked to their source vertex."),
+			/**
+			 * Edges have a color determined by a numerical feature of the branch
+			 * vertex in the branch 'up' (backward in time) that is linked to their
+			 * target vertex.
+			 */
+			TARGET_BRANCH_VERTEX("Target branch-vertex", TargetType.BRANCH_VERTEX,
+				"Edges have a color determined by a numerical feature of the branch-" +
+					"vertex that is linked to their target vertex."),
+			/**
+			 * Edges have a color determined by a numerical feature of the branch-link
+			 * they are linked to. Or the color of the incoming edge of the
+			 * branch-vertex they are linked to.
+			 */
+			INCOMING_BRANCH_EDGE("Branch-edge up", TargetType.BRANCH_EDGE,
+				"Edges have a color determined by a numerical feature of the branch-edge they are linked to." +
+					"Or the color of the incoming edge of the branch-vertex they are linked to. "),
+			/**
+			 * Edges have a color determined by a numerical feature of the branch-link
+			 * they are linked to. Or the color of the outgoing edge of the
+			 * branch-vertex they are linked to.
+			 */
+			OUTGOING_BRANCH_EDGE("Branch-edge down", TargetType.BRANCH_EDGE,
+				"Edges have a color determined by a numerical feature of the branch-edge they are linked to." +
+					"Or the color of the outgoing edge of the branch-vertex they are linked to. ");
 
 		private final String label;
 
@@ -121,7 +122,8 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 
 		private final String tooltip;
 
-		private EdgeColorMode( final String label, final TargetType targetType, final String tooltip )
+		private EdgeColorMode(final String label, final TargetType targetType,
+			final String tooltip)
 		{
 			this.label = label;
 			this.targetType = targetType;
@@ -129,22 +131,19 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		}
 
 		@Override
-		public String toString()
-		{
+		public String toString() {
 			return label;
 		}
 
-		public TargetType targetType()
-		{
+		public TargetType targetType() {
 			return targetType;
 		}
 
-		public static String[] tooltips()
-		{
+		public static String[] tooltips() {
 			final EdgeColorMode[] vals = values();
-			final String[] tooltips = new String[ vals.length ];
-			for ( int i = 0; i < vals.length; i++ )
-				tooltips[ i ] = vals[ i ].tooltip;
+			final String[] tooltips = new String[vals.length];
+			for (int i = 0; i < vals.length; i++)
+				tooltips[i] = vals[i].tooltip;
 
 			return tooltips;
 		}
@@ -153,56 +152,54 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 	/**
 	 * Supported modes for vertex coloring.
 	 */
-	public enum VertexColorMode
-	{
-		/**
-		 * Each vertex has a color determined by a numerical feature defined for
-		 * this vertex.
-		 */
-		VERTEX( "Vertex", TargetType.VERTEX,
-				"Each vertex has a color determined by a numerical feature defined for this vertex." ),
-		/**
-		 * Vertices have a color determined by a numerical feature of their
-		 * incoming edge, iff they have exactly one incoming edge.
-		 */
-		INCOMING_EDGE( "Incoming edge", TargetType.EDGE,
-				"Vertices have a color determined by a numerical feature of their "
-						+ "incoming edge, iff they have exactly one incoming edge." ),
-		/**
-		 * Vertices have a color determined by a numerical feature of their
-		 * outgoing edge, iff they have exactly one outgoing edge.
-		 */
-		OUTGOING_EDGE( "Outgoing edge", TargetType.EDGE,
-				"Vertices have a color determined by a numerical feature of their "
-						+ "outgoing edge, iff they have exactly one outgoing edge." ),
-		/**
-		 * Vertices are painted with a default color.
-		 */
-		NONE( "Default", null,
-				"Vertices are painted with a default color." ),
-		/**
-		 * Each vertex has a color determined by a numerical feature defined for
-		 * the branch vertex it is linked to.
-		 */
-		BRANCH_VERTEX( "Branch-vertex", TargetType.BRANCH_VERTEX,
-				"Each vertex has a color determined by a numerical feature defined "
-						+ "for the branch vertex it is linked to." ),
-		/**
-		 * Vertices have a color determined by a numerical feature of the
-		 * incoming branch-edge they are linked to, iff they have exactly one
-		 * such edge.
-		 */
-		INCOMING_BRANCH_EDGE( "Incoming branch-edge", TargetType.BRANCH_EDGE,
-				"Vertices have a color determined by a numerical feature of the incoming branch-edge "
-						+ "they are linked to, iff they have exactly one such edge." ),
-		/**
-		 * Vertices have a color determined by a numerical feature of the
-		 * outgoing branch-edge they are linked to, iff they have exactly one
-		 * such edge.
-		 */
-		OUTGOING_BRANCH_EDGE( "Outgoing branch-edge", TargetType.BRANCH_EDGE,
-				"Vertices have a color determined by a numerical feature of the outgoing branch-edge "
-						+ "they are linked to, iff they have exactly one such edge." );
+	public enum VertexColorMode {
+
+			/**
+			 * Each vertex has a color determined by a numerical feature defined for
+			 * this vertex.
+			 */
+			VERTEX("Vertex", TargetType.VERTEX,
+				"Each vertex has a color determined by a numerical feature defined for this vertex."),
+			/**
+			 * Vertices have a color determined by a numerical feature of their
+			 * incoming edge, iff they have exactly one incoming edge.
+			 */
+			INCOMING_EDGE("Incoming edge", TargetType.EDGE,
+				"Vertices have a color determined by a numerical feature of their " +
+					"incoming edge, iff they have exactly one incoming edge."),
+			/**
+			 * Vertices have a color determined by a numerical feature of their
+			 * outgoing edge, iff they have exactly one outgoing edge.
+			 */
+			OUTGOING_EDGE("Outgoing edge", TargetType.EDGE,
+				"Vertices have a color determined by a numerical feature of their " +
+					"outgoing edge, iff they have exactly one outgoing edge."),
+			/**
+			 * Vertices are painted with a default color.
+			 */
+			NONE("Default", null,
+				"Vertices are painted with a default color."),
+			/**
+			 * Each vertex has a color determined by a numerical feature defined for
+			 * the branch vertex it is linked to.
+			 */
+			BRANCH_VERTEX("Branch-vertex", TargetType.BRANCH_VERTEX,
+				"Each vertex has a color determined by a numerical feature defined " +
+					"for the branch vertex it is linked to."),
+			/**
+			 * Vertices have a color determined by a numerical feature of the incoming
+			 * branch-edge they are linked to, iff they have exactly one such edge.
+			 */
+			INCOMING_BRANCH_EDGE("Incoming branch-edge", TargetType.BRANCH_EDGE,
+				"Vertices have a color determined by a numerical feature of the incoming branch-edge " +
+					"they are linked to, iff they have exactly one such edge."),
+			/**
+			 * Vertices have a color determined by a numerical feature of the outgoing
+			 * branch-edge they are linked to, iff they have exactly one such edge.
+			 */
+			OUTGOING_BRANCH_EDGE("Outgoing branch-edge", TargetType.BRANCH_EDGE,
+				"Vertices have a color determined by a numerical feature of the outgoing branch-edge " +
+					"they are linked to, iff they have exactly one such edge.");
 
 		private final String label;
 
@@ -210,7 +207,8 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 
 		private final TargetType targetType;
 
-		private VertexColorMode( final String label, final TargetType targetType, final String tooltip )
+		private VertexColorMode(final String label, final TargetType targetType,
+			final String tooltip)
 		{
 			this.label = label;
 			this.targetType = targetType;
@@ -218,84 +216,72 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		}
 
 		@Override
-		public String toString()
-		{
+		public String toString() {
 			return label;
 		}
 
-		public TargetType targetType()
-		{
+		public TargetType targetType() {
 			return targetType;
 		}
 
-		public static String[] tooltips()
-		{
+		public static String[] tooltips() {
 			final VertexColorMode[] vals = values();
-			final String[] tooltips = new String[ vals.length ];
-			for ( int i = 0; i < vals.length; i++ )
-				tooltips[ i ] = vals[ i ].tooltip;
+			final String[] tooltips = new String[vals.length];
+			for (int i = 0; i < vals.length; i++)
+				tooltips[i] = vals[i].tooltip;
 
 			return tooltips;
 		}
 	}
 
-	public interface UpdateListener
-	{
+	public interface UpdateListener {
+
 		public void featureColorModeChanged();
 	}
 
-	private final Listeners.List< UpdateListener > updateListeners;
+	private final Listeners.List<UpdateListener> updateListeners;
 
-	private FeatureColorMode()
-	{
+	private FeatureColorMode() {
 		updateListeners = new Listeners.SynchronizedList<>();
 	}
 
-	private void notifyListeners()
-	{
-		for ( final UpdateListener l : updateListeners.list )
+	private void notifyListeners() {
+		for (final UpdateListener l : updateListeners.list)
 			l.featureColorModeChanged();
 	}
 
-	public Listeners< UpdateListener > updateListeners()
-	{
+	public Listeners<UpdateListener> updateListeners() {
 		return updateListeners;
 	}
 
 	@Override
-	public FeatureColorMode copy()
-	{
-		return copy( null );
+	public FeatureColorMode copy() {
+		return copy(null);
 	}
 
 	@Override
-	public FeatureColorMode copy( final String name )
-	{
+	public FeatureColorMode copy(final String name) {
 		final FeatureColorMode fcm = new FeatureColorMode();
-		fcm.set( this );
-		if ( name != null )
-			fcm.setName( name );
+		fcm.set(this);
+		if (name != null)
+			fcm.setName(name);
 		return fcm;
 	}
 
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
 	@Override
-	public synchronized void setName( final String name )
-	{
-		if ( this.name != name )
-		{
+	public synchronized void setName(final String name) {
+		if (this.name != name) {
 			this.name = name;
 			notifyListeners();
 		}
 	}
 
-	public synchronized void set( final FeatureColorMode mode )
-	{
+	public synchronized void set(final FeatureColorMode mode) {
 		name = mode.name;
 		vertexColorMode = mode.vertexColorMode;
 		vertexFeatureProjection = mode.vertexFeatureProjection;
@@ -371,144 +357,135 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 	 */
 	private double edgeRangeMax;
 
-	public synchronized void setVertexColorMode( final VertexColorMode vertexColorMode )
+	public synchronized void setVertexColorMode(
+		final VertexColorMode vertexColorMode)
 	{
-		if ( this.vertexColorMode != vertexColorMode )
-		{
+		if (this.vertexColorMode != vertexColorMode) {
 			this.vertexColorMode = vertexColorMode;
 			notifyListeners();
 		}
 	}
 
-	public synchronized void setVertexFeatureProjection( final FeatureProjectionId vertexFeatureProjection )
+	public synchronized void setVertexFeatureProjection(
+		final FeatureProjectionId vertexFeatureProjection)
 	{
-		if ( !Objects.equals( this.vertexFeatureProjection, vertexFeatureProjection ) )
+		if (!Objects.equals(this.vertexFeatureProjection,
+			vertexFeatureProjection))
 		{
 			this.vertexFeatureProjection = vertexFeatureProjection;
 			notifyListeners();
 		}
 	}
 
-	public synchronized void setVertexColorMap( final String vertexColorMap )
-	{
-		if ( this.vertexColorMap != vertexColorMap )
-		{
+	public synchronized void setVertexColorMap(final String vertexColorMap) {
+		if (this.vertexColorMap != vertexColorMap) {
 			this.vertexColorMap = vertexColorMap;
 			notifyListeners();
 		}
 	}
 
-	public synchronized void setVertexRange( final double vertexRangeMin, final double vertexRangeMax )
+	public synchronized void setVertexRange(final double vertexRangeMin,
+		final double vertexRangeMax)
 	{
-		if ( this.vertexRangeMin != vertexRangeMin || this.vertexRangeMax != vertexRangeMax )
+		if (this.vertexRangeMin != vertexRangeMin ||
+			this.vertexRangeMax != vertexRangeMax)
 		{
-			this.vertexRangeMin = Math.min( vertexRangeMin, vertexRangeMax );
-			this.vertexRangeMax = Math.max( vertexRangeMin, vertexRangeMax );
+			this.vertexRangeMin = Math.min(vertexRangeMin, vertexRangeMax);
+			this.vertexRangeMax = Math.max(vertexRangeMin, vertexRangeMax);
 			notifyListeners();
 		}
 	}
 
-	public synchronized void setEdgeColorMode( final EdgeColorMode edgeColorMode )
-	{
-		if ( this.edgeColorMode != edgeColorMode )
-		{
+	public synchronized void setEdgeColorMode(final EdgeColorMode edgeColorMode) {
+		if (this.edgeColorMode != edgeColorMode) {
 			this.edgeColorMode = edgeColorMode;
 			notifyListeners();
 		}
 	}
 
-	public synchronized void setEdgeFeatureProjection( final FeatureProjectionId edgeFeatureProjection )
+	public synchronized void setEdgeFeatureProjection(
+		final FeatureProjectionId edgeFeatureProjection)
 	{
-		if ( !Objects.equals( this.edgeFeatureProjection, edgeFeatureProjection ) )
-		{
+		if (!Objects.equals(this.edgeFeatureProjection, edgeFeatureProjection)) {
 			this.edgeFeatureProjection = edgeFeatureProjection;
 			notifyListeners();
 		}
 	}
 
-
-	public synchronized void setEdgeColorMap( final String edgeColorMap )
-	{
-		if ( this.edgeColorMap != edgeColorMap )
-		{
+	public synchronized void setEdgeColorMap(final String edgeColorMap) {
+		if (this.edgeColorMap != edgeColorMap) {
 			this.edgeColorMap = edgeColorMap;
 			notifyListeners();
 		}
 	}
 
-	public synchronized void setEdgeRange( final double edgeRangeMin, final double edgeRangeMax )
+	public synchronized void setEdgeRange(final double edgeRangeMin,
+		final double edgeRangeMax)
 	{
-		if ( this.edgeRangeMin != edgeRangeMin || this.edgeRangeMax != edgeRangeMax )
+		if (this.edgeRangeMin != edgeRangeMin ||
+			this.edgeRangeMax != edgeRangeMax)
 		{
-			this.edgeRangeMin = Math.min( edgeRangeMin, edgeRangeMax );
-			this.edgeRangeMax = Math.max( edgeRangeMin, edgeRangeMax );
+			this.edgeRangeMin = Math.min(edgeRangeMin, edgeRangeMax);
+			this.edgeRangeMax = Math.max(edgeRangeMin, edgeRangeMax);
 			notifyListeners();
 		}
 	}
 
-	public VertexColorMode getVertexColorMode()
-	{
+	public VertexColorMode getVertexColorMode() {
 		return vertexColorMode;
 	}
 
-	public FeatureProjectionId getVertexFeatureProjection()
-	{
+	public FeatureProjectionId getVertexFeatureProjection() {
 		return vertexFeatureProjection;
 	}
 
-	public String getVertexColorMap()
-	{
+	public String getVertexColorMap() {
 		return vertexColorMap;
 	}
 
-	public double getVertexRangeMin()
-	{
+	public double getVertexRangeMin() {
 		return vertexRangeMin;
 	}
 
-	public double getVertexRangeMax()
-	{
+	public double getVertexRangeMax() {
 		return vertexRangeMax;
 	}
 
-	public EdgeColorMode getEdgeColorMode()
-	{
+	public EdgeColorMode getEdgeColorMode() {
 		return edgeColorMode;
 	}
 
-	public FeatureProjectionId getEdgeFeatureProjection()
-	{
+	public FeatureProjectionId getEdgeFeatureProjection() {
 		return edgeFeatureProjection;
 	}
 
-	public String getEdgeColorMap()
-	{
+	public String getEdgeColorMap() {
 		return edgeColorMap;
 	}
 
-	public double getEdgeRangeMin()
-	{
+	public double getEdgeRangeMin() {
 		return edgeRangeMin;
 	}
 
-	public double getEdgeRangeMax()
-	{
+	public double getEdgeRangeMax() {
 		return edgeRangeMax;
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		final StringBuilder str = new StringBuilder();
-		str.append( "\n  name: " ).append( name );
-		str.append( "\n  vertex color mode: " ).append( vertexColorMode );
-		str.append( "\n  vertex feature projection: " ).append( vertexFeatureProjection );
-		str.append( "\n  vertex color map: " ).append( vertexColorMap );
-		str.append( String.format( "\n  vertex feature range: [ %.1f - %.1f ]", vertexRangeMin, vertexRangeMax ) );
-		str.append( "\n  edge color mode: " ).append( edgeColorMode );
-		str.append( "\n  edge feature projection: " ).append( edgeFeatureProjection );
-		str.append( "\n  edge color map: " ).append( edgeColorMap );
-		str.append( String.format( "\n  edge feature range: [ %.1f - %.1f ]", edgeRangeMin, edgeRangeMax ) );
+		str.append("\n  name: ").append(name);
+		str.append("\n  vertex color mode: ").append(vertexColorMode);
+		str.append("\n  vertex feature projection: ").append(
+			vertexFeatureProjection);
+		str.append("\n  vertex color map: ").append(vertexColorMap);
+		str.append(String.format("\n  vertex feature range: [ %.1f - %.1f ]",
+			vertexRangeMin, vertexRangeMax));
+		str.append("\n  edge color mode: ").append(edgeColorMode);
+		str.append("\n  edge feature projection: ").append(edgeFeatureProjection);
+		str.append("\n  edge color map: ").append(edgeColorMap);
+		str.append(String.format("\n  edge feature range: [ %.1f - %.1f ]",
+			edgeRangeMin, edgeRangeMax));
 		return str.toString();
 	}
 
@@ -517,46 +494,45 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 	 */
 
 	private static final FeatureColorMode N_LINKS;
-	static
-	{
+	static {
 		N_LINKS = new FeatureColorMode();
 		N_LINKS.name = "Number of links";
 		N_LINKS.vertexColorMode = VertexColorMode.VERTEX;
 		N_LINKS.vertexColorMap = ColorMap.PARULA.getName();
-		N_LINKS.vertexFeatureProjection = new FeatureProjectionId( DEFAULT_KEY, DEFAULT_KEY, N_LINKS.vertexColorMode.targetType() );
+		N_LINKS.vertexFeatureProjection = new FeatureProjectionId(DEFAULT_KEY,
+			DEFAULT_KEY, N_LINKS.vertexColorMode.targetType());
 		N_LINKS.vertexRangeMin = 0;
 		N_LINKS.vertexRangeMax = 3;
 		N_LINKS.edgeColorMode = EdgeColorMode.SOURCE_VERTEX;
 		N_LINKS.edgeColorMap = N_LINKS.vertexColorMap;
-		N_LINKS.edgeFeatureProjection = new FeatureProjectionId( DEFAULT_KEY, DEFAULT_KEY, N_LINKS.edgeColorMode.targetType() );
+		N_LINKS.edgeFeatureProjection = new FeatureProjectionId(DEFAULT_KEY,
+			DEFAULT_KEY, N_LINKS.edgeColorMode.targetType());
 		N_LINKS.edgeRangeMin = N_LINKS.vertexRangeMin;
 		N_LINKS.edgeRangeMax = N_LINKS.vertexRangeMax;
 	}
 
-	public static final Collection< FeatureColorMode > defaults;
-	static
-	{
-		defaults = new ArrayList<>( 1 );
-		defaults.add( N_LINKS );
+	public static final Collection<FeatureColorMode> defaults;
+	static {
+		defaults = new ArrayList<>(1);
+		defaults.add(N_LINKS);
 	}
 
-	public static FeatureColorMode defaultMode()
-	{
+	public static FeatureColorMode defaultMode() {
 		return N_LINKS;
 	}
 
-	public static void main( final String[] args )
-	{
+	public static void main(final String[] args) {
 		Yaml yaml = FeatureColorModeIO.createYaml();
-		final ArrayList< Object > objects = new ArrayList<>();
-		objects.add( N_LINKS );
+		final ArrayList<Object> objects = new ArrayList<>();
+		objects.add(N_LINKS);
 		final StringWriter writer = new StringWriter();
-		yaml.dumpAll( objects.iterator(), writer );
+		yaml.dumpAll(objects.iterator(), writer);
 
-		System.out.println( "writer = " + writer );
+		System.out.println("writer = " + writer);
 
 		yaml = FeatureColorModeIO.createYaml();
-		final Iterable< Object > objs = yaml.loadAll( new StringReader( writer.toString() ) );
-		System.out.println( "objs = " + objs.iterator().next() );
+		final Iterable<Object> objs = yaml.loadAll(new StringReader(writer
+			.toString()));
+		System.out.println("objs = " + objs.iterator().next());
 	}
 }

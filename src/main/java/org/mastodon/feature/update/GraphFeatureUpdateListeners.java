@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.feature.update;
 
 import java.util.ArrayList;
@@ -42,42 +43,42 @@ import org.mastodon.properties.PropertyChangeListener;
 /**
  * Listeners for incremental changes.
  */
-public class GraphFeatureUpdateListeners
-{
+public class GraphFeatureUpdateListeners {
 
 	/**
-	 * Returns a new {@link PropertyChangeListener} that will remove vertices
-	 * and their neighbor edges from a feature model if their property are
-	 * modified.
+	 * Returns a new {@link PropertyChangeListener} that will remove vertices and
+	 * their neighbor edges from a feature model if their property are modified.
 	 * 
-	 * @param featureModel
-	 *            the feature model.
-	 * @param vertexClass
-	 *            the class of vertices in the model.
-	 * @param edgeClass
-	 *            the class of edges in the model.
-	 *
+	 * @param featureModel the feature model.
+	 * @param vertexClass the class of vertices in the model.
+	 * @param edgeClass the class of edges in the model.
 	 * @return a new {@link PropertyChangeListener}.
 	 */
-	public static < V extends Vertex< E >, E extends Edge< V > > PropertyChangeListener< V > vertexPropertyListener( final FeatureModel featureModel, final Class< V > vertexClass, final Class< E > edgeClass )
+	public static <V extends Vertex<E>, E extends Edge<V>>
+		PropertyChangeListener<V> vertexPropertyListener(
+			final FeatureModel featureModel, final Class<V> vertexClass,
+			final Class<E> edgeClass)
 	{
-		return new MyVertexPropertyChangeListener<>( featureModel, vertexClass, edgeClass );
+		return new MyVertexPropertyChangeListener<>(featureModel, vertexClass,
+			edgeClass);
 	}
 
-	private static final class MyVertexPropertyChangeListener< V extends Vertex< E >, E extends Edge< V > > implements PropertyChangeListener< V >, FeatureModelListener
+	private static final class MyVertexPropertyChangeListener<V extends Vertex<E>, E extends Edge<V>>
+		implements PropertyChangeListener<V>, FeatureModelListener
 	{
 
 		private final FeatureModel featureModel;
 
-		private final Class< V > vertexClass;
+		private final Class<V> vertexClass;
 
-		private final Class< E > edgeClass;
+		private final Class<E> edgeClass;
 
-		private final List< Feature< E > > edgeFeatures;
+		private final List<Feature<E>> edgeFeatures;
 
-		private final List< Feature< V > > vertexFeatures;
+		private final List<Feature<V>> vertexFeatures;
 
-		public MyVertexPropertyChangeListener( final FeatureModel featureModel, final Class< V > vertexClass, final Class< E > edgeClass )
+		public MyVertexPropertyChangeListener(final FeatureModel featureModel,
+			final Class<V> vertexClass, final Class<E> edgeClass)
 		{
 			this.featureModel = featureModel;
 			this.vertexClass = vertexClass;
@@ -85,34 +86,32 @@ public class GraphFeatureUpdateListeners
 			this.edgeFeatures = new ArrayList<>();
 			this.vertexFeatures = new ArrayList<>();
 			featureModelChanged();
-			featureModel.listeners().add( this );
+			featureModel.listeners().add(this);
 		}
 
 		@Override
-		public void propertyChanged( final V v )
-		{
-			vertexFeatures.forEach( f -> f.invalidate( v ) );
-			for ( final Feature< E > f : edgeFeatures )
-				v.edges().forEach( e -> f.invalidate( e ) );
+		public void propertyChanged(final V v) {
+			vertexFeatures.forEach(f -> f.invalidate(v));
+			for (final Feature<E> f : edgeFeatures)
+				v.edges().forEach(e -> f.invalidate(e));
 		}
 
 		@Override
-		public void featureModelChanged()
-		{
-			featuresOfTarget( featureModel, vertexClass, vertexFeatures );
-			featuresOfTarget( featureModel, edgeClass, edgeFeatures );
+		public void featureModelChanged() {
+			featuresOfTarget(featureModel, vertexClass, vertexFeatures);
+			featuresOfTarget(featureModel, edgeClass, edgeFeatures);
 		}
 
-		@SuppressWarnings( "unchecked" )
-		private static < O > void featuresOfTarget(
-				final FeatureModel featureModel,
-				final Class< O > targetClass,
-				final List< Feature< O > > featureList )
+		@SuppressWarnings("unchecked")
+		private static <O> void featuresOfTarget(
+			final FeatureModel featureModel,
+			final Class<O> targetClass,
+			final List<Feature<O>> featureList)
 		{
 			featureList.clear();
-			for ( final FeatureSpec< ?, ? > fs : featureModel.getFeatureSpecs() )
-				if ( fs.getTargetClass().equals( targetClass ) )
-					featureList.add( ( Feature< O > ) featureModel.getFeature( fs ) );
+			for (final FeatureSpec<?, ?> fs : featureModel.getFeatureSpecs())
+				if (fs.getTargetClass().equals(targetClass))
+					featureList.add((Feature<O>) featureModel.getFeature(fs));
 		}
 	}
 }

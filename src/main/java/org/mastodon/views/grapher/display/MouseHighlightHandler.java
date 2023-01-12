@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.display;
 
 import java.awt.event.MouseEvent;
@@ -41,13 +42,15 @@ import org.mastodon.views.grapher.display.OffsetAxes.OffsetAxesListener;
 
 import bdv.viewer.TransformListener;
 
-public class MouseHighlightHandler implements MouseMotionListener, MouseListener, TransformListener< ScreenTransform >, OffsetAxesListener
+public class MouseHighlightHandler implements MouseMotionListener,
+	MouseListener, TransformListener<ScreenTransform>, OffsetAxesListener
 {
+
 	private final DataDisplayOverlay graphOverlay;
 
-	private final HighlightModel< DataVertex, DataEdge > highlight;
+	private final HighlightModel<DataVertex, DataEdge> highlight;
 
-	private final DataGraph< ?, ? > graph;
+	private final DataGraph<?, ?> graph;
 
 	private boolean mouseInside;
 
@@ -64,9 +67,9 @@ public class MouseHighlightHandler implements MouseMotionListener, MouseListener
 	private int screenHeight;
 
 	public MouseHighlightHandler(
-			final DataDisplayOverlay graphOverlay,
-			final HighlightModel< DataVertex, DataEdge > highlight,
-			final DataGraph< ?, ? > graph )
+		final DataDisplayOverlay graphOverlay,
+		final HighlightModel<DataVertex, DataEdge> highlight,
+		final DataGraph<?, ?> graph)
 	{
 		this.graphOverlay = graphOverlay;
 		this.highlight = highlight;
@@ -74,79 +77,70 @@ public class MouseHighlightHandler implements MouseMotionListener, MouseListener
 	}
 
 	@Override
-	public void mouseMoved( final MouseEvent e )
-	{
+	public void mouseMoved(final MouseEvent e) {
 		x = e.getX();
 		y = e.getY();
 		highlight();
 	}
 
 	@Override
-	public void mouseDragged( final MouseEvent e )
-	{
+	public void mouseDragged(final MouseEvent e) {
 		x = e.getX();
 		y = e.getY();
 		highlight();
 	}
 
 	@Override
-	public void transformChanged( final ScreenTransform t )
-	{
+	public void transformChanged(final ScreenTransform t) {
 		screenHeight = t.getScreenHeight();
-		if ( mouseInside )
+		if (mouseInside)
 			highlight();
 	}
 
 	@Override
-	public void updateAxesSize( final int width, final int height )
-	{
+	public void updateAxesSize(final int width, final int height) {
 		headerWidth = width;
 	}
 
-	private void highlight()
-	{
-		if ( x < headerWidth || y > screenHeight )
+	private void highlight() {
+		if (x < headerWidth || y > screenHeight)
 			highlight.clearHighlight();
-		else
-		{
+		else {
 			final DataVertex vertex = graph.vertexRef();
 			final DataEdge edge = graph.edgeRef();
 
 			// See if we can find a vertex.
-			if ( graphOverlay.getVertexAt( x, y, vertex ) != null )
-				highlight.highlightVertex( vertex );
+			if (graphOverlay.getVertexAt(x, y, vertex) != null)
+				highlight.highlightVertex(vertex);
 			// See if we can find an edge.
-			else if ( graphOverlay.getEdgeAt( x, y, DataDisplayNavigationBehaviours.EDGE_SELECT_DISTANCE_TOLERANCE, edge ) != null )
-				highlight.highlightEdge( edge );
+			else if (graphOverlay.getEdgeAt(x, y,
+				DataDisplayNavigationBehaviours.EDGE_SELECT_DISTANCE_TOLERANCE,
+				edge) != null)
+				highlight.highlightEdge(edge);
 			else
 				highlight.clearHighlight();
 
-			graph.releaseRef( vertex );
-			graph.releaseRef( edge );
+			graph.releaseRef(vertex);
+			graph.releaseRef(edge);
 		}
 	}
 
 	@Override
-	public void mouseClicked( final MouseEvent e )
-	{}
+	public void mouseClicked(final MouseEvent e) {}
 
 	@Override
-	public void mousePressed( final MouseEvent e )
-	{}
+	public void mousePressed(final MouseEvent e) {}
 
 	@Override
-	public void mouseReleased( final MouseEvent e )
-	{}
+	public void mouseReleased(final MouseEvent e) {}
 
 	@Override
-	public void mouseEntered( final MouseEvent e )
-	{
+	public void mouseEntered(final MouseEvent e) {
 		mouseInside = true;
 	}
 
 	@Override
-	public void mouseExited( final MouseEvent e )
-	{
+	public void mouseExited(final MouseEvent e) {
 		highlight.clearHighlight();
 		mouseInside = false;
 	}

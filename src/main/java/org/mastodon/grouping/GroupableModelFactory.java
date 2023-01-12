@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.grouping;
 
 /**
@@ -41,12 +42,11 @@ package org.mastodon.grouping;
  * </p>
  *
  * @author Tobias Pietzsch
- * @param <T>
- *            the type of the backing model.
+ * @param <T> the type of the backing model.
  */
-public interface GroupableModelFactory< T >
-{
+public interface GroupableModelFactory<T> {
+
 	public T createBackingModel();
 
-	public ForwardingModel< T > createForwardingModel();
+	public ForwardingModel<T> createForwardingModel();
 }

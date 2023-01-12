@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model;
 
 import org.mastodon.grouping.ForwardingModel;
@@ -41,71 +42,70 @@ import org.scijava.listeners.Listeners;
  *
  * @author Tobias Pietzsch
  */
-public class ForwardingTimepointModel implements TimepointModel, ForwardingModel< TimepointModel >
+public class ForwardingTimepointModel implements TimepointModel,
+	ForwardingModel<TimepointModel>
 {
+
 	private TimepointModel model;
 
-	private final Listeners.List< TimepointListener > listeners;
+	private final Listeners.List<TimepointListener> listeners;
 
 	private final TimepointListener listener;
 
-	public ForwardingTimepointModel()
-	{
+	public ForwardingTimepointModel() {
 		listeners = new Listeners.SynchronizedList<>();
-		listener = () -> listeners.list.forEach( TimepointListener::timepointChanged );
+		listener = () -> listeners.list.forEach(
+			TimepointListener::timepointChanged);
 	}
 
 	@Override
-	public void setTimepoint( final int t )
-	{
-		model.setTimepoint( t );
+	public void setTimepoint(final int t) {
+		model.setTimepoint(t);
 	}
 
 	@Override
-	public int getTimepoint()
-	{
+	public int getTimepoint() {
 		return model.getTimepoint();
 	}
 
 	@Override
-	public Listeners< TimepointListener > listeners()
-	{
+	public Listeners<TimepointListener> listeners() {
 		return listeners;
 	}
 
 	@Override
-	public void linkTo( final TimepointModel newModel, final boolean copyCurrentStateToNewModel )
+	public void linkTo(final TimepointModel newModel,
+		final boolean copyCurrentStateToNewModel)
 	{
 		final TimepointModel oldModel = model;
 		model = newModel;
 
-		if ( oldModel != null )
-			oldModel.listeners().remove( listener );
-		newModel.listeners().add( listener );
+		if (oldModel != null)
+			oldModel.listeners().remove(listener);
+		newModel.listeners().add(listener);
 
-		if ( copyCurrentStateToNewModel )
-		{
-			newModel.setTimepoint( oldModel.getTimepoint() );
+		if (copyCurrentStateToNewModel) {
+			newModel.setTimepoint(oldModel.getTimepoint());
 		}
-		else
-		{
-			if ( oldModel == null || oldModel.getTimepoint() != newModel.getTimepoint() )
+		else {
+			if (oldModel == null || oldModel.getTimepoint() != newModel
+				.getTimepoint())
 				listener.timepointChanged();
 		}
 	}
 
-	public static final GroupableModelFactory< TimepointModel > factory = new GroupableModelFactory< TimepointModel >()
-	{
-		@Override
-		public TimepointModel createBackingModel()
+	public static final GroupableModelFactory<TimepointModel> factory =
+		new GroupableModelFactory<TimepointModel>()
 		{
-			return new DefaultTimepointModel();
-		}
 
-		@Override
-		public ForwardingModel< TimepointModel > createForwardingModel()
-		{
-			return new ForwardingTimepointModel();
-		}
-	};
+			@Override
+			public TimepointModel createBackingModel() {
+				return new DefaultTimepointModel();
+			}
+
+			@Override
+			public ForwardingModel<TimepointModel> createForwardingModel() {
+				return new ForwardingTimepointModel();
+			}
+		};
 }

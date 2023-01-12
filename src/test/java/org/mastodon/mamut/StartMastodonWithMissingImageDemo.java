@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut;
 
 import javax.swing.JButton;
@@ -42,38 +43,41 @@ import org.scijava.Context;
  *
  * @author Matthias Arzt
  */
-public class StartMastodonWithMissingImageDemo extends JFrame
-{
+public class StartMastodonWithMissingImageDemo extends JFrame {
+
 	private StartMastodonWithMissingImageDemo() {
 		super("Start Mastodon With Missing Image Demo");
-		setLayout( new MigLayout("fill, wrap") );
+		setLayout(new MigLayout("fill, wrap"));
 		add(new JLabel("This is how Mastodon starts:"));
-		addButton( "... without dataset XML", "/org/mastodon/mamut/examples/tiny-no-image/tiny-project-no-dataset-xml.mastodon" );
-		addButton( "... from backup dataset XML", "/org/mastodon/mamut/examples/tiny-no-image/tiny-project-backup-dataset-xml.mastodon" );
-		addButton( "... without HDF5 file", "/org/mastodon/mamut/examples/tiny-missing-hdf5/tiny-project.mastodon" );
-		addButton( "... with unknown host", "/org/mastodon/mamut/examples/tiny-unknown-url/remote-dataset.mastodon" );
+		addButton("... without dataset XML",
+			"/org/mastodon/mamut/examples/tiny-no-image/tiny-project-no-dataset-xml.mastodon");
+		addButton("... from backup dataset XML",
+			"/org/mastodon/mamut/examples/tiny-no-image/tiny-project-backup-dataset-xml.mastodon");
+		addButton("... without HDF5 file",
+			"/org/mastodon/mamut/examples/tiny-missing-hdf5/tiny-project.mastodon");
+		addButton("... with unknown host",
+			"/org/mastodon/mamut/examples/tiny-unknown-url/remote-dataset.mastodon");
 	}
 
-	private void addButton( String title, String resourceName )
-	{
-		JButton button = new JButton( title );
-		button.addActionListener( ignore -> openProjectFromResources( resourceName ) );
-		add( button, "grow" );
+	private void addButton(String title, String resourceName) {
+		JButton button = new JButton(title);
+		button.addActionListener(ignore -> openProjectFromResources(resourceName));
+		add(button, "grow");
 	}
 
-	private void openProjectFromResources( String resourceName ) {
-		String file = StartMastodonWithMissingImageDemo.class.getResource( resourceName ).getPath();
-		try
-		{
-			System.setProperty( "apple.laf.useScreenMenuBar", "true" );
-			final WindowManager windowManager = new WindowManager( new Context() );
-			windowManager.getProjectManager().openWithDialog( new MamutProjectIO().load( file ) );
-			final MainWindow win = new MainWindow( windowManager );
-			win.setVisible( true );
+	private void openProjectFromResources(String resourceName) {
+		String file = StartMastodonWithMissingImageDemo.class.getResource(
+			resourceName).getPath();
+		try {
+			System.setProperty("apple.laf.useScreenMenuBar", "true");
+			final WindowManager windowManager = new WindowManager(new Context());
+			windowManager.getProjectManager().openWithDialog(new MamutProjectIO()
+				.load(file));
+			final MainWindow win = new MainWindow(windowManager);
+			win.setVisible(true);
 
 		}
-		catch ( Throwable e )
-		{
+		catch (Throwable e) {
 			e.printStackTrace();
 		}
 	}
@@ -81,7 +85,7 @@ public class StartMastodonWithMissingImageDemo extends JFrame
 	public static void main(String... args) {
 		JFrame frame = new StartMastodonWithMissingImageDemo();
 		frame.pack();
-		frame.setVisible( true );
-		frame.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	}
 }

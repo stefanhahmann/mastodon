@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model.branch;
 
 import org.mastodon.graph.Edge;
@@ -40,27 +41,22 @@ import org.mastodon.graph.branch.BranchGraph;
  * 
  * @author Jean-Yves Tinevez
  */
-public abstract class AbstractBranchGraphAdapter< 
-	V extends Vertex< E >, 
-	E extends Edge< V >, 
-	BV extends Vertex< BE >, 
-	BE extends Edge< BV > >
-{
+public abstract class AbstractBranchGraphAdapter<V extends Vertex<E>, E extends Edge<V>, BV extends Vertex<BE>, BE extends Edge<BV>> {
 
-	protected final BranchGraph< BV, BE, V, E > branchGraph;
+	protected final BranchGraph<BV, BE, V, E> branchGraph;
 
-	protected final ReadOnlyGraph< V, E > graph;
+	protected final ReadOnlyGraph<V, E> graph;
 
-	protected final GraphIdBimap< V, E > idmap;
+	protected final GraphIdBimap<V, E> idmap;
 
 	private final E eref;
 
 	private final V vref;
 
-	protected AbstractBranchGraphAdapter( 
-			final BranchGraph< BV, BE, V, E > branchGraph,
-			final ReadOnlyGraph< V, E > graph,
-			final GraphIdBimap< V, E > idmap )
+	protected AbstractBranchGraphAdapter(
+		final BranchGraph<BV, BE, V, E> branchGraph,
+		final ReadOnlyGraph<V, E> graph,
+		final GraphIdBimap<V, E> idmap)
 	{
 		this.branchGraph = branchGraph;
 		this.graph = graph;
@@ -68,21 +64,18 @@ public abstract class AbstractBranchGraphAdapter<
 		this.eref = graph.edgeRef();
 		this.vref = graph.vertexRef();
 	}
-	
 
-	protected final boolean isValid( final E e )
-	{
-		if ( e == null )
+	protected final boolean isValid(final E e) {
+		if (e == null)
 			return false;
-		final int id = idmap.getEdgeId( e );
-		return idmap.getEdgeIfExists( id, eref ) != null;
+		final int id = idmap.getEdgeId(e);
+		return idmap.getEdgeIfExists(id, eref) != null;
 	}
 
-	protected final boolean isValid( final V v )
-	{
-		if ( v == null )
+	protected final boolean isValid(final V v) {
+		if (v == null)
 			return false;
-		final int id = idmap.getVertexId( v );
-		return idmap.getVertexIfExists( id, vref ) != null;
+		final int id = idmap.getVertexId(v);
+		return idmap.getVertexIfExists(id, vref) != null;
 	}
 }

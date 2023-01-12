@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut;
 
 import static org.mastodon.app.ui.ViewMenuBuilder.item;
@@ -94,39 +95,41 @@ import org.mastodon.views.trackscheme.display.ColorBarOverlay.Position;
 import org.mastodon.views.trackscheme.display.TrackSchemeNavigationActions;
 import org.scijava.ui.behaviour.KeyPressedManager;
 
-public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVertex, DataEdge >
+public class MamutViewGrapher extends
+	MamutView<DataGraph<Spot, Link>, DataVertex, DataEdge>
 {
-	private final ContextChooser< Spot > contextChooser;
+
+	private final ContextChooser<Spot> contextChooser;
 
 	/**
 	 * a reference on the {@code GraphColorGeneratorAdapter} created and
 	 * registered with this instance/window
 	 */
-	private final GraphColorGeneratorAdapter< Spot, Link, DataVertex, DataEdge > coloringAdapter;
+	private final GraphColorGeneratorAdapter<Spot, Link, DataVertex, DataEdge> coloringAdapter;
 
 	/**
-	 * a reference on a supervising instance of the {@code ColoringModel} that
-	 * is bound to this instance/window
+	 * a reference on a supervising instance of the {@code ColoringModel} that is
+	 * bound to this instance/window
 	 */
-	private final ColoringModelMain< Spot, Link, BranchSpot, BranchLink > coloringModel;
+	private final ColoringModelMain<Spot, Link, BranchSpot, BranchLink> coloringModel;
 
-	private final DataDisplayPanel< Spot, Link > dataDisplayPanel;
+	private final DataDisplayPanel<Spot, Link> dataDisplayPanel;
 
 	private final ColorBarOverlay colorbarOverlay;
 
-	public MamutViewGrapher( final MamutAppModel appModel )
-	{
-		this( appModel, new HashMap<>() );
+	public MamutViewGrapher(final MamutAppModel appModel) {
+		this(appModel, new HashMap<>());
 	}
 
-	public MamutViewGrapher( final MamutAppModel appModel, final Map< String, Object > guiState )
+	public MamutViewGrapher(final MamutAppModel appModel,
+		final Map<String, Object> guiState)
 	{
-		super( appModel,
-				new DataGraph< Spot, Link >(
-						appModel.getModel().getGraph(),
-						appModel.getModel().getGraphIdBimap(),
-						appModel.getModel().getGraph().getLock() ),
-				new String[] { KeyConfigContexts.GRAPHER } );
+		super(appModel,
+			new DataGraph<Spot, Link>(
+				appModel.getModel().getGraph(),
+				appModel.getModel().getGraphIdBimap(),
+				appModel.getModel().getGraph().getLock()),
+			new String[] { KeyConfigContexts.GRAPHER });
 
 		final KeyPressedManager keyPressedManager = appModel.getKeyPressedManager();
 		final Model model = appModel.getModel();
@@ -134,205 +137,222 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 		/*
 		 * The layout.
 		 */
-		final DataGraphLayout< Spot, Link > layout = new DataGraphLayout<>( viewGraph, selectionModel );
-
+		final DataGraphLayout<Spot, Link> layout = new DataGraphLayout<>(viewGraph,
+			selectionModel);
 
 		/*
 		 * ContextChooser
 		 */
-		final DataContextListener< Spot > contextListener = new DataContextListener<>( viewGraph );
-		contextChooser = new ContextChooser<>( contextListener );
+		final DataContextListener<Spot> contextListener = new DataContextListener<>(
+			viewGraph);
+		contextChooser = new ContextChooser<>(contextListener);
 
 		/*
 		 * Show the frame
 		 */
 
-		final DataDisplayStyle forwardDefaultStyle = appModel.getDataDisplayStyleManager().getForwardDefaultStyle();
-		coloringAdapter = new GraphColorGeneratorAdapter<>( viewGraph.getVertexMap(), viewGraph.getEdgeMap() );
+		final DataDisplayStyle forwardDefaultStyle = appModel
+			.getDataDisplayStyleManager().getForwardDefaultStyle();
+		coloringAdapter = new GraphColorGeneratorAdapter<>(viewGraph.getVertexMap(),
+			viewGraph.getEdgeMap());
 		final DataDisplayOptions options = DataDisplayOptions.options()
-				.shareKeyPressedEvents( keyPressedManager )
-				.style( forwardDefaultStyle )
-				.graphColorGenerator( coloringAdapter );
-		final AutoNavigateFocusModel< DataVertex, DataEdge > navigateFocusModel = new AutoNavigateFocusModel<>( focusModel, navigationHandler );
+			.shareKeyPressedEvents(keyPressedManager)
+			.style(forwardDefaultStyle)
+			.graphColorGenerator(coloringAdapter);
+		final AutoNavigateFocusModel<DataVertex, DataEdge> navigateFocusModel =
+			new AutoNavigateFocusModel<>(focusModel, navigationHandler);
 
-		final DataDisplayFrame< Spot, Link > frame = new DataDisplayFrame< Spot, Link >(
-				viewGraph,
-				appModel.getModel().getFeatureModel(),
-				appModel.getSharedBdvData().getSources().size(),
-				layout,
-				highlightModel,
-				navigateFocusModel,
-				selectionModel,
-				navigationHandler,
-				model,
-				groupHandle,
-				contextChooser,
-				options );
+		final DataDisplayFrame<Spot, Link> frame = new DataDisplayFrame<Spot, Link>(
+			viewGraph,
+			appModel.getModel().getFeatureModel(),
+			appModel.getSharedBdvData().getSources().size(),
+			layout,
+			highlightModel,
+			navigateFocusModel,
+			selectionModel,
+			navigationHandler,
+			model,
+			groupHandle,
+			contextChooser,
+			options);
 		dataDisplayPanel = frame.getDataDisplayPanel();
 
 		// If they are available, set some sensible defaults for the feature.
-		final FeatureSpecPair spvx = new FeatureSpecPair( SpotFrameFeature.SPEC, SpotFrameFeature.SPEC.getProjectionSpecs().iterator().next(), false, false );
-		final FeatureSpecPair spvy = new FeatureSpecPair( SpotQuickMeanIntensityFeature.SPEC, SpotQuickMeanIntensityFeature.PROJECTION_SPEC, 0, false, false );
-		final FeatureGraphConfig gcv = new FeatureGraphConfig( spvx, spvy, GraphDataItemsSource.TRACK_OF_SELECTION, true );
-		frame.getVertexSidePanel().setGraphConfig( gcv );
+		final FeatureSpecPair spvx = new FeatureSpecPair(SpotFrameFeature.SPEC,
+			SpotFrameFeature.SPEC.getProjectionSpecs().iterator().next(), false,
+			false);
+		final FeatureSpecPair spvy = new FeatureSpecPair(
+			SpotQuickMeanIntensityFeature.SPEC,
+			SpotQuickMeanIntensityFeature.PROJECTION_SPEC, 0, false, false);
+		final FeatureGraphConfig gcv = new FeatureGraphConfig(spvx, spvy,
+			GraphDataItemsSource.TRACK_OF_SELECTION, true);
+		frame.getVertexSidePanel().setGraphConfig(gcv);
 
 		// Restore position
-		final int[] pos = ( int[] ) guiState.get( FRAME_POSITION_KEY );
-		if ( null != pos && pos.length == 4 )
-			frame.setBounds( pos[ 0 ], pos[ 1 ], pos[ 2 ], pos[ 3 ] );
-		else
-		{
-			frame.setSize( options.values.getWidth(), options.values.getHeight() );
-			frame.setLocationRelativeTo( null );
+		final int[] pos = (int[]) guiState.get(FRAME_POSITION_KEY);
+		if (null != pos && pos.length == 4)
+			frame.setBounds(pos[0], pos[1], pos[2], pos[3]);
+		else {
+			frame.setSize(options.values.getWidth(), options.values.getHeight());
+			frame.setLocationRelativeTo(null);
 		}
 
 		// Restore group handle.
-		final Integer groupID = ( Integer ) guiState.get( GROUP_HANDLE_ID_KEY );
-		if ( null != groupID )
-			groupHandle.setGroupId( groupID.intValue() );
+		final Integer groupID = (Integer) guiState.get(GROUP_HANDLE_ID_KEY);
+		if (null != groupID)
+			groupHandle.setGroupId(groupID.intValue());
 
 		// Restore settings panel visibility.
-		final Boolean settingsPanelVisible = ( Boolean ) guiState.get( SETTINGS_PANEL_VISIBLE_KEY );
-		if ( null != settingsPanelVisible )
-			frame.setSettingsPanelVisible( settingsPanelVisible.booleanValue() );
+		final Boolean settingsPanelVisible = (Boolean) guiState.get(
+			SETTINGS_PANEL_VISIBLE_KEY);
+		if (null != settingsPanelVisible)
+			frame.setSettingsPanelVisible(settingsPanelVisible.booleanValue());
 
 		dataDisplayPanel.graphChanged();
-		contextListener.setContextListener( dataDisplayPanel );
+		contextListener.setContextListener(dataDisplayPanel);
 
-		final DataDisplayStyle.UpdateListener updateListener = () -> dataDisplayPanel.repaint();
-		forwardDefaultStyle.updateListeners().add( updateListener );
-		onClose( () -> forwardDefaultStyle.updateListeners().remove( updateListener ) );
+		final DataDisplayStyle.UpdateListener updateListener =
+			() -> dataDisplayPanel.repaint();
+		forwardDefaultStyle.updateListeners().add(updateListener);
+		onClose(() -> forwardDefaultStyle.updateListeners().remove(updateListener));
 
-		setFrame( frame );
+		setFrame(frame);
 
 		// Transform.
-		final ScreenTransform tLoaded = ( ScreenTransform ) guiState.get( GRAPHER_TRANSFORM_KEY );
-		if ( null != tLoaded )
-			dataDisplayPanel.getScreenTransform().set( tLoaded );
+		final ScreenTransform tLoaded = (ScreenTransform) guiState.get(
+			GRAPHER_TRANSFORM_KEY);
+		if (null != tLoaded)
+			dataDisplayPanel.getScreenTransform().set(tLoaded);
 
-		MastodonFrameViewActions.install( viewActions, this );
-		FocusActions.install( viewActions, viewGraph, viewGraph.getLock(), navigateFocusModel, selectionModel );
-		EditTagActions.install( viewActions, frame.getKeybindings(), frame.getTriggerbindings(), model.getTagSetModel(), appModel.getSelectionModel(), viewGraph.getLock(), dataDisplayPanel, dataDisplayPanel.getDisplay(), model );
-		DataDisplayZoom.install( viewBehaviours, dataDisplayPanel );
+		MastodonFrameViewActions.install(viewActions, this);
+		FocusActions.install(viewActions, viewGraph, viewGraph.getLock(),
+			navigateFocusModel, selectionModel);
+		EditTagActions.install(viewActions, frame.getKeybindings(), frame
+			.getTriggerbindings(), model.getTagSetModel(), appModel
+				.getSelectionModel(), viewGraph.getLock(), dataDisplayPanel,
+			dataDisplayPanel.getDisplay(), model);
+		DataDisplayZoom.install(viewBehaviours, dataDisplayPanel);
 
-		final JPanel searchPanel = SearchVertexLabel.install( viewActions, viewGraph, navigationHandler, selectionModel, focusModel, dataDisplayPanel );
-		frame.getSettingsPanel().add( searchPanel );
+		final JPanel searchPanel = SearchVertexLabel.install(viewActions, viewGraph,
+			navigationHandler, selectionModel, focusModel, dataDisplayPanel);
+		frame.getSettingsPanel().add(searchPanel);
 
-		dataDisplayPanel.getNavigationActions().install( viewActions, TrackSchemeNavigationActions.NavigatorEtiquette.FINDER_LIKE );
-		dataDisplayPanel.getNavigationBehaviours().install( viewBehaviours );
-		dataDisplayPanel.getTransformEventHandler().install( viewBehaviours );
+		dataDisplayPanel.getNavigationActions().install(viewActions,
+			TrackSchemeNavigationActions.NavigatorEtiquette.FINDER_LIKE);
+		dataDisplayPanel.getNavigationBehaviours().install(viewBehaviours);
+		dataDisplayPanel.getTransformEventHandler().install(viewBehaviours);
 
 		/*
 		 * Menus
 		 */
-		final ViewMenu menu = new ViewMenu( this );
-		final ActionMap actionMap = frame.getKeybindings().getConcatenatedActionMap();
+		final ViewMenu menu = new ViewMenu(this);
+		final ActionMap actionMap = frame.getKeybindings()
+			.getConcatenatedActionMap();
 
 		final JMenuHandle coloringMenuHandle = new JMenuHandle();
 		final JMenuHandle tagSetMenuHandle = new JMenuHandle();
 		final JMenuHandle colorbarMenuHandle = new JMenuHandle();
 
-		MainWindow.addMenus( menu, actionMap );
-		MamutMenuBuilder.build( menu, actionMap,
-				viewMenu(
-						colorMenu( coloringMenuHandle ),
-						colorbarMenu( colorbarMenuHandle ),
-						separator(),
-						item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL ) ),
-				editMenu(
-						item( UndoActions.UNDO ),
-						item( UndoActions.REDO ),
-						separator(),
-						item( SelectionActions.DELETE_SELECTION ),
-						item( SelectionActions.SELECT_WHOLE_TRACK ),
-						item( SelectionActions.SELECT_TRACK_DOWNWARD ),
-						item( SelectionActions.SELECT_TRACK_UPWARD ),
-						separator(),
-						tagSetMenu( tagSetMenuHandle ) ) );
-		appModel.getPlugins().addMenus( menu );
+		MainWindow.addMenus(menu, actionMap);
+		MamutMenuBuilder.build(menu, actionMap,
+			viewMenu(
+				colorMenu(coloringMenuHandle),
+				colorbarMenu(colorbarMenuHandle),
+				separator(),
+				item(MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL)),
+			editMenu(
+				item(UndoActions.UNDO),
+				item(UndoActions.REDO),
+				separator(),
+				item(SelectionActions.DELETE_SELECTION),
+				item(SelectionActions.SELECT_WHOLE_TRACK),
+				item(SelectionActions.SELECT_TRACK_DOWNWARD),
+				item(SelectionActions.SELECT_TRACK_UPWARD),
+				separator(),
+				tagSetMenu(tagSetMenuHandle)));
+		appModel.getPlugins().addMenus(menu);
 
 		/*
 		 * Coloring & colobar.
 		 */
-		coloringModel = registerColoring( coloringAdapter, coloringMenuHandle,
-				() -> dataDisplayPanel.entitiesAttributesChanged() );
-		registerTagSetMenu( tagSetMenuHandle,
-				() -> dataDisplayPanel.entitiesAttributesChanged() );
-		colorbarOverlay = new ColorBarOverlay( coloringModel, () -> dataDisplayPanel.getBackground() );
+		coloringModel = registerColoring(coloringAdapter, coloringMenuHandle,
+			() -> dataDisplayPanel.entitiesAttributesChanged());
+		registerTagSetMenu(tagSetMenuHandle,
+			() -> dataDisplayPanel.entitiesAttributesChanged());
+		colorbarOverlay = new ColorBarOverlay(coloringModel, () -> dataDisplayPanel
+			.getBackground());
 		final OffsetAxes offset = dataDisplayPanel.getOffsetAxes();
-		offset.listeners().add( ( w, h ) -> colorbarOverlay.setInsets( 15, w + 15, h + 15, 15 ) );
-		registerColorbarOverlay( colorbarOverlay, colorbarMenuHandle, () -> dataDisplayPanel.repaint() );
+		offset.listeners().add((w, h) -> colorbarOverlay.setInsets(15, w + 15, h +
+			15, 15));
+		registerColorbarOverlay(colorbarOverlay, colorbarMenuHandle,
+			() -> dataDisplayPanel.repaint());
 
 		// Restore colorbar state.
-		final boolean colorbarVisible = ( boolean ) guiState.getOrDefault( COLORBAR_VISIBLE_KEY, false );
-		final Position colorbarPosition = ( Position ) guiState.getOrDefault( COLORBAR_POSITION_KEY, Position.BOTTOM_RIGHT );
-		colorbarOverlay.setVisible( colorbarVisible );
-		colorbarOverlay.setPosition( colorbarPosition );
+		final boolean colorbarVisible = (boolean) guiState.getOrDefault(
+			COLORBAR_VISIBLE_KEY, false);
+		final Position colorbarPosition = (Position) guiState.getOrDefault(
+			COLORBAR_POSITION_KEY, Position.BOTTOM_RIGHT);
+		colorbarOverlay.setVisible(colorbarVisible);
+		colorbarOverlay.setPosition(colorbarPosition);
 
 		// Listen to label changes.
-		model.getGraph().addVertexLabelListener( v -> dataDisplayPanel.entitiesAttributesChanged() );
+		model.getGraph().addVertexLabelListener(v -> dataDisplayPanel
+			.entitiesAttributesChanged());
 
 		// Restore coloring.
-		final Boolean noColoring = ( Boolean ) guiState.get( NO_COLORING_KEY );
-		if ( null != noColoring && noColoring )
-		{
+		final Boolean noColoring = (Boolean) guiState.get(NO_COLORING_KEY);
+		if (null != noColoring && noColoring) {
 			coloringModel.colorByNone();
 		}
-		else
-		{
-			final String tagSetName = ( String ) guiState.get( TAG_SET_KEY );
-			final String featureColorModeName = ( String ) guiState.get( FEATURE_COLOR_MODE_KEY );
-			if ( null != tagSetName )
-			{
-				for ( final TagSet tagSet : coloringModel.getTagSetStructure().getTagSets() )
+		else {
+			final String tagSetName = (String) guiState.get(TAG_SET_KEY);
+			final String featureColorModeName = (String) guiState.get(
+				FEATURE_COLOR_MODE_KEY);
+			if (null != tagSetName) {
+				for (final TagSet tagSet : coloringModel.getTagSetStructure()
+					.getTagSets())
 				{
-					if ( tagSet.getName().equals( tagSetName ) )
-					{
-						coloringModel.colorByTagSet( tagSet );
+					if (tagSet.getName().equals(tagSetName)) {
+						coloringModel.colorByTagSet(tagSet);
 						break;
 					}
 				}
 			}
-			else if ( null != featureColorModeName )
-			{
-				final List< FeatureColorMode > featureColorModes = new ArrayList<>();
-				featureColorModes.addAll( coloringModel.getFeatureColorModeManager().getBuiltinStyles() );
-				featureColorModes.addAll( coloringModel.getFeatureColorModeManager().getUserStyles() );
-				for ( final FeatureColorMode featureColorMode : featureColorModes )
-				{
-					if ( featureColorMode.getName().equals( featureColorModeName ) )
-					{
-						coloringModel.colorByFeature( featureColorMode );
+			else if (null != featureColorModeName) {
+				final List<FeatureColorMode> featureColorModes = new ArrayList<>();
+				featureColorModes.addAll(coloringModel.getFeatureColorModeManager()
+					.getBuiltinStyles());
+				featureColorModes.addAll(coloringModel.getFeatureColorModeManager()
+					.getUserStyles());
+				for (final FeatureColorMode featureColorMode : featureColorModes) {
+					if (featureColorMode.getName().equals(featureColorModeName)) {
+						coloringModel.colorByFeature(featureColorMode);
 						break;
 					}
 				}
 			}
 		}
-		dataDisplayPanel.getDisplay().overlays().add( colorbarOverlay );
+		dataDisplayPanel.getDisplay().overlays().add(colorbarOverlay);
 
 		layout.layout();
-		frame.setVisible( true );
+		frame.setVisible(true);
 		dataDisplayPanel.repaint();
 		dataDisplayPanel.getDisplay().requestFocusInWindow();
 	}
 
-	ContextChooser< Spot > getContextChooser()
-	{
+	ContextChooser<Spot> getContextChooser() {
 		return contextChooser;
 	}
 
-	DataDisplayPanel< Spot, Link > getDataDisplayPanel()
-	{
+	DataDisplayPanel<Spot, Link> getDataDisplayPanel() {
 		return dataDisplayPanel;
 	}
 
-	ColoringModelMain< Spot, Link, BranchSpot, BranchLink > getColoringModel()
-	{
+	ColoringModelMain<Spot, Link, BranchSpot, BranchLink> getColoringModel() {
 		return coloringModel;
 	}
 
-	ColorBarOverlay getColorBarOverlay()
-	{
+	ColorBarOverlay getColorBarOverlay() {
 		return colorbarOverlay;
 	}
 }

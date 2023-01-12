@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme;
 
 import java.util.Collection;
@@ -38,13 +39,13 @@ import org.scijava.listeners.Listeners;
 
 import net.imglib2.RealLocalizable;
 
-public interface LineageTreeLayout
-{
+public interface LineageTreeLayout {
+
 	void layout();
 
-	void layout( Collection<TrackSchemeVertex> layoutRoots );
+	void layout(Collection<TrackSchemeVertex> layoutRoots);
 
-	void layout( Collection<TrackSchemeVertex> layoutRoots, int mark );
+	void layout(Collection<TrackSchemeVertex> layoutRoots, int mark);
 
 	double getCurrentLayoutMinX();
 
@@ -54,40 +55,47 @@ public interface LineageTreeLayout
 
 	int nextLayoutTimestamp();
 
-	void cropAndScale( ScreenTransform transform, ScreenEntities screenEntities, int decorationsOffsetX, int decorationsOffsetY, GraphColorGenerator<TrackSchemeVertex, TrackSchemeEdge> colorGenerator );
+	void cropAndScale(ScreenTransform transform, ScreenEntities screenEntities,
+		int decorationsOffsetX, int decorationsOffsetY,
+		GraphColorGenerator<TrackSchemeVertex, TrackSchemeEdge> colorGenerator);
 
-	TrackSchemeVertex getClosestActiveVertex( RealLocalizable layoutPos, double aspectRatioXtoY, TrackSchemeVertex ref );
+	TrackSchemeVertex getClosestActiveVertex(RealLocalizable layoutPos,
+		double aspectRatioXtoY, TrackSchemeVertex ref);
 
-	TrackSchemeVertex getClosestActiveVertexWithin( double lx1, double ly1, double lx2, double ly2, double aspectRatioXtoY, TrackSchemeVertex ref );
+	TrackSchemeVertex getClosestActiveVertexWithin(double lx1, double ly1,
+		double lx2, double ly2, double aspectRatioXtoY, TrackSchemeVertex ref);
 
-	RefSet< TrackSchemeVertex > getActiveVerticesWithin( double lx1, double ly1, double lx2, double ly2 );
+	RefSet<TrackSchemeVertex> getActiveVerticesWithin(double lx1, double ly1,
+		double lx2, double ly2);
 
-	TrackSchemeVertex getFirstActiveChild( TrackSchemeVertex vertex, TrackSchemeVertex ref );
+	TrackSchemeVertex getFirstActiveChild(TrackSchemeVertex vertex,
+		TrackSchemeVertex ref);
 
-	TrackSchemeVertex getFirstActiveParent( TrackSchemeVertex vertex, TrackSchemeVertex ref );
+	TrackSchemeVertex getFirstActiveParent(TrackSchemeVertex vertex,
+		TrackSchemeVertex ref);
 
-	TrackSchemeVertex getLeftSibling( TrackSchemeVertex vertex, TrackSchemeVertex ref );
+	TrackSchemeVertex getLeftSibling(TrackSchemeVertex vertex,
+		TrackSchemeVertex ref);
 
-	TrackSchemeVertex getRightSibling( TrackSchemeVertex vertex, TrackSchemeVertex ref );
+	TrackSchemeVertex getRightSibling(TrackSchemeVertex vertex,
+		TrackSchemeVertex ref);
 
-	Listeners< LayoutListener > layoutListeners();
+	Listeners<LayoutListener> layoutListeners();
 
-	interface LayoutListener
-	{
+	interface LayoutListener {
 
 		/**
 		 * Notifies after the layout has been done.
 		 *
-		 * @param layout
-		 *            the layout.
+		 * @param layout the layout.
 		 */
-		public void layoutChanged( LineageTreeLayout layout );
+		public void layoutChanged(LineageTreeLayout layout);
 	}
 
-	interface LineageTreeLayoutFactory
-	{
-		LineageTreeLayout create( final RootsModel<TrackSchemeVertex> rootsModel,
-				final TrackSchemeGraph< ?, ? > graph,
-				final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection );
+	interface LineageTreeLayoutFactory {
+
+		LineageTreeLayout create(final RootsModel<TrackSchemeVertex> rootsModel,
+			final TrackSchemeGraph<?, ?> graph,
+			final SelectionModel<TrackSchemeVertex, TrackSchemeEdge> selection);
 	}
 }

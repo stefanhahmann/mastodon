@@ -26,8 +26,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
-package org.mastodon.views.trackscheme.display.animate;
 
+package org.mastodon.views.trackscheme.display.animate;
 
 /**
  * Mother abstract class for animators that animate the current view by
@@ -38,27 +38,23 @@ package org.mastodon.views.trackscheme.display.animate;
  *
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  * @author Jean-Yves Tinevez &lt;jeanyves.tinevez@gmail.com&gt;
- * @param <A>
- *            the type of the transform animated.
+ * @param <A> the type of the transform animated.
  */
-public abstract class AbstractTransformAnimator< A > extends AbstractAnimator
-{
+public abstract class AbstractTransformAnimator<A> extends AbstractAnimator {
+
 	/**
-	 * Create new animator with the given duration. The animation will start
-	 * with the first call to {@link #setTime(long)}.
+	 * Create new animator with the given duration. The animation will start with
+	 * the first call to {@link #setTime(long)}.
 	 *
-	 * @param duration
-	 *            animation duration (in time units)
+	 * @param duration animation duration (in time units)
 	 */
-	public AbstractTransformAnimator( final long duration )
-	{
-		super( duration );
+	public AbstractTransformAnimator(final long duration) {
+		super(duration);
 	}
 
-	public A getCurrent( final long time )
-	{
-		setTime( time );
-		return get( ratioComplete() );
+	public A getCurrent(final long time) {
+		setTime(time);
+		return get(ratioComplete());
 	}
 
 	/**
@@ -68,9 +64,8 @@ public abstract class AbstractTransformAnimator< A > extends AbstractAnimator
 	 * interpolate between the two, depending on the concrete animation
 	 * implementation.
 	 *
-	 * @param t
-	 *            the completion factor, ranging from 0 to 1.
+	 * @param t the completion factor, ranging from 0 to 1.
 	 * @return the viewer transform for the specified completion factor.
 	 */
-	protected abstract A get( double t );
+	protected abstract A get(double t);
 }

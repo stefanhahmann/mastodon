@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme;
 
 import java.util.ArrayList;
@@ -52,51 +53,51 @@ import gnu.trove.list.array.TIntArrayList;
  *
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  */
-public class LexicographicalVertexOrder
-{
-	public static RefList< TrackSchemeVertex > sort(
-			final TrackSchemeGraph< ?, ? > graph,
-			final RefCollection< TrackSchemeVertex > vertices )
-	{
-		final ArrayList< VertexKey > keys = new ArrayList<>( vertices.size() );
-		for ( final TrackSchemeVertex v : vertices )
-			keys.add( VertexKey.build( v, graph ) );
-		Collections.sort( keys );
+public class LexicographicalVertexOrder {
 
-		final RefArrayList< TrackSchemeVertex > sorted = new RefArrayList<>( graph.vertices().getRefPool(), vertices.size() );
+	public static RefList<TrackSchemeVertex> sort(
+		final TrackSchemeGraph<?, ?> graph,
+		final RefCollection<TrackSchemeVertex> vertices)
+	{
+		final ArrayList<VertexKey> keys = new ArrayList<>(vertices.size());
+		for (final TrackSchemeVertex v : vertices)
+			keys.add(VertexKey.build(v, graph));
+		Collections.sort(keys);
+
+		final RefArrayList<TrackSchemeVertex> sorted = new RefArrayList<>(graph
+			.vertices().getRefPool(), vertices.size());
 		final TIntArrayList indices = sorted.getIndexCollection();
-		for ( final VertexKey k : keys )
-			indices.add( k.getVertexInternalPoolIndex() );
+		for (final VertexKey k : keys)
+			indices.add(k.getVertexInternalPoolIndex());
 
 		return sorted;
 	}
 
-	private static class VertexKey implements Comparable< VertexKey >
-	{
+	private static class VertexKey implements Comparable<VertexKey> {
+
 		public static VertexKey build(
-				final TrackSchemeVertex v,
-				final TrackSchemeGraph< ?, ? > graph )
+			final TrackSchemeVertex v,
+			final TrackSchemeGraph<?, ?> graph)
 		{
 			final VertexKey token;
-			if ( v.incomingEdges().isEmpty() )
-				token = new VertexKey( v.getRootLabel() );
-			else
-			{
+			if (v.incomingEdges().isEmpty())
+				token = new VertexKey(v.getRootLabel());
+			else {
 				final TrackSchemeVertex ref = graph.vertexRef();
 
 				final TrackSchemeEdge parentEdge = v.incomingEdges().iterator().next();
-				final TrackSchemeVertex parent = parentEdge.getSource( ref );
-				token = build( parent, graph );
+				final TrackSchemeVertex parent = parentEdge.getSource(ref);
+				token = build(parent, graph);
 
 				int i = 0;
-				for ( final TrackSchemeEdge e : parent.outgoingEdges() )
-					if ( e.equals( parentEdge ) )
+				for (final TrackSchemeEdge e : parent.outgoingEdges())
+					if (e.equals(parentEdge))
 						break;
 					else
 						++i;
-				token.append( i );
+				token.append(i);
 
-				graph.releaseRef( ref );
+				graph.releaseRef(ref);
 			}
 			token.vertexInternalPoolIndex = v.getInternalPoolIndex();
 			return token;
@@ -108,36 +109,30 @@ public class LexicographicalVertexOrder
 
 		private int vertexInternalPoolIndex;
 
-		private VertexKey( final String rootName )
-		{
+		private VertexKey(final String rootName) {
 			this.rootName = rootName;
 			edgeSequence = new TIntArrayList();
 		}
 
-		private void append( final int i )
-		{
-			edgeSequence.add( i );
+		private void append(final int i) {
+			edgeSequence.add(i);
 		}
 
-		public int getVertexInternalPoolIndex()
-		{
+		public int getVertexInternalPoolIndex() {
 			return vertexInternalPoolIndex;
 		}
 
 		@Override
-		public int compareTo( final VertexKey o )
-		{
-			final int rc = AlphanumCompare.compare( rootName, o.rootName );
-			if ( rc == 0 )
-			{
+		public int compareTo(final VertexKey o) {
+			final int rc = AlphanumCompare.compare(rootName, o.rootName);
+			if (rc == 0) {
 				final TIntIterator it = edgeSequence.iterator();
 				final TIntIterator oit = o.edgeSequence.iterator();
-				while ( it.hasNext() )
-				{
-					if ( !oit.hasNext() )
+				while (it.hasNext()) {
+					if (!oit.hasNext())
 						return 1;
 					final int e = it.next() - oit.next();
-					if ( e != 0 )
+					if (e != 0)
 						return e;
 				}
 				return oit.hasNext() ? -1 : 0;
@@ -147,16 +142,14 @@ public class LexicographicalVertexOrder
 		}
 
 		@Override
-		public String toString()
-		{
-			final StringBuilder b = new StringBuilder( "[" + rootName );
+		public String toString() {
+			final StringBuilder b = new StringBuilder("[" + rootName);
 			final TIntIterator it = edgeSequence.iterator();
-			while ( it.hasNext() )
-			{
-				b.append( "," );
-				b.append( it.next() );
+			while (it.hasNext()) {
+				b.append(",");
+				b.append(it.next());
 			}
-			b.append( "]" );
+			b.append("]");
 			return b.toString();
 		}
 	}

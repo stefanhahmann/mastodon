@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.bdv.overlay.wrap;
 
 import java.util.Iterator;
@@ -36,48 +37,53 @@ import org.mastodon.graph.Vertex;
 import org.mastodon.spatial.SpatialIndex;
 import org.mastodon.spatial.SpatioTemporalIndex;
 
-public class SpatioTemporalIndexWrapper< V extends Vertex< E >, E extends Edge< V > >
-	implements SpatioTemporalIndex< OverlayVertexWrapper< V, E > >
+public class SpatioTemporalIndexWrapper<V extends Vertex<E>, E extends Edge<V>>
+	implements SpatioTemporalIndex<OverlayVertexWrapper<V, E>>
 {
-	private final OverlayGraphWrapper< V, E > graphWrapper;
 
-	private final SpatioTemporalIndex< V > wrappedIndex;
+	private final OverlayGraphWrapper<V, E> graphWrapper;
 
-	public SpatioTemporalIndexWrapper( final OverlayGraphWrapper< V, E > graphWrapper, final SpatioTemporalIndex< V > index )
+	private final SpatioTemporalIndex<V> wrappedIndex;
+
+	public SpatioTemporalIndexWrapper(
+		final OverlayGraphWrapper<V, E> graphWrapper,
+		final SpatioTemporalIndex<V> index)
 	{
 		this.graphWrapper = graphWrapper;
 		this.wrappedIndex = index;
 	}
 
 	@Override
-	public Iterator< OverlayVertexWrapper< V, E > > iterator()
-	{
-		return new OverlayVertexIteratorWrapper< V, E >( graphWrapper, graphWrapper.vertexRef(), wrappedIndex.iterator() );
+	public Iterator<OverlayVertexWrapper<V, E>> iterator() {
+		return new OverlayVertexIteratorWrapper<V, E>(graphWrapper, graphWrapper
+			.vertexRef(), wrappedIndex.iterator());
 	}
 
 	@Override
-	public Lock readLock()
-	{
+	public Lock readLock() {
 		return wrappedIndex.readLock();
 	}
 
 	@Override
-	public SpatialIndex< OverlayVertexWrapper< V, E > > getSpatialIndex( final int timepoint )
+	public SpatialIndex<OverlayVertexWrapper<V, E>> getSpatialIndex(
+		final int timepoint)
 	{
-		final SpatialIndex< V > index = wrappedIndex.getSpatialIndex( timepoint );
-		if ( index == null )
+		final SpatialIndex<V> index = wrappedIndex.getSpatialIndex(timepoint);
+		if (index == null)
 			return null;
 		else
-			return new SpatialIndexWrapper< V, E >( graphWrapper, index );
+			return new SpatialIndexWrapper<V, E>(graphWrapper, index);
 	}
 
 	@Override
-	public SpatialIndex< OverlayVertexWrapper< V, E > > getSpatialIndex( final int fromTimepoint, final int toTimepoint )
+	public SpatialIndex<OverlayVertexWrapper<V, E>> getSpatialIndex(
+		final int fromTimepoint, final int toTimepoint)
 	{
-		final SpatialIndex< V > index = wrappedIndex.getSpatialIndex( fromTimepoint, toTimepoint );
-		if ( index == null )
+		final SpatialIndex<V> index = wrappedIndex.getSpatialIndex(fromTimepoint,
+			toTimepoint);
+		if (index == null)
 			return null;
 		else
-			return new SpatialIndexWrapper< V, E >( graphWrapper, index );
+			return new SpatialIndexWrapper<V, E>(graphWrapper, index);
 	}
 }

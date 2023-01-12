@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme;
 
 import gnu.trove.iterator.TIntAlternatingIterator;
@@ -39,33 +40,33 @@ import org.mastodon.collection.RefCollections;
 import org.mastodon.collection.RefSet;
 
 /**
- * A "table" that contains vertices ({@link TrackSchemeVertex}).
- * The "table" has a "row" for each time point, that contains all the vertices
- * of this time point. Each "row" in the table is basically a {@link TrackSchemeVertexList}.
- * These lists are sorted in ascending order with respect to the {@link TrackSchemeVertex#getLayoutX() layout X} coordinate.
+ * A "table" that contains vertices ({@link TrackSchemeVertex}). The "table" has
+ * a "row" for each time point, that contains all the vertices of this time
+ * point. Each "row" in the table is basically a {@link TrackSchemeVertexList}.
+ * These lists are sorted in ascending order with respect to the
+ * {@link TrackSchemeVertex#getLayoutX() layout X} coordinate.
  */
-public class TrackSchemeVertexTable
-{
+public class TrackSchemeVertexTable {
+
 	/**
-	 *  Ordered list of all existing timepoints.
+	 * Ordered list of all existing timepoints.
 	 */
 	private final TIntArrayList timepoints;
 
 	/**
-	 * Maps timepoint to {@link TrackSchemeVertexList} that contains all
-	 * layouted vertices of that timepoint ordered by ascending layout X
-	 * coordinate.
+	 * Maps timepoint to {@link TrackSchemeVertexList} that contains all layouted
+	 * vertices of that timepoint ordered by ascending layout X coordinate.
 	 * <p>
 	 * This is built during TODO TODO TODO
 	 */
-	private final TIntObjectMap< TrackSchemeVertexList > timepointToOrderedVertices;
+	private final TIntObjectMap<TrackSchemeVertexList> timepointToOrderedVertices;
 
 	private final TrackSchemeGraph<?, ?> graph;
 
-	public TrackSchemeVertexTable( TrackSchemeGraph<?, ?> graph ) {
+	public TrackSchemeVertexTable(TrackSchemeGraph<?, ?> graph) {
 		this.graph = graph;
 		timepoints = new TIntArrayList();
-		timepointToOrderedVertices = new TIntObjectArrayMap< >();
+		timepointToOrderedVertices = new TIntObjectArrayMap<>();
 	}
 
 	public void clear() {
@@ -73,158 +74,162 @@ public class TrackSchemeVertexTable
 		timepointToOrderedVertices.clear();
 	}
 
-	public TIntList getTimepoints()
-	{
+	public TIntList getTimepoints() {
 		return timepoints;
 	}
 
-	public TrackSchemeVertexList getOrderedVertices(int timepoint ) {
+	public TrackSchemeVertexList getOrderedVertices(int timepoint) {
 		return timepointToOrderedVertices.get(timepoint);
 	}
 
-	public void add( TrackSchemeVertex v )
-	{
+	public void add(TrackSchemeVertex v) {
 		final int tp = v.getTimepoint();
-		TrackSchemeVertexList vlist = timepointToOrderedVertices.get( tp );
-		if ( vlist == null )
-		{
-			vlist = new TrackSchemeVertexList( graph );
-			timepointToOrderedVertices.put( tp, vlist );
-			timepoints.insert( -( 1 + timepoints.binarySearch( tp ) ), tp );
+		TrackSchemeVertexList vlist = timepointToOrderedVertices.get(tp);
+		if (vlist == null) {
+			vlist = new TrackSchemeVertexList(graph);
+			timepointToOrderedVertices.put(tp, vlist);
+			timepoints.insert(-(1 + timepoints.binarySearch(tp)), tp);
 		}
-		vlist.add( v );
+		vlist.add(v);
 	}
 
-	public RefSet<TrackSchemeVertex> getVerticesWithin( double lx1, double ly1, double lx2, double ly2 )
+	public RefSet<TrackSchemeVertex> getVerticesWithin(double lx1, double ly1,
+		double lx2, double ly2)
 	{
-		final int tStart = ( int ) Math.ceil( Math.min( ly1, ly2 ) );
-		final int tEnd = ( int ) Math.floor( Math.max( ly1, ly2 ) ) + 1;
-		final double x1 = Math.min( lx1, lx2 );
-		final double x2 = Math.max( lx1, lx2 );
+		final int tStart = (int) Math.ceil(Math.min(ly1, ly2));
+		final int tEnd = (int) Math.floor(Math.max(ly1, ly2)) + 1;
+		final double x1 = Math.min(lx1, lx2);
+		final double x2 = Math.max(lx1, lx2);
 
-		final RefSet< TrackSchemeVertex > vertexSet = RefCollections.createRefSet( graph.vertices() );
-		int start = timepoints.binarySearch( tStart );
-		if ( start < 0 )
+		final RefSet<TrackSchemeVertex> vertexSet = RefCollections.createRefSet(
+			graph.vertices());
+		int start = timepoints.binarySearch(tStart);
+		if (start < 0)
 			start = -start - 1;
-		int end = timepoints.binarySearch( tEnd );
-		if ( end < 0 )
+		int end = timepoints.binarySearch(tEnd);
+		if (end < 0)
 			end = -end - 1;
-		for ( int tpIndex = start; tpIndex < end; ++tpIndex )
-		{
-			final int timepoint = timepoints.get( tpIndex );
-			final TrackSchemeVertexList vertexList = timepointToOrderedVertices.get( timepoint );
-			final int left = vertexList.binarySearch( x1 ) + 1;
-			final int right = vertexList.binarySearch( x2, left, vertexList.size() );
-			vertexSet.addAll( vertexList.subList( left, right + 1 ) );
+		for (int tpIndex = start; tpIndex < end; ++tpIndex) {
+			final int timepoint = timepoints.get(tpIndex);
+			final TrackSchemeVertexList vertexList = timepointToOrderedVertices.get(
+				timepoint);
+			final int left = vertexList.binarySearch(x1) + 1;
+			final int right = vertexList.binarySearch(x2, left, vertexList.size());
+			vertexSet.addAll(vertexList.subList(left, right + 1));
 		}
 		return vertexSet;
 	}
 
-	public TrackSchemeVertex getClosestVertex( RealLocalizable layoutPos, double aspectRatioXtoY, TrackSchemeVertex ref )
+	public TrackSchemeVertex getClosestVertex(RealLocalizable layoutPos,
+		double aspectRatioXtoY, TrackSchemeVertex ref)
 	{
-		final double lx = layoutPos.getDoublePosition( 0 );
-		final double ly = layoutPos.getDoublePosition( 1 );
+		final double lx = layoutPos.getDoublePosition(0);
+		final double ly = layoutPos.getDoublePosition(1);
 
 		double closestVertexSquareDist = Double.POSITIVE_INFINITY;
 		int closestVertexIndex = -1;
 
-		final TIntIterator tpIter = new TIntAlternatingIterator( timepoints, ( int ) ly );
-		while( tpIter.hasNext() )
-		{
+		final TIntIterator tpIter = new TIntAlternatingIterator(timepoints,
+			(int) ly);
+		while (tpIter.hasNext()) {
 			final int tp = tpIter.next();
-			final double diffy = ( ly - tp ) * aspectRatioXtoY;
-			if ( diffy * diffy >= closestVertexSquareDist )
+			final double diffy = (ly - tp) * aspectRatioXtoY;
+			if (diffy * diffy >= closestVertexSquareDist)
 				break;
 
-			final TrackSchemeVertexList vertexList = timepointToOrderedVertices.get( tp );
-			final int left = vertexList.binarySearch( lx );
-			final int begin = Math.max( 0, left );
-			final int end = Math.min( begin + 2, vertexList.size() );
-			for ( int x = begin; x < end; ++x )
-			{
-				vertexList.get( x, ref );
-				final double diffx = ( lx - ref.getLayoutX() );
+			final TrackSchemeVertexList vertexList = timepointToOrderedVertices.get(
+				tp);
+			final int left = vertexList.binarySearch(lx);
+			final int begin = Math.max(0, left);
+			final int end = Math.min(begin + 2, vertexList.size());
+			for (int x = begin; x < end; ++x) {
+				vertexList.get(x, ref);
+				final double diffx = (lx - ref.getLayoutX());
 				final double d2 = diffx * diffx + diffy * diffy;
-				if ( d2 < closestVertexSquareDist )
-				{
+				if (d2 < closestVertexSquareDist) {
 					closestVertexSquareDist = d2;
 					closestVertexIndex = ref.getInternalPoolIndex();
 				}
 			}
 		}
 
-		if ( closestVertexIndex < 0 )
+		if (closestVertexIndex < 0)
 			return null;
 
-		graph.getVertexPool().getObject( closestVertexIndex, ref );
+		graph.getVertexPool().getObject(closestVertexIndex, ref);
 		return ref;
 	}
 
-	public TrackSchemeVertex getClosestVertexWithin( double lx1, double ly1, double lx2, double ly2, double aspectRatioXtoY, TrackSchemeVertex ref )
+	public TrackSchemeVertex getClosestVertexWithin(double lx1, double ly1,
+		double lx2, double ly2, double aspectRatioXtoY, TrackSchemeVertex ref)
 	{
-		final int tStart = ( int ) Math.ceil( Math.min( ly1, ly2 ) );
-		final int tEnd = ( int ) Math.floor( Math.max( ly1, ly2 ) ) + 1;
-		final double x1 = Math.min( lx1, lx2 );
-		final double x2 = Math.max( lx1, lx2 );
+		final int tStart = (int) Math.ceil(Math.min(ly1, ly2));
+		final int tEnd = (int) Math.floor(Math.max(ly1, ly2)) + 1;
+		final double x1 = Math.min(lx1, lx2);
+		final double x2 = Math.max(lx1, lx2);
 
 		double closestVertexSquareDist = Double.POSITIVE_INFINITY;
 		int closestVertexIndex = -1;
 
-		int start = timepoints.binarySearch( tStart );
-		if ( start < 0 )
+		int start = timepoints.binarySearch(tStart);
+		if (start < 0)
 			start = -start - 1;
-		int end = timepoints.binarySearch( tEnd );
-		if ( end < 0 )
+		int end = timepoints.binarySearch(tEnd);
+		if (end < 0)
 			end = -end - 1;
 
 		final int tpIndexFirst = ly1 < ly2 ? end - 1 : start;
 		final int tpIndexLast = ly1 < ly2 ? start - 1 : end;
 		final int tpIndexInc = ly1 < ly2 ? -1 : 1;
-		for ( int tpIndex = tpIndexFirst; tpIndex != tpIndexLast; tpIndex += tpIndexInc )
+		for (int tpIndex = tpIndexFirst; tpIndex != tpIndexLast; tpIndex +=
+			tpIndexInc)
 		{
-			final double diffy = ( ly2 - tpIndex ) * aspectRatioXtoY;
-			if ( diffy * diffy >= closestVertexSquareDist )
+			final double diffy = (ly2 - tpIndex) * aspectRatioXtoY;
+			if (diffy * diffy >= closestVertexSquareDist)
 				break;
 
-			int time = timepoints.get( tpIndex );
-			final TrackSchemeVertexList vertexList = timepointToOrderedVertices.get( time );
-			final int left = vertexList.binarySearch( x1 ) + 1;
-			final int right = vertexList.binarySearch( x2, left, vertexList.size() );
-			if ( right > left )
-			{
+			int time = timepoints.get(tpIndex);
+			final TrackSchemeVertexList vertexList = timepointToOrderedVertices.get(
+				time);
+			final int left = vertexList.binarySearch(x1) + 1;
+			final int right = vertexList.binarySearch(x2, left, vertexList.size());
+			if (right > left) {
 				final int candidate = lx1 < lx2 ? right : left;
-				final TrackSchemeVertex v = vertexList.get( candidate, ref );
-				final double diffx = ( lx2 - v.getLayoutX() );
+				final TrackSchemeVertex v = vertexList.get(candidate, ref);
+				final double diffx = (lx2 - v.getLayoutX());
 				final double d2 = diffx * diffx + diffy * diffy;
-				if ( d2 < closestVertexSquareDist )
-				{
+				if (d2 < closestVertexSquareDist) {
 					closestVertexSquareDist = d2;
 					closestVertexIndex = v.getInternalPoolIndex();
 				}
 			}
 		}
 
-		if ( closestVertexIndex < 0 )
+		if (closestVertexIndex < 0)
 			return null;
 
-		return graph.getVertexPool().getObject( closestVertexIndex, ref );
+		return graph.getVertexPool().getObject(closestVertexIndex, ref);
 	}
 
-	public TrackSchemeVertex getLeftSibling( TrackSchemeVertex vertex, TrackSchemeVertex ref )
+	public TrackSchemeVertex getLeftSibling(TrackSchemeVertex vertex,
+		TrackSchemeVertex ref)
 	{
-		final TrackSchemeVertexList vertices = timepointToOrderedVertices.get( vertex.getTimepoint() );
-		final int index = vertices.binarySearch( vertex.getLayoutX() );
-		return ( index > 0 )
-				? vertices.get( index - 1, ref )
-				: null;
+		final TrackSchemeVertexList vertices = timepointToOrderedVertices.get(vertex
+			.getTimepoint());
+		final int index = vertices.binarySearch(vertex.getLayoutX());
+		return (index > 0)
+			? vertices.get(index - 1, ref)
+			: null;
 	}
 
-	public TrackSchemeVertex getRightSibling( TrackSchemeVertex vertex, TrackSchemeVertex ref )
+	public TrackSchemeVertex getRightSibling(TrackSchemeVertex vertex,
+		TrackSchemeVertex ref)
 	{
-		final TrackSchemeVertexList vertices = timepointToOrderedVertices.get( vertex.getTimepoint() );
-		final int index = vertices.binarySearch( vertex.getLayoutX() );
-		return ( index < vertices.size() - 1 )
-				? vertices.get( index + 1, ref )
-				: null;
+		final TrackSchemeVertexList vertices = timepointToOrderedVertices.get(vertex
+			.getTimepoint());
+		final int index = vertices.binarySearch(vertex.getLayoutX());
+		return (index < vertices.size() - 1)
+			? vertices.get(index + 1, ref)
+			: null;
 	}
 }

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.feature;
 
 import java.util.Collection;
@@ -40,21 +41,20 @@ import org.scijava.listeners.Listeners;
  *
  * @author Jean-Yves Tinevez
  */
-public class FeatureModel
-{
+public class FeatureModel {
 
 	/**
 	 * Interface for listeners that listens to changes in a FeatureModel.
 	 */
-	public interface FeatureModelListener
-	{
+	public interface FeatureModelListener {
+
 		/**
 		 * Notifies a listener that the feature model has changed.
 		 */
 		public void featureModelChanged();
 	}
 
-	private final Listeners.List< FeatureModelListener > listeners;
+	private final Listeners.List<FeatureModelListener> listeners;
 
 	/**
 	 * If <code>false</code>, listeners will not be notified when a
@@ -63,15 +63,14 @@ public class FeatureModel
 	private boolean emitEvents = true;
 
 	/**
-	 * Is <code>true</code> if a featureModelChanged happened while the
-	 * listeners were paused.
+	 * Is <code>true</code> if a featureModelChanged happened while the listeners
+	 * were paused.
 	 */
 	private boolean shouldEmitEvent;
 
-	private final Map< FeatureSpec< ?, ? >, Feature< ? > > features;
+	private final Map<FeatureSpec<?, ?>, Feature<?>> features;
 
-	public FeatureModel()
-	{
+	public FeatureModel() {
 		this.features = new HashMap<>();
 		this.listeners = new Listeners.SynchronizedList<>();
 	}
@@ -79,8 +78,7 @@ public class FeatureModel
 	/**
 	 * Clears this feature model.
 	 */
-	public void clear()
-	{
+	public void clear() {
 		features.clear();
 		notifyFeatureModelChanged();
 	}
@@ -88,51 +86,44 @@ public class FeatureModel
 	/**
 	 * Removes the feature with the specified specification from this model.
 	 *
-	 * @param key
-	 *            the {@link FeatureSpec} of the feature to remove.
+	 * @param key the {@link FeatureSpec} of the feature to remove.
 	 */
-	public void clear( final FeatureSpec< ?, ? > key )
-	{
-		final boolean removed = features.remove( key ) != null;
-		if ( removed )
+	public void clear(final FeatureSpec<?, ?> key) {
+		final boolean removed = features.remove(key) != null;
+		if (removed)
 			notifyFeatureModelChanged();
 	}
 
 	/**
 	 * Registers the specified feature.
 	 * 
-	 * @param feature
-	 *            the feature to register.
+	 * @param feature the feature to register.
 	 */
-	public void declareFeature( final Feature< ? > feature )
-	{
-		features.put( feature.getSpec(), feature );
+	public void declareFeature(final Feature<?> feature) {
+		features.put(feature.getSpec(), feature);
 		notifyFeatureModelChanged();
 	}
 
 	/**
 	 * Returns the feature with the specified key.
 	 *
-	 * @param key
-	 *            the {@link FeatureSpec} of the feature to retrieve.
-	 * @return the feature, or {@code null} if a feature with the specified
-	 *         key is not registered in this model.
+	 * @param key the {@link FeatureSpec} of the feature to retrieve.
+	 * @return the feature, or {@code null} if a feature with the specified key is
+	 *         not registered in this model.
 	 */
-	public Feature< ? > getFeature( final FeatureSpec< ?, ? > key )
-	{
-		return features.get( key );
+	public Feature<?> getFeature(final FeatureSpec<?, ?> key) {
+		return features.get(key);
 	}
 
 	/**
-	 * Returns the collection of the {@link FeatureSpec}s declared in this
-	 * feature model.
+	 * Returns the collection of the {@link FeatureSpec}s declared in this feature
+	 * model.
 	 *
-	 * @return the collection of the {@link FeatureSpec}s declared in this
-	 *         feature model.
+	 * @return the collection of the {@link FeatureSpec}s declared in this feature
+	 *         model.
 	 */
-	public Collection< FeatureSpec< ?, ? > > getFeatureSpecs()
-	{
-		return Collections.unmodifiableSet( features.keySet() );
+	public Collection<FeatureSpec<?, ?>> getFeatureSpecs() {
+		return Collections.unmodifiableSet(features.keySet());
 	}
 
 	/*
@@ -144,43 +135,37 @@ public class FeatureModel
 
 	/**
 	 * Exposes the list of listeners that are notified when a change happens to
-	 * this feature model. Events are fired for every call to {@link #clear()}
-	 * or {@link #declareFeature(Feature)} methods.
+	 * this feature model. Events are fired for every call to {@link #clear()} or
+	 * {@link #declareFeature(Feature)} methods.
 	 *
 	 * @return the list of the listeners.
 	 */
-	public Listeners< FeatureModelListener > listeners()
-	{
+	public Listeners<FeatureModelListener> listeners() {
 		return listeners;
 	}
 
 	/**
 	 * Pause sending events from this feature model.
 	 */
-	public void pauseListeners()
-	{
+	public void pauseListeners() {
 		emitEvents = false;
 	}
 
 	/**
-	 * Resume sending events to the feature model. If events were generated
-	 * while the listeners were paused, an event is fired by calling this
-	 * method.
+	 * Resume sending events to the feature model. If events were generated while
+	 * the listeners were paused, an event is fired by calling this method.
 	 */
-	public void resumeListeners()
-	{
+	public void resumeListeners() {
 		emitEvents = true;
-		if ( shouldEmitEvent )
-		{
-			listeners.list.forEach( FeatureModelListener::featureModelChanged );
+		if (shouldEmitEvent) {
+			listeners.list.forEach(FeatureModelListener::featureModelChanged);
 			shouldEmitEvent = false;
 		}
 	}
 
-	private void notifyFeatureModelChanged()
-	{
-		if ( emitEvents )
-			listeners.list.forEach( FeatureModelListener::featureModelChanged );
+	private void notifyFeatureModelChanged() {
+		if (emitEvents)
+			listeners.list.forEach(FeatureModelListener::featureModelChanged);
 		else
 			shouldEmitEvent = true;
 	}

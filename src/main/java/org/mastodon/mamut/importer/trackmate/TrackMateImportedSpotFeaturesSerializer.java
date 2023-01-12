@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.importer.trackmate;
 
 import java.io.IOException;
@@ -38,21 +39,24 @@ import org.mastodon.io.FileIdToObjectMap;
 import org.mastodon.mamut.model.Spot;
 import org.scijava.plugin.Plugin;
 
-@Plugin( type = FeatureSerializer.class )
-public class TrackMateImportedSpotFeaturesSerializer extends TrackMateImportedFeaturesSerializer< TrackMateImportedSpotFeatures, Spot >
+@Plugin(type = FeatureSerializer.class)
+public class TrackMateImportedSpotFeaturesSerializer extends
+	TrackMateImportedFeaturesSerializer<TrackMateImportedSpotFeatures, Spot>
 {
 
 	@Override
-	public FeatureSpec< TrackMateImportedSpotFeatures, Spot > getFeatureSpec()
-	{
+	public FeatureSpec<TrackMateImportedSpotFeatures, Spot> getFeatureSpec() {
 		return new TrackMateImportedSpotFeatures.Spec();
 	}
 
 	@Override
-	public TrackMateImportedSpotFeatures deserialize( final FileIdToObjectMap< Spot > idmap, final RefCollection< Spot > pool, final ObjectInputStream ois ) throws IOException, ClassNotFoundException
+	public TrackMateImportedSpotFeatures deserialize(
+		final FileIdToObjectMap<Spot> idmap, final RefCollection<Spot> pool,
+		final ObjectInputStream ois) throws IOException, ClassNotFoundException
 	{
-		final TrackMateImportedSpotFeatures feature = new TrackMateImportedSpotFeatures();
-		deserializeInto( feature, idmap, pool, ois );
+		final TrackMateImportedSpotFeatures feature =
+			new TrackMateImportedSpotFeatures();
+		deserializeInto(feature, idmap, pool, ois);
 		return feature;
 	}
 }

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.ui.coloring;
 
 import org.mastodon.feature.FeatureProjection;
@@ -33,25 +34,24 @@ import org.mastodon.graph.Edge;
 import org.mastodon.graph.Vertex;
 import org.mastodon.graph.branch.BranchGraph;
 
-public class BranchFeatureColorGenerator< V extends Vertex< E >, E extends Edge< V >, BV extends Vertex< BE >, BE extends Edge< BV > >
-		extends AbstractBranchVertexColorGenerator< V, E, BV, BE >
-		implements ColorGenerator< V >
+public class BranchFeatureColorGenerator<V extends Vertex<E>, E extends Edge<V>, BV extends Vertex<BE>, BE extends Edge<BV>>
+	extends AbstractBranchVertexColorGenerator<V, E, BV, BE>
+	implements ColorGenerator<V>
 {
 
 	public BranchFeatureColorGenerator(
-			final FeatureProjection< BV > featureProjection,
-			final BranchGraph< BV, BE, V, E > branchGraph,
-			final ColorMap colorMap,
-			final double min,
-			final double max )
+		final FeatureProjection<BV> featureProjection,
+		final BranchGraph<BV, BE, V, E> branchGraph,
+		final ColorMap colorMap,
+		final double min,
+		final double max)
 	{
-		super( featureProjection, branchGraph, colorMap, min, max );
+		super(featureProjection, branchGraph, colorMap, min, max);
 	}
 
 	@Override
-	public int color( final V v )
-	{
-		return branchVertexColor( v );
+	public int color(final V v) {
+		return branchVertexColor(v);
 	}
 
 }

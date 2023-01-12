@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.app.ui;
 
 import java.awt.BorderLayout;
@@ -51,8 +52,8 @@ import bdv.util.InvokeOnEDT;
  *
  * @author Tobias Pietzsch
  */
-public class ViewFrame extends JFrame
-{
+public class ViewFrame extends JFrame {
+
 	private static final long serialVersionUID = 1L;
 
 	protected final JPanel settingsPanel;
@@ -65,79 +66,74 @@ public class ViewFrame extends JFrame
 
 	protected final JMenuBar menubar;
 
-	public ViewFrame( final String windowTitle )
-	{
-		super( windowTitle, AWTUtils.getSuitableGraphicsConfiguration( AWTUtils.RGB_COLOR_MODEL ) );
-		getRootPane().setDoubleBuffered( true );
-		setLocationByPlatform( true );
-		setLocationRelativeTo( null );
+	public ViewFrame(final String windowTitle) {
+		super(windowTitle, AWTUtils.getSuitableGraphicsConfiguration(
+			AWTUtils.RGB_COLOR_MODEL));
+		getRootPane().setDoubleBuffered(true);
+		setLocationByPlatform(true);
+		setLocationRelativeTo(null);
 
 		keybindings = new InputActionBindings();
 		triggerbindings = new TriggerBehaviourBindings();
 
 		settingsPanel = new JPanel();
-		settingsPanel.setLayout( new BoxLayout( settingsPanel, BoxLayout.LINE_AXIS ) );
-		add( settingsPanel, BorderLayout.NORTH );
+		settingsPanel.setLayout(new BoxLayout(settingsPanel, BoxLayout.LINE_AXIS));
+		add(settingsPanel, BorderLayout.NORTH);
 		isSettingsPanelVisible = true;
 
-		SwingUtilities.replaceUIActionMap( settingsPanel, keybindings.getConcatenatedActionMap() );
-		SwingUtilities.replaceUIInputMap( settingsPanel, JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, keybindings.getConcatenatedInputMap() );
+		SwingUtilities.replaceUIActionMap(settingsPanel, keybindings
+			.getConcatenatedActionMap());
+		SwingUtilities.replaceUIInputMap(settingsPanel,
+			JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, keybindings
+				.getConcatenatedInputMap());
 
 		menubar = new JMenuBar();
-		setJMenuBar( menubar );
+		setJMenuBar(menubar);
 	}
 
-	public boolean isSettingsPanelVisible()
-	{
+	public boolean isSettingsPanelVisible() {
 		return isSettingsPanelVisible;
 	}
 
-	public void setSettingsPanelVisible( final boolean visible )
-	{
-		try
-		{
-			InvokeOnEDT.invokeAndWait( () -> setSettingsPanelVisibleSynchronized( visible ) );
+	public void setSettingsPanelVisible(final boolean visible) {
+		try {
+			InvokeOnEDT.invokeAndWait(() -> setSettingsPanelVisibleSynchronized(
+				visible));
 		}
-		catch ( InvocationTargetException | InterruptedException e )
-		{
+		catch (InvocationTargetException | InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public InputActionBindings getKeybindings()
-	{
+	public InputActionBindings getKeybindings() {
 		return keybindings;
 	}
 
-	public TriggerBehaviourBindings getTriggerbindings()
-	{
+	public TriggerBehaviourBindings getTriggerbindings() {
 		return triggerbindings;
 	}
 
-	private synchronized void setSettingsPanelVisibleSynchronized( final boolean visible )
+	private synchronized void setSettingsPanelVisibleSynchronized(
+		final boolean visible)
 	{
-		if ( isSettingsPanelVisible != visible )
-		{
+		if (isSettingsPanelVisible != visible) {
 			final Dimension size = getSize();
 			isSettingsPanelVisible = visible;
-			if ( visible )
-			{
-				settingsPanel.setVisible( true );
-				add( settingsPanel, BorderLayout.NORTH );
+			if (visible) {
+				settingsPanel.setVisible(true);
+				add(settingsPanel, BorderLayout.NORTH);
 			}
-			else
-			{
-				remove( settingsPanel );
-				settingsPanel.setVisible( false );
+			else {
+				remove(settingsPanel);
+				settingsPanel.setVisible(false);
 			}
 			invalidate();
-			setPreferredSize( size );
+			setPreferredSize(size);
 			pack();
 		}
 	}
 
-	public JPanel getSettingsPanel()
-	{
+	public JPanel getSettingsPanel() {
 		return settingsPanel;
 	}
 }

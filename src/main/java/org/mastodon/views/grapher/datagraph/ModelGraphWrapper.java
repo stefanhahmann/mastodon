@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.datagraph;
 
 import org.mastodon.graph.Edge;
@@ -33,69 +34,59 @@ import org.mastodon.graph.GraphIdBimap;
 import org.mastodon.graph.Vertex;
 import org.mastodon.model.HasLabel;
 
-public class ModelGraphWrapper< V extends Vertex< E > & HasLabel, E extends Edge< V > >
-{
-	final GraphIdBimap< V, E > idmap;
+public class ModelGraphWrapper<V extends Vertex<E> & HasLabel, E extends Edge<V>> {
 
-	ModelGraphWrapper( final GraphIdBimap< V, E > idmap )
-	{
+	final GraphIdBimap<V, E> idmap;
+
+	ModelGraphWrapper(final GraphIdBimap<V, E> idmap) {
 		this.idmap = idmap;
 	}
 
-	ModelVertexWrapper createVertexWrapper( final DataVertex vertex )
-	{
-		return new ModelVertexWrapper( idmap.vertexIdBimap().createRef(), vertex );
+	ModelVertexWrapper createVertexWrapper(final DataVertex vertex) {
+		return new ModelVertexWrapper(idmap.vertexIdBimap().createRef(), vertex);
 	}
 
-	ModelEdgeWrapper createEdgeWrapper( final DataEdge edge )
-	{
-		return new ModelEdgeWrapper( idmap.edgeIdBimap().createRef(), edge );
+	ModelEdgeWrapper createEdgeWrapper(final DataEdge edge) {
+		return new ModelEdgeWrapper(idmap.edgeIdBimap().createRef(), edge);
 	}
 
-	class ModelVertexWrapper
-	{
+	class ModelVertexWrapper {
+
 		private final V ref;
 
 		private final DataVertex vertex;
 
-		public ModelVertexWrapper( final V ref, final DataVertex vertex )
-		{
+		public ModelVertexWrapper(final V ref, final DataVertex vertex) {
 			this.ref = ref;
 			this.vertex = vertex;
 		}
 
-		public String getLabel()
-		{
+		public String getLabel() {
 			return getModelVertex().getLabel();
 		}
 
-		public void setLabel( final String label )
-		{
-			getModelVertex().setLabel( label );
+		public void setLabel(final String label) {
+			getModelVertex().setLabel(label);
 		}
 
-		public V getReusableRef()
-		{
+		public V getReusableRef() {
 			return ref;
 		}
 
-		private V getModelVertex()
-		{
-			return idmap.getVertex( vertex.getModelVertexId(), ref );
+		private V getModelVertex() {
+			return idmap.getVertex(vertex.getModelVertexId(), ref);
 		}
 	}
 
-	class ModelEdgeWrapper
-	{
+	class ModelEdgeWrapper {
+
 		private final E ref;
 
-		public ModelEdgeWrapper( final E ref, final DataEdge edge )
-		{
+		public ModelEdgeWrapper(final E ref, final DataEdge edge) {
 			this.ref = ref;
 		}
 
-		public E getReusableRef()
-		{
+		public E getReusableRef() {
 			return ref;
 		}
 	}

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme.util;
 
 import java.util.Comparator;
@@ -54,17 +55,15 @@ import java.util.Comparator;
  * This is an updated version with enhancements made by Daniel Migowski, Andre
  * Bogus, and David Koelle
  */
-public class AlphanumComparator implements Comparator< String >
-{
+public class AlphanumComparator implements Comparator<String> {
+
 	public static final AlphanumComparator instance = new AlphanumComparator();
 
 	// Singleton
-	private AlphanumComparator()
-	{}
+	private AlphanumComparator() {}
 
 	@Override
-	public int compare( final String s1, final String s2 )
-	{
-		return AlphanumCompare.compare( s1, s2 );
+	public int compare(final String s1, final String s2) {
+		return AlphanumCompare.compare(s1, s2);
 	}
 }

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.model;
 
 import org.mastodon.model.AbstractSpotPool;
@@ -37,57 +38,55 @@ import org.mastodon.pool.attributes.DoubleAttribute;
 import org.mastodon.properties.ObjPropertyMap;
 import org.mastodon.properties.Property;
 
-public class SpotPool extends AbstractSpotPool< Spot, Link, ByteMappedElement, ModelGraph >
+public class SpotPool extends
+	AbstractSpotPool<Spot, Link, ByteMappedElement, ModelGraph>
 {
-	public static class SpotLayout extends AbstractSpotLayout
-	{
-		public SpotLayout()
-		{
-			super( 3 );
+
+	public static class SpotLayout extends AbstractSpotLayout {
+
+		public SpotLayout() {
+			super(3);
 		}
 
-		final DoubleArrayField covariance = doubleArrayField( 6 );
+		final DoubleArrayField covariance = doubleArrayField(6);
 		final DoubleField boundingSphereRadiusSqu = doubleField();
 	}
 
 	public static final SpotLayout layout = new SpotLayout();
 
-	final DoubleArrayAttribute< Spot > covariance = new DoubleArrayAttribute<>( layout.covariance, this );
+	final DoubleArrayAttribute<Spot> covariance = new DoubleArrayAttribute<>(
+		layout.covariance, this);
 
-	final DoubleAttribute< Spot > boundingSphereRadiusSqu = new DoubleAttribute<>( layout.boundingSphereRadiusSqu, this );
+	final DoubleAttribute<Spot> boundingSphereRadiusSqu = new DoubleAttribute<>(
+		layout.boundingSphereRadiusSqu, this);
 
-	final ObjPropertyMap< Spot, String > label;
+	final ObjPropertyMap<Spot, String> label;
 
-	SpotPool( final int initialCapacity )
-	{
-		super( initialCapacity, layout, Spot.class, SingleArrayMemPool.factory( ByteMappedElementArray.factory ) );
-		label = new ObjPropertyMap<>( this );
-		registerPropertyMap( label );
+	SpotPool(final int initialCapacity) {
+		super(initialCapacity, layout, Spot.class, SingleArrayMemPool.factory(
+			ByteMappedElementArray.factory));
+		label = new ObjPropertyMap<>(this);
+		registerPropertyMap(label);
 	}
 
 	@Override
-	protected Spot createEmptyRef()
-	{
-		return new Spot( this );
+	protected Spot createEmptyRef() {
+		return new Spot(this);
 	}
 
-	public final Property< Spot > covarianceProperty()
-	{
+	public final Property<Spot> covarianceProperty() {
 		return covariance;
 	}
 
-	public final Property< Spot > boundingSphereRadiusSquProperty()
-	{
+	public final Property<Spot> boundingSphereRadiusSquProperty() {
 		return boundingSphereRadiusSqu;
 	}
 
-	public final Property< Spot > positionProperty()
-	{
+	public final Property<Spot> positionProperty() {
 		return position;
 	}
 
-	public final Property< Spot > labelProperty()
-	{
+	public final Property<Spot> labelProperty() {
 		return label;
 	}
 }

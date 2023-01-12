@@ -26,49 +26,46 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme.display.style.dummygraph;
 
 import org.mastodon.graph.object.AbstractObjectIdVertex;
 import org.mastodon.model.HasLabel;
 import org.mastodon.spatial.HasTimepoint;
 
-public class DummyVertex extends AbstractObjectIdVertex< DummyVertex, DummyEdge > implements HasTimepoint, HasLabel
+public class DummyVertex extends AbstractObjectIdVertex<DummyVertex, DummyEdge>
+	implements HasTimepoint, HasLabel
 {
+
 	private String label;
 
 	private int timepoint;
 
-	DummyVertex()
-	{}
+	DummyVertex() {}
 
 	@Override
-	public int getTimepoint()
-	{
+	public int getTimepoint() {
 		return timepoint;
 	}
 
 	@Override
-	public String getLabel()
-	{
+	public String getLabel() {
 		return label;
 	}
 
 	@Override
-	public void setLabel( final String label )
-	{
+	public void setLabel(final String label) {
 		this.label = label;
 	}
 
-	public DummyVertex init( final String label, final int timepoint )
-	{
+	public DummyVertex init(final String label, final int timepoint) {
 		this.label = label;
 		this.timepoint = timepoint;
 		return this;
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return label + " @t=" + timepoint;
 	}
 }

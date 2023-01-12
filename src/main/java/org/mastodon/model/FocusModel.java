@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model;
 
 import org.mastodon.graph.Edge;
@@ -36,17 +37,15 @@ import org.scijava.listeners.Listeners;
  * Class to manage the model vertex that has the "focus", regardless of how this
  * focus is used.
  *
- * @param <V>
- *            type of model vertices.
- * @param <E>
- *            the of model edges.
+ * @param <V> type of model vertices.
+ * @param <E> the of model edges.
  */
 // TODO: E parameter not needed
-public interface FocusModel< V extends Vertex< E >, E extends Edge< V > >
-{
-	public void focusVertex( final V vertex );
+public interface FocusModel<V extends Vertex<E>, E extends Edge<V>> {
 
-	public V getFocusedVertex( final V ref );
+	public void focusVertex(final V vertex);
 
-	public Listeners< FocusListener > listeners();
+	public V getFocusedVertex(final V ref);
+
+	public Listeners<FocusListener> listeners();
 }

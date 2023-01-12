@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.bdv.overlay.ui;
 
 import java.awt.BorderLayout;
@@ -46,27 +47,33 @@ import bdv.ui.settings.SettingsPanel;
 import bdv.ui.settings.style.StyleProfile;
 import bdv.ui.settings.style.StyleProfileManager;
 
-public class RenderSettingsConfigPage extends SelectAndEditProfileSettingsPage< StyleProfile< RenderSettings > >
+public class RenderSettingsConfigPage extends
+	SelectAndEditProfileSettingsPage<StyleProfile<RenderSettings>>
 {
+
 	/**
 	 * Creates a new render-settings config page.
 	 *
-	 * @param treePath
-	 * 		path of this page in the settings tree.
-	 * @param renderSettingsManager
-	 *            the render settings manager.
+	 * @param treePath path of this page in the settings tree.
+	 * @param renderSettingsManager the render settings manager.
 	 */
-	public RenderSettingsConfigPage( final String treePath, final RenderSettingsManager renderSettingsManager )
+	public RenderSettingsConfigPage(final String treePath,
+		final RenderSettingsManager renderSettingsManager)
 	{
 		super(
-				treePath,
-				new StyleProfileManager<>( renderSettingsManager, new RenderSettingsManager( false ) ),
-				new RenderSettingsProfileEditPanel( renderSettingsManager.getSelectedStyle() ) );
+			treePath,
+			new StyleProfileManager<>(renderSettingsManager,
+				new RenderSettingsManager(false)),
+			new RenderSettingsProfileEditPanel(renderSettingsManager
+				.getSelectedStyle()));
 	}
 
-	static class RenderSettingsProfileEditPanel implements RenderSettings.UpdateListener, SelectAndEditProfileSettingsPage.ProfileEditPanel< StyleProfile< RenderSettings > >
+	static class RenderSettingsProfileEditPanel implements
+		RenderSettings.UpdateListener,
+		SelectAndEditProfileSettingsPage.ProfileEditPanel<StyleProfile<RenderSettings>>
 	{
-		private final Listeners.SynchronizedList< ModificationListener > modificationListeners;
+
+		private final Listeners.SynchronizedList<ModificationListener> modificationListeners;
 
 		private final RenderSettings editedStyle;
 
@@ -74,84 +81,77 @@ public class RenderSettingsConfigPage extends SelectAndEditProfileSettingsPage< 
 
 		private final DummyBdvPanel dummyModelCanvas;
 
-		public RenderSettingsProfileEditPanel( final RenderSettings initialStyle )
-		{
-			editedStyle = initialStyle.copy( "Edited" );
+		public RenderSettingsProfileEditPanel(final RenderSettings initialStyle) {
+			editedStyle = initialStyle.copy("Edited");
 			styleEditorPanel = new JPanel();
-			styleEditorPanel.setLayout( new BorderLayout() );
-			styleEditorPanel.add( new RenderSettingsPanel( editedStyle ), BorderLayout.CENTER );
+			styleEditorPanel.setLayout(new BorderLayout());
+			styleEditorPanel.add(new RenderSettingsPanel(editedStyle),
+				BorderLayout.CENTER);
 
 			this.dummyModelCanvas = new DummyBdvPanel();
-			dummyModelCanvas.setRenderSettings( initialStyle );
-			styleEditorPanel.add( dummyModelCanvas, BorderLayout.EAST );
+			dummyModelCanvas.setRenderSettings(initialStyle);
+			styleEditorPanel.add(dummyModelCanvas, BorderLayout.EAST);
 			modificationListeners = new Listeners.SynchronizedList<>();
-			editedStyle.updateListeners().add( this );
+			editedStyle.updateListeners().add(this);
 		}
 
 		private boolean trackModifications = true;
 
 		@Override
-		public void renderSettingsChanged()
-		{
-			dummyModelCanvas.setRenderSettings( editedStyle );
-			if ( trackModifications )
-				modificationListeners.list.forEach( ModificationListener::setModified );
+		public void renderSettingsChanged() {
+			dummyModelCanvas.setRenderSettings(editedStyle);
+			if (trackModifications)
+				modificationListeners.list.forEach(ModificationListener::setModified);
 		}
 
 		@Override
-		public void loadProfile( final StyleProfile< RenderSettings > profile )
-		{
+		public void loadProfile(final StyleProfile<RenderSettings> profile) {
 			trackModifications = false;
-			editedStyle.set( profile.getStyle() );
+			editedStyle.set(profile.getStyle());
 			trackModifications = true;
 		}
 
 		@Override
-		public void storeProfile( final StyleProfile< RenderSettings > profile )
-		{
+		public void storeProfile(final StyleProfile<RenderSettings> profile) {
 			trackModifications = false;
-			editedStyle.setName( profile.getStyle().getName() );
+			editedStyle.setName(profile.getStyle().getName());
 			trackModifications = true;
-			profile.getStyle().set( editedStyle );
+			profile.getStyle().set(editedStyle);
 		}
 
 		@Override
-		public Listeners< ModificationListener > modificationListeners()
-		{
+		public Listeners<ModificationListener> modificationListeners() {
 			return modificationListeners;
 		}
 
 		@Override
-		public JPanel getJPanel()
-		{
+		public JPanel getJPanel() {
 			return styleEditorPanel;
 		}
 	}
 
-	public static void main( final String[] args )
-	{
+	public static void main(final String[] args) {
 		final RenderSettingsManager styleManager = new RenderSettingsManager();
 
 		final SettingsPanel settings = new SettingsPanel();
-		settings.addPage( new RenderSettingsConfigPage( "Style > BDV", styleManager ) );
+		settings.addPage(new RenderSettingsConfigPage("Style > BDV", styleManager));
 
-		final JDialog dialog = new JDialog( ( Frame ) null, "Settings" );
-		dialog.getContentPane().add( settings, BorderLayout.CENTER );
+		final JDialog dialog = new JDialog((Frame) null, "Settings");
+		dialog.getContentPane().add(settings, BorderLayout.CENTER);
 
-		settings.onOk( () -> dialog.setVisible( false ) );
-		settings.onCancel( () -> dialog.setVisible( false ) );
+		settings.onOk(() -> dialog.setVisible(false));
+		settings.onCancel(() -> dialog.setVisible(false));
 
-		dialog.setDefaultCloseOperation( WindowConstants.DO_NOTHING_ON_CLOSE );
-		dialog.addWindowListener( new WindowAdapter()
-		{
+		dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		dialog.addWindowListener(new WindowAdapter() {
+
 			@Override
-			public void windowClosing( final WindowEvent e )
-			{
+			public void windowClosing(final WindowEvent e) {
 				settings.cancel();
 			}
-		} );
+		});
 
 		dialog.pack();
-		dialog.setVisible( true );
+		dialog.setVisible(true);
 	}
 }

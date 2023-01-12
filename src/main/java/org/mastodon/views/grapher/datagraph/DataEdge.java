@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.datagraph;
 
 import org.mastodon.graph.GraphIdBimap;
@@ -34,20 +35,21 @@ import org.mastodon.pool.ByteMappedElement;
 import org.mastodon.pool.PoolObject;
 import org.mastodon.views.grapher.datagraph.DataGraph.DataEdgePool;
 
-public class DataEdge extends AbstractEdge< DataEdge, DataVertex, DataEdgePool, ByteMappedElement >
+public class DataEdge extends
+	AbstractEdge<DataEdge, DataVertex, DataEdgePool, ByteMappedElement>
 {
-	final ModelGraphWrapper< ?, ? >.ModelEdgeWrapper modelEdge;
+
+	final ModelGraphWrapper<?, ?>.ModelEdgeWrapper modelEdge;
 
 	@Override
-	public String toString()
-	{
-		return String.format( "Edge( %s -> %s )", getSource().getLabel(), getTarget().getLabel() );
+	public String toString() {
+		return String.format("Edge( %s -> %s )", getSource().getLabel(), getTarget()
+			.getLabel());
 	}
 
-	DataEdge( final DataEdgePool pool )
-	{
-		super( pool );
-		modelEdge = pool.modelGraphWrapper.createEdgeWrapper( this );
+	DataEdge(final DataEdgePool pool) {
+		super(pool);
+		modelEdge = pool.modelGraphWrapper.createEdgeWrapper(this);
 	}
 
 	/**
@@ -60,21 +62,18 @@ public class DataEdge extends AbstractEdge< DataEdge, DataVertex, DataEdgePool, 
 	 *
 	 * @return this {@link DataEdge}
 	 */
-	public DataEdge init()
-	{
+	public DataEdge init() {
 		return this;
 	}
 
 	@Override
-	protected void setToUninitializedState()
-	{
+	protected void setToUninitializedState() {
 		super.setToUninitializedState();
-		setScreenEdgeIndex( -1 );
+		setScreenEdgeIndex(-1);
 	}
 
-	DataEdge initModelId( final int modelEdgeId )
-	{
-		setModelEdgeId( modelEdgeId );
+	DataEdge initModelId(final int modelEdgeId) {
+		setModelEdgeId(modelEdgeId);
 		return this;
 	}
 
@@ -85,23 +84,19 @@ public class DataEdge extends AbstractEdge< DataEdge, DataVertex, DataEdgePool, 
 	 *
 	 * @return the ID of the associated model edge.
 	 */
-	public int getModelEdgeId()
-	{
-		return pool.origEdgeIndex.get( this );
+	public int getModelEdgeId() {
+		return pool.origEdgeIndex.get(this);
 	}
 
-	protected void setModelEdgeId( final int id )
-	{
-		pool.origEdgeIndex.setQuiet( this, id );
+	protected void setModelEdgeId(final int id) {
+		pool.origEdgeIndex.setQuiet(this, id);
 	}
 
-	public int getScreenEdgeIndex()
-	{
-		return pool.screenEdgeIndex.get( this );
+	public int getScreenEdgeIndex() {
+		return pool.screenEdgeIndex.get(this);
 	}
 
-	public void setScreenEdgeIndex( final int screenEdgeIndex )
-	{
-		pool.screenEdgeIndex.setQuiet( this, screenEdgeIndex );
+	public void setScreenEdgeIndex(final int screenEdgeIndex) {
+		pool.screenEdgeIndex.setQuiet(this, screenEdgeIndex);
 	}
 }

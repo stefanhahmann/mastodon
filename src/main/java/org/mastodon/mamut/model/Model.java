@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.model;
 
 import java.io.BufferedInputStream;
@@ -91,7 +92,8 @@ import net.imglib2.RealLocalizable;
  *
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  */
-public class Model extends AbstractModel< ModelGraph, Spot, Link > implements UndoPointMarker
+public class Model extends AbstractModel<ModelGraph, Spot, Link> implements
+	UndoPointMarker
 {
 
 	private static final int initialCapacity = 1024;
@@ -99,15 +101,15 @@ public class Model extends AbstractModel< ModelGraph, Spot, Link > implements Un
 	/*
 	 * SpatioTemporalIndex of model spots
 	 */
-	private final SpatioTemporalIndex< Spot > index;
+	private final SpatioTemporalIndex<Spot> index;
 
 	private final ReentrantReadWriteLock lock;
 
-	private final GraphUndoRecorder< Spot, Link > undoRecorder;
+	private final GraphUndoRecorder<Spot, Link> undoRecorder;
 
 	private final FeatureModel featureModel;
 
-	private final DefaultTagSetModel< Spot, Link > tagSetModel;
+	private final DefaultTagSetModel<Spot, Link> tagSetModel;
 
 	private final String spaceUnits;
 
@@ -115,113 +117,121 @@ public class Model extends AbstractModel< ModelGraph, Spot, Link > implements Un
 
 	private final ModelBranchGraph branchGraph;
 
-	private final SpatioTemporalIndexImp< BranchSpot, BranchLink > branchIndex;
+	private final SpatioTemporalIndexImp<BranchSpot, BranchLink> branchIndex;
 
-	public Model()
-	{
-		this( "pixel", "frame" );
+	public Model() {
+		this("pixel", "frame");
 	}
 
-	public Model( final String spaceUnits, final String timeUnits )
-	{
-		super( new ModelGraph( initialCapacity ) );
+	public Model(final String spaceUnits, final String timeUnits) {
+		super(new ModelGraph(initialCapacity));
 		this.spaceUnits = spaceUnits;
 		this.timeUnits = timeUnits;
-		final SpatioTemporalIndexImp< Spot, Link > theIndex = new SpatioTemporalIndexImp<>( modelGraph, modelGraph.idmap().vertexIdBimap() );
+		final SpatioTemporalIndexImp<Spot, Link> theIndex =
+			new SpatioTemporalIndexImp<>(modelGraph, modelGraph.idmap()
+				.vertexIdBimap());
 		/*
 		 * Every 1 second, rebuild spatial indices with more than 100
 		 * modifications
 		 */
-		new SpatioTemporalIndexImpRebuilderThread( "Rebuild spatial indices", theIndex, 100, 1000, true ).start();
+		new SpatioTemporalIndexImpRebuilderThread("Rebuild spatial indices",
+			theIndex, 100, 1000, true).start();
 		index = theIndex;
 		lock = modelGraph.getLock();
 
-		branchGraph = new ModelBranchGraph( modelGraph, initialCapacity );
-		branchIndex = new SpatioTemporalIndexImp<>( branchGraph, branchGraph.getGraphIdBimap().vertexIdBimap() );
+		branchGraph = new ModelBranchGraph(modelGraph, initialCapacity);
+		branchIndex = new SpatioTemporalIndexImp<>(branchGraph, branchGraph
+			.getGraphIdBimap().vertexIdBimap());
 
-		final List< Property< Spot > > vertexUndoableProperties = new ArrayList<>();
-		vertexUndoableProperties.add( modelGraph.getVertexPool().positionProperty() );
-		vertexUndoableProperties.add( modelGraph.getVertexPool().covarianceProperty() );
-		vertexUndoableProperties.add( modelGraph.getVertexPool().boundingSphereRadiusSquProperty() );
-		vertexUndoableProperties.add( modelGraph.getVertexPool().labelProperty() );
+		final List<Property<Spot>> vertexUndoableProperties = new ArrayList<>();
+		vertexUndoableProperties.add(modelGraph.getVertexPool().positionProperty());
+		vertexUndoableProperties.add(modelGraph.getVertexPool()
+			.covarianceProperty());
+		vertexUndoableProperties.add(modelGraph.getVertexPool()
+			.boundingSphereRadiusSquProperty());
+		vertexUndoableProperties.add(modelGraph.getVertexPool().labelProperty());
 
-		final List< Property< Link > > edgeUndoableProperties = new ArrayList<>();
+		final List<Property<Link>> edgeUndoableProperties = new ArrayList<>();
 
 		featureModel = new FeatureModel();
 		declareDefaultFeatures();
-		tagSetModel = new DefaultTagSetModel<>( getGraph() );
+		tagSetModel = new DefaultTagSetModel<>(getGraph());
 		vertexUndoableProperties.add(
-				new DefaultTagSetModel.SerialisationAccess< Spot, Link >( tagSetModel )
-				{
-					@Override
-					protected LabelSets< Spot, Integer > getVertexIdLabelSets()
-					{
-						return super.getVertexIdLabelSets();
-					}
-				}.getVertexIdLabelSets() );
+			new DefaultTagSetModel.SerialisationAccess<Spot, Link>(tagSetModel)
+			{
+
+				@Override
+				protected LabelSets<Spot, Integer> getVertexIdLabelSets() {
+					return super.getVertexIdLabelSets();
+				}
+			}.getVertexIdLabelSets());
 		edgeUndoableProperties.add(
-				new DefaultTagSetModel.SerialisationAccess< Spot, Link >( tagSetModel )
-				{
-					@Override
-					protected LabelSets< Link, Integer > getEdgeIdLabelSets()
-					{
-						return super.getEdgeIdLabelSets();
-					}
-				}.getEdgeIdLabelSets() );
+			new DefaultTagSetModel.SerialisationAccess<Spot, Link>(tagSetModel)
+			{
+
+				@Override
+				protected LabelSets<Link, Integer> getEdgeIdLabelSets() {
+					return super.getEdgeIdLabelSets();
+				}
+			}.getEdgeIdLabelSets());
 
 		undoRecorder = new GraphUndoRecorder<>(
-				initialCapacity,
-				modelGraph,
-				modelGraph.idmap(),
-				ModelSerializer.getInstance().getVertexSerializer(),
-				ModelSerializer.getInstance().getEdgeSerializer(),
-				vertexUndoableProperties,
-				edgeUndoableProperties );
+			initialCapacity,
+			modelGraph,
+			modelGraph.idmap(),
+			ModelSerializer.getInstance().getVertexSerializer(),
+			ModelSerializer.getInstance().getEdgeSerializer(),
+			vertexUndoableProperties,
+			edgeUndoableProperties);
 
-		final Recorder< DefaultTagSetModel.SetTagSetStructureUndoableEdit > recorder = undoRecorder.createGenericUndoableEditRecorder();
-		tagSetModel.setUndoRecorder( recorder );
+		final Recorder<DefaultTagSetModel.SetTagSetStructureUndoableEdit> recorder =
+			undoRecorder.createGenericUndoableEditRecorder();
+		tagSetModel.setUndoRecorder(recorder);
 	}
 
 	/**
 	 * Declares a set of basic features that can return valid values without a
 	 * computer.
 	 */
-	public void declareDefaultFeatures()
-	{
-		featureModel.declareFeature( new SpotPositionFeature( Dimension.POSITION.getUnits( spaceUnits, timeUnits ) ) );
-		featureModel.declareFeature( new SpotRadiusFeature( Dimension.LENGTH.getUnits( spaceUnits, timeUnits ) ) );
-		featureModel.declareFeature( new SpotFrameFeature() );
-		featureModel.declareFeature( new SpotNLinksFeature() );
-		featureModel.declareFeature( new LinkTargetIdFeature( modelGraph ) );
-		featureModel.declareFeature( new LinkDisplacementFeature( modelGraph, Dimension.LENGTH.getUnits( spaceUnits, timeUnits ) ) );
-		featureModel.declareFeature( new LinkVelocityFeature( modelGraph, Dimension.VELOCITY.getUnits( spaceUnits, timeUnits ) ) );
-		featureModel.declareFeature( new BranchNDivisionsFeature() );
+	public void declareDefaultFeatures() {
+		featureModel.declareFeature(new SpotPositionFeature(Dimension.POSITION
+			.getUnits(spaceUnits, timeUnits)));
+		featureModel.declareFeature(new SpotRadiusFeature(Dimension.LENGTH.getUnits(
+			spaceUnits, timeUnits)));
+		featureModel.declareFeature(new SpotFrameFeature());
+		featureModel.declareFeature(new SpotNLinksFeature());
+		featureModel.declareFeature(new LinkTargetIdFeature(modelGraph));
+		featureModel.declareFeature(new LinkDisplacementFeature(modelGraph,
+			Dimension.LENGTH.getUnits(spaceUnits, timeUnits)));
+		featureModel.declareFeature(new LinkVelocityFeature(modelGraph,
+			Dimension.VELOCITY.getUnits(spaceUnits, timeUnits)));
+		featureModel.declareFeature(new BranchNDivisionsFeature());
 	}
 
 	/**
 	 * Clears this model and loads the model from the specified project folder.
 	 *
-	 * @param reader
-	 *            reader from which to load the raw project files.
-	 * @return the {@link FileIdToGraphMap} object generated by loading the
-	 *         model graph.
-	 * @throws IOException
-	 *             if an I/O error occurs while reading the file.
+	 * @param reader reader from which to load the raw project files.
+	 * @return the {@link FileIdToGraphMap} object generated by loading the model
+	 *         graph.
+	 * @throws IOException if an I/O error occurs while reading the file.
 	 */
-	public FileIdToGraphMap< Spot, Link > loadRaw( final MamutProject.ProjectReader reader ) throws IOException
+	public FileIdToGraphMap<Spot, Link> loadRaw(
+		final MamutProject.ProjectReader reader) throws IOException
 	{
-		final FileIdToGraphMap< Spot, Link > idmap = modelGraph.loadRaw( reader.getRawModelInputStream(), ModelSerializer.getInstance() );
+		final FileIdToGraphMap<Spot, Link> idmap = modelGraph.loadRaw(reader
+			.getRawModelInputStream(), ModelSerializer.getInstance());
 
 		tagSetModel.pauseListeners();
 		tagSetModel.clear();
 		try (
 				final InputStream tis = reader.getRawTagsInputStream();
-				final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( tis, 1024 * 1024 ) ))
+				final ObjectInputStream ois = new ObjectInputStream(
+					new BufferedInputStream(tis, 1024 * 1024)))
 		{
-			RawTagSetModelIO.read( tagSetModel, idmap, ois );
+			RawTagSetModelIO.read(tagSetModel, idmap, ois);
 		}
-		catch ( final FileNotFoundException e )
-		{}
+		catch (final FileNotFoundException e) {}
 		tagSetModel.resumeListeners();
 
 		return idmap;
@@ -230,22 +240,23 @@ public class Model extends AbstractModel< ModelGraph, Spot, Link > implements Un
 	/**
 	 * Saves this model to the specified the specified project folder.
 	 *
-	 * @param writer
-	 *            writer to save the raw project files.
+	 * @param writer writer to save the raw project files.
 	 * @return the {@link GraphToFileIdMap} object generated by saving the model
 	 *         graph.
-	 * @throws IOException
-	 *             if an I/O error occurs while writing the file.
+	 * @throws IOException if an I/O error occurs while writing the file.
 	 */
-	public GraphToFileIdMap< Spot, Link > saveRaw( final MamutProject.ProjectWriter writer ) throws IOException
+	public GraphToFileIdMap<Spot, Link> saveRaw(
+		final MamutProject.ProjectWriter writer) throws IOException
 	{
-		final GraphToFileIdMap< Spot, Link > idmap = modelGraph.saveRaw( writer.getRawModelOutputStream(), ModelSerializer.getInstance() );
+		final GraphToFileIdMap<Spot, Link> idmap = modelGraph.saveRaw(writer
+			.getRawModelOutputStream(), ModelSerializer.getInstance());
 
 		try (
 				final OutputStream fos = writer.getRawTagsOutputStream();
-				final ObjectOutputStream oos = new ObjectOutputStream( new BufferedOutputStream( fos, 1024 * 1024 ) ))
+				final ObjectOutputStream oos = new ObjectOutputStream(
+					new BufferedOutputStream(fos, 1024 * 1024)))
 		{
-			RawTagSetModelIO.write( tagSetModel, idmap, oos );
+			RawTagSetModelIO.write(tagSetModel, idmap, oos);
 		}
 
 		return idmap;
@@ -256,87 +267,70 @@ public class Model extends AbstractModel< ModelGraph, Spot, Link > implements Un
 	 *
 	 * @return the spatio-temporal index.
 	 */
-	public SpatioTemporalIndex< Spot > getSpatioTemporalIndex()
-	{
+	public SpatioTemporalIndex<Spot> getSpatioTemporalIndex() {
 		return index;
 	}
 
-	public SpatioTemporalIndex< BranchSpot > getBranchGraphSpatioTemporalIndex()
-	{
+	public SpatioTemporalIndex<BranchSpot> getBranchGraphSpatioTemporalIndex() {
 		return branchIndex;
 	}
 
-	public void undo()
-	{
+	public void undo() {
 		lock.writeLock().lock();
-		try
-		{
+		try {
 			undoRecorder.undo();
 			modelGraph.notifyGraphChanged();
 		}
-		finally
-		{
+		finally {
 			lock.writeLock().unlock();
 		}
 	}
 
-	public void redo()
-	{
+	public void redo() {
 		lock.writeLock().lock();
-		try
-		{
+		try {
 			undoRecorder.redo();
 			modelGraph.notifyGraphChanged();
 		}
-		finally
-		{
+		finally {
 			lock.writeLock().unlock();
 		}
 	}
 
 	@Override
-	public void setUndoPoint()
-	{
+	public void setUndoPoint() {
 		undoRecorder.setUndoPoint();
 	}
 
-	public void setSavePoint()
-	{
+	public void setSavePoint() {
 		undoRecorder.setSavePoint();
 	}
 
-	public boolean isSavePoint()
-	{
+	public boolean isSavePoint() {
 		return undoRecorder.isSavePoint();
 	}
 
-	public ModelBranchGraph getBranchGraph()
-	{
+	public ModelBranchGraph getBranchGraph() {
 		return branchGraph;
 	}
 
-	public GraphIdBimap< BranchSpot, BranchLink > getBranchGraphIdBimap()
-	{
+	public GraphIdBimap<BranchSpot, BranchLink> getBranchGraphIdBimap() {
 		return branchGraph.getGraphIdBimap();
 	}
 
-	public FeatureModel getFeatureModel()
-	{
+	public FeatureModel getFeatureModel() {
 		return featureModel;
 	}
 
-	public TagSetModel< Spot, Link > getTagSetModel()
-	{
+	public TagSetModel<Spot, Link> getTagSetModel() {
 		return tagSetModel;
 	}
 
-	public String getSpaceUnits()
-	{
+	public String getSpaceUnits() {
 		return spaceUnits;
 	}
 
-	public String getTimeUnits()
-	{
+	public String getTimeUnits() {
 		return timeUnits;
 	}
 }

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model;
 
 import org.mastodon.collection.RefCollections;
@@ -40,36 +41,37 @@ import org.mastodon.views.trackscheme.TrackSchemeVertex;
 import java.util.List;
 
 public class DefaultRootsModel<Spot extends Vertex<Link>, Link extends Edge<Spot>>
-		implements RootsModel<TrackSchemeVertex>
+	implements RootsModel<TrackSchemeVertex>
 {
+
 	private final TrackSchemeGraph<Spot, Link> viewGraph;
 
 	private final RefList<Spot> modelRoots;
 
-	public DefaultRootsModel( ReadOnlyGraph<Spot, Link> modelGraph, TrackSchemeGraph<Spot, Link> viewGraph )
+	public DefaultRootsModel(ReadOnlyGraph<Spot, Link> modelGraph,
+		TrackSchemeGraph<Spot, Link> viewGraph)
 	{
 		this.viewGraph = viewGraph;
-		this.modelRoots = RefCollections.createRefList( modelGraph.vertices() );
+		this.modelRoots = RefCollections.createRefList(modelGraph.vertices());
 	}
 
 	@Override
-	public void setRoots( List<TrackSchemeVertex> viewRoots )
-	{
+	public void setRoots(List<TrackSchemeVertex> viewRoots) {
 		modelRoots.clear();
 		TrackSchemeVertex ref = viewGraph.vertexRef();
-		for ( TrackSchemeVertex viewRoot : viewRoots )
-			modelRoots.add( viewGraph.getVertexMap().getLeft( viewRoot ) );
-		viewGraph.releaseRef( ref );
+		for (TrackSchemeVertex viewRoot : viewRoots)
+			modelRoots.add(viewGraph.getVertexMap().getLeft(viewRoot));
+		viewGraph.releaseRef(ref);
 	}
 
 	@Override
-	public RefList<TrackSchemeVertex> getRoots()
-	{
-		RefArrayList<TrackSchemeVertex> viewRoots = new RefArrayList<>( viewGraph.getVertexPool() );
+	public RefList<TrackSchemeVertex> getRoots() {
+		RefArrayList<TrackSchemeVertex> viewRoots = new RefArrayList<>(viewGraph
+			.getVertexPool());
 		TrackSchemeVertex ref = viewGraph.vertexRef();
-		for ( Spot modelRoot : this.modelRoots )
-			viewRoots.add( viewGraph.getVertexMap().getRight( modelRoot, ref ) );
-		viewGraph.releaseRef( ref );
+		for (Spot modelRoot : this.modelRoots)
+			viewRoots.add(viewGraph.getVertexMap().getRight(modelRoot, ref));
+		viewGraph.releaseRef(ref);
 		return viewRoots;
 	}
 }

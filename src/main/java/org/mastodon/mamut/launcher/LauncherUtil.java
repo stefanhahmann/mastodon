@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.launcher;
 
 import java.awt.BorderLayout;
@@ -61,149 +62,147 @@ import mpicbg.spim.data.generic.sequence.BasicViewSetup;
 import mpicbg.spim.data.sequence.VoxelDimensions;
 import net.imglib2.Dimensions;
 
-class LauncherUtil
-{
+class LauncherUtil {
 
-	static final void showHelp( final URL helpURL, final String title, final Component parent )
+	static final void showHelp(final URL helpURL, final String title,
+		final Component parent)
 	{
 
 		final JEditorPane editorPane = new JEditorPane();
-		editorPane.setBorder( BorderFactory.createEmptyBorder( 5, 5, 5, 5 ) );
-		editorPane.setEditable( false );
-		editorPane.addHyperlinkListener( new HyperlinkListener()
-		{
+		editorPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		editorPane.setEditable(false);
+		editorPane.addHyperlinkListener(new HyperlinkListener() {
+
 			@Override
-			public void hyperlinkUpdate( final HyperlinkEvent e )
-			{
-				if ( e.getEventType() == HyperlinkEvent.EventType.ACTIVATED && Desktop.isDesktopSupported() )
+			public void hyperlinkUpdate(final HyperlinkEvent e) {
+				if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED && Desktop
+					.isDesktopSupported())
 				{
-					try
-					{
-						Desktop.getDesktop().browse( e.getURL().toURI() );
+					try {
+						Desktop.getDesktop().browse(e.getURL().toURI());
 					}
-					catch ( IOException | URISyntaxException e1 )
-					{
+					catch (IOException | URISyntaxException e1) {
 						e1.printStackTrace();
 					}
 				}
 			}
-		} );
+		});
 
 		try
 
 		{
-			editorPane.setPage( helpURL );
+			editorPane.setPage(helpURL);
 		}
 		catch (
 
-		final IOException e )
-		{
-			editorPane.setText( "Attempted to read a bad URL: " + helpURL );
+		final IOException e) {
+			editorPane.setText("Attempted to read a bad URL: " + helpURL);
 		}
 
-		final JScrollPane editorScrollPane = new JScrollPane( editorPane );
+		final JScrollPane editorScrollPane = new JScrollPane(editorPane);
 
-		editorScrollPane.setVerticalScrollBarPolicy( JScrollPane.VERTICAL_SCROLLBAR_ALWAYS );
-		editorScrollPane.setPreferredSize( new Dimension( 600, 300 ) );
-		editorScrollPane.setMinimumSize( new Dimension( 10, 10 ) );
+		editorScrollPane.setVerticalScrollBarPolicy(
+			JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		editorScrollPane.setPreferredSize(new Dimension(600, 300));
+		editorScrollPane.setMinimumSize(new Dimension(10, 10));
 
 		final JFrame f = new JFrame();
-		f.setIconImage( MastodonIcons.MASTODON_ICON_MEDIUM.getImage() );
-		f.setTitle( title );
-		f.setSize( 600, 400 );
-		f.setLocationRelativeTo( parent );
-		f.getContentPane().add( editorScrollPane, BorderLayout.CENTER );
-		f.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
-		f.setResizable( true );
-		f.setVisible( true );
+		f.setIconImage(MastodonIcons.MASTODON_ICON_MEDIUM.getImage());
+		f.setTitle(title);
+		f.setSize(600, 400);
+		f.setLocationRelativeTo(parent);
+		f.getContentPane().add(editorScrollPane, BorderLayout.CENTER);
+		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		f.setResizable(true);
+		f.setVisible(true);
 	}
 
-	static final void browseToBDVFile( final String suggestedFile, final JTextArea target, final Runnable onSucess, final JComponent parent )
+	static final void browseToBDVFile(final String suggestedFile,
+		final JTextArea target, final Runnable onSucess, final JComponent parent)
 	{
-		final EverythingDisablerAndReenabler disabler = new EverythingDisablerAndReenabler( parent, new Class[] { JLabel.class } );
+		final EverythingDisablerAndReenabler disabler =
+			new EverythingDisablerAndReenabler(parent, new Class[] { JLabel.class });
 		disabler.disable();
-		try
-		{
+		try {
 			final File file = FileChooser.chooseFile(
-					parent,
-					suggestedFile,
-					new XmlFileFilter(),
-					"Open BigDataViewer File",
-					FileChooser.DialogType.LOAD );
-			if ( file == null )
+				parent,
+				suggestedFile,
+				new XmlFileFilter(),
+				"Open BigDataViewer File",
+				FileChooser.DialogType.LOAD);
+			if (file == null)
 				return;
 
-			target.setText( file.getAbsolutePath() );
+			target.setText(file.getAbsolutePath());
 			onSucess.run();
 		}
-		finally
-		{
+		finally {
 			disabler.reenable();
 		}
 	}
 
-	static final void decorateJComponent( final JComponent component, final Runnable toExecute )
+	static final void decorateJComponent(final JComponent component,
+		final Runnable toExecute)
 	{
-		final KeyStroke enter = KeyStroke.getKeyStroke( "ENTER" );
+		final KeyStroke enter = KeyStroke.getKeyStroke("ENTER");
 		final String TEXT_SUBMIT = "PRESSED_ENTER";
 		final InputMap input = component.getInputMap();
-		input.put( enter, TEXT_SUBMIT );
+		input.put(enter, TEXT_SUBMIT);
 		final ActionMap actions = component.getActionMap();
-		actions.put( TEXT_SUBMIT, new RunnableAction( "EnterPressed", toExecute ) );
+		actions.put(TEXT_SUBMIT, new RunnableAction("EnterPressed", toExecute));
 	}
 
-	static final String buildInfoString( final AbstractSpimData< ? > spimData )
-	{
+	static final String buildInfoString(final AbstractSpimData<?> spimData) {
 		final StringBuilder str = new StringBuilder();
-		str.append( "<html>" );
-		str.append( "<ul>" );
+		str.append("<html>");
+		str.append("<ul>");
 
-		final int nTimePoints = spimData.getSequenceDescription().getTimePoints().size();
-		str.append( "<li>N time-points: " + nTimePoints );
+		final int nTimePoints = spimData.getSequenceDescription().getTimePoints()
+			.size();
+		str.append("<li>N time-points: " + nTimePoints);
 
-		final int nViews = spimData.getSequenceDescription().getViewSetupsOrdered().size();
-		str.append( "<li>N views: " + nViews );
+		final int nViews = spimData.getSequenceDescription().getViewSetupsOrdered()
+			.size();
+		str.append("<li>N views: " + nViews);
 
-		if ( nViews > 0 )
-		{
-			str.append( "<ol start=\"0\">" );
-			for ( int i = 0; i < nViews; i++ )
-			{
-				final BasicViewSetup setup = spimData.getSequenceDescription().getViewSetupsOrdered().get( i );
-				str.append( "<li>" );
-				if ( setup.hasName() )
-					str.append( setup.getName() + ": " );
+		if (nViews > 0) {
+			str.append("<ol start=\"0\">");
+			for (int i = 0; i < nViews; i++) {
+				final BasicViewSetup setup = spimData.getSequenceDescription()
+					.getViewSetupsOrdered().get(i);
+				str.append("<li>");
+				if (setup.hasName())
+					str.append(setup.getName() + ": ");
 
-				if ( setup.hasSize() && setup.getSize().numDimensions() > 0 )
-				{
+				if (setup.hasSize() && setup.getSize().numDimensions() > 0) {
 					final Dimensions size = setup.getSize();
-					for ( int d = 0; d < size.numDimensions(); d++ )
-						str.append( size.dimension( d ) + " x " );
-					str.delete( str.length() - 3, str.length() );
+					for (int d = 0; d < size.numDimensions(); d++)
+						str.append(size.dimension(d) + " x ");
+					str.delete(str.length() - 3, str.length());
 
-					if ( setup.hasVoxelSize() && setup.getVoxelSize().numDimensions() > 0 )
+					if (setup.hasVoxelSize() && setup.getVoxelSize()
+						.numDimensions() > 0)
 					{
-						str.append( "; " );
+						str.append("; ");
 						final VoxelDimensions voxelSize = setup.getVoxelSize();
-						for ( int d = 0; d < voxelSize.numDimensions(); d++ )
-							str.append( voxelSize.dimension( d ) + " x " );
+						for (int d = 0; d < voxelSize.numDimensions(); d++)
+							str.append(voxelSize.dimension(d) + " x ");
 
-						str.delete( str.length() - 2, str.length() );
-						str.append( voxelSize.unit() );
+						str.delete(str.length() - 2, str.length());
+						str.append(voxelSize.unit());
 					}
 				}
 
 			}
-			str.append( "</ol>" );
+			str.append("</ol>");
 		}
 
-		str.append( "</ul>" );
-		str.append( "</html>" );
+		str.append("</ul>");
+		str.append("</html>");
 		return str.toString();
 	}
 
-	static final String toMessage( final Exception e )
-	{
+	static final String toMessage(final Exception e) {
 		return e.getMessage();
 	}
 }

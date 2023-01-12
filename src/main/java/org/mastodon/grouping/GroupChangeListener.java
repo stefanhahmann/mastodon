@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.grouping;
 
 /**
@@ -34,7 +35,7 @@ package org.mastodon.grouping;
  *
  * @author Tobias Pietzsch
  */
-public interface GroupChangeListener
-{
+public interface GroupChangeListener {
+
 	public void groupChanged();
 }

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.display;
 
 import org.mastodon.model.FocusListener;
@@ -43,58 +44,55 @@ import net.imglib2.RealPoint;
  * A {@code FocusModel} for Data that automatically focuses a vertex near the
  * center of the window if none is focused (on {@code getFocusedVertex()}).
  */
-public class DataDisplayAutoFocus implements FocusModel< DataVertex, DataEdge >, TransformListener< ScreenTransform >
+public class DataDisplayAutoFocus implements FocusModel<DataVertex, DataEdge>,
+	TransformListener<ScreenTransform>
 {
-	private final DataGraphLayout< ?, ? > layout;
 
-	private final FocusModel< DataVertex, DataEdge > focus;
+	private final DataGraphLayout<?, ?> layout;
+
+	private final FocusModel<DataVertex, DataEdge> focus;
 
 	private final ScreenTransform screenTransform = new ScreenTransform();
 
-	private final RealPoint centerPos = new RealPoint( 2 );
+	private final RealPoint centerPos = new RealPoint(2);
 
 	public DataDisplayAutoFocus(
-			final DataGraphLayout< ?, ? > layout,
-			final FocusModel< DataVertex, DataEdge > focus )
+		final DataGraphLayout<?, ?> layout,
+		final FocusModel<DataVertex, DataEdge> focus)
 	{
 		this.layout = layout;
 		this.focus = focus;
 	}
 
 	@Override
-	public void focusVertex( final DataVertex vertex )
-	{
-		focus.focusVertex( vertex );
+	public void focusVertex(final DataVertex vertex) {
+		focus.focusVertex(vertex);
 	}
 
 	@Override
-	public DataVertex getFocusedVertex( final DataVertex ref )
-	{
-		DataVertex vertex = focus.getFocusedVertex( ref );
-		if ( vertex != null )
+	public DataVertex getFocusedVertex(final DataVertex ref) {
+		DataVertex vertex = focus.getFocusedVertex(ref);
+		if (vertex != null)
 			return vertex;
 
-		vertex = layout.getClosestActiveVertex( centerPos, ref );
-		if ( vertex != null )
-			focus.focusVertex( vertex );
+		vertex = layout.getClosestActiveVertex(centerPos, ref);
+		if (vertex != null)
+			focus.focusVertex(vertex);
 
 		return vertex;
 	}
 
 	@Override
-	public Listeners< FocusListener > listeners()
-	{
+	public Listeners<FocusListener> listeners() {
 		return focus.listeners();
 	}
 
 	@Override
-	public void transformChanged( final ScreenTransform transform )
-	{
-		synchronized ( screenTransform )
-		{
-			screenTransform.set( transform );
-			centerPos.setPosition( transform.getScreenWidth() / 2., 0 );
-			centerPos.setPosition( transform.getScreenHeight() / 2., 1 );
+	public void transformChanged(final ScreenTransform transform) {
+		synchronized (screenTransform) {
+			screenTransform.set(transform);
+			centerPos.setPosition(transform.getScreenWidth() / 2., 0);
+			centerPos.setPosition(transform.getScreenHeight() / 2., 1);
 		}
 	}
 }

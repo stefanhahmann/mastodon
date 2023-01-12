@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.display;
 
 import java.awt.BorderLayout;
@@ -60,116 +61,126 @@ import org.mastodon.views.grapher.datagraph.DataGraphLayout;
 import org.mastodon.views.grapher.datagraph.DataVertex;
 import org.scijava.ui.behaviour.MouseAndKeyHandler;
 
-public class DataDisplayFrame< V extends Vertex< E > & HasTimepoint & HasLabel, E extends Edge< V > > extends ViewFrame
+public class DataDisplayFrame<V extends Vertex<E> & HasTimepoint & HasLabel, E extends Edge<V>>
+	extends ViewFrame
 {
+
 	private static final long serialVersionUID = 1L;
 
-	private final DataDisplayPanel< V, E > dataDisplayPanel;
+	private final DataDisplayPanel<V, E> dataDisplayPanel;
 
 	private final GrapherSidePanel sidePanel;
 
 	public DataDisplayFrame(
-			final DataGraph< V, E > graph,
-			final FeatureModel featureModel,
-			final int nSources,
-			final DataGraphLayout< V, E > layout,
-			final HighlightModel< DataVertex, DataEdge > highlight,
-			final FocusModel< DataVertex, DataEdge > focus,
-			final SelectionModel< DataVertex, DataEdge > selection,
-			final NavigationHandler< DataVertex, DataEdge > navigation,
-			final UndoPointMarker undoPointMarker,
-			final GroupHandle groupHandle,
-			final ContextChooser< V > contextChooser,
-			final DataDisplayOptions optional )
+		final DataGraph<V, E> graph,
+		final FeatureModel featureModel,
+		final int nSources,
+		final DataGraphLayout<V, E> layout,
+		final HighlightModel<DataVertex, DataEdge> highlight,
+		final FocusModel<DataVertex, DataEdge> focus,
+		final SelectionModel<DataVertex, DataEdge> selection,
+		final NavigationHandler<DataVertex, DataEdge> navigation,
+		final UndoPointMarker undoPointMarker,
+		final GroupHandle groupHandle,
+		final ContextChooser<V> contextChooser,
+		final DataDisplayOptions optional)
 	{
-		super( "Grapher" );
+		super("Grapher");
 
 		/*
 		 * Plot panel.
 		 */
 
 		dataDisplayPanel = new DataDisplayPanel<>(
-				graph,
-				layout,
-				highlight,
-				focus,
-				selection,
-				navigation,
-				optional );
+			graph,
+			layout,
+			highlight,
+			focus,
+			selection,
+			navigation,
+			optional);
 
 		/*
 		 * Get the classes of the model vertices and edges. We need them to
 		 * query the feature model.
 		 */
 
-		final Class< V > vertexClass = graph.getGraphIdBimap().vertexIdBimap().getRefClass();
-		final Class< E > edgeClass = graph.getGraphIdBimap().edgeIdBimap().getRefClass();
+		final Class<V> vertexClass = graph.getGraphIdBimap().vertexIdBimap()
+			.getRefClass();
+		final Class<E> edgeClass = graph.getGraphIdBimap().edgeIdBimap()
+			.getRefClass();
 
 		/*
 		 * Side panel.
 		 */
 
-		sidePanel = new GrapherSidePanel( nSources, contextChooser );
-		sidePanel.btnPlot.addActionListener( e -> dataDisplayPanel.plot( sidePanel.getGraphConfig(), featureModel ) );
+		sidePanel = new GrapherSidePanel(nSources, contextChooser);
+		sidePanel.btnPlot.addActionListener(e -> dataDisplayPanel.plot(sidePanel
+			.getGraphConfig(), featureModel));
 
-		final FeatureModelListener featureModelListener = () -> sidePanel.setFeatures(
-				FeatureUtils.collectFeatureMap( featureModel, vertexClass ),
-				FeatureUtils.collectFeatureMap( featureModel, edgeClass ) );
-		featureModel.listeners().add( featureModelListener );
+		final FeatureModelListener featureModelListener = () -> sidePanel
+			.setFeatures(
+				FeatureUtils.collectFeatureMap(featureModel, vertexClass),
+				FeatureUtils.collectFeatureMap(featureModel, edgeClass));
+		featureModel.listeners().add(featureModelListener);
 		featureModelListener.featureModelChanged();
 
 		/*
 		 * Main panel is a split pane.
 		 */
 
-		final JSplitPane mainPanel = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT,
-				sidePanel, dataDisplayPanel );
-		mainPanel.setOneTouchExpandable( true );
-		mainPanel.setBorder( null );
-		mainPanel.setDividerLocation( 250 );
+		final JSplitPane mainPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
+			sidePanel, dataDisplayPanel);
+		mainPanel.setOneTouchExpandable(true);
+		mainPanel.setBorder(null);
+		mainPanel.setDividerLocation(250);
 
-		add( mainPanel, BorderLayout.CENTER );
+		add(mainPanel, BorderLayout.CENTER);
 
 		/*
 		 * Top settings bar.
 		 */
 
-		final GroupLocksPanel navigationLocksPanel = new GroupLocksPanel( groupHandle );
-		settingsPanel.add( navigationLocksPanel );
-		settingsPanel.add( Box.createHorizontalGlue() );
+		final GroupLocksPanel navigationLocksPanel = new GroupLocksPanel(
+			groupHandle);
+		settingsPanel.add(navigationLocksPanel);
+		settingsPanel.add(Box.createHorizontalGlue());
 
 //		final ContextChooserPanel< ? > contextChooserPanel = new ContextChooserPanel<>( contextChooser );
 //		settingsPanel.add( contextChooserPanel );
 
 		pack();
-		setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
-		addWindowListener( new WindowAdapter()
-		{
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+
 			@Override
-			public void windowClosing( final WindowEvent e )
-			{
+			public void windowClosing(final WindowEvent e) {
 				dataDisplayPanel.stop();
 			}
-		} );
+		});
 
-		SwingUtilities.replaceUIActionMap( dataDisplayPanel, keybindings.getConcatenatedActionMap() );
-		SwingUtilities.replaceUIInputMap( dataDisplayPanel, JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, keybindings.getConcatenatedInputMap() );
+		SwingUtilities.replaceUIActionMap(dataDisplayPanel, keybindings
+			.getConcatenatedActionMap());
+		SwingUtilities.replaceUIInputMap(dataDisplayPanel,
+			JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, keybindings
+				.getConcatenatedInputMap());
 
 		final MouseAndKeyHandler mouseAndKeyHandler = new MouseAndKeyHandler();
-		mouseAndKeyHandler.setInputMap( triggerbindings.getConcatenatedInputTriggerMap() );
-		mouseAndKeyHandler.setBehaviourMap( triggerbindings.getConcatenatedBehaviourMap() );
-		mouseAndKeyHandler.setKeypressManager( optional.values.getKeyPressedManager(), dataDisplayPanel.getDisplay() );
-		dataDisplayPanel.getDisplay().addHandler( mouseAndKeyHandler );
-		setLocation( optional.values.getX(), optional.values.getY() );
+		mouseAndKeyHandler.setInputMap(triggerbindings
+			.getConcatenatedInputTriggerMap());
+		mouseAndKeyHandler.setBehaviourMap(triggerbindings
+			.getConcatenatedBehaviourMap());
+		mouseAndKeyHandler.setKeypressManager(optional.values
+			.getKeyPressedManager(), dataDisplayPanel.getDisplay());
+		dataDisplayPanel.getDisplay().addHandler(mouseAndKeyHandler);
+		setLocation(optional.values.getX(), optional.values.getY());
 	}
 
-	public DataDisplayPanel< V, E > getDataDisplayPanel()
-	{
+	public DataDisplayPanel<V, E> getDataDisplayPanel() {
 		return dataDisplayPanel;
 	}
 
-	public GrapherSidePanel getVertexSidePanel()
-	{
+	public GrapherSidePanel getVertexSidePanel() {
 		return sidePanel;
 	}
 }

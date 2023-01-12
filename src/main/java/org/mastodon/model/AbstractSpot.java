@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model;
 
 import org.mastodon.graph.ref.AbstractListenableEdge;
@@ -45,55 +46,44 @@ import org.mastodon.util.DelegateRealPositionable;
  * The class ships the minimal required features, that is coordinates and
  * time-point.
  *
- * @param <V>
- *            the recursive type of the concrete implementation.
- * @param <E>
- *            associated edge type.
- * @param <VP>
- *            the type of the vertex pool.
- * @param <T>
- *            the MappedElement type, for example {@link ByteMappedElement}.
- * @param <G>
- *            the type of the model graph using this class as vertex class.
- *
+ * @param <V> the recursive type of the concrete implementation.
+ * @param <E> associated edge type.
+ * @param <VP> the type of the vertex pool.
+ * @param <T> the MappedElement type, for example {@link ByteMappedElement}.
+ * @param <G> the type of the model graph using this class as vertex class.
  * @author Jean-Yves Tinevez
  * @author Tobias Pietzsch
  */
-public class AbstractSpot<
-		V extends AbstractSpot< V, E, VP, T, G >,
-		E extends AbstractListenableEdge< E, V, ?, T >,
-		VP extends AbstractSpotPool< V, ?, T, G >,
-		T extends MappedElement,
-		G extends AbstractModelGraph< ?, ?, ?, V, E, T > >
-	extends AbstractListenableVertex< V, E, VP, T >
+public class AbstractSpot<V extends AbstractSpot<V, E, VP, T, G>, E extends AbstractListenableEdge<E, V, ?, T>, VP extends AbstractSpotPool<V, ?, T, G>, T extends MappedElement, G extends AbstractModelGraph<?, ?, ?, V, E, T>>
+	extends AbstractListenableVertex<V, E, VP, T>
 	implements DelegateRealLocalizable, DelegateRealPositionable, HasTimepoint
 {
+
 	protected final int n;
 
 	private final IntAttributeValue timepoint;
 
 	private final RealPointAttributeValue position;
 
-	protected AbstractSpot( final VP pool )
-	{
-		super( pool );
+	protected AbstractSpot(final VP pool) {
+		super(pool);
 		n = pool.numDimensions();
 
-		@SuppressWarnings( "unchecked" ) final V self = ( V ) this;
-		position = pool.position.createAttributeValue( self );
-		timepoint = pool.timepoint.createQuietAttributeValue( self );
+		@SuppressWarnings("unchecked")
+		final V self = (V) this;
+		position = pool.position.createAttributeValue(self);
+		timepoint = pool.timepoint.createQuietAttributeValue(self);
 	}
 
-	protected void partialInit( final int timepointId, final double[] pos )
-	{
-		@SuppressWarnings( "unchecked" ) final V self = ( V ) this;
-		pool.position.setPositionQuiet( self, pos );
-		pool.timepoint.setQuiet( self, timepointId );
+	protected void partialInit(final int timepointId, final double[] pos) {
+		@SuppressWarnings("unchecked")
+		final V self = (V) this;
+		pool.position.setPositionQuiet(self, pos);
+		pool.timepoint.setQuiet(self, timepointId);
 	}
 
 	@Override
-	public RealPointAttributeValue delegate()
-	{
+	public RealPointAttributeValue delegate() {
 		return position;
 	}
 
@@ -102,13 +92,11 @@ public class AbstractSpot<
 	 */
 
 	@Override
-	public int getTimepoint()
-	{
+	public int getTimepoint() {
 		return timepoint.get();
 	}
 
-	public G getModelGraph()
-	{
+	public G getModelGraph() {
 		return pool.modelGraph;
 	}
 }

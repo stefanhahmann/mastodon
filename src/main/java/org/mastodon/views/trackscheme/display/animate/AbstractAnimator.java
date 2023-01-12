@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme.display.animate;
 
 /**
@@ -37,8 +38,8 @@ package org.mastodon.views.trackscheme.display.animate;
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  * @author Jean-Yves Tinevez &lt;jeanyves.tinevez@gmail.com&gt;
  */
-public class AbstractAnimator
-{
+public class AbstractAnimator {
+
 	/** Expected duration length of the animation (in time units). */
 	private long duration;
 
@@ -49,27 +50,23 @@ public class AbstractAnimator
 	private boolean started;
 
 	/**
-	 * Completion factor, ranging from 0 to 1. If &gt;= 1, the animation is
-	 * done.
+	 * Completion factor, ranging from 0 to 1. If &gt;= 1, the animation is done.
 	 */
 	private double complete;
 
 	/**
-	 * Create new animator with the given duration. The animation will start
-	 * with the first call to {@link #setTime(long)}.
+	 * Create new animator with the given duration. The animation will start with
+	 * the first call to {@link #setTime(long)}.
 	 *
-	 * @param duration
-	 *            animation duration (in time units)
+	 * @param duration animation duration (in time units)
 	 */
-	public AbstractAnimator( final long duration )
-	{
+	public AbstractAnimator(final long duration) {
 		this.duration = duration;
 		started = false;
 		complete = 0;
 	}
 
-	protected void reset( final long duration )
-	{
+	protected void reset(final long duration) {
 		this.duration = duration;
 		started = false;
 		complete = 0;
@@ -79,25 +76,20 @@ public class AbstractAnimator
 	 * Sets the current time for the animation. The first call starts the
 	 * animation.
 	 *
-	 * @param time
-	 *            current time (in time units)
+	 * @param time current time (in time units)
 	 */
-	public void setTime( final long time )
-	{
-		if ( !started )
-		{
+	public void setTime(final long time) {
+		if (!started) {
 			started = true;
 			startTime = time;
 		}
 
-		if ( duration <= 0 )
-		{
+		if (duration <= 0) {
 			complete = 1;
 		}
-		else
-		{
-			complete = ( time - startTime ) / ( double ) duration;
-			if ( complete >= 1 )
+		else {
+			complete = (time - startTime) / (double) duration;
+			if (complete >= 1)
 				complete = 1;
 		}
 	}
@@ -108,20 +100,17 @@ public class AbstractAnimator
 	 *
 	 * @return true if the animation completed.
 	 */
-	public boolean isComplete()
-	{
+	public boolean isComplete() {
 		return complete == 1;
 	}
 
 	/**
 	 * Returns the completion ratio. It is a double ranging from 0 to 1, 0
-	 * indicating that the animation just started, 1 indicating that it
-	 * completed.
+	 * indicating that the animation just started, 1 indicating that it completed.
 	 *
 	 * @return the completion ratio.
 	 */
-	public double ratioComplete()
-	{
+	public double ratioComplete() {
 		return complete;
 	}
 }

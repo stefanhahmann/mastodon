@@ -26,10 +26,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.app.ui;
 
-public interface IMastodonFrameView
-{
+public interface IMastodonFrameView {
 
 	ViewFrame getFrame();
 

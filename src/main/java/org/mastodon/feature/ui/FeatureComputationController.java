@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.feature.ui;
 
 import java.util.Collection;
@@ -46,8 +47,7 @@ import org.mastodon.graph.GraphChangeListener;
 import org.mastodon.ui.util.EverythingDisablerAndReenabler;
 import org.scijava.command.CommandService;
 
-public class FeatureComputationController implements GraphChangeListener
-{
+public class FeatureComputationController implements GraphChangeListener {
 
 	private final JDialog dialog;
 
@@ -59,114 +59,113 @@ public class FeatureComputationController implements GraphChangeListener
 
 	private final FeatureComputationStatusListener computationStatusListener;
 
-	public FeatureComputationController( final FeatureComputerService computerService, final Collection< Class< ? > > targets )
+	public FeatureComputationController(
+		final FeatureComputerService computerService,
+		final Collection<Class<?>> targets)
 	{
 		this.computerService = computerService;
-		model = createModel( targets );
-		dialog = new JDialog( ( JFrame ) null, "Feature calculation" );
-		dialog.setLocationByPlatform( true );
-		dialog.setLocationRelativeTo( null );
-		gui = new FeatureComputationPanel( model, targets );
-		dialog.getContentPane().add( gui );
+		model = createModel(targets);
+		dialog = new JDialog((JFrame) null, "Feature calculation");
+		dialog.setLocationByPlatform(true);
+		dialog.setLocationRelativeTo(null);
+		gui = new FeatureComputationPanel(model, targets);
+		dialog.getContentPane().add(gui);
 		dialog.pack();
 
-		gui.btnCompute.addActionListener( ( e ) -> compute() );
-		gui.btnCancel.addActionListener( ( e ) -> cancel() );
+		gui.btnCompute.addActionListener((e) -> compute());
+		gui.btnCancel.addActionListener((e) -> cancel());
 
-		gui.progressBar.setString( "" );
-		computationStatusListener = new FeatureComputationStatusListener()
-		{
+		gui.progressBar.setString("");
+		computationStatusListener = new FeatureComputationStatusListener() {
+
 			@Override
-			public void status( final String status )
-			{
-				SwingUtilities.invokeLater( () -> gui.progressBar.setString( status ) );
+			public void status(final String status) {
+				SwingUtilities.invokeLater(() -> gui.progressBar.setString(status));
 			}
 
 			@Override
-			public void progress( final double progress )
-			{
-				SwingUtilities.invokeLater( () -> gui.progressBar.setValue( ( int ) ( 100 * progress ) ) );
+			public void progress(final double progress) {
+				SwingUtilities.invokeLater(() -> gui.progressBar.setValue((int) (100 *
+					progress)));
 			}
 
 			@Override
-			public void clear()
-			{
-				SwingUtilities.invokeLater( () -> {
-					gui.progressBar.setValue( 0 );
-					gui.progressBar.setString( "" );
-				} );
+			public void clear() {
+				SwingUtilities.invokeLater(() -> {
+					gui.progressBar.setValue(0);
+					gui.progressBar.setString("");
+				});
 			}
 		};
 	}
 
-	public FeatureComputationStatusListener getComputationStatusListener()
-	{
+	public FeatureComputationStatusListener getComputationStatusListener() {
 		return computationStatusListener;
 	}
 
-	private void cancel()
-	{
-		computerService.cancel( "User pressed cancel button." );
+	private void cancel() {
+		computerService.cancel("User pressed cancel button.");
 	}
 
-	protected synchronized void compute()
-	{
-		final EverythingDisablerAndReenabler reenabler = new EverythingDisablerAndReenabler( gui,
-				new Class[] { JLabel.class, JProgressBar.class } );
+	protected synchronized void compute() {
+		final EverythingDisablerAndReenabler reenabler =
+			new EverythingDisablerAndReenabler(gui,
+				new Class[] { JLabel.class, JProgressBar.class });
 		reenabler.disable();
 
-		gui.btnCancel.setEnabled( true );
-		gui.btnCancel.setVisible( true );
-		gui.btnCompute.setVisible( false );
+		gui.btnCancel.setEnabled(true);
+		gui.btnCancel.setVisible(true);
+		gui.btnCompute.setVisible(false);
 		final boolean forceComputeAll = gui.chckbxForce.isSelected();
-		new Thread( "Feature computation thread" )
-		{
+		new Thread("Feature computation thread") {
+
 			@Override
-			public void run()
-			{
-				final Map< FeatureSpec< ?, ? >, Feature< ? > > computed =
-						computerService.compute( forceComputeAll, model.getSelectedFeatureKeys() );
-				SwingUtilities.invokeLater( () -> {
-					gui.btnCancel.setVisible( false );
-					gui.btnCompute.setVisible( true );
+			public void run() {
+				final Map<FeatureSpec<?, ?>, Feature<?>> computed =
+					computerService.compute(forceComputeAll, model
+						.getSelectedFeatureKeys());
+				SwingUtilities.invokeLater(() -> {
+					gui.btnCancel.setVisible(false);
+					gui.btnCompute.setVisible(true);
 					reenabler.reenable();
-					if ( !computerService.isCanceled() )
-						model.setUptodate( computed.keySet() );
-				} );
+					if (!computerService.isCanceled())
+						model.setUptodate(computed.keySet());
+				});
 			};
 		}.start();
 	}
 
-	private FeatureComputationModel createModel( final Collection< Class< ? > > targets )
+	private FeatureComputationModel createModel(
+		final Collection<Class<?>> targets)
 	{
-		final CommandService commandService = computerService.getContext().getService( CommandService.class );
+		final CommandService commandService = computerService.getContext()
+			.getService(CommandService.class);
 		final FeatureComputationModel model = new FeatureComputationModel();
-		for ( final FeatureSpec< ?, ? > spec : computerService.getFeatureSpecs() )
-		{
+		for (final FeatureSpec<?, ?> spec : computerService.getFeatureSpecs()) {
 			// Only add the features with specified targets.
-			if ( targets.contains( spec.getTargetClass() ) )
-			{
-				model.put( spec.getTargetClass(), spec, computerService.getDependencies( spec ) );
-				model.setSelected( spec, true );
+			if (targets.contains(spec.getTargetClass())) {
+				model.put(spec.getTargetClass(), spec, computerService.getDependencies(
+					spec));
+				model.setSelected(spec, true);
 
-				final FeatureComputer featureComputer = computerService.getFeatureComputerFor( spec );
+				final FeatureComputer featureComputer = computerService
+					.getFeatureComputerFor(spec);
 				// Check visibility.
-				final boolean visible = commandService.getCommand( featureComputer.getClass() ).isVisible();
-				model.setVisible( spec, visible );
+				final boolean visible = commandService.getCommand(featureComputer
+					.getClass()).isVisible();
+				model.setVisible(spec, visible);
 			}
 		}
 		return model;
 	}
 
 	@Override
-	public void graphChanged()
-	{
+	public void graphChanged() {
 		model.setOutofdate();
 		gui.repaint();
 	}
 
-	public JDialog getDialog()
-	{
+	public JDialog getDialog() {
 		return dialog;
 	}
 }

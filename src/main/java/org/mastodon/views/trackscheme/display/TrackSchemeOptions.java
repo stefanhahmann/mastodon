@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme.display;
 
 import java.awt.event.KeyListener;
@@ -46,43 +47,37 @@ import org.scijava.ui.behaviour.KeyPressedManager;
  *
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  */
-public class TrackSchemeOptions
-{
+public class TrackSchemeOptions {
+
 	public final Values values = new Values();
 
 	/**
 	 * Create default {@link TrackSchemeOptions}.
+	 * 
 	 * @return default {@link TrackSchemeOptions}.
 	 */
-	public static TrackSchemeOptions options()
-	{
+	public static TrackSchemeOptions options() {
 		return new TrackSchemeOptions();
 	}
 
 	/**
-	 * Sets the X position of the top-left corner of the
-	 * {@link TrackSchemeFrame}.
+	 * Sets the X position of the top-left corner of the {@link TrackSchemeFrame}.
 	 * 
-	 * @param x
-	 *            the X position.
+	 * @param x the X position.
 	 * @return this instance.
 	 */
-	public TrackSchemeOptions x( final int x )
-	{
+	public TrackSchemeOptions x(final int x) {
 		values.x = x;
 		return this;
 	}
 
 	/**
-	 * Sets the Y position of the top-left corner of the
-	 * {@link TrackSchemeFrame}.
+	 * Sets the Y position of the top-left corner of the {@link TrackSchemeFrame}.
 	 * 
-	 * @param y
-	 *            the Y position.
+	 * @param y the Y position.
 	 * @return this instance.
 	 */
-	public TrackSchemeOptions y( final int y )
-	{
+	public TrackSchemeOptions y(final int y) {
 		values.y = y;
 		return this;
 	}
@@ -90,12 +85,10 @@ public class TrackSchemeOptions
 	/**
 	 * Sets the width of {@link TrackSchemePanel} canvas.
 	 *
-	 * @param w
-	 *            the width.
+	 * @param w the width.
 	 * @return this instance.
 	 */
-	public TrackSchemeOptions width( final int w )
-	{
+	public TrackSchemeOptions width(final int w) {
 		values.width = w;
 		return this;
 	}
@@ -103,12 +96,10 @@ public class TrackSchemeOptions
 	/**
 	 * Sets the height of {@link TrackSchemePanel} canvas.
 	 *
-	 * @param h
-	 *            the height.
+	 * @param h the height.
 	 * @return this instance.
 	 */
-	public TrackSchemeOptions height( final int h )
-	{
+	public TrackSchemeOptions height(final int h) {
 		values.height = h;
 		return this;
 	}
@@ -116,12 +107,10 @@ public class TrackSchemeOptions
 	/**
 	 * Sets the animation time in milliseconds.
 	 *
-	 * @param ms
-	 *            the animation time in milliseconds.
+	 * @param ms the animation time in milliseconds.
 	 * @return this instance.
 	 */
-	public TrackSchemeOptions animationDurationMillis( final long ms )
-	{
+	public TrackSchemeOptions animationDurationMillis(final long ms) {
 		values.animationDurationMillis = ms;
 		return this;
 	}
@@ -136,23 +125,24 @@ public class TrackSchemeOptions
 	 * under the mouse receives focus and the behaviour is handled there.
 	 * </p>
 	 *
-	 * @param manager
-	 *            the key-pressed manager.
+	 * @param manager the key-pressed manager.
 	 * @return this instance.
 	 */
-	public TrackSchemeOptions shareKeyPressedEvents( final KeyPressedManager manager )
+	public TrackSchemeOptions shareKeyPressedEvents(
+		final KeyPressedManager manager)
 	{
 		values.keyPressedManager = manager;
 		return this;
 	}
+
 	/**
 	 * Sets the navigation etiquette.
 	 *
-	 * @param navigationEtiquette
-	 *            the navigation etiquette.
+	 * @param navigationEtiquette the navigation etiquette.
 	 * @return this instance.
 	 */
-	public TrackSchemeOptions navigationEtiquette( final NavigationEtiquette navigationEtiquette )
+	public TrackSchemeOptions navigationEtiquette(
+		final NavigationEtiquette navigationEtiquette)
 	{
 		values.navigationEtiquette = navigationEtiquette;
 		return this;
@@ -161,12 +151,10 @@ public class TrackSchemeOptions
 	/**
 	 * Sets the TrackScheme style.
 	 *
-	 * @param style
-	 *            the style.
+	 * @param style the style.
 	 * @return this instance.
 	 */
-	public TrackSchemeOptions style( final TrackSchemeStyle style )
-	{
+	public TrackSchemeOptions style(final TrackSchemeStyle style) {
 		values.style = style;
 		return this;
 	}
@@ -174,11 +162,11 @@ public class TrackSchemeOptions
 	/**
 	 * Sets the factory used to create this TrackScheme's overlay.
 	 *
-	 * @param factory
-	 *            the factory.
+	 * @param factory the factory.
 	 * @return this instance.
 	 */
-	public TrackSchemeOptions trackSchemeOverlayFactory( final TrackSchemeOverlayFactory factory )
+	public TrackSchemeOptions trackSchemeOverlayFactory(
+		final TrackSchemeOverlayFactory factory)
 	{
 		values.trackSchemeOverlayFactory = factory;
 		return this;
@@ -188,28 +176,28 @@ public class TrackSchemeOptions
 	 * Sets the color generator used to color vertices and edges in this
 	 * TrackScheme.
 	 *
-	 * @param generator
-	 *            the color generator.
+	 * @param generator the color generator.
 	 * @return this instance.
 	 */
-	public TrackSchemeOptions graphColorGenerator( final GraphColorGenerator< TrackSchemeVertex, TrackSchemeEdge > generator )
+	public TrackSchemeOptions graphColorGenerator(
+		final GraphColorGenerator<TrackSchemeVertex, TrackSchemeEdge> generator)
 	{
 		values.graphColorGenerator = generator;
 		return this;
 	}
 
-	public TrackSchemeOptions lineageTreeLayoutFactory( final LineageTreeLayoutFactory lineageTreeLayoutFactory )
+	public TrackSchemeOptions lineageTreeLayoutFactory(
+		final LineageTreeLayoutFactory lineageTreeLayoutFactory)
 	{
 		values.lineageTreeLayoutFactory = lineageTreeLayoutFactory;
 		return this;
 	}
 
-
 	/**
 	 * Read-only {@link TrackSchemeOptions} values.
 	 */
-	public static class Values
-	{
+	public static class Values {
+
 		private int x = 0;
 
 		private int y = 0;
@@ -222,83 +210,71 @@ public class TrackSchemeOptions
 
 		private KeyPressedManager keyPressedManager = null;
 
-		private NavigationEtiquette navigationEtiquette = NavigationEtiquette.MINIMAL;
+		private NavigationEtiquette navigationEtiquette =
+			NavigationEtiquette.MINIMAL;
 
 		private TrackSchemeStyle style = TrackSchemeStyle.defaultStyle();
 
-		private TrackSchemeOverlayFactory trackSchemeOverlayFactory = new TrackSchemeOverlayFactory();
+		private TrackSchemeOverlayFactory trackSchemeOverlayFactory =
+			new TrackSchemeOverlayFactory();
 
-		private GraphColorGenerator< TrackSchemeVertex, TrackSchemeEdge > graphColorGenerator = new DefaultGraphColorGenerator<>();
+		private GraphColorGenerator<TrackSchemeVertex, TrackSchemeEdge> graphColorGenerator =
+			new DefaultGraphColorGenerator<>();
 
-		private LineageTreeLayoutFactory lineageTreeLayoutFactory = LineageTreeLayoutImp::new;
+		private LineageTreeLayoutFactory lineageTreeLayoutFactory =
+			LineageTreeLayoutImp::new;
 
-		public TrackSchemeOptions optionsFromValues()
-		{
-			return new TrackSchemeOptions().
-				x( x ).
-				y( y ).
-				width( width ).
-				height( height ).
-				animationDurationMillis( animationDurationMillis ).
-				navigationEtiquette( navigationEtiquette ).
-				style( style ).
-				trackSchemeOverlayFactory( trackSchemeOverlayFactory ).
-				graphColorGenerator( graphColorGenerator ).
-				lineageTreeLayoutFactory( lineageTreeLayoutFactory );
+		public TrackSchemeOptions optionsFromValues() {
+			return new TrackSchemeOptions().x(x).y(y).width(width).height(height)
+				.animationDurationMillis(animationDurationMillis).navigationEtiquette(
+					navigationEtiquette).style(style).trackSchemeOverlayFactory(
+						trackSchemeOverlayFactory).graphColorGenerator(graphColorGenerator)
+				.lineageTreeLayoutFactory(lineageTreeLayoutFactory);
 		}
 
-		public int getX()
-		{
+		public int getX() {
 			return x;
 		}
 
-		public int getY()
-		{
+		public int getY() {
 			return y;
 		}
 
-		public int getWidth()
-		{
+		public int getWidth() {
 			return width;
 		}
 
-		public int getHeight()
-		{
+		public int getHeight() {
 			return height;
 		}
 
-		public long getAnimationDurationMillis()
-		{
+		public long getAnimationDurationMillis() {
 			return animationDurationMillis;
 		}
 
-		public KeyPressedManager getKeyPressedManager()
-		{
+		public KeyPressedManager getKeyPressedManager() {
 			return keyPressedManager;
 		}
 
-		public NavigationEtiquette getNavigationEtiquette()
-		{
+		public NavigationEtiquette getNavigationEtiquette() {
 			return navigationEtiquette;
 		}
 
-		public TrackSchemeStyle getStyle()
-		{
+		public TrackSchemeStyle getStyle() {
 			return style;
 		}
 
-		public TrackSchemeOverlayFactory getTrackSchemeOverlayFactory()
-		{
+		public TrackSchemeOverlayFactory getTrackSchemeOverlayFactory() {
 			return trackSchemeOverlayFactory;
 		}
 
-		public GraphColorGenerator< TrackSchemeVertex, TrackSchemeEdge > getGraphColorGenerator()
+		public GraphColorGenerator<TrackSchemeVertex, TrackSchemeEdge>
+			getGraphColorGenerator()
 		{
 			return graphColorGenerator;
 		}
 
-		public LineageTreeLayoutFactory lineageTreeLayoutFactory()
-		{
+		public LineageTreeLayoutFactory lineageTreeLayoutFactory() {
 			return lineageTreeLayoutFactory;
 		}
 	}

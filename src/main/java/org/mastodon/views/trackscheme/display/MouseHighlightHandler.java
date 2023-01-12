@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme.display;
 
 import bdv.viewer.TransformListener;
@@ -40,13 +41,15 @@ import org.mastodon.views.trackscheme.TrackSchemeGraph;
 import org.mastodon.views.trackscheme.TrackSchemeVertex;
 import org.mastodon.views.trackscheme.display.OffsetHeaders.OffsetHeadersListener;
 
-public class MouseHighlightHandler implements MouseMotionListener, MouseListener, TransformListener< ScreenTransform >, OffsetHeadersListener
+public class MouseHighlightHandler implements MouseMotionListener,
+	MouseListener, TransformListener<ScreenTransform>, OffsetHeadersListener
 {
+
 	private final TrackSchemeOverlay graphOverlay;
 
-	private final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight;
+	private final HighlightModel<TrackSchemeVertex, TrackSchemeEdge> highlight;
 
-	private final TrackSchemeGraph< ?, ? > graph;
+	private final TrackSchemeGraph<?, ?> graph;
 
 	private boolean mouseInside;
 
@@ -63,9 +66,9 @@ public class MouseHighlightHandler implements MouseMotionListener, MouseListener
 	private int headerHeight;
 
 	public MouseHighlightHandler(
-			final TrackSchemeOverlay graphOverlay,
-			final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight,
-			final TrackSchemeGraph< ?, ? > graph )
+		final TrackSchemeOverlay graphOverlay,
+		final HighlightModel<TrackSchemeVertex, TrackSchemeEdge> highlight,
+		final TrackSchemeGraph<?, ?> graph)
 	{
 		this.graphOverlay = graphOverlay;
 		this.highlight = highlight;
@@ -73,79 +76,70 @@ public class MouseHighlightHandler implements MouseMotionListener, MouseListener
 	}
 
 	@Override
-	public void mouseMoved( final MouseEvent e )
-	{
+	public void mouseMoved(final MouseEvent e) {
 		x = e.getX();
 		y = e.getY();
 		highlight();
 	}
 
 	@Override
-	public void mouseDragged( final MouseEvent e )
-	{
+	public void mouseDragged(final MouseEvent e) {
 		x = e.getX();
 		y = e.getY();
 		highlight();
 	}
 
 	@Override
-	public void transformChanged( final ScreenTransform t )
-	{
-		if ( mouseInside )
+	public void transformChanged(final ScreenTransform t) {
+		if (mouseInside)
 			highlight();
 	}
 
 	@Override
-	public void updateHeaderSize( final int width, final int height )
-	{
+	public void updateHeaderSize(final int width, final int height) {
 		headerWidth = width;
 		headerHeight = height;
 	}
 
-	private void highlight()
-	{
-		if ( x < headerWidth || y < headerHeight )
+	private void highlight() {
+		if (x < headerWidth || y < headerHeight)
 			highlight.clearHighlight();
-		else
-		{
+		else {
 			final TrackSchemeVertex vertex = graph.vertexRef();
 			final TrackSchemeEdge edge = graph.edgeRef();
 
 			// See if we can find a vertex.
-			if ( graphOverlay.getVertexAt( x, y, vertex ) != null )
-				highlight.highlightVertex( vertex );
+			if (graphOverlay.getVertexAt(x, y, vertex) != null)
+				highlight.highlightVertex(vertex);
 			// See if we can find an edge.
-			else if ( graphOverlay.getEdgeAt( x, y, TrackSchemeNavigationBehaviours.EDGE_SELECT_DISTANCE_TOLERANCE, edge ) != null )
-				highlight.highlightEdge( edge );
+			else if (graphOverlay.getEdgeAt(x, y,
+				TrackSchemeNavigationBehaviours.EDGE_SELECT_DISTANCE_TOLERANCE,
+				edge) != null)
+				highlight.highlightEdge(edge);
 			else
 				highlight.clearHighlight();
 
-			graph.releaseRef( vertex );
-			graph.releaseRef( edge );
+			graph.releaseRef(vertex);
+			graph.releaseRef(edge);
 		}
 	}
 
 	@Override
-	public void mouseClicked( final MouseEvent e )
-	{}
+	public void mouseClicked(final MouseEvent e) {}
 
 	@Override
-	public void mousePressed( final MouseEvent e )
-	{}
+	public void mousePressed(final MouseEvent e) {}
 
 	@Override
-	public void mouseReleased( final MouseEvent e )
-	{}
+	public void mouseReleased(final MouseEvent e) {}
 
 	@Override
-	public void mouseEntered( final MouseEvent e )
-	{
+	public void mouseEntered(final MouseEvent e) {
 		mouseInside = true;
 	}
 
 	@Override
-	public void mouseExited( final MouseEvent e )
-	{
+	public void mouseExited(final MouseEvent e) {
 		highlight.clearHighlight();
 		mouseInside = false;
 	}

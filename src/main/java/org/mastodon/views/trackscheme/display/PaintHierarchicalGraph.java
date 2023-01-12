@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme.display;
 
 import static org.mastodon.views.trackscheme.ScreenVertex.Transition.DISAPPEAR;
@@ -42,8 +43,8 @@ import org.mastodon.views.trackscheme.ScreenVertex;
 import org.mastodon.views.trackscheme.ScreenVertex.Transition;
 import org.mastodon.views.trackscheme.display.style.TrackSchemeStyle;
 
-public class PaintHierarchicalGraph extends PaintBranchGraph
-{
+public class PaintHierarchicalGraph extends PaintBranchGraph {
+
 	private final int SIMPLIFIED_VERTEX_THRESHOLD_RADIUS = 3;
 	private final int SIMPLIFIED_VERTEX_SELECTION_RADIUS = 4;
 	private static final int ARC_RADIUS = 15;
@@ -61,171 +62,168 @@ public class PaintHierarchicalGraph extends PaintBranchGraph
 	}
 
 	@Override
-	public void paintGraph( Graphics2D g2, ScreenEntities entities, int highlightedVertexId, int highlightedEdgeId, int focusedVertexId, TrackSchemeStyle style )
+	public void paintGraph(Graphics2D g2, ScreenEntities entities,
+		int highlightedVertexId, int highlightedEdgeId, int focusedVertexId,
+		TrackSchemeStyle style)
 	{
-		entities.getScreenTransform( this.transform );
-		super.paintGraph( g2, entities, highlightedVertexId, highlightedEdgeId, focusedVertexId, style );
+		entities.getScreenTransform(this.transform);
+		super.paintGraph(g2, entities, highlightedVertexId, highlightedEdgeId,
+			focusedVertexId, style);
 	}
 
 	@Override
-	protected void beforeDrawVertices()
-	{
-		g2.setStroke( style.getHierarchyVertexStroke() );
+	protected void beforeDrawVertices() {
+		g2.setStroke(style.getHierarchyVertexStroke());
 		calculateAverageLetterWidth();
-		spotRadius = Math.min(transform.getScaleX() * 0.25, transform.getScaleY() * 0.4);
-		labelColor = textColorForBackground( style.getBackgroundColor() );
+		spotRadius = Math.min(transform.getScaleX() * 0.25, transform.getScaleY() *
+			0.4);
+		labelColor = textColorForBackground(style.getBackgroundColor());
 	}
 
-	private void calculateAverageLetterWidth()
-	{
+	private void calculateAverageLetterWidth() {
 		final FontRenderContext frc = g2.getFontRenderContext();
 		String text = "0123456789abcdefghijklmnopqrstuvwxyz";
-		final TextLayout layout = new TextLayout( text, style.getFont(), frc );
+		final TextLayout layout = new TextLayout(text, style.getFont(), frc);
 		averageLetterWidth = layout.getBounds().getWidth() / text.length();
 	}
 
 	@Override
-	protected void drawVertex( ScreenVertex vertex )
-	{
-		if(spotRadius > SIMPLIFIED_VERTEX_THRESHOLD_RADIUS )
-			drawVertexFull( vertex );
+	protected void drawVertex(ScreenVertex vertex) {
+		if (spotRadius > SIMPLIFIED_VERTEX_THRESHOLD_RADIUS)
+			drawVertexFull(vertex);
 		else
-			drawVertexSimplified( vertex );
+			drawVertexSimplified(vertex);
 	}
 
 	@Override
-	protected void drawVertexFull( ScreenVertex vertex )
-	{
+	protected void drawVertexFull(ScreenVertex vertex) {
 		final Transition transition = vertex.getTransition();
-		final boolean disappear = ( transition == DISAPPEAR );
+		final boolean disappear = (transition == DISAPPEAR);
 		final double ratio = vertex.getInterpolationCompletionRatio();
 
-		final boolean highlighted = ( highlightedVertexId >= 0 ) && ( vertex.getTrackSchemeVertexId() == highlightedVertexId );
-		final boolean focused = ( focusedVertexId >= 0 ) && ( vertex.getTrackSchemeVertexId() == focusedVertexId );
+		final boolean highlighted = (highlightedVertexId >= 0) && (vertex
+			.getTrackSchemeVertexId() == highlightedVertexId);
+		final boolean focused = (focusedVertexId >= 0) && (vertex
+			.getTrackSchemeVertexId() == focusedVertexId);
 		final boolean selected = vertex.isSelected();
 		final boolean ghost = vertex.isGhost();
 		final int specifiedColor = vertex.getColor();
 
-		final Color fillColor = getColor( selected, ghost, transition, ratio, specifiedColor,
-				style.getVertexFillColor(), style.getSelectedVertexFillColor(),
-				style.getGhostVertexFillColor(), style.getGhostSelectedVertexFillColor() );
-		final Color drawColor = getColor( selected, ghost, transition, ratio, 0,
-				style.getVertexDrawColor(), style.getSelectedVertexDrawColor(),
-				style.getGhostVertexDrawColor(), style.getGhostSelectedVertexDrawColor() );
+		final Color fillColor = getColor(selected, ghost, transition, ratio,
+			specifiedColor,
+			style.getVertexFillColor(), style.getSelectedVertexFillColor(),
+			style.getGhostVertexFillColor(), style.getGhostSelectedVertexFillColor());
+		final Color drawColor = getColor(selected, ghost, transition, ratio, 0,
+			style.getVertexDrawColor(), style.getSelectedVertexDrawColor(),
+			style.getGhostVertexDrawColor(), style.getGhostSelectedVertexDrawColor());
 
 		final double x = vertex.getX();
 		final double y = vertex.getY();
-		final int ox = ( int ) x - ( int ) spotRadius;
-		final int oy = ( int ) y - ( int ) spotRadius;
-		final int sd = 2 * ( int ) spotRadius;
-		g2.setColor( fillColor );
-		g2.fillOval( ox, oy, sd, sd );
+		final int ox = (int) x - (int) spotRadius;
+		final int oy = (int) y - (int) spotRadius;
+		final int sd = 2 * (int) spotRadius;
+		g2.setColor(fillColor);
+		g2.fillOval(ox, oy, sd, sd);
 
-		g2.setColor( drawColor );
-		if ( highlighted )
-			g2.setStroke( style.getHierarchyVertexHighlightStroke() );
-		else if ( focused )
+		g2.setColor(drawColor);
+		if (highlighted)
+			g2.setStroke(style.getHierarchyVertexHighlightStroke());
+		else if (focused)
 			// An animation might be better for the focus, but for now this is it.
-			g2.setStroke( style.getFocusStroke() );
-		else if ( ghost )
-			g2.setStroke( style.getVertexGhostStroke() );
-		g2.drawOval( ox, oy, sd, sd );
-		if ( highlighted || focused || ghost )
-			g2.setStroke( style.getHierarchyVertexStroke() );
+			g2.setStroke(style.getFocusStroke());
+		else if (ghost)
+			g2.setStroke(style.getVertexGhostStroke());
+		g2.drawOval(ox, oy, sd, sd);
+		if (highlighted || focused || ghost)
+			g2.setStroke(style.getHierarchyVertexStroke());
 
-		final int maxLabelLength = (int) (transform.getScaleX() * 0.8 / averageLetterWidth );
-		if ( maxLabelLength > 2 && !disappear )
-		{
+		final int maxLabelLength = (int) (transform.getScaleX() * 0.8 /
+			averageLetterWidth);
+		if (maxLabelLength > 2 && !disappear) {
 			String label = vertex.getLabel();
-			if ( label.length() > maxLabelLength )
-				label = label.substring( 0, maxLabelLength - 2 ) + "...";
+			if (label.length() > maxLabelLength)
+				label = label.substring(0, maxLabelLength - 2) + "...";
 
-			if ( !label.isEmpty() )
-			{
-				g2.setColor( labelColor );
+			if (!label.isEmpty()) {
+				g2.setColor(labelColor);
 				final FontRenderContext frc = g2.getFontRenderContext();
-				final TextLayout layout = new TextLayout( label, style.getFont(), frc );
+				final TextLayout layout = new TextLayout(label, style.getFont(), frc);
 				final Rectangle2D bounds = layout.getBounds();
-				final float tx = ( float ) ( x - bounds.getCenterX() );
-				final float ty = ( float ) ( y + bounds.getHeight() + 1.2 * spotRadius + 3 );
-				layout.draw( g2, tx, ty );
+				final float tx = (float) (x - bounds.getCenterX());
+				final float ty = (float) (y + bounds.getHeight() + 1.2 * spotRadius +
+					3);
+				layout.draw(g2, tx, ty);
 			}
 		}
 	}
 
 	@Override
-	public void beforeDrawEdges()
-	{
+	public void beforeDrawEdges() {
 		edgeStroke = style.getHierarchyEdgeStroke();
 		edgeHighlightStroke = style.getHierarchyEdgeHighlightStroke();
 		edgeGhostStroke = style.getEdgeGhostStroke();
-		g2.setStroke( edgeStroke );
+		g2.setStroke(edgeStroke);
 	}
 
 	@Override
-	protected void drawEdgeLine( ScreenVertex vs, ScreenVertex vt )
-	{
-		if(style.isHierarchyGraphCurvedLines())
-			drawCurvedLine( vs, vt );
+	protected void drawEdgeLine(ScreenVertex vs, ScreenVertex vt) {
+		if (style.isHierarchyGraphCurvedLines())
+			drawCurvedLine(vs, vt);
 		else
-			drawHorizontalVerticalLine( vs, vt );
+			drawHorizontalVerticalLine(vs, vt);
 	}
 
-	private void drawHorizontalVerticalLine( ScreenVertex vs, ScreenVertex vt )
-	{
-		super.drawEdgeLine( vs, vt );
+	private void drawHorizontalVerticalLine(ScreenVertex vs, ScreenVertex vt) {
+		super.drawEdgeLine(vs, vt);
 	}
 
-	private void drawCurvedLine( ScreenVertex vs, ScreenVertex vt )
-	{
-		final int sx = ( int ) vs.getX();
-		final int sy = ( int ) vs.getY();
-		final int tx = ( int ) vt.getX();
-		final int ty = ( int ) vt.getY();
+	private void drawCurvedLine(ScreenVertex vs, ScreenVertex vt) {
+		final int sx = (int) vs.getX();
+		final int sy = (int) vs.getY();
+		final int tx = (int) vt.getX();
+		final int ty = (int) vt.getY();
 
 		final int dx = tx - sx;
 		final int dy = ty - sy;
 
-		if ( dx == 0 )
-		{
-			g2.drawLine( sx, sy, tx, ty );
+		if (dx == 0) {
+			g2.drawLine(sx, sy, tx, ty);
 		}
-		else if ( dx > 0 )
-		{
-			if ( dx > ARC_RADIUS )
-				g2.drawLine( sx, sy, tx - ARC_RADIUS, sy );
-			if ( dy > ARC_RADIUS )
-				g2.drawLine( tx, sy + ARC_RADIUS, tx, ty );
+		else if (dx > 0) {
+			if (dx > ARC_RADIUS)
+				g2.drawLine(sx, sy, tx - ARC_RADIUS, sy);
+			if (dy > ARC_RADIUS)
+				g2.drawLine(tx, sy + ARC_RADIUS, tx, ty);
 
 			g2.drawArc(
-					tx - 2 * Math.min( dx, ARC_RADIUS ),
-					sy,
-					2 * Math.min( ARC_RADIUS, dx ),
-					2 * Math.min( ARC_RADIUS, dy ),
-					90, -90 );
+				tx - 2 * Math.min(dx, ARC_RADIUS),
+				sy,
+				2 * Math.min(ARC_RADIUS, dx),
+				2 * Math.min(ARC_RADIUS, dy),
+				90, -90);
 		}
-		else
-		{
-			if ( -dx > ARC_RADIUS )
-				g2.drawLine( tx + ARC_RADIUS, sy, sx, sy );
-			if ( dy > ARC_RADIUS )
-				g2.drawLine( tx, sy + ARC_RADIUS, tx, ty );
+		else {
+			if (-dx > ARC_RADIUS)
+				g2.drawLine(tx + ARC_RADIUS, sy, sx, sy);
+			if (dy > ARC_RADIUS)
+				g2.drawLine(tx, sy + ARC_RADIUS, tx, ty);
 
 			g2.drawArc(
-					tx,
-					sy,
-					2 * Math.min( ARC_RADIUS, -dx ),
-					2 * Math.min( ARC_RADIUS, dy ),
-					90, 90 );
+				tx,
+				sy,
+				2 * Math.min(ARC_RADIUS, -dx),
+				2 * Math.min(ARC_RADIUS, dy),
+				90, 90);
 		}
 	}
 
 	@Override
-	public boolean isInsidePaintedVertex( double x, double y, ScreenVertex vertex )
+	public boolean isInsidePaintedVertex(double x, double y,
+		ScreenVertex vertex)
 	{
-		double radius = Math.max(spotRadius, SIMPLIFIED_VERTEX_SELECTION_RADIUS );
+		double radius = Math.max(spotRadius, SIMPLIFIED_VERTEX_SELECTION_RADIUS);
 		final double dx = x - vertex.getX();
 		final double dy = y - vertex.getY();
-		return ( dx * dx + dy * dy <= radius * radius );
+		return (dx * dx + dy * dy <= radius * radius);
 	}
 }

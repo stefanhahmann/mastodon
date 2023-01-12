@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.display;
 
 /**
@@ -33,12 +34,10 @@ package org.mastodon.views.grapher.display;
  * 
  * @author Jean-Yves Tinevez
  */
-public class FeatureGraphConfig
-{
+public class FeatureGraphConfig {
 
-	public enum GraphDataItemsSource
-	{
-		SELECTION, TRACK_OF_SELECTION, KEEP_CURRENT, CONTEXT;
+	public enum GraphDataItemsSource {
+			SELECTION, TRACK_OF_SELECTION, KEEP_CURRENT, CONTEXT;
 	}
 
 	private final FeatureSpecPair xFeature;
@@ -50,10 +49,10 @@ public class FeatureGraphConfig
 	private final boolean connect;
 
 	public FeatureGraphConfig(
-			final FeatureSpecPair xFeature,
-			final FeatureSpecPair yFeature,
-			final GraphDataItemsSource itemSource,
-			final boolean connect )
+		final FeatureSpecPair xFeature,
+		final FeatureSpecPair yFeature,
+		final GraphDataItemsSource itemSource,
+		final boolean connect)
 	{
 		this.xFeature = xFeature;
 		this.yFeature = yFeature;
@@ -61,33 +60,28 @@ public class FeatureGraphConfig
 		this.connect = connect;
 	}
 
-	public FeatureSpecPair getXFeature()
-	{
+	public FeatureSpecPair getXFeature() {
 		return xFeature;
 	}
 
-	public FeatureSpecPair getYFeature()
-	{
+	public FeatureSpecPair getYFeature() {
 		return yFeature;
 	}
 
-	public GraphDataItemsSource itemSource()
-	{
+	public GraphDataItemsSource itemSource() {
 		return itemSource;
 	}
 
-	public boolean drawConnected()
-	{
+	public boolean drawConnected() {
 		return connect;
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return super.toString() +
-				"\n - xFeature: " + xFeature +
-				"\n - yFeature: " + yFeature +
-				"\n - item source: " + itemSource +
-				"\n - show edge: " + connect;
+			"\n - xFeature: " + xFeature +
+			"\n - yFeature: " + yFeature +
+			"\n - item source: " + itemSource +
+			"\n - show edge: " + connect;
 	}
 }

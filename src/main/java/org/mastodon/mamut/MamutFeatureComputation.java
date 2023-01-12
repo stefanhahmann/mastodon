@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut;
 
 import java.util.ArrayList;
@@ -53,29 +54,38 @@ import org.mastodon.mamut.model.branch.BranchSpot;
 import org.scijava.Context;
 import org.scijava.service.AbstractService;
 
-public class MamutFeatureComputation
-{
+public class MamutFeatureComputation {
 
-	public static final JDialog getDialog( final MamutAppModel appModel, final Context context )
+	public static final JDialog getDialog(final MamutAppModel appModel,
+		final Context context)
 	{
 		// Prepare services.
-		final MamutFeatureComputerService computerService = context.getService( MamutFeatureComputerService.class );
-		computerService.setModel( appModel.getModel() );
-		computerService.setSharedBdvData( appModel.getSharedBdvData() );
-		final MyFeatureComputerService myComputerService = new MyFeatureComputerService( computerService, appModel.getModel().getFeatureModel() );
+		final MamutFeatureComputerService computerService = context.getService(
+			MamutFeatureComputerService.class);
+		computerService.setModel(appModel.getModel());
+		computerService.setSharedBdvData(appModel.getSharedBdvData());
+		final MyFeatureComputerService myComputerService =
+			new MyFeatureComputerService(computerService, appModel.getModel()
+				.getFeatureModel());
 
 		// Controller.
-		final Collection< Class< ? > > targets = Arrays.asList( Spot.class, Link.class, BranchSpot.class, BranchLink.class );
-		final MamutFeatureComputationController controller = new MamutFeatureComputationController( myComputerService, targets, appModel.getBranchGraphSync() );
-		computerService.computationStatusListeners().add( controller.getComputationStatusListener() );
+		final Collection<Class<?>> targets = Arrays.asList(Spot.class, Link.class,
+			BranchSpot.class, BranchLink.class);
+		final MamutFeatureComputationController controller =
+			new MamutFeatureComputationController(myComputerService, targets, appModel
+				.getBranchGraphSync());
+		computerService.computationStatusListeners().add(controller
+			.getComputationStatusListener());
 
 		// Listen to model changes and echo in the GUI
 		final ModelGraph graph = appModel.getModel().getGraph();
-		graph.addGraphChangeListener( controller );
+		graph.addGraphChangeListener(controller);
 		// Listen to changes in spot properties.
-		final SpotPool spotPool = ( SpotPool ) graph.vertices().getRefPool();
-		spotPool.covarianceProperty().propertyChangeListeners().add( ( o ) -> controller.graphChanged() );
-		spotPool.positionProperty().propertyChangeListeners().add( ( o ) -> controller.graphChanged() );
+		final SpotPool spotPool = (SpotPool) graph.vertices().getRefPool();
+		spotPool.covarianceProperty().propertyChangeListeners().add((
+			o) -> controller.graphChanged());
+		spotPool.positionProperty().propertyChangeListeners().add((o) -> controller
+			.graphChanged());
 
 		return controller.getDialog();
 	}
@@ -86,121 +96,120 @@ public class MamutFeatureComputation
 	 * 
 	 * @author Jean-Yves Tinevez
 	 */
-	private static final class MamutFeatureComputationController extends FeatureComputationController
+	private static final class MamutFeatureComputationController extends
+		FeatureComputationController
 	{
 
 		private final BranchGraphSynchronizer branchGraphSynchronizer;
 
 		public MamutFeatureComputationController(
-				final FeatureComputerService computerService,
-				final Collection< Class< ? > > targets,
-				final BranchGraphSynchronizer branchGraphSynchronizer )
+			final FeatureComputerService computerService,
+			final Collection<Class<?>> targets,
+			final BranchGraphSynchronizer branchGraphSynchronizer)
 		{
-			super( computerService, targets );
+			super(computerService, targets);
 			this.branchGraphSynchronizer = branchGraphSynchronizer;
 		}
 
 		@Override
-		protected synchronized void compute()
-		{
+		protected synchronized void compute() {
 			// Regen branch-graph prior to computation if out of sync.
-			if ( !branchGraphSynchronizer.isUptodate() )
+			if (!branchGraphSynchronizer.isUptodate())
 				branchGraphSynchronizer.sync();
 
 			super.compute();
 		}
 	}
 
-	private static final class MyFeatureComputerService extends AbstractService implements FeatureComputerService
+	private static final class MyFeatureComputerService extends AbstractService
+		implements FeatureComputerService
 	{
 
 		private final FeatureComputerService wrapped;
 
 		private final FeatureModel featureModel;
 
-		public MyFeatureComputerService( final FeatureComputerService wrapped, final FeatureModel featureModel )
+		public MyFeatureComputerService(final FeatureComputerService wrapped,
+			final FeatureModel featureModel)
 		{
 			this.wrapped = wrapped;
 			this.featureModel = featureModel;
 		}
 
 		@Override
-		public Context getContext()
-		{
+		public Context getContext() {
 			return wrapped.getContext();
 		}
 
 		@Override
-		public Context context()
-		{
+		public Context context() {
 			return wrapped.context();
 		}
 
 		@Override
-		public void setContext( final Context context )
-		{
-			wrapped.setContext( context );
+		public void setContext(final Context context) {
+			wrapped.setContext(context);
 		}
 
 		@Override
-		public boolean isCanceled()
-		{
+		public boolean isCanceled() {
 			return wrapped.isCanceled();
 		}
 
 		@Override
-		public void cancel( final String reason )
-		{
-			wrapped.cancel( reason );
+		public void cancel(final String reason) {
+			wrapped.cancel(reason);
 		}
 
 		@Override
-		public String getCancelReason()
-		{
+		public String getCancelReason() {
 			return wrapped.getCancelReason();
 		}
 
 		@Override
-		public Set< FeatureSpec< ?, ? > > getFeatureSpecs()
-		{
+		public Set<FeatureSpec<?, ?>> getFeatureSpecs() {
 			return wrapped.getFeatureSpecs();
 		}
 
 		@Override
-		public Map< FeatureSpec< ?, ? >, Feature< ? > > compute( final boolean forceComputeAll, final Collection< FeatureSpec< ?, ? > > featureKeys )
+		public Map<FeatureSpec<?, ?>, Feature<?>> compute(
+			final boolean forceComputeAll,
+			final Collection<FeatureSpec<?, ?>> featureKeys)
 		{
-			final Map< FeatureSpec< ?, ? >, Feature< ? > > map = wrapped.compute( forceComputeAll, featureKeys );
-			if ( wrapped.isCanceled() )
+			final Map<FeatureSpec<?, ?>, Feature<?>> map = wrapped.compute(
+				forceComputeAll, featureKeys);
+			if (wrapped.isCanceled())
 				return null;
 
 			featureModel.pauseListeners();
 			// Clear feature we can compute
-			final Collection< FeatureSpec< ?, ? > > featureSpecs = featureModel.getFeatureSpecs();
-			final Collection< FeatureSpec< ?, ? > > toClear = new ArrayList<>();
-			for ( final FeatureSpec< ?, ? > featureSpec : featureSpecs )
-				if ( null != wrapped.getFeatureComputerFor( featureSpec ) )
-					toClear.add( featureSpec );
+			final Collection<FeatureSpec<?, ?>> featureSpecs = featureModel
+				.getFeatureSpecs();
+			final Collection<FeatureSpec<?, ?>> toClear = new ArrayList<>();
+			for (final FeatureSpec<?, ?> featureSpec : featureSpecs)
+				if (null != wrapped.getFeatureComputerFor(featureSpec))
+					toClear.add(featureSpec);
 
-			for ( final FeatureSpec< ?, ? > featureSpec : toClear )
-				featureModel.clear( featureSpec );
+			for (final FeatureSpec<?, ?> featureSpec : toClear)
+				featureModel.clear(featureSpec);
 
 			// Pass the feature map to the feature model.
-			map.values().forEach( featureModel::declareFeature );
+			map.values().forEach(featureModel::declareFeature);
 
 			featureModel.resumeListeners();
 			return map;
 		}
 
 		@Override
-		public FeatureComputer getFeatureComputerFor( final FeatureSpec< ?, ? > spec )
-		{
-			return wrapped.getFeatureComputerFor( spec );
+		public FeatureComputer getFeatureComputerFor(final FeatureSpec<?, ?> spec) {
+			return wrapped.getFeatureComputerFor(spec);
 		}
 
 		@Override
-		public Collection< FeatureSpec< ?, ? > > getDependencies( final FeatureSpec< ?, ? > spec )
+		public Collection<FeatureSpec<?, ?>> getDependencies(
+			final FeatureSpec<?, ?> spec)
 		{
-			return wrapped.getDependencies( spec );
+			return wrapped.getDependencies(spec);
 		}
 	}
 }

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature;
 
 import java.io.IOException;
@@ -42,29 +43,35 @@ import org.mastodon.mamut.model.Spot;
 import org.mastodon.properties.IntPropertyMap;
 import org.scijava.plugin.Plugin;
 
-@Plugin( type = FeatureSerializer.class )
-public class SpotTrackIDFeatureSerializer implements FeatureSerializer< SpotTrackIDFeature, Spot >
+@Plugin(type = FeatureSerializer.class)
+public class SpotTrackIDFeatureSerializer implements
+	FeatureSerializer<SpotTrackIDFeature, Spot>
 {
 
 	@Override
-	public Spec getFeatureSpec()
-	{
+	public Spec getFeatureSpec() {
 		return SpotTrackIDFeature.SPEC;
 	}
 
 	@Override
-	public void serialize( final SpotTrackIDFeature feature, final ObjectToFileIdMap< Spot > idmap, final ObjectOutputStream oos ) throws IOException
+	public void serialize(final SpotTrackIDFeature feature,
+		final ObjectToFileIdMap<Spot> idmap, final ObjectOutputStream oos)
+		throws IOException
 	{
-		final IntPropertyMapSerializer< Spot > propertyMapSerializer = new IntPropertyMapSerializer<>( feature.map );
-		propertyMapSerializer.writePropertyMap( idmap, oos );
+		final IntPropertyMapSerializer<Spot> propertyMapSerializer =
+			new IntPropertyMapSerializer<>(feature.map);
+		propertyMapSerializer.writePropertyMap(idmap, oos);
 	}
 
 	@Override
-	public SpotTrackIDFeature deserialize( final FileIdToObjectMap< Spot > idmap, final RefCollection< Spot > pool, final ObjectInputStream ois ) throws IOException, ClassNotFoundException
+	public SpotTrackIDFeature deserialize(final FileIdToObjectMap<Spot> idmap,
+		final RefCollection<Spot> pool, final ObjectInputStream ois)
+		throws IOException, ClassNotFoundException
 	{
-		final IntPropertyMap< Spot > map = new IntPropertyMap<>( pool, -1 );
-		final IntPropertyMapSerializer< Spot > propertyMapSerializer = new IntPropertyMapSerializer<>( map );
-		propertyMapSerializer.readPropertyMap( idmap, ois );
-		return new SpotTrackIDFeature( map );
+		final IntPropertyMap<Spot> map = new IntPropertyMap<>(pool, -1);
+		final IntPropertyMapSerializer<Spot> propertyMapSerializer =
+			new IntPropertyMapSerializer<>(map);
+		propertyMapSerializer.readPropertyMap(idmap, ois);
+		return new SpotTrackIDFeature(map);
 	}
 }

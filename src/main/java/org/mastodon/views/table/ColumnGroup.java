@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.table;
 
 import java.awt.Component;
@@ -48,49 +49,46 @@ import javax.swing.table.TableColumn;
  * @author Nobuo Tamemasa (modified by Q)
  */
 
-public class ColumnGroup
-{
+public class ColumnGroup {
+
 	protected TableCellRenderer renderer;
 
-	protected Vector< Object > v;
+	protected Vector<Object> v;
 
 	protected String text;
 
 	protected int margin = 0;
 
-	public ColumnGroup( final String text )
-	{
-		this( null, text );
+	public ColumnGroup(final String text) {
+		this(null, text);
 	}
 
-	public ColumnGroup( final TableCellRenderer renderer, final String text )
-	{
-		if ( renderer == null )
-		{
-			this.renderer = new DefaultTableCellRenderer()
-			{
+	public ColumnGroup(final TableCellRenderer renderer, final String text) {
+		if (renderer == null) {
+			this.renderer = new DefaultTableCellRenderer() {
+
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public Component getTableCellRendererComponent( final JTable table, final Object value,
-						final boolean isSelected, final boolean hasFocus, final int row, final int column )
+				public Component getTableCellRendererComponent(final JTable table,
+					final Object value,
+					final boolean isSelected, final boolean hasFocus, final int row,
+					final int column)
 				{
 					final JTableHeader header = table.getTableHeader();
-					if ( header != null )
-					{
-						setForeground( header.getForeground() );
-						setBackground( header.getBackground() );
-						setFont( header.getFont() );
+					if (header != null) {
+						setForeground(header.getForeground());
+						setBackground(header.getBackground());
+						setFont(header.getFont());
 					}
-					setHorizontalAlignment( JLabel.CENTER );
-					setText( ( value == null ) ? "" : value.toString() );
-					setBorder( UIManager.getBorder( "TableHeader.cellBorder" ) );
+					setHorizontalAlignment(JLabel.CENTER);
+					setText((value == null) ? "" : value.toString());
+					setBorder(UIManager.getBorder("TableHeader.cellBorder"));
 					return this;
 				}
 			};
 		}
-		else
-		{
+		else {
 			this.renderer = renderer;
 		}
 		this.text = text;
@@ -98,84 +96,73 @@ public class ColumnGroup
 	}
 
 	/**
-	 * @param obj
-	 *            TableColumn or ColumnGroup
+	 * @param obj TableColumn or ColumnGroup
 	 */
-	public void add( final Object obj )
-	{
-		if ( obj == null ) { return; }
-		v.addElement( obj );
+	public void add(final Object obj) {
+		if (obj == null) {
+			return;
+		}
+		v.addElement(obj);
 	}
 
 	/**
-	 * @param c
-	 *            TableColumn
-	 * @param g
-	 *            ColumnGroups
+	 * @param c TableColumn
+	 * @param g ColumnGroups
 	 * @return the column groups.
 	 */
-	public Vector< ColumnGroup > getColumnGroups( final TableColumn c, final Vector< ColumnGroup > g )
+	public Vector<ColumnGroup> getColumnGroups(final TableColumn c,
+		final Vector<ColumnGroup> g)
 	{
-		g.addElement( this );
-		if ( v.contains( c ) )
+		g.addElement(this);
+		if (v.contains(c))
 			return g;
-		final Enumeration< Object > en = v.elements();
-		while ( en.hasMoreElements() )
-		{
+		final Enumeration<Object> en = v.elements();
+		while (en.hasMoreElements()) {
 			final Object obj = en.nextElement();
-			if ( obj instanceof ColumnGroup )
-			{
-				@SuppressWarnings( "unchecked" )
-				final Vector< ColumnGroup > groups =
-						( ( ColumnGroup ) obj ).getColumnGroups( c, ( Vector< ColumnGroup > ) g.clone() );
-				if ( groups != null )
+			if (obj instanceof ColumnGroup) {
+				@SuppressWarnings("unchecked")
+				final Vector<ColumnGroup> groups =
+					((ColumnGroup) obj).getColumnGroups(c, (Vector<ColumnGroup>) g
+						.clone());
+				if (groups != null)
 					return groups;
 			}
 		}
 		return null;
 	}
 
-	public TableCellRenderer getHeaderRenderer()
-	{
+	public TableCellRenderer getHeaderRenderer() {
 		return renderer;
 	}
 
-	public void setHeaderRenderer( final TableCellRenderer renderer )
-	{
-		if ( renderer != null )
-		{
+	public void setHeaderRenderer(final TableCellRenderer renderer) {
+		if (renderer != null) {
 			this.renderer = renderer;
 		}
 	}
 
-	public Object getHeaderValue()
-	{
+	public Object getHeaderValue() {
 		return text;
 	}
 
-	public Dimension getSize( final JTable table )
-	{
+	public Dimension getSize(final JTable table) {
 		final Component comp = renderer.getTableCellRendererComponent(
-				table, getHeaderValue(), false, false, -1, -1 );
+			table, getHeaderValue(), false, false, -1, -1);
 		final int height = comp.getPreferredSize().height;
 		int width = 0;
-		final Enumeration< Object > en = v.elements();
-		while ( en.hasMoreElements() )
-		{
+		final Enumeration<Object> en = v.elements();
+		while (en.hasMoreElements()) {
 			final Object obj = en.nextElement();
-			if ( obj instanceof TableColumn )
-			{
-				final TableColumn aColumn = ( TableColumn ) obj;
+			if (obj instanceof TableColumn) {
+				final TableColumn aColumn = (TableColumn) obj;
 				width += aColumn.getWidth();
 			}
-			else
-			{
-				width += ( ( ColumnGroup ) obj ).getSize( table ).width;
+			else {
+				width += ((ColumnGroup) obj).getSize(table).width;
 			}
 		}
-		return new Dimension( width, height );
+		return new Dimension(width, height);
 	}
 
-	public void setColumnMargin( final int margin )
-	{}
+	public void setColumnMargin(final int margin) {}
 }

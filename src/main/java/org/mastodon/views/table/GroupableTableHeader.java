@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.table;
 
 import java.awt.Component;
@@ -45,73 +46,66 @@ import javax.swing.table.TableColumnModel;
  * @author Nobuo Tamemasa (modified by Q)
  */
 
-public class GroupableTableHeader extends JTableHeader
-{
+public class GroupableTableHeader extends JTableHeader {
 
 	private static final long serialVersionUID = 1L;
 
-	protected Vector< ColumnGroup > columnGroups = null;
+	protected Vector<ColumnGroup> columnGroups = null;
 
-	public GroupableTableHeader( final TableColumnModel model )
-	{
-		super( model );
-		setReorderingAllowed( false );
+	public GroupableTableHeader(final TableColumnModel model) {
+		super(model);
+		setReorderingAllowed(false);
 	}
 
 	@Override
-	public void setReorderingAllowed( final boolean b )
-	{
+	public void setReorderingAllowed(final boolean b) {
 		reorderingAllowed = false;
 	}
 
-	public void addColumnGroup( final ColumnGroup g )
-	{
-		if ( columnGroups == null )
-			columnGroups = new Vector< ColumnGroup >();
+	public void addColumnGroup(final ColumnGroup g) {
+		if (columnGroups == null)
+			columnGroups = new Vector<ColumnGroup>();
 
-		columnGroups.addElement( g );
+		columnGroups.addElement(g);
 	}
 
-	public void clear()
-	{
-		if ( columnGroups != null )
+	public void clear() {
+		if (columnGroups != null)
 			columnGroups.clear();
 	}
 
-	public Enumeration< ? > getColumnGroups( final TableColumn col )
-	{
-		if ( columnGroups == null )
+	public Enumeration<?> getColumnGroups(final TableColumn col) {
+		if (columnGroups == null)
 			return null;
-		final Enumeration< ColumnGroup > en = columnGroups.elements();
-		while ( en.hasMoreElements() )
-		{
+		final Enumeration<ColumnGroup> en = columnGroups.elements();
+		while (en.hasMoreElements()) {
 			final ColumnGroup cGroup = en.nextElement();
-			final Vector< ? > v_ret = cGroup.getColumnGroups( col, new Vector< ColumnGroup >() );
-			if ( v_ret != null ) { return v_ret.elements(); }
+			final Vector<?> v_ret = cGroup.getColumnGroups(col,
+				new Vector<ColumnGroup>());
+			if (v_ret != null) {
+				return v_ret.elements();
+			}
 		}
 		return null;
 	}
 
 	@Override
-	public void updateUI()
-	{
-		setUI( new GroupableTableHeaderUI() );
+	public void updateUI() {
+		setUI(new GroupableTableHeaderUI());
 
 		final TableCellRenderer tablecellrenderer = getDefaultRenderer();
-		if ( tablecellrenderer instanceof Component )
-			SwingUtilities.updateComponentTreeUI( ( Component ) tablecellrenderer );
+		if (tablecellrenderer instanceof Component)
+			SwingUtilities.updateComponentTreeUI((Component) tablecellrenderer);
 	}
 
-	public void setColumnMargin()
-	{
-		if ( columnGroups == null )
+	public void setColumnMargin() {
+		if (columnGroups == null)
 			return;
 //    final int columnMargin = getColumnModel().getColumnMargin();
-		final Enumeration< ColumnGroup > en = columnGroups.elements();
-		while ( en.hasMoreElements() )
-		{
+		final Enumeration<ColumnGroup> en = columnGroups.elements();
+		while (en.hasMoreElements()) {
 			final ColumnGroup cGroup = en.nextElement();
-			cGroup.setColumnMargin( 0/* columnMargin */ );
+			cGroup.setColumnMargin(0/* columnMargin */ );
 		}
 	}
 

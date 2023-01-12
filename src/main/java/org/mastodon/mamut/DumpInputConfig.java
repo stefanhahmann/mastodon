@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut;
 
 import java.io.File;
@@ -57,58 +58,87 @@ import org.scijava.ui.behaviour.io.InputTriggerDescription;
 import org.scijava.ui.behaviour.io.InputTriggerDescriptionsBuilder;
 import org.scijava.ui.behaviour.io.yaml.YamlConfigIO;
 
-public class DumpInputConfig
-{
-	static boolean mkdirs( final String fileName )
-	{
-		final File dir = new File( fileName ).getParentFile();
+public class DumpInputConfig {
+
+	static boolean mkdirs(final String fileName) {
+		final File dir = new File(fileName).getParentFile();
 		return dir != null && dir.mkdirs();
 	}
 
-	public static void writeToYaml( final String fileName, final WindowManager wm ) throws IOException
+	public static void writeToYaml(final String fileName, final WindowManager wm)
+		throws IOException
 	{
-		mkdirs( fileName );
-		final List< InputTriggerDescription > descriptions = new InputTriggerDescriptionsBuilder( wm.getAppModel().getKeymap().getConfig() ).getDescriptions();
-		YamlConfigIO.write( descriptions, fileName );
+		mkdirs(fileName);
+		final List<InputTriggerDescription> descriptions =
+			new InputTriggerDescriptionsBuilder(wm.getAppModel().getKeymap()
+				.getConfig()).getDescriptions();
+		YamlConfigIO.write(descriptions, fileName);
 	}
 
-	public static void writeDefaultConfigToYaml( final String fileName, final Context context ) throws IOException
+	public static void writeDefaultConfigToYaml(final String fileName,
+		final Context context) throws IOException
 	{
-		mkdirs( fileName );
-		final List< InputTriggerDescription > descriptions = new InputTriggerDescriptionsBuilder( buildCommandDescriptions( context ).createDefaultKeyconfig() ).getDescriptions();
-		YamlConfigIO.write( descriptions, fileName );
+		mkdirs(fileName);
+		final List<InputTriggerDescription> descriptions =
+			new InputTriggerDescriptionsBuilder(buildCommandDescriptions(context)
+				.createDefaultKeyconfig()).getDescriptions();
+		YamlConfigIO.write(descriptions, fileName);
 	}
 
-	private static CommandDescriptions buildCommandDescriptions( final Context context )
+	private static CommandDescriptions buildCommandDescriptions(
+		final Context context)
 	{
 		final CommandDescriptionsBuilder builder = new CommandDescriptionsBuilder();
-		context.inject( builder );
+		context.inject(builder);
 
-		builder.addManually( new CloseWindowActions.Descriptions(), KeyConfigContexts.MASTODON);
-		builder.addManually( new ProjectManager.Descriptions(), KeyConfigContexts.MASTODON);
-		builder.addManually( new UndoActions.Descriptions(), KeyConfigContexts.MASTODON);
-		builder.addManually( new SelectionActions.Descriptions(), KeyConfigContexts.MASTODON);
-		builder.addManually( new WindowManager.Descriptions(), KeyConfigContexts.MASTODON);
+		builder.addManually(new CloseWindowActions.Descriptions(),
+			KeyConfigContexts.MASTODON);
+		builder.addManually(new ProjectManager.Descriptions(),
+			KeyConfigContexts.MASTODON);
+		builder.addManually(new UndoActions.Descriptions(),
+			KeyConfigContexts.MASTODON);
+		builder.addManually(new SelectionActions.Descriptions(),
+			KeyConfigContexts.MASTODON);
+		builder.addManually(new WindowManager.Descriptions(),
+			KeyConfigContexts.MASTODON);
 
-		builder.addManually( new MastodonFrameViewActions.Descriptions(), KeyConfigContexts.BIGDATAVIEWER );
-		builder.addManually( new TransformEventHandler3DDescriptions(), KeyConfigContexts.BIGDATAVIEWER );
-		builder.addManually( new BigDataViewerActionsMamut.Descriptions(), KeyConfigContexts.BIGDATAVIEWER );
-		builder.addManually( new NavigationActionsDescriptions(), KeyConfigContexts.BIGDATAVIEWER );
-		builder.addManually( new BdvSelectionBehaviours.Descriptions(), KeyConfigContexts.BIGDATAVIEWER );
-		builder.addManually( new EditBehaviours.Descriptions(), KeyConfigContexts.BIGDATAVIEWER );
-		builder.addManually( new EditSpecialBehaviours.Descriptions(), KeyConfigContexts.BIGDATAVIEWER );
-		builder.addManually( new FocusActions.Descriptions(), KeyConfigContexts.BIGDATAVIEWER );
-		builder.addManually( new HighlightBehaviours.Descriptions(), KeyConfigContexts.BIGDATAVIEWER );
+		builder.addManually(new MastodonFrameViewActions.Descriptions(),
+			KeyConfigContexts.BIGDATAVIEWER);
+		builder.addManually(new TransformEventHandler3DDescriptions(),
+			KeyConfigContexts.BIGDATAVIEWER);
+		builder.addManually(new BigDataViewerActionsMamut.Descriptions(),
+			KeyConfigContexts.BIGDATAVIEWER);
+		builder.addManually(new NavigationActionsDescriptions(),
+			KeyConfigContexts.BIGDATAVIEWER);
+		builder.addManually(new BdvSelectionBehaviours.Descriptions(),
+			KeyConfigContexts.BIGDATAVIEWER);
+		builder.addManually(new EditBehaviours.Descriptions(),
+			KeyConfigContexts.BIGDATAVIEWER);
+		builder.addManually(new EditSpecialBehaviours.Descriptions(),
+			KeyConfigContexts.BIGDATAVIEWER);
+		builder.addManually(new FocusActions.Descriptions(),
+			KeyConfigContexts.BIGDATAVIEWER);
+		builder.addManually(new HighlightBehaviours.Descriptions(),
+			KeyConfigContexts.BIGDATAVIEWER);
 
-		builder.addManually( new MastodonFrameViewActions.Descriptions(), KeyConfigContexts.TRACKSCHEME );
-		builder.addManually( new InertialScreenTransformEventHandler.Descriptions(), KeyConfigContexts.TRACKSCHEME );
-		builder.addManually( new EditFocusVertexLabelAction.Descriptions(), KeyConfigContexts.TRACKSCHEME );
-		builder.addManually( new ToggleLinkBehaviour.Descriptions(), KeyConfigContexts.TRACKSCHEME );
-		builder.addManually( new TrackSchemeNavigationActions.Descriptions(), KeyConfigContexts.TRACKSCHEME );
-		builder.addManually( new TrackSchemeNavigationBehaviours.Descriptions(), KeyConfigContexts.TRACKSCHEME );
-		builder.addManually( new EditTagActions.Descriptions(), KeyConfigContexts.TRACKSCHEME );
-		builder.addManually( new FocusActions.Descriptions(), KeyConfigContexts.TRACKSCHEME );
-		builder.addManually( new HighlightBehaviours.Descriptions(), KeyConfigContexts.TRACKSCHEME );
+		builder.addManually(new MastodonFrameViewActions.Descriptions(),
+			KeyConfigContexts.TRACKSCHEME);
+		builder.addManually(new InertialScreenTransformEventHandler.Descriptions(),
+			KeyConfigContexts.TRACKSCHEME);
+		builder.addManually(new EditFocusVertexLabelAction.Descriptions(),
+			KeyConfigContexts.TRACKSCHEME);
+		builder.addManually(new ToggleLinkBehaviour.Descriptions(),
+			KeyConfigContexts.TRACKSCHEME);
+		builder.addManually(new TrackSchemeNavigationActions.Descriptions(),
+			KeyConfigContexts.TRACKSCHEME);
+		builder.addManually(new TrackSchemeNavigationBehaviours.Descriptions(),
+			KeyConfigContexts.TRACKSCHEME);
+		builder.addManually(new EditTagActions.Descriptions(),
+			KeyConfigContexts.TRACKSCHEME);
+		builder.addManually(new FocusActions.Descriptions(),
+			KeyConfigContexts.TRACKSCHEME);
+		builder.addManually(new HighlightBehaviours.Descriptions(),
+			KeyConfigContexts.TRACKSCHEME);
 
 		builder.verifyManuallyAdded();
 

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model;
 
 import org.mastodon.graph.Edge;
@@ -40,29 +41,30 @@ import org.scijava.listeners.Listeners;
  * This allows to implement view-follows-focus behaviour on demand (without
  * having to hard-wire navigation into {@code FocusActions}).
  *
- * @param <V>
- *            the type of vertices in the graph.
- * @param <E>
- *            the type of edges in the graph.
+ * @param <V> the type of vertices in the graph.
+ * @param <E> the type of edges in the graph.
  */
-public class AutoNavigateFocusModel< V extends Vertex< E > & HasTimepoint, E extends Edge< V > > implements FocusModel< V, E >
+public class AutoNavigateFocusModel<V extends Vertex<E> & HasTimepoint, E extends Edge<V>>
+	implements FocusModel<V, E>
 {
-	private final FocusModel< V, E > focus;
 
-	private final NavigationHandler< V, E > navigation;
+	private final FocusModel<V, E> focus;
+
+	private final NavigationHandler<V, E> navigation;
 
 	private final TimepointModel timepointModel;
 
 	public AutoNavigateFocusModel(
-			final FocusModel< V, E > focus,
-			final NavigationHandler< V, E > navigation )
+		final FocusModel<V, E> focus,
+		final NavigationHandler<V, E> navigation)
 	{
-		this( focus, navigation, null );
+		this(focus, navigation, null);
 	}
+
 	public AutoNavigateFocusModel(
-			final FocusModel< V, E > focus,
-			final NavigationHandler< V, E > navigation,
-			final TimepointModel timepointModel )
+		final FocusModel<V, E> focus,
+		final NavigationHandler<V, E> navigation,
+		final TimepointModel timepointModel)
 	{
 		this.focus = focus;
 		this.navigation = navigation;
@@ -70,23 +72,20 @@ public class AutoNavigateFocusModel< V extends Vertex< E > & HasTimepoint, E ext
 	}
 
 	@Override
-	public void focusVertex( final V vertex )
-	{
-		if ( timepointModel != null && vertex != null )
-			timepointModel.setTimepoint( vertex.getTimepoint() );
-		focus.focusVertex( vertex );
-		navigation.notifyNavigateToVertex( vertex );
+	public void focusVertex(final V vertex) {
+		if (timepointModel != null && vertex != null)
+			timepointModel.setTimepoint(vertex.getTimepoint());
+		focus.focusVertex(vertex);
+		navigation.notifyNavigateToVertex(vertex);
 	}
 
 	@Override
-	public V getFocusedVertex( final V ref )
-	{
-		return focus.getFocusedVertex( ref );
+	public V getFocusedVertex(final V ref) {
+		return focus.getFocusedVertex(ref);
 	}
 
 	@Override
-	public Listeners< FocusListener > listeners()
-	{
+	public Listeners<FocusListener> listeners() {
 		return focus.listeners();
 	}
 }

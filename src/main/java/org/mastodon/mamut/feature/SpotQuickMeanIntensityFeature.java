@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature;
 
 import static org.mastodon.feature.FeatureProjectionKey.key;
@@ -48,75 +49,70 @@ import org.mastodon.mamut.model.Spot;
 import org.mastodon.properties.DoublePropertyMap;
 import org.scijava.plugin.Plugin;
 
-public class SpotQuickMeanIntensityFeature implements Feature< Spot >
-{
+public class SpotQuickMeanIntensityFeature implements Feature<Spot> {
 
 	public static final String KEY = "Spot quick mean";
 
 	private static final String HELP_STRING =
-			"Computes the mean intensity of spots using the highest resolution level to speedup calculation."
-					+ "It is recommended to use the 'Spot intensity' feature when the best accuracy is required.";
+		"Computes the mean intensity of spots using the highest resolution level to speedup calculation." +
+			"It is recommended to use the 'Spot intensity' feature when the best accuracy is required.";
 
-	public static final FeatureProjectionSpec PROJECTION_SPEC = new FeatureProjectionSpec( "Mean", Dimension.INTENSITY );
+	public static final FeatureProjectionSpec PROJECTION_SPEC =
+		new FeatureProjectionSpec("Mean", Dimension.INTENSITY);
 
 	public static final Spec SPEC = new Spec();
 
-	@Plugin( type = FeatureSpec.class )
-	public static class Spec extends FeatureSpec< SpotQuickMeanIntensityFeature, Spot >
+	@Plugin(type = FeatureSpec.class)
+	public static class Spec extends
+		FeatureSpec<SpotQuickMeanIntensityFeature, Spot>
 	{
-		public Spec()
-		{
+
+		public Spec() {
 			super(
-					KEY,
-					HELP_STRING,
-					SpotQuickMeanIntensityFeature.class,
-					Spot.class,
-					Multiplicity.ON_SOURCES,
-					PROJECTION_SPEC );
+				KEY,
+				HELP_STRING,
+				SpotQuickMeanIntensityFeature.class,
+				Spot.class,
+				Multiplicity.ON_SOURCES,
+				PROJECTION_SPEC);
 		}
 	}
 
-	private final Map< FeatureProjectionKey, FeatureProjection< Spot > > projectionMap;
+	private final Map<FeatureProjectionKey, FeatureProjection<Spot>> projectionMap;
 
-	final List< DoublePropertyMap< Spot > > means;
+	final List<DoublePropertyMap<Spot>> means;
 
-	SpotQuickMeanIntensityFeature( final List< DoublePropertyMap< Spot > > means )
-	{
+	SpotQuickMeanIntensityFeature(final List<DoublePropertyMap<Spot>> means) {
 		this.means = means;
-		this.projectionMap = new LinkedHashMap<>( 6 * means.size() );
-		for ( int iSource = 0; iSource < means.size(); iSource++ )
-		{
-			final FeatureProjectionKey meankey = key( PROJECTION_SPEC, iSource );
-			projectionMap.put( meankey, FeatureProjections.project( meankey, means.get( iSource ), Dimension.COUNTS_UNITS ) );
+		this.projectionMap = new LinkedHashMap<>(6 * means.size());
+		for (int iSource = 0; iSource < means.size(); iSource++) {
+			final FeatureProjectionKey meankey = key(PROJECTION_SPEC, iSource);
+			projectionMap.put(meankey, FeatureProjections.project(meankey, means.get(
+				iSource), Dimension.COUNTS_UNITS));
 		}
 	}
 
-	public double getMean( final Spot spot, final int source )
-	{
-		return means.get( source ).getDouble( spot );
+	public double getMean(final Spot spot, final int source) {
+		return means.get(source).getDouble(spot);
 	}
 
 	@Override
-	public FeatureProjection< Spot > project( final FeatureProjectionKey key )
-	{
-		return projectionMap.get( key );
+	public FeatureProjection<Spot> project(final FeatureProjectionKey key) {
+		return projectionMap.get(key);
 	}
 
 	@Override
-	public Set< FeatureProjection< Spot > > projections()
-	{
-		return new LinkedHashSet<>( projectionMap.values() );
+	public Set<FeatureProjection<Spot>> projections() {
+		return new LinkedHashSet<>(projectionMap.values());
 	}
 
 	@Override
-	public Spec getSpec()
-	{
+	public Spec getSpec() {
 		return SPEC;
 	}
 
 	@Override
-	public void invalidate( final Spot spot )
-	{
-		means.forEach( m -> m.remove( spot ) );
+	public void invalidate(final Spot spot) {
+		means.forEach(m -> m.remove(spot));
 	}
 }

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut;
 
 import java.awt.BorderLayout;
@@ -47,72 +48,69 @@ import org.scijava.ui.behaviour.util.Actions;
 
 import bdv.ui.settings.SettingsPage;
 
-public class PreferencesDialog extends JDialog
-{
+public class PreferencesDialog extends JDialog {
+
 	private static final long serialVersionUID = 1L;
 
 	private final SettingsPanel settingsPanel;
 
 	public PreferencesDialog(
-			final Frame owner,
-			final Keymap keymap,
-			final String[] keyConfigContexts )
+		final Frame owner,
+		final Keymap keymap,
+		final String[] keyConfigContexts)
 	{
-		super( owner, "Preferences", false );
-		setLocationByPlatform( true );
-		setLocationRelativeTo( null );
-		setIconImages( MastodonIcons.MASTODON_ICON );
+		super(owner, "Preferences", false);
+		setLocationByPlatform(true);
+		setLocationRelativeTo(null);
+		setIconImages(MastodonIcons.MASTODON_ICON);
 		settingsPanel = new SettingsPanel();
-		settingsPanel.onOk( () -> setVisible( false ) );
-		settingsPanel.onCancel( () -> setVisible( false ) );
+		settingsPanel.onOk(() -> setVisible(false));
+		settingsPanel.onCancel(() -> setVisible(false));
 
-		setDefaultCloseOperation( WindowConstants.HIDE_ON_CLOSE );
-		addWindowListener( new WindowAdapter()
-		{
+		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+
 			@Override
-			public void windowClosing( final WindowEvent e )
-			{
+			public void windowClosing(final WindowEvent e) {
 				settingsPanel.cancel();
 			}
-		} );
+		});
 
 		final ActionMap am = getRootPane().getActionMap();
-		final InputMap im = getRootPane().getInputMap( JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT );
-		final Actions actions = new Actions( im, am, keymap.getConfig(), keyConfigContexts );
-		CloseWindowActions.install( actions, this );
+		final InputMap im = getRootPane().getInputMap(
+			JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+		final Actions actions = new Actions(im, am, keymap.getConfig(),
+			keyConfigContexts);
+		CloseWindowActions.install(actions, this);
 
-		keymap.updateListeners().add( () -> actions.updateKeyConfig( keymap.getConfig() ) );
+		keymap.updateListeners().add(() -> actions.updateKeyConfig(keymap
+			.getConfig()));
 
-		getContentPane().add( settingsPanel, BorderLayout.CENTER );
+		getContentPane().add(settingsPanel, BorderLayout.CENTER);
 	}
 
-	public void addPage( final SettingsPage page )
-	{
-		settingsPanel.addPage( page );
+	public void addPage(final SettingsPage page) {
+		settingsPanel.addPage(page);
 	}
 
 	/**
-	 * Removes the settings page with the specified path. Does nothing if there
-	 * is not settings page for the path.
+	 * Removes the settings page with the specified path. Does nothing if there is
+	 * not settings page for the path.
 	 *
-	 * @param path
-	 *            the path of the settings page to remove.
+	 * @param path the path of the settings page to remove.
 	 */
-	public void removePage( final String path )
-	{
-		settingsPanel.removePage( path );
+	public void removePage(final String path) {
+		settingsPanel.removePage(path);
 	}
 
 	/**
 	 * Shows the settings page with the specified path. Does nothing if there is
-	 * not settings page for the path. This does not change the visibility of
-	 * this dialog.
+	 * not settings page for the path. This does not change the visibility of this
+	 * dialog.
 	 *
-	 * @param path
-	 *            the path of the settings page to show.
+	 * @param path the path of the settings page to show.
 	 */
-	public void showPage( final String path )
-	{
-		settingsPanel.showPage( path );
+	public void showPage(final String path) {
+		settingsPanel.showPage(path);
 	}
 }

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.launcher;
 
 import org.scijava.Context;
@@ -33,25 +34,21 @@ import org.scijava.command.Command;
 import org.scijava.command.ContextCommand;
 import org.scijava.plugin.Plugin;
 
-@Plugin( type = Command.class, menuPath = "Plugins>Mastodon" )
-public class MastodonLauncherCommand extends ContextCommand
-{
+@Plugin(type = Command.class, menuPath = "Plugins>Mastodon")
+public class MastodonLauncherCommand extends ContextCommand {
 
 	@Override
-	public void run()
-	{
-		final MastodonLauncher launcher = new MastodonLauncher( getContext() );
-		launcher.setLocationByPlatform( true );
-		launcher.setLocationRelativeTo( null );
-		launcher.setVisible( true );
+	public void run() {
+		final MastodonLauncher launcher = new MastodonLauncher(getContext());
+		launcher.setLocationByPlatform(true);
+		launcher.setLocationRelativeTo(null);
+		launcher.setVisible(true);
 	}
 
-	public static void main( final String[] args ) throws Exception
-	{
+	public static void main(final String[] args) throws Exception {
 		final MastodonLauncherCommand launcher = new MastodonLauncherCommand();
-		try (Context context = new Context())
-		{
-			context.inject( launcher );
+		try (Context context = new Context()) {
+			context.inject(launcher);
 			launcher.run();
 		}
 	}

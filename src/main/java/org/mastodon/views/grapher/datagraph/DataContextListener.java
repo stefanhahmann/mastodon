@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.datagraph;
 
 import java.util.Iterator;
@@ -43,25 +44,24 @@ import org.mastodon.views.context.ContextListener;
  * Context&lt;V&gt;} and forwards them to a {@link ContextListener
  * ContextListener &lt;DataVertex&gt;}.
  *
- * @param <V>
- *            model vertex type.
- *
+ * @param <V> model vertex type.
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  */
-public class DataContextListener< V extends Vertex< ? > & HasTimepoint & HasLabel > implements ContextListener< V >
+public class DataContextListener<V extends Vertex<?> & HasTimepoint & HasLabel>
+	implements ContextListener<V>
 {
-	private final GraphIdBimap< V, ? > idmap;
 
-	private final DataGraph< ?, ? > graph;
+	private final GraphIdBimap<V, ?> idmap;
 
-	private ContextListener< DataVertex > listener;
+	private final DataGraph<?, ?> graph;
 
-	private Context< V > previousContext;
+	private ContextListener<DataVertex> listener;
 
-	private DataContext< V > dataContext;
+	private Context<V> previousContext;
 
-	public DataContextListener( final DataGraph< V, ? > graph )
-	{
+	private DataContext<V> dataContext;
+
+	public DataContextListener(final DataGraph<V, ?> graph) {
 		this.idmap = graph.getGraphIdBimap();
 		this.graph = graph;
 		listener = null;
@@ -70,37 +70,36 @@ public class DataContextListener< V extends Vertex< ? > & HasTimepoint & HasLabe
 	}
 
 	@Override
-	public synchronized void contextChanged( final Context< V > context )
-	{
-		if ( previousContext != context )
-		{
+	public synchronized void contextChanged(final Context<V> context) {
+		if (previousContext != context) {
 			previousContext = context;
-			dataContext = ( context == null )
-					? null
-					: new DataContext<>( idmap, graph, context );
+			dataContext = (context == null)
+				? null
+				: new DataContext<>(idmap, graph, context);
 		}
-		if ( listener != null )
-			listener.contextChanged( dataContext );
+		if (listener != null)
+			listener.contextChanged(dataContext);
 	}
 
-	public synchronized void setContextListener( final ContextListener< DataVertex > l )
+	public synchronized void setContextListener(
+		final ContextListener<DataVertex> l)
 	{
 		listener = l;
-		listener.contextChanged( dataContext );
+		listener.contextChanged(dataContext);
 	}
 
-	static class DataContext< V > implements Context< DataVertex >
-	{
-		private final GraphIdBimap< V, ? > idmap;
+	static class DataContext<V> implements Context<DataVertex> {
 
-		private final DataGraph< ?, ? > graph;
+		private final GraphIdBimap<V, ?> idmap;
 
-		private final Context< V > context;
+		private final DataGraph<?, ?> graph;
+
+		private final Context<V> context;
 
 		public DataContext(
-				final GraphIdBimap< V, ? > idmap,
-				final DataGraph< ?, ? > graph,
-				final Context< V > context )
+			final GraphIdBimap<V, ?> idmap,
+			final DataGraph<?, ?> graph,
+			final Context<V> context)
 		{
 			this.idmap = idmap;
 			this.graph = graph;
@@ -108,37 +107,33 @@ public class DataContextListener< V extends Vertex< ? > & HasTimepoint & HasLabe
 		}
 
 		@Override
-		public Lock readLock()
-		{
+		public Lock readLock() {
 			return context.readLock();
 		}
 
 		@Override
-		public Iterable< DataVertex > getInsideVertices( final int timepoint )
-		{
-			final Iterable< V > insideVertices = context.getInsideVertices( timepoint );
+		public Iterable<DataVertex> getInsideVertices(final int timepoint) {
+			final Iterable<V> insideVertices = context.getInsideVertices(timepoint);
 
-			return new Iterable< DataVertex >()
-			{
+			return new Iterable<DataVertex>() {
+
 				@Override
-				public Iterator< DataVertex > iterator()
-				{
-					return new Iterator< DataVertex >()
-					{
-						private final Iterator< V > it = insideVertices.iterator();
+				public Iterator<DataVertex> iterator() {
+					return new Iterator<DataVertex>() {
+
+						private final Iterator<V> it = insideVertices.iterator();
 
 						private final DataVertex ref = graph.vertexRef();
 
 						@Override
-						public boolean hasNext()
-						{
+						public boolean hasNext() {
 							return it.hasNext();
 						}
 
 						@Override
-						public DataVertex next()
-						{
-							return graph.getDataVertexForModelId( idmap.getVertexId( it.next() ), ref );
+						public DataVertex next() {
+							return graph.getDataVertexForModelId(idmap.getVertexId(it.next()),
+								ref);
 						}
 					};
 				}
@@ -146,8 +141,7 @@ public class DataContextListener< V extends Vertex< ? > & HasTimepoint & HasLabe
 		}
 
 		@Override
-		public int getTimepoint()
-		{
+		public int getTimepoint() {
 			return context.getTimepoint();
 		}
 	}

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme;
 
 /**
@@ -33,8 +34,8 @@ package org.mastodon.views.trackscheme;
  *
  * @author Jean-Yves Tinevez
  */
-public class ScreenColumn
-{
+public class ScreenColumn {
+
 	/**
 	 * The label of the column.
 	 */
@@ -50,8 +51,7 @@ public class ScreenColumn
 	 */
 	public final int width;
 
-	public ScreenColumn( final String label, final int xLeft, final int width )
-	{
+	public ScreenColumn(final String label, final int xLeft, final int width) {
 		this.label = label;
 		this.xLeft = xLeft;
 		this.width = width;

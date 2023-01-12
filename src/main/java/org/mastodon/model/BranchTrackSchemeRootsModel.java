@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model;
 
 import org.mastodon.adapter.RefBimap;
@@ -42,8 +43,9 @@ import org.mastodon.views.trackscheme.TrackSchemeVertex;
 import java.util.List;
 
 public class BranchTrackSchemeRootsModel
-		implements RootsModel<TrackSchemeVertex>
+	implements RootsModel<TrackSchemeVertex>
 {
+
 	private final ModelGraph modelGraph;
 
 	private final ModelBranchGraph branchGraph;
@@ -52,44 +54,45 @@ public class BranchTrackSchemeRootsModel
 
 	private final RefArrayList<Spot> list;
 
-	public BranchTrackSchemeRootsModel( ModelGraph graph, ModelBranchGraph branchGraph, TrackSchemeGraph<BranchSpot, BranchLink> viewGraph )
+	public BranchTrackSchemeRootsModel(ModelGraph graph,
+		ModelBranchGraph branchGraph,
+		TrackSchemeGraph<BranchSpot, BranchLink> viewGraph)
 	{
 		this.modelGraph = graph;
 		this.branchGraph = branchGraph;
 		this.viewGraph = viewGraph;
-		this.list = new RefArrayList<>( graph.vertices().getRefPool() );
+		this.list = new RefArrayList<>(graph.vertices().getRefPool());
 	}
 
 	@Override
-	public void setRoots( List<TrackSchemeVertex> roots )
-	{
+	public void setRoots(List<TrackSchemeVertex> roots) {
 		list.clear();
 		Spot spotRef = modelGraph.vertexRef();
-		RefBimap<BranchSpot, TrackSchemeVertex> vertexMap = viewGraph.getVertexMap();
-		for ( TrackSchemeVertex root : roots )
-		{
-			BranchSpot branchSpot = vertexMap.getLeft( root );
-			Spot spot = branchGraph.getFirstLinkedVertex( branchSpot, spotRef );
-			list.add( spot );
+		RefBimap<BranchSpot, TrackSchemeVertex> vertexMap = viewGraph
+			.getVertexMap();
+		for (TrackSchemeVertex root : roots) {
+			BranchSpot branchSpot = vertexMap.getLeft(root);
+			Spot spot = branchGraph.getFirstLinkedVertex(branchSpot, spotRef);
+			list.add(spot);
 		}
-		modelGraph.releaseRef( spotRef );
+		modelGraph.releaseRef(spotRef);
 	}
 
 	@Override
-	public RefList<TrackSchemeVertex> getRoots()
-	{
-		RefArrayList<TrackSchemeVertex> roots = new RefArrayList<>( viewGraph.getVertexPool() );
-		RefBimap<BranchSpot, TrackSchemeVertex> vertexMap = viewGraph.getVertexMap();
+	public RefList<TrackSchemeVertex> getRoots() {
+		RefArrayList<TrackSchemeVertex> roots = new RefArrayList<>(viewGraph
+			.getVertexPool());
+		RefBimap<BranchSpot, TrackSchemeVertex> vertexMap = viewGraph
+			.getVertexMap();
 		BranchSpot branchSpotRef = branchGraph.vertexRef();
 		TrackSchemeVertex vertexRef = viewGraph.vertexRef();
-		for ( Spot root : list )
-		{
-			BranchSpot branchSpot = branchGraph.getBranchVertex( root, branchSpotRef );
-			TrackSchemeVertex vertex = vertexMap.getRight( branchSpot, vertexRef );
-			roots.add( vertex );
+		for (Spot root : list) {
+			BranchSpot branchSpot = branchGraph.getBranchVertex(root, branchSpotRef);
+			TrackSchemeVertex vertex = vertexMap.getRight(branchSpot, vertexRef);
+			roots.add(vertex);
 		}
-		viewGraph.releaseRef( vertexRef );
-		branchGraph.releaseRef( branchSpotRef );
+		viewGraph.releaseRef(vertexRef);
+		branchGraph.releaseRef(branchSpotRef);
 		return roots;
 	}
 }

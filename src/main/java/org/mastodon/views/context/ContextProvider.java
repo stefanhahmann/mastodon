@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.context;
 
 import org.scijava.listeners.Listeners;
@@ -35,13 +36,11 @@ import org.scijava.listeners.Listeners;
  * an identifying {@link #getName() name} (which is not enforced to be unique)
  * to use in {@code ContextChooserPanel} UI.
  *
- * @param <V>
- *            the type of objects the context is defined for.
- *
+ * @param <V> the type of objects the context is defined for.
  * @author Tobias Pietzsch
  */
-public interface ContextProvider< V >
-{
+public interface ContextProvider<V> {
+
 	public String getName();
 
 	/**
@@ -53,5 +52,5 @@ public interface ContextProvider< V >
 	 *
 	 * @return the listeners.
 	 */
-	public Listeners< ContextListener< V > > listeners();
+	public Listeners<ContextListener<V>> listeners();
 }

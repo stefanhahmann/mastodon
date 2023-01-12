@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature;
 
 import static org.mastodon.feature.FeatureProjectionKey.key;
@@ -48,77 +49,73 @@ import org.mastodon.mamut.model.Spot;
 import org.mastodon.properties.DoublePropertyMap;
 import org.scijava.plugin.Plugin;
 
-public class SpotCenterIntensityFeature implements Feature< Spot >
-{
+public class SpotCenterIntensityFeature implements Feature<Spot> {
+
 	public static final String KEY = "Spot center intensity";
 
 	private static final String HELP_STRING =
-			"Computes the intensity at the center of spots by taking the mean of pixel intensity "
-					+ "weigthted by a gaussian. The gaussian weights are centered int the spot, "
-					+ "and have a sigma value equal to the minimal radius of the ellipsoid divided by "
-					+ SpotCenterIntensityFeatureComputer.SIGMA_FACTOR + ".";
+		"Computes the intensity at the center of spots by taking the mean of pixel intensity " +
+			"weigthted by a gaussian. The gaussian weights are centered int the spot, " +
+			"and have a sigma value equal to the minimal radius of the ellipsoid divided by " +
+			SpotCenterIntensityFeatureComputer.SIGMA_FACTOR + ".";
 
-	public static final FeatureProjectionSpec PROJECTION_SPEC = new FeatureProjectionSpec( "Center", Dimension.INTENSITY );
+	public static final FeatureProjectionSpec PROJECTION_SPEC =
+		new FeatureProjectionSpec("Center", Dimension.INTENSITY);
 
 	public static final Spec SPEC = new Spec();
 
-	@Plugin( type = FeatureSpec.class )
-	public static class Spec extends FeatureSpec< SpotCenterIntensityFeature, Spot >
+	@Plugin(type = FeatureSpec.class)
+	public static class Spec extends
+		FeatureSpec<SpotCenterIntensityFeature, Spot>
 	{
-		public Spec()
-		{
+
+		public Spec() {
 			super(
-					KEY,
-					HELP_STRING,
-					SpotCenterIntensityFeature.class,
-					Spot.class,
-					Multiplicity.ON_SOURCES,
-					PROJECTION_SPEC );
+				KEY,
+				HELP_STRING,
+				SpotCenterIntensityFeature.class,
+				Spot.class,
+				Multiplicity.ON_SOURCES,
+				PROJECTION_SPEC);
 		}
 	}
 
-	private final Map< FeatureProjectionKey, FeatureProjection< Spot > > projectionMap;
+	private final Map<FeatureProjectionKey, FeatureProjection<Spot>> projectionMap;
 
-	final List< DoublePropertyMap< Spot > > maps;
+	final List<DoublePropertyMap<Spot>> maps;
 
-	SpotCenterIntensityFeature( final List< DoublePropertyMap< Spot > > maps )
-	{
+	SpotCenterIntensityFeature(final List<DoublePropertyMap<Spot>> maps) {
 		this.maps = maps;
-		this.projectionMap = new LinkedHashMap<>( 2 * maps.size() );
-		for ( int iSource = 0; iSource < maps.size(); iSource++ )
-		{
-			final FeatureProjectionKey mkey = key( PROJECTION_SPEC, iSource );
-			projectionMap.put( mkey, FeatureProjections.project( mkey, maps.get( iSource ), Dimension.COUNTS_UNITS ) );
+		this.projectionMap = new LinkedHashMap<>(2 * maps.size());
+		for (int iSource = 0; iSource < maps.size(); iSource++) {
+			final FeatureProjectionKey mkey = key(PROJECTION_SPEC, iSource);
+			projectionMap.put(mkey, FeatureProjections.project(mkey, maps.get(
+				iSource), Dimension.COUNTS_UNITS));
 		}
 	}
 
-	public double getCenterIntensity( final Spot spot, final int source )
-	{
-		return maps.get( source ).getDouble( spot );
+	public double getCenterIntensity(final Spot spot, final int source) {
+		return maps.get(source).getDouble(spot);
 	}
 
 	@Override
-	public FeatureProjection< Spot > project( final FeatureProjectionKey key )
-	{
-		return projectionMap.get( key );
+	public FeatureProjection<Spot> project(final FeatureProjectionKey key) {
+		return projectionMap.get(key);
 	}
 
 	@Override
-	public Set< FeatureProjection< Spot > > projections()
-	{
-		return new LinkedHashSet<>( projectionMap.values() );
+	public Set<FeatureProjection<Spot>> projections() {
+		return new LinkedHashSet<>(projectionMap.values());
 	}
 
 	@Override
-	public Spec getSpec()
-	{
+	public Spec getSpec() {
 		return SPEC;
 	}
 
 	@Override
-	public void invalidate( final Spot spot )
-	{
-		for ( final DoublePropertyMap< Spot > map : maps )
-			map.remove( spot );
+	public void invalidate(final Spot spot) {
+		for (final DoublePropertyMap<Spot> map : maps)
+			map.remove(spot);
 	}
 }

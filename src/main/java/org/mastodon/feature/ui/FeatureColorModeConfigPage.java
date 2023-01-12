@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.feature.ui;
 
 import javax.swing.JPanel;
@@ -40,89 +41,91 @@ import bdv.ui.settings.SelectAndEditProfileSettingsPage;
 import bdv.ui.settings.style.StyleProfile;
 import bdv.ui.settings.style.StyleProfileManager;
 
-public class FeatureColorModeConfigPage extends SelectAndEditProfileSettingsPage< StyleProfile< FeatureColorMode > >
+public class FeatureColorModeConfigPage extends
+	SelectAndEditProfileSettingsPage<StyleProfile<FeatureColorMode>>
 {
+
 	public FeatureColorModeConfigPage(
-			final String treePath,
-			final FeatureColorModeManager featureColorModeManager,
-			final FeatureProjectionsManager featureProjectionsManager,
-			final String vertexName, 
-			final String edgeName )
+		final String treePath,
+		final FeatureColorModeManager featureColorModeManager,
+		final FeatureProjectionsManager featureProjectionsManager,
+		final String vertexName,
+		final String edgeName)
 	{
-		super( treePath,
-				new StyleProfileManager<>( featureColorModeManager, new FeatureColorModeManager( false ) ),
-				new FeatureColorModelEditPanel(
-						featureColorModeManager.getSelectedStyle(),
-						featureProjectionsManager,
-						vertexName,
-						edgeName ) );
+		super(treePath,
+			new StyleProfileManager<>(featureColorModeManager,
+				new FeatureColorModeManager(false)),
+			new FeatureColorModelEditPanel(
+				featureColorModeManager.getSelectedStyle(),
+				featureProjectionsManager,
+				vertexName,
+				edgeName));
 	}
 
-	public static class FeatureColorModelEditPanel implements FeatureColorMode.UpdateListener, SelectAndEditProfileSettingsPage.ProfileEditPanel< StyleProfile< FeatureColorMode > >
+	public static class FeatureColorModelEditPanel implements
+		FeatureColorMode.UpdateListener,
+		SelectAndEditProfileSettingsPage.ProfileEditPanel<StyleProfile<FeatureColorMode>>
 	{
 
 		private final FeatureColorMode editedMode;
 
-		private final SynchronizedList< ModificationListener > modificationListeners;
+		private final SynchronizedList<ModificationListener> modificationListeners;
 
 		private final FeatureColorModeEditorPanel featureColorModeEditorPanel;
 
 		private boolean trackModifications = true;
 
 		public FeatureColorModelEditPanel(
-				final FeatureColorMode initialMode,
-				final FeatureProjectionsManager featureProjectionsManager,
-				final String vertexName,
-				final String edgeName )
+			final FeatureColorMode initialMode,
+			final FeatureProjectionsManager featureProjectionsManager,
+			final String vertexName,
+			final String edgeName)
 		{
-			this.editedMode = initialMode.copy( "Edited" );
+			this.editedMode = initialMode.copy("Edited");
 			this.featureColorModeEditorPanel = new FeatureColorModeEditorPanel(
-					editedMode,
-					featureProjectionsManager.getFeatureRangeCalculator(),
-					vertexName,
-					edgeName );
-			featureColorModeEditorPanel.setAvailableFeatureProjections( featureProjectionsManager.getAvailableFeatureProjections() );
-			featureProjectionsManager.listeners().add( () -> {
-				featureColorModeEditorPanel.setAvailableFeatureProjections( featureProjectionsManager.getAvailableFeatureProjections() );
-			} );
+				editedMode,
+				featureProjectionsManager.getFeatureRangeCalculator(),
+				vertexName,
+				edgeName);
+			featureColorModeEditorPanel.setAvailableFeatureProjections(
+				featureProjectionsManager.getAvailableFeatureProjections());
+			featureProjectionsManager.listeners().add(() -> {
+				featureColorModeEditorPanel.setAvailableFeatureProjections(
+					featureProjectionsManager.getAvailableFeatureProjections());
+			});
 			this.modificationListeners = new Listeners.SynchronizedList<>();
-			editedMode.updateListeners().add( this );
+			editedMode.updateListeners().add(this);
 		}
 
 		@Override
-		public Listeners< ModificationListener > modificationListeners()
-		{
+		public Listeners<ModificationListener> modificationListeners() {
 			return modificationListeners;
 		}
 
 		@Override
-		public void loadProfile( final StyleProfile< FeatureColorMode > profile )
-		{
+		public void loadProfile(final StyleProfile<FeatureColorMode> profile) {
 			trackModifications = false;
-			editedMode.set( profile.getStyle() );
+			editedMode.set(profile.getStyle());
 			trackModifications = true;
 		}
 
 		@Override
-		public void storeProfile( final StyleProfile< FeatureColorMode > profile )
-		{
+		public void storeProfile(final StyleProfile<FeatureColorMode> profile) {
 			trackModifications = false;
-			editedMode.setName( profile.getStyle().getName() );
+			editedMode.setName(profile.getStyle().getName());
 			trackModifications = true;
-			profile.getStyle().set( editedMode );
+			profile.getStyle().set(editedMode);
 		}
 
 		@Override
-		public JPanel getJPanel()
-		{
+		public JPanel getJPanel() {
 			return featureColorModeEditorPanel;
 		}
 
 		@Override
-		public void featureColorModeChanged()
-		{
-			if ( trackModifications )
-				modificationListeners.list.forEach( ModificationListener::setModified );
+		public void featureColorModeChanged() {
+			if (trackModifications)
+				modificationListeners.list.forEach(ModificationListener::setModified);
 		}
 	}
 }

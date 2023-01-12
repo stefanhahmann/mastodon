@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.bdv.export;
 
 import java.awt.image.BufferedImage;
@@ -47,8 +48,7 @@ import io.humble.video.Rational;
 import io.humble.video.awt.MediaPictureConverter;
 import io.humble.video.awt.MediaPictureConverterFactory;
 
-public class MovieFileBDVRecorder extends AbstractBDVRecorder
-{
+public class MovieFileBDVRecorder extends AbstractBDVRecorder {
 
 	private final String filename;
 
@@ -65,110 +65,106 @@ public class MovieFileBDVRecorder extends AbstractBDVRecorder
 	private MediaPacket packet;
 
 	protected MovieFileBDVRecorder(
-			final ViewerPanel viewer,
-			final OverlayGraphRenderer< ?, ? > tracksOverlay,
-			final ColorBarOverlay colorBarOverlay,
-			final ProgressWriter progressWriter,
-			final String filename,
-			final int fps )
+		final ViewerPanel viewer,
+		final OverlayGraphRenderer<?, ?> tracksOverlay,
+		final ColorBarOverlay colorBarOverlay,
+		final ProgressWriter progressWriter,
+		final String filename,
+		final int fps)
 	{
-		super( viewer, tracksOverlay, colorBarOverlay, progressWriter );
+		super(viewer, tracksOverlay, colorBarOverlay, progressWriter);
 		this.filename = filename;
 		this.fps = fps;
 	}
 
 	@Override
-	protected void initializeRecorder( final int w, final int h )
-	{
+	protected void initializeRecorder(final int w, final int h) {
 		/*
 		 * Make sure we only get even numbers for width and height.
 		 */
-		final int width = Math.round( w / 2 ) * 2;
-		final int height = Math.round( h / 2 ) * 2;
+		final int width = Math.round(w / 2) * 2;
+		final int height = Math.round(h / 2) * 2;
 
 		/*
 		 * First we create a muxer using the filename to determine code and
 		 * format.
 		 */
-		final Rational framerate = Rational.make( 1, fps );
-		this.muxer = Muxer.make( filename, null, null );
+		final Rational framerate = Rational.make(1, fps);
+		this.muxer = Muxer.make(filename, null, null);
 
 		// Determine codec.
 		final MuxerFormat format = muxer.getFormat();
-		final Codec codec = Codec.findEncodingCodec( format.getDefaultVideoCodecId() );
+		final Codec codec = Codec.findEncodingCodec(format
+			.getDefaultVideoCodecId());
 
 		// Create an encoder.
-		encoder = Encoder.make( codec );
-		encoder.setWidth( width );
-		encoder.setHeight( height );
+		encoder = Encoder.make(codec);
+		encoder.setWidth(width);
+		encoder.setHeight(height);
 		// Default pixel format, assuming it's the most used by codecs.
 		final PixelFormat.Type pixelformat = PixelFormat.Type.PIX_FMT_YUV420P;
-		encoder.setPixelFormat( pixelformat );
-		encoder.setTimeBase( framerate );
+		encoder.setPixelFormat(pixelformat);
+		encoder.setTimeBase(framerate);
 
 		// Global headers if needed.
-		if ( format.getFlag( MuxerFormat.Flag.GLOBAL_HEADER ) )
-			encoder.setFlag( Encoder.Flag.FLAG_GLOBAL_HEADER, true );
+		if (format.getFlag(MuxerFormat.Flag.GLOBAL_HEADER))
+			encoder.setFlag(Encoder.Flag.FLAG_GLOBAL_HEADER, true);
 
 		// Open the encoder.
-		encoder.open( null, null );
+		encoder.open(null, null);
 
 		// Add this stream to the muxer.
-		muxer.addNewStream( encoder );
+		muxer.addNewStream(encoder);
 
 		// And open the muxer for business.
-		try
-		{
-			muxer.open( null, null );
+		try {
+			muxer.open(null, null);
 		}
-		catch ( InterruptedException | IOException e )
-		{
+		catch (InterruptedException | IOException e) {
 			e.printStackTrace();
 		}
 
 		this.picture = MediaPicture.make(
-				encoder.getWidth(),
-				encoder.getHeight(),
-				pixelformat );
-		picture.setTimeBase( framerate );
+			encoder.getWidth(),
+			encoder.getHeight(),
+			pixelformat);
+		picture.setTimeBase(framerate);
 
 		packet = MediaPacket.make();
 	}
 
 	@Override
-	protected void writeFrame( final BufferedImage frame, final int timepoint )
-	{
+	protected void writeFrame(final BufferedImage frame, final int timepoint) {
 		// Convert BI type to something Humble can harness.
 		// Also crop in case we had non-even dimensions.
-		final BufferedImage convertedImg = new BufferedImage( picture.getWidth(), picture.getHeight(), BufferedImage.TYPE_3BYTE_BGR );
-		convertedImg.getGraphics().drawImage( frame, 0, 0, null );
+		final BufferedImage convertedImg = new BufferedImage(picture.getWidth(),
+			picture.getHeight(), BufferedImage.TYPE_3BYTE_BGR);
+		convertedImg.getGraphics().drawImage(frame, 0, 0, null);
 
-		if ( converter == null )
-			converter = MediaPictureConverterFactory.createConverter( convertedImg, picture );
+		if (converter == null)
+			converter = MediaPictureConverterFactory.createConverter(convertedImg,
+				picture);
 
-		converter.toPicture( picture, convertedImg, timepoint );
+		converter.toPicture(picture, convertedImg, timepoint);
 
 		// Write to output video stream.
-		do
-		{
-			encoder.encode( packet, picture );
-			if ( packet.isComplete() )
-				muxer.write( packet, false );
+		do {
+			encoder.encode(packet, picture);
+			if (packet.isComplete())
+				muxer.write(packet, false);
 		}
-		while ( packet.isComplete() );
+		while (packet.isComplete());
 	}
 
 	@Override
-	protected void closeRecorder()
-	{
+	protected void closeRecorder() {
 		// Flush.
-		do
-		{
-			encoder.encode( packet, null );
-			if ( packet.isComplete() )
-				muxer.write( packet, false );
+		do {
+			encoder.encode(packet, null);
+			if (packet.isComplete())
+				muxer.write(packet, false);
 		}
-		while ( packet.isComplete() );
+		while (packet.isComplete());
 
 		// Close.
 		muxer.close();

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.app;
 
 import org.mastodon.app.plugin.MastodonPlugins;
@@ -58,29 +59,25 @@ import org.scijava.ui.behaviour.util.Actions;
  *
  * @author Jean-Yves Tinevez
  * @author Tobias Pietzsch
- * @param <M>
- *            the type of the model used in the application.
- * @param <V>
- *            the type of vertices in the model graph.
- * @param <E>
- *            the type of edges in the model graph.
+ * @param <M> the type of the model used in the application.
+ * @param <V> the type of vertices in the model graph.
+ * @param <E> the type of edges in the model graph.
  */
-public class MastodonAppModel<
-		M extends AbstractModel< ?, V, E >,
-		V extends AbstractSpot< V, E, ?, ?, ? >,
-		E extends AbstractListenableEdge< E, V, ?, ? > >
-{
-	public final GroupableModelFactory< NavigationHandler< V, E > > NAVIGATION = new ForwardingNavigationHandler.Factory<>();
+public class MastodonAppModel<M extends AbstractModel<?, V, E>, V extends AbstractSpot<V, E, ?, ?, ?>, E extends AbstractListenableEdge<E, V, ?, ?>> {
 
-	public final GroupableModelFactory< TimepointModel > TIMEPOINT = ForwardingTimepointModel.factory;
+	public final GroupableModelFactory<NavigationHandler<V, E>> NAVIGATION =
+		new ForwardingNavigationHandler.Factory<>();
+
+	public final GroupableModelFactory<TimepointModel> TIMEPOINT =
+		ForwardingTimepointModel.factory;
 
 	private final M model;
 
-	private final SelectionModel< V, E > selectionModel;
+	private final SelectionModel<V, E> selectionModel;
 
-	private final HighlightModel< V, E > highlightModel;
+	private final HighlightModel<V, E> highlightModel;
 
-	private final FocusModel< V, E > focusModel;
+	private final FocusModel<V, E> focusModel;
 
 	private final GroupManager groupManager;
 
@@ -88,7 +85,7 @@ public class MastodonAppModel<
 
 	private final KeymapManager keymapManager;
 
-	private final MastodonPlugins< ?, ? > plugins;
+	private final MastodonPlugins<?, ?> plugins;
 
 	private final String[] keyConfigContexts;
 
@@ -106,109 +103,95 @@ public class MastodonAppModel<
 	/**
 	 * Instantiate a new Mastodon-app model.
 	 *
-	 * @param numGroups
-	 *            the number of groups to create in the group manager,
-	 * @param model
-	 *            the data model.
-	 * @param keyPressedManager
-	 *            the key-pressed manager.
-	 * @param keymapManager
-	 *            the keymap manager.
-	 * @param plugins
-	 *            the plugins.
-	 * @param globalActions
-	 *            the global actions.
-	 * @param keyConfigContexts
-	 *            keyconf contexts for appActions (actions that should be
-	 *            available in all views)
+	 * @param numGroups the number of groups to create in the group manager,
+	 * @param model the data model.
+	 * @param keyPressedManager the key-pressed manager.
+	 * @param keymapManager the keymap manager.
+	 * @param plugins the plugins.
+	 * @param globalActions the global actions.
+	 * @param keyConfigContexts keyconf contexts for appActions (actions that
+	 *          should be available in all views)
 	 */
 	public MastodonAppModel(
-			final int numGroups,
-			final M model,
-			final KeyPressedManager keyPressedManager,
-			final KeymapManager keymapManager,
-			final MastodonPlugins< ?, ? > plugins,
-			final Actions globalActions,
-			final String[] keyConfigContexts )
+		final int numGroups,
+		final M model,
+		final KeyPressedManager keyPressedManager,
+		final KeymapManager keymapManager,
+		final MastodonPlugins<?, ?> plugins,
+		final Actions globalActions,
+		final String[] keyConfigContexts)
 	{
 		this.model = model;
 		this.plugins = plugins;
 		this.globalActions = globalActions;
 
-		final ListenableReadOnlyGraph< V, E > graph = model.getGraph();
-		final GraphIdBimap< V, E > idmap = model.getGraphIdBimap();
+		final ListenableReadOnlyGraph<V, E> graph = model.getGraph();
+		final GraphIdBimap<V, E> idmap = model.getGraphIdBimap();
 
-		final DefaultSelectionModel< V, E > selectionModel = new DefaultSelectionModel<>( graph, idmap );
-		graph.addGraphListener( selectionModel );
+		final DefaultSelectionModel<V, E> selectionModel =
+			new DefaultSelectionModel<>(graph, idmap);
+		graph.addGraphListener(selectionModel);
 		this.selectionModel = selectionModel;
 
-		final DefaultHighlightModel< V, E > highlightModel = new DefaultHighlightModel<>( idmap );
-		graph.addGraphListener( highlightModel );
+		final DefaultHighlightModel<V, E> highlightModel =
+			new DefaultHighlightModel<>(idmap);
+		graph.addGraphListener(highlightModel);
 		this.highlightModel = highlightModel;
 
-		final DefaultFocusModel< V, E > focusModel = new DefaultFocusModel<>( idmap );
-		graph.addGraphListener( focusModel );
+		final DefaultFocusModel<V, E> focusModel = new DefaultFocusModel<>(idmap);
+		graph.addGraphListener(focusModel);
 		this.focusModel = focusModel;
 
-		groupManager = new GroupManager( numGroups );
-		groupManager.registerModel( TIMEPOINT );
-		groupManager.registerModel( NAVIGATION );
+		groupManager = new GroupManager(numGroups);
+		groupManager.registerModel(TIMEPOINT);
+		groupManager.registerModel(NAVIGATION);
 
 		this.keyPressedManager = keyPressedManager;
 		this.keymapManager = keymapManager;
 		this.keyConfigContexts = keyConfigContexts;
 
-		final InputTriggerConfig keyconf = keymapManager.getForwardDefaultKeymap().getConfig();
-		this.appActions = new Actions( keyconf, keyConfigContexts );
+		final InputTriggerConfig keyconf = keymapManager.getForwardDefaultKeymap()
+			.getConfig();
+		this.appActions = new Actions(keyconf, keyConfigContexts);
 	}
 
-	public M getModel()
-	{
+	public M getModel() {
 		return model;
 	}
 
-	public SelectionModel< V, E > getSelectionModel()
-	{
+	public SelectionModel<V, E> getSelectionModel() {
 		return selectionModel;
 	}
 
-	public HighlightModel< V, E > getHighlightModel()
-	{
+	public HighlightModel<V, E> getHighlightModel() {
 		return highlightModel;
 	}
 
-	public FocusModel< V, E > getFocusModel()
-	{
+	public FocusModel<V, E> getFocusModel() {
 		return focusModel;
 	}
 
-	public GroupManager getGroupManager()
-	{
+	public GroupManager getGroupManager() {
 		return groupManager;
 	}
 
-	public Keymap getKeymap()
-	{
+	public Keymap getKeymap() {
 		return keymapManager.getForwardDefaultKeymap();
 	}
 
-	public String[] getKeyConfigContexts()
-	{
+	public String[] getKeyConfigContexts() {
 		return keyConfigContexts;
 	}
 
-	public KeyPressedManager getKeyPressedManager()
-	{
+	public KeyPressedManager getKeyPressedManager() {
 		return keyPressedManager;
 	}
 
-	public KeymapManager getKeymapManager()
-	{
+	public KeymapManager getKeymapManager() {
 		return keymapManager;
 	}
 
-	public MastodonPlugins< ?, ? > getPlugins()
-	{
+	public MastodonPlugins<?, ?> getPlugins() {
 		return plugins;
 	}
 
@@ -217,8 +200,7 @@ public class MastodonAppModel<
 	 *
 	 * @return the application actions.
 	 */
-	public Actions getAppActions()
-	{
+	public Actions getAppActions() {
 		return appActions;
 	}
 
@@ -228,8 +210,7 @@ public class MastodonAppModel<
 	 *
 	 * @return the global actions.
 	 */
-	public Actions getGlobalActions()
-	{
+	public Actions getGlobalActions() {
 		return globalActions;
 	}
 }

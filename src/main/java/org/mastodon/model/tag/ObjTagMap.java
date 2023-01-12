@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model.tag;
 
 import java.util.Collection;
@@ -50,52 +51,44 @@ import org.mastodon.properties.ObjPropertyMap;
  * {@code DefaultObjTagMap}s).
  * </p>
  *
- * @param <O>
- *            the type of object to tag.
- * @param <T>
- *            the type of tags.
- *
+ * @param <O> the type of object to tag.
+ * @param <T> the type of tags.
  * @author Jean-Yves Tinevez
  * @author Tobias Pietzsch
  */
-public interface ObjTagMap< O, T >
-{
+public interface ObjTagMap<O, T> {
+
 	/**
 	 * Tags the object with the specified {@code tag}. The specified {@code tag}
 	 * may be {@code null}, in which case the object is un-tagged (see
 	 * {@link #remove(Object)}).
 	 *
-	 * @param object
-	 *            the object to tag.
-	 * @param tag
-	 *            the tag to apply.
+	 * @param object the object to tag.
+	 * @param tag the tag to apply.
 	 */
-	void set( final O object, final T tag );
+	void set(final O object, final T tag);
 
 	/**
 	 * Un-tag the specified object.
 	 *
-	 * @param object
-	 *            the object whose tag to remove.
+	 * @param object the object whose tag to remove.
 	 */
-	void remove( final O object );
+	void remove(final O object);
 
 	/**
 	 * Returns the tag of the specified object.
 	 *
-	 * @param object
-	 *            the object.
+	 * @param object the object.
 	 * @return the tag, may be {@code null}.
 	 */
-	T get( final O object );
+	T get(final O object);
 
 	/**
 	 * Returns an unmodifiable collection containing all the objects that are
 	 * tagged with the specified tag.
 	 *
-	 * @param tag
-	 *            the tag to query.
+	 * @param tag the tag to query.
 	 * @return the collection of objects.
 	 */
-	Collection< O > getTaggedWith( final Tag tag );
+	Collection<O> getTaggedWith(final Tag tag);
 }

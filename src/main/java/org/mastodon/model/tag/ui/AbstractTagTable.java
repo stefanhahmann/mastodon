@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model.tag.ui;
 
 import static javax.swing.JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT;
@@ -62,94 +63,87 @@ import org.scijava.listeners.Listeners;
 import org.scijava.ui.behaviour.io.InputTriggerConfig;
 import org.scijava.ui.behaviour.util.Actions;
 
-public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, ? >.Element >
-{
-	private static final ImageIcon ADD_ICON = new ImageIcon( AbstractTagTable.class.getResource( "add.png" ) );
+public abstract class AbstractTagTable<C, T, E extends AbstractTagTable<?, T, ?>.Element> {
 
-	private static final ImageIcon REMOVE_ICON = new ImageIcon( AbstractTagTable.class.getResource( "delete.png" ) );
+	private static final ImageIcon ADD_ICON = new ImageIcon(AbstractTagTable.class
+		.getResource("add.png"));
 
-	public class Element
-	{
+	private static final ImageIcon REMOVE_ICON = new ImageIcon(
+		AbstractTagTable.class.getResource("delete.png"));
+
+	public class Element {
+
 		protected final T wrapped;
 
-		public Element( final T wrapped )
-		{
+		public Element(final T wrapped) {
 			this.wrapped = wrapped;
 		}
 
-		public String getName()
-		{
-			return wrapped == null ? "" : getName.apply( wrapped );
+		public String getName() {
+			return wrapped == null ? "" : getName.apply(wrapped);
 		}
 
-		public void setName( final String name )
-		{
-			if ( wrapped != null )
-				setName.accept( wrapped, name );
+		public void setName(final String name) {
+			if (wrapped != null)
+				setName.accept(wrapped, name);
 		}
 	}
 
-	public abstract class Elements
-	{
+	public abstract class Elements {
+
 		protected final C wrapped;
 
 		private final E dummyElement;
 
-		public Elements( final C wrapped )
-		{
+		public Elements(final C wrapped) {
 			this.wrapped = wrapped;
-			dummyElement = wrap( null );
+			dummyElement = wrap(null);
 		}
 
-		protected abstract E wrap( final T wrapped );
+		protected abstract E wrap(final T wrapped);
 
-		public E getDummyElement()
-		{
+		public E getDummyElement() {
 			return dummyElement;
 		}
 
-		public E addElement()
-		{
-			return wrap( addElement.apply( wrapped ) );
+		public E addElement() {
+			return wrap(addElement.apply(wrapped));
 		}
 
-		public int size()
-		{
-			return size.applyAsInt( wrapped );
+		public int size() {
+			return size.applyAsInt(wrapped);
 		}
 
-		public void remove( final E element )
-		{
-			remove.accept( wrapped, element.wrapped );
+		public void remove(final E element) {
+			remove.accept(wrapped, element.wrapped);
 		}
 
-		public E get( final int index )
-		{
-			return wrap( get.apply( wrapped, index ) );
+		public E get(final int index) {
+			return wrap(get.apply(wrapped, index));
 		}
 	}
 
-	public interface UpdateListener
-	{
+	public interface UpdateListener {
+
 		void modelUpdated();
 	}
 
-	public interface SelectionListener< T >
-	{
-		void selectionChanged( T selected );
+	public interface SelectionListener<T> {
+
+		void selectionChanged(T selected);
 	}
 
-	protected final Function< C, T > addElement;
+	protected final Function<C, T> addElement;
 
-	protected final ToIntFunction< C > size;
+	protected final ToIntFunction<C> size;
 
-	protected final BiConsumer< C, T > remove;
+	protected final BiConsumer<C, T> remove;
 
-	protected final BiFunction< C, Integer, T > get;
+	protected final BiFunction<C, Integer, T> get;
 
-	protected final BiConsumer< T, String > setName;
+	protected final BiConsumer<T, String> setName;
 
-	protected final Function< T, String > getName;
+	protected final Function<T, String> getName;
 
 	protected Elements elements;
 
@@ -163,19 +157,19 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 
 	protected final JScrollPane scrollPane;
 
-	private final Listeners.List< UpdateListener > updateListeners;
+	private final Listeners.List<UpdateListener> updateListeners;
 
-	private final Listeners.List< SelectionListener< T > > selectionListeners;
+	private final Listeners.List<SelectionListener<T>> selectionListeners;
 
 	protected AbstractTagTable(
-			final C elements,
-			final Function< C, T > addElement,
-			final ToIntFunction< C > size,
-			final BiConsumer< C, T > remove,
-			final BiFunction< C, Integer, T > get,
-			final BiConsumer< T, String > setName,
-			final Function< T, String > getName,
-			final int numAdditionalCols )
+		final C elements,
+		final Function<C, T> addElement,
+		final ToIntFunction<C> size,
+		final BiConsumer<C, T> remove,
+		final BiFunction<C, Integer, T> get,
+		final BiConsumer<T, String> setName,
+		final Function<T, String> getName,
+		final int numAdditionalCols)
 	{
 		this.addElement = addElement;
 		this.size = size;
@@ -188,149 +182,143 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 		buttonColumn = columnCount - 1; // buttons in last column
 
 		tableModel = new MyTableModel();
-		table = new JTable( tableModel );
+		table = new JTable(tableModel);
 		updateListeners = new Listeners.SynchronizedList<>();
 		selectionListeners = new Listeners.SynchronizedList<>();
 
-		table.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
-		table.setTableHeader( null );
-		table.setFillsViewportHeight( true );
-		table.setAutoResizeMode( JTable.AUTO_RESIZE_ALL_COLUMNS );
-		table.setRowHeight( 30 );
-		table.getSelectionModel().addListSelectionListener( e -> {
-			if ( e.getValueIsAdjusting() )
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setTableHeader(null);
+		table.setFillsViewportHeight(true);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setRowHeight(30);
+		table.getSelectionModel().addListSelectionListener(e -> {
+			if (e.getValueIsAdjusting())
 				return;
 			final int row = table.getSelectedRow();
-			final T selected = ( this.elements != null && row >= 0 && row < this.elements.size() )
-					? this.elements.get( row ).wrapped
+			final T selected = (this.elements != null && row >= 0 &&
+				row < this.elements.size())
+					? this.elements.get(row).wrapped
 					: null;
-			selectionListeners.list.forEach( l -> l.selectionChanged( selected ) );
-		} );
-		table.getColumnModel().getColumn( 0 ).setCellRenderer( new MyTagSetRenderer() );
-		table.getColumnModel().getColumn( 0 ).setCellEditor( new MyTagSetNameEditor() );
-		table.getColumnModel().getColumn( buttonColumn ).setCellRenderer( new MyButtonRenderer() );
-		table.getColumnModel().getColumn( buttonColumn ).setMaxWidth( 32 );
-		table.addMouseListener( new MyTableButtonMouseListener() );
-		table.setShowGrid( false );
-		table.setIntercellSpacing( new Dimension( 0,0 ) );
-		table.setSurrendersFocusOnKeystroke( true );
-		table.setFocusTraversalKeys( KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null );
-		table.setFocusTraversalKeys( KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null );
+			selectionListeners.list.forEach(l -> l.selectionChanged(selected));
+		});
+		table.getColumnModel().getColumn(0).setCellRenderer(new MyTagSetRenderer());
+		table.getColumnModel().getColumn(0).setCellEditor(new MyTagSetNameEditor());
+		table.getColumnModel().getColumn(buttonColumn).setCellRenderer(
+			new MyButtonRenderer());
+		table.getColumnModel().getColumn(buttonColumn).setMaxWidth(32);
+		table.addMouseListener(new MyTableButtonMouseListener());
+		table.setShowGrid(false);
+		table.setIntercellSpacing(new Dimension(0, 0));
+		table.setSurrendersFocusOnKeystroke(true);
+		table.setFocusTraversalKeys(KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS,
+			null);
+		table.setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS,
+			null);
 
-		ToolTipManager.sharedInstance().unregisterComponent( table );
+		ToolTipManager.sharedInstance().unregisterComponent(table);
 
-		final Actions actions = new Actions( table.getInputMap( WHEN_ANCESTOR_OF_FOCUSED_COMPONENT ), table.getActionMap(), new InputTriggerConfig() );
-		actions.runnableAction( this::editSelectedRow, "edit selected row", "ENTER" );
-		actions.runnableAction( this::removeSelectedRow, "remove selected row", "DELETE", "BACK_SPACE" );
+		final Actions actions = new Actions(table.getInputMap(
+			WHEN_ANCESTOR_OF_FOCUSED_COMPONENT), table.getActionMap(),
+			new InputTriggerConfig());
+		actions.runnableAction(this::editSelectedRow, "edit selected row", "ENTER");
+		actions.runnableAction(this::removeSelectedRow, "remove selected row",
+			"DELETE", "BACK_SPACE");
 
 		scrollPane = new JScrollPane();
-		scrollPane.setVerticalScrollBarPolicy( ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED );
+		scrollPane.setVerticalScrollBarPolicy(
+			ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
-		setElements( elements );
+		setElements(elements);
 	}
 
-	protected abstract Elements wrap( final C wrapped );
+	protected abstract Elements wrap(final C wrapped);
 
-	public void setElements( final C elements )
-	{
-		if ( elements == null )
-		{
-			scrollPane.setViewportView( new JPanel() );
+	public void setElements(final C elements) {
+		if (elements == null) {
+			scrollPane.setViewportView(new JPanel());
 			this.elements = null;
-			selectionListeners.list.forEach( l -> l.selectionChanged( null ) );
+			selectionListeners.list.forEach(l -> l.selectionChanged(null));
 		}
-		else
-		{
+		else {
 			final boolean install = this.elements == null;
-			this.elements = wrap( elements );
-			if ( install )
-				scrollPane.setViewportView( table );
+			this.elements = wrap(elements);
+			if (install)
+				scrollPane.setViewportView(table);
 			tableModel.fireTableDataChanged();
-			if ( table.getRowCount() > 0 )
-				table.setRowSelectionInterval( 0, 0 );
+			if (table.getRowCount() > 0)
+				table.setRowSelectionInterval(0, 0);
 		}
 	}
 
-	public JComponent getTable()
-	{
+	public JComponent getTable() {
 		return scrollPane;
 	}
 
-	protected void notifyListeners()
-	{
-		updateListeners.list.forEach( UpdateListener::modelUpdated );
+	protected void notifyListeners() {
+		updateListeners.list.forEach(UpdateListener::modelUpdated);
 	}
 
-	public Listeners< UpdateListener > updateListeners()
-	{
+	public Listeners<UpdateListener> updateListeners() {
 		return updateListeners;
 	}
 
-	public Listeners< SelectionListener< T > > selectionListeners()
-	{
+	public Listeners<SelectionListener<T>> selectionListeners() {
 		return selectionListeners;
 	}
 
 	/**
 	 * If a cell is currently being edited, cancel editing.
 	 */
-	public void cancelEditing()
-	{
+	public void cancelEditing() {
 		final TableCellEditor editor = table.getCellEditor();
-		if ( editor != null )
+		if (editor != null)
 			editor.cancelCellEditing();
 	}
 
 	/**
 	 * If a cell is currently being edited, stop editing.
 	 */
-	public void stopEditing()
-	{
+	public void stopEditing() {
 		final TableCellEditor editor = table.getCellEditor();
-		if ( editor != null )
+		if (editor != null)
 			editor.stopCellEditing();
 	}
 
-	private void addAndEditRow()
-	{
+	private void addAndEditRow() {
 		final int row = elements.size();
 		elements.addElement();
-		tableModel.fireTableRowsInserted( row, row );
-		table.setRowSelectionInterval( row, row );
-		table.editCellAt( row, 0 );
+		tableModel.fireTableRowsInserted(row, row);
+		table.setRowSelectionInterval(row, row);
+		table.editCellAt(row, 0);
 	}
 
-	private void removeSelectedRow()
-	{
+	private void removeSelectedRow() {
 		final int row = table.getSelectedRow();
-		if ( row >= 0 && row < elements.size() )
-		{
-			elements.remove( elements.get( row ) );
+		if (row >= 0 && row < elements.size()) {
+			elements.remove(elements.get(row));
 			notifyListeners();
-			tableModel.fireTableRowsDeleted( row, row );
-			final int s = Math.max( row - 1, 0 );
-			table.setRowSelectionInterval( s, s );
+			tableModel.fireTableRowsDeleted(row, row);
+			final int s = Math.max(row - 1, 0);
+			table.setRowSelectionInterval(s, s);
 		}
 	}
 
-	private void editSelectedRow()
-	{
+	private void editSelectedRow() {
 		final int row = table.getSelectedRow();
-		if ( row == elements.size() )
+		if (row == elements.size())
 			addAndEditRow();
-		else if ( row >= 0 )
-			table.editCellAt( row, 0 );
+		else if (row >= 0)
+			table.editCellAt(row, 0);
 	}
 
-	protected class MyTableModel extends AbstractTableModel
-	{
+	protected class MyTableModel extends AbstractTableModel {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public boolean isCellEditable( final int rowIndex, final int columnIndex )
-		{
+		public boolean isCellEditable(final int rowIndex, final int columnIndex) {
 			// last row (with the Add button) is not editable
-			if ( rowIndex == getRowCount() - 1 )
+			if (rowIndex == getRowCount() - 1)
 				return false;
 
 			// only the column with the element name is editable
@@ -338,77 +326,78 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 		}
 
 		@Override
-		public int getColumnCount()
-		{
+		public int getColumnCount() {
 			return columnCount;
 		}
 
 		@Override
-		public int getRowCount()
-		{
+		public int getRowCount() {
 			return elements.size() + 1;
 		}
 
 		@Override
-		public Object getValueAt( final int rowIndex, final int columnIndex )
-		{
-			if ( rowIndex >= getRowCount() )
+		public Object getValueAt(final int rowIndex, final int columnIndex) {
+			if (rowIndex >= getRowCount())
 				return null;
-			else if ( rowIndex == elements.size() )
+			else if (rowIndex == elements.size())
 				return elements.getDummyElement();
-			return elements.get( rowIndex );
+			return elements.get(rowIndex);
 		}
 	}
 
-	private class MyTagSetRenderer extends DefaultTableCellRenderer
-	{
+	private class MyTagSetRenderer extends DefaultTableCellRenderer {
+
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public Component getTableCellRendererComponent( final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column )
+		public Component getTableCellRendererComponent(final JTable table,
+			final Object value, final boolean isSelected, final boolean hasFocus,
+			final int row, final int column)
 		{
-			super.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column );
-			@SuppressWarnings( "unchecked" )
-			final String text = ( value == null ) ? null : ( ( Element ) value ).getName();
-			setText( text );
+			super.getTableCellRendererComponent(table, value, isSelected, hasFocus,
+				row, column);
+			@SuppressWarnings("unchecked")
+			final String text = (value == null) ? null : ((Element) value).getName();
+			setText(text);
 			return this;
 		}
 	}
 
-	private class MyButtonRenderer extends JButton implements TableCellRenderer
-	{
+	private class MyButtonRenderer extends JButton implements TableCellRenderer {
+
 		private static final long serialVersionUID = 1L;
 
-		public MyButtonRenderer()
-		{
-			setOpaque( true );
-			setBorderPainted( false );
+		public MyButtonRenderer() {
+			setOpaque(true);
+			setBorderPainted(false);
 		}
 
 		@Override
-		public Component getTableCellRendererComponent( final JTable table, final Object value,
-				final boolean isSelected, final boolean hasFocus, final int row, final int column )
+		public Component getTableCellRendererComponent(final JTable table,
+			final Object value,
+			final boolean isSelected, final boolean hasFocus, final int row,
+			final int column)
 		{
-			if ( row == elements.size() )
-				setIcon( ADD_ICON );
+			if (row == elements.size())
+				setIcon(ADD_ICON);
 			else
-				setIcon( REMOVE_ICON );
+				setIcon(REMOVE_ICON);
 			final boolean paintSelected = isSelected && !table.isEditing();
-			setForeground( paintSelected ? table.getSelectionForeground() : table.getForeground() );
-			setBackground( paintSelected ? table.getSelectionBackground() : table.getBackground() );
+			setForeground(paintSelected ? table.getSelectionForeground() : table
+				.getForeground());
+			setBackground(paintSelected ? table.getSelectionBackground() : table
+				.getBackground());
 			return this;
 		}
 	}
 
-	private class MyTableButtonMouseListener extends MouseAdapter
-	{
+	private class MyTableButtonMouseListener extends MouseAdapter {
+
 		@Override
-		public void mouseClicked( final MouseEvent e )
-		{
-			final int column = table.getColumnModel().getColumnIndexAtX( e.getX() );
-			if ( column == buttonColumn )
-			{
-				if ( table.getSelectedRow() == elements.size() )
+		public void mouseClicked(final MouseEvent e) {
+			final int column = table.getColumnModel().getColumnIndexAtX(e.getX());
+			if (column == buttonColumn) {
+				if (table.getSelectedRow() == elements.size())
 					addAndEditRow();
 				else
 					removeSelectedRow();
@@ -416,39 +405,38 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 		}
 	}
 
-	private class MyTagSetNameEditor extends DefaultCellEditor
-	{
+	private class MyTagSetNameEditor extends DefaultCellEditor {
+
 		private static final long serialVersionUID = 1L;
 
 		private Element edited;
 
-		public MyTagSetNameEditor()
-		{
-			super( new JTextField() );
-			setClickCountToStart( 2 );
-			addCellEditorListener( new CellEditorListener()
-			{
+		public MyTagSetNameEditor() {
+			super(new JTextField());
+			setClickCountToStart(2);
+			addCellEditorListener(new CellEditorListener() {
 
 				@Override
-				public void editingStopped( final ChangeEvent e )
-				{
-					edited.setName( getCellEditorValue().toString() );
+				public void editingStopped(final ChangeEvent e) {
+					edited.setName(getCellEditorValue().toString());
 					notifyListeners();
 				}
 
 				@Override
-				public void editingCanceled( final ChangeEvent e )
-				{}
-			} );
+				public void editingCanceled(final ChangeEvent e) {}
+			});
 		}
 
-		@SuppressWarnings( "unchecked" )
+		@SuppressWarnings("unchecked")
 		@Override
-		public Component getTableCellEditorComponent( final JTable table, final Object value, final boolean isSelected, final int row, final int column )
+		public Component getTableCellEditorComponent(final JTable table,
+			final Object value, final boolean isSelected, final int row,
+			final int column)
 		{
-			final JTextField editor = ( JTextField ) super.getTableCellEditorComponent( table, value, isSelected, row, column );
-			edited = ( Element ) value;
-			editor.setText( edited.getName() );
+			final JTextField editor = (JTextField) super.getTableCellEditorComponent(
+				table, value, isSelected, row, column);
+			edited = (Element) value;
+			editor.setText(edited.getName());
 			return editor;
 		}
 	}

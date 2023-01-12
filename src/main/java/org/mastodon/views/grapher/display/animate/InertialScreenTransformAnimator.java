@@ -26,13 +26,16 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.display.animate;
 
 import org.mastodon.views.grapher.datagraph.ScreenTransform;
 import org.mastodon.views.trackscheme.display.animate.AbstractTransformAnimator;
 
-public class InertialScreenTransformAnimator extends AbstractTransformAnimator< ScreenTransform >
+public class InertialScreenTransformAnimator extends
+	AbstractTransformAnimator<ScreenTransform>
 {
+
 	private final ScreenTransform t0;
 
 	private final ScreenTransform t1;
@@ -47,34 +50,30 @@ public class InertialScreenTransformAnimator extends AbstractTransformAnimator< 
 	 * Extrapolate {@link ScreenTransform} that changed from {@code t0} to
 	 * {@code t1} in time interval {@code dt}, beyond {@code t1}.
 	 *
-	 * @param t0
-	 *            transform at begin of interval.
-	 * @param t1
-	 *            transform at end of interval.
-	 * @param dt
-	 *            duration of interval.
-	 * @param duration
-	 *            duration of inertial animation (same units as {@code dt}).
+	 * @param t0 transform at begin of interval.
+	 * @param t1 transform at end of interval.
+	 * @param dt duration of interval.
+	 * @param duration duration of inertial animation (same units as {@code dt}).
 	 */
-	public InertialScreenTransformAnimator( final ScreenTransform t0, final ScreenTransform t1, final long dt, final long duration )
+	public InertialScreenTransformAnimator(final ScreenTransform t0,
+		final ScreenTransform t1, final long dt, final long duration)
 	{
-		super( duration );
+		super(duration);
 		this.t0 = t0.copy();
 		this.t1 = t1.copy();
-		this.tau = duration / ( s * dt );
+		this.tau = duration / (s * dt);
 	}
 
 	@Override
-	protected ScreenTransform get( double t )
-	{
-		if ( t <= 0 )
+	protected ScreenTransform get(double t) {
+		if (t <= 0)
 			return t1;
 
-		if ( t > 1 )
+		if (t > 1)
 			t = 1;
 
-		final double inc = tau * ( 1 - Math.exp( -t * s ) );
-		transform.interpolate( t0, t1, 1 + inc );
+		final double inc = tau * (1 - Math.exp(-t * s));
+		transform.interpolate(t0, t1, 1 + inc);
 		return transform;
 	}
 }

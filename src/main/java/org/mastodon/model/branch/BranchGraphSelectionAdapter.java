@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model.branch;
 
 import java.util.Collection;
@@ -42,264 +43,231 @@ import org.mastodon.model.SelectionListener;
 import org.mastodon.model.SelectionModel;
 import org.scijava.listeners.Listeners;
 
-public class BranchGraphSelectionAdapter< 
-	V extends Vertex< E >, 
-	E extends Edge< V >, 
-	BV extends Vertex< BE >, 
-	BE extends Edge< BV > >
-		extends AbstractBranchGraphAdapter< V, E, BV, BE >
-		implements SelectionModel< BV, BE >
+public class BranchGraphSelectionAdapter<V extends Vertex<E>, E extends Edge<V>, BV extends Vertex<BE>, BE extends Edge<BV>>
+	extends AbstractBranchGraphAdapter<V, E, BV, BE>
+	implements SelectionModel<BV, BE>
 {
 
-	private final SelectionModel< V, E > selection;
+	private final SelectionModel<V, E> selection;
 
 	public BranchGraphSelectionAdapter(
-			final BranchGraph< BV, BE, V, E > branchGraph,
-			final ReadOnlyGraph< V, E > graph,
-			final GraphIdBimap< V, E > idmap,
-			final SelectionModel< V, E > selection )
+		final BranchGraph<BV, BE, V, E> branchGraph,
+		final ReadOnlyGraph<V, E> graph,
+		final GraphIdBimap<V, E> idmap,
+		final SelectionModel<V, E> selection)
 	{
-		super( branchGraph, graph, idmap );
+		super(branchGraph, graph, idmap);
 		this.selection = selection;
 	}
 
 	@Override
-	public void resumeListeners()
-	{
+	public void resumeListeners() {
 		selection.resumeListeners();
 	}
 
 	@Override
-	public void pauseListeners()
-	{
+	public void pauseListeners() {
 		selection.pauseListeners();
 	}
 
 	@Override
-	public boolean isSelected( final BV vertex )
-	{
-		Iterator<V> vIter = branchGraph.vertexBranchIterator( vertex );
-		Iterator<E> eIter = branchGraph.edgeBranchIterator( vertex );
-		try
-		{
-			while ( vIter.hasNext() )
-			{
+	public boolean isSelected(final BV vertex) {
+		Iterator<V> vIter = branchGraph.vertexBranchIterator(vertex);
+		Iterator<E> eIter = branchGraph.edgeBranchIterator(vertex);
+		try {
+			while (vIter.hasNext()) {
 				V v = vIter.next();
-				if ( !selection.isSelected( v ) )
+				if (!selection.isSelected(v))
 					return false;
 			}
 
-			while ( eIter.hasNext() )
-			{
+			while (eIter.hasNext()) {
 				E e = eIter.next();
-				if ( !selection.isSelected( e ) )
+				if (!selection.isSelected(e))
 					return false;
 			}
 
 			return true;
 		}
-		finally
-		{
-			branchGraph.releaseIterator( vIter );
-			branchGraph.releaseIterator( eIter );
+		finally {
+			branchGraph.releaseIterator(vIter);
+			branchGraph.releaseIterator(eIter);
 		}
 	}
 
 	@Override
-	public boolean isSelected( final BE edge )
-	{
+	public boolean isSelected(final BE edge) {
 		final E eRef = graph.edgeRef();
-		try
-		{
-			final E e = branchGraph.getLinkedEdge( edge, eRef );
-			return e != null && selection.isSelected( e );
+		try {
+			final E e = branchGraph.getLinkedEdge(edge, eRef);
+			return e != null && selection.isSelected(e);
 		}
-		finally
-		{
-			graph.releaseRef( eRef );
+		finally {
+			graph.releaseRef(eRef);
 		}
 	}
 
 	@Override
-	public void setSelected( final BV vertex, final boolean selected )
-	{
+	public void setSelected(final BV vertex, final boolean selected) {
 		selection.pauseListeners();
-		setVertexSelected( vertex, selected );
+		setVertexSelected(vertex, selected);
 		selection.resumeListeners();
 	}
 
-	private boolean setVertexSelected( final BV branchVertex, final boolean selected )
+	private boolean setVertexSelected(final BV branchVertex,
+		final boolean selected)
 	{
-		Iterator<V> vertices = branchGraph.vertexBranchIterator( branchVertex );
-		Iterator<E> edges = branchGraph.edgeBranchIterator( branchVertex );
-		try
-		{
+		Iterator<V> vertices = branchGraph.vertexBranchIterator(branchVertex);
+		Iterator<E> edges = branchGraph.edgeBranchIterator(branchVertex);
+		try {
 			boolean changed = false;
-			while ( vertices.hasNext() )
-			{
+			while (vertices.hasNext()) {
 				V v = vertices.next();
-				changed = changed || selected != selection.isSelected( v );
-				selection.setSelected( v, selected );
+				changed = changed || selected != selection.isSelected(v);
+				selection.setSelected(v, selected);
 			}
 
-			while ( edges.hasNext() )
-			{
+			while (edges.hasNext()) {
 				E e = edges.next();
-				changed = changed || selected != selection.isSelected( e );
-				selection.setSelected( e, selected );
+				changed = changed || selected != selection.isSelected(e);
+				selection.setSelected(e, selected);
 			}
 
 			return changed;
 		}
-		finally
-		{
-			branchGraph.releaseIterator( vertices );
-			branchGraph.releaseIterator( edges );
+		finally {
+			branchGraph.releaseIterator(vertices);
+			branchGraph.releaseIterator(edges);
 		}
 	}
 
 	@Override
-	public void setSelected( final BE edge, final boolean selected )
-	{
+	public void setSelected(final BE edge, final boolean selected) {
 		final E eRef = graph.edgeRef();
-		try
-		{
-			E e = branchGraph.getLinkedEdge( edge, eRef );
-			if( e != null )
-				selection.setSelected( e, selected );
+		try {
+			E e = branchGraph.getLinkedEdge(edge, eRef);
+			if (e != null)
+				selection.setSelected(e, selected);
 		}
-		finally
-		{
-			graph.releaseRef( eRef );
+		finally {
+			graph.releaseRef(eRef);
 		}
 	}
 
 	/**
 	 * Determines whether this call changed the underlying selection model.
 	 *
-	 * @param branchEdge
-	 *            the branch edge to select.
-	 * @param selected
-	 *            whether to select the specified edge.
+	 * @param branchEdge the branch edge to select.
+	 * @param selected whether to select the specified edge.
 	 * @return <code>true</code> if the selection model has been changed by this
 	 *         call.
 	 */
-	private boolean setEdgeSelected( final BE branchEdge, final boolean selected )
-	{
+	private boolean setEdgeSelected(final BE branchEdge, final boolean selected) {
 		final E eRef = graph.edgeRef();
 
-		try
-		{
-			E e = branchGraph.getLinkedEdge( branchEdge, eRef );
-			if ( !isValid( e ) )
+		try {
+			E e = branchGraph.getLinkedEdge(branchEdge, eRef);
+			if (!isValid(e))
 				return false;
-			boolean changed = selection.isSelected( e ) == selected;
-			selection.setSelected( e, selected );
+			boolean changed = selection.isSelected(e) == selected;
+			selection.setSelected(e, selected);
 			return changed;
 		}
-		finally
-		{
-			graph.releaseRef( eRef );
+		finally {
+			graph.releaseRef(eRef);
 		}
 	}
 
 	@Override
-	public void toggle( final BV vertex )
-	{
-		setSelected( vertex, !isSelected( vertex ) );
+	public void toggle(final BV vertex) {
+		setSelected(vertex, !isSelected(vertex));
 	}
 
 	@Override
-	public void toggle( final BE edge )
-	{
-		setSelected( edge, !isSelected( edge ) );
+	public void toggle(final BE edge) {
+		setSelected(edge, !isSelected(edge));
 	}
 
 	@Override
-	public boolean setEdgesSelected( final Collection< BE > edges, final boolean selected )
+	public boolean setEdgesSelected(final Collection<BE> edges,
+		final boolean selected)
 	{
 		boolean changed = false;
 		selection.pauseListeners();
 
-		for ( final BE edge : edges )
-			changed = setEdgeSelected( edge, selected ) || changed;
+		for (final BE edge : edges)
+			changed = setEdgeSelected(edge, selected) || changed;
 
 		selection.resumeListeners();
 		return changed;
 	}
 
 	@Override
-	public boolean setVerticesSelected( final Collection< BV > vertices, final boolean selected )
+	public boolean setVerticesSelected(final Collection<BV> vertices,
+		final boolean selected)
 	{
 		boolean changed = false;
 		selection.pauseListeners();
-		for ( final BV vertex : vertices )
-			changed = setVertexSelected( vertex, selected ) || changed;
+		for (final BV vertex : vertices)
+			changed = setVertexSelected(vertex, selected) || changed;
 		selection.resumeListeners();
 		return changed;
 	}
 
 	@Override
-	public RefSet< BE > getSelectedEdges()
-	{
+	public RefSet<BE> getSelectedEdges() {
 		final BE beRef = branchGraph.edgeRef();
 		try {
-			final RefSet< BE > branchEdges =
-					RefCollections.createRefSet( branchGraph.edges() );
+			final RefSet<BE> branchEdges =
+				RefCollections.createRefSet(branchGraph.edges());
 
-			for ( final E edges : selection.getSelectedEdges() )
-			{
-				final BE branchEdge = branchGraph.getBranchEdge( edges, beRef );
-				if ( branchEdge != null )
-					branchEdges.add( branchEdge );
+			for (final E edges : selection.getSelectedEdges()) {
+				final BE branchEdge = branchGraph.getBranchEdge(edges, beRef);
+				if (branchEdge != null)
+					branchEdges.add(branchEdge);
 			}
 
 			return branchEdges;
 		}
 		finally {
-			branchGraph.releaseRef( beRef );
+			branchGraph.releaseRef(beRef);
 		}
 	}
 
 	@Override
-	public RefSet< BV > getSelectedVertices()
-	{
+	public RefSet<BV> getSelectedVertices() {
 		final BV bvRef = branchGraph.vertexRef();
-		try
-		{
-			final RefSet<BV> branchVertices = RefCollections.createRefSet( branchGraph.vertices() );
+		try {
+			final RefSet<BV> branchVertices = RefCollections.createRefSet(branchGraph
+				.vertices());
 
-			for ( final V v : selection.getSelectedVertices() )
-			{
-				final BV branchVertex = branchGraph.getBranchVertex( v, bvRef );
-				if ( branchVertex != null && isSelected( branchVertex ) )
-					branchVertices.add( branchVertex );
+			for (final V v : selection.getSelectedVertices()) {
+				final BV branchVertex = branchGraph.getBranchVertex(v, bvRef);
+				if (branchVertex != null && isSelected(branchVertex))
+					branchVertices.add(branchVertex);
 			}
 
 			return branchVertices;
 		}
 		finally {
-			branchGraph.releaseRef( bvRef );
+			branchGraph.releaseRef(bvRef);
 		}
 	}
 
 	@Override
-	public boolean clearSelection()
-	{
+	public boolean clearSelection() {
 		return selection.clearSelection();
 	}
 
 	@Override
-	public boolean isEmpty()
-	{
-		if( selection.isEmpty() )
+	public boolean isEmpty() {
+		if (selection.isEmpty())
 			return true;
 		return getSelectedEdges().isEmpty() && getSelectedVertices().isEmpty();
 	}
 
 	@Override
-	public Listeners< SelectionListener > listeners()
-	{
+	public Listeners<SelectionListener> listeners() {
 		return selection.listeners();
 	}
 }

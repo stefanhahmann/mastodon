@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model;
 
 import org.mastodon.graph.Edge;
@@ -40,28 +41,24 @@ import org.scijava.listeners.Listeners;
  * vertex on all views while the mouse is hovering above its representation in
  * any view.
  *
- * @param <V>
- *            the type of the model vertices.
- * @param <E>
- *            the type of the model edges.
+ * @param <V> the type of the model vertices.
+ * @param <E> the type of the model edges.
  */
-public interface HighlightModel< V extends Vertex< E >, E extends Edge< V > >
-{
+public interface HighlightModel<V extends Vertex<E>, E extends Edge<V>> {
+
 	/**
 	 * Sets the specified vertex highlighted in this model.
 	 *
-	 * @param vertex
-	 *            the vertex to highlight, or {@code null} to clear highlight.
+	 * @param vertex the vertex to highlight, or {@code null} to clear highlight.
 	 */
-	public void highlightVertex( final V vertex );
+	public void highlightVertex(final V vertex);
 
 	/**
 	 * Sets the specified edge highlighted in this model.
 	 *
-	 * @param edge
-	 *            the edge to highlight, or {@code null} to clear highlight.
+	 * @param edge the edge to highlight, or {@code null} to clear highlight.
 	 */
-	public void highlightEdge( final E edge );
+	public void highlightEdge(final E edge);
 
 	/**
 	 * Clear highlight.
@@ -71,22 +68,19 @@ public interface HighlightModel< V extends Vertex< E >, E extends Edge< V > >
 	/**
 	 * Returns the vertex highlighted in this model.
 	 *
-	 * @param ref
-	 *            a vertex reference used for retrieval.
+	 * @param ref a vertex reference used for retrieval.
 	 * @return the highlighted vertex, or {@code null} if no vertex is
 	 *         highlighted.
 	 */
-	public V getHighlightedVertex( final V ref );
+	public V getHighlightedVertex(final V ref);
 
 	/**
 	 * Returns the edge highlighted in this model.
 	 *
-	 * @param ref
-	 *            an edge reference used for retrieval.
-	 * @return the highlighted edge, or {@code null} if no edge is
-	 *         highlighted.
+	 * @param ref an edge reference used for retrieval.
+	 * @return the highlighted edge, or {@code null} if no edge is highlighted.
 	 */
-	public E getHighlightedEdge( final E ref );
+	public E getHighlightedEdge(final E ref);
 
 	/**
 	 * Get the list of highlight listeners. Add a {@link HighlightListener} to
@@ -94,5 +88,5 @@ public interface HighlightModel< V extends Vertex< E >, E extends Edge< V > >
 	 *
 	 * @return the list of listeners
 	 */
-	public Listeners< HighlightListener > listeners();
+	public Listeners<HighlightListener> listeners();
 }

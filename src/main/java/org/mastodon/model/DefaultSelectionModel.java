@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model;
 
 import java.util.BitSet;
@@ -51,28 +52,26 @@ import org.scijava.listeners.Listeners;
  * TODO: less severe synchronization
  *
  * @author Tobias Pietzsch
- *
- * @param <V>
- *            the type of the vertices.
- * @param <E>
- *            the type of the edges.
+ * @param <V> the type of the vertices.
+ * @param <E> the type of the edges.
  */
-public class DefaultSelectionModel< V extends Vertex< E >, E extends Edge< V > >
-		implements SelectionModel< V, E >, GraphListener< V, E >
+public class DefaultSelectionModel<V extends Vertex<E>, E extends Edge<V>>
+	implements SelectionModel<V, E>, GraphListener<V, E>
 {
-	private final ListenableReadOnlyGraph< V, E > graph;
 
-	private final GraphIdBimap< V, E > idmap;
+	private final ListenableReadOnlyGraph<V, E> graph;
 
-	private final RefSet< V > selectedVertices;
+	private final GraphIdBimap<V, E> idmap;
 
-	private final RefSet< E > selectedEdges;
+	private final RefSet<V> selectedVertices;
+
+	private final RefSet<E> selectedEdges;
 
 	private final BitSet vertexBits;
 
 	private final BitSet edgeBits;
 
-	private final Listeners.List< SelectionListener > listeners;
+	private final Listeners.List<SelectionListener> listeners;
 
 	/**
 	 * If <code>false</code>, listeners will not be notified when a
@@ -92,18 +91,17 @@ public class DefaultSelectionModel< V extends Vertex< E >, E extends Edge< V > >
 	 * This returned instance registers itself as a {@link GraphListener} of the
 	 * graph.
 	 *
-	 * @param graph
-	 *            the graph.
-	 * @param idmap
-	 *            the bidirectional id map, used to efficiently stores the
-	 *            selected state of edges and vertices.
+	 * @param graph the graph.
+	 * @param idmap the bidirectional id map, used to efficiently stores the
+	 *          selected state of edges and vertices.
 	 */
-	public DefaultSelectionModel( final ListenableReadOnlyGraph< V, E > graph, final GraphIdBimap< V, E > idmap )
+	public DefaultSelectionModel(final ListenableReadOnlyGraph<V, E> graph,
+		final GraphIdBimap<V, E> idmap)
 	{
 		this.graph = graph;
 		this.idmap = idmap;
-		selectedVertices = RefCollections.createRefSet( graph.vertices() );
-		selectedEdges = RefCollections.createRefSet( graph.edges() );
+		selectedVertices = RefCollections.createRefSet(graph.vertices());
+		selectedEdges = RefCollections.createRefSet(graph.edges());
 		vertexBits = new BitSet();
 		edgeBits = new BitSet();
 		listeners = new Listeners.SynchronizedList<>();
@@ -114,47 +112,39 @@ public class DefaultSelectionModel< V extends Vertex< E >, E extends Edge< V > >
 	/**
 	 * Get the selected state of a vertex.
 	 *
-	 * @param v
-	 *            a vertex.
+	 * @param v a vertex.
 	 * @return {@code true} if specified vertex is selected.
 	 */
 	@Override
-	public synchronized boolean isSelected( final V v )
-	{
-		return vertexBits.get( idmap.getVertexId( v ) );
+	public synchronized boolean isSelected(final V v) {
+		return vertexBits.get(idmap.getVertexId(v));
 	}
 
 	/**
 	 * Get the selected state of an edge.
 	 *
-	 * @param e
-	 *            an edge.
+	 * @param e an edge.
 	 * @return {@code true} if specified edge is selected.
 	 */
 	@Override
-	public synchronized boolean isSelected( final E e )
-	{
-		return edgeBits.get( idmap.getEdgeId( e ) );
+	public synchronized boolean isSelected(final E e) {
+		return edgeBits.get(idmap.getEdgeId(e));
 	}
 
 	/**
 	 * Sets the selected state of a vertex.
 	 *
-	 * @param v
-	 *            a vertex.
-	 * @param selected
-	 *            selected state to set for specified vertex.
+	 * @param v a vertex.
+	 * @param selected selected state to set for specified vertex.
 	 */
 	@Override
-	public synchronized void setSelected( final V v, final boolean selected )
-	{
-		if ( isSelected( v ) != selected )
-		{
-			vertexBits.set( idmap.getVertexId( v ), selected );
-			if ( selected )
-				selectedVertices.add( v );
+	public synchronized void setSelected(final V v, final boolean selected) {
+		if (isSelected(v) != selected) {
+			vertexBits.set(idmap.getVertexId(v), selected);
+			if (selected)
+				selectedVertices.add(v);
 			else
-				selectedVertices.remove( v );
+				selectedVertices.remove(v);
 			notifyListeners();
 		}
 	}
@@ -162,21 +152,17 @@ public class DefaultSelectionModel< V extends Vertex< E >, E extends Edge< V > >
 	/**
 	 * Sets the selected state of an edge.
 	 *
-	 * @param e
-	 *            an edge.
-	 * @param selected
-	 *            selected state to set for specified edge.
+	 * @param e an edge.
+	 * @param selected selected state to set for specified edge.
 	 */
 	@Override
-	public synchronized void setSelected( final E e, final boolean selected )
-	{
-		if ( isSelected( e ) != selected )
-		{
-			edgeBits.set( idmap.getEdgeId( e ), selected );
-			if ( selected )
-				selectedEdges.add( e );
+	public synchronized void setSelected(final E e, final boolean selected) {
+		if (isSelected(e) != selected) {
+			edgeBits.set(idmap.getEdgeId(e), selected);
+			if (selected)
+				selectedEdges.add(e);
 			else
-				selectedEdges.remove( e );
+				selectedEdges.remove(e);
 			notifyListeners();
 		}
 	}
@@ -184,52 +170,45 @@ public class DefaultSelectionModel< V extends Vertex< E >, E extends Edge< V > >
 	/**
 	 * Toggles the selected state of a vertex.
 	 *
-	 * @param v
-	 *            a vertex.
+	 * @param v a vertex.
 	 */
 	@Override
-	public synchronized void toggle( final V v )
-	{
-		setSelected( v, !isSelected( v ) );
+	public synchronized void toggle(final V v) {
+		setSelected(v, !isSelected(v));
 	}
 
 	/**
 	 * Toggles the selected state of an edge.
 	 *
-	 * @param e
-	 *            an edge.
+	 * @param e an edge.
 	 */
 	@Override
-	public synchronized void toggle( final E e )
-	{
-		setSelected( e, !isSelected( e ) );
+	public synchronized void toggle(final E e) {
+		setSelected(e, !isSelected(e));
 	}
 
 	/**
 	 * Sets the selected state of a collection of edges.
 	 *
-	 * @param edges
-	 *            the edge collection.
-	 * @param selected
-	 *            selected state to set for specified edge collection.
+	 * @param edges the edge collection.
+	 * @param selected selected state to set for specified edge collection.
 	 * @return {@code true} if the selection was changed by this call.
 	 */
 	@Override
-	public synchronized boolean setEdgesSelected( final Collection< E > edges, final boolean selected )
+	public synchronized boolean setEdgesSelected(final Collection<E> edges,
+		final boolean selected)
 	{
-		for ( final E e : edges )
-			edgeBits.set( idmap.getEdgeId( e ), selected );
-		if ( selected )
-		{
-			final boolean changed = selectedEdges.addAll( edges );
-			if ( changed )
+		for (final E e : edges)
+			edgeBits.set(idmap.getEdgeId(e), selected);
+		if (selected) {
+			final boolean changed = selectedEdges.addAll(edges);
+			if (changed)
 				notifyListeners();
 			return changed;
 		}
-		else
-		{
-			final boolean changed = selectedEdges.removeAll( edges );
-			if ( changed )
+		else {
+			final boolean changed = selectedEdges.removeAll(edges);
+			if (changed)
 				notifyListeners();
 			return changed;
 		}
@@ -238,28 +217,25 @@ public class DefaultSelectionModel< V extends Vertex< E >, E extends Edge< V > >
 	/**
 	 * Sets the selected state of a collection of vertices.
 	 *
-	 * @param vertices
-	 *            the vertex collection.
-	 * @param selected
-	 *            selected state to set for specified vertex collection.
+	 * @param vertices the vertex collection.
+	 * @param selected selected state to set for specified vertex collection.
 	 * @return {@code true} if the selection was changed by this call.
 	 */
 	@Override
-	public synchronized boolean setVerticesSelected( final Collection< V > vertices, final boolean selected )
+	public synchronized boolean setVerticesSelected(final Collection<V> vertices,
+		final boolean selected)
 	{
-		for ( final V v : vertices )
-			vertexBits.set( idmap.getVertexId( v ), selected );
-		if ( selected )
-		{
-			final boolean changed = selectedVertices.addAll( vertices );
-			if ( changed )
+		for (final V v : vertices)
+			vertexBits.set(idmap.getVertexId(v), selected);
+		if (selected) {
+			final boolean changed = selectedVertices.addAll(vertices);
+			if (changed)
 				notifyListeners();
 			return changed;
 		}
-		else
-		{
-			final boolean changed = selectedVertices.removeAll( vertices );
-			if ( changed )
+		else {
+			final boolean changed = selectedVertices.removeAll(vertices);
+			if (changed)
 				notifyListeners();
 			return changed;
 		}
@@ -268,15 +244,14 @@ public class DefaultSelectionModel< V extends Vertex< E >, E extends Edge< V > >
 	/**
 	 * Clears this selection.
 	 *
-	 * @return {@code true} if this selection was not empty prior to
-	 *         calling this method.
+	 * @return {@code true} if this selection was not empty prior to calling this
+	 *         method.
 	 */
 	@Override
-	public synchronized boolean clearSelection()
-	{
+	public synchronized boolean clearSelection() {
 		vertexBits.clear();
 		edgeBits.clear();
-		if ( selectedEdges.isEmpty() && selectedVertices.isEmpty() )
+		if (selectedEdges.isEmpty() && selectedVertices.isEmpty())
 			return false;
 		selectedEdges.clear();
 		selectedVertices.clear();
@@ -290,10 +265,9 @@ public class DefaultSelectionModel< V extends Vertex< E >, E extends Edge< V > >
 	 * @return a <b>new</b> {@link RefSet} containing the selected edges.
 	 */
 	@Override
-	public synchronized RefSet< E > getSelectedEdges()
-	{
-		final RefSet< E > set = RefCollections.createRefSet( graph.edges() );
-		set.addAll( selectedEdges );
+	public synchronized RefSet<E> getSelectedEdges() {
+		final RefSet<E> set = RefCollections.createRefSet(graph.edges());
+		set.addAll(selectedEdges);
 		return set;
 	}
 
@@ -303,26 +277,23 @@ public class DefaultSelectionModel< V extends Vertex< E >, E extends Edge< V > >
 	 * @return a <b>new</b> {@link RefSet} containing the selected vertices.
 	 */
 	@Override
-	public synchronized RefSet< V > getSelectedVertices()
-	{
-		final RefSet< V > set = RefCollections.createRefSet( graph.vertices() );
-		set.addAll( selectedVertices );
+	public synchronized RefSet<V> getSelectedVertices() {
+		final RefSet<V> set = RefCollections.createRefSet(graph.vertices());
+		set.addAll(selectedVertices);
 		return set;
 	}
 
 	@Override
-	public boolean isEmpty()
-	{
+	public boolean isEmpty() {
 		return selectedVertices.isEmpty() && selectedEdges.isEmpty();
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		final StringBuilder sb = new StringBuilder();
-		sb.append( super.toString() );
-		sb.append( "\nVertices: " + selectedVertices );
-		sb.append( "\nEdges:    " + selectedEdges );
+		sb.append(super.toString());
+		sb.append("\nVertices: " + selectedVertices);
+		sb.append("\nEdges:    " + selectedEdges);
 		return sb.toString();
 	}
 
@@ -331,62 +302,52 @@ public class DefaultSelectionModel< V extends Vertex< E >, E extends Edge< V > >
 	 */
 
 	@Override
-	public void vertexAdded( final V v )
-	{}
+	public void vertexAdded(final V v) {}
 
 	@Override
-	public void vertexRemoved( final V v )
-	{
-		setSelected( v, false );
+	public void vertexRemoved(final V v) {
+		setSelected(v, false);
 	}
 
 	@Override
-	public void edgeAdded( final E e )
-	{}
+	public void edgeAdded(final E e) {}
 
 	@Override
-	public void edgeRemoved( final E e )
-	{
-		setSelected( e, false );
+	public void edgeRemoved(final E e) {
+		setSelected(e, false);
 	}
 
 	@Override
-	public void graphRebuilt()
-	{
+	public void graphRebuilt() {
 		clearSelection();
 	}
 
 	@Override
-	public Listeners< SelectionListener > listeners()
-	{
+	public Listeners<SelectionListener> listeners() {
 		return listeners;
 	}
 
-	private void notifyListeners()
-	{
-		if ( emitEvents )
-			for ( final SelectionListener l : listeners.list )
-				l.selectionChanged();
+	private void notifyListeners() {
+		if (emitEvents)
+			for (final SelectionListener l : listeners.list)
+			l.selectionChanged();
 		else
 			shouldEmitEvent = true;
 	}
 
 	@Override
-	public void resumeListeners()
-	{
+	public void resumeListeners() {
 		emitEvents = true;
-		if ( shouldEmitEvent )
-		{
+		if (shouldEmitEvent) {
 			// Catchup.
-			for ( final SelectionListener l : listeners.list )
+			for (final SelectionListener l : listeners.list)
 				l.selectionChanged();
 			shouldEmitEvent = false;
 		}
 	}
 
 	@Override
-	public void pauseListeners()
-	{
+	public void pauseListeners() {
 		emitEvents = false;
 	}
 }

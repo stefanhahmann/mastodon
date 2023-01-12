@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.ui.util;
 
 import java.io.FileNotFoundException;
@@ -44,107 +45,89 @@ import org.yaml.snakeyaml.Yaml;
  * Maintain a list of the Nth most recent project paths manipulated with this
  * object.
  */
-public class RecentProjects implements Iterable< String >
-{
+public class RecentProjects implements Iterable<String> {
 
-	private static final String RECENT_PROJECTS_FILE = System.getProperty( "user.home" ) + "/.mastodon/recentprojects.yaml";
+	private static final String RECENT_PROJECTS_FILE = System.getProperty(
+		"user.home") + "/.mastodon/recentprojects.yaml";
 
 	private static final int MAX_N_RECENT_PROJECTS = 10;
 
-	private final List< String > recent;
+	private final List<String> recent;
 
 	private final int maxLength;
 
-	public RecentProjects()
-	{
-		this.recent = new ArrayList< String >();
+	public RecentProjects() {
+		this.recent = new ArrayList<String>();
 		this.maxLength = MAX_N_RECENT_PROJECTS;
-		load( RECENT_PROJECTS_FILE );
+		load(RECENT_PROJECTS_FILE);
 	}
 
-	public void add( final String element )
-	{
-		recent.remove( element );
-		recent.add( 0, element );
+	public void add(final String element) {
+		recent.remove(element);
+		recent.add(0, element);
 		reduce();
-		save( RECENT_PROJECTS_FILE );
+		save(RECENT_PROJECTS_FILE);
 	}
 
-	private void reduce()
-	{
-		while ( recent.size() > maxLength )
-			recent.remove( recent.size() - 1 );
+	private void reduce() {
+		while (recent.size() > maxLength)
+			recent.remove(recent.size() - 1);
 	}
 
-	public void clear()
-	{
+	public void clear() {
 		recent.clear();
-		save( RECENT_PROJECTS_FILE );
+		save(RECENT_PROJECTS_FILE);
 	}
 
 	@Override
-	public Iterator< String > iterator()
-	{
-		return Collections.unmodifiableCollection( recent ).iterator();
+	public Iterator<String> iterator() {
+		return Collections.unmodifiableCollection(recent).iterator();
 	}
 
-	public boolean isempty()
-	{
+	public boolean isempty() {
 		return recent.isEmpty();
 	}
 
-	public int size()
-	{
+	public int size() {
 		return recent.size();
 	}
 
-	public boolean remove( final String element )
-	{
-		final boolean removed = recent.remove( element );
-		save( RECENT_PROJECTS_FILE );
+	public boolean remove(final String element) {
+		final boolean removed = recent.remove(element);
+		save(RECENT_PROJECTS_FILE);
 		return removed;
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return recent.toString();
 	}
 
-	private static Yaml createYaml()
-	{
+	private static Yaml createYaml() {
 		final DumperOptions dumperOptions = new DumperOptions();
-		final Yaml yaml = new Yaml( dumperOptions );
+		final Yaml yaml = new Yaml(dumperOptions);
 		return yaml;
 	}
 
-	private void save( final String filename )
-	{
-		try (final FileWriter output = new FileWriter( filename ))
-		{
+	private void save(final String filename) {
+		try (final FileWriter output = new FileWriter(filename)) {
 			final Yaml yaml = createYaml();
-			yaml.dumpAll( recent.iterator(), output );
+			yaml.dumpAll(recent.iterator(), output);
 		}
-		catch ( final IOException e )
-		{}
+		catch (final IOException e) {}
 	}
 
-	private void load( final String filename )
-	{
+	private void load(final String filename) {
 		recent.clear();
-		try (final FileReader input = new FileReader( filename ))
-		{
+		try (final FileReader input = new FileReader(filename)) {
 			final Yaml yaml = createYaml();
-			final Iterable< Object > objs = yaml.loadAll( input );
-			for ( final Object obj : objs )
-			{
-				if ( obj instanceof String )
-					recent.add( ( String ) obj );
+			final Iterable<Object> objs = yaml.loadAll(input);
+			for (final Object obj : objs) {
+				if (obj instanceof String)
+					recent.add((String) obj);
 			}
 		}
-		catch ( final FileNotFoundException e )
-		{}
-		catch ( final IOException e )
-		{}
+		catch (final FileNotFoundException e) {}
+		catch (final IOException e) {}
 	}
 }

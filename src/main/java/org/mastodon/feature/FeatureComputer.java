@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.feature;
 
 import org.scijava.ItemIO;
@@ -37,7 +38,7 @@ import org.scijava.command.Command;
  * A computer must generate exactly one single feature as output, annotated with
  * {@link ItemIO#OUTPUT}, and that must be of type {@link Feature}.
  */
-public interface FeatureComputer extends Command
-{
+public interface FeatureComputer extends Command {
+
 	void createOutput();
 }

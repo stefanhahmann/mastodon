@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.bdv.overlay.ui;
 
 import java.awt.BorderLayout;
@@ -86,8 +87,7 @@ import net.imglib2.realtransform.AffineTransform3D;
  *
  * @author Jean-Yves Tinevez
  */
-public class DummyBdvPanel extends JPanel
-{
+public class DummyBdvPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -95,45 +95,40 @@ public class DummyBdvPanel extends JPanel
 
 	private static final int HEIGHT = 400;
 
-	private final OverlayGraphRenderer< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > renderer;
+	private final OverlayGraphRenderer<OverlayVertexWrapper<Spot, Link>, OverlayEdgeWrapper<Spot, Link>> renderer;
 
-	public DummyBdvPanel()
-	{
-		super( new BorderLayout() );
+	public DummyBdvPanel() {
+		super(new BorderLayout());
 
 		/*
 		 * Load model.
 		 */
 
 		final Model model = new Model();
-		try
-		{
-			final ProjectReader reader = new MyProjectReader( "dummy" );
-			model.loadRaw( reader );
+		try {
+			final ProjectReader reader = new MyProjectReader("dummy");
+			model.loadRaw(reader);
 		}
-		catch ( final IOException e1 )
-		{
+		catch (final IOException e1) {
 			e1.printStackTrace();
 		}
 		final double dummyScale = 5.7;
-		final double[] pos = new double[ 3 ];
-		final double[][] cov = new double[ 3 ][ 3 ];
-		for ( final Spot spot : model.getGraph().vertices() )
-		{
+		final double[] pos = new double[3];
+		final double[][] cov = new double[3][3];
+		for (final Spot spot : model.getGraph().vertices()) {
 			// Scale spot position so that they are in sync with the image.
-			spot.localize( pos );
-			spot.getCovariance( cov );
-			for ( int d = 0; d < pos.length; d++ )
-			{
-				pos[ d ] *= dummyScale;
-				for ( int d2 = 0; d2 < cov[ d ].length; d2++ )
-					cov[ d ][ d2 ] *= dummyScale * dummyScale;
+			spot.localize(pos);
+			spot.getCovariance(cov);
+			for (int d = 0; d < pos.length; d++) {
+				pos[d] *= dummyScale;
+				for (int d2 = 0; d2 < cov[d].length; d2++)
+					cov[d][d2] *= dummyScale * dummyScale;
 
 			}
-			pos[ 0 ] -= 113 * dummyScale;
-			pos[ 1 ] += 2 * dummyScale;
-			spot.setPosition( pos );
-			spot.setCovariance( cov );
+			pos[0] -= 113 * dummyScale;
+			pos[1] += 2 * dummyScale;
+			spot.setPosition(pos);
+			spot.setCovariance(cov);
 		}
 
 		/*
@@ -141,24 +136,27 @@ public class DummyBdvPanel extends JPanel
 		 */
 
 		final ModelGraph graph = model.getGraph();
-		final GraphIdBimap< Spot, Link > idmap = model.getGraphIdBimap();
-		final SpatioTemporalIndex< Spot > spatioTemporalIndex = model.getSpatioTemporalIndex();
-		final SelectionModel< Spot, Link > selection = new DefaultSelectionModel<>( graph, idmap );
-		final FocusModel< Spot, Link > focus = new DefaultFocusModel<>( idmap );
-		final DefaultHighlightModel< Spot, Link > highlight = new DefaultHighlightModel<>( idmap );
-		final GraphColorGenerator< Spot, Link > coloring = new DefaultGraphColorGenerator<>();
-		final BoundingSphereRadiusStatistics radiusStats = new BoundingSphereRadiusStatistics( model );
+		final GraphIdBimap<Spot, Link> idmap = model.getGraphIdBimap();
+		final SpatioTemporalIndex<Spot> spatioTemporalIndex = model
+			.getSpatioTemporalIndex();
+		final SelectionModel<Spot, Link> selection = new DefaultSelectionModel<>(
+			graph, idmap);
+		final FocusModel<Spot, Link> focus = new DefaultFocusModel<>(idmap);
+		final DefaultHighlightModel<Spot, Link> highlight =
+			new DefaultHighlightModel<>(idmap);
+		final GraphColorGenerator<Spot, Link> coloring =
+			new DefaultGraphColorGenerator<>();
+		final BoundingSphereRadiusStatistics radiusStats =
+			new BoundingSphereRadiusStatistics(model);
 
 		/*
 		 * Set selection.
 		 */
 
 		// Find one particular spot.
-		for ( final Spot spot : graph.vertices() )
-		{
-			if ( spot.getLabel().equals( "291" ) )
-			{
-				selection.setSelected( spot, true );
+		for (final Spot spot : graph.vertices()) {
+			if (spot.getLabel().equals("291")) {
+				selection.setSelected(spot, true);
 				break;
 			}
 		}
@@ -166,34 +164,40 @@ public class DummyBdvPanel extends JPanel
 		// Select whole track.
 		// Prepare the iterator.
 		selection.pauseListeners();
-		final DepthFirstSearch< Spot, Link > search = new DepthFirstSearch<>( graph, SearchDirection.UNDIRECTED );
-		search.setTraversalListener( new SearchListener< Spot, Link, DepthFirstSearch< Spot, Link > >()
-		{
+		final DepthFirstSearch<Spot, Link> search = new DepthFirstSearch<>(graph,
+			SearchDirection.UNDIRECTED);
+		search.setTraversalListener(
+			new SearchListener<Spot, Link, DepthFirstSearch<Spot, Link>>()
+			{
 
-			@Override
-			public void processVertexLate( final Spot vertex, final DepthFirstSearch< Spot, Link > search )
+				@Override
+				public void processVertexLate(final Spot vertex,
+					final DepthFirstSearch<Spot, Link> search)
 			{}
 
-			@Override
-			public void processVertexEarly( final Spot vertex, final DepthFirstSearch< Spot, Link > search )
+				@Override
+				public void processVertexEarly(final Spot vertex,
+					final DepthFirstSearch<Spot, Link> search)
 			{
-				selection.setSelected( vertex, true );
-				vertex.setLabel( "selected" );
-			}
+					selection.setSelected(vertex, true);
+					vertex.setLabel("selected");
+				}
 
-			@Override
-			public void processEdge( final Link edge, final Spot from, final Spot to, final DepthFirstSearch< Spot, Link > search )
+				@Override
+				public void processEdge(final Link edge, final Spot from, final Spot to,
+					final DepthFirstSearch<Spot, Link> search)
 			{
-				selection.setSelected( edge, true );
-			}
+					selection.setSelected(edge, true);
+				}
 
-			@Override
-			public void crossComponent( final Spot from, final Spot to, final DepthFirstSearch< Spot, Link > search )
+				@Override
+				public void crossComponent(final Spot from, final Spot to,
+					final DepthFirstSearch<Spot, Link> search)
 			{}
-		} );
+			});
 
 		// Iterate from all vertices that were in the selection.
-		search.start( selection.getSelectedVertices().iterator().next() );
+		search.start(selection.getSelectedVertices().iterator().next());
 		selection.resumeListeners();
 
 		/*
@@ -201,22 +205,18 @@ public class DummyBdvPanel extends JPanel
 		 */
 
 		// Find one particular spot.
-		for ( final Spot spot : graph.vertices() )
-		{
-			if ( spot.getLabel().equals( "408" ) )
-			{
-				highlight.highlightVertex( spot );
-				spot.setLabel( "highlighted" );
+		for (final Spot spot : graph.vertices()) {
+			if (spot.getLabel().equals("408")) {
+				highlight.highlightVertex(spot);
+				spot.setLabel("highlighted");
 				break;
 			}
 		}
 
-		for ( final Spot spot : graph.vertices() )
-		{
-			if ( spot.getLabel().equals( "406" ) )
-			{
-				focus.focusVertex( spot );
-				spot.setLabel( "focused" );
+		for (final Spot spot : graph.vertices()) {
+			if (spot.getLabel().equals("406")) {
+				focus.focusVertex(spot);
+				spot.setLabel("focused");
 				break;
 			}
 		}
@@ -225,61 +225,65 @@ public class DummyBdvPanel extends JPanel
 		 * Wrapped model.
 		 */
 
-		final OverlayGraphWrapper< Spot, Link > viewGraph = new OverlayGraphWrapper<>(
-				graph,
-				idmap,
-				spatioTemporalIndex,
-				graph.getLock(),
-				new ModelOverlayProperties( graph, radiusStats ) );
-		final RefBimap< Spot, OverlayVertexWrapper< Spot, Link > > vertexMap = viewGraph.getVertexMap();
-		final RefBimap< Link, OverlayEdgeWrapper< Spot, Link > > edgeMap = viewGraph.getEdgeMap();
+		final OverlayGraphWrapper<Spot, Link> viewGraph = new OverlayGraphWrapper<>(
+			graph,
+			idmap,
+			spatioTemporalIndex,
+			graph.getLock(),
+			new ModelOverlayProperties(graph, radiusStats));
+		final RefBimap<Spot, OverlayVertexWrapper<Spot, Link>> vertexMap = viewGraph
+			.getVertexMap();
+		final RefBimap<Link, OverlayEdgeWrapper<Spot, Link>> edgeMap = viewGraph
+			.getEdgeMap();
 
-		final SelectionModelAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > viewSelection =
-				new SelectionModelAdapter<>( selection, vertexMap, edgeMap );
-		final FocusModelAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > viewFocus =
-				new FocusModelAdapter<>( focus, vertexMap, edgeMap );
-		final HighlightModelAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > viewHighlight =
-				new HighlightModelAdapter<>( highlight, vertexMap, edgeMap );
-		final GraphColorGeneratorAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > viewColoring =
-				new GraphColorGeneratorAdapter<>( vertexMap, edgeMap );
-		viewColoring.setColorGenerator( coloring );
+		final SelectionModelAdapter<Spot, Link, OverlayVertexWrapper<Spot, Link>, OverlayEdgeWrapper<Spot, Link>> viewSelection =
+			new SelectionModelAdapter<>(selection, vertexMap, edgeMap);
+		final FocusModelAdapter<Spot, Link, OverlayVertexWrapper<Spot, Link>, OverlayEdgeWrapper<Spot, Link>> viewFocus =
+			new FocusModelAdapter<>(focus, vertexMap, edgeMap);
+		final HighlightModelAdapter<Spot, Link, OverlayVertexWrapper<Spot, Link>, OverlayEdgeWrapper<Spot, Link>> viewHighlight =
+			new HighlightModelAdapter<>(highlight, vertexMap, edgeMap);
+		final GraphColorGeneratorAdapter<Spot, Link, OverlayVertexWrapper<Spot, Link>, OverlayEdgeWrapper<Spot, Link>> viewColoring =
+			new GraphColorGeneratorAdapter<>(vertexMap, edgeMap);
+		viewColoring.setColorGenerator(coloring);
 
 		/*
 		 * Canvas.
 		 */
 
-		final InteractiveDisplayCanvas canvas = new InteractiveDisplayCanvas( WIDTH, HEIGHT );
+		final InteractiveDisplayCanvas canvas = new InteractiveDisplayCanvas(WIDTH,
+			HEIGHT);
 
 		/*
 		 * Picture.
 		 */
 
 		BufferedImage pic = null;
-		try
-		{
-			final InputStream picStream = DummyBdvPanel.class.getResourceAsStream( "CaptureTP24.PNG" );
-			pic = ImageIO.read( picStream );
+		try {
+			final InputStream picStream = DummyBdvPanel.class.getResourceAsStream(
+				"CaptureTP24.PNG");
+			pic = ImageIO.read(picStream);
 		}
-		catch ( final IOException e1 )
-		{
+		catch (final IOException e1) {
 			e1.printStackTrace();
 		}
-		final MyBufferedImageOverlayRenderer imgRenderer = new MyBufferedImageOverlayRenderer( pic );
+		final MyBufferedImageOverlayRenderer imgRenderer =
+			new MyBufferedImageOverlayRenderer(pic);
 
 		/*
 		 * Picture renderer.
 		 */
 
 		final int tp = 24;
-		canvas.overlays().add( imgRenderer );
+		canvas.overlays().add(imgRenderer);
 
 		/*
 		 * Model renderer.
 		 */
 
-		this.renderer = new OverlayGraphRenderer<>( viewGraph, viewHighlight, viewFocus, viewSelection, viewColoring );
-		canvas.overlays().add( renderer );
-		renderer.timePointChanged( tp );
+		this.renderer = new OverlayGraphRenderer<>(viewGraph, viewHighlight,
+			viewFocus, viewSelection, viewColoring);
+		canvas.overlays().add(renderer);
+		renderer.timePointChanged(tp);
 
 		/*
 		 * Listeners. Listen to component being resized.
@@ -287,54 +291,48 @@ public class DummyBdvPanel extends JPanel
 
 		final AffineTransform3D t = new AffineTransform3D();
 		// Set z to model import.
-		t.set( -400., 2, 3 );
-		canvas.addComponentListener( new ComponentAdapter()
-		{
+		t.set(-400., 2, 3);
+		canvas.addComponentListener(new ComponentAdapter() {
 
 			@Override
-			public void componentResized( final ComponentEvent e )
-			{
+			public void componentResized(final ComponentEvent e) {
 				final int viewerWidth = imgRenderer.scaleWidth;
 				final int viewerHeight = imgRenderer.scaleHeight;
-				final double s1 = ( double ) viewerWidth / imgRenderer.image.getWidth();
-				final double s2 = ( double ) viewerHeight / imgRenderer.image.getHeight();
-				final double s = Math.max( s1, s2 );
-				if ( s < 1e-3 )
+				final double s1 = (double) viewerWidth / imgRenderer.image.getWidth();
+				final double s2 = (double) viewerHeight / imgRenderer.image.getHeight();
+				final double s = Math.max(s1, s2);
+				if (s < 1e-3)
 					return;
-				t.set( s, 0, 0 );
-				t.set( s, 1, 1 );
-				renderer.transformChanged( t );
+				t.set(s, 0, 0);
+				t.set(s, 1, 1);
+				renderer.transformChanged(t);
 			}
-		} );
-		this.add( canvas, BorderLayout.CENTER );
+		});
+		this.add(canvas, BorderLayout.CENTER);
 
 		/*
 		 * Time-points.
 		 */
 
-		final JSlider slider = new JSlider( 0, 30, tp );
-		this.add( slider, BorderLayout.SOUTH );
-		slider.addChangeListener( new ChangeListener()
-		{
+		final JSlider slider = new JSlider(0, 30, tp);
+		this.add(slider, BorderLayout.SOUTH);
+		slider.addChangeListener(new ChangeListener() {
 
 			@Override
-			public void stateChanged( final ChangeEvent e )
-			{
-				renderer.timePointChanged( slider.getValue() );
+			public void stateChanged(final ChangeEvent e) {
+				renderer.timePointChanged(slider.getValue());
 				repaint();
 			}
-		} );
-		renderer.transformChanged( t );
+		});
+		renderer.transformChanged(t);
 	}
 
-	public void setRenderSettings( final RenderSettings settings )
-	{
-		renderer.setRenderSettings( settings );
+	public void setRenderSettings(final RenderSettings settings) {
+		renderer.setRenderSettings(settings);
 		repaint();
 	}
 
-	private static class MyProjectReader implements ProjectReader
-	{
+	private static class MyProjectReader implements ProjectReader {
 
 		private static final String PROJECT_FILE_NAME = "/project.xml";
 
@@ -348,60 +346,60 @@ public class DummyBdvPanel extends JPanel
 
 		private final String resourceName;
 
-		public MyProjectReader( final String resourceName )
-		{
+		public MyProjectReader(final String resourceName) {
 			this.resourceName = resourceName;
 		}
 
 		@Override
-		public void close() throws IOException
-		{}
+		public void close() throws IOException {}
 
 		@Override
-		public InputStream getProjectXmlInputStream() throws IOException
-		{
-			return DummyBdvPanel.class.getResourceAsStream( resourceName + PROJECT_FILE_NAME );
+		public InputStream getProjectXmlInputStream() throws IOException {
+			return DummyBdvPanel.class.getResourceAsStream(resourceName +
+				PROJECT_FILE_NAME);
 		}
 
 		@Override
-		public InputStream getRawModelInputStream() throws IOException
-		{
-			return DummyBdvPanel.class.getResourceAsStream( resourceName + RAW_MODEL_FILE_NAME );
+		public InputStream getRawModelInputStream() throws IOException {
+			return DummyBdvPanel.class.getResourceAsStream(resourceName +
+				RAW_MODEL_FILE_NAME);
 		}
 
 		@Override
-		public InputStream getRawTagsInputStream() throws IOException
-		{
-			return DummyBdvPanel.class.getResourceAsStream( resourceName + RAW_TAGS_FILE_NAME );
+		public InputStream getRawTagsInputStream() throws IOException {
+			return DummyBdvPanel.class.getResourceAsStream(resourceName +
+				RAW_TAGS_FILE_NAME);
 		}
 
 		@Override
-		public InputStream getFeatureInputStream( final String featureKey ) throws IOException
+		public InputStream getFeatureInputStream(final String featureKey)
+			throws IOException
 		{
-			return DummyBdvPanel.class.getResourceAsStream( resourceName );
+			return DummyBdvPanel.class.getResourceAsStream(resourceName);
 		}
 
 		@Override
-		public InputStream getGuiInputStream() throws IOException
-		{
-			return DummyBdvPanel.class.getResourceAsStream( resourceName + GUI_FILE_NAME );
+		public InputStream getGuiInputStream() throws IOException {
+			return DummyBdvPanel.class.getResourceAsStream(resourceName +
+				GUI_FILE_NAME);
 		}
 
 		@Override
-		public InputStream getBackupDatasetXmlInputStream() throws IOException
-		{
-			return DummyBdvPanel.class.getResourceAsStream( resourceName + SPIM_DATA_FILE_BACKUP );
+		public InputStream getBackupDatasetXmlInputStream() throws IOException {
+			return DummyBdvPanel.class.getResourceAsStream(resourceName +
+				SPIM_DATA_FILE_BACKUP);
 		}
 
 		@Override
-		public Collection< String > getFeatureKeys()
-		{
+		public Collection<String> getFeatureKeys() {
 			return Collections.emptyList();
 		}
 	}
 
-	private static class MyBufferedImageOverlayRenderer implements OverlayRenderer
+	private static class MyBufferedImageOverlayRenderer implements
+		OverlayRenderer
 	{
+
 		private final BufferedImage image;
 
 		/**
@@ -418,33 +416,36 @@ public class DummyBdvPanel extends JPanel
 
 		private int scaleHeight;
 
-		public MyBufferedImageOverlayRenderer( final BufferedImage image )
-		{
+		public MyBufferedImageOverlayRenderer(final BufferedImage image) {
 			this.image = image;
 			width = 0;
 			height = 0;
 		}
 
 		@Override
-		public void drawOverlays( final Graphics g )
-		{
-			( ( Graphics2D ) g ).setRenderingHint( RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR );
-			( ( Graphics2D ) g ).setRenderingHint( RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED );
-			( ( Graphics2D ) g ).setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF );
-			( ( Graphics2D ) g ).setRenderingHint( RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_SPEED );
-			( ( Graphics2D ) g ).setRenderingHint( RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED );
+		public void drawOverlays(final Graphics g) {
+			((Graphics2D) g).setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+				RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+			((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
+				RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED);
+			((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_OFF);
+			((Graphics2D) g).setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,
+				RenderingHints.VALUE_COLOR_RENDER_SPEED);
+			((Graphics2D) g).setRenderingHint(RenderingHints.KEY_RENDERING,
+				RenderingHints.VALUE_RENDER_SPEED);
 
-			final double s1 = ( double ) width / image.getWidth();
-			final double s2 = ( double ) height / image.getHeight();
-			final double s = Math.max( s1, s2 );
-			scaleWidth = ( int ) Math.round( image.getWidth() * s );
-			scaleHeight = ( int ) Math.round( image.getHeight() * s );
-			g.drawImage( image, 0, 0, scaleWidth, scaleHeight, 0, 0, image.getWidth(), image.getHeight(), null );
+			final double s1 = (double) width / image.getWidth();
+			final double s2 = (double) height / image.getHeight();
+			final double s = Math.max(s1, s2);
+			scaleWidth = (int) Math.round(image.getWidth() * s);
+			scaleHeight = (int) Math.round(image.getHeight() * s);
+			g.drawImage(image, 0, 0, scaleWidth, scaleHeight, 0, 0, image.getWidth(),
+				image.getHeight(), null);
 		}
 
 		@Override
-		public void setCanvasSize( final int width, final int height )
-		{
+		public void setCanvasSize(final int width, final int height) {
 			this.width = width;
 			this.height = height;
 		}

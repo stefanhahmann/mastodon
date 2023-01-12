@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon;
 
 import org.scijava.Context;
@@ -36,14 +37,12 @@ import org.scijava.ui.UIService;
  *
  * @author Matthias Arzt
  */
-public class StartImageJ
-{
+public class StartImageJ {
 
-	public static void main( final String... args )
-	{
-		@SuppressWarnings( "resource" )
+	public static void main(final String... args) {
+		@SuppressWarnings("resource")
 		final Context context = new Context();
-		final UIService uiService = context.service( UIService.class );
+		final UIService uiService = context.service(UIService.class);
 		uiService.showUI();
 	}
 }

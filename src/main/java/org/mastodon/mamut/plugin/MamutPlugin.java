@@ -26,9 +26,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.plugin;
 
 import org.mastodon.app.plugin.MastodonPlugin;
 
-public interface MamutPlugin extends MastodonPlugin< MamutPluginAppModel >
-{}
+public interface MamutPlugin extends MastodonPlugin<MamutPluginAppModel> {}

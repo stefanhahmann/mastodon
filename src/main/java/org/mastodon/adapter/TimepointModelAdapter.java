@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.adapter;
 
 import org.mastodon.model.TimepointListener;
@@ -37,33 +38,29 @@ import org.mastodon.model.TimepointModel;
  *
  * @author Tobias Pietzsch
  */
-public class TimepointModelAdapter implements TimepointModel
-{
+public class TimepointModelAdapter implements TimepointModel {
+
 	private final TimepointModel timepoint;
 
-	private final ForwardedListeners< TimepointListener > listeners;
+	private final ForwardedListeners<TimepointListener> listeners;
 
-	public TimepointModelAdapter( final TimepointModel timepoint )
-	{
+	public TimepointModelAdapter(final TimepointModel timepoint) {
 		this.timepoint = timepoint;
-		this.listeners = new ForwardedListeners.List<>( timepoint.listeners() );
+		this.listeners = new ForwardedListeners.List<>(timepoint.listeners());
 	}
 
 	@Override
-	public void setTimepoint( final int t )
-	{
-		timepoint.setTimepoint( t );
+	public void setTimepoint(final int t) {
+		timepoint.setTimepoint(t);
 	}
 
 	@Override
-	public int getTimepoint()
-	{
+	public int getTimepoint() {
 		return timepoint.getTimepoint();
 	}
 
 	@Override
-	public ForwardedListeners< TimepointListener > listeners()
-	{
+	public ForwardedListeners<TimepointListener> listeners() {
 		return listeners;
 	}
 }

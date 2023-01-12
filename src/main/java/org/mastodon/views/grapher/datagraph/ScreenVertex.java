@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.datagraph;
 
 import static org.mastodon.views.trackscheme.ScreenVertex.Transition.NONE;
@@ -42,10 +43,13 @@ import net.imglib2.RealLocalizable;
  *
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  */
-public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, ByteMappedElement > implements RealLocalizable
+public class ScreenVertex extends
+	PoolObject<ScreenVertex, ScreenVertexPool, ByteMappedElement> implements
+	RealLocalizable
 {
-	public static class ScreenVertexLayout extends PoolObjectLayout
-	{
+
+	public static class ScreenVertexLayout extends PoolObjectLayout {
+
 		final IndexField origVertex = indexField();
 		final DoubleField xOffset = doubleField();
 		final DoubleField yOffset = doubleField();
@@ -59,26 +63,25 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 
 	public static ScreenVertexLayout layout = new ScreenVertexLayout();
 
-	protected ScreenVertex( final ScreenVertexPool pool )
-	{
-		super( pool );
+	protected ScreenVertex(final ScreenVertexPool pool) {
+		super(pool);
 	}
 
 	public ScreenVertex init(
-			final int id,
-			final String label,
-			final double x,
-			final double y,
-			final boolean selected,
-			final int color )
+		final int id,
+		final String label,
+		final double x,
+		final double y,
+		final boolean selected,
+		final int color)
 	{
-		setDataVertexId( id );
-		setLabel( label );
-		setX( x );
-		setY( y );
-		setSelected( selected );
-		setTransition( NONE );
-		setColor( color );
+		setDataVertexId(id);
+		setLabel(label);
+		setX(x);
+		setY(y);
+		setSelected(selected);
+		setTransition(NONE);
+		setColor(color);
 		return this;
 	}
 
@@ -87,14 +90,12 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	 *
 	 * @return the internal pool index of the associated data vertex.
 	 */
-	public int getDataVertexId()
-	{
-		return pool.origVertex.get( this );
+	public int getDataVertexId() {
+		return pool.origVertex.get(this);
 	}
 
-	protected void setDataVertexId( final int id )
-	{
-		pool.origVertex.setQuiet( this, id );
+	protected void setDataVertexId(final int id) {
+		pool.origVertex.setQuiet(this, id);
 	}
 
 	/**
@@ -102,14 +103,12 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	 *
 	 * @return X screen coordinate.
 	 */
-	public double getX()
-	{
-		return pool.xOffset.get( this );
+	public double getX() {
+		return pool.xOffset.get(this);
 	}
 
-	protected void setX( final double x )
-	{
-		pool.xOffset.setQuiet( this, x );
+	protected void setX(final double x) {
+		pool.xOffset.setQuiet(this, x);
 	}
 
 	/**
@@ -117,14 +116,12 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	 *
 	 * @return Y screen coordinate.
 	 */
-	public double getY()
-	{
-		return pool.yOffset.get( this );
+	public double getY() {
+		return pool.yOffset.get(this);
 	}
 
-	protected void setY( final double y )
-	{
-		pool.yOffset.setQuiet( this, y );
+	protected void setY(final double y) {
+		pool.yOffset.setQuiet(this, y);
 	}
 
 	/**
@@ -134,14 +131,12 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	 *
 	 * @return distance to the closest vertex on screen.
 	 */
-	public double getVertexDist()
-	{
-		return pool.vertexDist.get( this );
+	public double getVertexDist() {
+		return pool.vertexDist.get(this);
 	}
 
-	protected void setVertexDist( final double minVertexScreenDist )
-	{
-		pool.vertexDist.setQuiet( this, minVertexScreenDist );
+	protected void setVertexDist(final double minVertexScreenDist) {
+		pool.vertexDist.setQuiet(this, minVertexScreenDist);
 	}
 
 	/**
@@ -150,14 +145,12 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	 *
 	 * @return label of the vertex.
 	 */
-	public String getLabel()
-	{
-		return pool.label.get( this );
+	public String getLabel() {
+		return pool.label.get(this);
 	}
 
-	protected void setLabel( final String label )
-	{
-		pool.label.set( this, label );
+	protected void setLabel(final String label) {
+		pool.label.set(this, label);
 	}
 
 	/**
@@ -165,14 +158,12 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	 *
 	 * @return true, if the vertex is selected.
 	 */
-	public boolean isSelected()
-	{
-		return pool.selected.get( this );
+	public boolean isSelected() {
+		return pool.selected.get(this);
 	}
 
-	protected void setSelected( final boolean selected )
-	{
-		pool.selected.setQuiet( this, selected );
+	protected void setSelected(final boolean selected) {
+		pool.selected.setQuiet(this, selected);
 	}
 
 	/**
@@ -180,14 +171,12 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	 *
 	 * @return the transition state.
 	 */
-	public Transition getTransition()
-	{
-		return Transition.values()[ pool.transition.get( this ) ];
+	public Transition getTransition() {
+		return Transition.values()[pool.transition.get(this)];
 	}
 
-	protected void setTransition( final Transition t )
-	{
-		pool.transition.setQuiet( this, t.toByte() );
+	protected void setTransition(final Transition t) {
+		pool.transition.setQuiet(this, t.toByte());
 	}
 
 	/**
@@ -196,14 +185,12 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	 *
 	 * @return internal pool index of the interpolated {@link ScreenVertex}.
 	 */
-	protected int getInterpolatedScreenVertexIndex()
-	{
-		return pool.ipScreenVertex.get( this );
+	protected int getInterpolatedScreenVertexIndex() {
+		return pool.ipScreenVertex.get(this);
 	}
 
-	protected void setInterpolatedScreenVertexIndex( final int screenVertexIndex )
-	{
-		pool.ipScreenVertex.setQuiet( this, screenVertexIndex );
+	protected void setInterpolatedScreenVertexIndex(final int screenVertexIndex) {
+		pool.ipScreenVertex.setQuiet(this, screenVertexIndex);
 	}
 
 	/**
@@ -212,21 +199,18 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	 *
 	 * @return the interpolation completion ratio.
 	 */
-	public double getInterpolationCompletionRatio()
-	{
-		return pool.ipRatio.get( this );
+	public double getInterpolationCompletionRatio() {
+		return pool.ipRatio.get(this);
 	}
 
 	/**
-	 * Sets the interpolation completion ratio of the current transition for
-	 * this screen vertex.
+	 * Sets the interpolation completion ratio of the current transition for this
+	 * screen vertex.
 	 *
-	 * @param ratio
-	 *            the interpolation completion ratio.
+	 * @param ratio the interpolation completion ratio.
 	 */
-	protected void setInterpolationCompletionRatio( final double ratio )
-	{
-		pool.ipRatio.setQuiet( this, ratio );
+	protected void setInterpolationCompletionRatio(final double ratio) {
+		pool.ipRatio.setQuiet(this, ratio);
 	}
 
 	/**
@@ -234,73 +218,65 @@ public class ScreenVertex extends PoolObject< ScreenVertex, ScreenVertexPool, By
 	 *
 	 * @return the color.
 	 */
-	public int getColor()
-	{
-		return pool.color.get( this );
+	public int getColor() {
+		return pool.color.get(this);
 	}
 
 	/**
 	 * Set the color of this vertex (ARGB bytes packed into {@code int}).
 	 *
-	 * @param color
-	 *            the color as ARGB bytes packed into {@code int}
+	 * @param color the color as ARGB bytes packed into {@code int}
 	 */
-	protected void setColor( final int color )
-	{
-		pool.color.setQuiet( this, color );
+	protected void setColor(final int color) {
+		pool.color.setQuiet(this, color);
 	}
 
 	@Override
-	protected void setToUninitializedState()
-	{}
+	protected void setToUninitializedState() {}
 
 	/**
-	 * Set all fields as in specified {@link ScreenVertex} (which is possibly
-	 * from another pool).
+	 * Set all fields as in specified {@link ScreenVertex} (which is possibly from
+	 * another pool).
 	 * <p>
 	 * ONLY USE THIS FOR {@link ScreenEntities#set(ScreenEntities)}!
 	 *
-	 * @param v
-	 *            the vertex to clone parameters from.
+	 * @param v the vertex to clone parameters from.
 	 * @return {@code this}.
 	 */
-	ScreenVertex cloneFrom( final ScreenVertex v )
-	{
-		setDataVertexId( v.getDataVertexId() );
-		setLabel( v.getLabel() );
-		setX( v.getX() );
-		setY( v.getY() );
-		setVertexDist( v.getVertexDist() );
-		setSelected( v.isSelected() );
-		setTransition( v.getTransition() );
-		setInterpolatedScreenVertexIndex( v.getInterpolatedScreenVertexIndex() );
-		setInterpolationCompletionRatio( v.getInterpolationCompletionRatio() );
-		setColor( v.getColor() );
+	ScreenVertex cloneFrom(final ScreenVertex v) {
+		setDataVertexId(v.getDataVertexId());
+		setLabel(v.getLabel());
+		setX(v.getX());
+		setY(v.getY());
+		setVertexDist(v.getVertexDist());
+		setSelected(v.isSelected());
+		setTransition(v.getTransition());
+		setInterpolatedScreenVertexIndex(v.getInterpolatedScreenVertexIndex());
+		setInterpolationCompletionRatio(v.getInterpolationCompletionRatio());
+		setColor(v.getColor());
 		return this;
 	}
 
 	@Override
-	public String toString()
-	{
-		return String.format( "ScreenVertex(%d, dvid=%d, \"%s\", (%.2f, %.2f), %s%s)",
-				getInternalPoolIndex(),
-				getDataVertexId(),
-				getLabel(),
-				getX(),
-				getY(),
-				getTransition().toString(),
-				isSelected() ? ", selected" : "" );
+	public String toString() {
+		return String.format(
+			"ScreenVertex(%d, dvid=%d, \"%s\", (%.2f, %.2f), %s%s)",
+			getInternalPoolIndex(),
+			getDataVertexId(),
+			getLabel(),
+			getX(),
+			getY(),
+			getTransition().toString(),
+			isSelected() ? ", selected" : "");
 	}
 
 	@Override
-	public int numDimensions()
-	{
+	public int numDimensions() {
 		return 2;
 	}
 
 	@Override
-	public double getDoublePosition( final int d )
-	{
-		return ( d == 0 ) ? pool.xOffset.get( this ) : pool.yOffset.get( this );
+	public double getDoublePosition(final int d) {
+		return (d == 0) ? pool.xOffset.get(this) : pool.yOffset.get(this);
 	}
 }

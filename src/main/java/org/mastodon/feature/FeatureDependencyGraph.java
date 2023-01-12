@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.feature;
 
 import static org.mastodon.graph.algorithm.AncestorFinder.ancestors;
@@ -50,49 +51,45 @@ import org.scijava.command.CommandInfo;
  * Each edge represents a dependency, {@code A --> B} means "feature A depends
  * on feature B".
  */
-public class FeatureDependencyGraph extends AbstractObjectGraph< FeatureDependencyGraph.Vertex, FeatureDependencyGraph.Edge >
+public class FeatureDependencyGraph extends
+	AbstractObjectGraph<FeatureDependencyGraph.Vertex, FeatureDependencyGraph.Edge>
 {
-	private final Map< FeatureSpec< ?, ? >, Vertex > features;
 
-	public FeatureDependencyGraph()
-	{
-		super( new Factory(), new HashSet<>(), new HashSet<>() );
+	private final Map<FeatureSpec<?, ?>, Vertex> features;
+
+	public FeatureDependencyGraph() {
+		super(new Factory(), new HashSet<>(), new HashSet<>());
 		features = new HashMap<>();
 	}
 
-	public boolean contains( final FeatureSpec< ?, ? > featureSpec )
-	{
-		return features.containsKey( featureSpec );
+	public boolean contains(final FeatureSpec<?, ?> featureSpec) {
+		return features.containsKey(featureSpec);
 	}
 
-	public Vertex get( final FeatureSpec< ?, ? > featureSpec )
-	{
-		return features.get( featureSpec );
+	public Vertex get(final FeatureSpec<?, ?> featureSpec) {
+		return features.get(featureSpec);
 	}
 
-	public Vertex addVertex( final FeatureSpec< ?, ? > featureSpec )
-	{
-		final Vertex v = super.addVertex().init( featureSpec );
-		features.put( featureSpec, v );
+	public Vertex addVertex(final FeatureSpec<?, ?> featureSpec) {
+		final Vertex v = super.addVertex().init(featureSpec);
+		features.put(featureSpec, v);
 		return v;
 	}
 
 	@Override
-	public Vertex addVertex()
-	{
-		throw new UnsupportedOperationException( "Use addVertex(FeatureSpec) instead" );
+	public Vertex addVertex() {
+		throw new UnsupportedOperationException(
+			"Use addVertex(FeatureSpec) instead");
 	}
 
 	@Override
-	public void remove( final Vertex vertex )
-	{
-		super.remove( vertex );
-		features.remove( vertex.getFeatureSpec() );
+	public void remove(final Vertex vertex) {
+		super.remove(vertex);
+		features.remove(vertex.getFeatureSpec());
 	}
 
 	@Override
-	public void clear()
-	{
+	public void clear() {
 		super.clear();
 		features.clear();
 	}
@@ -102,39 +99,34 @@ public class FeatureDependencyGraph extends AbstractObjectGraph< FeatureDependen
 	 *
 	 * @return set of {@code FeatureSpec}s of all vertices in this graph.
 	 */
-	public Set< FeatureSpec< ?, ? > > getFeatureSpecs()
-	{
-		return Collections.unmodifiableSet( features.keySet() );
+	public Set<FeatureSpec<?, ?>> getFeatureSpecs() {
+		return Collections.unmodifiableSet(features.keySet());
 	}
 
 	/**
 	 * Removes vertices on cycles.
 	 */
-	public void removeCycles()
-	{
-		final Set< RefSet< Vertex > > sccs = stronglyConnectedComponents( this );
-		for ( final RefSet< FeatureDependencyGraph.Vertex > scc : sccs )
-		{
+	public void removeCycles() {
+		final Set<RefSet<Vertex>> sccs = stronglyConnectedComponents(this);
+		for (final RefSet<FeatureDependencyGraph.Vertex> scc : sccs) {
 			boolean prune = false;
-			if ( scc.size() > 1 )
-			{
+			if (scc.size() > 1) {
 				// Component contains vertices that are on a cycle.
 				prune = true;
 			}
-			else if ( scc.size() == 1 )
-			{
+			else if (scc.size() == 1) {
 				// Component contains exactly one vertex.
 				// Still needs to be pruned, if the one vertex has an edge to
 				// itself.
 				final FeatureDependencyGraph.Vertex vertex = scc.iterator().next();
-				for ( final FeatureDependencyGraph.Edge edge : vertex.outgoingEdges() )
-					if ( edge.getTarget().equals( vertex ) )
+				for (final FeatureDependencyGraph.Edge edge : vertex.outgoingEdges())
+					if (edge.getTarget().equals(vertex))
 						prune = true;
 			}
 
-			if ( prune )
-				for ( final FeatureDependencyGraph.Vertex vertex : scc )
-					remove( vertex );
+			if (prune)
+				for (final FeatureDependencyGraph.Vertex vertex : scc)
+				remove(vertex);
 		}
 	}
 
@@ -146,14 +138,14 @@ public class FeatureDependencyGraph extends AbstractObjectGraph< FeatureDependen
 	 * <li>it depends on an incomputable feature.</li>
 	 * </ul>
 	 */
-	public void removeIncomputable()
-	{
-		final RefSet< FeatureDependencyGraph.Vertex > missing = RefCollections.createRefSet( vertices() );
-		for ( final FeatureDependencyGraph.Vertex vertex : vertices() )
-			if ( vertex.getFeatureComputer() == null )
-				missing.add( vertex );
-		for ( final FeatureDependencyGraph.Vertex vertex : ancestors( this, missing ) )
-			remove( vertex );
+	public void removeIncomputable() {
+		final RefSet<FeatureDependencyGraph.Vertex> missing = RefCollections
+			.createRefSet(vertices());
+		for (final FeatureDependencyGraph.Vertex vertex : vertices())
+			if (vertex.getFeatureComputer() == null)
+				missing.add(vertex);
+		for (final FeatureDependencyGraph.Vertex vertex : ancestors(this, missing))
+			remove(vertex);
 	}
 
 	/**
@@ -162,31 +154,32 @@ public class FeatureDependencyGraph extends AbstractObjectGraph< FeatureDependen
 	 * <p>
 	 * <em>Note that this assumes that there are no cycles in the graph!</em>
 	 * 
-	 * @param specs
-	 *            the collection of feature specs.
+	 * @param specs the collection of feature specs.
 	 * @return a new feature dependency graph.
 	 */
-	public FeatureDependencyGraph subGraphFor( final Collection< FeatureSpec< ?, ? > > specs )
+	public FeatureDependencyGraph subGraphFor(
+		final Collection<FeatureSpec<?, ?>> specs)
 	{
 		final FeatureDependencyGraph graph = new FeatureDependencyGraph();
-		new Runnable()
-		{
+		new Runnable() {
+
 			@Override
-			public void run()
-			{
-				specs.forEach( this::vertex );
+			public void run() {
+				specs.forEach(this::vertex);
 			}
 
-			private FeatureDependencyGraph.Vertex vertex( final FeatureSpec< ?, ? > spec )
+			private FeatureDependencyGraph.Vertex vertex(
+				final FeatureSpec<?, ?> spec)
 			{
-				FeatureDependencyGraph.Vertex vertex = graph.get( spec );
-				if ( vertex == null )
-				{
-					final FeatureDependencyGraph.Vertex dep = FeatureDependencyGraph.this.get( spec );
-					vertex = graph.addVertex( dep.getFeatureSpec() );
-					vertex.setFeatureComputer( dep.getFeatureComputer(), dep.getFeatureComputerInfo() );
-					for ( final FeatureDependencyGraph.Edge edge : dep.outgoingEdges() )
-						graph.addEdge( vertex, vertex( edge.getTarget().getFeatureSpec() ) );
+				FeatureDependencyGraph.Vertex vertex = graph.get(spec);
+				if (vertex == null) {
+					final FeatureDependencyGraph.Vertex dep = FeatureDependencyGraph.this
+						.get(spec);
+					vertex = graph.addVertex(dep.getFeatureSpec());
+					vertex.setFeatureComputer(dep.getFeatureComputer(), dep
+						.getFeatureComputerInfo());
+					for (final FeatureDependencyGraph.Edge edge : dep.outgoingEdges())
+						graph.addEdge(vertex, vertex(edge.getTarget().getFeatureSpec()));
 				}
 				return vertex;
 			}
@@ -194,99 +187,92 @@ public class FeatureDependencyGraph extends AbstractObjectGraph< FeatureDependen
 		return graph;
 	}
 
-	private static class Factory implements AbstractObjectGraph.Factory< Vertex, Edge >
+	private static class Factory implements
+		AbstractObjectGraph.Factory<Vertex, Edge>
 	{
+
 		@Override
-		public Vertex createVertex()
-		{
+		public Vertex createVertex() {
 			return new Vertex();
 		}
 
 		@Override
-		public Edge createEdge( final Vertex source, final Vertex target )
-		{
-			return new Edge( source, target );
+		public Edge createEdge(final Vertex source, final Vertex target) {
+			return new Edge(source, target);
 		}
 	}
 
-	public static class Edge extends AbstractObjectEdge< Edge, Vertex >
-	{
-		Edge( final Vertex source, final Vertex target )
-		{
-			super( source, target );
+	public static class Edge extends AbstractObjectEdge<Edge, Vertex> {
+
+		Edge(final Vertex source, final Vertex target) {
+			super(source, target);
 		}
 
 		@Override
-		public String toString()
-		{
-			return "Edge{ " + getSource().featureSpec.getKey() + " --> " + getTarget().featureSpec.getKey() + "}";
+		public String toString() {
+			return "Edge{ " + getSource().featureSpec.getKey() + " --> " +
+				getTarget().featureSpec.getKey() + "}";
 		}
 	}
 
-	public static class Vertex extends AbstractObjectVertex< Vertex, Edge >
-	{
-		private FeatureSpec< ?, ? > featureSpec;
+	public static class Vertex extends AbstractObjectVertex<Vertex, Edge> {
+
+		private FeatureSpec<?, ?> featureSpec;
 
 		private FeatureComputer featureComputer;
 
 		private CommandInfo featureComputerInfo;
 
-		private Vertex()
-		{}
+		private Vertex() {}
 
-		private Vertex init( final FeatureSpec< ?, ? > featureSpec )
-		{
+		private Vertex init(final FeatureSpec<?, ?> featureSpec) {
 			this.featureSpec = featureSpec;
 			return this;
 		}
 
-		public FeatureSpec< ?, ? > getFeatureSpec()
-		{
+		public FeatureSpec<?, ?> getFeatureSpec() {
 			return featureSpec;
 		}
 
 		public void setFeatureComputer(
-				final FeatureComputer featureComputer,
-				final CommandInfo featureComputerInfo )
+			final FeatureComputer featureComputer,
+			final CommandInfo featureComputerInfo)
 		{
 			this.featureComputer = featureComputer;
 			this.featureComputerInfo = featureComputerInfo;
 		}
 
-		public FeatureComputer getFeatureComputer()
-		{
+		public FeatureComputer getFeatureComputer() {
 			return featureComputer;
 		}
 
-		public CommandInfo getFeatureComputerInfo()
-		{
+		public CommandInfo getFeatureComputerInfo() {
 			return featureComputerInfo;
 		}
 
 		@Override
-		public String toString()
-		{
+		public String toString() {
 			return "Vertex{" +
-					"featureSpec=" + featureSpec.getKey() +
-					", featureComputer=" + ( featureComputer == null ? "null" : featureComputer.getClass().getSimpleName() ) +
-					'}';
+				"featureSpec=" + featureSpec.getKey() +
+				", featureComputer=" + (featureComputer == null ? "null"
+					: featureComputer.getClass().getSimpleName()) +
+				'}';
 		}
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		final StringBuilder sb = new StringBuilder();
 
-		sb.append( "FeatureDependencyGraph{\n" );
-		sb.append( "  {\n" );
-		for ( final Vertex vertex : vertices() )
-			sb.append( "    " + vertex + "\n" );
-		sb.append( "  }, {\n" );
-		for ( final Edge edge : edges() )
-			sb.append( "    " + edge + "\n" );
-		sb.append( "  }\n" );
-		sb.append( "}" );
+		sb.append("FeatureDependencyGraph{\n");
+		sb.append("  {\n");
+		for (final Vertex vertex : vertices())
+			sb.append("    " + vertex + "\n");
+		sb.append("  }, {\n");
+		for (final Edge edge : edges())
+			sb.append("    " + edge + "\n");
+		sb.append("  }\n");
+		sb.append("}");
 		return sb.toString();
 	}
 }

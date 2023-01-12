@@ -26,18 +26,18 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model;
 
 /**
-* Something (e.g., a spot) that has a label.
-*
-* <p>
-* TODO: in which package should this be?
-*
-* @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
-*/
-public interface HasLabel
-{
+ * Something (e.g., a spot) that has a label.
+ * <p>
+ * TODO: in which package should this be?
+ *
+ * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
+ */
+public interface HasLabel {
+
 	/**
 	 * Get the label.
 	 *
@@ -48,8 +48,7 @@ public interface HasLabel
 	/**
 	 * Set the label.
 	 *
-	 * @param label
-	 *            the label.
+	 * @param label the label.
 	 */
-	public void setLabel( String label );
+	public void setLabel(String label);
 }

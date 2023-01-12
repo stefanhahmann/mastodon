@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.bdv;
 
 import bdv.ui.splitpanel.SplitPanel;
@@ -43,8 +44,8 @@ import bdv.tools.VisibilityAndGroupingDialog;
 import bdv.tools.bookmarks.BookmarksEditor;
 import bdv.tools.brightness.BrightnessDialog;
 
-public class BigDataViewerMamut
-{
+public class BigDataViewerMamut {
+
 	private final ViewerFrameMamut viewerFrame;
 
 	private final ViewerPanel viewer;
@@ -65,137 +66,117 @@ public class BigDataViewerMamut
 	 * Creates a new BDV window showing the image data overlaid with MaMuT
 	 * annotations.
 	 *
-	 * @param shared
-	 *            the shared BDV data.
-	 * @param windowTitle
-	 *            title of the viewer window.
-	 * @param groupHandle
-	 *            the group handle to manage view synchronization.
+	 * @param shared the shared BDV data.
+	 * @param windowTitle title of the viewer window.
+	 * @param groupHandle the group handle to manage view synchronization.
 	 */
 	public BigDataViewerMamut(
-			final SharedBigDataViewerData shared,
-			final String windowTitle,
-			final GroupHandle groupHandle )
+		final SharedBigDataViewerData shared,
+		final String windowTitle,
+		final GroupHandle groupHandle)
 	{
 		this.shared = shared;
 		viewerFrame = new ViewerFrameMamut(
-				windowTitle,
-				shared.getSources(),
-				shared.getConverterSetups(),
-				shared.getNumTimepoints(),
-				shared.getCache(),
-				groupHandle,
-				shared.getOptions() );
+			windowTitle,
+			shared.getSources(),
+			shared.getConverterSetups(),
+			shared.getNumTimepoints(),
+			shared.getCache(),
+			groupHandle,
+			shared.getOptions());
 		viewer = viewerFrame.getViewerPanel();
 		splitPanel = viewerFrame.getSplitPanel();
 
 		fileChooser = new JFileChooser();
-		fileChooser.setFileFilter( new FileFilter()
-		{
+		fileChooser.setFileFilter(new FileFilter() {
+
 			@Override
-			public String getDescription()
-			{
+			public String getDescription() {
 				return "xml files";
 			}
 
 			@Override
-			public boolean accept( final File f )
-			{
-				if ( f.isDirectory() )
+			public boolean accept(final File f) {
+				if (f.isDirectory())
 					return true;
-				if ( f.isFile() )
-				{
+				if (f.isFile()) {
 					final String s = f.getName();
-					final int i = s.lastIndexOf( '.' );
-					if ( i > 0 && i < s.length() - 1 )
-					{
-						final String ext = s.substring( i + 1 ).toLowerCase();
-						return ext.equals( "xml" );
+					final int i = s.lastIndexOf('.');
+					if (i > 0 && i < s.length() - 1) {
+						final String ext = s.substring(i + 1).toLowerCase();
+						return ext.equals("xml");
 					}
 				}
 				return false;
 			}
-		} );
+		});
 
-		bookmarkEditor = new BookmarksEditor( viewer, viewerFrame.getKeybindings(), shared.getBookmarks() );
-		bookmarkEditor.setInputMapsToBlock( Arrays.asList( "all" ) );
+		bookmarkEditor = new BookmarksEditor(viewer, viewerFrame.getKeybindings(),
+			shared.getBookmarks());
+		bookmarkEditor.setInputMapsToBlock(Arrays.asList("all"));
 
 		brightnessDialog = shared.getBrightnessDialog();
-		visibilityAndGroupingDialog = new VisibilityAndGroupingDialog( viewerFrame, viewer.getVisibilityAndGrouping() );
+		visibilityAndGroupingDialog = new VisibilityAndGroupingDialog(viewerFrame,
+			viewer.getVisibilityAndGrouping());
 	}
 
-	public ViewerPanel getViewer()
-	{
+	public ViewerPanel getViewer() {
 		return viewer;
 	}
 
-	public ViewerFrameMamut getViewerFrame()
-	{
+	public ViewerFrameMamut getViewerFrame() {
 		return viewerFrame;
 	}
 
-	public BrightnessDialog getBrightnessDialog()
-	{
+	public BrightnessDialog getBrightnessDialog() {
 		return brightnessDialog;
 	}
 
-	public VisibilityAndGroupingDialog getVisibilityAndGroupingDialog()
-	{
+	public VisibilityAndGroupingDialog getVisibilityAndGroupingDialog() {
 		return visibilityAndGroupingDialog;
 	}
 
-	public BookmarksEditor getBookmarksEditor()
-	{
+	public BookmarksEditor getBookmarksEditor() {
 		return bookmarkEditor;
 	}
 
-	public void expandAndFocusCardPanel()
-	{
-		splitPanel.setCollapsed( false );
+	public void expandAndFocusCardPanel() {
+		splitPanel.setCollapsed(false);
 		splitPanel.getRightComponent().requestFocusInWindow();
 	}
 
-	public void collapseCardPanel()
-	{
-		splitPanel.setCollapsed( true );
+	public void collapseCardPanel() {
+		splitPanel.setCollapsed(true);
 		viewer.requestFocusInWindow();
 	}
 
-	protected void saveSettings()
-	{
-		fileChooser.setSelectedFile( shared.getProposedSettingsFile() );
-		final int returnVal = fileChooser.showSaveDialog( null );
-		if ( returnVal == JFileChooser.APPROVE_OPTION )
-		{
+	protected void saveSettings() {
+		fileChooser.setSelectedFile(shared.getProposedSettingsFile());
+		final int returnVal = fileChooser.showSaveDialog(null);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			final File file = fileChooser.getSelectedFile();
-			shared.setProposedSettingsFile( file );
-			try
-			{
-				shared.saveSettings( file.getCanonicalPath(), viewer );
+			shared.setProposedSettingsFile(file);
+			try {
+				shared.saveSettings(file.getCanonicalPath(), viewer);
 			}
-			catch ( final IOException e )
-			{
+			catch (final IOException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	protected void loadSettings()
-	{
-		fileChooser.setSelectedFile( shared.getProposedSettingsFile()  );
-		final int returnVal = fileChooser.showOpenDialog( null );
-		if ( returnVal == JFileChooser.APPROVE_OPTION )
-		{
+	protected void loadSettings() {
+		fileChooser.setSelectedFile(shared.getProposedSettingsFile());
+		final int returnVal = fileChooser.showOpenDialog(null);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			final File file = fileChooser.getSelectedFile();
-			shared.setProposedSettingsFile( file );
-			try
-			{
-				shared.loadSettings( file.getCanonicalPath(), viewer );
+			shared.setProposedSettingsFile(file);
+			try {
+				shared.loadSettings(file.getCanonicalPath(), viewer);
 				visibilityAndGroupingDialog.update();
 				viewer.repaint();
 			}
-			catch ( final Exception e )
-			{
+			catch (final Exception e) {
 				e.printStackTrace();
 			}
 		}

@@ -26,19 +26,20 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.datagraph;
 
 import org.mastodon.collection.RefSet;
 import org.mastodon.views.context.Context;
 
-public class DataGraphContextLayout
-{
+public class DataGraphContextLayout {
 
-	private final DataGraphLayout< ?, ? > layout;
+	private final DataGraphLayout<?, ?> layout;
 
-	private final RefSet< DataVertex > holder;
+	private final RefSet<DataVertex> holder;
 
-	public DataGraphContextLayout( final DataGraphLayout< ?, ? > layout, final RefSet< DataVertex > holder )
+	public DataGraphContextLayout(final DataGraphLayout<?, ?> layout,
+		final RefSet<DataVertex> holder)
 	{
 		this.layout = layout;
 		this.holder = holder;
@@ -47,17 +48,15 @@ public class DataGraphContextLayout
 	/**
 	 * Layouts part of the graph covered by {@code context}.
 	 *
-	 * @param context
-	 *            the context to layout.
+	 * @param context the context to layout.
 	 */
-	public void buildContext( final Context< DataVertex > context )
-	{
+	public void buildContext(final Context<DataVertex> context) {
 		final int timepoint = context.getTimepoint();
-		final Iterable< DataVertex > vertices = context.getInsideVertices( timepoint );
+		final Iterable<DataVertex> vertices = context.getInsideVertices(timepoint);
 		holder.clear();
-		for ( final DataVertex v : vertices )
-			holder.add( v );
-		layout.setVertices( holder );
+		for (final DataVertex v : vertices)
+			holder.add(v);
+		layout.setVertices(holder);
 		layout.layout();
 	}
 }

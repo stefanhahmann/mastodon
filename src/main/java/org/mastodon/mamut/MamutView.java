@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut;
 
 import static org.mastodon.mamut.MamutViewStateSerialization.COLORBAR_POSITION_KEY;
@@ -75,152 +76,162 @@ import org.mastodon.ui.coloring.feature.FeatureColorModeManager;
 import org.mastodon.views.trackscheme.display.ColorBarOverlay;
 import org.mastodon.views.trackscheme.display.ColorBarOverlay.Position;
 
-public class MamutView< VG extends ViewGraph< Spot, Link, V, E >, V extends Vertex< E >, E extends Edge< V > >
-		extends MastodonFrameView< MamutAppModel, VG, Spot, Link, V, E >
+public class MamutView<VG extends ViewGraph<Spot, Link, V, E>, V extends Vertex<E>, E extends Edge<V>>
+	extends MastodonFrameView<MamutAppModel, VG, Spot, Link, V, E>
 {
-	public MamutView( final MamutAppModel appModel, final VG viewGraph, final String[] keyConfigContexts )
+
+	public MamutView(final MamutAppModel appModel, final VG viewGraph,
+		final String[] keyConfigContexts)
 	{
-		super( appModel, viewGraph, keyConfigContexts );
+		super(appModel, viewGraph, keyConfigContexts);
 	}
 
 	/**
 	 * Sets up and registers the coloring menu item and related actions and
-	 * listeners. A new instance of the {@code ColoringModel} is created here
-	 * and a reference on it is returned. This instance is bound to all relevant
+	 * listeners. A new instance of the {@code ColoringModel} is created here and
+	 * a reference on it is returned. This instance is bound to all relevant
 	 * actions and is therefore knowledgeable of the currently used coloring
 	 * style.
 	 *
-	 * @param colorGeneratorAdapter
-	 *            adapts a (modifiable) model coloring to view vertices/edges.
-	 * @param menuHandle
-	 *            handle to the JMenu corresponding to the coloring submenu.
-	 *            Coloring options will be installed here.
-	 * @param refresh
-	 *            triggers repaint of the graph (called when coloring changes)
-	 *
+	 * @param colorGeneratorAdapter adapts a (modifiable) model coloring to view
+	 *          vertices/edges.
+	 * @param menuHandle handle to the JMenu corresponding to the coloring
+	 *          submenu. Coloring options will be installed here.
+	 * @param refresh triggers repaint of the graph (called when coloring changes)
 	 * @return reference on the underlying {@code ColoringModel}
 	 */
-	protected ColoringModelMain< Spot, Link, BranchSpot, BranchLink > registerColoring(
-			final GraphColorGeneratorAdapter< Spot, Link, V, E > colorGeneratorAdapter,
+	protected ColoringModelMain<Spot, Link, BranchSpot, BranchLink>
+		registerColoring(
+			final GraphColorGeneratorAdapter<Spot, Link, V, E> colorGeneratorAdapter,
 			final JMenuHandle menuHandle,
-			final Runnable refresh )
+			final Runnable refresh)
 	{
-		final TagSetModel< Spot, Link > tagSetModel = appModel.getModel().getTagSetModel();
+		final TagSetModel<Spot, Link> tagSetModel = appModel.getModel()
+			.getTagSetModel();
 		final FeatureModel featureModel = appModel.getModel().getFeatureModel();
-		final FeatureColorModeManager featureColorModeManager = appModel.getFeatureColorModeManager();
+		final FeatureColorModeManager featureColorModeManager = appModel
+			.getFeatureColorModeManager();
 		final ModelBranchGraph branchGraph = appModel.getModel().getBranchGraph();
-		final ColoringModelMain< Spot, Link, BranchSpot, BranchLink > coloringModel = new ColoringModelMain<>( tagSetModel, featureColorModeManager, featureModel, branchGraph );
-		final ColoringMenu coloringMenu = new ColoringMenu( menuHandle.getMenu(), coloringModel );
+		final ColoringModelMain<Spot, Link, BranchSpot, BranchLink> coloringModel =
+			new ColoringModelMain<>(tagSetModel, featureColorModeManager,
+				featureModel, branchGraph);
+		final ColoringMenu coloringMenu = new ColoringMenu(menuHandle.getMenu(),
+			coloringModel);
 
-		tagSetModel.listeners().add( coloringModel );
-		onClose( () -> tagSetModel.listeners().remove( coloringModel ) );
-		tagSetModel.listeners().add( coloringMenu );
-		onClose( () -> tagSetModel.listeners().remove( coloringMenu ) );
+		tagSetModel.listeners().add(coloringModel);
+		onClose(() -> tagSetModel.listeners().remove(coloringModel));
+		tagSetModel.listeners().add(coloringMenu);
+		onClose(() -> tagSetModel.listeners().remove(coloringMenu));
 
-		featureColorModeManager.listeners().add( coloringModel );
-		onClose( () -> featureColorModeManager.listeners().remove( coloringModel ) );
-		featureColorModeManager.listeners().add( coloringMenu );
-		onClose( () -> featureColorModeManager.listeners().remove( coloringMenu ) );
+		featureColorModeManager.listeners().add(coloringModel);
+		onClose(() -> featureColorModeManager.listeners().remove(coloringModel));
+		featureColorModeManager.listeners().add(coloringMenu);
+		onClose(() -> featureColorModeManager.listeners().remove(coloringMenu));
 
-		featureModel.listeners().add( coloringMenu );
-		onClose( () -> featureModel.listeners().remove( coloringMenu ) );
+		featureModel.listeners().add(coloringMenu);
+		onClose(() -> featureModel.listeners().remove(coloringMenu));
 
-		final ColoringModelMain.ColoringChangedListener coloringChangedListener = () -> {
-			if ( coloringModel.noColoring() )
-				colorGeneratorAdapter.setColorGenerator( null );
-			else if ( coloringModel.getTagSet() != null )
-				colorGeneratorAdapter.setColorGenerator( new TagSetGraphColorGenerator<>( tagSetModel, coloringModel.getTagSet() ) );
-			else if ( coloringModel.getFeatureColorMode() != null )
-				colorGeneratorAdapter.setColorGenerator( coloringModel.getFeatureGraphColorGenerator() );
-			refresh.run();
-		};
-		coloringModel.listeners().add( coloringChangedListener );
+		final ColoringModelMain.ColoringChangedListener coloringChangedListener =
+			() -> {
+				if (coloringModel.noColoring())
+					colorGeneratorAdapter.setColorGenerator(null);
+				else if (coloringModel.getTagSet() != null)
+					colorGeneratorAdapter.setColorGenerator(
+						new TagSetGraphColorGenerator<>(tagSetModel, coloringModel
+							.getTagSet()));
+				else if (coloringModel.getFeatureColorMode() != null)
+					colorGeneratorAdapter.setColorGenerator(coloringModel
+						.getFeatureGraphColorGenerator());
+				refresh.run();
+			};
+		coloringModel.listeners().add(coloringChangedListener);
 
 		return coloringModel;
 	}
 
 	protected void registerColorbarOverlay(
-			final ColorBarOverlay colorBarOverlay,
-			final JMenuHandle menuHandle,
-			final Runnable refresh )
+		final ColorBarOverlay colorBarOverlay,
+		final JMenuHandle menuHandle,
+		final Runnable refresh)
 	{
-		menuHandle.getMenu().add( new JSeparator() );
-		final JCheckBoxMenuItem toggleOverlay = new JCheckBoxMenuItem( "Show colorbar", ColorBarOverlay.DEFAULT_VISIBLE );
-		toggleOverlay.addActionListener( ( l ) -> {
-			colorBarOverlay.setVisible( toggleOverlay.isSelected() );
+		menuHandle.getMenu().add(new JSeparator());
+		final JCheckBoxMenuItem toggleOverlay = new JCheckBoxMenuItem(
+			"Show colorbar", ColorBarOverlay.DEFAULT_VISIBLE);
+		toggleOverlay.addActionListener((l) -> {
+			colorBarOverlay.setVisible(toggleOverlay.isSelected());
 			refresh.run();
-		} );
-		menuHandle.getMenu().add( toggleOverlay );
+		});
+		menuHandle.getMenu().add(toggleOverlay);
 
-		menuHandle.getMenu().add( new JSeparator() );
-		menuHandle.getMenu().add( "Position:" ).setEnabled( false );
+		menuHandle.getMenu().add(new JSeparator());
+		menuHandle.getMenu().add("Position:").setEnabled(false);
 
 		final ButtonGroup buttonGroup = new ButtonGroup();
-		for ( final Position position : Position.values() )
-		{
-			final JRadioButtonMenuItem positionItem = new JRadioButtonMenuItem( position.toString() );
-			positionItem.addActionListener( ( l ) -> {
-				if ( positionItem.isSelected() )
-				{
-					colorBarOverlay.setPosition( position );
+		for (final Position position : Position.values()) {
+			final JRadioButtonMenuItem positionItem = new JRadioButtonMenuItem(
+				position.toString());
+			positionItem.addActionListener((l) -> {
+				if (positionItem.isSelected()) {
+					colorBarOverlay.setPosition(position);
 					refresh.run();
 				}
-			} );
-			buttonGroup.add( positionItem );
-			menuHandle.getMenu().add( positionItem );
+			});
+			buttonGroup.add(positionItem);
+			menuHandle.getMenu().add(positionItem);
 
-			if ( position.equals( ColorBarOverlay.DEFAULT_POSITION ) )
-				positionItem.setSelected( true );
+			if (position.equals(ColorBarOverlay.DEFAULT_POSITION))
+				positionItem.setSelected(true);
 		}
 	}
 
 	protected void registerTagSetMenu(
-			final JMenuHandle menuHandle,
-			final Runnable refresh )
+		final JMenuHandle menuHandle,
+		final Runnable refresh)
 	{
-		final SelectionModel< Spot, Link > selectionModel = appModel.getSelectionModel();
+		final SelectionModel<Spot, Link> selectionModel = appModel
+			.getSelectionModel();
 		final Model model = appModel.getModel();
-		final TagSetModel< Spot, Link > tagSetModel = model.getTagSetModel();
-		final TagSetMenu< Spot, Link > tagSetMenu = new TagSetMenu< >( menuHandle.getMenu(), tagSetModel, selectionModel, model.getGraph().getLock(), model );
-		tagSetModel.listeners().add( tagSetMenu );
-		onClose( () -> tagSetModel.listeners().remove( tagSetMenu ) );
+		final TagSetModel<Spot, Link> tagSetModel = model.getTagSetModel();
+		final TagSetMenu<Spot, Link> tagSetMenu = new TagSetMenu<>(menuHandle
+			.getMenu(), tagSetModel, selectionModel, model.getGraph().getLock(),
+			model);
+		tagSetModel.listeners().add(tagSetMenu);
+		onClose(() -> tagSetModel.listeners().remove(tagSetMenu));
 	}
 
-	protected static void restoreColoring( final ColoringModel coloringModel, final Map< String, Object > guiState )
+	protected static void restoreColoring(final ColoringModel coloringModel,
+		final Map<String, Object> guiState)
 	{
-		if ( guiState == null )
+		if (guiState == null)
 			return;
 
-		final Boolean noColoring = ( Boolean ) guiState.get( NO_COLORING_KEY );
-		if ( null != noColoring && noColoring )
-		{
+		final Boolean noColoring = (Boolean) guiState.get(NO_COLORING_KEY);
+		if (null != noColoring && noColoring) {
 			coloringModel.colorByNone();
 		}
-		else
-		{
-			final String tagSetName = ( String ) guiState.get( TAG_SET_KEY );
-			final String featureColorModeName = ( String ) guiState.get( FEATURE_COLOR_MODE_KEY );
-			if ( null != tagSetName )
-			{
-				for ( final TagSet tagSet : coloringModel.getTagSetStructure().getTagSets() )
+		else {
+			final String tagSetName = (String) guiState.get(TAG_SET_KEY);
+			final String featureColorModeName = (String) guiState.get(
+				FEATURE_COLOR_MODE_KEY);
+			if (null != tagSetName) {
+				for (final TagSet tagSet : coloringModel.getTagSetStructure()
+					.getTagSets())
 				{
-					if ( tagSet.getName().equals( tagSetName ) )
-					{
-						coloringModel.colorByTagSet( tagSet );
+					if (tagSet.getName().equals(tagSetName)) {
+						coloringModel.colorByTagSet(tagSet);
 						break;
 					}
 				}
 			}
-			else if ( null != featureColorModeName )
-			{
-				final List< FeatureColorMode > featureColorModes = new ArrayList<>();
-				featureColorModes.addAll( coloringModel.getFeatureColorModeManager().getBuiltinStyles() );
-				featureColorModes.addAll( coloringModel.getFeatureColorModeManager().getUserStyles() );
-				for ( final FeatureColorMode featureColorMode : featureColorModes )
-				{
-					if ( featureColorMode.getName().equals( featureColorModeName ) )
-					{
-						coloringModel.colorByFeature( featureColorMode );
+			else if (null != featureColorModeName) {
+				final List<FeatureColorMode> featureColorModes = new ArrayList<>();
+				featureColorModes.addAll(coloringModel.getFeatureColorModeManager()
+					.getBuiltinStyles());
+				featureColorModes.addAll(coloringModel.getFeatureColorModeManager()
+					.getUserStyles());
+				for (final FeatureColorMode featureColorMode : featureColorModes) {
+					if (featureColorMode.getName().equals(featureColorModeName)) {
+						coloringModel.colorByFeature(featureColorMode);
 						break;
 					}
 				}
@@ -228,37 +239,43 @@ public class MamutView< VG extends ViewGraph< Spot, Link, V, E >, V extends Vert
 		}
 	}
 
-	protected static void restoreColorbarState( final ColorBarOverlay colorBarOverlay, final Map< String, Object > guiState )
+	protected static void restoreColorbarState(
+		final ColorBarOverlay colorBarOverlay, final Map<String, Object> guiState)
 	{
-		final boolean colorbarVisible = ( boolean ) guiState.getOrDefault( COLORBAR_VISIBLE_KEY, false );
-		final Position colorbarPosition = ( Position ) guiState.getOrDefault( COLORBAR_POSITION_KEY, Position.BOTTOM_RIGHT );
-		colorBarOverlay.setVisible( colorbarVisible );
-		colorBarOverlay.setPosition( colorbarPosition );
+		final boolean colorbarVisible = (boolean) guiState.getOrDefault(
+			COLORBAR_VISIBLE_KEY, false);
+		final Position colorbarPosition = (Position) guiState.getOrDefault(
+			COLORBAR_POSITION_KEY, Position.BOTTOM_RIGHT);
+		colorBarOverlay.setVisible(colorbarVisible);
+		colorBarOverlay.setPosition(colorbarPosition);
 	}
 
-	protected static void restoreFramePosition( final Window frame, final Map< String, Object > guiState )
+	protected static void restoreFramePosition(final Window frame,
+		final Map<String, Object> guiState)
 	{
-		final int[] pos = ( int[] ) guiState.get( FRAME_POSITION_KEY );
-		if ( null != pos )
-			frame.setBounds( pos[ 0 ], pos[ 1 ], pos[ 2 ], pos[ 3 ] );
-		else
-		{
-			frame.setSize( 650, 400 );
-			frame.setLocationRelativeTo( null );
+		final int[] pos = (int[]) guiState.get(FRAME_POSITION_KEY);
+		if (null != pos)
+			frame.setBounds(pos[0], pos[1], pos[2], pos[3]);
+		else {
+			frame.setSize(650, 400);
+			frame.setLocationRelativeTo(null);
 		}
 	}
 
-	protected static void restoreGroupHandle( final GroupHandle groupHandle, final Map< String, Object > guiState )
+	protected static void restoreGroupHandle(final GroupHandle groupHandle,
+		final Map<String, Object> guiState)
 	{
-		final Integer groupID = ( Integer ) guiState.get( GROUP_HANDLE_ID_KEY );
-		if ( null != groupID )
-			groupHandle.setGroupId( groupID.intValue() );
+		final Integer groupID = (Integer) guiState.get(GROUP_HANDLE_ID_KEY);
+		if (null != groupID)
+			groupHandle.setGroupId(groupID.intValue());
 	}
 
-	protected static void restoreSettingsPanelVisibility( final ViewFrame frame, final Map< String, Object > guiState )
+	protected static void restoreSettingsPanelVisibility(final ViewFrame frame,
+		final Map<String, Object> guiState)
 	{
-		final Boolean settingsPanelVisible = ( Boolean ) guiState.get( SETTINGS_PANEL_VISIBLE_KEY );
-		if ( null != settingsPanelVisible )
-			frame.setSettingsPanelVisible( settingsPanelVisible.booleanValue() );
+		final Boolean settingsPanelVisible = (Boolean) guiState.get(
+			SETTINGS_PANEL_VISIBLE_KEY);
+		if (null != settingsPanelVisible)
+			frame.setSettingsPanelVisible(settingsPanelVisible.booleanValue());
 	}
 }

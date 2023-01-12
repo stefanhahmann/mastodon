@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme.display;
 
 import bdv.viewer.InteractiveDisplayCanvas;
@@ -60,8 +61,10 @@ import org.scijava.ui.behaviour.util.Behaviours;
  * @author Tobias Pietzsch
  * @author Jean-Yves Tinevez
  */
-public class TrackSchemeNavigationBehaviours implements TransformListener< ScreenTransform >, OffsetHeadersListener
+public class TrackSchemeNavigationBehaviours implements
+	TransformListener<ScreenTransform>, OffsetHeadersListener
 {
+
 	public static final String FOCUS_VERTEX = "ts click focus vertex";
 	public static final String NAVIGATE_TO_VERTEX = "ts click navigate to vertex";
 	public static final String SELECT = "ts click select";
@@ -69,33 +72,40 @@ public class TrackSchemeNavigationBehaviours implements TransformListener< Scree
 	public static final String BOX_SELECT = "ts box selection";
 	public static final String BOX_ADD_SELECT = "ts box add to selection";
 
-	private static final String[] FOCUS_VERTEX_KEYS = new String[] { "button1", "shift button1" };
-	private static final String[] NAVIGATE_TO_VERTEX_KEYS = new String[] { "double-click button1", "shift double-click button1" };
-	private static final String[] SELECT_KEYS = new String[] { "button1"};
-	private static final String[] ADD_SELECT_KEYS = new String[] { "shift button1"};
-	private static final String[] BOX_SELECT_KEYS = new String[] { "button1"};
-	private static final String[] BOX_ADD_SELECT_KEYS = new String[] { "shift button1"};
+	private static final String[] FOCUS_VERTEX_KEYS = new String[] { "button1",
+		"shift button1" };
+	private static final String[] NAVIGATE_TO_VERTEX_KEYS = new String[] {
+		"double-click button1", "shift double-click button1" };
+	private static final String[] SELECT_KEYS = new String[] { "button1" };
+	private static final String[] ADD_SELECT_KEYS = new String[] {
+		"shift button1" };
+	private static final String[] BOX_SELECT_KEYS = new String[] { "button1" };
+	private static final String[] BOX_ADD_SELECT_KEYS = new String[] {
+		"shift button1" };
 
 	/*
 	 * Command descriptions for all provided commands
 	 */
-	@Plugin( type = CommandDescriptionProvider.class )
-	public static class Descriptions extends CommandDescriptionProvider
-	{
-		public Descriptions()
-		{
-			super( KeyConfigContexts.TRACKSCHEME );
+	@Plugin(type = CommandDescriptionProvider.class)
+	public static class Descriptions extends CommandDescriptionProvider {
+
+		public Descriptions() {
+			super(KeyConfigContexts.TRACKSCHEME);
 		}
 
 		@Override
-		public void getCommandDescriptions( final CommandDescriptions descriptions )
-		{
-			descriptions.add( FOCUS_VERTEX, FOCUS_VERTEX_KEYS, "Focus spot (spot gets keyboard focus)." );
-			descriptions.add( NAVIGATE_TO_VERTEX, NAVIGATE_TO_VERTEX_KEYS, "Navigate to spot (in all linked views)." );
-			descriptions.add( SELECT, SELECT_KEYS, "Select spot or link." );
-			descriptions.add( ADD_SELECT, ADD_SELECT_KEYS, "Add spot or link to selection." );
-			descriptions.add( BOX_SELECT, BOX_SELECT_KEYS, "Drag a box to select spots and links." );
-			descriptions.add( BOX_ADD_SELECT, BOX_ADD_SELECT_KEYS, "Drag a box to add spots and links to selection." );
+		public void getCommandDescriptions(final CommandDescriptions descriptions) {
+			descriptions.add(FOCUS_VERTEX, FOCUS_VERTEX_KEYS,
+				"Focus spot (spot gets keyboard focus).");
+			descriptions.add(NAVIGATE_TO_VERTEX, NAVIGATE_TO_VERTEX_KEYS,
+				"Navigate to spot (in all linked views).");
+			descriptions.add(SELECT, SELECT_KEYS, "Select spot or link.");
+			descriptions.add(ADD_SELECT, ADD_SELECT_KEYS,
+				"Add spot or link to selection.");
+			descriptions.add(BOX_SELECT, BOX_SELECT_KEYS,
+				"Drag a box to select spots and links.");
+			descriptions.add(BOX_ADD_SELECT, BOX_ADD_SELECT_KEYS,
+				"Drag a box to add spots and links to selection.");
 		}
 	}
 
@@ -103,19 +113,19 @@ public class TrackSchemeNavigationBehaviours implements TransformListener< Scree
 
 	private final InteractiveDisplayCanvas display;
 
-	private final TrackSchemeGraph< ?, ? > graph;
+	private final TrackSchemeGraph<?, ?> graph;
 
 	private final ReentrantReadWriteLock lock;
 
 	private final LineageTreeLayout layout;
 
-	private final NavigationHandler< TrackSchemeVertex, TrackSchemeEdge > navigation;
+	private final NavigationHandler<TrackSchemeVertex, TrackSchemeEdge> navigation;
 
-	private final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection;
+	private final SelectionModel<TrackSchemeVertex, TrackSchemeEdge> selection;
 
 	private final TrackSchemeOverlay graphOverlay;
 
-	private final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus;
+	private final FocusModel<TrackSchemeVertex, TrackSchemeEdge> focus;
 
 	private final ScreenTransform screenTransform;
 
@@ -142,13 +152,13 @@ public class TrackSchemeNavigationBehaviours implements TransformListener< Scree
 	private final BoxSelectionBehaviour boxAddSelectBehaviour;
 
 	public TrackSchemeNavigationBehaviours(
-			final InteractiveDisplayCanvas display,
-			final TrackSchemeGraph< ?, ? > graph,
-			final LineageTreeLayout layout,
-			final TrackSchemeOverlay graphOverlay,
-			final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-			final NavigationHandler< TrackSchemeVertex, TrackSchemeEdge > navigation,
-			final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection )
+		final InteractiveDisplayCanvas display,
+		final TrackSchemeGraph<?, ?> graph,
+		final LineageTreeLayout layout,
+		final TrackSchemeOverlay graphOverlay,
+		final FocusModel<TrackSchemeVertex, TrackSchemeEdge> focus,
+		final NavigationHandler<TrackSchemeVertex, TrackSchemeEdge> navigation,
+		final SelectionModel<TrackSchemeVertex, TrackSchemeEdge> selection)
 	{
 		this.display = display;
 		this.graph = graph;
@@ -163,20 +173,20 @@ public class TrackSchemeNavigationBehaviours implements TransformListener< Scree
 
 		focusVertexBehaviour = new ClickFocusBehaviour();
 		navigateToVertexBehaviour = new ClickNavigateBehaviour();
-		selectBehaviour = new ClickSelectionBehaviour( SELECT, false );
-		addSelectBehaviour = new ClickSelectionBehaviour( ADD_SELECT, true );
-		boxSelectBehaviour = new BoxSelectionBehaviour( BOX_SELECT, false );
-		boxAddSelectBehaviour = new BoxSelectionBehaviour( BOX_ADD_SELECT, true );
+		selectBehaviour = new ClickSelectionBehaviour(SELECT, false);
+		addSelectBehaviour = new ClickSelectionBehaviour(ADD_SELECT, true);
+		boxSelectBehaviour = new BoxSelectionBehaviour(BOX_SELECT, false);
+		boxAddSelectBehaviour = new BoxSelectionBehaviour(BOX_ADD_SELECT, true);
 	}
 
-	public void install( final Behaviours behaviours )
-	{
-		behaviours.namedBehaviour( focusVertexBehaviour, FOCUS_VERTEX_KEYS );
-		behaviours.namedBehaviour( navigateToVertexBehaviour, NAVIGATE_TO_VERTEX_KEYS );
-		behaviours.namedBehaviour( selectBehaviour, SELECT_KEYS );
-		behaviours.namedBehaviour( addSelectBehaviour, ADD_SELECT_KEYS );
-		behaviours.namedBehaviour( boxSelectBehaviour, BOX_SELECT_KEYS );
-		behaviours.namedBehaviour( boxAddSelectBehaviour, BOX_ADD_SELECT_KEYS );
+	public void install(final Behaviours behaviours) {
+		behaviours.namedBehaviour(focusVertexBehaviour, FOCUS_VERTEX_KEYS);
+		behaviours.namedBehaviour(navigateToVertexBehaviour,
+			NAVIGATE_TO_VERTEX_KEYS);
+		behaviours.namedBehaviour(selectBehaviour, SELECT_KEYS);
+		behaviours.namedBehaviour(addSelectBehaviour, ADD_SELECT_KEYS);
+		behaviours.namedBehaviour(boxSelectBehaviour, BOX_SELECT_KEYS);
+		behaviours.namedBehaviour(boxAddSelectBehaviour, BOX_ADD_SELECT_KEYS);
 	}
 
 	/*
@@ -189,102 +199,103 @@ public class TrackSchemeNavigationBehaviours implements TransformListener< Scree
 	 * PRIVATE METHODS
 	 */
 
-	private void selectWithin( final int x1, final int y1, final int x2, final int y2, final boolean addToSelection )
+	private void selectWithin(final int x1, final int y1, final int x2,
+		final int y2, final boolean addToSelection)
 	{
 		selection.pauseListeners();
 
-		if ( !addToSelection )
+		if (!addToSelection)
 			selection.clearSelection();
 
 		final double lx1, ly1, lx2, ly2;
-		synchronized ( screenTransform )
-		{
-			lx1 = screenTransform.screenToLayoutX( x1 );
-			ly1 = screenTransform.screenToLayoutY( y1 );
-			lx2 = screenTransform.screenToLayoutX( x2 );
-			ly2 = screenTransform.screenToLayoutY( y2 );
+		synchronized (screenTransform) {
+			lx1 = screenTransform.screenToLayoutX(x1);
+			ly1 = screenTransform.screenToLayoutY(y1);
+			lx2 = screenTransform.screenToLayoutX(x2);
+			ly2 = screenTransform.screenToLayoutY(y2);
 		}
 
-		final RefSet< TrackSchemeVertex > vs = layout.getActiveVerticesWithin( lx1, ly1, lx2, ly2 );
+		final RefSet<TrackSchemeVertex> vs = layout.getActiveVerticesWithin(lx1,
+			ly1, lx2, ly2);
 		final TrackSchemeVertex vertexRef = graph.vertexRef();
-		for ( final TrackSchemeVertex v : vs )
-		{
-			selection.setSelected( v, true );
-			for ( final TrackSchemeEdge e : v.outgoingEdges() )
-			{
-				final TrackSchemeVertex t = e.getTarget( vertexRef );
-				if ( vs.contains( t ) )
-					selection.setSelected( e, true );
+		for (final TrackSchemeVertex v : vs) {
+			selection.setSelected(v, true);
+			for (final TrackSchemeEdge e : v.outgoingEdges()) {
+				final TrackSchemeVertex t = e.getTarget(vertexRef);
+				if (vs.contains(t))
+					selection.setSelected(e, true);
 			}
 		}
 
-		focus.focusVertex( layout.getClosestActiveVertexWithin( lx1, ly1, lx2, ly2, ratioXtoY, vertexRef ) );
+		focus.focusVertex(layout.getClosestActiveVertexWithin(lx1, ly1, lx2, ly2,
+			ratioXtoY, vertexRef));
 
-		graph.releaseRef( vertexRef );
+		graph.releaseRef(vertexRef);
 
 		selection.resumeListeners();
 	}
 
-	private void select( final int x, final int y, final boolean addToSelection )
-	{
+	private void select(final int x, final int y, final boolean addToSelection) {
 		selection.pauseListeners();
 
 		final TrackSchemeVertex vertex = graph.vertexRef();
 		final TrackSchemeEdge edge = graph.edgeRef();
 
 		// See if we can select a vertex.
-		if ( graphOverlay.getVertexAt( x, y, vertex ) != null )
-		{
-			final boolean selected = selection.isSelected( vertex );
-			if ( !addToSelection )
+		if (graphOverlay.getVertexAt(x, y, vertex) != null) {
+			final boolean selected = selection.isSelected(vertex);
+			if (!addToSelection)
 				selection.clearSelection();
-			selection.setSelected( vertex, !selected );
+			selection.setSelected(vertex, !selected);
 		}
 		// See if we can select an edge.
-		else if ( graphOverlay.getEdgeAt( x, y, EDGE_SELECT_DISTANCE_TOLERANCE, edge ) != null )
+		else if (graphOverlay.getEdgeAt(x, y, EDGE_SELECT_DISTANCE_TOLERANCE,
+			edge) != null)
 		{
-			final boolean selected = selection.isSelected( edge );
-			if ( !addToSelection )
+			final boolean selected = selection.isSelected(edge);
+			if (!addToSelection)
 				selection.clearSelection();
-			selection.setSelected( edge, !selected );
+			selection.setSelected(edge, !selected);
 		}
 		// Nothing found. clear selection if addToSelection == false
-		else if ( !addToSelection )
+		else if (!addToSelection)
 			selection.clearSelection();
 
-		graph.releaseRef( vertex );
-		graph.releaseRef( edge );
+		graph.releaseRef(vertex);
+		graph.releaseRef(edge);
 
 		selection.resumeListeners();
 	}
 
-	private void navigate( final int x, final int y )
-	{
+	private void navigate(final int x, final int y) {
 		final TrackSchemeVertex vertex = graph.vertexRef();
 		final TrackSchemeEdge edge = graph.edgeRef();
 
 		// See if we can find a vertex.
-		if ( graphOverlay.getVertexAt( x, y, vertex ) != null )
-		{
-			navigation.notifyNavigateToVertex( vertex );
+		if (graphOverlay.getVertexAt(x, y, vertex) != null) {
+			navigation.notifyNavigateToVertex(vertex);
 		}
 		// See if we can find an edge.
-		else if ( graphOverlay.getEdgeAt( x, y, EDGE_SELECT_DISTANCE_TOLERANCE, edge ) != null )
+		else if (graphOverlay.getEdgeAt(x, y, EDGE_SELECT_DISTANCE_TOLERANCE,
+			edge) != null)
 		{
-			navigation.notifyNavigateToEdge( edge );
+			navigation.notifyNavigateToEdge(edge);
 		}
 
-		graph.releaseRef( vertex );
-		graph.releaseRef( edge );
+		graph.releaseRef(vertex);
+		graph.releaseRef(edge);
 	}
 
-	private void focus( final int x, final int y )
-	{
+	private void focus(final int x, final int y) {
 		final TrackSchemeVertex ref = graph.vertexRef();
 
-		focus.focusVertex( graphOverlay.getVertexAt( x, y, ref ) ); // if clicked outside, getVertexAt == null, clears the focus.
+		focus.focusVertex(graphOverlay.getVertexAt(x, y, ref)); // if clicked
+																														// outside,
+																														// getVertexAt ==
+																														// null, clears the
+																														// focus.
 
-		graph.releaseRef( ref );
+		graph.releaseRef(ref);
 	}
 
 	/*
@@ -298,26 +309,24 @@ public class TrackSchemeNavigationBehaviours implements TransformListener< Scree
 	 * Note that this only applies to vertices that are individually painted on
 	 * the screen. Vertices inside dense ranges are ignored.
 	 */
-	private class ClickFocusBehaviour extends AbstractNamedBehaviour implements ClickBehaviour
+	private class ClickFocusBehaviour extends AbstractNamedBehaviour implements
+		ClickBehaviour
 	{
-		public ClickFocusBehaviour()
-		{
-			super( FOCUS_VERTEX );
+
+		public ClickFocusBehaviour() {
+			super(FOCUS_VERTEX);
 		}
 
 		@Override
-		public void click( final int x, final int y )
-		{
-			if ( x < headerWidth || y < headerHeight )
+		public void click(final int x, final int y) {
+			if (x < headerWidth || y < headerHeight)
 				return;
 
 			lock.readLock().lock();
-			try
-			{
-				focus( x, y );
+			try {
+				focus(x, y);
 			}
-			finally
-			{
+			finally {
 				lock.readLock().unlock();
 			}
 		}
@@ -329,26 +338,24 @@ public class TrackSchemeNavigationBehaviours implements TransformListener< Scree
 	 * Note that this only applies to vertices that are individually painted on
 	 * the screen. Vertices inside dense ranges are ignored.
 	 */
-	private class ClickNavigateBehaviour extends AbstractNamedBehaviour implements ClickBehaviour
+	private class ClickNavigateBehaviour extends AbstractNamedBehaviour implements
+		ClickBehaviour
 	{
-		public ClickNavigateBehaviour()
-		{
-			super( NAVIGATE_TO_VERTEX );
+
+		public ClickNavigateBehaviour() {
+			super(NAVIGATE_TO_VERTEX);
 		}
 
 		@Override
-		public void click( final int x, final int y )
-		{
-			if ( x < headerWidth || y < headerHeight )
+		public void click(final int x, final int y) {
+			if (x < headerWidth || y < headerHeight)
 				return;
 
 			lock.readLock().lock();
-			try
-			{
-				navigate( x, y );
+			try {
+				navigate(x, y);
 			}
-			finally
-			{
+			finally {
 				lock.readLock().unlock();
 			}
 		}
@@ -360,29 +367,29 @@ public class TrackSchemeNavigationBehaviours implements TransformListener< Scree
 	 * Note that this only applies to vertices that are individually painted on
 	 * the screen. Vertices inside dense ranges are ignored.
 	 */
-	private class ClickSelectionBehaviour extends AbstractNamedBehaviour implements ClickBehaviour
+	private class ClickSelectionBehaviour extends AbstractNamedBehaviour
+		implements ClickBehaviour
 	{
+
 		private final boolean addToSelection;
 
-		public ClickSelectionBehaviour( final String name, final boolean addToSelection )
+		public ClickSelectionBehaviour(final String name,
+			final boolean addToSelection)
 		{
-			super( name );
+			super(name);
 			this.addToSelection = addToSelection;
 		}
 
 		@Override
-		public void click( final int x, final int y )
-		{
-			if ( x < headerWidth || y < headerHeight )
+		public void click(final int x, final int y) {
+			if (x < headerWidth || y < headerHeight)
 				return;
 
 			lock.readLock().lock();
-			try
-			{
-				select( x, y, addToSelection );
+			try {
+				select(x, y, addToSelection);
 			}
-			finally
-			{
+			finally {
 				lock.readLock().unlock();
 			}
 		}
@@ -393,11 +400,13 @@ public class TrackSchemeNavigationBehaviours implements TransformListener< Scree
 	 * drag.
 	 * <p>
 	 * The selection happens in layout space, so it also selects vertices inside
-	 * dense ranges. A vertex is inside the bounding box if its layout
-	 * coordinate is inside the bounding box.
+	 * dense ranges. A vertex is inside the bounding box if its layout coordinate
+	 * is inside the bounding box.
 	 */
-	private class BoxSelectionBehaviour extends AbstractNamedBehaviour implements DragBehaviour, OverlayRenderer
+	private class BoxSelectionBehaviour extends AbstractNamedBehaviour implements
+		DragBehaviour, OverlayRenderer
 	{
+
 		/**
 		 * Coordinates where mouse dragging started.
 		 */
@@ -414,15 +423,15 @@ public class TrackSchemeNavigationBehaviours implements TransformListener< Scree
 
 		private final boolean addToSelection;
 
-		public BoxSelectionBehaviour( final String name, final boolean addToSelection )
+		public BoxSelectionBehaviour(final String name,
+			final boolean addToSelection)
 		{
-			super( name );
+			super(name);
 			this.addToSelection = addToSelection;
 		}
 
 		@Override
-		public void init( final int x, final int y )
-		{
+		public void init(final int x, final int y) {
 			oX = x;
 			oY = y;
 			dragging = false;
@@ -430,44 +439,38 @@ public class TrackSchemeNavigationBehaviours implements TransformListener< Scree
 		}
 
 		@Override
-		public void drag( final int x, final int y )
-		{
-			if ( ignore )
+		public void drag(final int x, final int y) {
+			if (ignore)
 				return;
 
 			eX = x;
 			eY = y;
-			if ( !dragging )
-			{
+			if (!dragging) {
 				dragging = true;
-				display.overlays().add( this );
+				display.overlays().add(this);
 			}
 			display.repaint();
 		}
 
 		@Override
-		public void end( final int x, final int y )
-		{
-			if ( ignore )
+		public void end(final int x, final int y) {
+			if (ignore)
 				return;
 
-			if ( dragging )
-			{
+			if (dragging) {
 				dragging = false;
-				display.overlays().remove( this );
+				display.overlays().remove(this);
 				display.repaint();
 				lock.readLock().lock();
-				try
-				{
+				try {
 					selectWithin(
-							oX - headerWidth,
-							oY - headerHeight,
-							eX - headerWidth,
-							eY - headerHeight,
-							addToSelection );
+						oX - headerWidth,
+						oY - headerHeight,
+						eX - headerWidth,
+						eY - headerHeight,
+						addToSelection);
 				}
-				finally
-				{
+				finally {
 					lock.readLock().unlock();
 				}
 			}
@@ -477,34 +480,29 @@ public class TrackSchemeNavigationBehaviours implements TransformListener< Scree
 		 * Draws the selection box, if there is one.
 		 */
 		@Override
-		public void drawOverlays( final Graphics g )
-		{
-			g.setColor( Color.RED );
-			final int x = Math.min( oX, eX );
-			final int y = Math.min( oY, eY );
-			final int width = Math.abs( eX - oX );
-			final int height = Math.abs( eY - oY );
-			g.drawRect( x, y, width, height );
+		public void drawOverlays(final Graphics g) {
+			g.setColor(Color.RED);
+			final int x = Math.min(oX, eX);
+			final int y = Math.min(oY, eY);
+			final int width = Math.abs(eX - oX);
+			final int height = Math.abs(eY - oY);
+			g.drawRect(x, y, width, height);
 		}
 
 		@Override
-		public void setCanvasSize( final int width, final int height )
-		{}
+		public void setCanvasSize(final int width, final int height) {}
 	}
 
 	@Override
-	public void transformChanged( final ScreenTransform transform )
-	{
-		synchronized ( screenTransform )
-		{
-			screenTransform.set( transform );
+	public void transformChanged(final ScreenTransform transform) {
+		synchronized (screenTransform) {
+			screenTransform.set(transform);
 			ratioXtoY = transform.getXtoYRatio();
 		}
 	}
 
 	@Override
-	public void updateHeaderSize( final int width, final int height )
-	{
+	public void updateHeaderSize(final int width, final int height) {
 		headerWidth = width;
 		headerHeight = height;
 	}

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.project;
 
 import static org.junit.Assert.assertTrue;
@@ -35,25 +36,25 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-public class MamutProjectIOTest
-{
+public class MamutProjectIOTest {
+
 	@Test
-	public void testProjectWithWindowsPath() throws IOException
-	{
-		testCanFindDatasetXmlFile( "/org/mastodon/mamut/examples/tiny-os/tiny-project-windows.mastodon" );
+	public void testProjectWithWindowsPath() throws IOException {
+		testCanFindDatasetXmlFile(
+			"/org/mastodon/mamut/examples/tiny-os/tiny-project-windows.mastodon");
 	}
 
 	@Test
-	public void testPorjectWithLinuxPath() throws IOException
-	{
-		testCanFindDatasetXmlFile( "/org/mastodon/mamut/examples/tiny-os/tiny-project-linux.mastodon" );
+	public void testPorjectWithLinuxPath() throws IOException {
+		testCanFindDatasetXmlFile(
+			"/org/mastodon/mamut/examples/tiny-os/tiny-project-linux.mastodon");
 	}
 
-	private void testCanFindDatasetXmlFile( String resource ) throws IOException
-	{
-		final String projectFile = MamutProjectIOTest.class.getResource( resource ).getPath();
-		MamutProject project = new MamutProjectIO().load( projectFile );
+	private void testCanFindDatasetXmlFile(String resource) throws IOException {
+		final String projectFile = MamutProjectIOTest.class.getResource(resource)
+			.getPath();
+		MamutProject project = new MamutProjectIO().load(projectFile);
 		File datasetXmlFile = project.getDatasetXmlFile();
-		assertTrue( datasetXmlFile.exists() );
+		assertTrue(datasetXmlFile.exists());
 	}
 }

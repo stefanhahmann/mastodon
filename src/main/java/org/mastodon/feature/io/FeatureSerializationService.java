@@ -26,21 +26,21 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.feature.io;
 
 import org.mastodon.feature.FeatureSpec;
 import org.scijava.service.SciJavaService;
 
-public interface FeatureSerializationService extends SciJavaService
-{
+public interface FeatureSerializationService extends SciJavaService {
 
 	/**
-	 * Returns a {@link FeatureSerializer} that can de/serialize the feature
-	 * with the specified specs.
+	 * Returns a {@link FeatureSerializer} that can de/serialize the feature with
+	 * the specified specs.
 	 *
-	 * @param spec
-	 *            the feature specification.
+	 * @param spec the feature specification.
 	 * @return a {@link FeatureSerializer}.
 	 */
-	public FeatureSerializer< ?, ? > getFeatureSerializerFor( FeatureSpec< ?, ? > spec );
+	public FeatureSerializer<?, ?> getFeatureSerializerFor(
+		FeatureSpec<?, ?> spec);
 }

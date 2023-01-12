@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.app;
 
 import java.util.ArrayList;
@@ -52,30 +53,18 @@ import org.mastodon.model.TimepointModel;
  * objects (selection, highlight, focus, time-point) and navigation (navigation,
  * group-handle).
  *
- * @param <M>
- *            the type of the mastodon-app model.
- * @param <VG>
- *            the type of the view-graph displayed in this view.
- * @param <MV>
- *            model vertex type.
- * @param <ME>
- *            model edge type.
- * @param <V>
- *            view vertex type.
- * @param <E>
- *            view edge type.
- *
+ * @param <M> the type of the mastodon-app model.
+ * @param <VG> the type of the view-graph displayed in this view.
+ * @param <MV> model vertex type.
+ * @param <ME> model edge type.
+ * @param <V> view vertex type.
+ * @param <E> view edge type.
  * @author Tobias Pietzsch
  */
-public class MastodonView<
-		M extends MastodonAppModel< ?, MV, ME >,
-		VG extends ViewGraph< MV, ME, V, E >,
-		MV extends AbstractSpot< MV, ME, ?, ?, ? >,
-		ME extends AbstractListenableEdge< ME, MV, ?, ? >,
-		V extends Vertex< E >,
-		E extends Edge< V > >
+public class MastodonView<M extends MastodonAppModel<?, MV, ME>, VG extends ViewGraph<MV, ME, V, E>, MV extends AbstractSpot<MV, ME, ?, ?, ?>, ME extends AbstractListenableEdge<ME, MV, ?, ?>, V extends Vertex<E>, E extends Edge<V>>
 	implements IMastodonView
 {
+
 	protected final M appModel;
 
 	protected VG viewGraph;
@@ -84,33 +73,41 @@ public class MastodonView<
 
 	protected final TimepointModel timepointModel;
 
-	protected final HighlightModel< V, E > highlightModel;
+	protected final HighlightModel<V, E> highlightModel;
 
-	protected final FocusModel< V, E > focusModel;
+	protected final FocusModel<V, E> focusModel;
 
-	protected final SelectionModel< V, E > selectionModel;
+	protected final SelectionModel<V, E> selectionModel;
 
-	protected final NavigationHandler< V, E > navigationHandler;
+	protected final NavigationHandler<V, E> navigationHandler;
 
-	protected final ArrayList< Runnable > runOnClose;
+	protected final ArrayList<Runnable> runOnClose;
 
 	public MastodonView(
-			final M appModel,
-			final VG viewGraph )
+		final M appModel,
+		final VG viewGraph)
 	{
 		this.appModel = appModel;
 		this.viewGraph = viewGraph;
 
-		final RefBimap< MV, V > vertexMap = viewGraph.getVertexMap();
-		final RefBimap< ME, E > edgeMap = viewGraph.getEdgeMap();
+		final RefBimap<MV, V> vertexMap = viewGraph.getVertexMap();
+		final RefBimap<ME, E> edgeMap = viewGraph.getEdgeMap();
 
 		groupHandle = appModel.getGroupManager().createGroupHandle();
 
-		final TimepointModelAdapter timepointModelAdapter = new TimepointModelAdapter( groupHandle.getModel( appModel.TIMEPOINT ) );
-		final HighlightModelAdapter< MV, ME, V, E > highlightModelAdapter = new HighlightModelAdapter<>( appModel.getHighlightModel(), vertexMap, edgeMap );
-		final FocusModelAdapter< MV, ME, V, E > focusModelAdapter = new FocusModelAdapter<>( appModel.getFocusModel(), vertexMap, edgeMap );
-		final SelectionModelAdapter< MV, ME, V, E > selectionModelAdapter = new SelectionModelAdapter<>( appModel.getSelectionModel(), vertexMap, edgeMap );
-		final NavigationHandlerAdapter< MV, ME, V, E > navigationHandlerAdapter = new NavigationHandlerAdapter<>( groupHandle.getModel( appModel.NAVIGATION ), vertexMap, edgeMap );
+		final TimepointModelAdapter timepointModelAdapter =
+			new TimepointModelAdapter(groupHandle.getModel(appModel.TIMEPOINT));
+		final HighlightModelAdapter<MV, ME, V, E> highlightModelAdapter =
+			new HighlightModelAdapter<>(appModel.getHighlightModel(), vertexMap,
+				edgeMap);
+		final FocusModelAdapter<MV, ME, V, E> focusModelAdapter =
+			new FocusModelAdapter<>(appModel.getFocusModel(), vertexMap, edgeMap);
+		final SelectionModelAdapter<MV, ME, V, E> selectionModelAdapter =
+			new SelectionModelAdapter<>(appModel.getSelectionModel(), vertexMap,
+				edgeMap);
+		final NavigationHandlerAdapter<MV, ME, V, E> navigationHandlerAdapter =
+			new NavigationHandlerAdapter<>(groupHandle.getModel(appModel.NAVIGATION),
+				vertexMap, edgeMap);
 
 		timepointModel = timepointModelAdapter;
 		highlightModel = highlightModelAdapter;
@@ -119,7 +116,7 @@ public class MastodonView<
 		navigationHandler = navigationHandlerAdapter;
 
 		runOnClose = new ArrayList<>();
-		runOnClose.add( () -> {
+		runOnClose.add(() -> {
 			timepointModelAdapter.listeners().removeAll();
 			highlightModelAdapter.listeners().removeAll();
 			focusModelAdapter.listeners().removeAll();
@@ -132,18 +129,15 @@ public class MastodonView<
 	 * Adds the specified {@link Runnable} to the list of runnables to execute
 	 * when this view is closed.
 	 *
-	 * @param runnable
-	 *            the {@link Runnable} to add.
+	 * @param runnable the {@link Runnable} to add.
 	 */
 	@Override
-	public synchronized void onClose( final Runnable runnable )
-	{
-		runOnClose.add( runnable );
+	public synchronized void onClose(final Runnable runnable) {
+		runOnClose.add(runnable);
 	}
 
-	protected synchronized void close()
-	{
-		runOnClose.forEach( Runnable::run );
+	protected synchronized void close() {
+		runOnClose.forEach(Runnable::run);
 		runOnClose.clear();
 	}
 
@@ -153,8 +147,7 @@ public class MastodonView<
 	 * @return the {@link GroupHandle} of this view.
 	 */
 	@Override
-	public GroupHandle getGroupHandle()
-	{
+	public GroupHandle getGroupHandle() {
 		return groupHandle;
 	}
 }

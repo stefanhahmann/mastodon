@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model;
 
 import org.scijava.listeners.Listeners;
@@ -35,11 +36,11 @@ import org.scijava.listeners.Listeners;
  *
  * @author Tobias Pietzsch
  */
-public interface TimepointModel
-{
-	public void setTimepoint( final int t );
+public interface TimepointModel {
+
+	public void setTimepoint(final int t);
 
 	public int getTimepoint();
 
-	public Listeners< TimepointListener > listeners();
+	public Listeners<TimepointListener> listeners();
 }

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.util;
 
 import java.util.ArrayList;
@@ -56,116 +57,110 @@ import net.imglib2.util.ConstantUtils;
  * @author Tobias Pietzsch
  * @author Vladimir Ulman
  */
-public class DummyImgLoader implements ViewerImgLoader
-{
-	private final List< ViewerSetupImgLoader< ?, ? > > setupImgLoaders;
+public class DummyImgLoader implements ViewerImgLoader {
 
-	public DummyImgLoader( Dimensions dimensions )
-	{
-		this( new UnsignedShortType(), Collections.singletonList( dimensions ) );
+	private final List<ViewerSetupImgLoader<?, ?>> setupImgLoaders;
+
+	public DummyImgLoader(Dimensions dimensions) {
+		this(new UnsignedShortType(), Collections.singletonList(dimensions));
 	}
 
 	/**
 	 * Creates a new DummyImgLoader.
 	 *
-	 * @param type
-	 * 		the data type of the image
-	 * @param dimensionsList
-	 * 		a {@link List} of {@link Dimensions}. Each entry will result in a view
-	 * 		setup.
-	 * @param <T>
-	 * 		the data type of the image
+	 * @param type the data type of the image
+	 * @param dimensionsList a {@link List} of {@link Dimensions}. Each entry will
+	 *          result in a view setup.
+	 * @param <T> the data type of the image
 	 */
-	public < T extends RealType< T > > DummyImgLoader( final T type, final List< Dimensions > dimensionsList )
+	public <T extends RealType<T>> DummyImgLoader(final T type,
+		final List<Dimensions> dimensionsList)
 	{
 		setupImgLoaders = new ArrayList<>();
-		for ( Dimensions dimensions : dimensionsList )
-		{
-			assert ( dimensions.numDimensions() == 3 );
-			setupImgLoaders.add( new DummyViewerSetupImgLoader<>( type, new FinalInterval( dimensions ) ) );
+		for (Dimensions dimensions : dimensionsList) {
+			assert (dimensions.numDimensions() == 3);
+			setupImgLoaders.add(new DummyViewerSetupImgLoader<>(type,
+				new FinalInterval(dimensions)));
 		}
 	}
 
 	@Override
-	public ViewerSetupImgLoader< ?, ? > getSetupImgLoader( final int setupId )
-	{
-		return setupImgLoaders.get( setupId );
+	public ViewerSetupImgLoader<?, ?> getSetupImgLoader(final int setupId) {
+		return setupImgLoaders.get(setupId);
 	}
 
 	@Override
-	public CacheControl getCacheControl()
-	{
+	public CacheControl getCacheControl() {
 		return new CacheControl.Dummy();
 	}
 
-	private static class DummyViewerSetupImgLoader< T extends RealType< T > >
-			implements ViewerSetupImgLoader< T, Volatile< T > >
+	private static class DummyViewerSetupImgLoader<T extends RealType<T>>
+		implements ViewerSetupImgLoader<T, Volatile<T>>
 	{
+
 		private final T type;
 
-		private final VolatileRealType< T > volatileType;
+		private final VolatileRealType<T> volatileType;
 
-		private final RandomAccessibleInterval< T > img;
+		private final RandomAccessibleInterval<T> img;
 
-		private final RandomAccessibleInterval< Volatile< T > > volatileImg;
+		private final RandomAccessibleInterval<Volatile<T>> volatileImg;
 
 		private final double[][] resolution = { { 1, 1, 1 } };
 
 		private final AffineTransform3D[] transform = { new AffineTransform3D() };
 
-		public DummyViewerSetupImgLoader( T type, Interval interval )
-		{
+		public DummyViewerSetupImgLoader(T type, Interval interval) {
 			this.type = type;
-			this.volatileType = new VolatileRealType<>( type );
-			this.img = ConstantUtils.constantRandomAccessibleInterval( type, interval );
-			this.volatileImg = ConstantUtils.constantRandomAccessibleInterval( volatileType, interval );
+			this.volatileType = new VolatileRealType<>(type);
+			this.img = ConstantUtils.constantRandomAccessibleInterval(type, interval);
+			this.volatileImg = ConstantUtils.constantRandomAccessibleInterval(
+				volatileType, interval);
 		}
 
 		@Override
-		public RandomAccessibleInterval< T > getImage( int timepointId, int level, ImgLoaderHint... hints )
+		public RandomAccessibleInterval<T> getImage(int timepointId, int level,
+			ImgLoaderHint... hints)
 		{
 			return img;
 		}
 
 		@Override
-		public double[][] getMipmapResolutions()
-		{
+		public double[][] getMipmapResolutions() {
 			return resolution;
 		}
 
 		@Override
-		public AffineTransform3D[] getMipmapTransforms()
-		{
+		public AffineTransform3D[] getMipmapTransforms() {
 			return transform;
 		}
 
 		@Override
-		public int numMipmapLevels()
-		{
+		public int numMipmapLevels() {
 			return 1;
 		}
 
 		@Override
-		public RandomAccessibleInterval< Volatile< T > > getVolatileImage( int timepointId, int level, ImgLoaderHint... hints )
+		public RandomAccessibleInterval<Volatile<T>> getVolatileImage(
+			int timepointId, int level, ImgLoaderHint... hints)
 		{
 			return volatileImg;
 		}
 
 		@Override
-		public Volatile< T > getVolatileImageType()
-		{
+		public Volatile<T> getVolatileImageType() {
 			return volatileType;
 		}
 
 		@Override
-		public RandomAccessibleInterval< T > getImage( final int timepointId, final ImgLoaderHint... hints )
+		public RandomAccessibleInterval<T> getImage(final int timepointId,
+			final ImgLoaderHint... hints)
 		{
 			return img;
 		}
 
 		@Override
-		public T getImageType()
-		{
+		public T getImageType() {
 			return type;
 		}
 	}

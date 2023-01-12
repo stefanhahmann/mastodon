@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -105,35 +106,30 @@ import org.scijava.listeners.Listeners;
  * graphChanged} events such that interested clients can register with the
  * {@link TrackSchemeGraph} and do not have to know the model graph.
  *
- * @param <V>
- *            the type of the vertices of the wrapped model graph.
- * @param <E>
- *            the type of the edges of the wrapped model graph.
- *
+ * @param <V> the type of the vertices of the wrapped model graph.
+ * @param <E> the type of the edges of the wrapped model graph.
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  */
-public class TrackSchemeGraph<
-		V extends Vertex< E >,
-		E extends Edge< V > >
-	extends GraphImp<
-				TrackSchemeGraph.TrackSchemeVertexPool,
-				TrackSchemeGraph.TrackSchemeEdgePool,
-				TrackSchemeVertex, TrackSchemeEdge, ByteMappedElement >
-	implements GraphListener< V, E >, GraphChangeNotifier, GraphChangeListener, ViewGraph< V, E, TrackSchemeVertex, TrackSchemeEdge >
+public class TrackSchemeGraph<V extends Vertex<E>, E extends Edge<V>>
+	extends
+	GraphImp<TrackSchemeGraph.TrackSchemeVertexPool, TrackSchemeGraph.TrackSchemeEdgePool, TrackSchemeVertex, TrackSchemeEdge, ByteMappedElement>
+	implements GraphListener<V, E>, GraphChangeNotifier, GraphChangeListener,
+	ViewGraph<V, E, TrackSchemeVertex, TrackSchemeEdge>
 {
-	private final ListenableReadOnlyGraph< V, E > modelGraph;
 
-	private final ModelGraphProperties< V, E > modelGraphProperties;
+	private final ListenableReadOnlyGraph<V, E> modelGraph;
+
+	private final ModelGraphProperties<V, E> modelGraphProperties;
 
 	private final ReentrantReadWriteLock lock;
 
-	private final GraphIdBimap< V, E > idmap;
+	private final GraphIdBimap<V, E> idmap;
 
-	private final IntRefMap< TrackSchemeVertex > idToTrackSchemeVertex;
+	private final IntRefMap<TrackSchemeVertex> idToTrackSchemeVertex;
 
-	private final IntRefMap< TrackSchemeEdge > idToTrackSchemeEdge;
+	private final IntRefMap<TrackSchemeEdge> idToTrackSchemeEdge;
 
-	private final RefSet< TrackSchemeVertex > roots;
+	private final RefSet<TrackSchemeVertex> roots;
 
 	private V mv;
 
@@ -143,49 +139,42 @@ public class TrackSchemeGraph<
 
 	private final TrackSchemeEdge tse;
 
-	private final Listeners.List< GraphChangeListener > listeners;
+	private final Listeners.List<GraphChangeListener> listeners;
 
-	private final RefBimap< V, TrackSchemeVertex > vertexMap;
+	private final RefBimap<V, TrackSchemeVertex> vertexMap;
 
-	private final RefBimap< E, TrackSchemeEdge > edgeMap;
+	private final RefBimap<E, TrackSchemeEdge> edgeMap;
 
 	/**
 	 * Creates a new TrackSchemeGraph with a default initial capacity.
 	 *
-	 * @param modelGraph
-	 *            the model graph to wrap.
-	 * @param idmap
-	 *            the bidirectional id map of the model graph.
-	 * @param modelGraphProperties
-	 *            an accessor for properties of the model graph.
+	 * @param modelGraph the model graph to wrap.
+	 * @param idmap the bidirectional id map of the model graph.
+	 * @param modelGraphProperties an accessor for properties of the model graph.
 	 */
 	public TrackSchemeGraph(
-			final ListenableReadOnlyGraph< V, E > modelGraph,
-			final GraphIdBimap< V, E > idmap,
-			final ModelGraphProperties< V, E > modelGraphProperties )
+		final ListenableReadOnlyGraph<V, E> modelGraph,
+		final GraphIdBimap<V, E> idmap,
+		final ModelGraphProperties<V, E> modelGraphProperties)
 	{
-		this( modelGraph, idmap, modelGraphProperties, new ReentrantReadWriteLock() );
+		this(modelGraph, idmap, modelGraphProperties, new ReentrantReadWriteLock());
 	}
 
 	/**
 	 * Creates a new TrackSchemeGraph with a default initial capacity.
 	 *
-	 * @param modelGraph
-	 *            the model graph to wrap.
-	 * @param idmap
-	 *            the bidirectional id map of the model graph.
-	 * @param modelGraphProperties
-	 *            an accessor for properties of the model graph.
-	 * @param lock
-	 *            read/write locks for the model graph
+	 * @param modelGraph the model graph to wrap.
+	 * @param idmap the bidirectional id map of the model graph.
+	 * @param modelGraphProperties an accessor for properties of the model graph.
+	 * @param lock read/write locks for the model graph
 	 */
 	public TrackSchemeGraph(
-			final ListenableReadOnlyGraph< V, E > modelGraph,
-			final GraphIdBimap< V, E > idmap,
-			final ModelGraphProperties< V, E > modelGraphProperties,
-			final ReentrantReadWriteLock lock )
+		final ListenableReadOnlyGraph<V, E> modelGraph,
+		final GraphIdBimap<V, E> idmap,
+		final ModelGraphProperties<V, E> modelGraphProperties,
+		final ReentrantReadWriteLock lock)
 	{
-		this( modelGraph, idmap, modelGraphProperties, lock, 10000 );
+		this(modelGraph, idmap, modelGraphProperties, lock, 10000);
 	}
 
 	/**
@@ -193,53 +182,46 @@ public class TrackSchemeGraph<
 	 * graph structure. It registers as a {@link GraphListener} to keep in sync
 	 * with changes the model graph.
 	 *
-	 * @param modelGraph
-	 *            the model graph to wrap.
-	 * @param idmap
-	 *            the bidirectional id map of the model graph.
-	 * @param modelGraphProperties
-	 *            an accessor for properties of the model graph.
-	 * @param lock
-	 *            read/write locks for the model graph
-	 * @param initialCapacity
-	 *            the initial capacity for the graph storage.
+	 * @param modelGraph the model graph to wrap.
+	 * @param idmap the bidirectional id map of the model graph.
+	 * @param modelGraphProperties an accessor for properties of the model graph.
+	 * @param lock read/write locks for the model graph
+	 * @param initialCapacity the initial capacity for the graph storage.
 	 */
 	public TrackSchemeGraph(
-			final ListenableReadOnlyGraph< V, E > modelGraph,
-			final GraphIdBimap< V, E > idmap,
-			final ModelGraphProperties< V, E > modelGraphProperties,
-			final ReentrantReadWriteLock lock,
-			final int initialCapacity )
+		final ListenableReadOnlyGraph<V, E> modelGraph,
+		final GraphIdBimap<V, E> idmap,
+		final ModelGraphProperties<V, E> modelGraphProperties,
+		final ReentrantReadWriteLock lock,
+		final int initialCapacity)
 	{
-		super( new TrackSchemeEdgePool(
+		super(new TrackSchemeEdgePool(
+			initialCapacity,
+			new TrackSchemeVertexPool(
 				initialCapacity,
-				new TrackSchemeVertexPool(
-						initialCapacity,
-						new ModelGraphWrapper<>( idmap, modelGraphProperties ) ) ) );
+				new ModelGraphWrapper<>(idmap, modelGraphProperties))));
 		this.modelGraph = modelGraph;
 		this.modelGraphProperties = modelGraphProperties;
 		this.lock = lock;
 		this.idmap = idmap;
-		idToTrackSchemeVertex =	new IntRefArrayMap<>( vertexPool );
-		idToTrackSchemeEdge = new IntRefArrayMap<>( edgePool );
-		roots = new RefSetImp<>( vertexPool );
+		idToTrackSchemeVertex = new IntRefArrayMap<>(vertexPool);
+		idToTrackSchemeEdge = new IntRefArrayMap<>(edgePool);
+		roots = new RefSetImp<>(vertexPool);
 		mv = modelGraph.vertexRef();
 		tsv = vertexRef();
 		tsv2 = vertexRef();
 		tse = edgeRef();
 		listeners = new Listeners.SynchronizedList<>();
-		vertexMap = new TrackSchemeVertexBimap<>( this );
-		edgeMap = new TrackSchemeEdgeBimap<>( this );
+		vertexMap = new TrackSchemeVertexBimap<>(this);
+		edgeMap = new TrackSchemeEdgeBimap<>(this);
 
-		modelGraph.addGraphListener( this );
-		modelGraph.addGraphChangeListener( this );
+		modelGraph.addGraphListener(this);
+		modelGraph.addGraphChangeListener(this);
 		lock.writeLock().lock();
-		try
-		{
+		try {
 			graphRebuilt();
 		}
-		finally
-		{
+		finally {
 			lock.writeLock().unlock();
 		}
 	}
@@ -250,8 +232,7 @@ public class TrackSchemeGraph<
 	 *
 	 * @return the vertex pool.
 	 */
-	public RefPool< TrackSchemeVertex > getVertexPool()
-	{
+	public RefPool<TrackSchemeVertex> getVertexPool() {
 		return vertexPool;
 	}
 
@@ -261,56 +242,51 @@ public class TrackSchemeGraph<
 	 *
 	 * @return the edge pool.
 	 */
-	public RefPool< TrackSchemeEdge > getEdgePool()
-	{
+	public RefPool<TrackSchemeEdge> getEdgePool() {
 		return edgePool;
 	}
 
 	/**
 	 * @return the bidirectional id map of the model graph.
 	 */
-	public GraphIdBimap< V, E > getGraphIdBimap()
-	{
+	public GraphIdBimap<V, E> getGraphIdBimap() {
 		return idmap;
 	}
 
 	/**
 	 * Returns the roots of this graph.
 	 * <p>
-	 * Roots are defined as the vertices that have no incoming edges. Therefore
-	 * a single connected-component of the graph may have several roots.
+	 * Roots are defined as the vertices that have no incoming edges. Therefore a
+	 * single connected-component of the graph may have several roots.
 	 * <p>
 	 * To be properly used in TrackScheme, it is best to adopt the convention
 	 * where all edges are directed along time: They should depart from the
-	 * earliest vertex in time, and point to the latest vertex in time. Then,
-	 * the roots of the graph corresponds to vertices that appear as time
-	 * increases.
+	 * earliest vertex in time, and point to the latest vertex in time. Then, the
+	 * roots of the graph corresponds to vertices that appear as time increases.
 	 *
 	 * @return the roots of the graph, as a set of vertices.
 	 */
-	public RefSet< TrackSchemeVertex > getRoots()
-	{
+	public RefSet<TrackSchemeVertex> getRoots() {
 		return roots;
 	}
 
 	@Override
-	public String toString()
-	{
-		final StringBuffer sb = new StringBuffer( "TrackSchemeGraph {\n" );
-		sb.append( "  vertices = {\n" );
-		for ( final TrackSchemeVertex vertex : vertices() )
-			sb.append( "    " + vertex + "\n" );
-		sb.append( "  },\n" );
-		sb.append( "  edges = {\n" );
-		for ( final TrackSchemeEdge edge : edges() )
-			sb.append( "    " + edge + "\n" );
-		sb.append( "  }\n" );
-		sb.append( "},\n" );
-		sb.append( "  roots = {\n" );
-		for ( final TrackSchemeVertex vertex : roots )
-			sb.append( "    " + vertex + "\n" );
-		sb.append( "  },\n" );
-		sb.append( "}" );
+	public String toString() {
+		final StringBuffer sb = new StringBuffer("TrackSchemeGraph {\n");
+		sb.append("  vertices = {\n");
+		for (final TrackSchemeVertex vertex : vertices())
+			sb.append("    " + vertex + "\n");
+		sb.append("  },\n");
+		sb.append("  edges = {\n");
+		for (final TrackSchemeEdge edge : edges())
+			sb.append("    " + edge + "\n");
+		sb.append("  }\n");
+		sb.append("},\n");
+		sb.append("  roots = {\n");
+		for (final TrackSchemeVertex vertex : roots)
+			sb.append("    " + vertex + "\n");
+		sb.append("  },\n");
+		sb.append("}");
 		return sb.toString();
 	}
 
@@ -318,102 +294,104 @@ public class TrackSchemeGraph<
 	 * Returns the vertex in this TrackSchemeGraph that corresponds to the model
 	 * vertex with the specified id.
 	 *
-	 * @param modelId
-	 *            the id of the vertex in the model graph.
-	 * @param ref
-	 *            a TrackSchemeVertex reference.
+	 * @param modelId the id of the vertex in the model graph.
+	 * @param ref a TrackSchemeVertex reference.
 	 * @return the TrackSchemeVertex corresponding to the model vertex with the
 	 *         specified id.
 	 */
-	TrackSchemeVertex getTrackSchemeVertexForModelId( final int modelId, final TrackSchemeVertex ref )
+	TrackSchemeVertex getTrackSchemeVertexForModelId(final int modelId,
+		final TrackSchemeVertex ref)
 	{
-		return idToTrackSchemeVertex.get( modelId, ref );
+		return idToTrackSchemeVertex.get(modelId, ref);
 	}
 
-	TrackSchemeEdge getTrackSchemeEdgeForModelId( final int modelId, final TrackSchemeEdge ref )
+	TrackSchemeEdge getTrackSchemeEdgeForModelId(final int modelId,
+		final TrackSchemeEdge ref)
 	{
-		return idToTrackSchemeEdge.get( modelId, ref );
+		return idToTrackSchemeEdge.get(modelId, ref);
 	}
 
 	/**
-	 * Get the list of GraphChangeListeners. This can be used to add (or
-	 * remove) a GraphChangeListener that will be notified when this
-	 * TrackSchemeGraph changes.
+	 * Get the list of GraphChangeListeners. This can be used to add (or remove) a
+	 * GraphChangeListener that will be notified when this TrackSchemeGraph
+	 * changes.
 	 *
 	 * @return list of GraphChangeListeners
 	 */
-	public Listeners< GraphChangeListener > graphChangeListeners()
-	{
+	public Listeners<GraphChangeListener> graphChangeListeners() {
 		return listeners;
 	}
 
-	public ReentrantReadWriteLock getLock()
-	{
+	public ReentrantReadWriteLock getLock() {
 		return lock;
 	}
 
 	@Override
-	public TrackSchemeVertex addVertex()
-	{
+	public TrackSchemeVertex addVertex() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public TrackSchemeVertex addVertex( final TrackSchemeVertex ref )
-	{
+	public TrackSchemeVertex addVertex(final TrackSchemeVertex ref) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public TrackSchemeEdge addEdge( final TrackSchemeVertex source, final TrackSchemeVertex target )
+	public TrackSchemeEdge addEdge(final TrackSchemeVertex source,
+		final TrackSchemeVertex target)
 	{
-		return addEdge( source, target, edgeRef() );
+		return addEdge(source, target, edgeRef());
 	}
 
 	@Override
-	public TrackSchemeEdge addEdge( final TrackSchemeVertex source, final TrackSchemeVertex target, final TrackSchemeEdge ref )
+	public TrackSchemeEdge addEdge(final TrackSchemeVertex source,
+		final TrackSchemeVertex target, final TrackSchemeEdge ref)
 	{
 		final E mref = modelGraph.edgeRef();
 
-		final E medge = modelGraphProperties.addEdge( vertexMap.getLeft( source ), vertexMap.getLeft( target ), mref );
-		modelGraphProperties.initEdge( medge );
-		final TrackSchemeEdge edge = edgeMap.getRight( medge, ref );
+		final E medge = modelGraphProperties.addEdge(vertexMap.getLeft(source),
+			vertexMap.getLeft(target), mref);
+		modelGraphProperties.initEdge(medge);
+		final TrackSchemeEdge edge = edgeMap.getRight(medge, ref);
 
-		modelGraph.releaseRef( mref );
+		modelGraph.releaseRef(mref);
 
 		return edge;
 	}
 
 	@Override
-	public TrackSchemeEdge insertEdge( final TrackSchemeVertex source, final int sourceOutIndex, final TrackSchemeVertex target, final int targetInIndex )
+	public TrackSchemeEdge insertEdge(final TrackSchemeVertex source,
+		final int sourceOutIndex, final TrackSchemeVertex target,
+		final int targetInIndex)
 	{
-		return insertEdge( source, sourceOutIndex, target, targetInIndex, edgeRef() );
+		return insertEdge(source, sourceOutIndex, target, targetInIndex, edgeRef());
 	}
 
 	@Override
-	public TrackSchemeEdge insertEdge( final TrackSchemeVertex source, final int sourceOutIndex, final TrackSchemeVertex target, final int targetInIndex, final TrackSchemeEdge ref )
+	public TrackSchemeEdge insertEdge(final TrackSchemeVertex source,
+		final int sourceOutIndex, final TrackSchemeVertex target,
+		final int targetInIndex, final TrackSchemeEdge ref)
 	{
 		final E mref = modelGraph.edgeRef();
 
-		final E medge = modelGraphProperties.insertEdge( vertexMap.getLeft( source ), sourceOutIndex, vertexMap.getLeft( target ), targetInIndex, mref );
-		modelGraphProperties.initEdge( medge );
-		final TrackSchemeEdge edge = edgeMap.getRight( medge, ref );
+		final E medge = modelGraphProperties.insertEdge(vertexMap.getLeft(source),
+			sourceOutIndex, vertexMap.getLeft(target), targetInIndex, mref);
+		modelGraphProperties.initEdge(medge);
+		final TrackSchemeEdge edge = edgeMap.getRight(medge, ref);
 
-		modelGraph.releaseRef( mref );
+		modelGraph.releaseRef(mref);
 
 		return edge;
 	}
 
 	@Override
-	public void remove( final TrackSchemeVertex vertex )
-	{
-		modelGraphProperties.removeVertex( vertexMap.getLeft( vertex ) );
+	public void remove(final TrackSchemeVertex vertex) {
+		modelGraphProperties.removeVertex(vertexMap.getLeft(vertex));
 	}
 
 	@Override
-	public void remove( final TrackSchemeEdge edge )
-	{
-		modelGraphProperties.removeEdge( edgeMap.getLeft( edge ) );
+	public void remove(final TrackSchemeEdge edge) {
+		modelGraphProperties.removeEdge(edgeMap.getLeft(edge));
 	}
 
 	/*
@@ -422,14 +400,12 @@ public class TrackSchemeGraph<
 
 	/**
 	 * Triggers a {@link GraphChangeListener#graphChanged()} event.
-	 *
-	 * notifyGraphChanged() is not implicitly called in addVertex() etc because
-	 * we want to support batches of add/remove with one final
-	 * notifyGraphChanged() at the end.
+	 * notifyGraphChanged() is not implicitly called in addVertex() etc because we
+	 * want to support batches of add/remove with one final notifyGraphChanged()
+	 * at the end.
 	 */
 	@Override
-	public void notifyGraphChanged()
-	{
+	public void notifyGraphChanged() {
 		modelGraphProperties.notifyGraphChanged();
 	}
 
@@ -438,9 +414,8 @@ public class TrackSchemeGraph<
 	 */
 
 	@Override
-	public void graphChanged()
-	{
-		for ( final GraphChangeListener l : listeners.list )
+	public void graphChanged() {
+		for (final GraphChangeListener l : listeners.list)
 			l.graphChanged();
 	}
 
@@ -449,79 +424,72 @@ public class TrackSchemeGraph<
 	 */
 
 	@Override
-	public void graphRebuilt()
-	{
+	public void graphRebuilt() {
 		idToTrackSchemeVertex.clear();
 		idToTrackSchemeEdge.clear();
 		roots.clear();
 
-		for ( final V v : modelGraph.vertices() )
-		{
-			final int id = idmap.getVertexId( v );
-			super.addVertex( tsv ).initModelId( id );
-			idToTrackSchemeVertex.put( id, tsv );
-			if ( v.incomingEdges().isEmpty() )
-				roots.add( tsv );
+		for (final V v : modelGraph.vertices()) {
+			final int id = idmap.getVertexId(v);
+			super.addVertex(tsv).initModelId(id);
+			idToTrackSchemeVertex.put(id, tsv);
+			if (v.incomingEdges().isEmpty())
+				roots.add(tsv);
 		}
-		for ( final E e : modelGraph.edges() )
-		{
-			final int id = idmap.getEdgeId( e );
-			idToTrackSchemeVertex.get( idmap.getVertexId( e.getSource( mv ) ), tsv );
-			idToTrackSchemeVertex.get( idmap.getVertexId( e.getTarget( mv ) ), tsv2 );
-			super.insertEdge( tsv, e.getSourceOutIndex(), tsv2, e.getTargetInIndex(), tse ).initModelId( id );
-			idToTrackSchemeEdge.put( id, tse );
-		}
-	}
-
-	@Override
-	public void vertexAdded( final V vertex )
-	{
-		final int id = idmap.getVertexId( vertex );
-		super.addVertex( tsv ).initModelId( id );
-		idToTrackSchemeVertex.put( id, tsv );
-		roots.add( tsv );
-	}
-
-	@Override
-	public void vertexRemoved( final V vertex )
-	{
-		final int id = idmap.getVertexId( vertex );
-		if ( idToTrackSchemeVertex.remove( id, tsv ) != null )
-		{
-			if ( tsv.incomingEdges().isEmpty() )
-				roots.remove( tsv );
-			super.remove( tsv );
+		for (final E e : modelGraph.edges()) {
+			final int id = idmap.getEdgeId(e);
+			idToTrackSchemeVertex.get(idmap.getVertexId(e.getSource(mv)), tsv);
+			idToTrackSchemeVertex.get(idmap.getVertexId(e.getTarget(mv)), tsv2);
+			super.insertEdge(tsv, e.getSourceOutIndex(), tsv2, e.getTargetInIndex(),
+				tse).initModelId(id);
+			idToTrackSchemeEdge.put(id, tse);
 		}
 	}
 
 	@Override
-	public void edgeAdded( final E edge )
-	{
-		final int id = idmap.getEdgeId( edge );
-		idToTrackSchemeVertex.get( idmap.getVertexId( edge.getSource( mv ) ), tsv );
-		idToTrackSchemeVertex.get( idmap.getVertexId( edge.getTarget( mv ) ), tsv2 );
-		if ( tsv2.incomingEdges().isEmpty() )
-			roots.remove( tsv2 );
-		super.insertEdge( tsv, edge.getSourceOutIndex(), tsv2, edge.getTargetInIndex(), tse ).initModelId( id );
-		idToTrackSchemeEdge.put( id, tse );
+	public void vertexAdded(final V vertex) {
+		final int id = idmap.getVertexId(vertex);
+		super.addVertex(tsv).initModelId(id);
+		idToTrackSchemeVertex.put(id, tsv);
+		roots.add(tsv);
 	}
 
 	@Override
-	public void edgeRemoved( final E edge )
-	{
-		final int id = idmap.getEdgeId( edge );
-		if ( idToTrackSchemeEdge.remove( id, tse ) != null )
-		{
-			if ( tse.getTarget( tsv ).incomingEdges().size() == 1 )
-				roots.add( tsv );
-			super.remove( tse );
+	public void vertexRemoved(final V vertex) {
+		final int id = idmap.getVertexId(vertex);
+		if (idToTrackSchemeVertex.remove(id, tsv) != null) {
+			if (tsv.incomingEdges().isEmpty())
+				roots.remove(tsv);
+			super.remove(tsv);
+		}
+	}
+
+	@Override
+	public void edgeAdded(final E edge) {
+		final int id = idmap.getEdgeId(edge);
+		idToTrackSchemeVertex.get(idmap.getVertexId(edge.getSource(mv)), tsv);
+		idToTrackSchemeVertex.get(idmap.getVertexId(edge.getTarget(mv)), tsv2);
+		if (tsv2.incomingEdges().isEmpty())
+			roots.remove(tsv2);
+		super.insertEdge(tsv, edge.getSourceOutIndex(), tsv2, edge
+			.getTargetInIndex(), tse).initModelId(id);
+		idToTrackSchemeEdge.put(id, tse);
+	}
+
+	@Override
+	public void edgeRemoved(final E edge) {
+		final int id = idmap.getEdgeId(edge);
+		if (idToTrackSchemeEdge.remove(id, tse) != null) {
+			if (tse.getTarget(tsv).incomingEdges().size() == 1)
+				roots.add(tsv);
+			super.remove(tse);
 		}
 	}
 
 //	@Override // TODO: should be implemented for some listener interface, or REMOVE? (vertices never change timepoint?)
-	public void vertexTimepointChanged( final V vertex )
-	{
-		idToTrackSchemeVertex.get( idmap.getVertexId( vertex ), tsv ).updateTimepointFromModel();
+	public void vertexTimepointChanged(final V vertex) {
+		idToTrackSchemeVertex.get(idmap.getVertexId(vertex), tsv)
+			.updateTimepointFromModel();
 	}
 
 	/**
@@ -530,8 +498,7 @@ public class TrackSchemeGraph<
 	 * @return bidirectional mapping between model vertices and view vertices.
 	 */
 	@Override
-	public RefBimap< V, TrackSchemeVertex > getVertexMap()
-	{
+	public RefBimap<V, TrackSchemeVertex> getVertexMap() {
 		return vertexMap;
 	}
 
@@ -541,8 +508,7 @@ public class TrackSchemeGraph<
 	 * @return bidirectional mapping between model edges and view edges.
 	 */
 	@Override
-	public RefBimap< E, TrackSchemeEdge > getEdgeMap()
-	{
+	public RefBimap<E, TrackSchemeEdge> getEdgeMap() {
 		return edgeMap;
 	}
 
@@ -550,8 +516,8 @@ public class TrackSchemeGraph<
 	 * vertex and edge pools
 	 */
 
-	static class TrackSchemeVertexLayout extends AbstractVertexLayout
-	{
+	static class TrackSchemeVertexLayout extends AbstractVertexLayout {
+
 		final IndexField origVertexIndex = indexField();
 		final IntField layoutTimeStamp = intField();
 		final IndexField layoutInEdgeIndex = indexField();
@@ -564,58 +530,74 @@ public class TrackSchemeGraph<
 
 	static TrackSchemeVertexLayout vertexLayout = new TrackSchemeVertexLayout();
 
-	static class TrackSchemeVertexPool extends AbstractVertexPool< TrackSchemeVertex, TrackSchemeEdge, ByteMappedElement >
+	static class TrackSchemeVertexPool extends
+		AbstractVertexPool<TrackSchemeVertex, TrackSchemeEdge, ByteMappedElement>
 	{
-		final ModelGraphWrapper< ?, ? > modelGraphWrapper;
 
-		final IndexAttribute< TrackSchemeVertex > origVertexIndex = new IndexAttribute<>( vertexLayout.origVertexIndex, this );
-		final IntAttribute< TrackSchemeVertex > layoutTimeStamp = new IntAttribute<>( vertexLayout.layoutTimeStamp, this );
-		final IndexAttribute< TrackSchemeVertex > layoutInEdgeIndex = new IndexAttribute<>( vertexLayout.layoutInEdgeIndex, this );
-		final DoubleAttribute< TrackSchemeVertex > layoutX = new DoubleAttribute<>( vertexLayout.layoutX, this );
-		final IntAttribute< TrackSchemeVertex > firstTimepoint = new IntAttribute<>( vertexLayout.firstTimepoint, this );
-		final IntAttribute< TrackSchemeVertex > timepoint = new IntAttribute<>( vertexLayout.timepoint, this );
-		final IndexAttribute< TrackSchemeVertex > screenVertexIndex = new IndexAttribute<>( vertexLayout.screenVertexIndex, this );
-		final BooleanAttribute< TrackSchemeVertex > ghost = new BooleanAttribute<>( vertexLayout.ghost, this );
+		final ModelGraphWrapper<?, ?> modelGraphWrapper;
 
-		private TrackSchemeVertexPool( final int initialCapacity, final ModelGraphWrapper< ?, ? > modelGraphWrapper )
+		final IndexAttribute<TrackSchemeVertex> origVertexIndex =
+			new IndexAttribute<>(vertexLayout.origVertexIndex, this);
+		final IntAttribute<TrackSchemeVertex> layoutTimeStamp = new IntAttribute<>(
+			vertexLayout.layoutTimeStamp, this);
+		final IndexAttribute<TrackSchemeVertex> layoutInEdgeIndex =
+			new IndexAttribute<>(vertexLayout.layoutInEdgeIndex, this);
+		final DoubleAttribute<TrackSchemeVertex> layoutX = new DoubleAttribute<>(
+			vertexLayout.layoutX, this);
+		final IntAttribute<TrackSchemeVertex> firstTimepoint = new IntAttribute<>(
+			vertexLayout.firstTimepoint, this);
+		final IntAttribute<TrackSchemeVertex> timepoint = new IntAttribute<>(
+			vertexLayout.timepoint, this);
+		final IndexAttribute<TrackSchemeVertex> screenVertexIndex =
+			new IndexAttribute<>(vertexLayout.screenVertexIndex, this);
+		final BooleanAttribute<TrackSchemeVertex> ghost = new BooleanAttribute<>(
+			vertexLayout.ghost, this);
+
+		private TrackSchemeVertexPool(final int initialCapacity,
+			final ModelGraphWrapper<?, ?> modelGraphWrapper)
 		{
-			super( initialCapacity, vertexLayout, TrackSchemeVertex.class, SingleArrayMemPool.factory( ByteMappedElementArray.factory ) );
+			super(initialCapacity, vertexLayout, TrackSchemeVertex.class,
+				SingleArrayMemPool.factory(ByteMappedElementArray.factory));
 			this.modelGraphWrapper = modelGraphWrapper;
 		}
 
 		@Override
-		protected TrackSchemeVertex createEmptyRef()
-		{
-			return new TrackSchemeVertex( this );
+		protected TrackSchemeVertex createEmptyRef() {
+			return new TrackSchemeVertex(this);
 		}
 	}
 
-	static class TrackSchemeEdgeLayout extends AbstractEdgeLayout
-	{
+	static class TrackSchemeEdgeLayout extends AbstractEdgeLayout {
+
 		final IndexField origEdgeIndex = indexField();
 		final IndexField screenEdgeIndex = indexField();
 	}
 
 	static TrackSchemeEdgeLayout edgeLayout = new TrackSchemeEdgeLayout();
 
-	static class TrackSchemeEdgePool extends AbstractEdgePool< TrackSchemeEdge, TrackSchemeVertex, ByteMappedElement >
+	static class TrackSchemeEdgePool extends
+		AbstractEdgePool<TrackSchemeEdge, TrackSchemeVertex, ByteMappedElement>
 	{
-		final ModelGraphWrapper< ?, ? > modelGraphWrapper;
 
-		final IndexAttribute< TrackSchemeEdge > origEdgeIndex = new IndexAttribute<>( edgeLayout.origEdgeIndex, this );
-		final IndexAttribute< TrackSchemeEdge > screenEdgeIndex = new IndexAttribute<>( edgeLayout.screenEdgeIndex, this );
+		final ModelGraphWrapper<?, ?> modelGraphWrapper;
 
-		private TrackSchemeEdgePool( final int initialCapacity, final TrackSchemeVertexPool vertexPool )
+		final IndexAttribute<TrackSchemeEdge> origEdgeIndex = new IndexAttribute<>(
+			edgeLayout.origEdgeIndex, this);
+		final IndexAttribute<TrackSchemeEdge> screenEdgeIndex =
+			new IndexAttribute<>(edgeLayout.screenEdgeIndex, this);
+
+		private TrackSchemeEdgePool(final int initialCapacity,
+			final TrackSchemeVertexPool vertexPool)
 		{
-			super( initialCapacity, edgeLayout, TrackSchemeEdge.class, SingleArrayMemPool.factory( ByteMappedElementArray.factory ), vertexPool );
+			super(initialCapacity, edgeLayout, TrackSchemeEdge.class,
+				SingleArrayMemPool.factory(ByteMappedElementArray.factory), vertexPool);
 			modelGraphWrapper = vertexPool.modelGraphWrapper;
-			vertexPool.linkEdgePool( this );
+			vertexPool.linkEdgePool(this);
 		}
 
 		@Override
-		protected TrackSchemeEdge createEmptyRef()
-		{
-			return new TrackSchemeEdge( this );
+		protected TrackSchemeEdge createEmptyRef() {
+			return new TrackSchemeEdge(this);
 		}
 	}
 }

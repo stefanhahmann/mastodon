@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.display;
 
 import org.mastodon.views.grapher.datagraph.ScreenTransform;
@@ -33,32 +34,28 @@ import org.scijava.listeners.Listeners;
 
 import bdv.viewer.TransformListener;
 
-public class ScreenTransformState
-{
-	private final Listeners.List< TransformListener< ScreenTransform > > listeners;
+public class ScreenTransformState {
+
+	private final Listeners.List<TransformListener<ScreenTransform>> listeners;
 
 	private final ScreenTransform transform;
 
-	public ScreenTransformState( final ScreenTransform transform )
-	{
-		this.transform = new ScreenTransform( transform );
+	public ScreenTransformState(final ScreenTransform transform) {
+		this.transform = new ScreenTransform(transform);
 		listeners = new Listeners.List<>();
 	}
 
-	public ScreenTransformState()
-	{
-		this( new ScreenTransform() );
+	public ScreenTransformState() {
+		this(new ScreenTransform());
 	}
 
 	/**
 	 * Get the current transform.
 	 *
-	 * @param transform
-	 *     is set to the current transform
+	 * @param transform is set to the current transform
 	 */
-	public synchronized void get( final ScreenTransform transform )
-	{
-		transform.set( this.transform );
+	public synchronized void get(final ScreenTransform transform) {
+		transform.set(this.transform);
 	}
 
 	/**
@@ -66,23 +63,19 @@ public class ScreenTransformState
 	 *
 	 * @return a copy of the current transform
 	 */
-	public synchronized ScreenTransform get()
-	{
-		return new ScreenTransform( this.transform );
+	public synchronized ScreenTransform get() {
+		return new ScreenTransform(this.transform);
 	}
 
 	/**
 	 * Set the transform.
 	 * 
-	 * @param transform
-	 *            the transform to copy from.
+	 * @param transform the transform to copy from.
 	 */
-	public synchronized void set( final ScreenTransform transform )
-	{
-		if ( !this.transform.equals( transform ) )
-		{
-			this.transform.set( transform );
-			listeners.list.forEach( l -> l.transformChanged( this.transform ) );
+	public synchronized void set(final ScreenTransform transform) {
+		if (!this.transform.equals(transform)) {
+			this.transform.set(transform);
+			listeners.list.forEach(l -> l.transformChanged(this.transform));
 		}
 	}
 
@@ -91,8 +84,7 @@ public class ScreenTransformState
 	 * 
 	 * @return the listeners.
 	 */
-	public Listeners< TransformListener< ScreenTransform > > listeners()
-	{
+	public Listeners<TransformListener<ScreenTransform>> listeners() {
 		return listeners;
 	}
 }

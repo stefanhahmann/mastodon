@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.datagraph;
 
 import org.mastodon.adapter.RefBimap;
@@ -35,48 +36,46 @@ import org.mastodon.graph.Vertex;
 import org.mastodon.model.HasLabel;
 import org.mastodon.spatial.HasTimepoint;
 
-public class DataEdgeBimap< V extends Vertex< E > & HasTimepoint & HasLabel, E extends Edge< V > >
-		implements RefBimap< E, DataEdge >
+public class DataEdgeBimap<V extends Vertex<E> & HasTimepoint & HasLabel, E extends Edge<V>>
+	implements RefBimap<E, DataEdge>
 {
-	private final GraphIdBimap< V, E > idmap;
 
-	private final DataGraph< V, E > dataGraph;
+	private final GraphIdBimap<V, E> idmap;
+
+	private final DataGraph<V, E> dataGraph;
 
 	public DataEdgeBimap(
-			final DataGraph< V, E > dataGraph )
+		final DataGraph<V, E> dataGraph)
 	{
 		this.idmap = dataGraph.getGraphIdBimap();
 		this.dataGraph = dataGraph;
 	}
 
 	@Override
-	public E getLeft( final DataEdge right )
-	{
-		return right == null ? null : idmap.getEdge( right.getModelEdgeId(), reusableLeftRef( right ) );
+	public E getLeft(final DataEdge right) {
+		return right == null ? null : idmap.getEdge(right.getModelEdgeId(),
+			reusableLeftRef(right));
 	}
 
 	@Override
-	public DataEdge getRight( final E left, final DataEdge ref )
-	{
-		return left == null ? null : dataGraph.getDataEdgeForModelId( idmap.getEdgeId( left ), ref );
+	public DataEdge getRight(final E left, final DataEdge ref) {
+		return left == null ? null : dataGraph.getDataEdgeForModelId(idmap
+			.getEdgeId(left), ref);
 	}
 
-	@SuppressWarnings( "unchecked" )
+	@SuppressWarnings("unchecked")
 	@Override
-	public E reusableLeftRef( final DataEdge ref )
-	{
-		return ( E ) ref.modelEdge.getReusableRef();
+	public E reusableLeftRef(final DataEdge ref) {
+		return (E) ref.modelEdge.getReusableRef();
 	}
 
 	@Override
-	public DataEdge reusableRightRef()
-	{
+	public DataEdge reusableRightRef() {
 		return dataGraph.edgeRef();
 	}
 
 	@Override
-	public void releaseRef( final DataEdge ref )
-	{
-		dataGraph.releaseRef( ref );
+	public void releaseRef(final DataEdge ref) {
+		dataGraph.releaseRef(ref);
 	}
 }

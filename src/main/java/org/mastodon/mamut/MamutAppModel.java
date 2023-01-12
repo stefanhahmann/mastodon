@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut;
 
 import org.mastodon.app.MastodonAppModel;
@@ -51,8 +52,8 @@ import org.scijava.ui.behaviour.util.Actions;
  *
  * @author Jean-Yves Tinevez
  */
-public class MamutAppModel extends MastodonAppModel< Model, Spot, Link >
-{
+public class MamutAppModel extends MastodonAppModel<Model, Spot, Link> {
+
 	private static final int NUM_GROUPS = 3;
 
 	private final BoundingSphereRadiusStatistics radiusStats;
@@ -74,27 +75,27 @@ public class MamutAppModel extends MastodonAppModel< Model, Spot, Link >
 	private final BranchGraphSynchronizer branchGraphSync;
 
 	public MamutAppModel(
-			final Model model,
-			final SharedBigDataViewerData sharedBdvData,
-			final KeyPressedManager keyPressedManager,
-			final TrackSchemeStyleManager trackSchemeStyleManager,
-			final DataDisplayStyleManager dataDisplayStyleManager,
-			final RenderSettingsManager renderSettingsManager,
-			final FeatureColorModeManager featureColorModeManager,
-			final KeymapManager keymapManager,
-			final MamutPlugins plugins,
-			final Actions globalActions )
+		final Model model,
+		final SharedBigDataViewerData sharedBdvData,
+		final KeyPressedManager keyPressedManager,
+		final TrackSchemeStyleManager trackSchemeStyleManager,
+		final DataDisplayStyleManager dataDisplayStyleManager,
+		final RenderSettingsManager renderSettingsManager,
+		final FeatureColorModeManager featureColorModeManager,
+		final KeymapManager keymapManager,
+		final MamutPlugins plugins,
+		final Actions globalActions)
 	{
 		super(
-				NUM_GROUPS,
-				model,
-				keyPressedManager,
-				keymapManager,
-				plugins,
-				globalActions,
-				new String[] { KeyConfigContexts.MASTODON } );
+			NUM_GROUPS,
+			model,
+			keyPressedManager,
+			keymapManager,
+			plugins,
+			globalActions,
+			new String[] { KeyConfigContexts.MASTODON });
 
-		this.radiusStats = new BoundingSphereRadiusStatistics( model );
+		this.radiusStats = new BoundingSphereRadiusStatistics(model);
 		this.sharedBdvData = sharedBdvData;
 		this.trackSchemeStyleManager = trackSchemeStyleManager;
 		this.dataDisplayStyleManager = dataDisplayStyleManager;
@@ -102,8 +103,9 @@ public class MamutAppModel extends MastodonAppModel< Model, Spot, Link >
 		this.featureColorModeManager = featureColorModeManager;
 		this.minTimepoint = 0;
 		this.maxTimepoint = sharedBdvData.getNumTimepoints() - 1;
-		this.branchGraphSync = new BranchGraphSynchronizer( model.getBranchGraph(), model.getGraph().getLock().readLock() );
-		model.getGraph().addGraphChangeListener( branchGraphSync );
+		this.branchGraphSync = new BranchGraphSynchronizer(model.getBranchGraph(),
+			model.getGraph().getLock().readLock());
+		model.getGraph().addGraphChangeListener(branchGraphSync);
 		/*
 		 * TODO: (?) For now, we use timepoint indices in MaMuT model, instead
 		 * of IDs/names. This is because BDV also displays timepoint index, and
@@ -112,48 +114,39 @@ public class MamutAppModel extends MastodonAppModel< Model, Spot, Link >
 		 */
 	}
 
-	public DataDisplayStyleManager getDataDisplayStyleManager()
-	{
+	public DataDisplayStyleManager getDataDisplayStyleManager() {
 		return dataDisplayStyleManager;
 	}
 
-	public TrackSchemeStyleManager getTrackSchemeStyleManager()
-	{
+	public TrackSchemeStyleManager getTrackSchemeStyleManager() {
 		return trackSchemeStyleManager;
 	}
 
-	public RenderSettingsManager getRenderSettingsManager()
-	{
+	public RenderSettingsManager getRenderSettingsManager() {
 		return renderSettingsManager;
 	}
 
-	public FeatureColorModeManager getFeatureColorModeManager()
-	{
+	public FeatureColorModeManager getFeatureColorModeManager() {
 		return featureColorModeManager;
 	}
 
-	public BoundingSphereRadiusStatistics getRadiusStats()
-	{
+	public BoundingSphereRadiusStatistics getRadiusStats() {
 		return radiusStats;
 	}
 
-	public SharedBigDataViewerData getSharedBdvData()
-	{
+	public SharedBigDataViewerData getSharedBdvData() {
 		return sharedBdvData;
 	}
 
-	public int getMinTimepoint()
-	{
+	public int getMinTimepoint() {
 		return minTimepoint;
 	}
 
-	public int getMaxTimepoint()
-	{
+	public int getMaxTimepoint() {
 		return maxTimepoint;
 	}
 
-	public BranchGraphSynchronizer getBranchGraphSync()
-	{
+	public BranchGraphSynchronizer getBranchGraphSync() {
 		return branchGraphSync;
 	}
 }

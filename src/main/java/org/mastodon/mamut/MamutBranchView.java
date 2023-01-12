@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut;
 
 import java.awt.event.WindowAdapter;
@@ -87,11 +88,8 @@ import org.scijava.ui.behaviour.util.Behaviours;
 import org.scijava.ui.behaviour.util.WrappedActionMap;
 import org.scijava.ui.behaviour.util.WrappedInputMap;
 
-public class MamutBranchView< 
-	VG extends ViewGraph< BranchSpot, BranchLink, V, E >, 
-	V extends Vertex< E >, 
-	E extends Edge< V > >
-		implements IMastodonFrameView, IMastodonView
+public class MamutBranchView<VG extends ViewGraph<BranchSpot, BranchLink, V, E>, V extends Vertex<E>, E extends Edge<V>>
+	implements IMastodonFrameView, IMastodonView
 {
 
 	protected final MamutAppModel appModel;
@@ -110,23 +108,24 @@ public class MamutBranchView<
 
 	protected final TimepointModelAdapter timepointModel;
 
-	protected final HighlightModelAdapter< BranchSpot, BranchLink, V, E > highlightModel;
+	protected final HighlightModelAdapter<BranchSpot, BranchLink, V, E> highlightModel;
 
-	protected final FocusModelAdapter< BranchSpot, BranchLink, V, E > focusModel;
+	protected final FocusModelAdapter<BranchSpot, BranchLink, V, E> focusModel;
 
-	protected final SelectionModelAdapter< BranchSpot, BranchLink, V, E > selectionModel;
+	protected final SelectionModelAdapter<BranchSpot, BranchLink, V, E> selectionModel;
 
-	protected final NavigationHandlerAdapter< BranchSpot, BranchLink, V, E > navigationHandler;
+	protected final NavigationHandlerAdapter<BranchSpot, BranchLink, V, E> navigationHandler;
 
-	protected final ArrayList< Runnable > runOnClose;
+	protected final ArrayList<Runnable> runOnClose;
 
-	protected final RefBimap< BranchSpot, V > vertexMap;
+	protected final RefBimap<BranchSpot, V> vertexMap;
 
-	protected final RefBimap< BranchLink, E > edgeMap;
+	protected final RefBimap<BranchLink, E> edgeMap;
 
-	protected final TagSetModel< BranchSpot, BranchLink > tagSetModel;
+	protected final TagSetModel<BranchSpot, BranchLink> tagSetModel;
 
-	public MamutBranchView( final MamutAppModel appModel, final VG viewGraph, final String[] keyConfigContexts )
+	public MamutBranchView(final MamutAppModel appModel, final VG viewGraph,
+		final String[] keyConfigContexts)
 	{
 		this.appModel = appModel;
 		this.viewGraph = viewGraph;
@@ -144,217 +143,238 @@ public class MamutBranchView<
 		final ModelGraph graph = appModel.getModel().getGraph();
 
 		// Highlight.
-		final HighlightModel< Spot, Link > graphHighlightModel = appModel.getHighlightModel();
-		final HighlightModel< BranchSpot, BranchLink > branchHighlightModel =
-				new BranchGraphHighlightAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphHighlightModel );
-		this.highlightModel = new HighlightModelAdapter<>( branchHighlightModel, vertexMap, edgeMap );
+		final HighlightModel<Spot, Link> graphHighlightModel = appModel
+			.getHighlightModel();
+		final HighlightModel<BranchSpot, BranchLink> branchHighlightModel =
+			new BranchGraphHighlightAdapter<>(branchGraph, graph, graph
+				.getGraphIdBimap(), graphHighlightModel);
+		this.highlightModel = new HighlightModelAdapter<>(branchHighlightModel,
+			vertexMap, edgeMap);
 
 		// Focus
-		final FocusModel< Spot, Link > graphFocusModel = appModel.getFocusModel();
-		final FocusModel< BranchSpot, BranchLink > branchFocusfocusModel =
-				new BranchGraphFocusAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphFocusModel );
-		this.focusModel = new FocusModelAdapter<>( branchFocusfocusModel, vertexMap, edgeMap );
+		final FocusModel<Spot, Link> graphFocusModel = appModel.getFocusModel();
+		final FocusModel<BranchSpot, BranchLink> branchFocusfocusModel =
+			new BranchGraphFocusAdapter<>(branchGraph, graph, graph.getGraphIdBimap(),
+				graphFocusModel);
+		this.focusModel = new FocusModelAdapter<>(branchFocusfocusModel, vertexMap,
+			edgeMap);
 
 		// Selection
-		final SelectionModel< Spot, Link > graphSelectionModel = appModel.getSelectionModel();
-		final SelectionModel< BranchSpot, BranchLink > branchSelectionModel =
-				new BranchGraphSelectionAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphSelectionModel );
-		selectionModel = new SelectionModelAdapter<>( branchSelectionModel, vertexMap, edgeMap );
+		final SelectionModel<Spot, Link> graphSelectionModel = appModel
+			.getSelectionModel();
+		final SelectionModel<BranchSpot, BranchLink> branchSelectionModel =
+			new BranchGraphSelectionAdapter<>(branchGraph, graph, graph
+				.getGraphIdBimap(), graphSelectionModel);
+		selectionModel = new SelectionModelAdapter<>(branchSelectionModel,
+			vertexMap, edgeMap);
 
 		// Navigation.
-		final NavigationHandler< Spot, Link > graphNavigationHandler = groupHandle.getModel( appModel.NAVIGATION );
-		final NavigationHandler< BranchSpot, BranchLink > branchGraphNavigation =
-				new BranchGraphNavigationHandlerAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphNavigationHandler );
-		this.navigationHandler = new NavigationHandlerAdapter<>( branchGraphNavigation, vertexMap, edgeMap );
+		final NavigationHandler<Spot, Link> graphNavigationHandler = groupHandle
+			.getModel(appModel.NAVIGATION);
+		final NavigationHandler<BranchSpot, BranchLink> branchGraphNavigation =
+			new BranchGraphNavigationHandlerAdapter<>(branchGraph, graph, graph
+				.getGraphIdBimap(), graphNavigationHandler);
+		this.navigationHandler = new NavigationHandlerAdapter<>(
+			branchGraphNavigation, vertexMap, edgeMap);
 
 		// Time-point.
-		this.timepointModel = new TimepointModelAdapter( groupHandle.getModel( appModel.TIMEPOINT ) );
+		this.timepointModel = new TimepointModelAdapter(groupHandle.getModel(
+			appModel.TIMEPOINT));
 
 		// Tag-set.
-		this.tagSetModel = branchTagSetModel( appModel );
+		this.tagSetModel = branchTagSetModel(appModel);
 
 		// Closing runnables.
 		this.runOnClose = new ArrayList<>();
-		runOnClose.add( () -> {
+		runOnClose.add(() -> {
 			timepointModel.listeners().removeAll();
 			highlightModel.listeners().removeAll();
 			focusModel.listeners().removeAll();
 			selectionModel.listeners().removeAll();
 			navigationHandler.listeners().removeAll();
-		} );
+		});
 	}
 
-	protected void setFrame( final ViewFrame frame )
-	{
-		frame.addWindowListener( new WindowAdapter()
-		{
+	protected void setFrame(final ViewFrame frame) {
+		frame.addWindowListener(new WindowAdapter() {
+
 			@Override
-			public void windowClosing( final WindowEvent e )
-			{
+			public void windowClosing(final WindowEvent e) {
 				close();
 			}
-		} );
+		});
 		this.frame = frame;
 
 		final Actions globalActions = appModel.getGlobalActions();
-		if ( globalActions != null )
-		{
-			frame.getKeybindings().addActionMap( "global", new WrappedActionMap( globalActions.getActionMap() ) );
-			frame.getKeybindings().addInputMap( "global", new WrappedInputMap( globalActions.getInputMap() ) );
+		if (globalActions != null) {
+			frame.getKeybindings().addActionMap("global", new WrappedActionMap(
+				globalActions.getActionMap()));
+			frame.getKeybindings().addInputMap("global", new WrappedInputMap(
+				globalActions.getInputMap()));
 		}
 
 		final Actions pluginActions = appModel.getPlugins().getPluginActions();
-		if ( pluginActions != null )
-		{
-			frame.getKeybindings().addActionMap( "plugin", new WrappedActionMap( pluginActions.getActionMap() ) );
-			frame.getKeybindings().addInputMap( "plugin", new WrappedInputMap( pluginActions.getInputMap() ) );
+		if (pluginActions != null) {
+			frame.getKeybindings().addActionMap("plugin", new WrappedActionMap(
+				pluginActions.getActionMap()));
+			frame.getKeybindings().addInputMap("plugin", new WrappedInputMap(
+				pluginActions.getInputMap()));
 		}
 
 		final Actions appActions = appModel.getAppActions();
-		frame.getKeybindings().addActionMap( "app", new WrappedActionMap( appActions.getActionMap() ) );
-		frame.getKeybindings().addInputMap( "app", new WrappedInputMap( appActions.getInputMap() ) );
+		frame.getKeybindings().addActionMap("app", new WrappedActionMap(appActions
+			.getActionMap()));
+		frame.getKeybindings().addInputMap("app", new WrappedInputMap(appActions
+			.getInputMap()));
 
 		final Keymap keymap = appModel.getKeymap();
 
-		viewActions = new Actions( keymap.getConfig(), keyConfigContexts );
-		viewActions.install( frame.getKeybindings(), "view" );
+		viewActions = new Actions(keymap.getConfig(), keyConfigContexts);
+		viewActions.install(frame.getKeybindings(), "view");
 
-		viewBehaviours = new Behaviours( keymap.getConfig(), keyConfigContexts );
-		viewBehaviours.install( frame.getTriggerbindings(), "view" );
+		viewBehaviours = new Behaviours(keymap.getConfig(), keyConfigContexts);
+		viewBehaviours.install(frame.getTriggerbindings(), "view");
 
 		final UpdateListener updateListener = () -> {
-			viewBehaviours.updateKeyConfig( keymap.getConfig() );
-			viewActions.updateKeyConfig( keymap.getConfig() );
+			viewBehaviours.updateKeyConfig(keymap.getConfig());
+			viewActions.updateKeyConfig(keymap.getConfig());
 		};
-		keymap.updateListeners().add( updateListener );
-		onClose( () -> keymap.updateListeners().remove( updateListener ) );
+		keymap.updateListeners().add(updateListener);
+		onClose(() -> keymap.updateListeners().remove(updateListener));
 	}
 
 	protected final ColoringModel registerBranchColoring(
-			final GraphColorGeneratorAdapter< BranchSpot, BranchLink, V, E > colorGeneratorAdapter,
-			final JMenuHandle menuHandle,
-			final Runnable refresh )
+		final GraphColorGeneratorAdapter<BranchSpot, BranchLink, V, E> colorGeneratorAdapter,
+		final JMenuHandle menuHandle,
+		final Runnable refresh)
 	{
 		final FeatureModel featureModel = appModel.getModel().getFeatureModel();
-		final FeatureColorModeManager featureColorModeManager = appModel.getFeatureColorModeManager();
-		final ColoringModelBranchGraph< ?, ? > coloringModel = new ColoringModelBranchGraph<>( tagSetModel, featureColorModeManager, featureModel );
-		final ColoringMenu coloringMenu = new ColoringMenu( menuHandle.getMenu(), coloringModel );
+		final FeatureColorModeManager featureColorModeManager = appModel
+			.getFeatureColorModeManager();
+		final ColoringModelBranchGraph<?, ?> coloringModel =
+			new ColoringModelBranchGraph<>(tagSetModel, featureColorModeManager,
+				featureModel);
+		final ColoringMenu coloringMenu = new ColoringMenu(menuHandle.getMenu(),
+			coloringModel);
 
-		tagSetModel.listeners().add( coloringModel );
-		onClose( () -> tagSetModel.listeners().remove( coloringModel ) );
-		tagSetModel.listeners().add( coloringMenu );
-		onClose( () -> tagSetModel.listeners().remove( coloringMenu ) );
+		tagSetModel.listeners().add(coloringModel);
+		onClose(() -> tagSetModel.listeners().remove(coloringModel));
+		tagSetModel.listeners().add(coloringMenu);
+		onClose(() -> tagSetModel.listeners().remove(coloringMenu));
 
-		featureColorModeManager.listeners().add( coloringModel );
-		onClose( () -> featureColorModeManager.listeners().remove( coloringModel ) );
-		featureColorModeManager.listeners().add( coloringMenu );
-		onClose( () -> featureColorModeManager.listeners().remove( coloringMenu ) );
+		featureColorModeManager.listeners().add(coloringModel);
+		onClose(() -> featureColorModeManager.listeners().remove(coloringModel));
+		featureColorModeManager.listeners().add(coloringMenu);
+		onClose(() -> featureColorModeManager.listeners().remove(coloringMenu));
 
-		featureModel.listeners().add( coloringMenu );
-		onClose( () -> featureModel.listeners().remove( coloringMenu ) );
+		featureModel.listeners().add(coloringMenu);
+		onClose(() -> featureModel.listeners().remove(coloringMenu));
 
-		@SuppressWarnings( "unchecked" )
-		final ColoringModelMain.ColoringChangedListener coloringChangedListener = () -> {
-			if ( coloringModel.noColoring() )
-				colorGeneratorAdapter.setColorGenerator( null );
-			else if ( coloringModel.getTagSet() != null )
-				colorGeneratorAdapter.setColorGenerator( new TagSetGraphColorGenerator<>( tagSetModel, coloringModel.getTagSet() ) );
-			else if ( coloringModel.getFeatureColorMode() != null )
-				colorGeneratorAdapter.setColorGenerator( ( GraphColorGenerator< BranchSpot, BranchLink > ) coloringModel.getFeatureGraphColorGenerator() );
-			refresh.run();
-		};
-		coloringModel.listeners().add( coloringChangedListener );
+		@SuppressWarnings("unchecked")
+		final ColoringModelMain.ColoringChangedListener coloringChangedListener =
+			() -> {
+				if (coloringModel.noColoring())
+					colorGeneratorAdapter.setColorGenerator(null);
+				else if (coloringModel.getTagSet() != null)
+					colorGeneratorAdapter.setColorGenerator(
+						new TagSetGraphColorGenerator<>(tagSetModel, coloringModel
+							.getTagSet()));
+				else if (coloringModel.getFeatureColorMode() != null)
+					colorGeneratorAdapter.setColorGenerator(
+						(GraphColorGenerator<BranchSpot, BranchLink>) coloringModel
+							.getFeatureGraphColorGenerator());
+				refresh.run();
+			};
+		coloringModel.listeners().add(coloringChangedListener);
 
 		return coloringModel;
 	}
 
 	protected void registerColorbarOverlay(
-			final ColorBarOverlay colorBarOverlay,
-			final JMenuHandle menuHandle,
-			final Runnable refresh )
+		final ColorBarOverlay colorBarOverlay,
+		final JMenuHandle menuHandle,
+		final Runnable refresh)
 	{
-		menuHandle.getMenu().add( new JSeparator() );
-		final JCheckBoxMenuItem toggleOverlay = new JCheckBoxMenuItem( "Show colorbar", ColorBarOverlay.DEFAULT_VISIBLE );
-		toggleOverlay.addActionListener( ( l ) -> {
-			colorBarOverlay.setVisible( toggleOverlay.isSelected() );
+		menuHandle.getMenu().add(new JSeparator());
+		final JCheckBoxMenuItem toggleOverlay = new JCheckBoxMenuItem(
+			"Show colorbar", ColorBarOverlay.DEFAULT_VISIBLE);
+		toggleOverlay.addActionListener((l) -> {
+			colorBarOverlay.setVisible(toggleOverlay.isSelected());
 			refresh.run();
-		} );
-		menuHandle.getMenu().add( toggleOverlay );
+		});
+		menuHandle.getMenu().add(toggleOverlay);
 
-		menuHandle.getMenu().add( new JSeparator() );
-		menuHandle.getMenu().add( "Position:" ).setEnabled( false );
+		menuHandle.getMenu().add(new JSeparator());
+		menuHandle.getMenu().add("Position:").setEnabled(false);
 
 		final ButtonGroup buttonGroup = new ButtonGroup();
-		for ( final Position position : Position.values() )
-		{
-			final JRadioButtonMenuItem positionItem = new JRadioButtonMenuItem( position.toString() );
-			positionItem.addActionListener( ( l ) -> {
-				if ( positionItem.isSelected() )
-				{
-					colorBarOverlay.setPosition( position );
+		for (final Position position : Position.values()) {
+			final JRadioButtonMenuItem positionItem = new JRadioButtonMenuItem(
+				position.toString());
+			positionItem.addActionListener((l) -> {
+				if (positionItem.isSelected()) {
+					colorBarOverlay.setPosition(position);
 					refresh.run();
 				}
-			} );
-			buttonGroup.add( positionItem );
-			menuHandle.getMenu().add( positionItem );
+			});
+			buttonGroup.add(positionItem);
+			menuHandle.getMenu().add(positionItem);
 
-			if ( position.equals( ColorBarOverlay.DEFAULT_POSITION ) )
-				positionItem.setSelected( true );
+			if (position.equals(ColorBarOverlay.DEFAULT_POSITION))
+				positionItem.setSelected(true);
 		}
 	}
 
 	protected void registerTagSetMenu(
-			final JMenuHandle menuHandle,
-			final Runnable refresh )
+		final JMenuHandle menuHandle,
+		final Runnable refresh)
 	{
 		final Model model = appModel.getModel();
-		final TagSetMenu< Spot, Link > tagSetMenu = new TagSetMenu<>(
-				menuHandle.getMenu(),
-				model.getTagSetModel(),
-				appModel.getSelectionModel(),
-				model.getGraph().getLock(), model );
-		tagSetModel.listeners().add( tagSetMenu );
-		onClose( () -> tagSetModel.listeners().remove( tagSetMenu ) );
+		final TagSetMenu<Spot, Link> tagSetMenu = new TagSetMenu<>(
+			menuHandle.getMenu(),
+			model.getTagSetModel(),
+			appModel.getSelectionModel(),
+			model.getGraph().getLock(), model);
+		tagSetModel.listeners().add(tagSetMenu);
+		onClose(() -> tagSetModel.listeners().remove(tagSetMenu));
 	}
 
 	/**
 	 * Adds the specified {@link Runnable} to the list of runnables to execute
 	 * when this view is closed.
 	 *
-	 * @param runnable
-	 *            the {@link Runnable} to add.
+	 * @param runnable the {@link Runnable} to add.
 	 */
 	@Override
-	public synchronized void onClose( final Runnable runnable )
-	{
-		runOnClose.add( runnable );
+	public synchronized void onClose(final Runnable runnable) {
+		runOnClose.add(runnable);
 	}
 
-	protected synchronized void close()
-	{
-		runOnClose.forEach( Runnable::run );
+	protected synchronized void close() {
+		runOnClose.forEach(Runnable::run);
 		runOnClose.clear();
 	}
 
 	@Override
-	public ViewFrame getFrame()
-	{
+	public ViewFrame getFrame() {
 		return frame;
 	}
 
 	@Override
-	public GroupHandle getGroupHandle()
-	{
+	public GroupHandle getGroupHandle() {
 		return groupHandle;
 	}
 
-	private static TagSetModel< BranchSpot, BranchLink > branchTagSetModel( final MamutAppModel appModel )
+	private static TagSetModel<BranchSpot, BranchLink> branchTagSetModel(
+		final MamutAppModel appModel)
 	{
 		final ModelGraph graph = appModel.getModel().getGraph();
 		final ModelBranchGraph branchGraph = appModel.getModel().getBranchGraph();
-		final TagSetModel< Spot, Link > tagSetModel = appModel.getModel().getTagSetModel();
-		final BranchGraphTagSetAdapter< Spot, Link, BranchSpot, BranchLink > branchGraphTagSetModel =
-				new BranchGraphTagSetAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), tagSetModel );
+		final TagSetModel<Spot, Link> tagSetModel = appModel.getModel()
+			.getTagSetModel();
+		final BranchGraphTagSetAdapter<Spot, Link, BranchSpot, BranchLink> branchGraphTagSetModel =
+			new BranchGraphTagSetAdapter<>(branchGraph, graph, graph
+				.getGraphIdBimap(), tagSetModel);
 		return branchGraphTagSetModel;
 	}
 }

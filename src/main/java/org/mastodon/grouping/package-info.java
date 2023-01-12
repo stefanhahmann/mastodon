@@ -36,4 +36,5 @@
  * from which it can obtain fixed forwarding models whose backing models are
  * transparently switched as group membership changes.
  */
+
 package org.mastodon.grouping;

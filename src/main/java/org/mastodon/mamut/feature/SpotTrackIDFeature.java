@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature;
 
 import static org.mastodon.feature.FeatureProjectionKey.key;
@@ -46,68 +47,63 @@ import org.mastodon.mamut.model.Spot;
 import org.mastodon.properties.IntPropertyMap;
 import org.scijava.plugin.Plugin;
 
-public class SpotTrackIDFeature implements Feature< Spot >
-{
+public class SpotTrackIDFeature implements Feature<Spot> {
 
 	public static final String KEY = "Spot track ID";
 
-	private static final String HELP_STRING = "Returns the ID of the track each spot belongs to.";
+	private static final String HELP_STRING =
+		"Returns the ID of the track each spot belongs to.";
 
-	private static final FeatureProjectionSpec PROJECTION_SPEC = new FeatureProjectionSpec( KEY );
+	private static final FeatureProjectionSpec PROJECTION_SPEC =
+		new FeatureProjectionSpec(KEY);
 
 	public static final Spec SPEC = new Spec();
 
-	final IntPropertyMap< Spot > map;
+	final IntPropertyMap<Spot> map;
 
-	private final IntFeatureProjection< Spot > projection;
+	private final IntFeatureProjection<Spot> projection;
 
-	@Plugin( type = FeatureSpec.class )
-	public static class Spec extends FeatureSpec< SpotTrackIDFeature, Spot >
-	{
-		public Spec()
-		{
+	@Plugin(type = FeatureSpec.class)
+	public static class Spec extends FeatureSpec<SpotTrackIDFeature, Spot> {
+
+		public Spec() {
 			super(
-					KEY,
-					HELP_STRING,
-					SpotTrackIDFeature.class,
-					Spot.class,
-					Multiplicity.SINGLE,
-					PROJECTION_SPEC );
+				KEY,
+				HELP_STRING,
+				SpotTrackIDFeature.class,
+				Spot.class,
+				Multiplicity.SINGLE,
+				PROJECTION_SPEC);
 		}
 	}
 
-	SpotTrackIDFeature( final IntPropertyMap< Spot > map )
-	{
+	SpotTrackIDFeature(final IntPropertyMap<Spot> map) {
 		this.map = map;
-		this.projection = FeatureProjections.project( key( PROJECTION_SPEC ), map, Dimension.NONE_UNITS );
+		this.projection = FeatureProjections.project(key(PROJECTION_SPEC), map,
+			Dimension.NONE_UNITS);
 	}
 
-	public int get( final Spot spot)
-	{
-		return map.getInt( spot );
-	}
-
-	@Override
-	public FeatureProjection< Spot > project( final FeatureProjectionKey key )
-	{
-		return projection.getKey().equals( key ) ? projection : null;
+	public int get(final Spot spot) {
+		return map.getInt(spot);
 	}
 
 	@Override
-	public Set< FeatureProjection< Spot > > projections()
-	{
-		return Collections.singleton( projection );
+	public FeatureProjection<Spot> project(final FeatureProjectionKey key) {
+		return projection.getKey().equals(key) ? projection : null;
 	}
 
 	@Override
-	public Spec getSpec()
-	{
+	public Set<FeatureProjection<Spot>> projections() {
+		return Collections.singleton(projection);
+	}
+
+	@Override
+	public Spec getSpec() {
 		return SPEC;
 	}
 
 	@Override
-	public void invalidate( final Spot spot )
-	{
-		map.remove( spot );
+	public void invalidate(final Spot spot) {
+		map.remove(spot);
 	}
 }

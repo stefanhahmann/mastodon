@@ -29,6 +29,7 @@
 /**
  *
  */
+
 package org.mastodon.views.trackscheme.display;
 
 import bdv.viewer.OverlayRenderer;
@@ -59,18 +60,16 @@ import org.scijava.ui.behaviour.util.Behaviours;
 /**
  * Bahviour for creating / deleting links in TrackScheme views.
  *
- * @param <V>
- *            vertex type.
- * @param <E>
- *            edge type.
- *
+ * @param <V> vertex type.
+ * @param <E> edge type.
  * @author Jean-Yves Tinevez
  * @author Tobias Pietzsch
  */
-public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extends Edge< V > >
-		extends AbstractNamedBehaviour
-		implements DragBehaviour
+public class ToggleLinkBehaviour<V extends Vertex<E> & HasTimepoint, E extends Edge<V>>
+	extends AbstractNamedBehaviour
+	implements DragBehaviour
 {
+
 	public static final String TOGGLE_LINK = "toggle link";
 
 	private static final String[] TOGGLE_LINK_KEYS = new String[] { "L" };
@@ -78,26 +77,26 @@ public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extend
 	/*
 	 * Command descriptions for all provided commands
 	 */
-	@Plugin( type = CommandDescriptionProvider.class )
-	public static class Descriptions extends CommandDescriptionProvider
-	{
-		public Descriptions()
-		{
-			super( KeyConfigContexts.TRACKSCHEME );
+	@Plugin(type = CommandDescriptionProvider.class)
+	public static class Descriptions extends CommandDescriptionProvider {
+
+		public Descriptions() {
+			super(KeyConfigContexts.TRACKSCHEME);
 		}
 
 		@Override
-		public void getCommandDescriptions( final CommandDescriptions descriptions )
-		{
-			descriptions.add( TOGGLE_LINK, TOGGLE_LINK_KEYS, "Toggle a Link by dragging between two spots." );
+		public void getCommandDescriptions(final CommandDescriptions descriptions) {
+			descriptions.add(TOGGLE_LINK, TOGGLE_LINK_KEYS,
+				"Toggle a Link by dragging between two spots.");
 		}
 	}
 
 	private static final Color EDIT_GRAPH_OVERLAY_COLOR = Color.RED.darker();
 
-	private static final BasicStroke EDIT_GRAPH_OVERLAY_STROKE = new BasicStroke( 2f );
+	private static final BasicStroke EDIT_GRAPH_OVERLAY_STROKE = new BasicStroke(
+		2f);
 
-	private final TrackSchemeGraph< V, E > graph;
+	private final TrackSchemeGraph<V, E> graph;
 
 	private final TrackSchemeOverlay renderer;
 
@@ -117,26 +116,28 @@ public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extend
 
 	private boolean editing;
 
-	public static < V extends Vertex< E > & HasTimepoint, E extends Edge< V > > void install(
+	public static <V extends Vertex<E> & HasTimepoint, E extends Edge<V>> void
+		install(
 			final Behaviours behaviours,
 			final TrackSchemePanel panel,
-			final TrackSchemeGraph< V, E > graph,
+			final TrackSchemeGraph<V, E> graph,
 			final ReentrantReadWriteLock lock,
 			final GraphChangeNotifier notify,
-			final UndoPointMarker undo )
+			final UndoPointMarker undo)
 	{
-		final ToggleLinkBehaviour< V, E > toggleLinkBehaviour = new ToggleLinkBehaviour<>( panel, graph, lock, notify, undo );
-		behaviours.namedBehaviour( toggleLinkBehaviour, TOGGLE_LINK_KEYS );
+		final ToggleLinkBehaviour<V, E> toggleLinkBehaviour =
+			new ToggleLinkBehaviour<>(panel, graph, lock, notify, undo);
+		behaviours.namedBehaviour(toggleLinkBehaviour, TOGGLE_LINK_KEYS);
 	}
 
 	private ToggleLinkBehaviour(
-			final TrackSchemePanel panel,
-			final TrackSchemeGraph< V, E > graph,
-			final ReentrantReadWriteLock lock,
-			final GraphChangeNotifier notify,
-			final UndoPointMarker undo )
+		final TrackSchemePanel panel,
+		final TrackSchemeGraph<V, E> graph,
+		final ReentrantReadWriteLock lock,
+		final GraphChangeNotifier notify,
+		final UndoPointMarker undo)
 	{
-		super( TOGGLE_LINK );
+		super(TOGGLE_LINK);
 		this.panel = panel;
 		this.graph = graph;
 		this.renderer = panel.getGraphOverlay();
@@ -146,10 +147,10 @@ public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extend
 
 		// Create and register overlay.
 		overlay = new EditOverlay();
-		overlay.transformChanged( panel.getScreenTransform().get() );
+		overlay.transformChanged(panel.getScreenTransform().get());
 		// put the overlay first, so that is below the graph rendering.
-		renderer.addOverlayRenderer( overlay );
-		panel.getScreenTransform().listeners().add( overlay );
+		renderer.addOverlayRenderer(overlay);
+		panel.getScreenTransform().listeners().add(overlay);
 
 		startVertex = graph.vertexRef();
 		endVertex = graph.vertexRef();
@@ -157,38 +158,35 @@ public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extend
 	}
 
 	@Override
-	public void init( final int x, final int y )
-	{
-		// TODO: should listen to graph and abort behaviour if startVertex is removed. For this TrackSchemeGraph would need to be listenable...
+	public void init(final int x, final int y) {
+		// TODO: should listen to graph and abort behaviour if startVertex is
+		// removed. For this TrackSchemeGraph would need to be listenable...
 
 		// Get vertex we clicked inside.
-		if ( renderer.getVertexAt( x, y, startVertex ) != null )
-		{
-			overlay.from[ 0 ] = startVertex.getLayoutX();
-			overlay.from[ 1 ] = startVertex.getTimepoint();
-			overlay.to[ 0 ] = overlay.from[ 0 ];
-			overlay.to[ 1 ] = overlay.to[ 0 ];
+		if (renderer.getVertexAt(x, y, startVertex) != null) {
+			overlay.from[0] = startVertex.getLayoutX();
+			overlay.from[1] = startVertex.getTimepoint();
+			overlay.to[0] = overlay.from[0];
+			overlay.to[1] = overlay.to[0];
 			editing = true;
 			overlay.paint = true;
 		}
 	}
 
 	@Override
-	public void drag( final int x, final int y )
-	{
-		if ( editing )
-		{
-			if ( renderer.getVertexAt( x, y, endVertex ) != null && startVertex.getTimepoint() != endVertex.getTimepoint() )
+	public void drag(final int x, final int y) {
+		if (editing) {
+			if (renderer.getVertexAt(x, y, endVertex) != null && startVertex
+				.getTimepoint() != endVertex.getTimepoint())
 			{
-				overlay.to[ 0 ] = endVertex.getLayoutX();
-				overlay.to[ 1 ] = endVertex.getTimepoint();
+				overlay.to[0] = endVertex.getLayoutX();
+				overlay.to[1] = endVertex.getTimepoint();
 				overlay.strongEdge = true;
 			}
-			else
-			{
-				overlay.vTo[ 0 ] = x - panel.getOffsetHeaders().getWidth();
-				overlay.vTo[ 1 ] = y - panel.getOffsetHeaders().getHeight();
-				overlay.screenTransform.applyInverse( overlay.to, overlay.vTo );
+			else {
+				overlay.vTo[0] = x - panel.getOffsetHeaders().getWidth();
+				overlay.vTo[1] = y - panel.getOffsetHeaders().getHeight();
+				overlay.screenTransform.applyInverse(overlay.to, overlay.vTo);
 				overlay.strongEdge = false;
 			}
 			panel.repaint();
@@ -196,20 +194,16 @@ public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extend
 	}
 
 	@Override
-	public void end( final int x, final int y )
-	{
-		if ( editing )
-		{
+	public void end(final int x, final int y) {
+		if (editing) {
 			editing = false;
 			overlay.paint = false;
 
 			lock.writeLock().lock();
-			try
-			{
-				if ( renderer.getVertexAt( x, y, endVertex ) != null )
-				{
-					overlay.to[ 0 ] = endVertex.getLayoutX();
-					overlay.to[ 1 ] = endVertex.getTimepoint();
+			try {
+				if (renderer.getVertexAt(x, y, endVertex) != null) {
+					overlay.to[0] = endVertex.getLayoutX();
+					overlay.to[1] = endVertex.getTimepoint();
 
 					/*
 					 * Prevent the creation of links between vertices in the
@@ -217,38 +211,41 @@ public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extend
 					 */
 					final int tStart = startVertex.getTimepoint();
 					final int tEnd = endVertex.getTimepoint();
-					if ( tStart == tEnd )
+					if (tStart == tEnd)
 						return;
 
 					/*
 					 * Careful with directed graphs. We always check and create
 					 * links forward in time.
 					 */
-					final TrackSchemeVertex source = tStart > tEnd ? endVertex : startVertex;
-					final TrackSchemeVertex target = tStart > tEnd ? startVertex : endVertex;
+					final TrackSchemeVertex source = tStart > tEnd ? endVertex
+						: startVertex;
+					final TrackSchemeVertex target = tStart > tEnd ? startVertex
+						: endVertex;
 
 					final TrackSchemeEdge eref = graph.edgeRef();
-					final TrackSchemeEdge edge = graph.getEdge( source, target, eref );
-					if ( null == edge )
-						graph.addEdge( source, target, eref ).init();
+					final TrackSchemeEdge edge = graph.getEdge(source, target, eref);
+					if (null == edge)
+						graph.addEdge(source, target, eref).init();
 					else
-						graph.remove( edge );
-					graph.releaseRef( eref );
+						graph.remove(edge);
+					graph.releaseRef(eref);
 
 					undo.setUndoPoint();
 					notify.notifyGraphChanged();
 
 				}
 			}
-			finally
-			{
+			finally {
 				lock.writeLock().unlock();
 			}
 		}
 	}
 
-	private class EditOverlay implements OverlayRenderer, TransformListener< ScreenTransform >
+	private class EditOverlay implements OverlayRenderer,
+		TransformListener<ScreenTransform>
 	{
+
 		public boolean strongEdge;
 
 		/** The global coordinates to paint the link from. */
@@ -267,45 +264,40 @@ public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extend
 
 		private boolean paint;
 
-		public EditOverlay()
-		{
-			from = new double[ 2 ];
-			vFrom = new double[ 2 ];
-			to = new double[ 2 ];
-			vTo = new double[ 2 ];
+		public EditOverlay() {
+			from = new double[2];
+			vFrom = new double[2];
+			to = new double[2];
+			vTo = new double[2];
 			screenTransform = new ScreenTransform();
 			paint = false;
 		}
 
 		@Override
-		public void drawOverlays( final Graphics g )
-		{
-			if ( !paint )
+		public void drawOverlays(final Graphics g) {
+			if (!paint)
 				return;
 
-			final Graphics2D graphics = ( Graphics2D ) g;
-			g.setColor( EDIT_GRAPH_OVERLAY_COLOR );
-			if ( strongEdge )
-				graphics.setStroke( EDIT_GRAPH_OVERLAY_STROKE );
-			screenTransform.apply( from, vFrom );
-			screenTransform.apply( to, vTo );
+			final Graphics2D graphics = (Graphics2D) g;
+			g.setColor(EDIT_GRAPH_OVERLAY_COLOR);
+			if (strongEdge)
+				graphics.setStroke(EDIT_GRAPH_OVERLAY_STROKE);
+			screenTransform.apply(from, vFrom);
+			screenTransform.apply(to, vTo);
 			g.drawLine(
-					( int ) vFrom[ 0 ] + panel.getOffsetHeaders().getWidth(),
-					( int ) vFrom[ 1 ] + panel.getOffsetHeaders().getHeight(),
-					( int ) vTo[ 0 ] + panel.getOffsetHeaders().getWidth(),
-					( int ) vTo[ 1 ] + panel.getOffsetHeaders().getHeight() );
+				(int) vFrom[0] + panel.getOffsetHeaders().getWidth(),
+				(int) vFrom[1] + panel.getOffsetHeaders().getHeight(),
+				(int) vTo[0] + panel.getOffsetHeaders().getWidth(),
+				(int) vTo[1] + panel.getOffsetHeaders().getHeight());
 		}
 
 		@Override
-		public void setCanvasSize( final int width, final int height )
-		{}
+		public void setCanvasSize(final int width, final int height) {}
 
 		@Override
-		public void transformChanged( final ScreenTransform transform )
-		{
-			synchronized ( screenTransform )
-			{
-				screenTransform.set( transform );
+		public void transformChanged(final ScreenTransform transform) {
+			synchronized (screenTransform) {
+				screenTransform.set(transform);
 			}
 		}
 	}

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut;
 
 import java.util.HashMap;
@@ -54,46 +55,48 @@ import org.mastodon.views.trackscheme.display.TrackSchemeOverlay.TrackSchemeOver
 import org.mastodon.views.trackscheme.wrap.DefaultModelGraphProperties;
 import org.mastodon.views.trackscheme.wrap.ModelGraphProperties;
 
-public class MamutBranchViewTrackSchemeHierarchy extends MamutBranchViewTrackScheme
+public class MamutBranchViewTrackSchemeHierarchy extends
+	MamutBranchViewTrackScheme
 {
 
 	private static final int MINIMUM_NUMBER_OF_HIERARCHY_LEVELS_SCROLLABLE = 30;
 
-	public MamutBranchViewTrackSchemeHierarchy( final MamutAppModel appModel )
-	{
-		this( appModel, new HashMap<>() );
+	public MamutBranchViewTrackSchemeHierarchy(final MamutAppModel appModel) {
+		this(appModel, new HashMap<>());
 	}
 
-	public MamutBranchViewTrackSchemeHierarchy( final MamutAppModel appModel, final Map< String, Object > guiState )
+	public MamutBranchViewTrackSchemeHierarchy(final MamutAppModel appModel,
+		final Map<String, Object> guiState)
 	{
-		super( appModel, guiState, new BranchHierarchyTrackSchemeFactory(), new HierarchyTrackSchemeOverlayFactory(), LineageTreeLayoutImp::new, new DefaultTimepointModel() );
+		super(appModel, guiState, new BranchHierarchyTrackSchemeFactory(),
+			new HierarchyTrackSchemeOverlayFactory(), LineageTreeLayoutImp::new,
+			new DefaultTimepointModel());
 
 		// Window title.
 		final TrackSchemeFrame frame = getFrame();
-		frame.setTitle( "TrackScheme Hierarchy" );
+		frame.setTitle("TrackScheme Hierarchy");
 
 		// Min & max levels.
 		final GraphChangeListener gcl = () -> {
 			int minT = Integer.MAX_VALUE;
 			int maxT = Integer.MIN_VALUE;
-			for ( final TrackSchemeVertex v : viewGraph.vertices() )
-			{
+			for (final TrackSchemeVertex v : viewGraph.vertices()) {
 				final int t = v.getTimepoint();
-				if ( t > maxT )
+				if (t > maxT)
 					maxT = t;
-				if ( t < minT )
+				if (t < minT)
 					minT = t;
 			}
 
 			// NB: The line below is a hack that allows the user to further
 			// zoom out in Y when showing a hierarchy track scheme with only
 			// shallow hierarchies.
-			maxT = Math.max( MINIMUM_NUMBER_OF_HIERARCHY_LEVELS_SCROLLABLE, maxT );
+			maxT = Math.max(MINIMUM_NUMBER_OF_HIERARCHY_LEVELS_SCROLLABLE, maxT);
 
-			frame.getTrackschemePanel().setTimepointRange( minT, maxT );
+			frame.getTrackschemePanel().setTimepointRange(minT, maxT);
 			frame.getTrackschemePanel().graphChanged();
 		};
-		viewGraph.graphChangeListeners().add( gcl );
+		viewGraph.graphChangeListeners().add(gcl);
 		gcl.graphChanged();
 	}
 
@@ -101,18 +104,22 @@ public class MamutBranchViewTrackSchemeHierarchy extends MamutBranchViewTrackSch
 	 * A {@link BranchTrackSchemeFactory} that returns a TrackScheme graph where
 	 * the Y coordinates of nodes are taken from the time-point they belong to.
 	 */
-	public static class BranchHierarchyTrackSchemeFactory extends BranchTimeTrackSchemeFactory
+	public static class BranchHierarchyTrackSchemeFactory extends
+		BranchTimeTrackSchemeFactory
 	{
 
 		@Override
-		public TrackSchemeGraph< BranchSpot, BranchLink > createViewGraph( final MamutAppModel appModel )
+		public TrackSchemeGraph<BranchSpot, BranchLink> createViewGraph(
+			final MamutAppModel appModel)
 		{
 			final Model model = appModel.getModel();
 			final ModelBranchGraph graph = model.getBranchGraph();
-			final GraphIdBimap< BranchSpot, BranchLink > idmap = graph.getGraphIdBimap();
-			final ModelGraphProperties< BranchSpot, BranchLink > properties = new MyModelGraphProperties( graph );
-			final TrackSchemeGraph< BranchSpot, BranchLink > trackSchemeGraph =
-					new TrackSchemeGraph<>( graph, idmap, properties );
+			final GraphIdBimap<BranchSpot, BranchLink> idmap = graph
+				.getGraphIdBimap();
+			final ModelGraphProperties<BranchSpot, BranchLink> properties =
+				new MyModelGraphProperties(graph);
+			final TrackSchemeGraph<BranchSpot, BranchLink> trackSchemeGraph =
+				new TrackSchemeGraph<>(graph, idmap, properties);
 			return trackSchemeGraph;
 		}
 
@@ -121,44 +128,45 @@ public class MamutBranchViewTrackSchemeHierarchy extends MamutBranchViewTrackSch
 		 * creation, they will be caused here. But for now, there is no
 		 * concurrent creation of vertices or editing of vertex properties.
 		 */
-		private static class MyModelGraphProperties extends DefaultModelGraphProperties< BranchSpot, BranchLink >
+		private static class MyModelGraphProperties extends
+			DefaultModelGraphProperties<BranchSpot, BranchLink>
 		{
 
-			private final InverseDepthFirstIterator< BranchSpot, BranchLink > it;
+			private final InverseDepthFirstIterator<BranchSpot, BranchLink> it;
 
-			public MyModelGraphProperties( final ModelBranchGraph graph )
-			{
-				this.it = new InverseDepthFirstIterator<>( graph );
+			public MyModelGraphProperties(final ModelBranchGraph graph) {
+				this.it = new InverseDepthFirstIterator<>(graph);
 			}
 
 			@Override
-			public int getTimepoint( final BranchSpot v )
-			{
-				it.reset( v );
+			public int getTimepoint(final BranchSpot v) {
+				it.reset(v);
 				int level = 0;
-				while ( it.hasNext() && it.next().incomingEdges().size() > 0 )
+				while (it.hasNext() && it.next().incomingEdges().size() > 0)
 					level++;
 				return level;
 			}
 
 			@Override
-			public String getFirstLabel( BranchSpot branchSpot )
-			{
+			public String getFirstLabel(BranchSpot branchSpot) {
 				return branchSpot.getFirstLabel();
 			}
 		}
 	}
 
-	private static class HierarchyTrackSchemeOverlayFactory extends TrackSchemeOverlayFactory
+	private static class HierarchyTrackSchemeOverlayFactory extends
+		TrackSchemeOverlayFactory
 	{
+
 		@Override
 		public TrackSchemeOverlay create(
-				final TrackSchemeGraph< ?, ? > graph,
-				final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight,
-				final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-				final TrackSchemeOptions options )
+			final TrackSchemeGraph<?, ?> graph,
+			final HighlightModel<TrackSchemeVertex, TrackSchemeEdge> highlight,
+			final FocusModel<TrackSchemeVertex, TrackSchemeEdge> focus,
+			final TrackSchemeOptions options)
 		{
-			return new TrackSchemeOverlay( graph, highlight, focus, new PaintDecorations(), new PaintHierarchicalGraph(), options );
+			return new TrackSchemeOverlay(graph, highlight, focus,
+				new PaintDecorations(), new PaintHierarchicalGraph(), options);
 		}
 	}
 

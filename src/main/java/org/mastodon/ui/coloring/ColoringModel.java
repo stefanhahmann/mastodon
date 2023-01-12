@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.ui.coloring;
 
 import java.util.Optional;
@@ -54,15 +55,14 @@ import org.scijava.listeners.Listeners;
  *
  * @author Tobias Pietzsch
  */
-public abstract class ColoringModel
-{
+public abstract class ColoringModel {
 
-	public interface ColoringChangedListener
-	{
+	public interface ColoringChangedListener {
+
 		void coloringChanged();
 	}
 
-	private final TagSetModel< ?, ? > tagSetModel;
+	private final TagSetModel<?, ?> tagSetModel;
 
 	private TagSetStructure.TagSet tagSet;
 
@@ -72,121 +72,108 @@ public abstract class ColoringModel
 
 	protected final Projections projections;
 
-	private final Listeners.List< ColoringChangedListener > listeners;
+	private final Listeners.List<ColoringChangedListener> listeners;
 
 	public ColoringModel(
-			final TagSetModel< ?, ? > tagSetModel,
-			final FeatureColorModeManager featureColorModeManager,
-			final FeatureModel featureModel )
+		final TagSetModel<?, ?> tagSetModel,
+		final FeatureColorModeManager featureColorModeManager,
+		final FeatureModel featureModel)
 	{
 		this.tagSetModel = tagSetModel;
 		this.featureColorModeManager = featureColorModeManager;
-		this.projections = new ProjectionsFromFeatureModel( featureModel );
+		this.projections = new ProjectionsFromFeatureModel(featureModel);
 		this.listeners = new Listeners.SynchronizedList<>();
 	}
 
-	public Listeners< ColoringChangedListener > listeners()
-	{
+	public Listeners<ColoringChangedListener> listeners() {
 		return listeners;
 	}
 
-	public void colorByNone()
-	{
+	public void colorByNone() {
 		tagSet = null;
 		featureColorMode = null;
-		listeners.list.forEach( ColoringChangedListener::coloringChanged );
+		listeners.list.forEach(ColoringChangedListener::coloringChanged);
 	}
 
-	public void colorByTagSet( final TagSetStructure.TagSet tagSet )
-	{
+	public void colorByTagSet(final TagSetStructure.TagSet tagSet) {
 		this.tagSet = tagSet;
 		this.featureColorMode = null;
-		listeners.list.forEach( ColoringChangedListener::coloringChanged );
+		listeners.list.forEach(ColoringChangedListener::coloringChanged);
 	}
 
-	public TagSetStructure.TagSet getTagSet()
-	{
+	public TagSetStructure.TagSet getTagSet() {
 		return tagSet;
 	}
 
-	public void colorByFeature( final FeatureColorMode featureColorMode )
-	{
+	public void colorByFeature(final FeatureColorMode featureColorMode) {
 		this.featureColorMode = featureColorMode;
 		this.tagSet = null;
-		listeners.list.forEach( ColoringChangedListener::coloringChanged );
+		listeners.list.forEach(ColoringChangedListener::coloringChanged);
 	}
 
-	public FeatureColorMode getFeatureColorMode()
-	{
+	public FeatureColorMode getFeatureColorMode() {
 		return featureColorMode;
 	}
 
-	public boolean noColoring()
-	{
+	public boolean noColoring() {
 		return tagSet == null && featureColorMode == null;
 	}
 
-	public void tagSetStructureChanged()
-	{
-		if ( tagSet != null )
-		{
+	public void tagSetStructureChanged() {
+		if (tagSet != null) {
 			final int id = tagSet.id();
 			final TagSetStructure tss = tagSetModel.getTagSetStructure();
-			final Optional< TagSetStructure.TagSet > ts = tss.getTagSets().stream().filter( t -> t.id() == id ).findFirst();
-			if ( ts.isPresent() )
-				colorByTagSet( ts.get() );
+			final Optional<TagSetStructure.TagSet> ts = tss.getTagSets().stream()
+				.filter(t -> t.id() == id).findFirst();
+			if (ts.isPresent())
+				colorByTagSet(ts.get());
 			else
 				colorByNone();
 		}
 	}
 
-	public void featureColorModesChanged()
-	{
-		if ( featureColorMode != null )
-		{
+	public void featureColorModesChanged() {
+		if (featureColorMode != null) {
 			final String name = featureColorMode.getName();
-			final Optional< FeatureColorMode > mode = Stream.concat(
-					featureColorModeManager.getBuiltinStyles().stream(),
-					featureColorModeManager.getUserStyles().stream() )
-					.filter( m -> m.getName().equals( name ) && isValid( m ) )
-					.findFirst();
-			if ( mode.isPresent() )
-				colorByFeature( mode.get() );
+			final Optional<FeatureColorMode> mode = Stream.concat(
+				featureColorModeManager.getBuiltinStyles().stream(),
+				featureColorModeManager.getUserStyles().stream())
+				.filter(m -> m.getName().equals(name) && isValid(m))
+				.findFirst();
+			if (mode.isPresent())
+				colorByFeature(mode.get());
 			else
 				colorByNone();
 		}
 	}
 
-	public TagSetStructure getTagSetStructure()
-	{
+	public TagSetStructure getTagSetStructure() {
 		return tagSetModel.getTagSetStructure();
 	}
 
-	public FeatureColorModeManager getFeatureColorModeManager()
-	{
+	public FeatureColorModeManager getFeatureColorModeManager() {
 		return featureColorModeManager;
 	}
 
 	/**
 	 * Returns {@code true} if the specified color mode is valid against the
-	 * {@link FeatureModel}. That is: the feature projections that the color
-	 * mode rely on are declared in the feature model, and of the right class.
+	 * {@link FeatureModel}. That is: the feature projections that the color mode
+	 * rely on are declared in the feature model, and of the right class.
 	 *
-	 * @param mode
-	 *            the color mode
+	 * @param mode the color mode
 	 * @return {@code true} if the color mode is valid.
 	 */
-	public abstract boolean isValid( FeatureColorMode mode );
+	public abstract boolean isValid(FeatureColorMode mode);
 
 	/**
-	 * Returns a {@link GraphColorGenerator} that can color graph objects based
-	 * on the feature color mode defined in this model.
+	 * Returns a {@link GraphColorGenerator} that can color graph objects based on
+	 * the feature color mode defined in this model.
 	 * <p>
-	 * The {@link #isValid(FeatureColorMode)} method must return
-	 * <code>true</code> only for the modes that are defined for the graph
-	 * objects to color with this model.
+	 * The {@link #isValid(FeatureColorMode)} method must return <code>true</code>
+	 * only for the modes that are defined for the graph objects to color with
+	 * this model.
 	 * 
 	 * @return a {@link GraphColorGenerator}.
 	 */
-	public abstract GraphColorGenerator< ?, ? > getFeatureGraphColorGenerator();
+	public abstract GraphColorGenerator<?, ?> getFeatureGraphColorGenerator();
 }

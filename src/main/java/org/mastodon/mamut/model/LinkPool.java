@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.model;
 
 import org.mastodon.graph.ref.AbstractEdgePool;
@@ -34,16 +35,17 @@ import org.mastodon.pool.ByteMappedElement;
 import org.mastodon.pool.ByteMappedElementArray;
 import org.mastodon.pool.SingleArrayMemPool;
 
-public class LinkPool extends AbstractListenableEdgePool< Link, Spot, ByteMappedElement >
+public class LinkPool extends
+	AbstractListenableEdgePool<Link, Spot, ByteMappedElement>
 {
-	LinkPool( final int initialCapacity, final SpotPool vertexPool )
-	{
-		super( initialCapacity, AbstractEdgePool.layout, Link.class, SingleArrayMemPool.factory( ByteMappedElementArray.factory ), vertexPool );
+
+	LinkPool(final int initialCapacity, final SpotPool vertexPool) {
+		super(initialCapacity, AbstractEdgePool.layout, Link.class,
+			SingleArrayMemPool.factory(ByteMappedElementArray.factory), vertexPool);
 	}
 
 	@Override
-	protected Link createEmptyRef()
-	{
-		return new Link( this );
+	protected Link createEmptyRef() {
+		return new Link(this);
 	}
 }

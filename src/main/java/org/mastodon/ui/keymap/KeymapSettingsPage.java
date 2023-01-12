@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.ui.keymap;
 
 import java.awt.BorderLayout;
@@ -48,115 +49,116 @@ import bdv.ui.settings.SettingsPanel;
 import bdv.ui.settings.style.StyleProfile;
 import bdv.ui.settings.style.StyleProfileManager;
 
-public class KeymapSettingsPage extends SelectAndEditProfileSettingsPage< StyleProfile< Keymap > >
+public class KeymapSettingsPage extends
+	SelectAndEditProfileSettingsPage<StyleProfile<Keymap>>
 {
+
 	/**
 	 * Creates a new settings page for Keymaps.
 	 *
-	 * @param treePath
-	 *            path of this page in the settings tree.
-	 * @param styleManager
-	 *            the keymap manager.
-	 * @param commandDescriptions
-	 *            the command descriptions.
+	 * @param treePath path of this page in the settings tree.
+	 * @param styleManager the keymap manager.
+	 * @param commandDescriptions the command descriptions.
 	 */
-	public KeymapSettingsPage( final String treePath, final KeymapManager styleManager, final CommandDescriptions commandDescriptions )
+	public KeymapSettingsPage(final String treePath,
+		final KeymapManager styleManager,
+		final CommandDescriptions commandDescriptions)
 	{
 		super(
-				treePath,
-				new StyleProfileManager<>( styleManager, new KeymapManager( false ) ),
-				new KeymapProfileEditPanel( styleManager.getSelectedStyle(), commandDescriptions ) );
+			treePath,
+			new StyleProfileManager<>(styleManager, new KeymapManager(false)),
+			new KeymapProfileEditPanel(styleManager.getSelectedStyle(),
+				commandDescriptions));
 	}
 
-	static class KeymapProfileEditPanel implements VisualEditorPanel.ConfigChangeListener, ProfileEditPanel< StyleProfile< Keymap > >
+	static class KeymapProfileEditPanel implements
+		VisualEditorPanel.ConfigChangeListener,
+		ProfileEditPanel<StyleProfile<Keymap>>
 	{
-		private final Listeners.SynchronizedList< ModificationListener > modificationListeners;
+
+		private final Listeners.SynchronizedList<ModificationListener> modificationListeners;
 
 		private final Keymap editedStyle;
 
 		private final VisualEditorPanel styleEditorPanel;
 
-		public KeymapProfileEditPanel( final Keymap initialStyle, final CommandDescriptions commandDescriptions )
+		public KeymapProfileEditPanel(final Keymap initialStyle,
+			final CommandDescriptions commandDescriptions)
 		{
-			editedStyle = initialStyle.copy( "Edited" );
-			styleEditorPanel = new VisualEditorPanel( editedStyle.getConfig(), commandDescriptions.createCommandDescriptionsMap() );
-			styleEditorPanel.setButtonPanelVisible( false );
+			editedStyle = initialStyle.copy("Edited");
+			styleEditorPanel = new VisualEditorPanel(editedStyle.getConfig(),
+				commandDescriptions.createCommandDescriptionsMap());
+			styleEditorPanel.setButtonPanelVisible(false);
 			modificationListeners = new Listeners.SynchronizedList<>();
-			styleEditorPanel.modelChangedListeners().add( this );
-			styleEditorPanel.setPreferredSize( new Dimension( 200, 200 ) );
+			styleEditorPanel.modelChangedListeners().add(this);
+			styleEditorPanel.setPreferredSize(new Dimension(200, 200));
 		}
 
 		private boolean trackModifications = true;
 
 		@Override
-		public void configChanged()
-		{
+		public void configChanged() {
 			styleEditorPanel.modelToConfig();
-			if ( trackModifications )
-				modificationListeners.list.forEach( ModificationListener::setModified );
+			if (trackModifications)
+				modificationListeners.list.forEach(ModificationListener::setModified);
 		}
 
 		@Override
-		public void loadProfile( final StyleProfile< Keymap > profile )
-		{
+		public void loadProfile(final StyleProfile<Keymap> profile) {
 			trackModifications = false;
-			editedStyle.set( profile.getStyle() );
+			editedStyle.set(profile.getStyle());
 			styleEditorPanel.configToModel();
 			trackModifications = true;
 		}
 
 		@Override
-		public void storeProfile( final StyleProfile< Keymap > profile )
-		{
+		public void storeProfile(final StyleProfile<Keymap> profile) {
 			trackModifications = false;
 			styleEditorPanel.modelToConfig();
-			editedStyle.setName( profile.getStyle().getName() );
+			editedStyle.setName(profile.getStyle().getName());
 			trackModifications = true;
-			profile.getStyle().set( editedStyle );
+			profile.getStyle().set(editedStyle);
 		}
 
 		@Override
-		public Listeners< ModificationListener > modificationListeners()
-		{
+		public Listeners<ModificationListener> modificationListeners() {
 			return modificationListeners;
 		}
 
 		@Override
-		public JPanel getJPanel()
-		{
+		public JPanel getJPanel() {
 			return styleEditorPanel;
 		}
 	}
 
-	public static void main( final String[] args )
-	{
+	public static void main(final String[] args) {
 		final KeymapManager styleManager = new KeymapManager();
 
 		final SettingsPanel settings = new SettingsPanel();
 
 		final CommandDescriptions descriptions = new CommandDescriptions();
-		descriptions.setKeyconfigContext( KeyConfigContexts.BIGDATAVIEWER );
-		new NavigationActionsDescriptions().getCommandDescriptions( descriptions );
+		descriptions.setKeyconfigContext(KeyConfigContexts.BIGDATAVIEWER);
+		new NavigationActionsDescriptions().getCommandDescriptions(descriptions);
 
-		settings.addPage( new KeymapSettingsPage( "Style > Keymap", styleManager, descriptions ) );
+		settings.addPage(new KeymapSettingsPage("Style > Keymap", styleManager,
+			descriptions));
 
-		final JDialog dialog = new JDialog( ( Frame ) null, "Settings" );
-		dialog.getContentPane().add( settings, BorderLayout.CENTER );
+		final JDialog dialog = new JDialog((Frame) null, "Settings");
+		dialog.getContentPane().add(settings, BorderLayout.CENTER);
 
-		settings.onOk( () -> dialog.setVisible( false ) );
-		settings.onCancel( () -> dialog.setVisible( false ) );
+		settings.onOk(() -> dialog.setVisible(false));
+		settings.onCancel(() -> dialog.setVisible(false));
 
-		dialog.setDefaultCloseOperation( WindowConstants.DO_NOTHING_ON_CLOSE );
-		dialog.addWindowListener( new WindowAdapter()
-		{
+		dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		dialog.addWindowListener(new WindowAdapter() {
+
 			@Override
-			public void windowClosing( final WindowEvent e )
-			{
+			public void windowClosing(final WindowEvent e) {
 				settings.cancel();
 			}
-		} );
+		});
 
 		dialog.pack();
-		dialog.setVisible( true );
+		dialog.setVisible(true);
 	}
 }

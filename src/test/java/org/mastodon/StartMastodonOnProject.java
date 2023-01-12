@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon;
 
 import javax.swing.JFileChooser;
@@ -42,33 +43,30 @@ import java.io.IOException;
 /**
  * Starts Mastodon on a given project file.
  */
-public class StartMastodonOnProject
-{
+public class StartMastodonOnProject {
 
-	public static void main( String... args )
-	{
-		try
-		{
+	public static void main(String... args) {
+		try {
 			String projectPath = fileOpenDialog();
-			System.setProperty( "apple.laf.useScreenMenuBar", "true" );
-			final WindowManager windowManager = new WindowManager( new Context() );
-			windowManager.getProjectManager().open( new MamutProjectIO().load( projectPath ) );
-			final MainWindow win = new MainWindow( windowManager );
-			win.setVisible( true );
-			win.setDefaultCloseOperation( WindowConstants.EXIT_ON_CLOSE );
+			System.setProperty("apple.laf.useScreenMenuBar", "true");
+			final WindowManager windowManager = new WindowManager(new Context());
+			windowManager.getProjectManager().open(new MamutProjectIO().load(
+				projectPath));
+			final MainWindow win = new MainWindow(windowManager);
+			win.setVisible(true);
+			win.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		}
-		catch ( IOException | SpimDataException e )
-		{
+		catch (IOException | SpimDataException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static String fileOpenDialog()
-	{
-		JFileChooser fileChooser = new JFileChooser( "Open Mastodon Project" );
-		fileChooser.setFileFilter( new FileNameExtensionFilter( "Mastodon Project (*.mastodon)", "mastodon" ) );
-		fileChooser.showOpenDialog( null );
+	private static String fileOpenDialog() {
+		JFileChooser fileChooser = new JFileChooser("Open Mastodon Project");
+		fileChooser.setFileFilter(new FileNameExtensionFilter(
+			"Mastodon Project (*.mastodon)", "mastodon"));
+		fileChooser.showOpenDialog(null);
 		return fileChooser.getSelectedFile().getAbsolutePath();
 	}
 }

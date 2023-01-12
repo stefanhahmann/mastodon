@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature;
 
 import static org.mastodon.feature.FeatureProjectionKey.key;
@@ -45,15 +46,16 @@ import org.mastodon.mamut.model.ModelGraph;
 import org.mastodon.mamut.model.Spot;
 import org.scijava.plugin.Plugin;
 
-public class LinkDisplacementFeature implements Feature< Link >
-{
+public class LinkDisplacementFeature implements Feature<Link> {
 
 	private static final String KEY = "Link displacement";
 
-	private static final String HELP_STRING = "Computes the link displacement in physical units "
-			+ "as the distance between the source spot and the target spot.";
+	private static final String HELP_STRING =
+		"Computes the link displacement in physical units " +
+			"as the distance between the source spot and the target spot.";
 
-	private static final FeatureProjectionSpec PROJECTION_SPEC = new FeatureProjectionSpec( KEY, Dimension.LENGTH );
+	private static final FeatureProjectionSpec PROJECTION_SPEC =
+		new FeatureProjectionSpec(KEY, Dimension.LENGTH);
 
 	public static final Spec SPEC = new Spec();
 
@@ -61,51 +63,45 @@ public class LinkDisplacementFeature implements Feature< Link >
 
 	private final String units;
 
-	@Plugin( type = FeatureSpec.class )
-	public static class Spec extends FeatureSpec< LinkDisplacementFeature, Link >
-	{
-		public Spec()
-		{
+	@Plugin(type = FeatureSpec.class)
+	public static class Spec extends FeatureSpec<LinkDisplacementFeature, Link> {
+
+		public Spec() {
 			super(
-					KEY,
-					HELP_STRING,
-					LinkDisplacementFeature.class,
-					Link.class,
-					Multiplicity.SINGLE,
-					PROJECTION_SPEC );
+				KEY,
+				HELP_STRING,
+				LinkDisplacementFeature.class,
+				Link.class,
+				Multiplicity.SINGLE,
+				PROJECTION_SPEC);
 		}
 	}
 
-	public LinkDisplacementFeature( final ModelGraph graph, final String units )
-	{
+	public LinkDisplacementFeature(final ModelGraph graph, final String units) {
 		this.graph = graph;
 		this.units = units;
 	}
 
 	@Override
-	public FeatureProjection< Link > project( final FeatureProjectionKey key )
-	{
-		return key( PROJECTION_SPEC ).equals( key ) ? new MyProjection( graph, units ) : null;
+	public FeatureProjection<Link> project(final FeatureProjectionKey key) {
+		return key(PROJECTION_SPEC).equals(key) ? new MyProjection(graph, units)
+			: null;
 	}
 
 	@Override
-	public Set< FeatureProjection< Link > > projections()
-	{
-		return Collections.singleton( new MyProjection( graph, units ) );
+	public Set<FeatureProjection<Link>> projections() {
+		return Collections.singleton(new MyProjection(graph, units));
 	}
 
 	@Override
-	public Spec getSpec()
-	{
+	public Spec getSpec() {
 		return SPEC;
 	}
 
 	@Override
-	public void invalidate( final Link link )
-	{}
+	public void invalidate(final Link link) {}
 
-	private static final class MyProjection implements FeatureProjection< Link >
-	{
+	private static final class MyProjection implements FeatureProjection<Link> {
 
 		private final String units;
 
@@ -113,42 +109,37 @@ public class LinkDisplacementFeature implements Feature< Link >
 
 		private final Spot ref2;
 
-		public MyProjection( final ModelGraph graph, final String units )
-		{
+		public MyProjection(final ModelGraph graph, final String units) {
 			this.units = units;
 			this.ref1 = graph.vertexRef();
 			this.ref2 = graph.vertexRef();
 		}
 
 		@Override
-		public FeatureProjectionKey getKey()
-		{
-			return key( PROJECTION_SPEC );
+		public FeatureProjectionKey getKey() {
+			return key(PROJECTION_SPEC);
 		}
 
 		@Override
-		public boolean isSet( final Link link )
-		{
+		public boolean isSet(final Link link) {
 			return true;
 		}
 
 		@Override
-		public synchronized double value( final Link link )
-		{
-			final Spot source = link.getSource( ref1 );
-			final Spot target = link.getTarget( ref2 );
+		public synchronized double value(final Link link) {
+			final Spot source = link.getSource(ref1);
+			final Spot target = link.getTarget(ref2);
 			double d2 = 0.;
-			for ( int d = 0; d < 3; d++ )
-			{
-				final double dx = source.getDoublePosition( d ) - target.getDoublePosition( d );
+			for (int d = 0; d < 3; d++) {
+				final double dx = source.getDoublePosition(d) - target
+					.getDoublePosition(d);
 				d2 += dx * dx;
 			}
-			return Math.sqrt( d2 );
+			return Math.sqrt(d2);
 		}
 
 		@Override
-		public String units()
-		{
+		public String units() {
 			return units;
 		}
 	}

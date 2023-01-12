@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.util;
 
 import java.awt.event.ActionEvent;
@@ -41,32 +42,32 @@ import org.scijava.ui.behaviour.util.AbstractNamedAction;
  * 
  * @author Jean-Yves Tinevez
  */
-public class RunnableActionPair extends AbstractNamedAction implements Runnable
+public class RunnableActionPair extends AbstractNamedAction implements
+	Runnable
 {
 
 	private final Runnable action;
 
 	private final Runnable actionWithShift;
 
-	public RunnableActionPair( final String name, final Runnable action, final Runnable actionWithShift )
+	public RunnableActionPair(final String name, final Runnable action,
+		final Runnable actionWithShift)
 	{
-		super( name );
+		super(name);
 		this.action = action;
 		this.actionWithShift = actionWithShift;
 	}
 
 	@Override
-	public void actionPerformed( final ActionEvent e )
-	{
-		if ( ( e.getModifiers() & InputEvent.SHIFT_MASK ) != 0 )
+	public void actionPerformed(final ActionEvent e) {
+		if ((e.getModifiers() & InputEvent.SHIFT_MASK) != 0)
 			actionWithShift.run();
 		else
 			action.run();
 	}
 
 	@Override
-	public void run()
-	{
+	public void run() {
 		action.run();
 	}
 

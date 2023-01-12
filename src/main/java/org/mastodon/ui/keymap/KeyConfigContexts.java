@@ -26,14 +26,15 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.ui.keymap;
 
 /**
  * Constants that specify to what context an action or a behaviour applies.
  */
 // TODO move to somewhere in mamut package
-public interface KeyConfigContexts
-{
+public interface KeyConfigContexts {
+
 	/**
 	 * The action or behaviour applies to the whole app.
 	 */

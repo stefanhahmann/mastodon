@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.launcher;
 
 import org.mastodon.mamut.MainWindow;
@@ -53,7 +54,7 @@ public class MastodonDndLauncher extends AbstractIOPlugin<Object> {
 	@Override
 	public boolean supportsOpen(Location source) {
 		final String sourcePath = source.getURI().getPath();
-		logService.debug("MastodonDndLauncher was questioned: "+sourcePath);
+		logService.debug("MastodonDndLauncher was questioned: " + sourcePath);
 
 		if (!(source instanceof FileLocation)) return false;
 		return sourcePath.endsWith(".mastodon");
@@ -61,35 +62,38 @@ public class MastodonDndLauncher extends AbstractIOPlugin<Object> {
 
 	@Override
 	public Object open(Location source) throws IOException {
-		logService.debug("MastodonDndLauncher was asked to open: "+source.getURI().getPath());
-		final FileLocation fsource = source instanceof FileLocation ? (FileLocation)source : null;
-		if (fsource == null) return null; //NB: shouldn't happen... (in theory)
+		logService.debug("MastodonDndLauncher was asked to open: " + source.getURI()
+			.getPath());
+		final FileLocation fsource = source instanceof FileLocation
+			? (FileLocation) source : null;
+		if (fsource == null) return null; // NB: shouldn't happen... (in theory)
 
 		final String projectPath = fsource.getFile().getAbsolutePath();
 
-		//make sure that the menus appear on top of the screen
-		//to look natively in the Apple world
-		System.setProperty( "apple.laf.useScreenMenuBar", "true" );
+		// make sure that the menus appear on top of the screen
+		// to look natively in the Apple world
+		System.setProperty("apple.laf.useScreenMenuBar", "true");
 
-		//start up "the main object behind the scenes" -- the WindowManager,
-		final WindowManager windowManager = new WindowManager( getContext() );
+		// start up "the main object behind the scenes" -- the WindowManager,
+		final WindowManager windowManager = new WindowManager(getContext());
 
 		try {
-			final MamutProject project = new MamutProjectIO().load( projectPath );
-			windowManager.getProjectManager().openWithDialog( project );
+			final MamutProject project = new MamutProjectIO().load(projectPath);
+			windowManager.getProjectManager().openWithDialog(project);
 
-			//start up the main/central Mastodon window
-			final MainWindow mainWindow = new MainWindow( windowManager );
-			mainWindow.setVisible( true );
-		} catch (Exception e) {
-			logService.error( "Error reading Mastodon project file: " + projectPath );
-			logService.error( "Error was: " + e.getMessage() );
+			// start up the main/central Mastodon window
+			final MainWindow mainWindow = new MainWindow(windowManager);
+			mainWindow.setVisible(true);
+		}
+		catch (Exception e) {
+			logService.error("Error reading Mastodon project file: " + projectPath);
+			logService.error("Error was: " + e.getMessage());
 		}
 
 		return FAKE_INPUT;
 	}
 
-	//the "innocent" product of the (hypothetical) file reading...
+	// the "innocent" product of the (hypothetical) file reading...
 	private static final Object FAKE_INPUT = new ArrayList<>(0);
 
 	@Override

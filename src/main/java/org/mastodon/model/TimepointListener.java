@@ -26,9 +26,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model;
 
-public interface TimepointListener
-{
+public interface TimepointListener {
+
 	public void timepointChanged();
 }

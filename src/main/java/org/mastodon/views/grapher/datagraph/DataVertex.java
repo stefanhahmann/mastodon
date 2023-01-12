@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.datagraph;
 
 import org.mastodon.graph.GraphIdBimap;
@@ -38,145 +39,127 @@ import org.mastodon.views.grapher.datagraph.DataGraph.DataVertexPool;
 
 import net.imglib2.RealLocalizable;
 
-public class DataVertex extends AbstractVertex< DataVertex, DataEdge, DataVertexPool, ByteMappedElement > implements HasLabel, HasTimepoint, RealLocalizable
+public class DataVertex extends
+	AbstractVertex<DataVertex, DataEdge, DataVertexPool, ByteMappedElement>
+	implements HasLabel, HasTimepoint, RealLocalizable
 {
-	final ModelGraphWrapper< ?, ? >.ModelVertexWrapper modelVertex;
+
+	final ModelGraphWrapper<?, ?>.ModelVertexWrapper modelVertex;
 
 	@Override
-	protected void setToUninitializedState()
-	{
+	protected void setToUninitializedState() {
 		super.setToUninitializedState();
-		setScreenVertexIndex( -1 );
+		setScreenVertexIndex(-1);
 	}
 
-	DataVertex initModelId( final int modelVertexId, final int timepoint )
-	{
-		setModelVertexId( modelVertexId );
-		setLayoutX( Double.NaN );
-		setLayoutY( Double.NaN );
-		setTimepoint( timepoint );
-		setLayoutInEdgeIndex( 0 );
+	DataVertex initModelId(final int modelVertexId, final int timepoint) {
+		setModelVertexId(modelVertexId);
+		setLayoutX(Double.NaN);
+		setLayoutY(Double.NaN);
+		setTimepoint(timepoint);
+		setLayoutInEdgeIndex(0);
 		return this;
 	}
 
 	/**
 	 * Gets the ID of the associated model vertex, as defined by a
-	 * {@link GraphIdBimap}. For {@link PoolObject} model vertices, the ID will
-	 * be the internal pool index of the model vertex.
+	 * {@link GraphIdBimap}. For {@link PoolObject} model vertices, the ID will be
+	 * the internal pool index of the model vertex.
 	 *
 	 * @return the ID of the associated model vertex.
 	 */
-	public int getModelVertexId()
-	{
-		return pool.origVertexIndex.get( this );
+	public int getModelVertexId() {
+		return pool.origVertexIndex.get(this);
 	}
 
-	protected void setModelVertexId( final int id )
-	{
-		pool.origVertexIndex.setQuiet( this, id );
+	protected void setModelVertexId(final int id) {
+		pool.origVertexIndex.setQuiet(this, id);
 	}
 
 	@Override
-	public String toString()
-	{
-		return String.format( "DataVertex( ID=%d, LABEL=%s, X=%.2f, Y=%.2f )",
-				getModelVertexId(),
-				getLabel(),
-				getLayoutX(),
-				getLayoutY() );
+	public String toString() {
+		return String.format("DataVertex( ID=%d, LABEL=%s, X=%.2f, Y=%.2f )",
+			getModelVertexId(),
+			getLabel(),
+			getLayoutX(),
+			getLayoutY());
 	}
 
-	DataVertex( final DataVertexPool pool )
-	{
-		super( pool );
-		modelVertex = pool.modelGraphWrapper.createVertexWrapper( this );
+	DataVertex(final DataVertexPool pool) {
+		super(pool);
+		modelVertex = pool.modelGraphWrapper.createVertexWrapper(this);
 	}
 
 	/**
 	 * Gets the label of associated model vertex.
 	 *
 	 * @return the label.
-	 *
 	 */
 	@Override
-	public String getLabel()
-	{
+	public String getLabel() {
 		return modelVertex.getLabel();
 	}
 
 	/**
 	 * Sets the label of associated model vertex.
 	 *
-	 * @param label
-	 *            the label to set.
+	 * @param label the label to set.
 	 */
 	@Override
-	public void setLabel( final String label )
-	{
-		modelVertex.setLabel( label );
+	public void setLabel(final String label) {
+		modelVertex.setLabel(label);
 	}
 
-	public double getLayoutX()
-	{
-		return pool.layoutX.get( this );
+	public double getLayoutX() {
+		return pool.layoutX.get(this);
 	}
 
-	protected void setLayoutX( final double x )
-	{
-		pool.layoutX.setQuiet( this, x );
+	protected void setLayoutX(final double x) {
+		pool.layoutX.setQuiet(this, x);
 	}
 
-	public double getLayoutY()
-	{
-		return pool.layoutY.get( this );
+	public double getLayoutY() {
+		return pool.layoutY.get(this);
 	}
 
-	protected void setLayoutY( final double y )
-	{
-		pool.layoutY.setQuiet( this, y );
+	protected void setLayoutY(final double y) {
+		pool.layoutY.setQuiet(this, y);
 	}
 
 	@Override
-	public int getTimepoint()
-	{
-		return pool.modelTimepoint.get( this );
+	public int getTimepoint() {
+		return pool.modelTimepoint.get(this);
 	}
 
-	public void setTimepoint( final int timepoint )
-	{
-		pool.modelTimepoint.setQuiet( this, timepoint );
+	public void setTimepoint(final int timepoint) {
+		pool.modelTimepoint.setQuiet(this, timepoint);
 	}
 
 	/**
-	 * Internal pool index of last {@link ScreenVertex} that was created for
-	 * this vertex. Used for lookup when creating {@link ScreenEdge}s.
+	 * Internal pool index of last {@link ScreenVertex} that was created for this
+	 * vertex. Used for lookup when creating {@link ScreenEdge}s.
 	 *
 	 * @return internal pool index of associated {@link ScreenVertex}.
 	 */
-	public int getScreenVertexIndex()
-	{
-		return pool.screenVertexIndex.get( this );
+	public int getScreenVertexIndex() {
+		return pool.screenVertexIndex.get(this);
 	}
 
-	protected void setScreenVertexIndex( final int screenVertexIndex )
-	{
-		pool.screenVertexIndex.setQuiet( this, screenVertexIndex );
+	protected void setScreenVertexIndex(final int screenVertexIndex) {
+		pool.screenVertexIndex.setQuiet(this, screenVertexIndex);
 	}
 
-	protected void setLayoutInEdgeIndex( final int index )
-	{
-		pool.layoutInEdgeIndex.setQuiet( this, index );
+	protected void setLayoutInEdgeIndex(final int index) {
+		pool.layoutInEdgeIndex.setQuiet(this, index);
 	}
 
 	@Override
-	public int numDimensions()
-	{
+	public int numDimensions() {
 		return 2;
 	}
 
 	@Override
-	public double getDoublePosition( final int d )
-	{
-		return ( d == 0 ) ? pool.layoutX.get( this ) : pool.layoutY.get( this );
+	public double getDoublePosition(final int d) {
+		return (d == 0) ? pool.layoutX.get(this) : pool.layoutY.get(this);
 	}
 }

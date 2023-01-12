@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.datagraph;
 
 import org.mastodon.collection.RefList;
@@ -38,8 +39,8 @@ import org.mastodon.views.trackscheme.ScreenVertexRange;
  *
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  */
-public class ScreenEntities
-{
+public class ScreenEntities {
+
 	/**
 	 * Initial capacity value to use when instantiating the screen pools.
 	 */
@@ -49,78 +50,70 @@ public class ScreenEntities
 
 	private final ScreenEdgePool edgePool;
 
-	private final RefArrayList< ScreenVertex > vertices;
+	private final RefArrayList<ScreenVertex> vertices;
 
-	private final RefArrayList< ScreenEdge > edges;
+	private final RefArrayList<ScreenEdge> edges;
 
 	private final ScreenTransform screenTransform;
 
-	public ScreenEntities( final DataGraph< ?, ? > graph )
-	{
-		this( graph, DEFAULT_CAPACITY );
+	public ScreenEntities(final DataGraph<?, ?> graph) {
+		this(graph, DEFAULT_CAPACITY);
 	}
 
-	public ScreenEntities( final DataGraph< ?, ? > graph, final int initialCapacity )
+	public ScreenEntities(final DataGraph<?, ?> graph,
+		final int initialCapacity)
 	{
-		vertexPool = new ScreenVertexPool( initialCapacity, graph.getVertexPool() );
-		vertices = new RefArrayList<>( vertexPool, initialCapacity );
-		edgePool = new ScreenEdgePool( initialCapacity );
-		edges = new RefArrayList<>( edgePool, initialCapacity );
+		vertexPool = new ScreenVertexPool(initialCapacity, graph.getVertexPool());
+		vertices = new RefArrayList<>(vertexPool, initialCapacity);
+		edgePool = new ScreenEdgePool(initialCapacity);
+		edges = new RefArrayList<>(edgePool, initialCapacity);
 		screenTransform = new ScreenTransform();
 	}
 
-	public RefList< ScreenVertex > getVertices()
-	{
+	public RefList<ScreenVertex> getVertices() {
 		return vertices;
 	}
 
-	public RefList< ScreenEdge > getEdges()
-	{
+	public RefList<ScreenEdge> getEdges() {
 		return edges;
 	}
 
-	public void getScreenTransform( final ScreenTransform t )
-	{
-		t.set( screenTransform );
+	public void getScreenTransform(final ScreenTransform t) {
+		t.set(screenTransform);
 	}
 
-	ScreenVertexPool getVertexPool()
-	{
+	ScreenVertexPool getVertexPool() {
 		return vertexPool;
 	}
 
-	ScreenEdgePool getEdgePool()
-	{
+	ScreenEdgePool getEdgePool() {
 		return edgePool;
 	}
 
-	ScreenTransform screenTransform()
-	{
+	ScreenTransform screenTransform() {
 		return screenTransform;
 	}
 
-	public void clear()
-	{
+	public void clear() {
 		vertexPool.clear();
 		vertices.resetQuick();
 		edgePool.clear();
 		edges.resetQuick();
 	}
 
-	public void set( final ScreenEntities ent )
-	{
+	public void set(final ScreenEntities ent) {
 		clear();
 
 		final ScreenVertex vRef = vertexPool.createRef();
-		for ( final ScreenVertex v : ent.getVertices() )
-			vertices.add( vertexPool.create( vRef ).cloneFrom( v ) );
-		vertexPool.releaseRef( vRef );
+		for (final ScreenVertex v : ent.getVertices())
+			vertices.add(vertexPool.create(vRef).cloneFrom(v));
+		vertexPool.releaseRef(vRef);
 
 		final ScreenEdge eRef = edgePool.createRef();
-		for ( final ScreenEdge e : ent.getEdges() )
-			edges.add( edgePool.create( eRef ).cloneFrom( e ) );
-		edgePool.releaseRef( eRef );
+		for (final ScreenEdge e : ent.getEdges())
+			edges.add(edgePool.create(eRef).cloneFrom(e));
+		edgePool.releaseRef(eRef);
 
-		screenTransform().set( ent.screenTransform );
+		screenTransform().set(ent.screenTransform);
 	}
 }

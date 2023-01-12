@@ -53,9 +53,9 @@
  * of this vector. Or maybe the 6 projections since they can be calculated on
  * the fly. A complex feature value will reasonably expose 2 projections, one
  * for the real part, one of the imaginary part. Etc.
- *
  * <p>
  * Numerical feature values are calculated by feature computers, derived from
  * the {@link org.mastodon.feature.FeatureComputer} interface.
  */
+
 package org.mastodon.feature;

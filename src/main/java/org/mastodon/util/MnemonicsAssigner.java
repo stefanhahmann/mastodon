@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.util;
 
 import java.awt.event.KeyEvent;
@@ -52,45 +53,37 @@ import org.mastodon.util.GroupStrings.Group;
  * 
  * @author Jean-Yves Tinevez
  */
-public class MnemonicsAssigner
-{
+public class MnemonicsAssigner {
 
-	private final Map< String, AbstractButton > buttons;
+	private final Map<String, AbstractButton> buttons;
 
-	public MnemonicsAssigner()
-	{
-		this.buttons = new HashMap< >();
+	public MnemonicsAssigner() {
+		this.buttons = new HashMap<>();
 	}
 
-	public void add( final AbstractButton button )
-	{
-		buttons.put( button.getText(), button );
+	public void add(final AbstractButton button) {
+		buttons.put(button.getText(), button);
 	}
 
-	public void assignMnemonics()
-	{
+	public void assignMnemonics() {
 		final GroupStrings grouper = new GroupStrings();
 
-		for ( final String text : buttons.keySet() )
-			grouper.add( text );
+		for (final String text : buttons.keySet())
+			grouper.add(text);
 
-		final Set< Integer > mnemonics = new HashSet<>();
-		final Collection< Group > groups = grouper.group();
-		for ( final Group group : groups )
-		{
-			for ( final String string : group.strings )
-			{
-				final AbstractButton button = buttons.get( string );
-				final String suffix = group.suffix( string );
-				for ( final char c : suffix.toLowerCase().toCharArray() )
-				{
-					if ( c < 'a' || c > 'z' )
+		final Set<Integer> mnemonics = new HashSet<>();
+		final Collection<Group> groups = grouper.group();
+		for (final Group group : groups) {
+			for (final String string : group.strings) {
+				final AbstractButton button = buttons.get(string);
+				final String suffix = group.suffix(string);
+				for (final char c : suffix.toLowerCase().toCharArray()) {
+					if (c < 'a' || c > 'z')
 						continue;
-					final int keyCode = KeyEvent.getExtendedKeyCodeForChar( c );
-					if ( !mnemonics.contains( Integer.valueOf( keyCode ) ) )
-					{
-						mnemonics.add( Integer.valueOf( keyCode ) );
-						button.setMnemonic( keyCode );
+					final int keyCode = KeyEvent.getExtendedKeyCodeForChar(c);
+					if (!mnemonics.contains(Integer.valueOf(keyCode))) {
+						mnemonics.add(Integer.valueOf(keyCode));
+						button.setMnemonic(keyCode);
 						break;
 					}
 				}

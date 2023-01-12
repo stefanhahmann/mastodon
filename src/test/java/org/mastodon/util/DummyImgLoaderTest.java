@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.util;
 
 import mpicbg.spim.data.generic.sequence.BasicSetupImgLoader;
@@ -47,18 +48,19 @@ import static org.junit.Assert.assertNotNull;
  *
  * @author Stefan Hahmann
  */
-public class DummyImgLoaderTest
-{
+public class DummyImgLoaderTest {
+
 	@Test
-	public void testDummyImgLoader()
-	{
-		Dimensions dimensions = new FinalDimensions( 660, 596, 120 );
-		DummyImgLoader dummyImgLoader = new DummyImgLoader( dimensions );
-		assertThat( dummyImgLoader.getSetupImgLoader( 0 ).getVolatileImageType(), instanceOf( VolatileRealType.class ) );
-		assertNotNull( dummyImgLoader.getCacheControl() );
-		BasicSetupImgLoader< ? > setupImgLoader = dummyImgLoader.getSetupImgLoader( 0 );
-		RandomAccessibleInterval< ? > image = setupImgLoader.getImage( 0 );
-		assertEquals( new UnsignedShortType( 0 ), image.getAt( 0, 0, 0 ) );
-		assertArrayEquals( dimensions.dimensionsAsLongArray(), image.dimensionsAsLongArray() );
+	public void testDummyImgLoader() {
+		Dimensions dimensions = new FinalDimensions(660, 596, 120);
+		DummyImgLoader dummyImgLoader = new DummyImgLoader(dimensions);
+		assertThat(dummyImgLoader.getSetupImgLoader(0).getVolatileImageType(),
+			instanceOf(VolatileRealType.class));
+		assertNotNull(dummyImgLoader.getCacheControl());
+		BasicSetupImgLoader<?> setupImgLoader = dummyImgLoader.getSetupImgLoader(0);
+		RandomAccessibleInterval<?> image = setupImgLoader.getImage(0);
+		assertEquals(new UnsignedShortType(0), image.getAt(0, 0, 0));
+		assertArrayEquals(dimensions.dimensionsAsLongArray(), image
+			.dimensionsAsLongArray());
 	}
 }

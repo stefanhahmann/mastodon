@@ -33,4 +33,5 @@
  * {@link org.mastodon.mamut.model.Spot} as vertices and
  * {@link org.mastodon.mamut.model.Link} as edges.
  */
+
 package org.mastodon.mamut.model;

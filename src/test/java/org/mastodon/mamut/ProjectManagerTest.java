@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut;
 
 import static org.junit.Assert.assertTrue;
@@ -50,74 +51,75 @@ import org.scijava.Context;
  *
  * @author Matthias Arzt
  */
-public class ProjectManagerTest
-{
+public class ProjectManagerTest {
 
-	private final Path tinyExampleProject = resourceAsFile( "/org/mastodon/mamut/examples/tiny/tiny-project.mastodon" );
+	private final Path tinyExampleProject = resourceAsFile(
+		"/org/mastodon/mamut/examples/tiny/tiny-project.mastodon");
 
 	private final Context context = new Context();
 
 	/** Test if a saved project contains a dataset.xml.backup. */
 	@Test
-	public void testSaveDatasetXmlBackup() throws IOException, SpimDataException
-	{
-		assumeFalse( GraphicsEnvironment.isHeadless() );
-		Path outputProject = Files.createTempFile( "test", ".mastodon" );
-		openAndSaveMastodonProject( tinyExampleProject, outputProject );
-		assertProjectContainsBackupDatasetXml( outputProject );
+	public void testSaveDatasetXmlBackup() throws IOException, SpimDataException {
+		assumeFalse(GraphicsEnvironment.isHeadless());
+		Path outputProject = Files.createTempFile("test", ".mastodon");
+		openAndSaveMastodonProject(tinyExampleProject, outputProject);
+		assertProjectContainsBackupDatasetXml(outputProject);
 	}
 
 	/** Test if a project doesn't lose its dataset.xml.backup if it's resaved. */
 	@Test
-	public void testSaveDatasetXmlBackupUnderManyConditions() throws IOException, SpimDataException
+	public void testSaveDatasetXmlBackupUnderManyConditions() throws IOException,
+		SpimDataException
 	{
-		assumeFalse( GraphicsEnvironment.isHeadless() );
+		assumeFalse(GraphicsEnvironment.isHeadless());
 		// The following use case is tested.
-		Path projectA = Files.createTempFile( "test", ".mastodon" );
+		Path projectA = Files.createTempFile("test", ".mastodon");
 		// 1. Open mastodon project and save it
-		openAndSaveMastodonProject( tinyExampleProject, projectA );
-		assertProjectContainsBackupDatasetXml( projectA );
-		// 2. Move mastodon project to new location, relative path to dataset.xml gets lost
+		openAndSaveMastodonProject(tinyExampleProject, projectA);
+		assertProjectContainsBackupDatasetXml(projectA);
+		// 2. Move mastodon project to new location, relative path to dataset.xml
+		// gets lost
 		Path newLocation = Files.createTempDirectory("mastodon-test");
-		Path projectB = newLocation.resolve( "moved-project.mastodon" );
-		Files.move( projectA, projectB );
-		assertProjectContainsBackupDatasetXml( projectB );
+		Path projectB = newLocation.resolve("moved-project.mastodon");
+		Files.move(projectA, projectB);
+		assertProjectContainsBackupDatasetXml(projectB);
 		// 3. Save mastodon project inplace
-		openAndSaveMastodonProject( projectB, projectB );
-		assertProjectContainsBackupDatasetXml( projectB );
+		openAndSaveMastodonProject(projectB, projectB);
+		assertProjectContainsBackupDatasetXml(projectB);
 		// 4. Save mastodon project (not inplace)
-		Path projectC = newLocation.resolve( "moved-project.mastodon" );
-		openAndSaveMastodonProject( projectB, projectC );
-		assertProjectContainsBackupDatasetXml( projectC );
+		Path projectC = newLocation.resolve("moved-project.mastodon");
+		openAndSaveMastodonProject(projectB, projectC);
+		assertProjectContainsBackupDatasetXml(projectC);
 	}
 
-	private void openAndSaveMastodonProject( Path open, Path save )
-			throws IOException, SpimDataException
+	private void openAndSaveMastodonProject(Path open, Path save)
+		throws IOException, SpimDataException
 	{
-		WindowManager windowManager = new WindowManager( context );
-		MamutProject project = new MamutProjectIO().load( open.toFile().getAbsolutePath() );
-		windowManager.getProjectManager().open( project, false, true );
-		windowManager.getProjectManager().saveProject( save.toFile() );
+		WindowManager windowManager = new WindowManager(context);
+		MamutProject project = new MamutProjectIO().load(open.toFile()
+			.getAbsolutePath());
+		windowManager.getProjectManager().open(project, false, true);
+		windowManager.getProjectManager().saveProject(save.toFile());
 	}
 
-	private void assertProjectContainsBackupDatasetXml( Path project )
-			throws IOException
+	private void assertProjectContainsBackupDatasetXml(Path project)
+		throws IOException
 	{
-		try ( ZipFile zipFile = new ZipFile( project.toFile() ) )
-		{
+		try (ZipFile zipFile = new ZipFile(project.toFile())) {
 			boolean containsBackupXml = zipFile.stream()
-					.anyMatch( entry -> "dataset.xml.backup".equals( entry.getName() ) );
-			assertTrue( containsBackupXml );
+				.anyMatch(entry -> "dataset.xml.backup".equals(entry.getName()));
+			assertTrue(containsBackupXml);
 		}
 	}
 
-	private Path resourceAsFile( String resourceName )
-	{
+	private Path resourceAsFile(String resourceName) {
 		try {
-			return Paths.get( ProjectManagerTest.class.getResource( resourceName ).toURI() );
+			return Paths.get(ProjectManagerTest.class.getResource(resourceName)
+				.toURI());
 		}
-		catch ( URISyntaxException e ) {
-			throw new RuntimeException( e );
+		catch (URISyntaxException e) {
+			throw new RuntimeException(e);
 		}
 	}
 }

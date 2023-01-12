@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model;
 
 import org.scijava.listeners.Listeners;
@@ -34,18 +35,15 @@ import org.scijava.listeners.Listeners;
  * Class that centralizes receiving and sending navigation events to navigation
  * listeners.
  *
- * @param <V>
- *            the type of vertices.
- * @param <E>
- *            the type of edges.
- *
+ * @param <V> the type of vertices.
+ * @param <E> the type of edges.
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  */
-public interface NavigationHandler< V, E >
-{
-	public void notifyNavigateToVertex( final V vertex );
+public interface NavigationHandler<V, E> {
 
-	public void notifyNavigateToEdge( final E edge );
+	public void notifyNavigateToVertex(final V vertex);
+
+	public void notifyNavigateToEdge(final E edge);
 
 	/**
 	 * Get the list of navigation listeners. Add a {@link NavigationListener} to
@@ -55,5 +53,5 @@ public interface NavigationHandler< V, E >
 	 *
 	 * @return the list of listeners
 	 */
-	public Listeners< NavigationListener< V, E > > listeners();
+	public Listeners<NavigationListener<V, E>> listeners();
 }

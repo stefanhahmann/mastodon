@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature;
 
 import java.io.IOException;
@@ -44,69 +45,83 @@ import org.mastodon.mamut.model.Spot;
 import org.mastodon.properties.DoublePropertyMap;
 import org.scijava.plugin.Plugin;
 
-@Plugin( type = FeatureSerializer.class )
-public class SpotIntensityFeatureSerializer implements FeatureSerializer< SpotIntensityFeature, Spot >
+@Plugin(type = FeatureSerializer.class)
+public class SpotIntensityFeatureSerializer implements
+	FeatureSerializer<SpotIntensityFeature, Spot>
 {
 
 	@Override
-	public Spec getFeatureSpec()
-	{
+	public Spec getFeatureSpec() {
 		return SpotIntensityFeature.SPEC;
 	}
 
 	@Override
-	public void serialize( final SpotIntensityFeature feature, final ObjectToFileIdMap< Spot > idmap, final ObjectOutputStream oos ) throws IOException
+	public void serialize(final SpotIntensityFeature feature,
+		final ObjectToFileIdMap<Spot> idmap, final ObjectOutputStream oos)
+		throws IOException
 	{
 		final int nSources = feature.means.size();
-		oos.writeInt( nSources );
-		for ( int i = 0; i < nSources; i++ )
-		{
-			new DoublePropertyMapSerializer<>( feature.means.get( i ) ).writePropertyMap( idmap, oos );
-			new DoublePropertyMapSerializer<>( feature.stds.get( i ) ).writePropertyMap( idmap, oos );
-			new DoublePropertyMapSerializer<>( feature.mins.get( i ) ).writePropertyMap( idmap, oos );
-			new DoublePropertyMapSerializer<>( feature.maxs.get( i ) ).writePropertyMap( idmap, oos );
-			new DoublePropertyMapSerializer<>( feature.medians.get( i ) ).writePropertyMap( idmap, oos );
-			new DoublePropertyMapSerializer<>( feature.sums.get( i ) ).writePropertyMap( idmap, oos );
+		oos.writeInt(nSources);
+		for (int i = 0; i < nSources; i++) {
+			new DoublePropertyMapSerializer<>(feature.means.get(i)).writePropertyMap(
+				idmap, oos);
+			new DoublePropertyMapSerializer<>(feature.stds.get(i)).writePropertyMap(
+				idmap, oos);
+			new DoublePropertyMapSerializer<>(feature.mins.get(i)).writePropertyMap(
+				idmap, oos);
+			new DoublePropertyMapSerializer<>(feature.maxs.get(i)).writePropertyMap(
+				idmap, oos);
+			new DoublePropertyMapSerializer<>(feature.medians.get(i))
+				.writePropertyMap(idmap, oos);
+			new DoublePropertyMapSerializer<>(feature.sums.get(i)).writePropertyMap(
+				idmap, oos);
 		}
 	}
 
 	@Override
-	public SpotIntensityFeature deserialize( final FileIdToObjectMap< Spot > idmap, final RefCollection< Spot > pool, final ObjectInputStream ois ) throws IOException, ClassNotFoundException
+	public SpotIntensityFeature deserialize(final FileIdToObjectMap<Spot> idmap,
+		final RefCollection<Spot> pool, final ObjectInputStream ois)
+		throws IOException, ClassNotFoundException
 	{
 		final int nSources = ois.readInt();
-		final List< DoublePropertyMap< Spot > > means = new ArrayList<>( nSources );
-		final List< DoublePropertyMap< Spot > > stds = new ArrayList<>( nSources );
-		final List< DoublePropertyMap< Spot > > mins = new ArrayList<>( nSources );
-		final List< DoublePropertyMap< Spot > > maxs = new ArrayList<>( nSources );
-		final List< DoublePropertyMap< Spot > > medians = new ArrayList<>( nSources );
-		final List< DoublePropertyMap< Spot > > sums = new ArrayList<>( nSources );
+		final List<DoublePropertyMap<Spot>> means = new ArrayList<>(nSources);
+		final List<DoublePropertyMap<Spot>> stds = new ArrayList<>(nSources);
+		final List<DoublePropertyMap<Spot>> mins = new ArrayList<>(nSources);
+		final List<DoublePropertyMap<Spot>> maxs = new ArrayList<>(nSources);
+		final List<DoublePropertyMap<Spot>> medians = new ArrayList<>(nSources);
+		final List<DoublePropertyMap<Spot>> sums = new ArrayList<>(nSources);
 
-		for ( int i = 0; i < nSources; i++ )
-		{
-			final DoublePropertyMap< Spot > meanMap = new DoublePropertyMap<>( pool, Double.NaN );
-			new DoublePropertyMapSerializer<>( meanMap ).readPropertyMap( idmap, ois );
-			means.add( meanMap );
+		for (int i = 0; i < nSources; i++) {
+			final DoublePropertyMap<Spot> meanMap = new DoublePropertyMap<>(pool,
+				Double.NaN);
+			new DoublePropertyMapSerializer<>(meanMap).readPropertyMap(idmap, ois);
+			means.add(meanMap);
 
-			final DoublePropertyMap< Spot > stdMap = new DoublePropertyMap<>( pool, Double.NaN );
-			new DoublePropertyMapSerializer<>( stdMap ).readPropertyMap( idmap, ois );
-			stds.add( stdMap );
+			final DoublePropertyMap<Spot> stdMap = new DoublePropertyMap<>(pool,
+				Double.NaN);
+			new DoublePropertyMapSerializer<>(stdMap).readPropertyMap(idmap, ois);
+			stds.add(stdMap);
 
-			final DoublePropertyMap< Spot > minMap = new DoublePropertyMap<>( pool, Double.NaN );
-			new DoublePropertyMapSerializer<>( minMap ).readPropertyMap( idmap, ois );
-			mins.add( minMap );
+			final DoublePropertyMap<Spot> minMap = new DoublePropertyMap<>(pool,
+				Double.NaN);
+			new DoublePropertyMapSerializer<>(minMap).readPropertyMap(idmap, ois);
+			mins.add(minMap);
 
-			final DoublePropertyMap< Spot > maxMap = new DoublePropertyMap<>( pool, Double.NaN );
-			new DoublePropertyMapSerializer<>( maxMap ).readPropertyMap( idmap, ois );
-			maxs.add( maxMap );
+			final DoublePropertyMap<Spot> maxMap = new DoublePropertyMap<>(pool,
+				Double.NaN);
+			new DoublePropertyMapSerializer<>(maxMap).readPropertyMap(idmap, ois);
+			maxs.add(maxMap);
 
-			final DoublePropertyMap< Spot > medianMap = new DoublePropertyMap<>( pool, Double.NaN );
-			new DoublePropertyMapSerializer<>( medianMap ).readPropertyMap( idmap, ois );
-			medians.add( medianMap );
+			final DoublePropertyMap<Spot> medianMap = new DoublePropertyMap<>(pool,
+				Double.NaN);
+			new DoublePropertyMapSerializer<>(medianMap).readPropertyMap(idmap, ois);
+			medians.add(medianMap);
 
-			final DoublePropertyMap< Spot > sumMap = new DoublePropertyMap<>( pool, Double.NaN );
-			new DoublePropertyMapSerializer<>( sumMap ).readPropertyMap( idmap, ois );
-			sums.add( sumMap );
+			final DoublePropertyMap<Spot> sumMap = new DoublePropertyMap<>(pool,
+				Double.NaN);
+			new DoublePropertyMapSerializer<>(sumMap).readPropertyMap(idmap, ois);
+			sums.add(sumMap);
 		}
-		return new SpotIntensityFeature( means, stds, mins, maxs, medians, sums );
+		return new SpotIntensityFeature(means, stds, mins, maxs, medians, sums);
 	}
 }

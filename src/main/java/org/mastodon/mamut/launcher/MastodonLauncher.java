@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.launcher;
 
 import java.awt.Color;
@@ -79,580 +80,568 @@ import mpicbg.spim.data.sequence.TimePoint;
 import mpicbg.spim.data.sequence.TimePoints;
 import mpicbg.spim.data.sequence.TimePointsPattern;
 
-public class MastodonLauncher extends JFrame
-{
+public class MastodonLauncher extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	static final String MASTODON_VERSION = VersionUtils.getVersion( MastodonLauncher.class );
+	static final String MASTODON_VERSION = VersionUtils.getVersion(
+		MastodonLauncher.class);
 
 	private final LauncherGUI gui;
 
 	private final Context context;
 
-	public MastodonLauncher( final Context context )
-	{
-		super( "Mastodon launcher" );
-		this.context = Optional.ofNullable( context ).orElse( new Context() );
+	public MastodonLauncher(final Context context) {
+		super("Mastodon launcher");
+		this.context = Optional.ofNullable(context).orElse(new Context());
 
-		System.setProperty( "apple.laf.useScreenMenuBar", "true" );
+		System.setProperty("apple.laf.useScreenMenuBar", "true");
 
-		setIconImage( MastodonIcons.MASTODON_ICON_LARGE.getImage() );
-		gui = new LauncherGUI( s -> loadMastodonProject( s ) );
+		setIconImage(MastodonIcons.MASTODON_ICON_LARGE.getImage());
+		gui = new LauncherGUI(s -> loadMastodonProject(s));
 
 		/*
 		 * Wire buttons.
 		 */
-		gui.btnNew.addActionListener( l -> newMastodonProject() );
-		gui.btnOpenURL.addActionListener( l -> showOpenFromURLPanel() );
-		gui.btnLoad.addActionListener( l -> showShowRecentProjects() );
-		gui.btnImportTgmm.addActionListener( l -> showImportTgmmPanel() );
-		gui.btnImportMamut.addActionListener( l -> importMaMuT() );
-		gui.btnImportSimi.addActionListener( l -> showImportSimiPanel() );
-		gui.btnHelp.addActionListener( l -> showHelpPanel() );
+		gui.btnNew.addActionListener(l -> newMastodonProject());
+		gui.btnOpenURL.addActionListener(l -> showOpenFromURLPanel());
+		gui.btnLoad.addActionListener(l -> showShowRecentProjects());
+		gui.btnImportTgmm.addActionListener(l -> showImportTgmmPanel());
+		gui.btnImportMamut.addActionListener(l -> importMaMuT());
+		gui.btnImportSimi.addActionListener(l -> showImportSimiPanel());
+		gui.btnHelp.addActionListener(l -> showHelpPanel());
 
-		gui.newMastodonProjectPanel.btnCreate.addActionListener( l -> createNewProject() );
-		gui.importTGMMPanel.btnImport.addActionListener( l -> importTgmm() );
-		gui.importSimiBioCellPanel.btnImport.addActionListener( l -> importSimi() );
-		gui.openRemoteURLPanel.btnCreate.addActionListener( l -> createProjectFromURL() );
+		gui.newMastodonProjectPanel.btnCreate.addActionListener(
+			l -> createNewProject());
+		gui.importTGMMPanel.btnImport.addActionListener(l -> importTgmm());
+		gui.importSimiBioCellPanel.btnImport.addActionListener(l -> importSimi());
+		gui.openRemoteURLPanel.btnCreate.addActionListener(
+			l -> createProjectFromURL());
 
-		getContentPane().add( gui );
-		setSize( 630, 660 );
+		getContentPane().add(gui);
+		setSize(630, 660);
 	}
 
-	private void importSimi()
-	{
-		if ( !gui.importSimiBioCellPanel.checkBDVFile() )
+	private void importSimi() {
+		if (!gui.importSimiBioCellPanel.checkBDVFile())
 			return;
 
-		final EverythingDisablerAndReenabler disabler = new EverythingDisablerAndReenabler( gui, new Class[] { JLabel.class } );
+		final EverythingDisablerAndReenabler disabler =
+			new EverythingDisablerAndReenabler(gui, new Class[] { JLabel.class });
 		disabler.disable();
 
-		new Thread( () -> {
-			try
-			{
+		new Thread(() -> {
+			try {
 				// Create new blank project from BDV file.
-				final File bdvFile = new File( gui.importSimiBioCellPanel.textAreaBDVFile.getText() );
+				final File bdvFile = new File(gui.importSimiBioCellPanel.textAreaBDVFile
+					.getText());
 				final WindowManager windowManager = createWindowManager();
-				windowManager.getProjectManager().open( new MamutProject( null, bdvFile ) );
+				windowManager.getProjectManager().open(new MamutProject(null, bdvFile));
 				final Model model = windowManager.getAppModel().getModel();
-				final AbstractSpimData< ? > spimData = windowManager.getAppModel().getSharedBdvData().getSpimData();
+				final AbstractSpimData<?> spimData = windowManager.getAppModel()
+					.getSharedBdvData().getSpimData();
 
-				final String sbdFilename = gui.importSimiBioCellPanel.textAreaSimiFile.getText();
-				final int setupIndex = gui.importSimiBioCellPanel.setupComboBox.getSelectedIndex();
+				final String sbdFilename = gui.importSimiBioCellPanel.textAreaSimiFile
+					.getText();
+				final int setupIndex = gui.importSimiBioCellPanel.setupComboBox
+					.getSelectedIndex();
 				final ViewRegistrations regs = spimData.getViewRegistrations();
-				final AbstractSequenceDescription< ?, ?, ? > seq = spimData.getSequenceDescription();
-				final List< TimePoint > timePointsOrdered = seq.getTimePoints().getTimePointsOrdered();
+				final AbstractSequenceDescription<?, ?, ?> seq = spimData
+					.getSequenceDescription();
+				final List<TimePoint> timePointsOrdered = seq.getTimePoints()
+					.getTimePointsOrdered();
 				final int maxtp = timePointsOrdered.size() - 1;
-				final int setupID = seq.getViewSetupsOrdered().get( setupIndex ).getId();
+				final int setupID = seq.getViewSetupsOrdered().get(setupIndex).getId();
 
-				final int frameOffset = ( ( Number ) gui.importSimiBioCellPanel.spinnerTimeOffset.getValue() ).intValue();
+				final int frameOffset =
+					((Number) gui.importSimiBioCellPanel.spinnerTimeOffset.getValue())
+						.intValue();
 
 				// maps frame to timepoint index
 				final IntUnaryOperator frameToTimepointFunction = frame -> {
 					int tp = frame - frameOffset;
-					if ( tp < 0 )
-					{
+					if (tp < 0) {
 						gui.importSimiBioCellPanel.labelInfo.setText(
-								"<html>WARNING: simi frame " + frame + " translates to out-of-bounds "
-										+ "timepoint index " + tp + ". Clipping to 0.</html>" );
+							"<html>WARNING: simi frame " + frame +
+								" translates to out-of-bounds " + "timepoint index " + tp +
+								". Clipping to 0.</html>");
 						tp = 0;
 					}
-					else if ( tp > maxtp )
-					{
+					else if (tp > maxtp) {
 						gui.importSimiBioCellPanel.labelInfo.setText(
-								"<html>WARNING: simi frame " + frame + " translates to out-of-bounds "
-										+ "timepoint index " + tp + ". Clipping to " + maxtp + ".</html>" );
+							"<html>WARNING: simi frame " + frame +
+								" translates to out-of-bounds " + "timepoint index " + tp +
+								". Clipping to " + maxtp + ".</html>");
 						tp = maxtp;
 					}
 					return tp;
 				};
 
-				final LabelFunction labelFunction = ( generic_name, generation_name, name ) -> {
-					if ( name != null )
+				final LabelFunction labelFunction = (generic_name, generation_name,
+					name) -> {
+					if (name != null)
 						return name;
-					if ( generic_name != null )
+					if (generic_name != null)
 						return generic_name;
-					if ( generation_name != null )
+					if (generation_name != null)
 						return generation_name;
 					return null;
 				};
 
-				final BiFunction< Integer, double[], double[] > positionFunction = ( frame, lPos ) -> {
-					final double[] gPos = new double[ 3 ];
-					final int tp = frameToTimepointFunction.applyAsInt( frame );
-					final int timepointId = timePointsOrdered.get( tp ).getId();
-					regs.getViewRegistration( timepointId, setupID ).getModel().apply( lPos, gPos );
+				final BiFunction<Integer, double[], double[]> positionFunction = (frame,
+					lPos) -> {
+					final double[] gPos = new double[3];
+					final int tp = frameToTimepointFunction.applyAsInt(frame);
+					final int timepointId = timePointsOrdered.get(tp).getId();
+					regs.getViewRegistration(timepointId, setupID).getModel().apply(lPos,
+						gPos);
 					return gPos;
 				};
-				final int radius = Integer.parseInt( gui.importSimiBioCellPanel.spotRadiusTextField.getText() );
-				final boolean interpolateMissingSpots = gui.importSimiBioCellPanel.interpolateCheckBox.isSelected();
-				SimiImporter.read( sbdFilename, frameToTimepointFunction, labelFunction, positionFunction, radius, interpolateMissingSpots, model );
-				new MainWindow( windowManager ).setVisible( true );
+				final int radius = Integer.parseInt(
+					gui.importSimiBioCellPanel.spotRadiusTextField.getText());
+				final boolean interpolateMissingSpots =
+					gui.importSimiBioCellPanel.interpolateCheckBox.isSelected();
+				SimiImporter.read(sbdFilename, frameToTimepointFunction, labelFunction,
+					positionFunction, radius, interpolateMissingSpots, model);
+				new MainWindow(windowManager).setVisible(true);
 				dispose();
 			}
-			catch ( final IOException e )
-			{
+			catch (final IOException e) {
 				gui.importSimiBioCellPanel.labelInfo.setText(
-						"<html>Problem reading the SimiBioCell file.<p>" +
-								LauncherUtil.toMessage( e ) + "</html>" );
+					"<html>Problem reading the SimiBioCell file.<p>" +
+						LauncherUtil.toMessage(e) + "</html>");
 			}
-			catch ( final ParseException e )
-			{
+			catch (final ParseException e) {
 				gui.importSimiBioCellPanel.labelInfo.setText(
-						"<html>Problem parsing the SimiBioCell file.<p>" +
-								LauncherUtil.toMessage( e ) + "</html>" );
+					"<html>Problem parsing the SimiBioCell file.<p>" +
+						LauncherUtil.toMessage(e) + "</html>");
 			}
-			catch ( final SpimDataException e )
-			{
-				gui.importSimiBioCellPanel.labelInfo.setText( "<html>Invalid BDV xml/h5 file.<p>" +
-						LauncherUtil.toMessage( e ) + "</html>" );
+			catch (final SpimDataException e) {
+				gui.importSimiBioCellPanel.labelInfo.setText(
+					"<html>Invalid BDV xml/h5 file.<p>" +
+						LauncherUtil.toMessage(e) + "</html>");
 			}
-			finally
-			{
+			finally {
 				disabler.reenable();
 			}
-		} ).start();
+		}).start();
 	}
 
-	private void importTgmm()
-	{
-		if ( !gui.importTGMMPanel.checkBDVFile( false ) || !gui.importTGMMPanel.checkTGMMFolder() )
+	private void importTgmm() {
+		if (!gui.importTGMMPanel.checkBDVFile(false) || !gui.importTGMMPanel
+			.checkTGMMFolder())
 			return;
 
-		final EverythingDisablerAndReenabler disabler = new EverythingDisablerAndReenabler( gui, new Class[] { JLabel.class } );
+		final EverythingDisablerAndReenabler disabler =
+			new EverythingDisablerAndReenabler(gui, new Class[] { JLabel.class });
 		disabler.disable();
 
-		new Thread( () -> {
-			try
-			{
+		new Thread(() -> {
+			try {
 				String tgmmFiles = gui.importTGMMPanel.textAreaTGMM.getText();
-				if ( !tgmmFiles.endsWith( "/" ) )
+				if (!tgmmFiles.endsWith("/"))
 					tgmmFiles = tgmmFiles + "/";
-				tgmmFiles = tgmmFiles + gui.importTGMMPanel.filenamePatternTextField.getText();
+				tgmmFiles = tgmmFiles + gui.importTGMMPanel.filenamePatternTextField
+					.getText();
 
 				// Create new blank project from BDV file.
-				final File bdvFile = new File( gui.importTGMMPanel.textAreaBDVFile.getText() );
+				final File bdvFile = new File(gui.importTGMMPanel.textAreaBDVFile
+					.getText());
 				final WindowManager windowManager = createWindowManager();
-				windowManager.getProjectManager().open( new MamutProject( null, bdvFile ) );
+				windowManager.getProjectManager().open(new MamutProject(null, bdvFile));
 				final Model model = windowManager.getAppModel().getModel();
-				final AbstractSpimData< ? > spimData = windowManager.getAppModel().getSharedBdvData().getSpimData();
+				final AbstractSpimData<?> spimData = windowManager.getAppModel()
+					.getSharedBdvData().getSpimData();
 
 				// Read setup id.
-				final ViewRegistrations viewRegistrations = spimData.getViewRegistrations();
-				final int setupIndex = gui.importTGMMPanel.setupComboBox.getSelectedIndex();
-				final AbstractSequenceDescription< ?, ?, ? > seq = spimData.getSequenceDescription();
-				final int setupID = seq.getViewSetupsOrdered().get( setupIndex ).getId();
+				final ViewRegistrations viewRegistrations = spimData
+					.getViewRegistrations();
+				final int setupIndex = gui.importTGMMPanel.setupComboBox
+					.getSelectedIndex();
+				final AbstractSequenceDescription<?, ?, ?> seq = spimData
+					.getSequenceDescription();
+				final int setupID = seq.getViewSetupsOrdered().get(setupIndex).getId();
 
 				// Run import.
-				final TimePoints timepoints = new TimePointsPattern( gui.importTGMMPanel.timepointPatternTextField.getText() );
-				final double nSigmas = Double.parseDouble( gui.importTGMMPanel.nSigmasTextField.getText() );
-				if ( gui.importTGMMPanel.covCheckBox.isSelected() )
-				{
-					final double[][] cov = parseCov( gui.importTGMMPanel.covTextField.getText() );
-					if ( null == cov )
-					{
-						gui.importTGMMPanel.labelInfo.setText( "<html>Cannot parse the covariance pattern.</html>" );
+				final TimePoints timepoints = new TimePointsPattern(
+					gui.importTGMMPanel.timepointPatternTextField.getText());
+				final double nSigmas = Double.parseDouble(
+					gui.importTGMMPanel.nSigmasTextField.getText());
+				if (gui.importTGMMPanel.covCheckBox.isSelected()) {
+					final double[][] cov = parseCov(gui.importTGMMPanel.covTextField
+						.getText());
+					if (null == cov) {
+						gui.importTGMMPanel.labelInfo.setText(
+							"<html>Cannot parse the covariance pattern.</html>");
 						return;
 					}
-					TgmmImporter.read( tgmmFiles, timepoints, TgmmImporter.getTimepointToIndex( spimData ), viewRegistrations, setupID, nSigmas, cov, model );
+					TgmmImporter.read(tgmmFiles, timepoints, TgmmImporter
+						.getTimepointToIndex(spimData), viewRegistrations, setupID, nSigmas,
+						cov, model);
 				}
 				else
-					TgmmImporter.read( tgmmFiles, timepoints, TgmmImporter.getTimepointToIndex( spimData ), viewRegistrations, setupID, nSigmas, model );
+					TgmmImporter.read(tgmmFiles, timepoints, TgmmImporter
+						.getTimepointToIndex(spimData), viewRegistrations, setupID, nSigmas,
+						model);
 
 				// Success? We move on.
-				new MainWindow( windowManager ).setVisible( true );
+				new MainWindow(windowManager).setVisible(true);
 				dispose();
 			}
-			catch ( final ParseException e )
-			{
-				gui.importTGMMPanel.labelInfo.setText( "<html>Could not parse timepoint pattern.<p>" +
-						LauncherUtil.toMessage( e ) + "</html>" );
+			catch (final ParseException e) {
+				gui.importTGMMPanel.labelInfo.setText(
+					"<html>Could not parse timepoint pattern.<p>" +
+						LauncherUtil.toMessage(e) + "</html>");
 			}
-			catch ( JDOMException | IOException e )
-			{
-				gui.importTGMMPanel.labelInfo.setText( "<html>Malformed TGMM dataset.<p>" +
-						LauncherUtil.toMessage( e ) + "</html>" );
+			catch (JDOMException | IOException e) {
+				gui.importTGMMPanel.labelInfo.setText(
+					"<html>Malformed TGMM dataset.<p>" +
+						LauncherUtil.toMessage(e) + "</html>");
 			}
-			catch ( final SpimDataException e )
-			{
-				gui.importTGMMPanel.labelInfo.setText( "<html>Invalid BDV xml/h5 file.<p>" +
-						LauncherUtil.toMessage( e ) + "</html>" );
+			catch (final SpimDataException e) {
+				gui.importTGMMPanel.labelInfo.setText(
+					"<html>Invalid BDV xml/h5 file.<p>" +
+						LauncherUtil.toMessage(e) + "</html>");
 			}
 			disabler.reenable();
-		} ).start();
+		}).start();
 	}
 
-	private double[][] parseCov( final String text )
-	{
-		try
-		{
-			final String[] entries = text.split( "\\s+" );
-			if ( entries.length == 1 )
-			{
-				if ( !entries[ 0 ].isEmpty() )
-				{
-					final double v = Double.parseDouble( entries[ 0 ] );
+	private double[][] parseCov(final String text) {
+		try {
+			final String[] entries = text.split("\\s+");
+			if (entries.length == 1) {
+				if (!entries[0].isEmpty()) {
+					final double v = Double.parseDouble(entries[0]);
 					return new double[][] { { v, 0, 0 }, { 0, v, 0 }, { 0, 0, v } };
 				}
 			}
-			else if ( entries.length == 3 )
-			{
-				final double[][] m = new double[ 3 ][ 3 ];
-				for ( int r = 0; r < 3; ++r )
-					m[ r ][ r ] = Double.parseDouble( entries[ r ] );
+			else if (entries.length == 3) {
+				final double[][] m = new double[3][3];
+				for (int r = 0; r < 3; ++r)
+					m[r][r] = Double.parseDouble(entries[r]);
 				return m;
 			}
-			else if ( entries.length == 9 )
-			{
-				final double[][] m = new double[ 3 ][ 3 ];
-				for ( int r = 0; r < 3; ++r )
-					for ( int c = 0; c < 3; ++c )
-						m[ r ][ c ] = Double.parseDouble( entries[ r * 3 + c ] );
+			else if (entries.length == 9) {
+				final double[][] m = new double[3][3];
+				for (int r = 0; r < 3; ++r)
+					for (int c = 0; c < 3; ++c)
+						m[r][c] = Double.parseDouble(entries[r * 3 + c]);
 				return m;
 			}
 		}
-		catch ( final Exception e )
-		{}
+		catch (final Exception e) {}
 		return null;
 	}
 
-	private void createNewProject()
-	{
-		if ( gui.newMastodonProjectPanel.rdbtBrowseToBDV.isSelected() )
-		{
+	private void createNewProject() {
+		if (gui.newMastodonProjectPanel.rdbtBrowseToBDV.isSelected()) {
 			/*
 			 * Open from a BDV local file.
 			 */
 
-			if ( !gui.newMastodonProjectPanel.checkBDVFile() )
+			if (!gui.newMastodonProjectPanel.checkBDVFile())
 				return;
 
-			final File file = new File( gui.newMastodonProjectPanel.textAreaFile.getText() );
-			final EverythingDisablerAndReenabler disabler = new EverythingDisablerAndReenabler( gui, new Class[] { JLabel.class } );
+			final File file = new File(gui.newMastodonProjectPanel.textAreaFile
+				.getText());
+			final EverythingDisablerAndReenabler disabler =
+				new EverythingDisablerAndReenabler(gui, new Class[] { JLabel.class });
 			disabler.disable();
-			new Thread( () -> {
-				try
-				{
+			new Thread(() -> {
+				try {
 					final WindowManager windowManager = createWindowManager();
-					windowManager.getProjectManager().open( new MamutProject( null, file ) );
-					new MainWindow( windowManager ).setVisible( true );
+					windowManager.getProjectManager().open(new MamutProject(null, file));
+					new MainWindow(windowManager).setVisible(true);
 					dispose();
 				}
-				catch ( IOException | SpimDataException e )
-				{
-					gui.newMastodonProjectPanel.labelInfo.setText( "<html>Invalid BDV xml/h5 file.<p>" +
-							LauncherUtil.toMessage( e ) + "</html>" );
+				catch (IOException | SpimDataException e) {
+					gui.newMastodonProjectPanel.labelInfo.setText(
+						"<html>Invalid BDV xml/h5 file.<p>" +
+							LauncherUtil.toMessage(e) + "</html>");
 				}
-				finally
-				{
+				finally {
 					disabler.reenable();
 				}
-			} ).start();
+			}).start();
 		}
-		else
-		{
+		else {
 			/*
 			 * Open from an ImagePlus opened in ImageJ.
 			 */
 
-			final String imageName = ( String ) gui.newMastodonProjectPanel.comboBox.getSelectedItem();
-			final ImagePlus imp = ij.WindowManager.getImage( imageName );
-			if ( imp == null )
-			{
-				gui.newMastodonProjectPanel.labelInfo.setText( "Invalid image." );
+			final String imageName = (String) gui.newMastodonProjectPanel.comboBox
+				.getSelectedItem();
+			final ImagePlus imp = ij.WindowManager.getImage(imageName);
+			if (imp == null) {
+				gui.newMastodonProjectPanel.labelInfo.setText("Invalid image.");
 				return;
 			}
-			final EverythingDisablerAndReenabler disabler = new EverythingDisablerAndReenabler( gui, new Class[] { JLabel.class } );
+			final EverythingDisablerAndReenabler disabler =
+				new EverythingDisablerAndReenabler(gui, new Class[] { JLabel.class });
 			disabler.disable();
-			new Thread( () -> {
-				try
-				{
+			new Thread(() -> {
+				try {
 					final WindowManager windowManager = createWindowManager();
-					final MainWindow mainWindow = new MainWindow( windowManager );
-					
+					final MainWindow mainWindow = new MainWindow(windowManager);
+
 					/*
 					 * Action when user closes source image plus.
 					 */
 					final ImageWindow window = imp.getWindow();
-					if ( window != null )
-					{
-						for ( final WindowListener wl : window.getWindowListeners() )
-							window.removeWindowListener( wl );
+					if (window != null) {
+						for (final WindowListener wl : window.getWindowListeners())
+							window.removeWindowListener(wl);
 
-						window.addWindowListener( new WindowAdapter()
-						{
+						window.addWindowListener(new WindowAdapter() {
+
 							@Override
-							public void windowClosing( final WindowEvent e )
-							{
+							public void windowClosing(final WindowEvent e) {
 								final int val = JOptionPane.showConfirmDialog(
-										window,
-										"Warning.\n"
-												+ "\n"
-												+ "If you close this image, the Mastodon \n"
-												+ "instance that runs on it will be closed \n"
-												+ "as well.\n"
-												+ "\n"
-												+ "Are you sure you want to close this image?",
-										"Confirm closing image",
-										JOptionPane.YES_NO_OPTION,
-										JOptionPane.QUESTION_MESSAGE,
-										MastodonIcons.MASTODON_ICON_MEDIUM );
-								if ( val == JOptionPane.YES_OPTION )
-								{
-									final ActionMap actionMap = windowManager.getAppModel().getAppActions().getActionMap();
-									final boolean hasBeenClosed = mainWindow.close( windowManager, actionMap.get( ProjectManager.SAVE_PROJECT ), e );
-									if ( hasBeenClosed )
+									window,
+									"Warning.\n" + "\n" +
+										"If you close this image, the Mastodon \n" +
+										"instance that runs on it will be closed \n" +
+										"as well.\n" + "\n" +
+										"Are you sure you want to close this image?",
+									"Confirm closing image",
+									JOptionPane.YES_NO_OPTION,
+									JOptionPane.QUESTION_MESSAGE,
+									MastodonIcons.MASTODON_ICON_MEDIUM);
+								if (val == JOptionPane.YES_OPTION) {
+									final ActionMap actionMap = windowManager.getAppModel()
+										.getAppActions().getActionMap();
+									final boolean hasBeenClosed = mainWindow.close(windowManager,
+										actionMap.get(ProjectManager.SAVE_PROJECT), e);
+									if (hasBeenClosed)
 										window.close();
 								}
 							}
-						} );
-					}
-					
-					// Check whether the imp can be found on disk.
-					if ( imp.getOriginalFileInfo() == null ||
-							imp.getOriginalFileInfo().directory == null ||
-							imp.getOriginalFileInfo().fileName == null ||
-							!new File( imp.getOriginalFileInfo().directory, imp.getOriginalFileInfo().fileName ).exists() )
-					{
-						JOptionPane.showMessageDialog( gui,
-								"Warning.\n"
-										+ "\n"
-										+ "The image being used for this new \n"
-										+ "Mastodon project cannot be found \n"
-										+ "on disk.  \n"
-										+ "\n"
-										+ "Mastodon will not be able to reopen it \n"
-										+ "unless you resave the image as a BDV \n"
-										+ "file when saving the Mastodon project. ",
-								"Source image not saved",
-								JOptionPane.WARNING_MESSAGE,
-								MastodonIcons.MASTODON_ICON_MEDIUM );
+						});
 					}
 
-					windowManager.getProjectManager().open( new MamutImagePlusProject( imp ) );
-					mainWindow.setVisible( true );
+					// Check whether the imp can be found on disk.
+					if (imp.getOriginalFileInfo() == null ||
+						imp.getOriginalFileInfo().directory == null ||
+						imp.getOriginalFileInfo().fileName == null ||
+						!new File(imp.getOriginalFileInfo().directory, imp
+							.getOriginalFileInfo().fileName).exists())
+					{
+						JOptionPane.showMessageDialog(gui,
+							"Warning.\n" + "\n" + "The image being used for this new \n" +
+								"Mastodon project cannot be found \n" + "on disk.  \n" + "\n" +
+								"Mastodon will not be able to reopen it \n" +
+								"unless you resave the image as a BDV \n" +
+								"file when saving the Mastodon project. ",
+							"Source image not saved",
+							JOptionPane.WARNING_MESSAGE,
+							MastodonIcons.MASTODON_ICON_MEDIUM);
+					}
+
+					windowManager.getProjectManager().open(new MamutImagePlusProject(
+						imp));
+					mainWindow.setVisible(true);
 					dispose();
 				}
-				catch ( IOException | SpimDataException e )
-				{
-					gui.newMastodonProjectPanel.labelInfo.setText( "<html>Invalid image.<p>" +
-							LauncherUtil.toMessage( e ) + "</html>" );
+				catch (IOException | SpimDataException e) {
+					gui.newMastodonProjectPanel.labelInfo.setText(
+						"<html>Invalid image.<p>" +
+							LauncherUtil.toMessage(e) + "</html>");
 				}
-				finally
-				{
+				finally {
 					disabler.reenable();
 				}
-			} ).start();
+			}).start();
 		}
 	}
 
-	private void newMastodonProject()
-	{
-		gui.showPanel( LauncherGUI.NEW_MASTODON_PROJECT_KEY );
+	private void newMastodonProject() {
+		gui.showPanel(LauncherGUI.NEW_MASTODON_PROJECT_KEY);
 	}
 
-	private void showShowRecentProjects()
-	{
-		gui.showPanel( LauncherGUI.RECENT_PROJECTS_KEY );
+	private void showShowRecentProjects() {
+		gui.showPanel(LauncherGUI.RECENT_PROJECTS_KEY);
 	}
 
-	private void showOpenFromURLPanel()
-	{
-		gui.showPanel( LauncherGUI.NEW_FROM_URL_KEY );
+	private void showOpenFromURLPanel() {
+		gui.showPanel(LauncherGUI.NEW_FROM_URL_KEY);
 	}
 
-	private void showImportTgmmPanel()
-	{
-		gui.showPanel( LauncherGUI.IMPORT_TGMM_KEY );
+	private void showImportTgmmPanel() {
+		gui.showPanel(LauncherGUI.IMPORT_TGMM_KEY);
 	}
 
-	private void showImportSimiPanel()
-	{
-		gui.showPanel( LauncherGUI.IMPORT_SIMI_KEY );
+	private void showImportSimiPanel() {
+		gui.showPanel(LauncherGUI.IMPORT_SIMI_KEY);
 	}
 
-	private void showHelpPanel()
-	{
-		gui.showPanel( LauncherGUI.WELCOME_PANEL_KEY );
+	private void showHelpPanel() {
+		gui.showPanel(LauncherGUI.WELCOME_PANEL_KEY);
 	}
 
-	private void createProjectFromURL()
-	{
+	private void createProjectFromURL() {
 		final String filepath = gui.openRemoteURLPanel.taFileSave.getText();
-		if ( filepath == null || filepath.isEmpty() )
-		{
-			gui.openRemoteURLPanel.log.setForeground( Color.RED );
-			gui.openRemoteURLPanel.log.setText( "Please specify a BDV file to write to." );
+		if (filepath == null || filepath.isEmpty()) {
+			gui.openRemoteURLPanel.log.setForeground(Color.RED);
+			gui.openRemoteURLPanel.log.setText(
+				"Please specify a BDV file to write to.");
 			return;
 		}
 
-		final File file = new File( filepath );
-		if ( file.exists() && !file.canWrite() )
-		{
-			gui.openRemoteURLPanel.log.setForeground( Color.RED );
-			gui.openRemoteURLPanel.log.setText( "Target BDV file exists and cannot be overwritten." );
+		final File file = new File(filepath);
+		if (file.exists() && !file.canWrite()) {
+			gui.openRemoteURLPanel.log.setForeground(Color.RED);
+			gui.openRemoteURLPanel.log.setText(
+				"Target BDV file exists and cannot be overwritten.");
 			return;
 		}
 
 		final SpimData spimData = gui.openRemoteURLPanel.spimData;
-		if ( spimData == null )
-		{
-			gui.openRemoteURLPanel.log.setForeground( Color.RED );
-			gui.openRemoteURLPanel.log.setText( "Please specify an image URL first." );
+		if (spimData == null) {
+			gui.openRemoteURLPanel.log.setForeground(Color.RED);
+			gui.openRemoteURLPanel.log.setText("Please specify an image URL first.");
 			return;
 		}
 
-		final EverythingDisablerAndReenabler disabler = new EverythingDisablerAndReenabler( gui, new Class[] { JLabel.class } );
+		final EverythingDisablerAndReenabler disabler =
+			new EverythingDisablerAndReenabler(gui, new Class[] { JLabel.class });
 		disabler.disable();
-		new Thread( () -> {
-			try
-			{
-				gui.openRemoteURLPanel.log.setText( "Creating project..." );
+		new Thread(() -> {
+			try {
+				gui.openRemoteURLPanel.log.setText("Creating project...");
 
 				/*
 				 * Save the XML file first.
 				 */
 				final XmlIoSpimData xmlIoSpimData = new XmlIoSpimData();
-				spimData.setBasePath( file.getParentFile() );
-				try
-				{
-					xmlIoSpimData.save( spimData, file.getAbsolutePath() );
+				spimData.setBasePath(file.getParentFile());
+				try {
+					xmlIoSpimData.save(spimData, file.getAbsolutePath());
 				}
-				catch ( final SpimDataException e )
-				{
-					gui.openRemoteURLPanel.log.setForeground( Color.RED );
-					gui.openRemoteURLPanel.log.setText( "<html>Problem save to BDV file.<p>" +
-							LauncherUtil.toMessage( e ) + "</html>" );
+				catch (final SpimDataException e) {
+					gui.openRemoteURLPanel.log.setForeground(Color.RED);
+					gui.openRemoteURLPanel.log.setText(
+						"<html>Problem save to BDV file.<p>" +
+							LauncherUtil.toMessage(e) + "</html>");
 				}
 
 				/*
 				 * Open it as a new Mastodon project.
 				 */
 				final WindowManager windowManager = createWindowManager();
-				windowManager.getProjectManager().open( new MamutProject( null, file ) );
-				new MainWindow( windowManager ).setVisible( true );
+				windowManager.getProjectManager().open(new MamutProject(null, file));
+				new MainWindow(windowManager).setVisible(true);
 				dispose();
 
 				/*
 				 * We update the list of recent projects here so that only
 				 * projects that were successfully opened are added to the list.
 				 */
-				RecentProjectsPanel.recentProjects.add( file.getAbsolutePath() );
+				RecentProjectsPanel.recentProjects.add(file.getAbsolutePath());
 			}
-			catch ( IOException | SpimDataException e )
-			{
-				gui.openRemoteURLPanel.log.setForeground( Color.RED );
-				gui.openRemoteURLPanel.log.setText( "<html>Problem creating project.<p>" +
-						LauncherUtil.toMessage( e ) + "</html>" );
+			catch (IOException | SpimDataException e) {
+				gui.openRemoteURLPanel.log.setForeground(Color.RED);
+				gui.openRemoteURLPanel.log.setText(
+					"<html>Problem creating project.<p>" +
+						LauncherUtil.toMessage(e) + "</html>");
 			}
-			finally
-			{
+			finally {
 				disabler.reenable();
 			}
-		} ).start();
+		}).start();
 	}
 
-	private void importMaMuT()
-	{
-		final EverythingDisablerAndReenabler disabler = new EverythingDisablerAndReenabler( gui, new Class[] { JLabel.class } );
+	private void importMaMuT() {
+		final EverythingDisablerAndReenabler disabler =
+			new EverythingDisablerAndReenabler(gui, new Class[] { JLabel.class });
 		disabler.disable();
 		final File file = FileChooser.chooseFile(
-				this,
-				null,
-				new XmlFileFilter(),
-				"Import MaMuT Project",
-				FileChooser.DialogType.LOAD );
-		if ( file == null )
-		{
+			this,
+			null,
+			new XmlFileFilter(),
+			"Import MaMuT Project",
+			FileChooser.DialogType.LOAD);
+		if (file == null) {
 			disabler.reenable();
 			return;
 		}
 
-		gui.showPanel( LauncherGUI.LOGGER_KEY );
-		new Thread( () -> {
-			try
-			{
+		gui.showPanel(LauncherGUI.LOGGER_KEY);
+		new Thread(() -> {
+			try {
 
-				final TrackMateImporter importer = new TrackMateImporter( file );
+				final TrackMateImporter importer = new TrackMateImporter(file);
 				final WindowManager windowManager = createWindowManager();
-				windowManager.getProjectManager().open( importer.createProject() );
-				importer.readModel( windowManager.getAppModel().getModel(), windowManager.getFeatureSpecsService() );
-				new MainWindow( windowManager ).setVisible( true );
+				windowManager.getProjectManager().open(importer.createProject());
+				importer.readModel(windowManager.getAppModel().getModel(), windowManager
+					.getFeatureSpecsService());
+				new MainWindow(windowManager).setVisible(true);
 				dispose();
 			}
-			catch ( final IOException | SpimDataException e )
-			{
-				gui.error( "Invalid MaMuT file.\n\n" + LauncherUtil.toMessage( e ) );
+			catch (final IOException | SpimDataException e) {
+				gui.error("Invalid MaMuT file.\n\n" + LauncherUtil.toMessage(e));
 			}
-			finally
-			{
+			finally {
 				disabler.reenable();
 			}
-		} ).start();
+		}).start();
 	}
 
-	private void loadMastodonProject( final String projectPath )
-	{
-		final EverythingDisablerAndReenabler disabler = new EverythingDisablerAndReenabler( gui, new Class[] { JLabel.class } );
+	private void loadMastodonProject(final String projectPath) {
+		final EverythingDisablerAndReenabler disabler =
+			new EverythingDisablerAndReenabler(gui, new Class[] { JLabel.class });
 		disabler.disable();
-		gui.showPanel( LauncherGUI.LOGGER_KEY );
-		new Thread( () -> {
-			try
-			{
+		gui.showPanel(LauncherGUI.LOGGER_KEY);
+		new Thread(() -> {
+			try {
 				gui.clearLog();
 				final WindowManager windowManager = createWindowManager();
-				SwingUtilities.invokeLater( () -> {
+				SwingUtilities.invokeLater(() -> {
 
 					final File file;
-					if ( projectPath == null )
-					{
+					if (projectPath == null) {
 						// We have to use the JFileChooser to open folders.
 						file = FileChooser.chooseFile(
-								true,
-								this,
-								null,
-								new ExtensionFileFilter( "mastodon" ),
-								"Open Mastodon Project",
-								FileChooser.DialogType.LOAD,
-								SelectionMode.FILES_AND_DIRECTORIES );
-						if ( file == null )
+							true,
+							this,
+							null,
+							new ExtensionFileFilter("mastodon"),
+							"Open Mastodon Project",
+							FileChooser.DialogType.LOAD,
+							SelectionMode.FILES_AND_DIRECTORIES);
+						if (file == null)
 							return;
 					}
-					else
-					{
-						file = new File( projectPath );
+					else {
+						file = new File(projectPath);
 					}
 
-					try
-					{
-						final MamutProject project = new MamutProjectIO().load( file.getAbsolutePath() );
-						windowManager.getProjectManager().openWithDialog( project );
+					try {
+						final MamutProject project = new MamutProjectIO().load(file
+							.getAbsolutePath());
+						windowManager.getProjectManager().openWithDialog(project);
 
-						new MainWindow( windowManager ).setVisible( true );
+						new MainWindow(windowManager).setVisible(true);
 						dispose();
 						/*
 						 * We update the list of recent projects here so that
 						 * only projects that were successfully opened are added
 						 * to the list.
 						 */
-						RecentProjectsPanel.recentProjects.add( file.getAbsolutePath() );
+						RecentProjectsPanel.recentProjects.add(file.getAbsolutePath());
 					}
-					catch ( final IOException | SpimDataException e )
-					{
-						gui.error( "Invalid Mastodon file.\n\n" + LauncherUtil.toMessage( e ) );
+					catch (final IOException | SpimDataException e) {
+						gui.error("Invalid Mastodon file.\n\n" + LauncherUtil.toMessage(e));
 					}
-				} );
+				});
 			}
-			finally
-			{
+			finally {
 				disabler.reenable();
 			}
-		} ).start();
+		}).start();
 	}
 
-	private WindowManager createWindowManager()
-	{
-		return new WindowManager( context );
+	private WindowManager createWindowManager() {
+		return new WindowManager(context);
 	}
 }

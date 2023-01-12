@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.datagraph;
 
 import org.mastodon.adapter.RefBimap;
@@ -35,47 +36,44 @@ import org.mastodon.graph.Vertex;
 import org.mastodon.model.HasLabel;
 import org.mastodon.spatial.HasTimepoint;
 
-public class DataVertexBimap< V extends Vertex< E > & HasTimepoint & HasLabel, E extends Edge< V > >
-		implements RefBimap< V, DataVertex >
+public class DataVertexBimap<V extends Vertex<E> & HasTimepoint & HasLabel, E extends Edge<V>>
+	implements RefBimap<V, DataVertex>
 {
-	private final GraphIdBimap< V, E > idmap;
 
-	private final DataGraph< V, E > dataGraph;
+	private final GraphIdBimap<V, E> idmap;
 
-	public DataVertexBimap( final DataGraph< V, E > dataGraph )
-	{
+	private final DataGraph<V, E> dataGraph;
+
+	public DataVertexBimap(final DataGraph<V, E> dataGraph) {
 		this.idmap = dataGraph.getGraphIdBimap();
 		this.dataGraph = dataGraph;
 	}
 
 	@Override
-	public V getLeft( final DataVertex right )
-	{
-		return right == null ? null : idmap.getVertex( right.getModelVertexId(), reusableLeftRef( right ) );
+	public V getLeft(final DataVertex right) {
+		return right == null ? null : idmap.getVertex(right.getModelVertexId(),
+			reusableLeftRef(right));
 	}
 
 	@Override
-	public DataVertex getRight( final V left, final DataVertex ref )
-	{
-		return left == null ? null : dataGraph.getDataVertexForModelId( idmap.getVertexId( left ), ref );
+	public DataVertex getRight(final V left, final DataVertex ref) {
+		return left == null ? null : dataGraph.getDataVertexForModelId(idmap
+			.getVertexId(left), ref);
 	}
 
-	@SuppressWarnings( "unchecked" )
+	@SuppressWarnings("unchecked")
 	@Override
-	public V reusableLeftRef( final DataVertex ref )
-	{
-		return ( V ) ref.modelVertex.getReusableRef();
+	public V reusableLeftRef(final DataVertex ref) {
+		return (V) ref.modelVertex.getReusableRef();
 	}
 
 	@Override
-	public DataVertex reusableRightRef()
-	{
+	public DataVertex reusableRightRef() {
 		return dataGraph.vertexRef();
 	}
 
 	@Override
-	public void releaseRef( final DataVertex ref )
-	{
-		dataGraph.releaseRef( ref );
+	public void releaseRef(final DataVertex ref) {
+		dataGraph.releaseRef(ref);
 	}
 }

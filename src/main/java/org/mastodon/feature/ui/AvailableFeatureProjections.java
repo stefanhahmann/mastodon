@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.feature.ui;
 
 import java.util.Collection;
@@ -41,8 +42,8 @@ import gnu.trove.list.TIntList;
  *
  * @author Tobias Pietzsch
  */
-public interface AvailableFeatureProjections
-{
+public interface AvailableFeatureProjections {
+
 	/**
 	 * Get ordered list of source indices available for selection as feature
 	 * source.
@@ -54,34 +55,30 @@ public interface AvailableFeatureProjections
 	/**
 	 * Get ordered list of feature keys for the given {@code targetType}.
 	 *
-	 * @param targetType
-	 *            whether vertex or edge features should be returned
+	 * @param targetType whether vertex or edge features should be returned
 	 * @return ordered list of feature keys
 	 */
-	public Collection< String > featureKeys( final TargetType targetType );
+	public Collection<String> featureKeys(final TargetType targetType);
 
 	/**
 	 * Get ordered list of projection keys available for the feature with the
 	 * specified {@code targetType} and {@code String} key.
 	 *
-	 * @param targetType
-	 *            whether a vertex or edge feature is queried
-	 * @param featureKey
-	 *            key of the feature to query
+	 * @param targetType whether a vertex or edge feature is queried
+	 * @param featureKey key of the feature to query
 	 * @return ordered list of projection keys
 	 */
-	public Collection< String > projectionKeys( final TargetType targetType, final String featureKey );
-
+	public Collection<String> projectionKeys(final TargetType targetType,
+		final String featureKey);
 
 	/**
 	 * Get the multiplicity of the feature with the specified {@code targetType}
 	 * and {@code String} key.
 	 *
-	 * @param targetType
-	 *            whether a vertex or edge feature is queried
-	 * @param featureKey
-	 *            key of the feature to query
+	 * @param targetType whether a vertex or edge feature is queried
+	 * @param featureKey key of the feature to query
 	 * @return multiplicity of specified feature
 	 */
-	public Multiplicity multiplicity( final TargetType targetType, final String featureKey );
+	public Multiplicity multiplicity(final TargetType targetType,
+		final String featureKey);
 }

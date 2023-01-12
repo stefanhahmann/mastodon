@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.app.plugin;
 
 /**
@@ -33,5 +34,4 @@ package org.mastodon.app.plugin;
  * app to plugins of the app. An app plugin model contains for instance a
  * reference to the app model and to the window manager of the app.
  */
-public interface MastodonAppPluginModel
-{}
+public interface MastodonAppPluginModel {}

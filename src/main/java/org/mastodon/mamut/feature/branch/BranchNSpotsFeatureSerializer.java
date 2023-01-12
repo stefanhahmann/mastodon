@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature.branch;
 
 import java.io.IOException;
@@ -44,43 +45,48 @@ import org.mastodon.mamut.model.branch.ModelBranchGraph;
 import org.mastodon.properties.IntPropertyMap;
 import org.scijava.plugin.Plugin;
 
-@Plugin( type = FeatureSerializer.class )
-public class BranchNSpotsFeatureSerializer implements BranchFeatureSerializer< BranchNSpotsFeature, BranchSpot, Spot>
+@Plugin(type = FeatureSerializer.class)
+public class BranchNSpotsFeatureSerializer implements
+	BranchFeatureSerializer<BranchNSpotsFeature, BranchSpot, Spot>
 {
 
 	@Override
-	public Spec getFeatureSpec()
-	{
+	public Spec getFeatureSpec() {
 		return BranchNSpotsFeature.SPEC;
 	}
 
 	@Override
 	public BranchNSpotsFeature deserialize(
-			final FileIdToObjectMap< Spot > idmap,
-			final ObjectInputStream ois,
-			final ModelBranchGraph branchGraph,
-			final ModelGraph graph ) throws ClassNotFoundException, IOException
+		final FileIdToObjectMap<Spot> idmap,
+		final ObjectInputStream ois,
+		final ModelBranchGraph branchGraph,
+		final ModelGraph graph) throws ClassNotFoundException, IOException
 	{
 		// Read the map link -> val.
-		final IntPropertyMap< Spot > lmap = new IntPropertyMap<>( graph.vertices(), -1 );
-		final IntPropertyMapSerializer< Spot > propertyMapSerializer = new IntPropertyMapSerializer<>( lmap );
-		propertyMapSerializer.readPropertyMap( idmap, ois );
+		final IntPropertyMap<Spot> lmap = new IntPropertyMap<>(graph.vertices(),
+			-1);
+		final IntPropertyMapSerializer<Spot> propertyMapSerializer =
+			new IntPropertyMapSerializer<>(lmap);
+		propertyMapSerializer.readPropertyMap(idmap, ois);
 
 		// Map to branch-link -> val.
-		return new BranchNSpotsFeature( BranchFeatureSerializer.mapToBranchSpotMap( lmap, branchGraph ) );
+		return new BranchNSpotsFeature(BranchFeatureSerializer.mapToBranchSpotMap(
+			lmap, branchGraph));
 	}
 
 	@Override
 	public void serialize(
-			final BranchNSpotsFeature feature,
-			final ObjectToFileIdMap< Spot > idmap,
-			final ObjectOutputStream oos,
-			final ModelBranchGraph branchGraph,
-			final ModelGraph graph ) throws IOException
+		final BranchNSpotsFeature feature,
+		final ObjectToFileIdMap<Spot> idmap,
+		final ObjectOutputStream oos,
+		final ModelBranchGraph branchGraph,
+		final ModelGraph graph) throws IOException
 	{
-		final IntPropertyMap< Spot > lmap = BranchFeatureSerializer.branchSpotMapToMap( feature.map, branchGraph, graph );
-		final IntPropertyMapSerializer< Spot > propertyMapSerializer = new IntPropertyMapSerializer<>( lmap );
-		propertyMapSerializer.writePropertyMap( idmap, oos );
+		final IntPropertyMap<Spot> lmap = BranchFeatureSerializer
+			.branchSpotMapToMap(feature.map, branchGraph, graph);
+		final IntPropertyMapSerializer<Spot> propertyMapSerializer =
+			new IntPropertyMapSerializer<>(lmap);
+		propertyMapSerializer.writePropertyMap(idmap, oos);
 	}
 
 }

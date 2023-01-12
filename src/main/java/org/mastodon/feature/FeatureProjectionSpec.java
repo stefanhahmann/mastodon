@@ -26,13 +26,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.feature;
 
 /**
  * Specifications for a feature projection.
  */
-public class FeatureProjectionSpec
-{
+public class FeatureProjectionSpec {
+
 	/**
 	 * The projection specification name.
 	 */
@@ -40,49 +41,46 @@ public class FeatureProjectionSpec
 
 	public final Dimension projectionDimension;
 
-	public FeatureProjectionSpec( final String projectionName )
-	{
-		this( projectionName, Dimension.NONE );
+	public FeatureProjectionSpec(final String projectionName) {
+		this(projectionName, Dimension.NONE);
 	}
 
-	public FeatureProjectionSpec( final String projectionName, final Dimension dimension )
+	public FeatureProjectionSpec(final String projectionName,
+		final Dimension dimension)
 	{
 		this.projectionName = projectionName;
 		this.projectionDimension = dimension;
 	}
 
-	public String getKey()
-	{
+	public String getKey() {
 		return projectionName;
 	}
 
 	@Override
-	public String toString()
-	{
-		return "\"" + projectionName + "\" (dimension = " + projectionDimension + ")";
+	public String toString() {
+		return "\"" + projectionName + "\" (dimension = " + projectionDimension +
+			")";
 	}
 
 	@Override
-	public boolean equals( final Object o )
-	{
-		if ( this == o )
+	public boolean equals(final Object o) {
+		if (this == o)
 			return true;
-		if ( !( o instanceof FeatureProjectionSpec ) )
+		if (!(o instanceof FeatureProjectionSpec))
 			return false;
 
-		final FeatureProjectionSpec that = ( FeatureProjectionSpec ) o;
+		final FeatureProjectionSpec that = (FeatureProjectionSpec) o;
 
-		if ( !projectionName.equals( that.projectionName ) )
+		if (!projectionName.equals(that.projectionName))
 			return false;
-		if ( projectionDimension != that.projectionDimension )
+		if (projectionDimension != that.projectionDimension)
 			return false;
 
 		return true;
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public int hashCode() {
 		return projectionName.hashCode();
 	}
 }

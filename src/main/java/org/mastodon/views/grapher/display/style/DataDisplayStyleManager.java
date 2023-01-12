@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.display.style;
 
 import java.io.FileNotFoundException;
@@ -52,9 +53,12 @@ import bdv.ui.settings.style.AbstractStyleManager;
  * @author Jean-Yves Tinevez
  * @author Tobias Pietzsch
  */
-public class DataDisplayStyleManager extends AbstractStyleManager< DataDisplayStyleManager, DataDisplayStyle >
+public class DataDisplayStyleManager extends
+	AbstractStyleManager<DataDisplayStyleManager, DataDisplayStyle>
 {
-	private static final String STYLE_FILE = System.getProperty( "user.home" ) + "/.mastodon/datagraphstyles.yaml";
+
+	private static final String STYLE_FILE = System.getProperty("user.home") +
+		"/.mastodon/datagraphstyles.yaml";
 
 	/**
 	 * A {@code DataDisplayStyle} that has the same properties as the default
@@ -66,105 +70,93 @@ public class DataDisplayStyleManager extends AbstractStyleManager< DataDisplaySt
 
 	private final DataDisplayStyle.UpdateListener updateForwardDefaultListeners;
 
-	public DataDisplayStyleManager()
-	{
-		this( true );
+	public DataDisplayStyleManager() {
+		this(true);
 	}
 
-	public DataDisplayStyleManager( final boolean loadStyles )
-	{
+	public DataDisplayStyleManager(final boolean loadStyles) {
 		forwardDefaultStyle = DataDisplayStyle.defaultStyle().copy();
-		updateForwardDefaultListeners = () -> forwardDefaultStyle.set( selectedStyle );
-		selectedStyle.updateListeners().add( updateForwardDefaultListeners );
-		if ( loadStyles )
+		updateForwardDefaultListeners = () -> forwardDefaultStyle.set(
+			selectedStyle);
+		selectedStyle.updateListeners().add(updateForwardDefaultListeners);
+		if (loadStyles)
 			loadStyles();
 	}
 
 	@Override
-	protected List< DataDisplayStyle > loadBuiltinStyles()
-	{
-		return Collections.unmodifiableList( new ArrayList<>( DataDisplayStyle.defaults ) );
+	protected List<DataDisplayStyle> loadBuiltinStyles() {
+		return Collections.unmodifiableList(new ArrayList<>(
+			DataDisplayStyle.defaults));
 	}
 
 	@Override
-	public synchronized void setSelectedStyle( final DataDisplayStyle style )
-	{
-		selectedStyle.updateListeners().remove( updateForwardDefaultListeners );
+	public synchronized void setSelectedStyle(final DataDisplayStyle style) {
+		selectedStyle.updateListeners().remove(updateForwardDefaultListeners);
 		selectedStyle = style;
-		forwardDefaultStyle.set( selectedStyle );
-		selectedStyle.updateListeners().add( updateForwardDefaultListeners );
+		forwardDefaultStyle.set(selectedStyle);
+		selectedStyle.updateListeners().add(updateForwardDefaultListeners);
 	}
 
 	/**
-	 * Returns a final {@link DataDisplayStyle} instance that always has the
-	 * same properties as the default style.
+	 * Returns a final {@link DataDisplayStyle} instance that always has the same
+	 * properties as the default style.
 	 *
-	 * @return a style instance that always has the same properties as the default style.
+	 * @return a style instance that always has the same properties as the default
+	 *         style.
 	 */
-	public DataDisplayStyle getForwardDefaultStyle()
-	{
+	public DataDisplayStyle getForwardDefaultStyle() {
 		return forwardDefaultStyle;
 	}
 
-	public void loadStyles()
-	{
-		loadStyles( STYLE_FILE );
+	public void loadStyles() {
+		loadStyles(STYLE_FILE);
 	}
 
-	public void loadStyles( final String filename )
-	{
+	public void loadStyles(final String filename) {
 		userStyles.clear();
-		final Set< String > names = builtinStyles.stream().map( DataDisplayStyle::getName ).collect( Collectors.toSet() );
-		try
-		{
-			final FileReader input = new FileReader( filename );
+		final Set<String> names = builtinStyles.stream().map(
+			DataDisplayStyle::getName).collect(Collectors.toSet());
+		try {
+			final FileReader input = new FileReader(filename);
 			final Yaml yaml = DataDisplayStyleIO.createYaml();
-			final Iterable< Object > objs = yaml.loadAll( input );
+			final Iterable<Object> objs = yaml.loadAll(input);
 			String defaultStyleName = null;
-			for ( final Object obj : objs )
-			{
-				if ( obj instanceof String )
-				{
-					defaultStyleName = ( String ) obj;
+			for (final Object obj : objs) {
+				if (obj instanceof String) {
+					defaultStyleName = (String) obj;
 				}
-				else if ( obj instanceof DataDisplayStyle )
-				{
-					final DataDisplayStyle ts = ( DataDisplayStyle ) obj;
-					if ( null != ts )
-					{
+				else if (obj instanceof DataDisplayStyle) {
+					final DataDisplayStyle ts = (DataDisplayStyle) obj;
+					if (null != ts) {
 						// sanity check: style names must be unique
-						if ( names.add( ts.getName() ) )
-							userStyles.add( ts );
+						if (names.add(ts.getName()))
+							userStyles.add(ts);
 					}
 				}
 			}
-			setSelectedStyle( styleForName( defaultStyleName ).orElseGet( () -> builtinStyles.get( 0 ) ) );
+			setSelectedStyle(styleForName(defaultStyleName).orElseGet(
+				() -> builtinStyles.get(0)));
 		}
-		catch ( final FileNotFoundException e )
-		{}
+		catch (final FileNotFoundException e) {}
 	}
 
 	@Override
-	public void saveStyles()
-	{
-		saveStyles( STYLE_FILE );
+	public void saveStyles() {
+		saveStyles(STYLE_FILE);
 	}
 
-	public void saveStyles( final String filename )
-	{
-		try
-		{
-			FileChooser.mkdirs( filename );
-			final FileWriter output = new FileWriter( filename );
+	public void saveStyles(final String filename) {
+		try {
+			FileChooser.mkdirs(filename);
+			final FileWriter output = new FileWriter(filename);
 			final Yaml yaml = DataDisplayStyleIO.createYaml();
-			final ArrayList< Object > objects = new ArrayList<>();
-			objects.add( selectedStyle.getName() );
-			objects.addAll( userStyles );
-			yaml.dumpAll( objects.iterator(), output );
+			final ArrayList<Object> objects = new ArrayList<>();
+			objects.add(selectedStyle.getName());
+			objects.addAll(userStyles);
+			yaml.dumpAll(objects.iterator(), output);
 			output.close();
 		}
-		catch ( final IOException e )
-		{
+		catch (final IOException e) {
 			e.printStackTrace();
 		}
 	}

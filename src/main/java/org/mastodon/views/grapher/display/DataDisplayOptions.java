@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.display;
 
 import java.awt.event.KeyListener;
@@ -41,39 +42,32 @@ import org.mastodon.views.trackscheme.display.TrackSchemeFrame;
 import org.mastodon.views.trackscheme.display.TrackSchemePanel;
 import org.scijava.ui.behaviour.KeyPressedManager;
 
-public class DataDisplayOptions
-{
+public class DataDisplayOptions {
+
 	public final Values values = new Values();
 
-	public static DataDisplayOptions options()
-	{
+	public static DataDisplayOptions options() {
 		return new DataDisplayOptions();
 	}
 
 	/**
-	 * Sets the X position of the top-left corner of the
-	 * {@link TrackSchemeFrame}.
+	 * Sets the X position of the top-left corner of the {@link TrackSchemeFrame}.
 	 * 
-	 * @param x
-	 *            the X position.
+	 * @param x the X position.
 	 * @return this instance.
 	 */
-	public DataDisplayOptions x( final int x )
-	{
+	public DataDisplayOptions x(final int x) {
 		values.x = x;
 		return this;
 	}
 
 	/**
-	 * Sets the Y position of the top-left corner of the
-	 * {@link TrackSchemeFrame}.
+	 * Sets the Y position of the top-left corner of the {@link TrackSchemeFrame}.
 	 * 
-	 * @param y
-	 *            the Y position.
+	 * @param y the Y position.
 	 * @return this instance.
 	 */
-	public DataDisplayOptions y( final int y )
-	{
+	public DataDisplayOptions y(final int y) {
 		values.y = y;
 		return this;
 	}
@@ -81,12 +75,10 @@ public class DataDisplayOptions
 	/**
 	 * Sets the width of {@link TrackSchemePanel} canvas.
 	 *
-	 * @param w
-	 *            the width.
+	 * @param w the width.
 	 * @return this instance.
 	 */
-	public DataDisplayOptions width( final int w )
-	{
+	public DataDisplayOptions width(final int w) {
 		values.width = w;
 		return this;
 	}
@@ -94,12 +86,10 @@ public class DataDisplayOptions
 	/**
 	 * Sets the height of {@link TrackSchemePanel} canvas.
 	 *
-	 * @param h
-	 *            the height.
+	 * @param h the height.
 	 * @return this instance.
 	 */
-	public DataDisplayOptions height( final int h )
-	{
+	public DataDisplayOptions height(final int h) {
 		values.height = h;
 		return this;
 	}
@@ -107,12 +97,10 @@ public class DataDisplayOptions
 	/**
 	 * Sets the animation time in milliseconds.
 	 *
-	 * @param ms
-	 *            the animation time in milliseconds.
+	 * @param ms the animation time in milliseconds.
 	 * @return this instance.
 	 */
-	public DataDisplayOptions animationDurationMillis( final long ms )
-	{
+	public DataDisplayOptions animationDurationMillis(final long ms) {
 		values.animationDurationMillis = ms;
 		return this;
 	}
@@ -127,23 +115,24 @@ public class DataDisplayOptions
 	 * under the mouse receives focus and the behaviour is handled there.
 	 * </p>
 	 *
-	 * @param manager
-	 *            the key-pressed manager.
+	 * @param manager the key-pressed manager.
 	 * @return this instance.
 	 */
-	public DataDisplayOptions shareKeyPressedEvents( final KeyPressedManager manager )
+	public DataDisplayOptions shareKeyPressedEvents(
+		final KeyPressedManager manager)
 	{
 		values.keyPressedManager = manager;
 		return this;
 	}
+
 	/**
 	 * Sets the navigation etiquette.
 	 *
-	 * @param navigationEtiquette
-	 *            the navigation etiquette.
+	 * @param navigationEtiquette the navigation etiquette.
 	 * @return this instance.
 	 */
-	public DataDisplayOptions navigationEtiquette( final NavigationEtiquette navigationEtiquette )
+	public DataDisplayOptions navigationEtiquette(
+		final NavigationEtiquette navigationEtiquette)
 	{
 		values.navigationEtiquette = navigationEtiquette;
 		return this;
@@ -152,12 +141,10 @@ public class DataDisplayOptions
 	/**
 	 * Sets the TrackScheme style.
 	 *
-	 * @param style
-	 *            the style.
+	 * @param style the style.
 	 * @return this instance.
 	 */
-	public DataDisplayOptions style( final DataDisplayStyle style )
-	{
+	public DataDisplayOptions style(final DataDisplayStyle style) {
 		values.style = style;
 		return this;
 	}
@@ -165,11 +152,11 @@ public class DataDisplayOptions
 	/**
 	 * Sets the factory used to create this TrackScheme's overlay.
 	 *
-	 * @param factory
-	 *            the factory.
+	 * @param factory the factory.
 	 * @return this instance.
 	 */
-	public DataDisplayOptions dataDisplayOverlayFactory( final DataDisplayOverlayFactory factory )
+	public DataDisplayOptions dataDisplayOverlayFactory(
+		final DataDisplayOverlayFactory factory)
 	{
 		values.dataDisplayOverlayFactory = factory;
 		return this;
@@ -179,11 +166,11 @@ public class DataDisplayOptions
 	 * Sets the color generator used to color vertices and edges in this
 	 * TrackScheme.
 	 *
-	 * @param generator
-	 *            the color generator.
+	 * @param generator the color generator.
 	 * @return this instance.
 	 */
-	public DataDisplayOptions graphColorGenerator( final GraphColorGenerator< DataVertex, DataEdge > generator )
+	public DataDisplayOptions graphColorGenerator(
+		final GraphColorGenerator<DataVertex, DataEdge> generator)
 	{
 		values.graphColorGenerator = generator;
 		return this;
@@ -192,8 +179,8 @@ public class DataDisplayOptions
 	/**
 	 * Read-only {@link DataDisplayOptions} values.
 	 */
-	public static class Values
-	{
+	public static class Values {
+
 		private int x = 0;
 
 		private int y = 0;
@@ -206,75 +193,61 @@ public class DataDisplayOptions
 
 		private KeyPressedManager keyPressedManager = null;
 
-		private NavigationEtiquette navigationEtiquette = NavigationEtiquette.MINIMAL;
+		private NavigationEtiquette navigationEtiquette =
+			NavigationEtiquette.MINIMAL;
 
 		private DataDisplayStyle style = DataDisplayStyle.defaultStyle();
 
-		private DataDisplayOverlayFactory dataDisplayOverlayFactory = new DataDisplayOverlayFactory();
+		private DataDisplayOverlayFactory dataDisplayOverlayFactory =
+			new DataDisplayOverlayFactory();
 
-		private GraphColorGenerator< DataVertex, DataEdge > graphColorGenerator = new DefaultGraphColorGenerator<>();
+		private GraphColorGenerator<DataVertex, DataEdge> graphColorGenerator =
+			new DefaultGraphColorGenerator<>();
 
-		public DataDisplayOptions optionsFromValues()
-		{
-			return new DataDisplayOptions().
-				x( x ).
-				y( y ).
-				width( width ).
-				height( height ).
-				animationDurationMillis( animationDurationMillis ).
-				navigationEtiquette( navigationEtiquette ).
-				style( style ).
-				dataDisplayOverlayFactory( dataDisplayOverlayFactory ).
-				graphColorGenerator( graphColorGenerator );
+		public DataDisplayOptions optionsFromValues() {
+			return new DataDisplayOptions().x(x).y(y).width(width).height(height)
+				.animationDurationMillis(animationDurationMillis).navigationEtiquette(
+					navigationEtiquette).style(style).dataDisplayOverlayFactory(
+						dataDisplayOverlayFactory).graphColorGenerator(graphColorGenerator);
 		}
 
-		public int getX()
-		{
+		public int getX() {
 			return x;
 		}
 
-		public int getY()
-		{
+		public int getY() {
 			return y;
 		}
 
-		public int getWidth()
-		{
+		public int getWidth() {
 			return width;
 		}
 
-		public int getHeight()
-		{
+		public int getHeight() {
 			return height;
 		}
 
-		public long getAnimationDurationMillis()
-		{
+		public long getAnimationDurationMillis() {
 			return animationDurationMillis;
 		}
 
-		public KeyPressedManager getKeyPressedManager()
-		{
+		public KeyPressedManager getKeyPressedManager() {
 			return keyPressedManager;
 		}
 
-		public NavigationEtiquette getNavigationEtiquette()
-		{
+		public NavigationEtiquette getNavigationEtiquette() {
 			return navigationEtiquette;
 		}
 
-		public DataDisplayStyle getStyle()
-		{
+		public DataDisplayStyle getStyle() {
 			return style;
 		}
 
-		public DataDisplayOverlayFactory getDataDisplayOverlayFactory()
-		{
+		public DataDisplayOverlayFactory getDataDisplayOverlayFactory() {
 			return dataDisplayOverlayFactory;
 		}
 
-		public GraphColorGenerator< DataVertex, DataEdge > getGraphColorGenerator()
-		{
+		public GraphColorGenerator<DataVertex, DataEdge> getGraphColorGenerator() {
 			return graphColorGenerator;
 		}
 	}

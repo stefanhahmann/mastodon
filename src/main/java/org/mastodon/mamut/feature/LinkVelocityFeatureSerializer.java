@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature;
 
 import java.io.IOException;
@@ -38,19 +39,21 @@ import org.mastodon.mamut.feature.LinkVelocityFeature.Spec;
 import org.mastodon.mamut.model.Link;
 import org.scijava.plugin.Plugin;
 
-@Plugin( type = FeatureSerializer.class )
-public class LinkVelocityFeatureSerializer implements FeatureSerializer< LinkVelocityFeature, Link >
+@Plugin(type = FeatureSerializer.class)
+public class LinkVelocityFeatureSerializer implements
+	FeatureSerializer<LinkVelocityFeature, Link>
 {
 
 	@Override
-	public Spec getFeatureSpec()
-	{
+	public Spec getFeatureSpec() {
 		return LinkVelocityFeature.SPEC;
 	}
 
 	@Override
-	public void serialize( final LinkVelocityFeature feature, final ObjectToFileIdMap< Link > idmap, final ObjectOutputStream oos ) throws IOException
+	public void serialize(final LinkVelocityFeature feature,
+		final ObjectToFileIdMap<Link> idmap, final ObjectOutputStream oos)
+		throws IOException
 	{
-		LazyFeatureSerializer.serialize( feature, feature.graph.edges(), idmap, oos );
+		LazyFeatureSerializer.serialize(feature, feature.graph.edges(), idmap, oos);
 	}
 }

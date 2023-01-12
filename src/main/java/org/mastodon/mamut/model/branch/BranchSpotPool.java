@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.model.branch;
 
 import org.mastodon.RefPool;
@@ -36,37 +37,34 @@ import org.mastodon.pool.ByteMappedElementArray;
 import org.mastodon.pool.SingleArrayMemPool;
 import org.mastodon.pool.attributes.IntAttribute;
 
-public class BranchSpotPool extends AbstractListenableVertexPool< 
-		BranchSpot, 
-		BranchLink, 
-		ByteMappedElement >
+public class BranchSpotPool extends
+	AbstractListenableVertexPool<BranchSpot, BranchLink, ByteMappedElement>
 {
 
-	public static class BranchVertexLayout extends AbstractVertexLayout
-	{
+	public static class BranchVertexLayout extends AbstractVertexLayout {
+
 		final IntField firstLinkedVertexId = intField();
 		final IntField lastLinkedVertexId = intField();
 	}
 
 	public static final BranchVertexLayout layout = new BranchVertexLayout();
 
-	protected final IntAttribute< BranchSpot > firstSpotId;
+	protected final IntAttribute<BranchSpot> firstSpotId;
 
-	protected final IntAttribute< BranchSpot > lastSpotId;
+	protected final IntAttribute<BranchSpot> lastSpotId;
 
-	private final RefPool< Spot > vertexPool;
+	private final RefPool<Spot> vertexPool;
 
-	BranchSpotPool( final int initialCapacity, final RefPool< Spot > vertexPool )
-	{
-		super( initialCapacity, layout, BranchSpot.class, SingleArrayMemPool.factory( ByteMappedElementArray.factory ) );
+	BranchSpotPool(final int initialCapacity, final RefPool<Spot> vertexPool) {
+		super(initialCapacity, layout, BranchSpot.class, SingleArrayMemPool.factory(
+			ByteMappedElementArray.factory));
 		this.vertexPool = vertexPool;
-		this.firstSpotId = new IntAttribute<>( layout.firstLinkedVertexId, this );
-		this.lastSpotId = new IntAttribute<>( layout.lastLinkedVertexId, this );
+		this.firstSpotId = new IntAttribute<>(layout.firstLinkedVertexId, this);
+		this.lastSpotId = new IntAttribute<>(layout.lastLinkedVertexId, this);
 	}
 
 	@Override
-	protected BranchSpot createEmptyRef()
-	{
-		return new BranchSpot( this, vertexPool );
+	protected BranchSpot createEmptyRef() {
+		return new BranchSpot(this, vertexPool);
 	}
 }

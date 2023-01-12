@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.bdv;
 
 import java.io.File;
@@ -93,9 +94,9 @@ import net.imglib2.RandomAccessibleInterval;
 import net.imglib2.realtransform.AffineTransform3D;
 import net.imglib2.type.numeric.ARGBType;
 
-public class SharedBigDataViewerData
-{
-	private final ArrayList< SourceAndConverter< ? > > sources;
+public class SharedBigDataViewerData {
+
+	private final ArrayList<SourceAndConverter<?>> sources;
 
 	private final ConverterSetups setups;
 
@@ -113,7 +114,7 @@ public class SharedBigDataViewerData
 
 	private final InputTriggerConfig inputTriggerConfig;
 
-	private final AbstractSpimData< ? > spimData;
+	private final AbstractSpimData<?> spimData;
 
 	private final int numTimepoints;
 
@@ -124,14 +125,14 @@ public class SharedBigDataViewerData
 	private File proposedSettingsFile;
 
 	private SharedBigDataViewerData(
-			final AbstractSpimData< ? > spimData,
-			final ArrayList< SourceAndConverter< ? > > sources,
-			final ConverterSetups setups,
-			final SetupAssignments setupAssignments,
-			final CacheControl cache,
-			final int numTimepoints,
-			final ViewerOptions options,
-			final RequestRepaint requestRepaint )
+		final AbstractSpimData<?> spimData,
+		final ArrayList<SourceAndConverter<?>> sources,
+		final ConverterSetups setups,
+		final SetupAssignments setupAssignments,
+		final CacheControl cache,
+		final int numTimepoints,
+		final ViewerOptions options,
+		final RequestRepaint requestRepaint)
 	{
 		this.spimData = spimData;
 		this.sources = sources;
@@ -140,61 +141,54 @@ public class SharedBigDataViewerData
 		this.cache = cache;
 		this.numTimepoints = numTimepoints;
 
-		this.inputTriggerConfig = ( options.values.getInputTriggerConfig() != null )
-				? options.values.getInputTriggerConfig()
-				: new InputTriggerConfig();
+		this.inputTriggerConfig = (options.values.getInputTriggerConfig() != null)
+			? options.values.getInputTriggerConfig()
+			: new InputTriggerConfig();
 
-		this.manualTransformation = new ManualTransformation( sources );
+		this.manualTransformation = new ManualTransformation(sources);
 
 		this.bookmarks = new Bookmarks();
 
 		this.is2D = computeIs2D();
 		this.options = options
-				.inputTriggerConfig( inputTriggerConfig )
-				.transformEventHandlerFactory( is2D
-						? TransformEventHandler2D::new
-						: TransformEventHandler3D::new );
+			.inputTriggerConfig(inputTriggerConfig)
+			.transformEventHandlerFactory(is2D
+				? TransformEventHandler2D::new
+				: TransformEventHandler3D::new);
 
-		if ( WrapBasicImgLoader.wrapImgLoaderIfNecessary( spimData ) )
-			System.err.println( "WARNING:\nOpening <SpimData> dataset that is not suited for interactive browsing.\nConsider resaving as HDF5 for better performance." );
+		if (WrapBasicImgLoader.wrapImgLoaderIfNecessary(spimData))
+			System.err.println(
+				"WARNING:\nOpening <SpimData> dataset that is not suited for interactive browsing.\nConsider resaving as HDF5 for better performance.");
 
-		WrapBasicImgLoader.removeWrapperIfPresent( spimData );
+		WrapBasicImgLoader.removeWrapperIfPresent(spimData);
 	}
 
-	public boolean tryLoadSettings( final String xmlFilename )
-	{
+	public boolean tryLoadSettings(final String xmlFilename) {
 		proposedSettingsFile = null;
-		if ( xmlFilename.startsWith( "http://" ) )
-		{
+		if (xmlFilename.startsWith("http://")) {
 			// load settings.xml from the BigDataServer
 			final String settings = xmlFilename + "settings";
 			{
-				try
-				{
-					loadSettings( settings, null );
+				try {
+					loadSettings(settings, null);
 					return true;
 				}
-				catch ( final FileNotFoundException e )
-				{}
-				catch ( final Exception e )
-				{
+				catch (final FileNotFoundException e) {}
+				catch (final Exception e) {
 					e.printStackTrace();
 				}
 			}
 		}
-		else if ( xmlFilename.endsWith( ".xml" ) )
-		{
-			final String settings = xmlFilename.substring( 0, xmlFilename.length() - ".xml".length() ) + ".settings" + ".xml";
-			proposedSettingsFile = new File( settings );
-			if ( proposedSettingsFile.isFile() )
-			{
-				try
-				{
-					loadSettings( settings, null );
+		else if (xmlFilename.endsWith(".xml")) {
+			final String settings = xmlFilename.substring(0, xmlFilename.length() -
+				".xml".length()) + ".settings" + ".xml";
+			proposedSettingsFile = new File(settings);
+			if (proposedSettingsFile.isFile()) {
+				try {
+					loadSettings(settings, null);
 					return true;
 				}
-				catch ( final Exception e )
-				{
+				catch (final Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -202,122 +196,105 @@ public class SharedBigDataViewerData
 		return false;
 	}
 
-	public void loadSettings( final String xmlFilename, final ViewerPanel viewer ) throws IOException, JDOMException
+	public void loadSettings(final String xmlFilename, final ViewerPanel viewer)
+		throws IOException, JDOMException
 	{
 		final SAXBuilder sax = new SAXBuilder();
-		final Document doc = sax.build( xmlFilename );
+		final Document doc = sax.build(xmlFilename);
 		final Element root = doc.getRootElement();
-		if ( viewer != null )
-			viewer.stateFromXml( root );
-		setupAssignments.restoreFromXml( root );
-		manualTransformation.restoreFromXml( root );
-		bookmarks.restoreFromXml( root );
+		if (viewer != null)
+			viewer.stateFromXml(root);
+		setupAssignments.restoreFromXml(root);
+		manualTransformation.restoreFromXml(root);
+		bookmarks.restoreFromXml(root);
 	}
 
-	public void saveSettings( final String xmlFilename, final ViewerPanel viewer ) throws IOException
+	public void saveSettings(final String xmlFilename, final ViewerPanel viewer)
+		throws IOException
 	{
-		final Element root = new Element( "Settings" );
-		root.addContent( viewer.stateToXml() );
-		root.addContent( setupAssignments.toXml() );
-		root.addContent( manualTransformation.toXml() );
-		root.addContent( bookmarks.toXml() );
-		final Document doc = new Document( root );
-		final XMLOutputter xout = new XMLOutputter( Format.getPrettyFormat() );
-		xout.output( doc, new FileWriter( xmlFilename ) );
+		final Element root = new Element("Settings");
+		root.addContent(viewer.stateToXml());
+		root.addContent(setupAssignments.toXml());
+		root.addContent(manualTransformation.toXml());
+		root.addContent(bookmarks.toXml());
+		final Document doc = new Document(root);
+		final XMLOutputter xout = new XMLOutputter(Format.getPrettyFormat());
+		xout.output(doc, new FileWriter(xmlFilename));
 	}
 
-	public AbstractSpimData< ? > getSpimData()
-	{
+	public AbstractSpimData<?> getSpimData() {
 		return spimData;
 	}
 
-	public ViewerOptions getOptions()
-	{
+	public ViewerOptions getOptions() {
 		return options;
 	}
 
-	public InputTriggerConfig getInputTriggerConfig()
-	{
+	public InputTriggerConfig getInputTriggerConfig() {
 		return inputTriggerConfig;
 	}
 
-	public ArrayList< SourceAndConverter< ? > > getSources()
-	{
+	public ArrayList<SourceAndConverter<?>> getSources() {
 		return sources;
 	}
 
-	public ConverterSetups getConverterSetups()
-	{
+	public ConverterSetups getConverterSetups() {
 		return setups;
 	}
 
 	@Deprecated
-	public SetupAssignments getSetupAssignments()
-	{
+	public SetupAssignments getSetupAssignments() {
 		return setupAssignments;
 	}
 
-	public int getNumTimepoints()
-	{
+	public int getNumTimepoints() {
 		return numTimepoints;
 	}
 
-	public CacheControl getCache()
-	{
+	public CacheControl getCache() {
 		return cache;
 	}
 
-	public Bookmarks getBookmarks()
-	{
+	public Bookmarks getBookmarks() {
 		return bookmarks;
 	}
 
-	public ManualTransformation getManualTransformation()
-	{
+	public ManualTransformation getManualTransformation() {
 		return manualTransformation;
 	}
 
 	@Deprecated
-	public synchronized BrightnessDialog getBrightnessDialog()
-	{
-		if ( brightnessDialog == null )
-			brightnessDialog = new BrightnessDialog( null, setupAssignments );
+	public synchronized BrightnessDialog getBrightnessDialog() {
+		if (brightnessDialog == null)
+			brightnessDialog = new BrightnessDialog(null, setupAssignments);
 
 		return brightnessDialog;
 	}
 
-	public File getProposedSettingsFile()
-	{
+	public File getProposedSettingsFile() {
 		return proposedSettingsFile;
 	}
 
-	public void setProposedSettingsFile( final File file )
-	{
+	public void setProposedSettingsFile(final File file) {
 		this.proposedSettingsFile = file;
 	}
 
-	public boolean is2D()
-	{
+	public boolean is2D() {
 		return is2D;
 	}
 
 	/**
-	 * Utility that returns <code>true</code> if all the sources specified are
-	 * 2D.
+	 * Utility that returns <code>true</code> if all the sources specified are 2D.
 	 *
 	 * @return <code>true</code> if all the sources specified are 2D.
 	 */
-	private boolean computeIs2D()
-	{
-		for ( final SourceAndConverter< ? > sac : sources )
-		{
-			final Source< ? > source = sac.getSpimSource();
-			for ( int t = 0; t < numTimepoints; t++ )
-			{
-				if ( source.isPresent( t ) )
-				{
-					final RandomAccessibleInterval< ? > level = source.getSource( t, 0 );
-					if ( level.dimension( 2 ) > 1 )
+	private boolean computeIs2D() {
+		for (final SourceAndConverter<?> sac : sources) {
+			final Source<?> source = sac.getSpimSource();
+			for (int t = 0; t < numTimepoints; t++) {
+				if (source.isPresent(t)) {
+					final RandomAccessibleInterval<?> level = source.getSource(t, 0);
+					if (level.dimension(2) > 1)
 						return false;
 					break;
 				}
@@ -327,22 +304,26 @@ public class SharedBigDataViewerData
 	}
 
 	public static SharedBigDataViewerData fromSpimDataXmlFile(
-			final String spimDataXmlFilename,
-			final ViewerOptions viewerOptions,
-			final RequestRepaint requestRepaint ) throws SpimDataException
+		final String spimDataXmlFilename,
+		final ViewerOptions viewerOptions,
+		final RequestRepaint requestRepaint) throws SpimDataException
 	{
-		final AbstractSpimData< ? > spimData = new XmlIoSpimDataMinimal().load( spimDataXmlFilename );
-		return formSpimData( spimDataXmlFilename, spimData, viewerOptions, requestRepaint );
+		final AbstractSpimData<?> spimData = new XmlIoSpimDataMinimal().load(
+			spimDataXmlFilename);
+		return formSpimData(spimDataXmlFilename, spimData, viewerOptions,
+			requestRepaint);
 	}
 
 	public static
-			SharedBigDataViewerData fromDummyFilename(
-					final String spimDataXmlFilename,
-					final ViewerOptions viewerOptions,
-					final RequestRepaint requestRepaint )
+		SharedBigDataViewerData fromDummyFilename(
+			final String spimDataXmlFilename,
+			final ViewerOptions viewerOptions,
+			final RequestRepaint requestRepaint)
 	{
-		final AbstractSpimData< ? > spimData = DummySpimData.tryCreate( spimDataXmlFilename );
-		return formSpimData( spimDataXmlFilename, spimData, viewerOptions, requestRepaint );
+		final AbstractSpimData<?> spimData = DummySpimData.tryCreate(
+			spimDataXmlFilename);
+		return formSpimData(spimDataXmlFilename, spimData, viewerOptions,
+			requestRepaint);
 	}
 
 	/**
@@ -354,58 +335,61 @@ public class SharedBigDataViewerData
 	 * @return a "dummy" {@link SharedBigDataViewerData} object.
 	 */
 	public static SharedBigDataViewerData createDummyDataFromSpimDataXml(
-			final String spimDataXmlFilename,
-			final ViewerOptions viewerOptions,
-			final RequestRepaint requestRepaint ) throws SpimDataException
+		final String spimDataXmlFilename,
+		final ViewerOptions viewerOptions,
+		final RequestRepaint requestRepaint) throws SpimDataException
 	{
-		final AbstractSpimData< ? > spimData = DummySpimData.fromSpimDataXml( spimDataXmlFilename );
-		return formSpimData( spimDataXmlFilename, spimData, viewerOptions, requestRepaint );
+		final AbstractSpimData<?> spimData = DummySpimData.fromSpimDataXml(
+			spimDataXmlFilename);
+		return formSpimData(spimDataXmlFilename, spimData, viewerOptions,
+			requestRepaint);
 	}
 
 	private static SharedBigDataViewerData formSpimData(
-			final String spimDataXmlFilename,
-			final AbstractSpimData< ? > spimData,
-			final ViewerOptions viewerOptions,
-			final RequestRepaint requestRepaint )
+		final String spimDataXmlFilename,
+		final AbstractSpimData<?> spimData,
+		final ViewerOptions viewerOptions,
+		final RequestRepaint requestRepaint)
 	{
-		final AbstractSequenceDescription< ?, ?, ? > seq = spimData.getSequenceDescription();
+		final AbstractSequenceDescription<?, ?, ?> seq = spimData
+			.getSequenceDescription();
 		final int numTimepoints = seq.getTimePoints().size();
-		final CacheControl cache = ( ( ViewerImgLoader ) seq.getImgLoader() ).getCacheControl();
+		final CacheControl cache = ((ViewerImgLoader) seq.getImgLoader())
+			.getCacheControl();
 
-		final ArrayList< ConverterSetup > converterSetups = new ArrayList<>();
-		final ArrayList< SourceAndConverter< ? > > sources = new ArrayList<>();
-		BigDataViewer.initSetups( spimData, converterSetups, sources );
+		final ArrayList<ConverterSetup> converterSetups = new ArrayList<>();
+		final ArrayList<SourceAndConverter<?>> sources = new ArrayList<>();
+		BigDataViewer.initSetups(spimData, converterSetups, sources);
 
-		final ConverterSetups setups = new ConverterSetups( new BasicViewerState() );
-		for ( int i = 0; i < sources.size(); ++i )
-			setups.put( sources.get( i ), converterSetups.get( i ) );
+		final ConverterSetups setups = new ConverterSetups(new BasicViewerState());
+		for (int i = 0; i < sources.size(); ++i)
+			setups.put(sources.get(i), converterSetups.get(i));
 
-		final SetupAssignments setupAssignments = new SetupAssignments( converterSetups, 0, 65535 );
-		if ( setupAssignments.getMinMaxGroups().size() > 0 )
-		{
-			final MinMaxGroup group = setupAssignments.getMinMaxGroups().get( 0 );
-			for ( final ConverterSetup setup : setupAssignments.getConverterSetups() )
-				setupAssignments.moveSetupToGroup( setup, group );
+		final SetupAssignments setupAssignments = new SetupAssignments(
+			converterSetups, 0, 65535);
+		if (setupAssignments.getMinMaxGroups().size() > 0) {
+			final MinMaxGroup group = setupAssignments.getMinMaxGroups().get(0);
+			for (final ConverterSetup setup : setupAssignments.getConverterSetups())
+				setupAssignments.moveSetupToGroup(setup, group);
 		}
 
-		WrapBasicImgLoader.removeWrapperIfPresent( spimData );
+		WrapBasicImgLoader.removeWrapperIfPresent(spimData);
 
 		final SharedBigDataViewerData sbdv = new SharedBigDataViewerData(
-				spimData,
-				sources,
-				setups,
-				setupAssignments,
-				cache,
-				numTimepoints,
-				viewerOptions,
-				requestRepaint );
+			spimData,
+			sources,
+			setups,
+			setupAssignments,
+			cache,
+			numTimepoints,
+			viewerOptions,
+			requestRepaint);
 
-		if ( !sbdv.tryLoadSettings( spimDataXmlFilename ) )
-		{
+		if (!sbdv.tryLoadSettings(spimDataXmlFilename)) {
 			final BasicViewerState state = new BasicViewerState();
-			state.addSource( sources.get( 0 ) );
-			state.setCurrentSource( sources.get( 0 ) );
-			InitializeViewerState.initBrightness( 0.001, 0.999, state, setups );
+			state.addSource(sources.get(0));
+			state.setCurrentSource(sources.get(0));
+			InitializeViewerState.initBrightness(0.001, 0.999, state, setups);
 		}
 
 		return sbdv;
@@ -416,21 +400,21 @@ public class SharedBigDataViewerData
 	 */
 
 	public static SharedBigDataViewerData fromImagePlus(
-			final ImagePlus imp,
-			final ViewerOptions viewerOptions,
-			final RequestRepaint requestRepaint )
+		final ImagePlus imp,
+		final ViewerOptions viewerOptions,
+		final RequestRepaint requestRepaint)
 	{
 		// check the image type
-		switch ( imp.getType() )
-		{
-		case ImagePlus.GRAY8:
-		case ImagePlus.GRAY16:
-		case ImagePlus.GRAY32:
-		case ImagePlus.COLOR_RGB:
-			break;
-		default:
-			IJ.showMessage( imp.getShortTitle() + ": Only 8, 16, 32-bit images and RGB images are supported currently!" );
-			return null;
+		switch (imp.getType()) {
+			case ImagePlus.GRAY8:
+			case ImagePlus.GRAY16:
+			case ImagePlus.GRAY32:
+			case ImagePlus.COLOR_RGB:
+				break;
+			default:
+				IJ.showMessage(imp.getShortTitle() +
+					": Only 8, 16, 32-bit images and RGB images are supported currently!");
+				return null;
 		}
 
 		// get calibration and image size
@@ -438,53 +422,58 @@ public class SharedBigDataViewerData
 		final double ph = imp.getCalibration().pixelHeight;
 		final double pd = imp.getCalibration().pixelDepth;
 		String punit = imp.getCalibration().getUnit();
-		if ( punit == null || punit.isEmpty() )
+		if (punit == null || punit.isEmpty())
 			punit = "pixel";
-		final FinalVoxelDimensions voxelSize = new FinalVoxelDimensions( punit, pw, ph, pd );
+		final FinalVoxelDimensions voxelSize = new FinalVoxelDimensions(punit, pw,
+			ph, pd);
 		final int w = imp.getWidth();
 		final int h = imp.getHeight();
 		final int d = imp.getNSlices();
-		final FinalDimensions size = new FinalDimensions( w, h, d );
+		final FinalDimensions size = new FinalDimensions(w, h, d);
 
 		// create ImgLoader wrapping the image
 		final BasicImgLoader imgLoader;
 		int setupIdOffset = 0;
-		if ( imp.getStack().isVirtual() )
-		{
-			switch ( imp.getType() )
-			{
-			case ImagePlus.GRAY8:
-				imgLoader = VirtualStackImageLoader.createUnsignedByteInstance( imp, setupIdOffset );
-				break;
-			case ImagePlus.GRAY16:
-				imgLoader = VirtualStackImageLoader.createUnsignedShortInstance( imp, setupIdOffset );
-				break;
-			case ImagePlus.GRAY32:
-				imgLoader = VirtualStackImageLoader.createFloatInstance( imp, setupIdOffset );
-				break;
-			case ImagePlus.COLOR_RGB:
-			default:
-				imgLoader = VirtualStackImageLoader.createARGBInstance( imp, setupIdOffset );
-				break;
+		if (imp.getStack().isVirtual()) {
+			switch (imp.getType()) {
+				case ImagePlus.GRAY8:
+					imgLoader = VirtualStackImageLoader.createUnsignedByteInstance(imp,
+						setupIdOffset);
+					break;
+				case ImagePlus.GRAY16:
+					imgLoader = VirtualStackImageLoader.createUnsignedShortInstance(imp,
+						setupIdOffset);
+					break;
+				case ImagePlus.GRAY32:
+					imgLoader = VirtualStackImageLoader.createFloatInstance(imp,
+						setupIdOffset);
+					break;
+				case ImagePlus.COLOR_RGB:
+				default:
+					imgLoader = VirtualStackImageLoader.createARGBInstance(imp,
+						setupIdOffset);
+					break;
 			}
 		}
-		else
-		{
-			switch ( imp.getType() )
-			{
-			case ImagePlus.GRAY8:
-				imgLoader = ImageStackImageLoader.createUnsignedByteInstance( imp, setupIdOffset );
-				break;
-			case ImagePlus.GRAY16:
-				imgLoader = ImageStackImageLoader.createUnsignedShortInstance( imp, setupIdOffset );
-				break;
-			case ImagePlus.GRAY32:
-				imgLoader = ImageStackImageLoader.createFloatInstance( imp, setupIdOffset );
-				break;
-			case ImagePlus.COLOR_RGB:
-			default:
-				imgLoader = ImageStackImageLoader.createARGBInstance( imp, setupIdOffset );
-				break;
+		else {
+			switch (imp.getType()) {
+				case ImagePlus.GRAY8:
+					imgLoader = ImageStackImageLoader.createUnsignedByteInstance(imp,
+						setupIdOffset);
+					break;
+				case ImagePlus.GRAY16:
+					imgLoader = ImageStackImageLoader.createUnsignedShortInstance(imp,
+						setupIdOffset);
+					break;
+				case ImagePlus.GRAY32:
+					imgLoader = ImageStackImageLoader.createFloatInstance(imp,
+						setupIdOffset);
+					break;
+				case ImagePlus.COLOR_RGB:
+				default:
+					imgLoader = ImageStackImageLoader.createARGBInstance(imp,
+						setupIdOffset);
+					break;
 			}
 		}
 
@@ -492,89 +481,92 @@ public class SharedBigDataViewerData
 		final int numSetups = imp.getNChannels();
 
 		// create setups from channels
-		final HashMap< Integer, BasicViewSetup > setups = new HashMap<>( numSetups );
-		for ( int s = 0; s < numSetups; ++s )
-		{
-			final BasicViewSetup setup = new BasicViewSetup( setupIdOffset + s, String.format( imp.getTitle() + " channel %d", s + 1 ), size, voxelSize );
-			setup.setAttribute( new Channel( s + 1 ) );
-			setups.put( setupIdOffset + s, setup );
+		final HashMap<Integer, BasicViewSetup> setups = new HashMap<>(numSetups);
+		for (int s = 0; s < numSetups; ++s) {
+			final BasicViewSetup setup = new BasicViewSetup(setupIdOffset + s, String
+				.format(imp.getTitle() + " channel %d", s + 1), size, voxelSize);
+			setup.setAttribute(new Channel(s + 1));
+			setups.put(setupIdOffset + s, setup);
 		}
 
 		// create timepoints
-		final ArrayList< TimePoint > timepoints = new ArrayList<>( numTimepoints );
-		for ( int t = 0; t < numTimepoints; ++t )
-			timepoints.add( new TimePoint( t ) );
-		final SequenceDescriptionMinimal seq = new SequenceDescriptionMinimal( new TimePoints( timepoints ), setups, imgLoader, null );
+		final ArrayList<TimePoint> timepoints = new ArrayList<>(numTimepoints);
+		for (int t = 0; t < numTimepoints; ++t)
+			timepoints.add(new TimePoint(t));
+		final SequenceDescriptionMinimal seq = new SequenceDescriptionMinimal(
+			new TimePoints(timepoints), setups, imgLoader, null);
 
 		// create ViewRegistrations from the images calibration
 		final AffineTransform3D sourceTransform = new AffineTransform3D();
-		sourceTransform.set( pw, 0, 0, 0, 0, ph, 0, 0, 0, 0, pd, 0 );
-		final ArrayList< ViewRegistration > registrations = new ArrayList<>();
-		for ( int t = 0; t < numTimepoints; ++t )
-			for ( int s = 0; s < numSetups; ++s )
-				registrations.add( new ViewRegistration( t, setupIdOffset + s, sourceTransform ) );
+		sourceTransform.set(pw, 0, 0, 0, 0, ph, 0, 0, 0, 0, pd, 0);
+		final ArrayList<ViewRegistration> registrations = new ArrayList<>();
+		for (int t = 0; t < numTimepoints; ++t)
+			for (int s = 0; s < numSetups; ++s)
+				registrations.add(new ViewRegistration(t, setupIdOffset + s,
+					sourceTransform));
 
-		final ArrayList< ConverterSetup > converterSetups = new ArrayList<>();
-		final ArrayList< SourceAndConverter< ? > > sources = new ArrayList<>();
+		final ArrayList<ConverterSetup> converterSetups = new ArrayList<>();
+		final ArrayList<SourceAndConverter<?>> sources = new ArrayList<>();
 
-		final File basePath = new File( "." );
-		final AbstractSpimData< ? > spimData = new SpimDataMinimal( basePath, seq, new ViewRegistrations( registrations ) );
-		WrapBasicImgLoader.wrapImgLoaderIfNecessary( spimData );
-		BigDataViewer.initSetups( spimData, converterSetups, sources );
+		final File basePath = new File(".");
+		final AbstractSpimData<?> spimData = new SpimDataMinimal(basePath, seq,
+			new ViewRegistrations(registrations));
+		WrapBasicImgLoader.wrapImgLoaderIfNecessary(spimData);
+		BigDataViewer.initSetups(spimData, converterSetups, sources);
 
 		final CacheControl.CacheControls cache = new CacheControl.CacheControls();
-		cache.addCacheControl( ( ( ViewerImgLoader ) spimData.getSequenceDescription().getImgLoader() ).getCacheControl() );
+		cache.addCacheControl(((ViewerImgLoader) spimData.getSequenceDescription()
+			.getImgLoader()).getCacheControl());
 		setupIdOffset += imp.getNChannels();
 
 		final BasicViewerState state = new BasicViewerState();
-		for ( final SourceAndConverter< ? > sourceAndConverter : sources )
-			state.addSource( sourceAndConverter );
+		for (final SourceAndConverter<?> sourceAndConverter : sources)
+			state.addSource(sourceAndConverter);
 
-		final ConverterSetups css = new ConverterSetups( state );
-		for ( int i = 0; i < sources.size(); i++ )
-			css.put( sources.get( i ), converterSetups.get( i ) );
+		final ConverterSetups css = new ConverterSetups(state);
+		for (int i = 0; i < sources.size(); i++)
+			css.put(sources.get(i), converterSetups.get(i));
 
-		final SetupAssignments setupAssignments = new SetupAssignments( converterSetups, 0, 65535 );
+		final SetupAssignments setupAssignments = new SetupAssignments(
+			converterSetups, 0, 65535);
 
 		final SharedBigDataViewerData sbdv = new SharedBigDataViewerData(
-				spimData,
-				sources,
-				css,
-				setupAssignments,
-				cache,
-				numTimepoints,
-				viewerOptions,
-				requestRepaint );
+			spimData,
+			sources,
+			css,
+			setupAssignments,
+			cache,
+			numTimepoints,
+			viewerOptions,
+			requestRepaint);
 
 		// File info
 		final FileInfo fileInfo = imp.getOriginalFileInfo();
 		String imageFileName;
 		String imageFolder;
-		if ( null != fileInfo )
-		{
+		if (null != fileInfo) {
 			imageFileName = fileInfo.fileName;
 			imageFolder = fileInfo.directory;
 		}
-		else
-		{
+		else {
 			imageFileName = imp.getShortTitle();
 			imageFolder = "";
 
 		}
-		final String imageSourceFilename = new File( imageFolder, imageFileName ).getAbsolutePath();
+		final String imageSourceFilename = new File(imageFolder, imageFileName)
+			.getAbsolutePath();
 
-		if ( !sbdv.tryLoadSettings( imageSourceFilename ) )
-		{
+		if (!sbdv.tryLoadSettings(imageSourceFilename)) {
 			int channelOffset = 0;
-			final int numActiveChannels = transferChannelVisibility( imp, state );
-			transferChannelSettings( channelOffset, imp, state, css );
+			final int numActiveChannels = transferChannelVisibility(imp, state);
+			transferChannelSettings(channelOffset, imp, state, css);
 			channelOffset += imp.getNChannels();
-			state.setDisplayMode( numActiveChannels > 1 ? DisplayMode.FUSED : DisplayMode.SINGLE );
-			if ( setupAssignments.getMinMaxGroups().size() > 0 )
-			{
-				final MinMaxGroup group = setupAssignments.getMinMaxGroups().get( 0 );
-				for ( final ConverterSetup setup : setupAssignments.getConverterSetups() )
-					setupAssignments.moveSetupToGroup( setup, group );
+			state.setDisplayMode(numActiveChannels > 1 ? DisplayMode.FUSED
+				: DisplayMode.SINGLE);
+			if (setupAssignments.getMinMaxGroups().size() > 0) {
+				final MinMaxGroup group = setupAssignments.getMinMaxGroups().get(0);
+				for (final ConverterSetup setup : setupAssignments.getConverterSetups())
+					setupAssignments.moveSetupToGroup(setup, group);
 			}
 		}
 
@@ -585,64 +577,61 @@ public class SharedBigDataViewerData
 	 * @return number of setups that were set active.
 	 */
 	private static int transferChannelVisibility(
-			final ImagePlus imp,
-			final ViewerState state )
+		final ImagePlus imp,
+		final ViewerState state)
 	{
 		final int nChannels = imp.getNChannels();
-		final CompositeImage ci = imp.isComposite() ? ( CompositeImage ) imp : null;
-		final List< SourceAndConverter< ? > > sources = state.getSources();
-		if ( ci != null && ci.getCompositeMode() == IJ.COMPOSITE )
-		{
+		final CompositeImage ci = imp.isComposite() ? (CompositeImage) imp : null;
+		final List<SourceAndConverter<?>> sources = state.getSources();
+		if (ci != null && ci.getCompositeMode() == IJ.COMPOSITE) {
 			final boolean[] activeChannels = ci.getActiveChannels();
 			int numActiveChannels = 0;
-			for ( int i = 0; i < Math.min( activeChannels.length, nChannels ); ++i )
-			{
-				final SourceAndConverter< ? > source = sources.get( i );
-				state.setSourceActive( source, activeChannels[ i ] );
-				state.setCurrentSource( source );
-				numActiveChannels += activeChannels[ i ] ? 1 : 0;
+			for (int i = 0; i < Math.min(activeChannels.length, nChannels); ++i) {
+				final SourceAndConverter<?> source = sources.get(i);
+				state.setSourceActive(source, activeChannels[i]);
+				state.setCurrentSource(source);
+				numActiveChannels += activeChannels[i] ? 1 : 0;
 			}
 			return numActiveChannels;
 		}
-		else
-		{
+		else {
 			final int activeChannel = imp.getChannel() - 1;
-			for ( int i = 0; i < nChannels; ++i )
-				state.setSourceActive( sources.get( i ), i == activeChannel );
-			state.setCurrentSource( sources.get( activeChannel ) );
+			for (int i = 0; i < nChannels; ++i)
+				state.setSourceActive(sources.get(i), i == activeChannel);
+			state.setCurrentSource(sources.get(activeChannel));
 			return 1;
 		}
 	}
 
-	private static void transferChannelSettings( final int channelOffset, final ImagePlus imp, final ViewerState state, final ConverterSetups converterSetups )
+	private static void transferChannelSettings(final int channelOffset,
+		final ImagePlus imp, final ViewerState state,
+		final ConverterSetups converterSetups)
 	{
 		final int nChannels = imp.getNChannels();
-		final CompositeImage ci = imp.isComposite() ? ( CompositeImage ) imp : null;
-		final List< SourceAndConverter< ? > > sources = state.getSources();
-		if ( ci != null )
-		{
+		final CompositeImage ci = imp.isComposite() ? (CompositeImage) imp : null;
+		final List<SourceAndConverter<?>> sources = state.getSources();
+		if (ci != null) {
 			final int mode = ci.getCompositeMode();
 			final boolean transferColor = mode == IJ.COMPOSITE || mode == IJ.COLOR;
-			for ( int c = 0; c < nChannels; ++c )
-			{
-				final LUT lut = ci.getChannelLut( c + 1 );
-				final ConverterSetup setup = converterSetups.getConverterSetup( sources.get( channelOffset + c ) );
-				if ( transferColor )
-					setup.setColor( new ARGBType( lut.getRGB( 255 ) ) );
-				setup.setDisplayRange( lut.min, lut.max );
+			for (int c = 0; c < nChannels; ++c) {
+				final LUT lut = ci.getChannelLut(c + 1);
+				final ConverterSetup setup = converterSetups.getConverterSetup(sources
+					.get(channelOffset + c));
+				if (transferColor)
+					setup.setColor(new ARGBType(lut.getRGB(255)));
+				setup.setDisplayRange(lut.min, lut.max);
 			}
 		}
-		else
-		{
+		else {
 			final double displayRangeMin = imp.getDisplayRangeMin();
 			final double displayRangeMax = imp.getDisplayRangeMax();
-			for ( int i = 0; i < nChannels; ++i )
-			{
-				final ConverterSetup setup = converterSetups.getConverterSetup( sources.get( channelOffset + i ) );
+			for (int i = 0; i < nChannels; ++i) {
+				final ConverterSetup setup = converterSetups.getConverterSetup(sources
+					.get(channelOffset + i));
 				final LUT[] luts = imp.getLuts();
-				if ( luts.length != 0 )
-					setup.setColor( new ARGBType( luts[ 0 ].getRGB( 255 ) ) );
-				setup.setDisplayRange( displayRangeMin, displayRangeMax );
+				if (luts.length != 0)
+					setup.setColor(new ARGBType(luts[0].getRGB(255)));
+				setup.setDisplayRange(displayRangeMin, displayRangeMax);
 			}
 		}
 	}

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature;
 
 import java.util.Collection;
@@ -51,34 +52,35 @@ import org.scijava.module.ModuleItem;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
-@Plugin( type = MamutFeatureComputerService.class )
-public class MamutFeatureComputerService extends DefaultFeatureComputerService
-{
+@Plugin(type = MamutFeatureComputerService.class)
+public class MamutFeatureComputerService extends DefaultFeatureComputerService {
 
 	private SharedBigDataViewerData sharedBdvData;
 
 	private Model model;
 
-	private final AtomicBoolean shouldRecomputeAll = new AtomicBoolean( false );
+	private final AtomicBoolean shouldRecomputeAll = new AtomicBoolean(false);
 
 	@Parameter
 	private FeatureSpecsService featureSpecsService;
 
-	private PropertyChangeListener< Spot > vertexPropertyListener;
+	private PropertyChangeListener<Spot> vertexPropertyListener;
 
-	public MamutFeatureComputerService()
-	{
-		super( MamutFeatureComputer.class );
+	public MamutFeatureComputerService() {
+		super(MamutFeatureComputer.class);
 	}
 
 	@Override
-	public Map< FeatureSpec< ?, ? >, Feature< ? > > compute( final boolean forceComputeAll, final Collection< FeatureSpec< ?, ? > > featureKeys )
+	public Map<FeatureSpec<?, ?>, Feature<?>> compute(
+		final boolean forceComputeAll,
+		final Collection<FeatureSpec<?, ?>> featureKeys)
 	{
 		// Set the force flag.
-		shouldRecomputeAll.set( forceComputeAll );
+		shouldRecomputeAll.set(forceComputeAll);
 
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > results = super.compute( forceComputeAll, featureKeys );
-		if ( isCanceled() )
+		final Map<FeatureSpec<?, ?>, Feature<?>> results = super.compute(
+			forceComputeAll, featureKeys);
+		if (isCanceled())
 			return null;
 
 		return results;
@@ -86,87 +88,83 @@ public class MamutFeatureComputerService extends DefaultFeatureComputerService
 
 	@Override
 	protected void provideParameters(
-			final ModuleItem< ? > item,
-			final CommandModule module, final Class< ? > parameterClass,
-			final Map< FeatureSpec< ?, ? >, Feature< ? > > featureModel )
+		final ModuleItem<?> item,
+		final CommandModule module, final Class<?> parameterClass,
+		final Map<FeatureSpec<?, ?>, Feature<?>> featureModel)
 	{
 
 		// Pass the model is required.
-		if ( Model.class.isAssignableFrom( parameterClass ) )
-		{
-			@SuppressWarnings( "unchecked" )
-			final ModuleItem< Model > modelItem = ( ModuleItem< Model > ) item;
-			modelItem.setValue( module, model );
+		if (Model.class.isAssignableFrom(parameterClass)) {
+			@SuppressWarnings("unchecked")
+			final ModuleItem<Model> modelItem = (ModuleItem<Model>) item;
+			modelItem.setValue(module, model);
 			return;
 		}
 
 		// Pass the model graph.
-		if ( ModelGraph.class.isAssignableFrom( parameterClass ) )
-		{
-			@SuppressWarnings( "unchecked" )
-			final ModuleItem< ModelGraph > graphItem = ( ModuleItem< ModelGraph > ) item;
-			graphItem.setValue( module, model.getGraph() );
+		if (ModelGraph.class.isAssignableFrom(parameterClass)) {
+			@SuppressWarnings("unchecked")
+			final ModuleItem<ModelGraph> graphItem = (ModuleItem<ModelGraph>) item;
+			graphItem.setValue(module, model.getGraph());
 			return;
 		}
 
 		// Pass the model branch graph.
-		if ( ModelBranchGraph.class.isAssignableFrom( parameterClass ) )
-		{
-			@SuppressWarnings( "unchecked" )
-			final ModuleItem< ModelBranchGraph > graphItem = ( ModuleItem< ModelBranchGraph > ) item;
-			graphItem.setValue( module, model.getBranchGraph() );
+		if (ModelBranchGraph.class.isAssignableFrom(parameterClass)) {
+			@SuppressWarnings("unchecked")
+			final ModuleItem<ModelBranchGraph> graphItem =
+				(ModuleItem<ModelBranchGraph>) item;
+			graphItem.setValue(module, model.getBranchGraph());
 			return;
 		}
 
 		// Pass the BDV data.
-		if ( SharedBigDataViewerData.class.isAssignableFrom( parameterClass ) )
-		{
-			@SuppressWarnings( "unchecked" )
-			final ModuleItem< SharedBigDataViewerData > bdvItem = ( ModuleItem< SharedBigDataViewerData > ) item;
-			bdvItem.setValue( module, sharedBdvData );
+		if (SharedBigDataViewerData.class.isAssignableFrom(parameterClass)) {
+			@SuppressWarnings("unchecked")
+			final ModuleItem<SharedBigDataViewerData> bdvItem =
+				(ModuleItem<SharedBigDataViewerData>) item;
+			bdvItem.setValue(module, sharedBdvData);
 			return;
 		}
 
 		// Pass the "force recompute" flag.
-		if ( AtomicBoolean.class.isAssignableFrom( parameterClass ) )
-		{
-			@SuppressWarnings( "unchecked" )
-			final ModuleItem< AtomicBoolean > forceRecomputeAllItem = ( ModuleItem< AtomicBoolean > ) item;
-			forceRecomputeAllItem.setValue( module, shouldRecomputeAll );
+		if (AtomicBoolean.class.isAssignableFrom(parameterClass)) {
+			@SuppressWarnings("unchecked")
+			final ModuleItem<AtomicBoolean> forceRecomputeAllItem =
+				(ModuleItem<AtomicBoolean>) item;
+			forceRecomputeAllItem.setValue(module, shouldRecomputeAll);
 			return;
 		}
 
-		super.provideParameters( item, module, parameterClass, featureModel );
+		super.provideParameters(item, module, parameterClass, featureModel);
 	}
 
 	/**
 	 * Sets the image data to be used by the feature computers.
 	 *
-	 * @param sharedBdvData
-	 *            the image data.
+	 * @param sharedBdvData the image data.
 	 */
-	public void setSharedBdvData( final SharedBigDataViewerData sharedBdvData )
-	{
+	public void setSharedBdvData(final SharedBigDataViewerData sharedBdvData) {
 		this.sharedBdvData = sharedBdvData;
 	}
 
 	/**
 	 * Sets the model to be used by the feature computers.
 	 *
-	 * @param model
-	 *            the model.
+	 * @param model the model.
 	 */
-	public void setModel( final Model model )
-	{
+	public void setModel(final Model model) {
 		/*
 		 * Unregister listeners from previous this.model.getGraph().
 		 */
 
-		if ( this.model != null )
-		{
-			final SpotPool previousSpotPool = ( SpotPool ) this.model.getGraph().vertices().getRefPool();
-			previousSpotPool.covarianceProperty().propertyChangeListeners().remove( vertexPropertyListener );
-			previousSpotPool.positionProperty().propertyChangeListeners().remove( vertexPropertyListener );
+		if (this.model != null) {
+			final SpotPool previousSpotPool = (SpotPool) this.model.getGraph()
+				.vertices().getRefPool();
+			previousSpotPool.covarianceProperty().propertyChangeListeners().remove(
+				vertexPropertyListener);
+			previousSpotPool.positionProperty().propertyChangeListeners().remove(
+				vertexPropertyListener);
 		}
 
 		/*
@@ -191,12 +189,15 @@ public class MamutFeatureComputerService extends DefaultFeatureComputerService
 
 		// Create listener.
 		final FeatureModel featureModel = model.getFeatureModel();
-		this.vertexPropertyListener = GraphFeatureUpdateListeners.vertexPropertyListener( featureModel, Spot.class, Link.class );
+		this.vertexPropertyListener = GraphFeatureUpdateListeners
+			.vertexPropertyListener(featureModel, Spot.class, Link.class);
 
 		// Listen to changes in spot properties.
 		final ModelGraph graph = model.getGraph();
-		final SpotPool spotPool = ( SpotPool ) graph.vertices().getRefPool();
-		spotPool.covarianceProperty().propertyChangeListeners().add( vertexPropertyListener );
-		spotPool.positionProperty().propertyChangeListeners().add( vertexPropertyListener );
+		final SpotPool spotPool = (SpotPool) graph.vertices().getRefPool();
+		spotPool.covarianceProperty().propertyChangeListeners().add(
+			vertexPropertyListener);
+		spotPool.positionProperty().propertyChangeListeners().add(
+			vertexPropertyListener);
 	}
 }

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme;
 
 import org.mastodon.collection.RefList;
@@ -41,8 +42,8 @@ import gnu.trove.list.array.TIntArrayList;
 /**
  * A version of {@link LineageTreeLayoutImp} made specially for branch graphs.
  * <p>
- * {@link LineageTreeLayoutImp} generates Screen objects only for the vertices that
- * are in the visible rectangle specified in the transform when calling
+ * {@link LineageTreeLayoutImp} generates Screen objects only for the vertices
+ * that are in the visible rectangle specified in the transform when calling
  * {@link #cropAndScale(ScreenTransform, ScreenEntities, int, int, GraphColorGenerator)}.
  * This is ok when the TrackSchemeGraph is dense, as in for the core graph, but
  * not for the branch graph. Indeed, the branch graph has few vertices and long
@@ -50,24 +51,23 @@ import gnu.trove.list.array.TIntArrayList;
  * is not painted. This version solves this issue by forcing the generation of
  * Screen objects ignoring the Y bounds of the visible rectangle.
  */
-public class LongEdgesLineageTreeLayout extends LineageTreeLayoutImp
-{
+public class LongEdgesLineageTreeLayout extends LineageTreeLayoutImp {
 
 	public LongEdgesLineageTreeLayout(
-			final RootsModel<TrackSchemeVertex> rootsModel,
-			final TrackSchemeGraph<?, ?> graph,
-			final SelectionModel<TrackSchemeVertex, TrackSchemeEdge> selection )
+		final RootsModel<TrackSchemeVertex> rootsModel,
+		final TrackSchemeGraph<?, ?> graph,
+		final SelectionModel<TrackSchemeVertex, TrackSchemeEdge> selection)
 	{
-		super( rootsModel, graph, selection );
+		super(rootsModel, graph, selection);
 	}
 
 	@Override
 	public void cropAndScale(
-			final ScreenTransform transform,
-			final ScreenEntities screenEntities,
-			final int decorationsOffsetX,
-			final int decorationsOffsetY,
-			final GraphColorGenerator< TrackSchemeVertex, TrackSchemeEdge > colorGenerator )
+		final ScreenTransform transform,
+		final ScreenEntities screenEntities,
+		final int decorationsOffsetX,
+		final int decorationsOffsetY,
+		final GraphColorGenerator<TrackSchemeVertex, TrackSchemeEdge> colorGenerator)
 	{
 		final double minX = transform.getMinX();
 		final double maxX = transform.getMaxX();
@@ -75,10 +75,10 @@ public class LongEdgesLineageTreeLayout extends LineageTreeLayoutImp
 		final double maxY = transform.getMaxY();
 		final double xScale = transform.getScaleX();
 		final double yScale = transform.getScaleY();
-		screenEntities.screenTransform().set( transform );
+		screenEntities.screenTransform().set(transform);
 
-		final RefList< ScreenVertex > screenVertices = screenEntities.getVertices();
-		final RefList< ScreenEdge > screenEdges = screenEntities.getEdges();
+		final RefList<ScreenVertex> screenVertices = screenEntities.getVertices();
+		final RefList<ScreenEdge> screenEdges = screenEntities.getEdges();
 		final ScreenVertexPool screenVertexPool = screenEntities.getVertexPool();
 		final ScreenEdgePool screenEdgePool = screenEntities.getEdgePool();
 
@@ -90,92 +90,101 @@ public class LongEdgesLineageTreeLayout extends LineageTreeLayoutImp
 		final double allowedMinD = 2.0 / xScale;
 
 		final TIntIterator iter = vertexTable.getTimepoints().iterator();
-		while ( iter.hasNext() )
-		{
+		while (iter.hasNext()) {
 			final int timepoint = iter.next();
 			final int timepointStartScreenVertexIndex = screenVertices.size();
 			// screen y of vertices of timepoint
-			final double y = ( timepoint - minY ) * yScale + decorationsOffsetY;
+			final double y = (timepoint - minY) * yScale + decorationsOffsetY;
 			// screen y of vertices of (timepoint-1)
-			final TrackSchemeVertexList vertexList = vertexTable.getOrderedVertices( timepoint );
+			final TrackSchemeVertexList vertexList = vertexTable.getOrderedVertices(
+				timepoint);
 			// largest index of vertex with layoutX <= minX
-			int minIndex = vertexList.binarySearch( minX );
+			int minIndex = vertexList.binarySearch(minX);
 			// include vertex before that (may be appears partially on
 			// screen, and may be needed to paint edge to vertex in other
 			// timepoint)
 			minIndex--;
-			if ( minIndex < 0 )
+			if (minIndex < 0)
 				minIndex = 0;
 			// largest index of vertex with layoutX <= maxX
-			int maxIndex = vertexList.binarySearch( maxX, minIndex, vertexList.size() );
+			int maxIndex = vertexList.binarySearch(maxX, minIndex, vertexList.size());
 			// include vertex after that (may be appears partially on
 			// screen, and may be needed to paint edge to vertex in other
 			// timepoint)
-			if ( maxIndex < vertexList.size() - 1 )
+			if (maxIndex < vertexList.size() - 1)
 				maxIndex++;
 
 			final double minLayoutX = vertexList.getMinLayoutXDistance();
-			TIntArrayList denseRanges = vertexList.getDenseRanges( minIndex, maxIndex + 1, minLayoutX, allowedMinD, 3, v1 );
-			if ( denseRanges == null )
+			TIntArrayList denseRanges = vertexList.getDenseRanges(minIndex, maxIndex +
+				1, minLayoutX, allowedMinD, 3, v1);
+			if (denseRanges == null)
 				denseRanges = new TIntArrayList();
-			denseRanges.add( maxIndex + 1 );
+			denseRanges.add(maxIndex + 1);
 
 			double prevX = Double.NEGATIVE_INFINITY;
 			double minVertexScreenDist = yScale;
-			for ( int i = minIndex; i <= maxIndex; ++i )
-			{
-				vertexList.get( i, v1 );
-				final double x = ( v1.getLayoutX() - minX ) * xScale + decorationsOffsetX;
-				final double fy = ( v1.getFirstTimepoint() - minY ) * yScale + decorationsOffsetY;
-				addScreenVertex( colorGenerator, screenVertices, screenVertexPool, v1, sv, x, y, fy );
+			for (int i = minIndex; i <= maxIndex; ++i) {
+				vertexList.get(i, v1);
+				final double x = (v1.getLayoutX() - minX) * xScale + decorationsOffsetX;
+				final double fy = (v1.getFirstTimepoint() - minY) * yScale +
+					decorationsOffsetY;
+				addScreenVertex(colorGenerator, screenVertices, screenVertexPool, v1,
+					sv, x, y, fy);
 
-				minVertexScreenDist = Math.min( minVertexScreenDist, x - prevX );
+				minVertexScreenDist = Math.min(minVertexScreenDist, x - prevX);
 				prevX = x;
 
 				final int tp1 = v1.getTimepoint();
-				for ( final TrackSchemeEdge edge : v1.incomingEdges() )
-				{
-					edge.getSource( v2 );
+				for (final TrackSchemeEdge edge : v1.incomingEdges()) {
+					edge.getSource(v2);
 
-					if( v2.getLayoutTimestamp() != timestamp )
+					if (v2.getLayoutTimestamp() != timestamp)
 						continue;
 
 					// Check if the edge has some parts on the screen.
 					final int tp2 = v2.getTimepoint();
-					if ( ( tp1 > maxY && tp2 > maxY ) || ( tp1 < minY && tp2 < minY ) )
+					if ((tp1 > maxY && tp2 > maxY) || (tp1 < minY && tp2 < minY))
 						continue;
 
 					int v2si = v2.getScreenVertexIndex();
-					if ( v2si < 0 || v2si >= screenVertices.size() || screenVertices.get( v2si, sv ).getTrackSchemeVertexId() != v2.getInternalPoolIndex() )
+					if (v2si < 0 || v2si >= screenVertices.size() || screenVertices.get(
+						v2si, sv).getTrackSchemeVertexId() != v2.getInternalPoolIndex())
 					{
 						// ScreenVertex for v2 not found. Adding one...
-						final double nx = ( v2.getLayoutX() - minX ) * xScale + decorationsOffsetX;
-						final double ny = ( v2.getTimepoint() - minY ) * yScale + decorationsOffsetY;
-						final double nfy = ( v1.getFirstTimepoint() - minY ) * yScale + decorationsOffsetY;
-						addScreenVertex( colorGenerator, screenVertices, screenVertexPool, v2, sv, nx, ny, nfy );
+						final double nx = (v2.getLayoutX() - minX) * xScale +
+							decorationsOffsetX;
+						final double ny = (v2.getTimepoint() - minY) * yScale +
+							decorationsOffsetY;
+						final double nfy = (v1.getFirstTimepoint() - minY) * yScale +
+							decorationsOffsetY;
+						addScreenVertex(colorGenerator, screenVertices, screenVertexPool,
+							v2, sv, nx, ny, nfy);
 					}
 
 					final int eid = edge.getInternalPoolIndex();
 					final int sourceScreenVertexIndex = v2.getScreenVertexIndex();
 					final int targetScreenVertexIndex = v1.getScreenVertexIndex();
-					final boolean eselected = selection.isSelected( edge );
-					screenEdgePool.create( se ).init( eid, sourceScreenVertexIndex, targetScreenVertexIndex, eselected, colorGenerator.color( edge, v2, v1 ) );
-					screenEdges.add( se );
+					final boolean eselected = selection.isSelected(edge);
+					screenEdgePool.create(se).init(eid, sourceScreenVertexIndex,
+						targetScreenVertexIndex, eselected, colorGenerator.color(edge, v2,
+							v1));
+					screenEdges.add(se);
 					final int sei = se.getInternalPoolIndex();
-					edge.setScreenEdgeIndex( sei );
+					edge.setScreenEdgeIndex(sei);
 				}
 			}
-			for ( int i = timepointStartScreenVertexIndex; i < screenVertices.size(); ++i )
+			for (int i = timepointStartScreenVertexIndex; i < screenVertices
+				.size(); ++i)
 			{
-				screenVertices.get( i, sv ).setVertexDist( minVertexScreenDist );
+				screenVertices.get(i, sv).setVertexDist(minVertexScreenDist);
 			}
 		}
 
-		screenEdgePool.releaseRef( se );
-		screenVertexPool.releaseRef( sv );
-		graph.releaseRef( v1 );
-		graph.releaseRef( v2 );
+		screenEdgePool.releaseRef(se);
+		screenVertexPool.releaseRef(sv);
+		graph.releaseRef(v1);
+		graph.releaseRef(v2);
 
-		buildScreenColumns( screenEntities, decorationsOffsetX, minX, maxX, xScale );
+		buildScreenColumns(screenEntities, decorationsOffsetX, minX, maxX, xScale);
 	}
 }

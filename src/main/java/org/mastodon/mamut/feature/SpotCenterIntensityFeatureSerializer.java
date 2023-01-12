@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature;
 
 import java.io.IOException;
@@ -44,36 +45,41 @@ import org.mastodon.mamut.model.Spot;
 import org.mastodon.properties.DoublePropertyMap;
 import org.scijava.plugin.Plugin;
 
-@Plugin( type = FeatureSerializer.class )
-public class SpotCenterIntensityFeatureSerializer implements FeatureSerializer< SpotCenterIntensityFeature, Spot >
+@Plugin(type = FeatureSerializer.class)
+public class SpotCenterIntensityFeatureSerializer implements
+	FeatureSerializer<SpotCenterIntensityFeature, Spot>
 {
 
 	@Override
-	public Spec getFeatureSpec()
-	{
+	public Spec getFeatureSpec() {
 		return SpotCenterIntensityFeature.SPEC;
 	}
 
 	@Override
-	public void serialize( final SpotCenterIntensityFeature feature, final ObjectToFileIdMap< Spot > idmap, final ObjectOutputStream oos ) throws IOException
+	public void serialize(final SpotCenterIntensityFeature feature,
+		final ObjectToFileIdMap<Spot> idmap, final ObjectOutputStream oos)
+		throws IOException
 	{
 		final int nSources = feature.maps.size();
-		oos.writeInt( nSources );
-		for ( int i = 0; i < nSources; i++ )
-			new DoublePropertyMapSerializer<>( feature.maps.get( i ) ).writePropertyMap( idmap, oos );
+		oos.writeInt(nSources);
+		for (int i = 0; i < nSources; i++)
+			new DoublePropertyMapSerializer<>(feature.maps.get(i)).writePropertyMap(
+				idmap, oos);
 	}
 
 	@Override
-	public SpotCenterIntensityFeature deserialize( final FileIdToObjectMap< Spot > idmap, final RefCollection< Spot > pool, final ObjectInputStream ois ) throws IOException, ClassNotFoundException
+	public SpotCenterIntensityFeature deserialize(
+		final FileIdToObjectMap<Spot> idmap, final RefCollection<Spot> pool,
+		final ObjectInputStream ois) throws IOException, ClassNotFoundException
 	{
 		final int nSources = ois.readInt();
-		final List< DoublePropertyMap< Spot > > maps = new ArrayList<>( nSources );
-		for ( int i = 0; i < nSources; i++ )
-		{
-			final DoublePropertyMap< Spot > meanMap = new DoublePropertyMap<>( pool, Double.NaN );
-			new DoublePropertyMapSerializer<>( meanMap ).readPropertyMap( idmap, ois );
-			maps.add( meanMap );
+		final List<DoublePropertyMap<Spot>> maps = new ArrayList<>(nSources);
+		for (int i = 0; i < nSources; i++) {
+			final DoublePropertyMap<Spot> meanMap = new DoublePropertyMap<>(pool,
+				Double.NaN);
+			new DoublePropertyMapSerializer<>(meanMap).readPropertyMap(idmap, ois);
+			maps.add(meanMap);
 		}
-		return new SpotCenterIntensityFeature( maps );
+		return new SpotCenterIntensityFeature(maps);
 	}
 }

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.feature.io;
 
 import java.io.IOException;
@@ -43,13 +44,11 @@ import org.scijava.plugin.SciJavaPlugin;
  * Interface for classes that can de/serialize a feature.
  *
  * @author Jean-Yves Tinevez
- *
- * @param <F>
- *            the type of the feature to serialize.
- * @param <O>
- *            the class of the object the feature is defined for.
+ * @param <F> the type of the feature to serialize.
+ * @param <O> the class of the object the feature is defined for.
  */
-public interface FeatureSerializer< F extends Feature< O >, O > extends SciJavaPlugin
+public interface FeatureSerializer<F extends Feature<O>, O> extends
+	SciJavaPlugin
 {
 
 	/**
@@ -59,43 +58,37 @@ public interface FeatureSerializer< F extends Feature< O >, O > extends SciJavaP
 	 * @return the feature specifications of the feature this
 	 *         {@link FeatureSerializer} can de/serialize.
 	 */
-	public FeatureSpec< F, O > getFeatureSpec();
+	public FeatureSpec<F, O> getFeatureSpec();
 
 	/**
 	 * Serializes the feature to the specified output stream.
 	 *
-	 * @param feature
-	 *            the feature to serialize.
-	 * @param idmap
-	 *            the {@link ObjectToFileIdMap}.
-	 * @param oos
-	 *            the output stream.
-	 * @throws IOException
-	 *             if an I/O error occurs while writing the feature file.
+	 * @param feature the feature to serialize.
+	 * @param idmap the {@link ObjectToFileIdMap}.
+	 * @param oos the output stream.
+	 * @throws IOException if an I/O error occurs while writing the feature file.
 	 */
-	public void serialize( F feature, ObjectToFileIdMap< O > idmap, ObjectOutputStream oos ) throws IOException;
+	public void serialize(F feature, ObjectToFileIdMap<O> idmap,
+		ObjectOutputStream oos) throws IOException;
 
 	/**
 	 * Deserializes a feature from the specified input stream. Returns
-	 * <code>null</code> if the feature values are computed on the fly and do
-	 * not need deseralization.
+	 * <code>null</code> if the feature values are computed on the fly and do not
+	 * need deseralization.
 	 *
-	 * @param idmap
-	 *            the {@link FileIdToObjectMap}.
-	 * @param pool
-	 *            the {@link RefCollection} used to create property maps inside
-	 *            the feature.
-	 * @param ois
-	 *            the input stream.
+	 * @param idmap the {@link FileIdToObjectMap}.
+	 * @param pool the {@link RefCollection} used to create property maps inside
+	 *          the feature.
+	 * @param ois the input stream.
 	 * @return a new feature instance or <code>null</code> if the feature values
 	 *         are computed on the fly and do not need deseralization.
-	 * @throws IOException
-	 *             if an I/O error occurs while reading the feature file.
-	 * @throws ClassNotFoundException
-	 *             if the class of the feature or the class of its target cannot
-	 *             be found.
+	 * @throws IOException if an I/O error occurs while reading the feature file.
+	 * @throws ClassNotFoundException if the class of the feature or the class of
+	 *           its target cannot be found.
 	 */
-	public default F deserialize( final FileIdToObjectMap< O > idmap, final RefCollection< O > pool, final ObjectInputStream ois ) throws IOException, ClassNotFoundException
+	public default F deserialize(final FileIdToObjectMap<O> idmap,
+		final RefCollection<O> pool, final ObjectInputStream ois)
+		throws IOException, ClassNotFoundException
 	{
 		return null;
 	}

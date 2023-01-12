@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.app.ui;
 
 import static org.mastodon.grouping.GroupManager.NO_GROUP;
@@ -50,64 +51,62 @@ import org.mastodon.grouping.GroupHandle;
  * @author Tobias Pietzsch
  * @author Jean-Ives Tinevez
  */
-public class GroupLocksPanel extends JPanel implements GroupChangeListener
-{
+public class GroupLocksPanel extends JPanel implements GroupChangeListener {
+
 	private static final long serialVersionUID = 1L;
 
-	private static final ImageIcon LOCK_ICON = new ImageIcon( GroupLocksPanel.class.getResource( "lock.png" ) );
+	private static final ImageIcon LOCK_ICON = new ImageIcon(GroupLocksPanel.class
+		.getResource("lock.png"));
 
-	private static final ImageIcon UNLOCK_ICON = new ImageIcon( GroupLocksPanel.class.getResource( "lock_open_grey.png" ) );
+	private static final ImageIcon UNLOCK_ICON = new ImageIcon(
+		GroupLocksPanel.class.getResource("lock_open_grey.png"));
 
-	private static final Font FONT = new Font( "Arial", Font.PLAIN, 10 );
+	private static final Font FONT = new Font("Arial", Font.PLAIN, 10);
 
-	private final ArrayList< JToggleButton > buttons;
+	private final ArrayList<JToggleButton> buttons;
 
 	private final GroupHandle groupHandle;
 
-	public GroupLocksPanel( final GroupHandle groupHandle )
-	{
-		super( new FlowLayout( FlowLayout.LEADING ) );
+	public GroupLocksPanel(final GroupHandle groupHandle) {
+		super(new FlowLayout(FlowLayout.LEADING));
 		this.groupHandle = groupHandle;
 		this.buttons = new ArrayList<>();
 		final int numGroups = groupHandle.getNumGroups();
-		for ( int i = 0; i < numGroups; i++ )
-		{
+		for (int i = 0; i < numGroups; i++) {
 			final int lockId = i;
 			final boolean isActive = groupHandle.getGroupId() == lockId;
-			final JToggleButton button = new JToggleButton( "" + ( i + 1 ), isActive ? LOCK_ICON : UNLOCK_ICON, isActive );
-			button.setFont( FONT );
-			button.setPreferredSize( new Dimension( 60, 20 ) );
-			button.setHorizontalAlignment( SwingConstants.LEFT );
-			button.setOpaque( false );
-			button.setContentAreaFilled( false );
-			button.setBorderPainted( false );
-			button.addActionListener( new ActionListener()
-			{
+			final JToggleButton button = new JToggleButton("" + (i + 1), isActive
+				? LOCK_ICON : UNLOCK_ICON, isActive);
+			button.setFont(FONT);
+			button.setPreferredSize(new Dimension(60, 20));
+			button.setHorizontalAlignment(SwingConstants.LEFT);
+			button.setOpaque(false);
+			button.setContentAreaFilled(false);
+			button.setBorderPainted(false);
+			button.addActionListener(new ActionListener() {
+
 				@Override
-				public void actionPerformed( final ActionEvent e )
-				{
-					if ( button.isSelected() )
-						groupHandle.setGroupId( lockId );
+				public void actionPerformed(final ActionEvent e) {
+					if (button.isSelected())
+						groupHandle.setGroupId(lockId);
 					else
-						groupHandle.setGroupId( NO_GROUP );
+						groupHandle.setGroupId(NO_GROUP);
 				}
-			} );
-			add( button );
-			buttons.add( button );
+			});
+			add(button);
+			buttons.add(button);
 		}
-		groupHandle.groupChangeListeners().add( this );
+		groupHandle.groupChangeListeners().add(this);
 	}
 
 	@Override
-	public void groupChanged()
-	{
+	public void groupChanged() {
 		final int numGroups = groupHandle.getNumGroups();
-		for ( int i = 0; i < numGroups; i++ )
-		{
+		for (int i = 0; i < numGroups; i++) {
 			final boolean activated = groupHandle.getGroupId() == i;
-			final JToggleButton button = buttons.get( i );
-			button.setSelected( activated );
-			button.setIcon( activated ? LOCK_ICON : UNLOCK_ICON );
+			final JToggleButton button = buttons.get(i);
+			button.setSelected(activated);
+			button.setIcon(activated ? LOCK_ICON : UNLOCK_ICON);
 		}
 	}
 }

@@ -26,9 +26,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model;
 
-public interface FocusListener
-{
+public interface FocusListener {
+
 	public void focusChanged();
 }

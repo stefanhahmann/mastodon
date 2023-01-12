@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.ui.keymap;
 
 import org.scijava.plugin.SciJavaPlugin;
@@ -38,19 +39,18 @@ import org.scijava.plugin.SciJavaPlugin;
  * (This allows to discover Plugin shortcuts which cannot be hardwired into the
  * default keymap.)
  */
-public abstract class CommandDescriptionProvider implements SciJavaPlugin
-{
+public abstract class CommandDescriptionProvider implements SciJavaPlugin {
+
 	private final String[] expectedContexts;
 
-	protected CommandDescriptionProvider( final String... expectedContexts )
-	{
+	protected CommandDescriptionProvider(final String... expectedContexts) {
 		this.expectedContexts = expectedContexts;
 	}
 
-	public String[] getExpectedContexts()
-	{
+	public String[] getExpectedContexts() {
 		return expectedContexts;
 	}
 
-	public abstract void getCommandDescriptions( final CommandDescriptions descriptions );
+	public abstract void getCommandDescriptions(
+		final CommandDescriptions descriptions);
 }

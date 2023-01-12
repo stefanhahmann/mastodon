@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.graph;
 
 import java.io.IOException;
@@ -40,38 +41,33 @@ import org.mastodon.mamut.project.MamutProject;
 import org.mastodon.mamut.project.MamutProjectIO;
 import org.scijava.Context;
 
-public class BranchGraphExample
-{
+public class BranchGraphExample {
 
-	public static void main( final String[] args ) throws IOException
-	{
+	public static void main(final String[] args) throws IOException {
 		setSystemLookAndFeelAndLocale();
-		try (final Context context = new Context())
-		{
+		try (final Context context = new Context()) {
 			final String projectPath = "samples/test_branchgraph.mastodon";
 //			final String projectPath = "samples/mette_e1.mastodon";
 //			final String projectPath = "samples/mette_e1_small.mastodon";
-			final MamutProject project = new MamutProjectIO().load( projectPath );
+			final MamutProject project = new MamutProjectIO().load(projectPath);
 
-			final WindowManager wm = new WindowManager( context );
-			wm.getProjectManager().openWithDialog( project );
+			final WindowManager wm = new WindowManager(context);
+			wm.getProjectManager().openWithDialog(project);
 			wm.getAppModel().getBranchGraphSync().sync();
-			new MainWindow( wm ).setVisible( true );
+			new MainWindow(wm).setVisible(true);
 		}
-		catch ( final Exception e1 )
-		{
+		catch (final Exception e1) {
 			e1.printStackTrace();
 		}
 	}
 
-	private static final void setSystemLookAndFeelAndLocale()
-	{
-		Locale.setDefault( Locale.ROOT );
-		try
-		{
-			UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );
+	private static final void setSystemLookAndFeelAndLocale() {
+		Locale.setDefault(Locale.ROOT);
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		}
-		catch ( ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e )
+		catch (ClassNotFoundException | InstantiationException
+				| IllegalAccessException | UnsupportedLookAndFeelException e)
 		{
 			e.printStackTrace();
 		}

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model;
 
 import org.scijava.listeners.Listeners;
@@ -35,29 +36,27 @@ import org.scijava.listeners.Listeners;
  *
  * @author Tobias Pietzsch
  */
-public class DefaultTimepointModel implements TimepointModel
-{
-	private final Listeners.List< TimepointListener > listeners = new Listeners.SynchronizedList<>();
+public class DefaultTimepointModel implements TimepointModel {
+
+	private final Listeners.List<TimepointListener> listeners =
+		new Listeners.SynchronizedList<>();
 
 	private int timepoint = 0;
 
 	@Override
-	public void setTimepoint( final int t )
-	{
+	public void setTimepoint(final int t) {
 		timepoint = t;
-		for ( final TimepointListener l : listeners.list )
+		for (final TimepointListener l : listeners.list)
 			l.timepointChanged();
 	}
 
 	@Override
-	public int getTimepoint()
-	{
+	public int getTimepoint() {
 		return timepoint;
 	}
 
 	@Override
-	public Listeners< TimepointListener > listeners()
-	{
+	public Listeners<TimepointListener> listeners() {
 		return listeners;
 	}
 }

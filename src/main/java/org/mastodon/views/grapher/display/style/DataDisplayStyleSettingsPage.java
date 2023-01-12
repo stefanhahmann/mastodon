@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.display.style;
 
 import java.awt.BorderLayout;
@@ -45,103 +46,101 @@ import bdv.ui.settings.SettingsPanel;
 import bdv.ui.settings.style.StyleProfile;
 import bdv.ui.settings.style.StyleProfileManager;
 
-public class DataDisplayStyleSettingsPage extends SelectAndEditProfileSettingsPage< StyleProfile< DataDisplayStyle > >
+public class DataDisplayStyleSettingsPage extends
+	SelectAndEditProfileSettingsPage<StyleProfile<DataDisplayStyle>>
 {
+
 	/**
 	 * Creates a new settings page for grapher styles.
 	 *
-	 * @param treePath
-	 *            path of this page in the settings tree.
-	 * @param styleManager
-	 *            the style manager.
+	 * @param treePath path of this page in the settings tree.
+	 * @param styleManager the style manager.
 	 */
-	public DataDisplayStyleSettingsPage( final String treePath, final DataDisplayStyleManager styleManager )
+	public DataDisplayStyleSettingsPage(final String treePath,
+		final DataDisplayStyleManager styleManager)
 	{
 		super(
-				treePath,
-				new StyleProfileManager<>( styleManager, new DataDisplayStyleManager( false ) ),
-				new DataGraphProfileEditPanel( styleManager.getSelectedStyle() ) );
+			treePath,
+			new StyleProfileManager<>(styleManager, new DataDisplayStyleManager(
+				false)),
+			new DataGraphProfileEditPanel(styleManager.getSelectedStyle()));
 	}
 
-	static class DataGraphProfileEditPanel implements DataDisplayStyle.UpdateListener, SelectAndEditProfileSettingsPage.ProfileEditPanel< StyleProfile< DataDisplayStyle > >
+	static class DataGraphProfileEditPanel implements
+		DataDisplayStyle.UpdateListener,
+		SelectAndEditProfileSettingsPage.ProfileEditPanel<StyleProfile<DataDisplayStyle>>
 	{
-		private final Listeners.SynchronizedList< ModificationListener > modificationListeners;
+
+		private final Listeners.SynchronizedList<ModificationListener> modificationListeners;
 
 		private final DataDisplayStyle editedStyle;
 
 		private final DataDisplayStyleEditorPanel styleEditorPanel;
 
-		public DataGraphProfileEditPanel( final DataDisplayStyle initialStyle )
-		{
-			editedStyle = initialStyle.copy( "Edited" );
-			styleEditorPanel = new DataDisplayStyleEditorPanel( editedStyle );
+		public DataGraphProfileEditPanel(final DataDisplayStyle initialStyle) {
+			editedStyle = initialStyle.copy("Edited");
+			styleEditorPanel = new DataDisplayStyleEditorPanel(editedStyle);
 			modificationListeners = new Listeners.SynchronizedList<>();
-			editedStyle.updateListeners().add( this );
+			editedStyle.updateListeners().add(this);
 		}
 
 		private boolean trackModifications = true;
 
 		@Override
-		public void dataGraphStyleChanged()
-		{
-			if ( trackModifications )
-				modificationListeners.list.forEach( ModificationListener::setModified );
+		public void dataGraphStyleChanged() {
+			if (trackModifications)
+				modificationListeners.list.forEach(ModificationListener::setModified);
 		}
 
 		@Override
-		public void loadProfile( final StyleProfile< DataDisplayStyle > profile )
-		{
+		public void loadProfile(final StyleProfile<DataDisplayStyle> profile) {
 			trackModifications = false;
-			editedStyle.set( profile.getStyle() );
+			editedStyle.set(profile.getStyle());
 			trackModifications = true;
 		}
 
 		@Override
-		public void storeProfile( final StyleProfile< DataDisplayStyle > profile )
-		{
+		public void storeProfile(final StyleProfile<DataDisplayStyle> profile) {
 			trackModifications = false;
-			editedStyle.name( profile.getStyle().getName() );
+			editedStyle.name(profile.getStyle().getName());
 			trackModifications = true;
-			profile.getStyle().set( editedStyle );
+			profile.getStyle().set(editedStyle);
 		}
 
 		@Override
-		public Listeners< ModificationListener > modificationListeners()
-		{
+		public Listeners<ModificationListener> modificationListeners() {
 			return modificationListeners;
 		}
 
 		@Override
-		public JPanel getJPanel()
-		{
+		public JPanel getJPanel() {
 			return styleEditorPanel;
 		}
 	}
 
-	public static void main( final String[] args )
-	{
+	public static void main(final String[] args) {
 		final DataDisplayStyleManager styleManager = new DataDisplayStyleManager();
 
 		final SettingsPanel settings = new SettingsPanel();
-		settings.addPage( new DataDisplayStyleSettingsPage( "Style > Grapher", styleManager ) );
+		settings.addPage(new DataDisplayStyleSettingsPage("Style > Grapher",
+			styleManager));
 
-		final JDialog dialog = new JDialog( ( Frame ) null, "Settings" );
-		dialog.getContentPane().add( settings, BorderLayout.CENTER );
+		final JDialog dialog = new JDialog((Frame) null, "Settings");
+		dialog.getContentPane().add(settings, BorderLayout.CENTER);
 
-		settings.onOk( () -> dialog.setVisible( false ) );
-		settings.onCancel( () -> dialog.setVisible( false ) );
+		settings.onOk(() -> dialog.setVisible(false));
+		settings.onCancel(() -> dialog.setVisible(false));
 
-		dialog.setDefaultCloseOperation( WindowConstants.DO_NOTHING_ON_CLOSE );
-		dialog.addWindowListener( new WindowAdapter()
-		{
+		dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		dialog.addWindowListener(new WindowAdapter() {
+
 			@Override
-			public void windowClosing( final WindowEvent e )
-			{
+			public void windowClosing(final WindowEvent e) {
 				settings.cancel();
 			}
-		} );
+		});
 
 		dialog.pack();
-		dialog.setVisible( true );
+		dialog.setVisible(true);
 	}
 }

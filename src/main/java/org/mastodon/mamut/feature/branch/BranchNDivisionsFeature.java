@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature.branch;
 
 import java.util.Collections;
@@ -42,85 +43,79 @@ import org.mastodon.feature.Multiplicity;
 import org.mastodon.mamut.model.branch.BranchSpot;
 import org.scijava.plugin.Plugin;
 
-public class BranchNDivisionsFeature implements Feature< BranchSpot >
-{
+public class BranchNDivisionsFeature implements Feature<BranchSpot> {
 
 	public static final String KEY = "Branch N successors";
 
-	private static final String HELP_STRING = "Computes the number of successors of a branch spot.";
+	private static final String HELP_STRING =
+		"Computes the number of successors of a branch spot.";
 
-	public static final FeatureProjectionSpec PROJECTION_SPEC = new FeatureProjectionSpec( KEY );
+	public static final FeatureProjectionSpec PROJECTION_SPEC =
+		new FeatureProjectionSpec(KEY);
 
 	public static final Spec SPEC = new Spec();
 
-	private final IntFeatureProjection< BranchSpot > projection;
+	private final IntFeatureProjection<BranchSpot> projection;
 
-	@Plugin( type = FeatureSpec.class )
-	public static class Spec extends FeatureSpec< BranchNDivisionsFeature, BranchSpot >
+	@Plugin(type = FeatureSpec.class)
+	public static class Spec extends
+		FeatureSpec<BranchNDivisionsFeature, BranchSpot>
 	{
-		public Spec()
-		{
+
+		public Spec() {
 			super(
-					KEY,
-					HELP_STRING,
-					BranchNDivisionsFeature.class,
-					BranchSpot.class,
-					Multiplicity.SINGLE,
-					PROJECTION_SPEC );
+				KEY,
+				HELP_STRING,
+				BranchNDivisionsFeature.class,
+				BranchSpot.class,
+				Multiplicity.SINGLE,
+				PROJECTION_SPEC);
 		}
 	}
 
-	public BranchNDivisionsFeature()
-	{
+	public BranchNDivisionsFeature() {
 		this.projection = new MyProjection();
 	}
 
 	@Override
-	public FeatureProjection< BranchSpot > project( final FeatureProjectionKey key )
-	{
-		return projection.getKey().equals( key ) ? projection : null;
+	public FeatureProjection<BranchSpot> project(final FeatureProjectionKey key) {
+		return projection.getKey().equals(key) ? projection : null;
 	}
 
 	@Override
-	public Set< FeatureProjection< BranchSpot > > projections()
-	{
-		return Collections.singleton( projection );
+	public Set<FeatureProjection<BranchSpot>> projections() {
+		return Collections.singleton(projection);
 	}
 
 	@Override
-	public Spec getSpec()
-	{
+	public Spec getSpec() {
 		return SPEC;
 	}
 
 	@Override
-	public void invalidate( final BranchSpot spot )
-	{}
+	public void invalidate(final BranchSpot spot) {}
 
-	private static final class MyProjection implements IntFeatureProjection< BranchSpot >
+	private static final class MyProjection implements
+		IntFeatureProjection<BranchSpot>
 	{
 
 		@Override
-		public FeatureProjectionKey getKey()
-		{
-			return FeatureProjectionKey.key( PROJECTION_SPEC );
+		public FeatureProjectionKey getKey() {
+			return FeatureProjectionKey.key(PROJECTION_SPEC);
 		}
 
 		@Override
-		public boolean isSet( final BranchSpot obj )
-		{
+		public boolean isSet(final BranchSpot obj) {
 			return true;
 		}
 
 		@Override
-		public double value( final BranchSpot obj )
-		{
+		public double value(final BranchSpot obj) {
 			return obj.outgoingEdges().size();
 		}
 
 		@Override
-		public String units()
-		{
+		public String units() {
 			return Dimension.NONE_UNITS;
 		}
 	}

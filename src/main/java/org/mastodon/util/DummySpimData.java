@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.util;
 
 import java.io.File;
@@ -73,13 +74,12 @@ import org.jdom2.output.XMLOutputter;
  *
  * @author Tobias Pietzsch
  */
-public class DummySpimData
-{
+public class DummySpimData {
+
 	static public final String DUMMY = ".dummy";
 
-	public static boolean isDummyString( String name )
-	{
-		return name.endsWith( DUMMY );
+	public static boolean isDummyString(String name) {
+		return name.endsWith(DUMMY);
 	}
 
 	/**
@@ -90,130 +90,128 @@ public class DummySpimData
 	 * {@code 1000x1000x100} images for 400 timepoints with calibration
 	 * {@code 1x1x10}.
 	 *
-	 * @param name
-	 *            the filename
-	 *
+	 * @param name the filename
 	 * @return a dummy {@link SpimDataMinimal} if the name matches the pattern,
 	 *         otherwise {@code null}.
 	 */
-	public static SpimDataMinimal tryCreate( final String name )
-	{
-		if ( !isDummyString( name ) )
-			throw new IllegalArgumentException("Couldn't parse dummy dataset description: '" + name + "'");
+	public static SpimDataMinimal tryCreate(final String name) {
+		if (!isDummyString(name))
+			throw new IllegalArgumentException(
+				"Couldn't parse dummy dataset description: '" + name + "'");
 
-		try
-		{
-			final String baseName = FilenameUtils.getBaseName( name );
-			final String[] parts = baseName.split( "\\s+" );
-			final int x = ( int ) get( parts, "x", 1 );
-			final int y = ( int ) get( parts, "y", 1 );
-			final int z = ( int ) get( parts, "z", 1 );
-			final double sx = get( parts, "sx", 1 );
-			final double sy = get( parts, "sy", 1 );
-			final double sz = get( parts, "sz", 1 );
-			final int t = ( int ) get( parts, "t", 1 );
-			return tryCreate( x, y, z, sx, sy, sz, t );
+		try {
+			final String baseName = FilenameUtils.getBaseName(name);
+			final String[] parts = baseName.split("\\s+");
+			final int x = (int) get(parts, "x", 1);
+			final int y = (int) get(parts, "y", 1);
+			final int z = (int) get(parts, "z", 1);
+			final double sx = get(parts, "sx", 1);
+			final double sy = get(parts, "sy", 1);
+			final double sz = get(parts, "sz", 1);
+			final int t = (int) get(parts, "t", 1);
+			return tryCreate(x, y, z, sx, sy, sz, t);
 		}
-		catch ( final NumberFormatException e )
-		{
-			throw new IllegalArgumentException("Couldn't parse dummy dataset description: '" + name + "'");
+		catch (final NumberFormatException e) {
+			throw new IllegalArgumentException(
+				"Couldn't parse dummy dataset description: '" + name + "'");
 		}
 	}
 
-	public static SpimDataMinimal tryCreate( final int x, final int y, final int z, final double sx, final double sy, final double sz, final int t )
+	public static SpimDataMinimal tryCreate(final int x, final int y, final int z,
+		final double sx, final double sy, final double sz, final int t)
 	{
-		final Dimensions imageSize = new FinalDimensions( x, y, z );
+		final Dimensions imageSize = new FinalDimensions(x, y, z);
 		final AffineTransform3D calib = new AffineTransform3D();
-		calib.set( sx, 0, 0 );
-		calib.set( sy, 1, 1 );
-		calib.set( sz, 2, 2 );
+		calib.set(sx, 0, 0);
+		calib.set(sy, 1, 1);
+		calib.set(sz, 2, 2);
 
-		final File basePath = new File( "." );
+		final File basePath = new File(".");
 		final TimePoints timepoints = new TimePoints(
-				IntStream.range( 0, t ).mapToObj( TimePoint::new ).collect( Collectors.toList() ) );
-		final Map< Integer, BasicViewSetup > setups = new HashMap<>();
-		setups.put( 0, new BasicViewSetup( 0, "dummy", imageSize, null ) );
-		final BasicImgLoader imgLoader = new DummyImgLoader( imageSize );
-		final SequenceDescriptionMinimal sequenceDescription = new SequenceDescriptionMinimal( timepoints, setups, imgLoader, null );
+			IntStream.range(0, t).mapToObj(TimePoint::new).collect(Collectors
+				.toList()));
+		final Map<Integer, BasicViewSetup> setups = new HashMap<>();
+		setups.put(0, new BasicViewSetup(0, "dummy", imageSize, null));
+		final BasicImgLoader imgLoader = new DummyImgLoader(imageSize);
+		final SequenceDescriptionMinimal sequenceDescription =
+			new SequenceDescriptionMinimal(timepoints, setups, imgLoader, null);
 		final ViewRegistrations viewRegistrations = new ViewRegistrations(
-				IntStream.range( 0, t ).mapToObj( tp -> new ViewRegistration( tp, 0, calib ) ).collect( Collectors.toList() ) );
-		return new SpimDataMinimal( basePath, sequenceDescription, viewRegistrations );
+			IntStream.range(0, t).mapToObj(tp -> new ViewRegistration(tp, 0, calib))
+				.collect(Collectors.toList()));
+		return new SpimDataMinimal(basePath, sequenceDescription,
+			viewRegistrations);
 
 	}
 
-	private static double get( final String[] parts, final String key, final double defaultValue )
+	private static double get(final String[] parts, final String key,
+		final double defaultValue)
 	{
 		final String prefix = key + "=";
-		for ( final String part : parts )
-		{
-			if ( part.startsWith( prefix ) )
-			{
-				final String value = part.substring( prefix.length() );
-				return Double.parseDouble( value );
+		for (final String part : parts) {
+			if (part.startsWith(prefix)) {
+				final String value = part.substring(prefix.length());
+				return Double.parseDouble(value);
 			}
 		}
 		return defaultValue;
 	}
 
 	/**
-	 * @return a {@link AbstractSpimData} object. Pixel sizes,
-	 * image sizes, and image transformations are read from the given
-	 * BigDataViewer XML. The actual image data is not loaded, all pixels
-	 * are black. {@link DummyImgLoader} is used to provide the dummy image data.
+	 * @return a {@link AbstractSpimData} object. Pixel sizes, image sizes, and
+	 *         image transformations are read from the given BigDataViewer XML.
+	 *         The actual image data is not loaded, all pixels are black.
+	 *         {@link DummyImgLoader} is used to provide the dummy image data.
 	 */
-	public static AbstractSpimData<?> fromSpimDataXml( String spimDataXmlFilename )
-			throws SpimDataException
+	public static AbstractSpimData<?> fromSpimDataXml(String spimDataXmlFilename)
+		throws SpimDataException
 	{
-		File modifiedXml = getBdvXmlWithoutImageLoader( new File( spimDataXmlFilename ) );
-		AbstractSpimData<?> spimData = new XmlIoSpimDataMinimal().load( modifiedXml.getAbsolutePath() );
-		setDummyImageLoader( spimData );
+		File modifiedXml = getBdvXmlWithoutImageLoader(new File(
+			spimDataXmlFilename));
+		AbstractSpimData<?> spimData = new XmlIoSpimDataMinimal().load(modifiedXml
+			.getAbsolutePath());
+		setDummyImageLoader(spimData);
 		return spimData;
 	}
 
-	private static File getBdvXmlWithoutImageLoader( File xmlFile )
-	{
-		Document document = readXml( xmlFile );
+	private static File getBdvXmlWithoutImageLoader(File xmlFile) {
+		Document document = readXml(xmlFile);
 		document.getRootElement()
-				.getChild( "SequenceDescription" )
-				.removeChildren( "ImageLoader" );
-		return writeXmlToTmpFile( document );
+			.getChild("SequenceDescription")
+			.removeChildren("ImageLoader");
+		return writeXmlToTmpFile(document);
 	}
 
-	private static void setDummyImageLoader( AbstractSpimData<?> spimData )
-	{
-		final AbstractSequenceDescription<?, ?, BasicImgLoader> seq = Cast.unchecked( spimData.getSequenceDescription() );
+	private static void setDummyImageLoader(AbstractSpimData<?> spimData) {
+		final AbstractSequenceDescription<?, ?, BasicImgLoader> seq = Cast
+			.unchecked(spimData.getSequenceDescription());
 		List<Dimensions> dimensionsList = new ArrayList<>();
-		for ( BasicViewSetup basicViewSetup : seq.getViewSetupsOrdered() )
-			dimensionsList.add( basicViewSetup.getSize() );
-		seq.setImgLoader( new DummyImgLoader( new UnsignedShortType(), dimensionsList ) );
+		for (BasicViewSetup basicViewSetup : seq.getViewSetupsOrdered())
+			dimensionsList.add(basicViewSetup.getSize());
+		seq.setImgLoader(new DummyImgLoader(new UnsignedShortType(),
+			dimensionsList));
 	}
 
-	private static Document readXml( File xmlFile )
-	{
-		try
-		{
-			return new SAXBuilder().build( xmlFile );
+	private static Document readXml(File xmlFile) {
+		try {
+			return new SAXBuilder().build(xmlFile);
 		}
-		catch ( JDOMException | IOException e )
-		{
-			throw new RuntimeException( e );
+		catch (JDOMException | IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 
-	private static File writeXmlToTmpFile( Document document )
-	{
-		try
-		{
-			File file = File.createTempFile( "dataset-dummy-img-loader", ".xml" );
+	private static File writeXmlToTmpFile(Document document) {
+		try {
+			File file = File.createTempFile("dataset-dummy-img-loader", ".xml");
 			file.deleteOnExit();
-			try (OutputStream outputStream = new FileOutputStream( file )) {
-				new XMLOutputter( Format.getPrettyFormat() ).output( document, outputStream);
+			try (OutputStream outputStream = new FileOutputStream(file)) {
+				new XMLOutputter(Format.getPrettyFormat()).output(document,
+					outputStream);
 			}
 			return file;
 		}
-		catch ( IOException e )
-		{
-			throw new RuntimeException( e );
+		catch (IOException e) {
+			throw new RuntimeException(e);
 		}
 	}
 }

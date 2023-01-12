@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.display.style;
 
 import java.awt.BasicStroke;
@@ -41,9 +42,11 @@ import org.scijava.listeners.Listeners;
 
 import bdv.ui.settings.style.Style;
 
-public class DataDisplayStyle implements Style< DataDisplayStyle >
-{
-	private static final Stroke DEFAULT_FOCUS_STROKE = new BasicStroke( 2f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1f, new float[] { 8f, 3f }, 0 );
+public class DataDisplayStyle implements Style<DataDisplayStyle> {
+
+	private static final Stroke DEFAULT_FOCUS_STROKE = new BasicStroke(2f,
+		BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1f, new float[] { 8f, 3f },
+		0);
 
 	private String name;
 
@@ -92,128 +95,105 @@ public class DataDisplayStyle implements Style< DataDisplayStyle >
 	private Stroke axisStroke;
 
 	private boolean drawVertexName;
-	
+
 	/*
 	 * GETTERS for non public fields.
 	 */
 
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
-	public boolean isAutoVertexSize()
-	{
+	public boolean isAutoVertexSize() {
 		return autoVertexSize;
 	}
 
-	public Color getAxisColor()
-	{
+	public Color getAxisColor() {
 		return axisColor;
 	}
 
-	public Font getAxisLabelFont()
-	{
+	public Font getAxisLabelFont() {
 		return axisLabelFont;
 	}
 
-	public Stroke getAxisStroke()
-	{
+	public Stroke getAxisStroke() {
 		return axisStroke;
 	}
 
-	public Font getAxisTickFont()
-	{
+	public Font getAxisTickFont() {
 		return axisTickFont;
 	}
 
-	public Color getBackgroundColor()
-	{
+	public Color getBackgroundColor() {
 		return backgroundColor;
 	}
 
-	public boolean isDrawVertexName()
-	{
+	public boolean isDrawVertexName() {
 		return drawVertexName;
 	}
 
-	public Color getEdgeColor()
-	{
+	public Color getEdgeColor() {
 		return edgeColor;
 	}
 
-	public Stroke getEdgeHighlightStroke()
-	{
+	public Stroke getEdgeHighlightStroke() {
 		return edgeHighlightStroke;
 	}
 
-	public Stroke getEdgeStroke()
-	{
+	public Stroke getEdgeStroke() {
 		return edgeStroke;
 	}
 
-	public Stroke getFocusStroke()
-	{
+	public Stroke getFocusStroke() {
 		return focusStroke;
 	}
 
-	public Font getFont()
-	{
+	public Font getFont() {
 		return font;
 	}
 
-	public Color getSelectedEdgeColor()
-	{
+	public Color getSelectedEdgeColor() {
 		return selectedEdgeColor;
 	}
 
-	public Color getSelectedSimplifiedVertexFillColor()
-	{
+	public Color getSelectedSimplifiedVertexFillColor() {
 		return selectedSimplifiedVertexFillColor;
 	}
 
-	public Color getSelectedVertexDrawColor()
-	{
+	public Color getSelectedVertexDrawColor() {
 		return selectedVertexDrawColor;
 	}
 
-	public Color getSelectedVertexFillColor()
-	{
+	public Color getSelectedVertexFillColor() {
 		return selectedVertexFillColor;
 	}
 
-	public Color getVertexDrawColor()
-	{
+	public Color getVertexDrawColor() {
 		return vertexDrawColor;
 	}
 
-	public VertexDrawShape getVertexDrawShape()
-	{
+	public VertexDrawShape getVertexDrawShape() {
 		return vertexDrawShape;
 	}
 
-	public Color getVertexFillColor()
-	{
+	public Color getVertexFillColor() {
 		return vertexFillColor;
 	}
 
-	public double getVertexFixedSize()
-	{
+	public double getVertexFixedSize() {
 		return vertexFixedSize;
 	}
 
-	public Color getSimplifiedVertexFillColor()
-	{
+	public Color getSimplifiedVertexFillColor() {
 		return simplifiedVertexFillColor;
 	}
 
-	public Stroke getVertexHighlightStroke()
-	{
+	public Stroke getVertexHighlightStroke() {
 		return vertexHighlightStroke;
 	}
-	public Stroke getVertexStroke()
-	{
+
+	public Stroke getVertexStroke() {
 		return vertexStroke;
 	}
 
@@ -221,10 +201,8 @@ public class DataDisplayStyle implements Style< DataDisplayStyle >
 	 * SETTERS
 	 */
 
-	public DataDisplayStyle name( final String name )
-	{
-		if ( !Objects.equals( this.name, name ) )
-		{
+	public DataDisplayStyle name(final String name) {
+		if (!Objects.equals(this.name, name)) {
 			this.name = name;
 			notifyListeners();
 		}
@@ -232,236 +210,190 @@ public class DataDisplayStyle implements Style< DataDisplayStyle >
 	}
 
 	@Override
-	public void setName( final String name )
-	{
-		name( name );
+	public void setName(final String name) {
+		name(name);
 	}
 
-	public DataDisplayStyle autoVertexSize( final boolean autoVertexSize )
-	{
-		if ( this.autoVertexSize != autoVertexSize )
-		{
+	public DataDisplayStyle autoVertexSize(final boolean autoVertexSize) {
+		if (this.autoVertexSize != autoVertexSize) {
 			this.autoVertexSize = autoVertexSize;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle axisColor( final Color color )
-	{
-		if ( !Objects.equals( this.axisColor, color ) )
-		{
+	public DataDisplayStyle axisColor(final Color color) {
+		if (!Objects.equals(this.axisColor, color)) {
 			this.axisColor = color;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle axisLabelFont( final Font axisLabelFont )
-	{
-		if ( !Objects.equals( this.axisLabelFont, axisLabelFont ) )
-		{
+	public DataDisplayStyle axisLabelFont(final Font axisLabelFont) {
+		if (!Objects.equals(this.axisLabelFont, axisLabelFont)) {
 			this.axisLabelFont = axisLabelFont;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle axisStroke( final Stroke stroke )
-	{
-		if ( !Objects.equals( this.axisStroke, stroke ) )
-		{
+	public DataDisplayStyle axisStroke(final Stroke stroke) {
+		if (!Objects.equals(this.axisStroke, stroke)) {
 			this.axisStroke = stroke;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle axisTickFont( final Font font )
-	{
-		if ( !Objects.equals( this.axisTickFont, font ) )
-		{
+	public DataDisplayStyle axisTickFont(final Font font) {
+		if (!Objects.equals(this.axisTickFont, font)) {
 			this.axisTickFont = font;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle backgroundColor( final Color color )
-	{
-		if ( !Objects.equals( this.backgroundColor, color ) )
-		{
+	public DataDisplayStyle backgroundColor(final Color color) {
+		if (!Objects.equals(this.backgroundColor, color)) {
 			this.backgroundColor = color;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle drawVertexName( final boolean drawVertexName )
-	{
-		if ( this.drawVertexName != drawVertexName )
-		{
+	public DataDisplayStyle drawVertexName(final boolean drawVertexName) {
+		if (this.drawVertexName != drawVertexName) {
 			this.drawVertexName = drawVertexName;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle edgeColor( final Color color )
-	{
-		if ( !Objects.equals( this.edgeColor, color ) )
-		{
+	public DataDisplayStyle edgeColor(final Color color) {
+		if (!Objects.equals(this.edgeColor, color)) {
 			this.edgeColor = color;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle edgeHighlightStroke( final Stroke stroke )
-	{
-		if ( !Objects.equals( this.edgeHighlightStroke, stroke ) )
-		{
+	public DataDisplayStyle edgeHighlightStroke(final Stroke stroke) {
+		if (!Objects.equals(this.edgeHighlightStroke, stroke)) {
 			this.edgeHighlightStroke = stroke;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle edgeStroke( final Stroke stroke )
-	{
-		if ( !Objects.equals( this.edgeStroke, stroke ) )
-		{
+	public DataDisplayStyle edgeStroke(final Stroke stroke) {
+		if (!Objects.equals(this.edgeStroke, stroke)) {
 			this.edgeStroke = stroke;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle focusStroke( final Stroke stroke )
-	{
-		if ( !Objects.equals( this.focusStroke, stroke ) )
-		{
+	public DataDisplayStyle focusStroke(final Stroke stroke) {
+		if (!Objects.equals(this.focusStroke, stroke)) {
 			this.focusStroke = stroke;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle font( final Font font )
-	{
-		if ( !Objects.equals( this.font, font ) )
-		{
+	public DataDisplayStyle font(final Font font) {
+		if (!Objects.equals(this.font, font)) {
 			this.font = font;
 			notifyListeners();
 		}
 		return this;
 	}
 
-
-	public DataDisplayStyle selectedEdgeColor( final Color color )
-	{
-		if ( !Objects.equals( this.selectedEdgeColor, color ) )
-		{
+	public DataDisplayStyle selectedEdgeColor(final Color color) {
+		if (!Objects.equals(this.selectedEdgeColor, color)) {
 			this.selectedEdgeColor = color;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle selectedVertexDrawColor( final Color color )
-	{
-		if ( !Objects.equals( this.selectedVertexDrawColor, color ) )
-		{
+	public DataDisplayStyle selectedVertexDrawColor(final Color color) {
+		if (!Objects.equals(this.selectedVertexDrawColor, color)) {
 			this.selectedVertexDrawColor = color;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle selectedVertexFillColor( final Color color )
-	{
-		if ( !Objects.equals( this.selectedVertexFillColor, color ) )
-		{
+	public DataDisplayStyle selectedVertexFillColor(final Color color) {
+		if (!Objects.equals(this.selectedVertexFillColor, color)) {
 			this.selectedVertexFillColor = color;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle selectedSimplifiedVertexFillColor( final Color color )
-	{
-		if ( !Objects.equals( this.selectedSimplifiedVertexFillColor, color ) )
-		{
+	public DataDisplayStyle selectedSimplifiedVertexFillColor(final Color color) {
+		if (!Objects.equals(this.selectedSimplifiedVertexFillColor, color)) {
 			this.selectedSimplifiedVertexFillColor = color;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle simplifiedVertexFillColor( final Color color )
-	{
-		if ( !Objects.equals( this.simplifiedVertexFillColor, color ) )
-		{
+	public DataDisplayStyle simplifiedVertexFillColor(final Color color) {
+		if (!Objects.equals(this.simplifiedVertexFillColor, color)) {
 			this.simplifiedVertexFillColor = color;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle vertexDrawColor( final Color color )
-	{
-		if ( !Objects.equals( this.vertexDrawColor, color ) )
-		{
+	public DataDisplayStyle vertexDrawColor(final Color color) {
+		if (!Objects.equals(this.vertexDrawColor, color)) {
 			this.vertexDrawColor = color;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle vertexDrawShape( final VertexDrawShape vertexDrawShape )
+	public DataDisplayStyle vertexDrawShape(
+		final VertexDrawShape vertexDrawShape)
 	{
-		if ( !Objects.equals( this.vertexDrawShape, vertexDrawShape ) )
-		{
+		if (!Objects.equals(this.vertexDrawShape, vertexDrawShape)) {
 			this.vertexDrawShape = vertexDrawShape;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle vertexFillColor( final Color color )
-	{
-		if ( !Objects.equals( this.vertexFillColor, color ) )
-		{
+	public DataDisplayStyle vertexFillColor(final Color color) {
+		if (!Objects.equals(this.vertexFillColor, color)) {
 			this.vertexFillColor = color;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle vertexFixedSize( final double vertexFixedSize )
-	{
-		if ( this.vertexFixedSize != vertexFixedSize )
-		{
+	public DataDisplayStyle vertexFixedSize(final double vertexFixedSize) {
+		if (this.vertexFixedSize != vertexFixedSize) {
 			this.vertexFixedSize = vertexFixedSize;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle vertexHighlightStroke( final Stroke stroke )
-	{
-		if ( !Objects.equals( this.vertexHighlightStroke, stroke ) )
-		{
+	public DataDisplayStyle vertexHighlightStroke(final Stroke stroke) {
+		if (!Objects.equals(this.vertexHighlightStroke, stroke)) {
 			this.vertexHighlightStroke = stroke;
 			notifyListeners();
 		}
 		return this;
 	}
 
-	public DataDisplayStyle vertexStroke( final Stroke stroke )
-	{
-		if ( !Objects.equals( this.vertexStroke, stroke ) )
-		{
+	public DataDisplayStyle vertexStroke(final Stroke stroke) {
+		if (!Objects.equals(this.vertexStroke, stroke)) {
 			this.vertexStroke = stroke;
 			notifyListeners();
 		}
@@ -472,26 +404,23 @@ public class DataDisplayStyle implements Style< DataDisplayStyle >
 	 * 
 	 */
 
-	public interface UpdateListener
-	{
+	public interface UpdateListener {
+
 		void dataGraphStyleChanged();
 	}
 
-	private final Listeners.List< UpdateListener > updateListeners;
+	private final Listeners.List<UpdateListener> updateListeners;
 
-	private DataDisplayStyle()
-	{
+	private DataDisplayStyle() {
 		updateListeners = new Listeners.SynchronizedList<>();
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return name;
 	}
 
-	public synchronized void set( final DataDisplayStyle style )
-	{
+	public synchronized void set(final DataDisplayStyle style) {
 		this.name = style.name;
 		this.autoVertexSize = style.autoVertexSize;
 		this.axisColor = style.axisColor;
@@ -506,7 +435,8 @@ public class DataDisplayStyle implements Style< DataDisplayStyle >
 		this.focusStroke = style.focusStroke;
 		this.font = style.font;
 		this.selectedEdgeColor = style.selectedEdgeColor;
-		this.selectedSimplifiedVertexFillColor = style.selectedSimplifiedVertexFillColor;
+		this.selectedSimplifiedVertexFillColor =
+			style.selectedSimplifiedVertexFillColor;
 		this.selectedVertexDrawColor = style.selectedVertexDrawColor;
 		this.selectedVertexFillColor = style.selectedVertexFillColor;
 		this.simplifiedVertexFillColor = style.simplifiedVertexFillColor;
@@ -519,100 +449,75 @@ public class DataDisplayStyle implements Style< DataDisplayStyle >
 		notifyListeners();
 	}
 
-	private void notifyListeners()
-	{
-		updateListeners.listCopy().forEach( UpdateListener::dataGraphStyleChanged );
+	private void notifyListeners() {
+		updateListeners.listCopy().forEach(UpdateListener::dataGraphStyleChanged);
 	}
 
-	public Listeners< UpdateListener > updateListeners()
-	{
+	public Listeners<UpdateListener> updateListeners() {
 		return updateListeners;
 	}
 
 	/**
 	 * Returns a new style instance, copied from this style.
 	 *
-	 * @param name
-	 *            the name for the copied style.
+	 * @param name the name for the copied style.
 	 * @return a new style instance.
 	 */
 	@Override
-	public DataDisplayStyle copy( final String name )
-	{
+	public DataDisplayStyle copy(final String name) {
 		final DataDisplayStyle newStyle = new DataDisplayStyle();
-		newStyle.set( this );
-		if ( name != null )
-			newStyle.name( name );
+		newStyle.set(this);
+		if (name != null)
+			newStyle.name(name);
 		return newStyle;
 	}
 
 	@Override
-	public DataDisplayStyle copy()
-	{
-		return copy( null );
+	public DataDisplayStyle copy() {
+		return copy(null);
 	}
 
 	/**
-	 * Returns the default TrackScheme style instance. Editing this instance
-	 * will affect all view using this style.
+	 * Returns the default TrackScheme style instance. Editing this instance will
+	 * affect all view using this style.
 	 *
 	 * @return the single common instance for the default style.
 	 */
-	public static DataDisplayStyle defaultStyle()
-	{
+	public static DataDisplayStyle defaultStyle() {
 		return df;
 	}
 
 	private static final DataDisplayStyle df;
-	static
-	{
-		final Color fill = new Color( 128, 255, 128 );
-		df = new DataDisplayStyle().name( "default" ).
-				autoVertexSize( true ).
-				axisColor( new Color( 89, 89, 89 ) ).
-				axisTickFont( new Font( "SansSerif", Font.PLAIN, 9 ) ).
-				axisLabelFont( new Font( "SansSerif", Font.PLAIN, 10 ) ).
-				axisStroke( new BasicStroke() ).
-				backgroundColor( new Color( 204, 204, 204 ) ).
-				drawVertexName( true ).
-				edgeColor( Color.BLACK ).
-				edgeHighlightStroke( new BasicStroke( 2f ) ).
-				edgeStroke( new BasicStroke() ).
-				focusStroke( DEFAULT_FOCUS_STROKE ).
-				font( new Font( "SansSerif", Font.PLAIN, 9 ) ).
-				selectedVertexFillColor( fill ).
-				selectedSimplifiedVertexFillColor( new Color( 0, 128, 0 ) ).
-				selectedVertexDrawColor( Color.BLACK ).
-				selectedEdgeColor( fill.darker() ).
-				simplifiedVertexFillColor( Color.BLACK ).
-				vertexDrawColor( Color.BLACK ).
-				vertexDrawShape( VertexDrawShape.CIRCLE ).
-				vertexFillColor( Color.WHITE ).
-				vertexFixedSize( 10. ).
-				vertexHighlightStroke( new BasicStroke( 3f ) ).
-				vertexStroke( new BasicStroke() );
+	static {
+		final Color fill = new Color(128, 255, 128);
+		df = new DataDisplayStyle().name("default").autoVertexSize(true).axisColor(
+			new Color(89, 89, 89)).axisTickFont(new Font("SansSerif", Font.PLAIN, 9))
+			.axisLabelFont(new Font("SansSerif", Font.PLAIN, 10)).axisStroke(
+				new BasicStroke()).backgroundColor(new Color(204, 204, 204))
+			.drawVertexName(true).edgeColor(Color.BLACK).edgeHighlightStroke(
+				new BasicStroke(2f)).edgeStroke(new BasicStroke()).focusStroke(
+					DEFAULT_FOCUS_STROKE).font(new Font("SansSerif", Font.PLAIN, 9))
+			.selectedVertexFillColor(fill).selectedSimplifiedVertexFillColor(
+				new Color(0, 128, 0)).selectedVertexDrawColor(Color.BLACK)
+			.selectedEdgeColor(fill.darker()).simplifiedVertexFillColor(Color.BLACK)
+			.vertexDrawColor(Color.BLACK).vertexDrawShape(VertexDrawShape.CIRCLE)
+			.vertexFillColor(Color.WHITE).vertexFixedSize(10.).vertexHighlightStroke(
+				new BasicStroke(3f)).vertexStroke(new BasicStroke());
 	}
 
 	private static final DataDisplayStyle discreet;
-	static
-	{
-		final Color mainColor = new Color( 0, 83, 140 );
-		discreet = df.copy( "discreet" ).
-				autoVertexSize( false ).
-				drawVertexName( false ).
-				edgeColor(mainColor ).
-				vertexFixedSize( 7. ).
-				edgeStroke( new BasicStroke( 0.5f ) ).
-				vertexDrawColor( df.getBackgroundColor() ).
-				vertexDrawShape( VertexDrawShape.SQUARE ).
-				vertexFillColor( mainColor );
-		}
+	static {
+		final Color mainColor = new Color(0, 83, 140);
+		discreet = df.copy("discreet").autoVertexSize(false).drawVertexName(false)
+			.edgeColor(mainColor).vertexFixedSize(7.).edgeStroke(new BasicStroke(
+				0.5f)).vertexDrawColor(df.getBackgroundColor()).vertexDrawShape(
+					VertexDrawShape.SQUARE).vertexFillColor(mainColor);
+	}
 
-	public static Collection< DataDisplayStyle > defaults;
-	static
-	{
-		defaults = new ArrayList<>( 2 );
-		defaults.add( df );
-		defaults.add( discreet );
+	public static Collection<DataDisplayStyle> defaults;
+	static {
+		defaults = new ArrayList<>(2);
+		defaults.add(df);
+		defaults.add(discreet);
 	}
 }

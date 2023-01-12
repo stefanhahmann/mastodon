@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme;
 
 import org.mastodon.pool.ByteMappedElement;
@@ -42,10 +43,12 @@ import org.mastodon.views.trackscheme.ScreenVertexRange.ScreenVertexRangePool;
  *
  * @author Tobias Pietzsch &lt;tobias.pietzsch@gmail.com&gt;
  */
-public class ScreenVertexRange extends PoolObject< ScreenVertexRange, ScreenVertexRangePool, ByteMappedElement >
+public class ScreenVertexRange extends
+	PoolObject<ScreenVertexRange, ScreenVertexRangePool, ByteMappedElement>
 {
-	public static class ScreenVertexRangeLayout extends PoolObjectLayout
-	{
+
+	public static class ScreenVertexRangeLayout extends PoolObjectLayout {
+
 		final DoubleField minX = doubleField();
 		final DoubleField maxX = doubleField();
 		final DoubleField minY = doubleField();
@@ -54,108 +57,101 @@ public class ScreenVertexRange extends PoolObject< ScreenVertexRange, ScreenVert
 
 	public static ScreenVertexRangeLayout layout = new ScreenVertexRangeLayout();
 
-	public static class ScreenVertexRangePool extends Pool< ScreenVertexRange, ByteMappedElement >
+	public static class ScreenVertexRangePool extends
+		Pool<ScreenVertexRange, ByteMappedElement>
 	{
-		final DoubleAttribute< ScreenVertexRange > minX = new DoubleAttribute<>( layout.minX, this );
-		final DoubleAttribute< ScreenVertexRange > maxX = new DoubleAttribute<>( layout.maxX, this );
-		final DoubleAttribute< ScreenVertexRange > minY = new DoubleAttribute<>( layout.minY, this );
-		final DoubleAttribute< ScreenVertexRange > maxY = new DoubleAttribute<>( layout.maxY, this );
 
-		public ScreenVertexRangePool( final int initialCapacity )
-		{
-			super( initialCapacity, layout, ScreenVertexRange.class, SingleArrayMemPool.factory( ByteMappedElementArray.factory ) );
+		final DoubleAttribute<ScreenVertexRange> minX = new DoubleAttribute<>(
+			layout.minX, this);
+		final DoubleAttribute<ScreenVertexRange> maxX = new DoubleAttribute<>(
+			layout.maxX, this);
+		final DoubleAttribute<ScreenVertexRange> minY = new DoubleAttribute<>(
+			layout.minY, this);
+		final DoubleAttribute<ScreenVertexRange> maxY = new DoubleAttribute<>(
+			layout.maxY, this);
+
+		public ScreenVertexRangePool(final int initialCapacity) {
+			super(initialCapacity, layout, ScreenVertexRange.class, SingleArrayMemPool
+				.factory(ByteMappedElementArray.factory));
 		}
 
 		@Override
-		protected ScreenVertexRange createEmptyRef()
-		{
-			return new ScreenVertexRange( this );
+		protected ScreenVertexRange createEmptyRef() {
+			return new ScreenVertexRange(this);
 		}
 
 		@Override
-		public ScreenVertexRange create( final ScreenVertexRange vertex )
-		{
-			return super.create( vertex );
+		public ScreenVertexRange create(final ScreenVertexRange vertex) {
+			return super.create(vertex);
 		}
 
 		@Override
-		public void delete( final ScreenVertexRange vertex )
-		{
-			super.delete( vertex );
+		public void delete(final ScreenVertexRange vertex) {
+			super.delete(vertex);
 		}
 	}
 
-	protected ScreenVertexRange( final ScreenVertexRangePool pool )
-	{
-		super( pool );
+	protected ScreenVertexRange(final ScreenVertexRangePool pool) {
+		super(pool);
 	}
 
-	public ScreenVertexRange init( final double minX, final double maxX, final double minY, final double maxY )
+	public ScreenVertexRange init(final double minX, final double maxX,
+		final double minY, final double maxY)
 	{
-		setMinX( minX );
-		setMaxX( maxX );
-		setMinY( minY );
-		setMaxY( maxY );
+		setMinX(minX);
+		setMaxX(maxX);
+		setMinY(minY);
+		setMaxY(maxY);
 		return this;
 	}
 
-	public double getMinX()
-	{
-		return pool.minX.get( this );
+	public double getMinX() {
+		return pool.minX.get(this);
 	}
 
-	protected void setMinX( final double minX )
-	{
-		pool.minX.setQuiet( this, minX );
+	protected void setMinX(final double minX) {
+		pool.minX.setQuiet(this, minX);
 	}
 
-	public double getMaxX()
-	{
-		return pool.maxX.get( this );
+	public double getMaxX() {
+		return pool.maxX.get(this);
 	}
 
-	protected void setMaxX( final double maxX )
-	{
-		pool.maxX.setQuiet( this, maxX );
+	protected void setMaxX(final double maxX) {
+		pool.maxX.setQuiet(this, maxX);
 	}
 
-	public double getMinY()
-	{
-		return pool.minY.get( this );
+	public double getMinY() {
+		return pool.minY.get(this);
 	}
 
-	protected void setMinY( final double minY )
-	{
-		pool.minY.setQuiet( this, minY );
+	protected void setMinY(final double minY) {
+		pool.minY.setQuiet(this, minY);
 	}
 
-	public double getMaxY()
-	{
-		return pool.maxY.get( this );
+	public double getMaxY() {
+		return pool.maxY.get(this);
 	}
 
-	protected void setMaxY( final double maxY )
-	{
-		pool.maxY.setQuiet( this, maxY );
+	protected void setMaxY(final double maxY) {
+		pool.maxY.setQuiet(this, maxY);
 	}
 
 	@Override
-	protected void setToUninitializedState()
-	{}
+	protected void setToUninitializedState() {}
 
 	/**
-	 * Set all fields as in specified {@link ScreenVertexRange} (which is
-	 * possibly from another pool).
+	 * Set all fields as in specified {@link ScreenVertexRange} (which is possibly
+	 * from another pool).
 	 *
 	 * @param r
 	 * @return {@code this}.
 	 */
-	ScreenVertexRange cloneFrom( final ScreenVertexRange r )
-	{
-		setMinX( r.getMinX() );
-		setMaxX( r.getMaxX() );
-		setMinY( r.getMinY() );
-		setMaxY( r.getMaxY() );
+	ScreenVertexRange cloneFrom(final ScreenVertexRange r) {
+		setMinX(r.getMinX());
+		setMaxX(r.getMaxX());
+		setMinY(r.getMinY());
+		setMaxY(r.getMaxY());
 		return this;
 	}
 }

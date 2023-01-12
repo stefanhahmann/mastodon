@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.display;
 
 import org.scijava.listeners.Listeners;
@@ -33,50 +34,45 @@ import org.scijava.listeners.Listeners;
 /**
  * Class to represent the offset reserved for plotting the axes lines.
  */
-public class OffsetAxes
-{
-	public interface OffsetAxesListener
-	{
-		void updateAxesSize( int width, int height );
+public class OffsetAxes {
+
+	public interface OffsetAxesListener {
+
+		void updateAxesSize(int width, int height);
 	}
 
-	private final Listeners.List< OffsetAxesListener > listeners;
+	private final Listeners.List<OffsetAxesListener> listeners;
 
 	private int width;
 
 	private int height;
 
-	public OffsetAxes()
-	{
-		listeners = new Listeners.SynchronizedList<>( l -> l.updateAxesSize( width, height ) );
+	public OffsetAxes() {
+		listeners = new Listeners.SynchronizedList<>(l -> l.updateAxesSize(width,
+			height));
 		width = 0;
 		height = 0;
 	}
 
-	public void setAxesSize( final int width, final int height )
-	{
+	public void setAxesSize(final int width, final int height) {
 		this.width = width;
 		this.height = height;
 		notifyListeners();
 	}
 
-	public Listeners< OffsetAxesListener > listeners()
-	{
+	public Listeners<OffsetAxesListener> listeners() {
 		return listeners;
 	}
 
-	private void notifyListeners()
-	{
-		listeners.list.forEach( l -> l.updateAxesSize( width, height ) );
+	private void notifyListeners() {
+		listeners.list.forEach(l -> l.updateAxesSize(width, height));
 	}
 
-	public int getWidth()
-	{
+	public int getWidth() {
 		return width;
 	}
 
-	public int getHeight()
-	{
+	public int getHeight() {
 		return height;
 	}
 }

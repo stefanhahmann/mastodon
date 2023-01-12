@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.feature.io;
 
 import java.io.IOException;
@@ -44,10 +45,8 @@ import org.mastodon.io.ObjectToFileIdMap;
  * have a property map that can be serialized.
  * 
  * @author Jean-Yves Tinevez
- *
  */
-public class LazyFeatureSerializer
-{
+public class LazyFeatureSerializer {
 
 	/**
 	 * Serialize a feature via its collection of projections, over a specified
@@ -71,65 +70,53 @@ public class LazyFeatureSerializer
 	 * </ul>
 	 * </ul>
 	 * 
-	 * 
-	 * @param <O>
-	 *            the type of objects to serialize.
-	 * @param feature
-	 *            the feature to serialize.
-	 * @param objs
-	 *            the collection of objects to serialize.
-	 * @param idmap
-	 *            the map linking object to their file if.
-	 * @param oos
-	 *            an object output stream to write to.
-	 * @throws IOException
-	 *             if problems arise while writing the file.
+	 * @param <O> the type of objects to serialize.
+	 * @param feature the feature to serialize.
+	 * @param objs the collection of objects to serialize.
+	 * @param idmap the map linking object to their file if.
+	 * @param oos an object output stream to write to.
+	 * @throws IOException if problems arise while writing the file.
 	 */
-	public static < O > void serialize(
-			final Feature< O > feature,
-			final Collection< O > objs,
-			final ObjectToFileIdMap< O > idmap,
-			final ObjectOutputStream oos ) throws IOException
+	public static <O> void serialize(
+		final Feature<O> feature,
+		final Collection<O> objs,
+		final ObjectToFileIdMap<O> idmap,
+		final ObjectOutputStream oos) throws IOException
 	{
 		// NUMBER OF ENTRIES
-		oos.writeInt( objs.size() );
+		oos.writeInt(objs.size());
 
-		final Set< FeatureProjection< O > > projs = feature.projections();
+		final Set<FeatureProjection<O>> projs = feature.projections();
 
 		// NUMBER OF PROJECTIONS.
-		oos.writeInt( projs.size() );
+		oos.writeInt(projs.size());
 
 		// PER PROJ
-		for ( final FeatureProjection< O > proj : projs )
-		{
+		for (final FeatureProjection<O> proj : projs) {
 			final FeatureProjectionKey key = proj.getKey();
 
 			// PROJECTION NAME.
-			oos.writeUTF( key.toString() );
+			oos.writeUTF(key.toString());
 
 			// PROJECTION DIMENSION.
-			oos.writeUTF( key.getSpec().projectionDimension.name() );
+			oos.writeUTF(key.getSpec().projectionDimension.name());
 
 			// UNITS.
-			oos.writeUTF( proj.units() );
+			oos.writeUTF(proj.units());
 
 			// ENTRIES.
-			try
-			{
-				objs.forEach( o -> {
-					try
-					{
-						oos.writeInt( idmap.getId( o ) );
-						oos.writeDouble( proj.value( o ) );
+			try {
+				objs.forEach(o -> {
+					try {
+						oos.writeInt(idmap.getId(o));
+						oos.writeDouble(proj.value(o));
 					}
-					catch ( final IOException e )
-					{
-						throw new UncheckedIOException( e );
+					catch (final IOException e) {
+						throw new UncheckedIOException(e);
 					}
-				} );
+				});
 			}
-			catch ( final UncheckedIOException e )
-			{
+			catch (final UncheckedIOException e) {
 				throw e.getCause();
 			}
 		}

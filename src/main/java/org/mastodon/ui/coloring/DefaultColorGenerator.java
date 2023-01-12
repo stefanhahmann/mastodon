@@ -26,13 +26,13 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.ui.coloring;
 
-public class DefaultColorGenerator< T > implements ColorGenerator< T >
-{
+public class DefaultColorGenerator<T> implements ColorGenerator<T> {
+
 	@Override
-	public int color( final T t )
-	{
+	public int color(final T t) {
 		return 0;
 	}
 }

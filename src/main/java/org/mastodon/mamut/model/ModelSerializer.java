@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.model;
 
 import org.mastodon.graph.io.GraphSerializer;
@@ -33,15 +34,13 @@ import org.mastodon.graph.ref.AbstractEdgePool;
 import org.mastodon.graph.ref.AbstractVertexPool;
 import org.mastodon.pool.PoolObjectAttributeSerializer;
 
-class ModelSerializer implements GraphSerializer< Spot, Link >
-{
-	private ModelSerializer()
-	{}
+class ModelSerializer implements GraphSerializer<Spot, Link> {
+
+	private ModelSerializer() {}
 
 	private static ModelSerializer instance = new ModelSerializer();
 
-	public static ModelSerializer getInstance()
-	{
+	public static ModelSerializer getInstance() {
 		return instance;
 	}
 
@@ -50,46 +49,41 @@ class ModelSerializer implements GraphSerializer< Spot, Link >
 	private final LinkSerializer edgeSerializer = new LinkSerializer();
 
 	@Override
-	public SpotSerializer getVertexSerializer()
-	{
+	public SpotSerializer getVertexSerializer() {
 		return vertexSerializer;
 	}
 
 	@Override
-	public LinkSerializer getEdgeSerializer()
-	{
+	public LinkSerializer getEdgeSerializer() {
 		return edgeSerializer;
 	}
 
+	static class SpotSerializer extends PoolObjectAttributeSerializer<Spot> {
 
-	static class SpotSerializer extends PoolObjectAttributeSerializer< Spot >
-	{
-		public SpotSerializer()
-		{
+		public SpotSerializer() {
 			super(
-					AbstractVertexPool.layout.getSizeInBytes(),
-					SpotPool.layout.getSizeInBytes() - AbstractVertexPool.layout.getSizeInBytes() );
+				AbstractVertexPool.layout.getSizeInBytes(),
+				SpotPool.layout.getSizeInBytes() - AbstractVertexPool.layout
+					.getSizeInBytes());
 		}
 
 		@Override
-		public void notifySet( final Spot vertex )
-		{
+		public void notifySet(final Spot vertex) {
 			vertex.notifyVertexAdded();
 		}
 	}
 
-	static class LinkSerializer extends PoolObjectAttributeSerializer< Link >
-	{
-		public LinkSerializer()
-		{
+	static class LinkSerializer extends PoolObjectAttributeSerializer<Link> {
+
+		public LinkSerializer() {
 			super(
-					AbstractEdgePool.layout.getSizeInBytes(),
-					LinkPool.layout.getSizeInBytes() - AbstractEdgePool.layout.getSizeInBytes() );
+				AbstractEdgePool.layout.getSizeInBytes(),
+				LinkPool.layout.getSizeInBytes() - AbstractEdgePool.layout
+					.getSizeInBytes());
 		}
 
 		@Override
-		public void notifySet( final Link edge )
-		{
+		public void notifySet(final Link edge) {
 			edge.notifyEdgeAdded();
 		}
 	}

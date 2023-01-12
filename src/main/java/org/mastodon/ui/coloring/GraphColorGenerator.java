@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.ui.coloring;
 
 import org.mastodon.graph.Edge;
@@ -34,16 +35,13 @@ import org.mastodon.graph.Vertex;
 /**
  * Interface that can associate colors to a graph's vertices and edges.
  *
- * @param <V>
- *            the type of the vertices.
- * @param <E>
- *            the type of the edges.
- *
+ * @param <V> the type of the vertices.
+ * @param <E> the type of the edges.
  * @author Jean-Yves Tinevez.
  * @author Tobias Pietzsch
  */
-public interface GraphColorGenerator< V extends Vertex< E >, E extends Edge< V > >
-{
+public interface GraphColorGenerator<V extends Vertex<E>, E extends Edge<V>> {
+
 	/**
 	 * Gets the color for the specified vertex (ARGB bytes packed into
 	 * {@code int}).
@@ -51,29 +49,24 @@ public interface GraphColorGenerator< V extends Vertex< E >, E extends Edge< V >
 	 * The special value {@code 0x00000000} is used to denote that no color is
 	 * assigned to the vertex (which should be drawn in default color then).
 	 *
-	 * @param vertex
-	 *            the vertex.
+	 * @param vertex the vertex.
 	 * @return a color (as ARGB bytes packed into {@code int}).
 	 */
-	int color( V vertex );
+	int color(V vertex);
 
 	/**
-	 * Gets the color for the specified edge (ARGB bytes packed into
-	 * {@code int}).
+	 * Gets the color for the specified edge (ARGB bytes packed into {@code int}).
 	 * <p>
-	 * The {@code source} and {@code target} vertices of the edge are provided
-	 * for convenience, in case the edge coloring is determined by its vertices.
+	 * The {@code source} and {@code target} vertices of the edge are provided for
+	 * convenience, in case the edge coloring is determined by its vertices.
 	 * <p>
 	 * The special value {@code 0x00000000} is used to denote that no color is
 	 * assigned to the edge (which should be drawn in default color then).
 	 *
-	 * @param edge
-	 *            the edge
-	 * @param source
-	 *            the source vertex of the edge
-	 * @param target
-	 *            the target vertex of the edge
+	 * @param edge the edge
+	 * @param source the source vertex of the edge
+	 * @param target the target vertex of the edge
 	 * @return a color (as ARGB bytes packed into {@code int}).
 	 */
-	int color( E edge, V source, V target );
+	int color(E edge, V source, V target);
 }

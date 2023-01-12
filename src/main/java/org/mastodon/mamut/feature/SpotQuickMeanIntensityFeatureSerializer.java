@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature;
 
 import java.io.IOException;
@@ -44,36 +45,41 @@ import org.mastodon.mamut.model.Spot;
 import org.mastodon.properties.DoublePropertyMap;
 import org.scijava.plugin.Plugin;
 
-@Plugin( type = FeatureSerializer.class )
-public class SpotQuickMeanIntensityFeatureSerializer implements FeatureSerializer< SpotQuickMeanIntensityFeature, Spot >
+@Plugin(type = FeatureSerializer.class)
+public class SpotQuickMeanIntensityFeatureSerializer implements
+	FeatureSerializer<SpotQuickMeanIntensityFeature, Spot>
 {
 
 	@Override
-	public Spec getFeatureSpec()
-	{
+	public Spec getFeatureSpec() {
 		return SpotQuickMeanIntensityFeature.SPEC;
 	}
 
 	@Override
-	public void serialize( final SpotQuickMeanIntensityFeature feature, final ObjectToFileIdMap< Spot > idmap, final ObjectOutputStream oos ) throws IOException
+	public void serialize(final SpotQuickMeanIntensityFeature feature,
+		final ObjectToFileIdMap<Spot> idmap, final ObjectOutputStream oos)
+		throws IOException
 	{
 		final int nSources = feature.means.size();
-		oos.writeInt( nSources );
-		for ( int i = 0; i < nSources; i++ )
-			new DoublePropertyMapSerializer<>( feature.means.get( i ) ).writePropertyMap( idmap, oos );
+		oos.writeInt(nSources);
+		for (int i = 0; i < nSources; i++)
+			new DoublePropertyMapSerializer<>(feature.means.get(i)).writePropertyMap(
+				idmap, oos);
 	}
 
 	@Override
-	public SpotQuickMeanIntensityFeature deserialize( final FileIdToObjectMap< Spot > idmap, final RefCollection< Spot > pool, final ObjectInputStream ois ) throws IOException, ClassNotFoundException
+	public SpotQuickMeanIntensityFeature deserialize(
+		final FileIdToObjectMap<Spot> idmap, final RefCollection<Spot> pool,
+		final ObjectInputStream ois) throws IOException, ClassNotFoundException
 	{
 		final int nSources = ois.readInt();
-		final List< DoublePropertyMap< Spot > > maps = new ArrayList<>( nSources );
-		for ( int i = 0; i < nSources; i++ )
-		{
-			final DoublePropertyMap< Spot > meanMap = new DoublePropertyMap<>( pool, Double.NaN );
-			new DoublePropertyMapSerializer<>( meanMap ).readPropertyMap( idmap, ois );
-			maps.add( meanMap );
+		final List<DoublePropertyMap<Spot>> maps = new ArrayList<>(nSources);
+		for (int i = 0; i < nSources; i++) {
+			final DoublePropertyMap<Spot> meanMap = new DoublePropertyMap<>(pool,
+				Double.NaN);
+			new DoublePropertyMapSerializer<>(meanMap).readPropertyMap(idmap, ois);
+			maps.add(meanMap);
 		}
-		return new SpotQuickMeanIntensityFeature( maps );
+		return new SpotQuickMeanIntensityFeature(maps);
 	}
 }

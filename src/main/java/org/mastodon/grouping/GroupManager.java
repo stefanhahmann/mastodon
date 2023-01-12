@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.grouping;
 
 import static gnu.trove.impl.Constants.DEFAULT_CAPACITY;
@@ -59,25 +60,23 @@ import gnu.trove.map.hash.TIntObjectHashMap;
  *
  * @author Tobias Pietzsch
  */
-public class GroupManager
-{
+public class GroupManager {
+
 	public static final int NO_GROUP = -1;
 
-	private final TIntObjectMap< Set< GroupHandle > > groupIdToGroupHandles;
+	private final TIntObjectMap<Set<GroupHandle>> groupIdToGroupHandles;
 
 	private final int numGroups;
 
 	/**
-	 *
-	 * @param numGroups
-	 *            how many groups to create
+	 * @param numGroups how many groups to create
 	 */
-	public GroupManager( final int numGroups )
-	{
+	public GroupManager(final int numGroups) {
 		this.numGroups = numGroups;
-		groupIdToGroupHandles = new TIntObjectHashMap<>( DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, -1 );
-		for ( int i = 0; i < numGroups; ++i )
-			groupIdToGroupHandles.put( i, new HashSet<>() );
+		groupIdToGroupHandles = new TIntObjectHashMap<>(DEFAULT_CAPACITY,
+			DEFAULT_LOAD_FACTOR, -1);
+		for (int i = 0; i < numGroups; ++i)
+			groupIdToGroupHandles.put(i, new HashSet<>());
 	}
 
 	/**
@@ -85,73 +84,68 @@ public class GroupManager
 	 *
 	 * @return a new {@link GroupHandle}
 	 */
-	public GroupHandle createGroupHandle()
-	{
-		return new GroupHandle( this );
+	public GroupHandle createGroupHandle() {
+		return new GroupHandle(this);
 	}
 
-	public void removeGroupHandle( final GroupHandle handle )
-	{
-		setGroupId( handle, NO_GROUP );
+	public void removeGroupHandle(final GroupHandle handle) {
+		setGroupId(handle, NO_GROUP);
 	}
 
-	public int getNumGroups()
-	{
+	public int getNumGroups() {
 		return numGroups;
 	}
 
-	boolean setGroupId( final GroupHandle handle, final int groupId )
-	{
+	boolean setGroupId(final GroupHandle handle, final int groupId) {
 		final int oldId = handle.groupId;
-		if ( oldId == groupId )
+		if (oldId == groupId)
 			return false;
 
-		if ( oldId != NO_GROUP )
-			groupIdToGroupHandles.get( oldId ).remove( handle );
+		if (oldId != NO_GROUP)
+			groupIdToGroupHandles.get(oldId).remove(handle);
 
 		final boolean copyCurrentStateToNewModel;
-		if ( groupId != NO_GROUP )
-		{
-			final Set< GroupHandle > handles = groupIdToGroupHandles.get( groupId );
+		if (groupId != NO_GROUP) {
+			final Set<GroupHandle> handles = groupIdToGroupHandles.get(groupId);
 			copyCurrentStateToNewModel = handles.isEmpty();
-			handles.add( handle );
+			handles.add(handle);
 		}
 		else
 			copyCurrentStateToNewModel = true;
 
 		handle.groupId = groupId;
-		models.values().forEach( ( m ) -> m.moveTo( handle, groupId, copyCurrentStateToNewModel ) );
+		models.values().forEach((m) -> m.moveTo(handle, groupId,
+			copyCurrentStateToNewModel));
 		return true;
 	}
 
-	class ModelType< T >
-	{
-		final ArrayList< T > models;
+	class ModelType<T> {
 
-		final GroupableModelFactory< T > factory;
+		final ArrayList<T> models;
 
-		ModelType( final GroupableModelFactory< T > factory )
-		{
+		final GroupableModelFactory<T> factory;
+
+		ModelType(final GroupableModelFactory<T> factory) {
 			this.factory = factory;
 			models = new ArrayList<>();
-			for ( int i = 0; i < getNumGroups(); ++i )
-				models.add( factory.createBackingModel() );
+			for (int i = 0; i < getNumGroups(); ++i)
+				models.add(factory.createBackingModel());
 		}
 
-		public void moveTo( final GroupHandle handle, final int groupId, final boolean copyCurrentStateToNewModel )
+		public void moveTo(final GroupHandle handle, final int groupId,
+			final boolean copyCurrentStateToNewModel)
 		{
-			final GroupHandle.ModelData< T > data = handle.getModelData( factory );
-			final T model = ( groupId == NO_GROUP )
-					? data.backing
-					: models.get( groupId );
-			data.forwarding.linkTo( model, copyCurrentStateToNewModel );
+			final GroupHandle.ModelData<T> data = handle.getModelData(factory);
+			final T model = (groupId == NO_GROUP)
+				? data.backing
+				: models.get(groupId);
+			data.forwarding.linkTo(model, copyCurrentStateToNewModel);
 		}
 	}
 
-	final Map< GroupableModelFactory< ? >, ModelType< ? > > models = new HashMap<>();
+	final Map<GroupableModelFactory<?>, ModelType<?>> models = new HashMap<>();
 
-	public void registerModel( final GroupableModelFactory< ? > factory )
-	{
-		models.put( factory, new ModelType<>( factory ) );
+	public void registerModel(final GroupableModelFactory<?> factory) {
+		models.put(factory, new ModelType<>(factory));
 	}
 }

@@ -26,13 +26,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.ui.coloring;
 
 import org.mastodon.feature.FeatureProjection;
 
-public class FeatureColorGenerator< T > implements ColorGenerator< T >
-{
-	private final FeatureProjection< T > featureProjection;
+public class FeatureColorGenerator<T> implements ColorGenerator<T> {
+
+	private final FeatureProjection<T> featureProjection;
 
 	private final ColorMap colorMap;
 
@@ -40,7 +41,8 @@ public class FeatureColorGenerator< T > implements ColorGenerator< T >
 
 	private final double max;
 
-	public FeatureColorGenerator( final FeatureProjection< T > featureProjection, final ColorMap colorMap, final double min, final double max )
+	public FeatureColorGenerator(final FeatureProjection<T> featureProjection,
+		final ColorMap colorMap, final double min, final double max)
 	{
 		this.featureProjection = featureProjection;
 		this.colorMap = colorMap;
@@ -49,12 +51,11 @@ public class FeatureColorGenerator< T > implements ColorGenerator< T >
 	}
 
 	@Override
-	public int color( final T object )
-	{
-		if ( !featureProjection.isSet( object ) )
+	public int color(final T object) {
+		if (!featureProjection.isSet(object))
 			return 0;
 
-		final double alpha = ( featureProjection.value( object ) - min ) / ( max - min );
-		return colorMap.get( alpha );
+		final double alpha = (featureProjection.value(object) - min) / (max - min);
+		return colorMap.get(alpha);
 	}
 }

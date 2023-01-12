@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.ui.keymap;
 
 import java.util.Objects;
@@ -35,8 +36,8 @@ import org.scijava.ui.behaviour.io.InputTriggerConfig;
 
 import bdv.ui.settings.style.Style;
 
-public class Keymap implements Style< Keymap >
-{
+public class Keymap implements Style<Keymap> {
+
 	/**
 	 * The name of this keymap.
 	 */
@@ -44,68 +45,59 @@ public class Keymap implements Style< Keymap >
 
 	private final InputTriggerConfig config;
 
-	public interface UpdateListener
-	{
+	public interface UpdateListener {
+
 		public void keymapChanged();
 	}
 
-	private final Listeners.List< UpdateListener > updateListeners;
+	private final Listeners.List<UpdateListener> updateListeners;
 
-	public Keymap( final String name, final InputTriggerConfig config )
-	{
+	public Keymap(final String name, final InputTriggerConfig config) {
 		this.name = name;
 		this.config = config;
 		this.updateListeners = new Listeners.SynchronizedList<>();
 	}
 
-	public Keymap()
-	{
-		this( "", new InputTriggerConfig() );
+	public Keymap() {
+		this("", new InputTriggerConfig());
 	}
 
 	/**
 	 * Returns a new style instance, copied from this style.
 	 *
-	 * @param name
-	 *            the name for the copied style.
+	 * @param name the name for the copied style.
 	 * @return a new style instance.
 	 */
 	@Override
-	public Keymap copy( final String name )
-	{
+	public Keymap copy(final String name) {
 		final Keymap newStyle = new Keymap();
-		newStyle.set( this );
-		if ( name != null )
-			newStyle.setName( name );
+		newStyle.set(this);
+		if (name != null)
+			newStyle.setName(name);
 		return newStyle;
 	}
 
 	@Override
-	public Keymap copy()
-	{
-		return copy( null );
+	public Keymap copy() {
+		return copy(null);
 	}
 
-	public synchronized void set( final Keymap style )
-	{
+	public synchronized void set(final Keymap style) {
 		this.name = style.name;
-		this.config.set( style.config );
+		this.config.set(style.config);
 		notifyListeners();
 	}
 
-	private void notifyListeners()
-	{
-		for ( final UpdateListener l : updateListeners.list )
+	private void notifyListeners() {
+		for (final UpdateListener l : updateListeners.list)
 			l.keymapChanged();
 	}
 
-	public Listeners< UpdateListener > updateListeners()
-	{
+	public Listeners<UpdateListener> updateListeners() {
 		return updateListeners;
 	}
 
-	public InputTriggerConfig getConfig()
-	{
+	public InputTriggerConfig getConfig() {
 		return config;
 	}
 
@@ -115,22 +107,18 @@ public class Keymap implements Style< Keymap >
 	 * @return the name.
 	 */
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
 	/**
 	 * Sets the name of this {@link Keymap}.
 	 *
-	 * @param name
-	 *            the name to set.
+	 * @param name the name to set.
 	 */
 	@Override
-	public synchronized void setName( final String name )
-	{
-		if ( !Objects.equals( this.name, name ) )
-		{
+	public synchronized void setName(final String name) {
+		if (!Objects.equals(this.name, name)) {
 			this.name = name;
 //			notifyListeners(); // TODO?
 		}

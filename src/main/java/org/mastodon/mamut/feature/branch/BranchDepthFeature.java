@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature.branch;
 
 import static org.mastodon.feature.FeatureProjectionKey.key;
@@ -46,68 +47,63 @@ import org.mastodon.mamut.model.branch.BranchSpot;
 import org.mastodon.properties.IntPropertyMap;
 import org.scijava.plugin.Plugin;
 
-public class BranchDepthFeature implements Feature< BranchSpot >
-{
+public class BranchDepthFeature implements Feature<BranchSpot> {
 
 	public static final String KEY = "Branch depth";
 
-	private static final String HELP_STRING = "The depth of this branch in the track tree.";
+	private static final String HELP_STRING =
+		"The depth of this branch in the track tree.";
 
-	public static final FeatureProjectionSpec PROJECTION_SPEC = new FeatureProjectionSpec( KEY );
+	public static final FeatureProjectionSpec PROJECTION_SPEC =
+		new FeatureProjectionSpec(KEY);
 
 	public static final Spec SPEC = new Spec();
 
-	final IntPropertyMap< BranchSpot > map;
+	final IntPropertyMap<BranchSpot> map;
 
-	private final IntFeatureProjection< BranchSpot > projection;
+	private final IntFeatureProjection<BranchSpot> projection;
 
-	@Plugin( type = FeatureSpec.class )
-	public static class Spec extends FeatureSpec< BranchDepthFeature, BranchSpot >
-	{
-		public Spec()
-		{
+	@Plugin(type = FeatureSpec.class)
+	public static class Spec extends FeatureSpec<BranchDepthFeature, BranchSpot> {
+
+		public Spec() {
 			super(
-					KEY,
-					HELP_STRING,
-					BranchDepthFeature.class,
-					BranchSpot.class,
-					Multiplicity.SINGLE,
-					PROJECTION_SPEC );
+				KEY,
+				HELP_STRING,
+				BranchDepthFeature.class,
+				BranchSpot.class,
+				Multiplicity.SINGLE,
+				PROJECTION_SPEC);
 		}
 	}
 
-	public BranchDepthFeature( final IntPropertyMap< BranchSpot > map )
-	{
+	public BranchDepthFeature(final IntPropertyMap<BranchSpot> map) {
 		this.map = map;
-		this.projection = FeatureProjections.project( key( PROJECTION_SPEC ), map, Dimension.NONE_UNITS );
+		this.projection = FeatureProjections.project(key(PROJECTION_SPEC), map,
+			Dimension.NONE_UNITS);
 	}
 
-	public int get( final BranchSpot branch )
-	{
-		return map.getInt( branch );
-	}
-
-	@Override
-	public FeatureProjection< BranchSpot > project( final FeatureProjectionKey key )
-	{
-		return projection.getKey().equals( key ) ? projection : null;
+	public int get(final BranchSpot branch) {
+		return map.getInt(branch);
 	}
 
 	@Override
-	public Set< FeatureProjection< BranchSpot > > projections()
-	{
-		return Collections.singleton( projection );
+	public FeatureProjection<BranchSpot> project(final FeatureProjectionKey key) {
+		return projection.getKey().equals(key) ? projection : null;
 	}
 
 	@Override
-	public Spec getSpec()
-	{
+	public Set<FeatureProjection<BranchSpot>> projections() {
+		return Collections.singleton(projection);
+	}
+
+	@Override
+	public Spec getSpec() {
 		return SPEC;
 	}
 
 	@Override
-	public void invalidate( final BranchSpot spot )
-	{
-		map.remove( spot );
+	public void invalidate(final BranchSpot spot) {
+		map.remove(spot);
 	}
 }

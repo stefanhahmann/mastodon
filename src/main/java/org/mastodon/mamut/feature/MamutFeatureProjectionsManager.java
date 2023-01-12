@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature;
 
 import static org.mastodon.feature.ui.AvailableFeatureProjectionsImp.createAvailableFeatureProjections;
@@ -60,23 +61,25 @@ import org.scijava.listeners.Listeners;
  *
  * @author Tobias Pietzsch
  */
-public class MamutFeatureProjectionsManager implements FeatureProjectionsManager
+public class MamutFeatureProjectionsManager implements
+	FeatureProjectionsManager
 {
+
 	private final FeatureSpecsService featureSpecsService;
 
 	private final FeatureColorModeManager featureColorModeManager;
 
 	private final AggregateFeatureRangeCalculator featureRangeCalculator;
 
-	private final Listeners.List< AvailableFeatureProjectionsListener > listeners;
+	private final Listeners.List<AvailableFeatureProjectionsListener> listeners;
 
 	private Model model;
 
 	private int numSources = 1;
 
 	public MamutFeatureProjectionsManager(
-			final FeatureSpecsService featureSpecsService,
-			final FeatureColorModeManager featureColorModeManager )
+		final FeatureSpecsService featureSpecsService,
+		final FeatureColorModeManager featureColorModeManager)
 	{
 		this.featureSpecsService = featureSpecsService;
 		this.featureColorModeManager = featureColorModeManager;
@@ -85,31 +88,36 @@ public class MamutFeatureProjectionsManager implements FeatureProjectionsManager
 	}
 
 	/**
-	 * Sets the current {@code Model}. This will update the available
-	 * projections and listen to the model's {@code FeatureModel}.
+	 * Sets the current {@code Model}. This will update the available projections
+	 * and listen to the model's {@code FeatureModel}.
 	 *
-	 * @param model
-	 *            the current {@code Model} (or {@code null}).
-	 * @param numSources
-	 *            the number of sources in the image data.
+	 * @param model the current {@code Model} (or {@code null}).
+	 * @param numSources the number of sources in the image data.
 	 */
-	public void setModel( final Model model, final int numSources )
-	{
+	public void setModel(final Model model, final int numSources) {
 		this.model = model;
-		this.numSources = Math.max( 1, numSources );
+		this.numSources = Math.max(1, numSources);
 
-		if ( model != null )
-		{
+		if (model != null) {
 			final FeatureModel featureModel = model.getFeatureModel();
-			final Projections projections = new ProjectionsFromFeatureModel( featureModel );
-			featureRangeCalculator.vertexCalculator = new DefaultFeatureRangeCalculator<>( model.getGraph().vertices(), projections );
-			featureRangeCalculator.edgeCalculator = new DefaultFeatureRangeCalculator<>( model.getGraph().edges(), projections );
-			featureRangeCalculator.branchVertexCalculator = new DefaultFeatureRangeCalculator<>( model.getBranchGraph().vertices(), projections );
-			featureRangeCalculator.branchEdgeCalculator = new DefaultFeatureRangeCalculator<>( model.getBranchGraph().edges(), projections );
-			featureModel.listeners().add( this::notifyAvailableFeatureProjectionsChanged );
+			final Projections projections = new ProjectionsFromFeatureModel(
+				featureModel);
+			featureRangeCalculator.vertexCalculator =
+				new DefaultFeatureRangeCalculator<>(model.getGraph().vertices(),
+					projections);
+			featureRangeCalculator.edgeCalculator =
+				new DefaultFeatureRangeCalculator<>(model.getGraph().edges(),
+					projections);
+			featureRangeCalculator.branchVertexCalculator =
+				new DefaultFeatureRangeCalculator<>(model.getBranchGraph().vertices(),
+					projections);
+			featureRangeCalculator.branchEdgeCalculator =
+				new DefaultFeatureRangeCalculator<>(model.getBranchGraph().edges(),
+					projections);
+			featureModel.listeners().add(
+				this::notifyAvailableFeatureProjectionsChanged);
 		}
-		else
-		{
+		else {
 			featureRangeCalculator.vertexCalculator = null;
 			featureRangeCalculator.edgeCalculator = null;
 			featureRangeCalculator.branchVertexCalculator = null;
@@ -123,32 +131,32 @@ public class MamutFeatureProjectionsManager implements FeatureProjectionsManager
 	 * Exposes the list of listeners that are notified when a change happens to
 	 */
 	@Override
-	public Listeners< AvailableFeatureProjectionsListener > listeners()
-	{
+	public Listeners<AvailableFeatureProjectionsListener> listeners() {
 		return listeners;
 	}
 
 	@Override
-	public AvailableFeatureProjections getAvailableFeatureProjections()
-	{
-		final FeatureModel featureModel = ( model != null ) ? model.getFeatureModel() : null;
+	public AvailableFeatureProjections getAvailableFeatureProjections() {
+		final FeatureModel featureModel = (model != null) ? model.getFeatureModel()
+			: null;
 		return createAvailableFeatureProjections(
-				featureSpecsService,
-				numSources,
-				featureModel,
-				featureColorModeManager,
-				Spot.class,
-				Link.class,
-				BranchSpot.class,
-				BranchLink.class );
+			featureSpecsService,
+			numSources,
+			featureModel,
+			featureColorModeManager,
+			Spot.class,
+			Link.class,
+			BranchSpot.class,
+			BranchLink.class);
 	}
 
-	private void notifyAvailableFeatureProjectionsChanged()
-	{
-		listeners.list.forEach( AvailableFeatureProjectionsListener::availableFeatureProjectionsChanged );
+	private void notifyAvailableFeatureProjectionsChanged() {
+		listeners.list.forEach(
+			AvailableFeatureProjectionsListener::availableFeatureProjectionsChanged);
 	}
 
-	private static class AggregateFeatureRangeCalculator implements FeatureRangeCalculator
+	private static class AggregateFeatureRangeCalculator implements
+		FeatureRangeCalculator
 	{
 
 		FeatureRangeCalculator vertexCalculator;
@@ -160,38 +168,36 @@ public class MamutFeatureProjectionsManager implements FeatureProjectionsManager
 		FeatureRangeCalculator branchEdgeCalculator;
 
 		@Override
-		public double[] computeMinMax( final FeatureProjectionId projection )
-		{
-			if ( projection == null )
+		public double[] computeMinMax(final FeatureProjectionId projection) {
+			if (projection == null)
 				return null;
 
-			switch ( projection.getTargetType() )
-			{
-			case VERTEX:
-				return vertexCalculator == null
+			switch (projection.getTargetType()) {
+				case VERTEX:
+					return vertexCalculator == null
 						? null
-						: vertexCalculator.computeMinMax( projection );
-			case EDGE:
-				return edgeCalculator == null
+						: vertexCalculator.computeMinMax(projection);
+				case EDGE:
+					return edgeCalculator == null
 						? null
-						: edgeCalculator.computeMinMax( projection );
-			case BRANCH_VERTEX:
-				return branchVertexCalculator == null
+						: edgeCalculator.computeMinMax(projection);
+				case BRANCH_VERTEX:
+					return branchVertexCalculator == null
 						? null
-						: branchVertexCalculator.computeMinMax( projection );
-			case BRANCH_EDGE:
-				return branchEdgeCalculator == null
+						: branchVertexCalculator.computeMinMax(projection);
+				case BRANCH_EDGE:
+					return branchEdgeCalculator == null
 						? null
-						: branchEdgeCalculator.computeMinMax( projection );
-			default:
-				throw new IllegalArgumentException( "Unknown target type: " + projection.getTargetType() + " of projection " + projection );
+						: branchEdgeCalculator.computeMinMax(projection);
+				default:
+					throw new IllegalArgumentException("Unknown target type: " +
+						projection.getTargetType() + " of projection " + projection);
 			}
 		}
 	};
 
 	@Override
-	public FeatureRangeCalculator getFeatureRangeCalculator()
-	{
+	public FeatureRangeCalculator getFeatureRangeCalculator() {
 		return featureRangeCalculator;
 	}
 }

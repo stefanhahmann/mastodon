@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.grapher.display;
 
 import java.awt.Color;
@@ -55,15 +56,15 @@ import bdv.viewer.TransformListener;
  * Drag behaviour that implements a zoom rectangle in a grapher view.
  *
  * @author Jean-Yves Tinevez
- * @param <V>
- *            the type of vertices in the graph.
- * @param <E>
- *            the type of edges in the graph.
+ * @param <V> the type of vertices in the graph.
+ * @param <E> the type of edges in the graph.
  */
-public class DataDisplayZoom< V extends Vertex< E > & HasTimepoint & HasLabel, E extends Edge< V > >
-		extends AbstractNamedBehaviour
-		implements DragBehaviour, OffsetAxesListener, TransformListener< ScreenTransform >
+public class DataDisplayZoom<V extends Vertex<E> & HasTimepoint & HasLabel, E extends Edge<V>>
+	extends AbstractNamedBehaviour
+	implements DragBehaviour, OffsetAxesListener,
+	TransformListener<ScreenTransform>
 {
+
 	private static final String TOGGLE_ZOOM = "box zoom";
 
 	private static final String[] TOGGLE_ZOOM_KEYS = new String[] { "Z" };
@@ -71,41 +72,44 @@ public class DataDisplayZoom< V extends Vertex< E > & HasTimepoint & HasLabel, E
 	/*
 	 * Command descriptions for all provided commands
 	 */
-	@Plugin( type = CommandDescriptionProvider.class )
-	public static class Descriptions extends CommandDescriptionProvider
-	{
-		public Descriptions()
-		{
-			super( KeyConfigContexts.GRAPHER );
+	@Plugin(type = CommandDescriptionProvider.class)
+	public static class Descriptions extends CommandDescriptionProvider {
+
+		public Descriptions() {
+			super(KeyConfigContexts.GRAPHER);
 		}
 
 		@Override
-		public void getCommandDescriptions( final CommandDescriptions descriptions )
-		{
-			descriptions.add( TOGGLE_ZOOM, TOGGLE_ZOOM_KEYS, "Zoom to area specified by dragging a box." );
+		public void getCommandDescriptions(final CommandDescriptions descriptions) {
+			descriptions.add(TOGGLE_ZOOM, TOGGLE_ZOOM_KEYS,
+				"Zoom to area specified by dragging a box.");
 		}
 	}
 
-	public static < V extends Vertex< E > & HasTimepoint & HasLabel, E extends Edge< V > > void install( final Behaviours behaviours, final DataDisplayPanel< V, E > panel )
+	public static <V extends Vertex<E> & HasTimepoint & HasLabel, E extends Edge<V>>
+		void install(final Behaviours behaviours,
+			final DataDisplayPanel<V, E> panel)
 	{
-		final DataDisplayZoom< V, E > zoom = new DataDisplayZoom<>( panel );
+		final DataDisplayZoom<V, E> zoom = new DataDisplayZoom<>(panel);
 
 		// Create and register overlay.
-		zoom.transformChanged( panel.getScreenTransform().get() );
-		zoom.updateAxesSize( panel.getOffsetAxes().getWidth(), panel.getOffsetAxes().getHeight() );
+		zoom.transformChanged(panel.getScreenTransform().get());
+		zoom.updateAxesSize(panel.getOffsetAxes().getWidth(), panel.getOffsetAxes()
+			.getHeight());
 		// put the overlay first, so that is below the graph rendering.
-		panel.getDisplay().overlays().add( zoom.overlay );
-		panel.getScreenTransform().listeners().add( zoom );
-		panel.getOffsetAxes().listeners().add( zoom );
+		panel.getDisplay().overlays().add(zoom.overlay);
+		panel.getScreenTransform().listeners().add(zoom);
+		panel.getOffsetAxes().listeners().add(zoom);
 
-		behaviours.namedBehaviour( zoom, TOGGLE_ZOOM_KEYS );
+		behaviours.namedBehaviour(zoom, TOGGLE_ZOOM_KEYS);
 	}
 
-	private static final ImageIcon ZOOM_ICON = new ImageIcon( TrackSchemeZoom.class.getResource( "zoom.png" ) );
+	private static final ImageIcon ZOOM_ICON = new ImageIcon(TrackSchemeZoom.class
+		.getResource("zoom.png"));
 
 	public static final Color ZOOM_GRAPH_OVERLAY_COLOR = Color.BLUE.darker();
 
-	private final DataDisplayPanel< V, E > panel;
+	private final DataDisplayPanel<V, E> panel;
 
 	private final InertialScreenTransformEventHandler transformEventHandler;
 
@@ -117,9 +121,8 @@ public class DataDisplayZoom< V extends Vertex< E > & HasTimepoint & HasLabel, E
 
 	private final ZoomOverlay overlay;
 
-	private DataDisplayZoom( final DataDisplayPanel< V, E > panel )
-	{
-		super( TOGGLE_ZOOM );
+	private DataDisplayZoom(final DataDisplayPanel<V, E> panel) {
+		super(TOGGLE_ZOOM);
 		this.panel = panel;
 		this.transformEventHandler = panel.getTransformEventHandler();
 
@@ -129,23 +132,19 @@ public class DataDisplayZoom< V extends Vertex< E > & HasTimepoint & HasLabel, E
 	}
 
 	@Override
-	public void updateAxesSize( final int width, final int height )
-	{
+	public void updateAxesSize(final int width, final int height) {
 		axesWidth = width;
 	}
 
 	@Override
-	public void transformChanged( final ScreenTransform transform )
-	{
-		synchronized ( screenTransform )
-		{
-			screenTransform.set( transform );
+	public void transformChanged(final ScreenTransform transform) {
+		synchronized (screenTransform) {
+			screenTransform.set(transform);
 		}
 	}
 
 	@Override
-	public void init( final int x, final int y )
-	{
+	public void init(final int x, final int y) {
 		overlay.ox = x;
 		overlay.oy = y;
 		overlay.ex = x;
@@ -155,10 +154,8 @@ public class DataDisplayZoom< V extends Vertex< E > & HasTimepoint & HasLabel, E
 	}
 
 	@Override
-	public void drag( final int x, final int y )
-	{
-		if ( dragging )
-		{
+	public void drag(final int x, final int y) {
+		if (dragging) {
 			overlay.ex = x;
 			overlay.ey = y;
 			panel.repaint();
@@ -166,34 +163,31 @@ public class DataDisplayZoom< V extends Vertex< E > & HasTimepoint & HasLabel, E
 	}
 
 	@Override
-	public void end( final int x, final int y )
-	{
-		if ( dragging )
-		{
+	public void end(final int x, final int y) {
+		if (dragging) {
 			dragging = false;
 			overlay.paint = false;
 
-			final int x1 = Math.min( overlay.ox, overlay.ex ) - axesWidth;
-			final int x2 = Math.max( overlay.ox, overlay.ex ) - axesWidth;
-			final int y1 = Math.min( overlay.oy, overlay.ey );
-			final int y2 = Math.max( overlay.oy, overlay.ey );
+			final int x1 = Math.min(overlay.ox, overlay.ex) - axesWidth;
+			final int x2 = Math.max(overlay.ox, overlay.ex) - axesWidth;
+			final int y1 = Math.min(overlay.oy, overlay.ey);
+			final int y2 = Math.max(overlay.oy, overlay.ey);
 			final double[] screen1 = new double[] { x1, y1 };
 			final double[] screen2 = new double[] { x2, y2 };
-			final double[] layout1 = new double[ 2 ];
-			final double[] layout2 = new double[ 2 ];
+			final double[] layout1 = new double[2];
+			final double[] layout2 = new double[2];
 
-			screenTransform.applyInverse( layout1, screen1 );
-			screenTransform.applyInverse( layout2, screen2 );
+			screenTransform.applyInverse(layout1, screen1);
+			screenTransform.applyInverse(layout2, screen2);
 			transformEventHandler.zoomTo(
-					layout1[ 0 ],
-					layout2[ 0 ],
-					layout1[ 1 ],
-					layout2[ 1 ] );
+				layout1[0],
+				layout2[0],
+				layout1[1],
+				layout2[1]);
 		}
 	}
 
-	private class ZoomOverlay implements OverlayRenderer
-	{
+	private class ZoomOverlay implements OverlayRenderer {
 
 		public int ey;
 
@@ -205,30 +199,27 @@ public class DataDisplayZoom< V extends Vertex< E > & HasTimepoint & HasLabel, E
 
 		private boolean paint;
 
-		public ZoomOverlay()
-		{
+		public ZoomOverlay() {
 			paint = false;
 		}
 
 		@Override
-		public void drawOverlays( final Graphics g )
-		{
-			if ( !paint )
+		public void drawOverlays(final Graphics g) {
+			if (!paint)
 				return;
 
-			final int x1 = Math.min( ox, ex );
-			final int x2 = Math.max( ox, ex );
-			final int y1 = Math.min( oy, ey );
-			final int y2 = Math.max( oy, ey );
+			final int x1 = Math.min(ox, ex);
+			final int x2 = Math.max(ox, ex);
+			final int y1 = Math.min(oy, ey);
+			final int y2 = Math.max(oy, ey);
 
-			g.setColor( ZOOM_GRAPH_OVERLAY_COLOR );
-			g.drawRect( x1, y1, x2 - x1, y2 - y1 );
-			g.drawRect( x1 + 1, y1 + 1, x2 - x1 - 2, y2 - y1 - 2 );
-			g.drawImage( ZOOM_ICON.getImage(), x1 + 3, y1 + 3, null );
+			g.setColor(ZOOM_GRAPH_OVERLAY_COLOR);
+			g.drawRect(x1, y1, x2 - x1, y2 - y1);
+			g.drawRect(x1 + 1, y1 + 1, x2 - x1 - 2, y2 - y1 - 2);
+			g.drawImage(ZOOM_ICON.getImage(), x1 + 3, y1 + 3, null);
 		}
 
 		@Override
-		public void setCanvasSize( final int width, final int height )
-		{}
+		public void setCanvasSize(final int width, final int height) {}
 	}
 }

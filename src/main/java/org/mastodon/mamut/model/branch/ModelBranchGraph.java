@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.model.branch;
 
 import org.mastodon.graph.branch.BranchGraphImp;
@@ -43,30 +44,30 @@ import net.imglib2.RealLocalizable;
  * {@link Spot} they are linked to.
  *
  * @author Jean-Yves Tinevez.
- *
  */
-public class ModelBranchGraph extends BranchGraphImp< Spot, Link, BranchSpot, BranchLink, BranchSpotPool, BranchLinkPool, ByteMappedElement >
+public class ModelBranchGraph extends
+	BranchGraphImp<Spot, Link, BranchSpot, BranchLink, BranchSpotPool, BranchLinkPool, ByteMappedElement>
 {
 
-	public ModelBranchGraph( final ModelGraph graph )
-	{
-		super( graph, new BranchLinkPool( 1024, new BranchSpotPool( 1024, graph.vertices().getRefPool() ) ) );
+	public ModelBranchGraph(final ModelGraph graph) {
+		super(graph, new BranchLinkPool(1024, new BranchSpotPool(1024, graph
+			.vertices().getRefPool())));
 	}
 
-	public ModelBranchGraph( final ModelGraph graph, final int initialCapacity )
-	{
-		super( graph, new BranchLinkPool( initialCapacity, new BranchSpotPool( initialCapacity, graph.vertices().getRefPool() ) ) );
-	}
-
-	@Override
-	public BranchSpot init( final BranchSpot branchVertex, final Spot branchStart, final Spot branchEnd )
-	{
-		return branchVertex.init( branchStart, branchEnd );
+	public ModelBranchGraph(final ModelGraph graph, final int initialCapacity) {
+		super(graph, new BranchLinkPool(initialCapacity, new BranchSpotPool(
+			initialCapacity, graph.vertices().getRefPool())));
 	}
 
 	@Override
-	public BranchLink init( final BranchLink branchEdge, final Link edge )
+	public BranchSpot init(final BranchSpot branchVertex, final Spot branchStart,
+		final Spot branchEnd)
 	{
+		return branchVertex.init(branchStart, branchEnd);
+	}
+
+	@Override
+	public BranchLink init(final BranchLink branchEdge, final Link edge) {
 		return branchEdge.init();
 	}
 }

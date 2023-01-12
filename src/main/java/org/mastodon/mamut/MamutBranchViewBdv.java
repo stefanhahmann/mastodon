@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut;
 
 import static org.mastodon.app.ui.ViewMenuBuilder.item;
@@ -92,10 +93,8 @@ import bdv.viewer.NavigationActions;
 import bdv.viewer.ViewerPanel;
 import net.imglib2.realtransform.AffineTransform3D;
 
-public class MamutBranchViewBdv extends MamutBranchView< 
-	OverlayGraphWrapper< BranchSpot, BranchLink >,
-	OverlayVertexWrapper< BranchSpot, BranchLink >, 
-	OverlayEdgeWrapper< BranchSpot, BranchLink > >
+public class MamutBranchViewBdv extends
+	MamutBranchView<OverlayGraphWrapper<BranchSpot, BranchLink>, OverlayVertexWrapper<BranchSpot, BranchLink>, OverlayEdgeWrapper<BranchSpot, BranchLink>>
 {
 
 	private static int bdvName = 1;
@@ -106,211 +105,227 @@ public class MamutBranchViewBdv extends MamutBranchView<
 
 	private final ColorBarOverlay colorBarOverlay;
 
-	public MamutBranchViewBdv( final MamutAppModel appModel )
-	{
-		this( appModel, new HashMap<>() );
+	public MamutBranchViewBdv(final MamutAppModel appModel) {
+		this(appModel, new HashMap<>());
 	}
 
-	public MamutBranchViewBdv( final MamutAppModel appModel, final Map< String, Object > guiState )
+	public MamutBranchViewBdv(final MamutAppModel appModel,
+		final Map<String, Object> guiState)
 	{
-		super( appModel, createViewBranchGraph( appModel ), new String[] { KeyConfigContexts.BIGDATAVIEWER } );
-		
+		super(appModel, createViewBranchGraph(appModel), new String[] {
+			KeyConfigContexts.BIGDATAVIEWER });
+
 		// Image data.
 		final SharedBigDataViewerData sharedBdvData = appModel.getSharedBdvData();
 
 		// BDV.
-		final String windowTitle = "BigDataViewer Branch " + ( bdvName++ );
-		final BigDataViewerMamut bdv = new BigDataViewerMamut( sharedBdvData, windowTitle, groupHandle );
+		final String windowTitle = "BigDataViewer Branch " + (bdvName++);
+		final BigDataViewerMamut bdv = new BigDataViewerMamut(sharedBdvData,
+			windowTitle, groupHandle);
 		final ViewerFrameMamut viewerFrame = bdv.getViewerFrame();
-		setFrame( viewerFrame );
+		setFrame(viewerFrame);
 		viewer = bdv.getViewer();
 
 		// Restore position.
-		MamutView.restoreFramePosition( viewerFrame, guiState );
+		MamutView.restoreFramePosition(viewerFrame, guiState);
 
 		// Restore group handle.
-		MamutView.restoreGroupHandle( groupHandle, guiState );
+		MamutView.restoreGroupHandle(groupHandle, guiState);
 
 		// Restore settings panel visibility.
-		MamutView.restoreSettingsPanelVisibility( viewerFrame, guiState );
+		MamutView.restoreSettingsPanelVisibility(viewerFrame, guiState);
 
 		// Menus
-		final ViewMenu menu = new ViewMenu( frame.getJMenuBar(), appModel.getKeymap(), keyConfigContexts );
-		final ActionMap actionMap = frame.getKeybindings().getConcatenatedActionMap();
+		final ViewMenu menu = new ViewMenu(frame.getJMenuBar(), appModel
+			.getKeymap(), keyConfigContexts);
+		final ActionMap actionMap = frame.getKeybindings()
+			.getConcatenatedActionMap();
 
 		final JMenuHandle coloringMenuHandle = new JMenuHandle();
 		final JMenuHandle tagSetMenuHandle = new JMenuHandle();
 		final JMenuHandle colorbarMenuHandle = new JMenuHandle();
-		MainWindow.addMenus( menu, actionMap );
-		MamutMenuBuilder.build( menu, actionMap,
-				fileMenu(
-						separator(),
-						item( BigDataViewerActions.LOAD_SETTINGS ),
-						item( BigDataViewerActions.SAVE_SETTINGS ) ),
-				viewMenu(
-						branchColorMenu( coloringMenuHandle ),
-						colorbarMenu( colorbarMenuHandle ),
-						separator(),
-						item( MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL ) ),
-				editMenu(
-						item( SelectionActions.SELECT_WHOLE_TRACK ),
-						item( SelectionActions.SELECT_TRACK_DOWNWARD ),
-						item( SelectionActions.SELECT_TRACK_UPWARD ),
-						separator(),
-						tagSetMenu( tagSetMenuHandle ) ),
-				ViewMenuBuilder.menu( "Settings",
-						item( BigDataViewerActions.BRIGHTNESS_SETTINGS ),
-						item( BigDataViewerActions.VISIBILITY_AND_GROUPING ) ) );
-		appModel.getPlugins().addMenus( menu );
+		MainWindow.addMenus(menu, actionMap);
+		MamutMenuBuilder.build(menu, actionMap,
+			fileMenu(
+				separator(),
+				item(BigDataViewerActions.LOAD_SETTINGS),
+				item(BigDataViewerActions.SAVE_SETTINGS)),
+			viewMenu(
+				branchColorMenu(coloringMenuHandle),
+				colorbarMenu(colorbarMenuHandle),
+				separator(),
+				item(MastodonFrameViewActions.TOGGLE_SETTINGS_PANEL)),
+			editMenu(
+				item(SelectionActions.SELECT_WHOLE_TRACK),
+				item(SelectionActions.SELECT_TRACK_DOWNWARD),
+				item(SelectionActions.SELECT_TRACK_UPWARD),
+				separator(),
+				tagSetMenu(tagSetMenuHandle)),
+			ViewMenuBuilder.menu("Settings",
+				item(BigDataViewerActions.BRIGHTNESS_SETTINGS),
+				item(BigDataViewerActions.VISIBILITY_AND_GROUPING)));
+		appModel.getPlugins().addMenus(menu);
 
 		// Register coloring and tag-sets.
 
 		// Coloring.
-		final GraphColorGeneratorAdapter< BranchSpot, BranchLink, OverlayVertexWrapper< BranchSpot, BranchLink >, OverlayEdgeWrapper< BranchSpot, BranchLink > > coloring =
-				new GraphColorGeneratorAdapter<>( vertexMap, edgeMap );
+		final GraphColorGeneratorAdapter<BranchSpot, BranchLink, OverlayVertexWrapper<BranchSpot, BranchLink>, OverlayEdgeWrapper<BranchSpot, BranchLink>> coloring =
+			new GraphColorGeneratorAdapter<>(vertexMap, edgeMap);
 
-		coloringModel = registerBranchColoring( coloring, coloringMenuHandle,
-				() -> viewer.getDisplay().repaint() );
-		colorBarOverlay = new ColorBarOverlay( coloringModel, () -> viewer.getBackground() );
-		registerColorbarOverlay( colorBarOverlay, colorbarMenuHandle, () -> viewer.getDisplay().repaint() );
+		coloringModel = registerBranchColoring(coloring, coloringMenuHandle,
+			() -> viewer.getDisplay().repaint());
+		colorBarOverlay = new ColorBarOverlay(coloringModel, () -> viewer
+			.getBackground());
+		registerColorbarOverlay(colorBarOverlay, colorbarMenuHandle, () -> viewer
+			.getDisplay().repaint());
 
-		registerTagSetMenu( tagSetMenuHandle,
-				() -> viewer.getDisplay().repaint() );
+		registerTagSetMenu(tagSetMenuHandle,
+			() -> viewer.getDisplay().repaint());
 
 		// Restore coloring.
-		MamutView.restoreColoring( coloringModel, guiState );
+		MamutView.restoreColoring(coloringModel, guiState);
 
 		// Restore colorbar state.
-		MamutView.restoreColorbarState( colorBarOverlay, guiState );
-		viewer.getDisplay().overlays().add( colorBarOverlay );
+		MamutView.restoreColorbarState(colorBarOverlay, guiState);
+		viewer.getDisplay().overlays().add(colorBarOverlay);
 
 		// Restore BDV state.
-		final Element stateEl = ( Element ) guiState.get( BDV_STATE_KEY );
-		if ( null != stateEl )
-			viewer.stateFromXml( stateEl );
+		final Element stateEl = (Element) guiState.get(BDV_STATE_KEY);
+		if (null != stateEl)
+			viewer.stateFromXml(stateEl);
 
 		// Restore transform.
-		final AffineTransform3D tLoaded = ( AffineTransform3D ) guiState.get( BDV_TRANSFORM_KEY );
-		if ( null == tLoaded )
-			InitializeViewerState.initTransform( viewer );
+		final AffineTransform3D tLoaded = (AffineTransform3D) guiState.get(
+			BDV_TRANSFORM_KEY);
+		if (null == tLoaded)
+			InitializeViewerState.initTransform(viewer);
 		else
-			viewer.state().setViewerTransform( tLoaded );
+			viewer.state().setViewerTransform(tLoaded);
 
 		// Renderer.
-		final OverlayGraphRenderer< OverlayVertexWrapper< BranchSpot, BranchLink >, OverlayEdgeWrapper< BranchSpot, BranchLink > > tracksOverlay =
-				new OverlayBranchGraphRenderer<>(
-						viewGraph,
-						highlightModel,
-						focusModel,
-						selectionModel,
-						coloring );
+		final OverlayGraphRenderer<OverlayVertexWrapper<BranchSpot, BranchLink>, OverlayEdgeWrapper<BranchSpot, BranchLink>> tracksOverlay =
+			new OverlayBranchGraphRenderer<>(
+				viewGraph,
+				highlightModel,
+				focusModel,
+				selectionModel,
+				coloring);
 
-		viewer.getDisplay().overlays().add( tracksOverlay );
-		viewer.renderTransformListeners().add( tracksOverlay );
-		viewer.addTimePointListener( tracksOverlay );
+		viewer.getDisplay().overlays().add(tracksOverlay);
+		viewer.renderTransformListeners().add(tracksOverlay);
+		viewer.addTimePointListener(tracksOverlay);
 
 		// Core graph.
 		final Model model = appModel.getModel();
 		final ModelGraph graph = model.getGraph();
 
 		// Listen to changes in models -> repaint.
-		highlightModel.listeners().add( () -> viewer.getDisplay().repaint() );
-		focusModel.listeners().add( () -> viewer.getDisplay().repaint() );
-		selectionModel.listeners().add( () -> viewer.getDisplay().repaint() );
-		graph.addGraphChangeListener( () -> viewer.getDisplay().repaint() );
-		graph.addVertexPositionListener( ( v ) -> viewer.getDisplay().repaint() );
+		highlightModel.listeners().add(() -> viewer.getDisplay().repaint());
+		focusModel.listeners().add(() -> viewer.getDisplay().repaint());
+		selectionModel.listeners().add(() -> viewer.getDisplay().repaint());
+		graph.addGraphChangeListener(() -> viewer.getDisplay().repaint());
+		graph.addVertexPositionListener((v) -> viewer.getDisplay().repaint());
 
 		// Forward navigation to view.
-		final OverlayNavigation< OverlayVertexWrapper< BranchSpot, BranchLink >, OverlayEdgeWrapper< BranchSpot, BranchLink > > overlayNavigation =
-				new OverlayNavigation<>( viewer, viewGraph );
-		navigationHandler.listeners().add( overlayNavigation );
+		final OverlayNavigation<OverlayVertexWrapper<BranchSpot, BranchLink>, OverlayEdgeWrapper<BranchSpot, BranchLink>> overlayNavigation =
+			new OverlayNavigation<>(viewer, viewGraph);
+		navigationHandler.listeners().add(overlayNavigation);
 
-		final BdvHighlightHandler< ?, ? > highlightHandler = new BdvHighlightHandler<>( viewGraph, tracksOverlay, highlightModel );
-		viewer.getDisplay().addHandler( highlightHandler );
-		viewer.renderTransformListeners().add( highlightHandler );
+		final BdvHighlightHandler<?, ?> highlightHandler =
+			new BdvHighlightHandler<>(viewGraph, tracksOverlay, highlightModel);
+		viewer.getDisplay().addHandler(highlightHandler);
+		viewer.renderTransformListeners().add(highlightHandler);
 
 		// Actions & Behaviors.
-		MastodonFrameViewActions.install( viewActions, this );
-		BigDataViewerActionsMamut.install( viewActions, bdv );
-		NavigationActions.install( viewActions, viewer, sharedBdvData.is2D() );
-		viewer.getTransformEventHandler().install( viewBehaviours );
-		HighlightBehaviours.install( viewBehaviours, viewGraph, graph.getLock(), graph, highlightModel, model );
-		FocusActions.install( viewActions, viewGraph, graph.getLock(), focusModel, selectionModel );
-		BdvSelectionBehaviours.install( viewBehaviours, viewGraph, tracksOverlay, selectionModel, focusModel, navigationHandler );
-		OverlayActions.install( viewActions, viewer, tracksOverlay );
+		MastodonFrameViewActions.install(viewActions, this);
+		BigDataViewerActionsMamut.install(viewActions, bdv);
+		NavigationActions.install(viewActions, viewer, sharedBdvData.is2D());
+		viewer.getTransformEventHandler().install(viewBehaviours);
+		HighlightBehaviours.install(viewBehaviours, viewGraph, graph.getLock(),
+			graph, highlightModel, model);
+		FocusActions.install(viewActions, viewGraph, graph.getLock(), focusModel,
+			selectionModel);
+		BdvSelectionBehaviours.install(viewBehaviours, viewGraph, tracksOverlay,
+			selectionModel, focusModel, navigationHandler);
+		OverlayActions.install(viewActions, viewer, tracksOverlay);
 
 		/*
 		 * We must make a search action using the underlying model graph,
 		 * because we cannot iterate over the OverlayGraphWrapper properly
 		 * (vertices are object vertices that wrap a pool vertex...)
 		 */
-		final NavigationHandler< Spot, Link > navigationHandlerAdapter = groupHandle.getModel( appModel.NAVIGATION );
+		final NavigationHandler<Spot, Link> navigationHandlerAdapter = groupHandle
+			.getModel(appModel.NAVIGATION);
 		final JPanel searchField = SearchVertexLabel.install(
-				viewActions,
-				appModel.getModel().getGraph(),
-				navigationHandlerAdapter,
-				appModel.getSelectionModel(),
-				appModel.getFocusModel(),
-				viewer );
-		frame.getSettingsPanel().add( searchField );
+			viewActions,
+			appModel.getModel().getGraph(),
+			navigationHandlerAdapter,
+			appModel.getSelectionModel(),
+			appModel.getFocusModel(),
+			viewer);
+		frame.getSettingsPanel().add(searchField);
 
 		// Moving in the BDV.
-		NavigationActions.install( viewActions, viewer, sharedBdvData.is2D() );
-		viewer.getTransformEventHandler().install( viewBehaviours );
+		NavigationActions.install(viewActions, viewer, sharedBdvData.is2D());
+		viewer.getTransformEventHandler().install(viewBehaviours);
 
 		// Time-point listener.
-		viewer.addTimePointListener( timePointIndex -> timepointModel.setTimepoint( timePointIndex ) );
-		timepointModel.listeners().add( () -> viewer.setTimepoint( timepointModel.getTimepoint() ) );
+		viewer.addTimePointListener(timePointIndex -> timepointModel.setTimepoint(
+			timePointIndex));
+		timepointModel.listeners().add(() -> viewer.setTimepoint(timepointModel
+			.getTimepoint()));
 
 		// Render settings.
-		final RenderSettings renderSettings = appModel.getRenderSettingsManager().getForwardDefaultStyle();
-		tracksOverlay.setRenderSettings( renderSettings );
+		final RenderSettings renderSettings = appModel.getRenderSettingsManager()
+			.getForwardDefaultStyle();
+		tracksOverlay.setRenderSettings(renderSettings);
 		final UpdateListener updateListener = () -> viewer.repaint();
-		renderSettings.updateListeners().add( updateListener );
-		onClose( () -> renderSettings.updateListeners().remove( updateListener ) );
+		renderSettings.updateListeners().add(updateListener);
+		onClose(() -> renderSettings.updateListeners().remove(updateListener));
 
 		// Give focus to display so that it can receive key-presses immediately.
 		viewer.getDisplay().requestFocusInWindow();
 
-		viewerFrame.setVisible( true );
+		viewerFrame.setVisible(true);
 	}
 
-	ColoringModel getColoringModel()
-	{
+	ColoringModel getColoringModel() {
 		return coloringModel;
 	}
 
-	ColorBarOverlay getColorBarOverlay()
-	{
+	ColorBarOverlay getColorBarOverlay() {
 		return colorBarOverlay;
 	}
 
-	ViewerPanel getViewerPanelMamut()
-	{
+	ViewerPanel getViewerPanelMamut() {
 		return viewer;
 	}
 
-	private static OverlayGraphWrapper<BranchSpot, BranchLink> createViewBranchGraph( final MamutAppModel appModel )
+	private static OverlayGraphWrapper<BranchSpot, BranchLink>
+		createViewBranchGraph(final MamutAppModel appModel)
 	{
 		// Model.
 		final Model model = appModel.getModel();
 
 		// Branch graph.
 		final ModelBranchGraph branchGraph = model.getBranchGraph();
-		final GraphIdBimap< BranchSpot, BranchLink > branchGraphIdBimap = model.getBranchGraphIdBimap();
+		final GraphIdBimap<BranchSpot, BranchLink> branchGraphIdBimap = model
+			.getBranchGraphIdBimap();
 
 		// Graph.
 		final ModelGraph graph = model.getGraph();
-		final BoundingSphereRadiusStatistics radiusStats = appModel.getRadiusStats();
+		final BoundingSphereRadiusStatistics radiusStats = appModel
+			.getRadiusStats();
 
-		final OverlayProperties< BranchSpot, BranchLink > properties =
-				new BranchGraphModelOverlayProperties( branchGraph, graph, radiusStats );
-		final OverlayGraphWrapper< BranchSpot, BranchLink > overlayBranchGraph = new OverlayGraphWrapper<>(
+		final OverlayProperties<BranchSpot, BranchLink> properties =
+			new BranchGraphModelOverlayProperties(branchGraph, graph, radiusStats);
+		final OverlayGraphWrapper<BranchSpot, BranchLink> overlayBranchGraph =
+			new OverlayGraphWrapper<>(
 				branchGraph,
 				branchGraphIdBimap,
 				model.getBranchGraphSpatioTemporalIndex(),
 				graph.getLock(),
-				properties );
+				properties);
 		return overlayBranchGraph;
 	}
 }

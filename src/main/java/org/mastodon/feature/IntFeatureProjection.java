@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.feature;
 
 /**
@@ -36,8 +37,6 @@ package org.mastodon.feature;
  * formatted to reflect that their projections are integer valued.
  *
  * @author Jean-Yves Tinevez
- *
  * @param <O> the type of objects for which the feature is defined.
  */
-public interface IntFeatureProjection< O > extends FeatureProjection< O >
-{}
+public interface IntFeatureProjection<O> extends FeatureProjection<O> {}

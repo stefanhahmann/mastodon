@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.trackscheme.wrap;
 
 import org.mastodon.model.HasLabel;
@@ -44,41 +45,37 @@ import org.mastodon.views.trackscheme.TrackSchemeGraph;
  * {@link HasTimepoint}, {@link HasLabel}, etc),
  * {@link DefaultModelGraphProperties} can be used.
  *
- * @param <V>
- *            the type of vertices in the model graph (not the TrackScheme
- *            graph).
- * @param <E>
- *            the type of edges in the graph.
- *
+ * @param <V> the type of vertices in the model graph (not the TrackScheme
+ *          graph).
+ * @param <E> the type of edges in the graph.
  * @author Tobias Pietzsch
  */
-public interface ModelGraphProperties< V, E >
-{
-	public int getTimepoint( V v );
+public interface ModelGraphProperties<V, E> {
 
-	default public int getFirstTimePoint(V v)
-	{
-		return getTimepoint( v );
+	public int getTimepoint(V v);
+
+	default public int getFirstTimePoint(V v) {
+		return getTimepoint(v);
 	};
 
-	public String getLabel( V v );
+	public String getLabel(V v);
 
-	public void setLabel( V v, String label );
+	public void setLabel(V v, String label);
 
-	default String getFirstLabel( V v )
-	{
-		return getLabel( v );
+	default String getFirstLabel(V v) {
+		return getLabel(v);
 	}
 
-	public E addEdge( V source, V target, E ref );
+	public E addEdge(V source, V target, E ref);
 
-	public E insertEdge( V source, final int sourceOutIndex, V target, final int targetInIndex, final E ref );
+	public E insertEdge(V source, final int sourceOutIndex, V target,
+		final int targetInIndex, final E ref);
 
-	public E initEdge( E e );
+	public E initEdge(E e);
 
-	public void removeEdge( E e );
+	public void removeEdge(E e);
 
-	public void removeVertex( V v );
+	public void removeVertex(V v);
 
 	public void notifyGraphChanged();
 

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature.branch;
 
 import static org.mastodon.feature.FeatureProjectionKey.key;
@@ -47,84 +48,85 @@ import org.mastodon.mamut.model.branch.BranchSpot;
 import org.mastodon.properties.DoublePropertyMap;
 import org.scijava.plugin.Plugin;
 
-public class BranchDisplacementDurationFeature implements Feature< BranchSpot >
-{
+public class BranchDisplacementDurationFeature implements Feature<BranchSpot> {
+
 	public static final String KEY = "Branch duration and displacement";
 
-	private static final String INFO_STRING = "The displacement and duration of a branch.";
+	private static final String INFO_STRING =
+		"The displacement and duration of a branch.";
 
-	public static final FeatureProjectionSpec DISPLACEMENT_PROJECTION_SPEC = new FeatureProjectionSpec( "Displacement", Dimension.LENGTH );
+	public static final FeatureProjectionSpec DISPLACEMENT_PROJECTION_SPEC =
+		new FeatureProjectionSpec("Displacement", Dimension.LENGTH);
 
-	public static final FeatureProjectionSpec DURATION_PROJECTION_SPEC = new FeatureProjectionSpec( "Duration", Dimension.NONE );
+	public static final FeatureProjectionSpec DURATION_PROJECTION_SPEC =
+		new FeatureProjectionSpec("Duration", Dimension.NONE);
 
 	public static final Spec SPEC = new Spec();
 
-	@Plugin( type = FeatureSpec.class )
-	public static class Spec extends FeatureSpec< BranchDisplacementDurationFeature, BranchSpot >
+	@Plugin(type = FeatureSpec.class)
+	public static class Spec extends
+		FeatureSpec<BranchDisplacementDurationFeature, BranchSpot>
 	{
-		public Spec()
-		{
+
+		public Spec() {
 			super(
-					KEY,
-					INFO_STRING,
-					BranchDisplacementDurationFeature.class,
-					BranchSpot.class,
-					Multiplicity.SINGLE,
-					DISPLACEMENT_PROJECTION_SPEC,
-					DURATION_PROJECTION_SPEC );
+				KEY,
+				INFO_STRING,
+				BranchDisplacementDurationFeature.class,
+				BranchSpot.class,
+				Multiplicity.SINGLE,
+				DISPLACEMENT_PROJECTION_SPEC,
+				DURATION_PROJECTION_SPEC);
 		}
 	}
 
-	private final Map< FeatureProjectionKey, FeatureProjection< BranchSpot > > projectionMap;
+	private final Map<FeatureProjectionKey, FeatureProjection<BranchSpot>> projectionMap;
 
-	final DoublePropertyMap< BranchSpot > dispMap;
+	final DoublePropertyMap<BranchSpot> dispMap;
 
-	final DoublePropertyMap< BranchSpot > durMap;
+	final DoublePropertyMap<BranchSpot> durMap;
 
 	final String lengthUnits;
 
-	BranchDisplacementDurationFeature( final DoublePropertyMap< BranchSpot > dispMap, final DoublePropertyMap< BranchSpot > durMap, final String lengthUnits )
+	BranchDisplacementDurationFeature(final DoublePropertyMap<BranchSpot> dispMap,
+		final DoublePropertyMap<BranchSpot> durMap, final String lengthUnits)
 	{
 		this.dispMap = dispMap;
 		this.durMap = durMap;
 		this.lengthUnits = lengthUnits;
-		this.projectionMap = new LinkedHashMap<>( 2 );
-		projectionMap.put( key( DISPLACEMENT_PROJECTION_SPEC ), FeatureProjections.project( key( DISPLACEMENT_PROJECTION_SPEC ), dispMap, lengthUnits ) );
-		projectionMap.put( key( DURATION_PROJECTION_SPEC ), FeatureProjections.project( key( DURATION_PROJECTION_SPEC ), durMap, Dimension.NONE_UNITS ) );
+		this.projectionMap = new LinkedHashMap<>(2);
+		projectionMap.put(key(DISPLACEMENT_PROJECTION_SPEC), FeatureProjections
+			.project(key(DISPLACEMENT_PROJECTION_SPEC), dispMap, lengthUnits));
+		projectionMap.put(key(DURATION_PROJECTION_SPEC), FeatureProjections.project(
+			key(DURATION_PROJECTION_SPEC), durMap, Dimension.NONE_UNITS));
 	}
 
-	public double getDuration( final BranchSpot branch )
-	{
-		return durMap.get( branch );
+	public double getDuration(final BranchSpot branch) {
+		return durMap.get(branch);
 	}
 
-	public double getDisplacement( final BranchSpot branch )
-	{
-		return dispMap.get( branch );
-	}
-
-	@Override
-	public FeatureProjection< BranchSpot > project( final FeatureProjectionKey key )
-	{
-		return projectionMap.get( key );
+	public double getDisplacement(final BranchSpot branch) {
+		return dispMap.get(branch);
 	}
 
 	@Override
-	public Set< FeatureProjection< BranchSpot > > projections()
-	{
-		return new LinkedHashSet<>( projectionMap.values() );
+	public FeatureProjection<BranchSpot> project(final FeatureProjectionKey key) {
+		return projectionMap.get(key);
 	}
 
 	@Override
-	public Spec getSpec()
-	{
+	public Set<FeatureProjection<BranchSpot>> projections() {
+		return new LinkedHashSet<>(projectionMap.values());
+	}
+
+	@Override
+	public Spec getSpec() {
 		return SPEC;
 	}
 
 	@Override
-	public void invalidate( final BranchSpot branch )
-	{
-		dispMap.remove( branch );
-		durMap.remove( branch );
+	public void invalidate(final BranchSpot branch) {
+		dispMap.remove(branch);
+		durMap.remove(branch);
 	}
 }

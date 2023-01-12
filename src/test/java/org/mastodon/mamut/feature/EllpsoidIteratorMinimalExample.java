@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.feature;
 
 import org.mastodon.mamut.model.ModelGraph;
@@ -38,54 +39,57 @@ import net.imglib2.img.Img;
 import net.imglib2.img.array.ArrayImgs;
 import net.imglib2.type.numeric.integer.UnsignedByteType;
 
-public class EllpsoidIteratorMinimalExample
-{
-	public static void main( final String[] args )
-	{
+public class EllpsoidIteratorMinimalExample {
+
+	public static void main(final String[] args) {
 		// Create ArrayImg to act as source pixel data.
-		// We show it as a Source in BDV with a calibration of (X=1, Y=1, Z=2) as a minimal test whether the EllipsoidIterator handles source transforms correctly.
-		// The Img is filled with a checkerboard pattern, so that we can see where the voxel raster is in BDV.
-		final Img< UnsignedByteType > img = ArrayImgs.unsignedBytes( 100, 100, 50 );
-		final Cursor< UnsignedByteType > cursor = img.cursor();
-		while ( cursor.hasNext() )
-		{
+		// We show it as a Source in BDV with a calibration of (X=1, Y=1, Z=2) as a
+		// minimal test whether the EllipsoidIterator handles source transforms
+		// correctly.
+		// The Img is filled with a checkerboard pattern, so that we can see where
+		// the voxel raster is in BDV.
+		final Img<UnsignedByteType> img = ArrayImgs.unsignedBytes(100, 100, 50);
+		final Cursor<UnsignedByteType> cursor = img.cursor();
+		while (cursor.hasNext()) {
 			cursor.fwd();
-			final int s = cursor.getIntPosition( 0 ) + cursor.getIntPosition( 1 ) + cursor.getIntPosition( 2 );
-			cursor.get().set( s % 2 == 0 ? 32 : 64 );
+			final int s = cursor.getIntPosition(0) + cursor.getIntPosition(1) + cursor
+				.getIntPosition(2);
+			cursor.get().set(s % 2 == 0 ? 32 : 64);
 		}
-		final BdvStackSource< UnsignedByteType > bdv = BdvFunctions.show( img, "img", Bdv.options().sourceTransform( 1, 1, 2 ) );
+		final BdvStackSource<UnsignedByteType> bdv = BdvFunctions.show(img, "img",
+			Bdv.options().sourceTransform(1, 1, 2));
 
 		// Now create a model graph with a few test spots for EllipsoidIterator
 		final ModelGraph graph = new ModelGraph();
-		graph.addVertex().init( 0,
-				new double[] { 50, 50, 50 },
-				new double[][] {
-						{ 210, 100, 0 },
-						{ 100, 110, 10 },
-						{ 0, 10, 100 }
-				} );
-		graph.addVertex().init( 0,
-				new double[] { 20, 80, 40 },
-				new double[][] {
-						{ 90, 0, 0 },
-						{ 0, 90,  0 },
-						{ 0, 0, 500 }
-				} );
-		graph.addVertex().init( 0,
-				new double[] { 40, 10, 40 },
-				new double[][] {
-						{ 90, -80, 0 },
-						{ -80, 90, 0 },
-						{ 0, 0, 90 }
-				} );
+		graph.addVertex().init(0,
+			new double[] { 50, 50, 50 },
+			new double[][] {
+				{ 210, 100, 0 },
+				{ 100, 110, 10 },
+				{ 0, 10, 100 }
+			});
+		graph.addVertex().init(0,
+			new double[] { 20, 80, 40 },
+			new double[][] {
+				{ 90, 0, 0 },
+				{ 0, 90, 0 },
+				{ 0, 0, 500 }
+			});
+		graph.addVertex().init(0,
+			new double[] { 40, 10, 40 },
+			new double[][] {
+				{ 90, -80, 0 },
+				{ -80, 90, 0 },
+				{ 0, 0, 90 }
+			});
 
 		// We now create an EllipsoidIterable and re-use it for each spot.
 		// For each spot, we iterate inside pixels and set them to 255.
-		final EllipsoidIterable< UnsignedByteType > ellipsoidIter = new EllipsoidIterable<>( bdv.getSources().get( 0 ).getSpimSource() );
-		graph.vertices().forEach( spot ->
-		{
-			ellipsoidIter.reset( spot );
-			ellipsoidIter.forEach( t -> t.set( 255 ) );
-		} );
+		final EllipsoidIterable<UnsignedByteType> ellipsoidIter =
+			new EllipsoidIterable<>(bdv.getSources().get(0).getSpimSource());
+		graph.vertices().forEach(spot -> {
+			ellipsoidIter.reset(spot);
+			ellipsoidIter.forEach(t -> t.set(255));
+		});
 	}
 }

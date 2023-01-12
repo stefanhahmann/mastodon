@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.ui;
 
 /*
@@ -38,9 +39,8 @@ package org.mastodon.ui;
  *
  * @author Jean-Yves Tinevez
  */
-public enum NavigationEtiquette
-{
-	CENTERING,
-	CENTER_IF_INVISIBLE,
-	MINIMAL;
+public enum NavigationEtiquette {
+		CENTERING,
+		CENTER_IF_INVISIBLE,
+		MINIMAL;
 }

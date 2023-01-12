@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.feature;
 
 import java.util.Set;
@@ -43,29 +44,27 @@ import java.util.Set;
  * etc.) specified as a type parameter of this class.
  * <p>
  *
- * @param <T>
- *            target the type of the object this feature is defined for.
+ * @param <T> target the type of the object this feature is defined for.
  */
-public interface Feature< T >
-{
+public interface Feature<T> {
+
 	/**
 	 * Get the projection with the specified {@link FeatureProjectionKey}.
 	 *
-	 * @param key
-	 *            the requested projection
-	 * @return the specified projection, or {@code null} if the projection is
-	 *         not available.
+	 * @param key the requested projection
+	 * @return the specified projection, or {@code null} if the projection is not
+	 *         available.
 	 */
-	public FeatureProjection< T > project( final FeatureProjectionKey key );
+	public FeatureProjection<T> project(final FeatureProjectionKey key);
 
 	/**
 	 * Get all {@link FeatureProjection}s that this feature currently provides.
 	 *
 	 * @return set of all projections.
 	 */
-	public Set< FeatureProjection< T > > projections();
+	public Set<FeatureProjection<T>> projections();
 
-	public FeatureSpec< ? extends Feature<T>, T > getSpec();
+	public FeatureSpec<? extends Feature<T>, T> getSpec();
 
 	/**
 	 * Invalidates the value of this feature for the specified object.
@@ -73,8 +72,7 @@ public interface Feature< T >
 	 * This method is used to invalidate a feature value when an object has been
 	 * modified under it.
 	 *
-	 * @param obj
-	 *            the object to remove.
+	 * @param obj the object to remove.
 	 */
-	public void invalidate( T obj );
+	public void invalidate(T obj);
 }

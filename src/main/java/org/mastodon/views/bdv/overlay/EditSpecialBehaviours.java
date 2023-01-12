@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.bdv.overlay;
 
 import static org.mastodon.views.bdv.overlay.EditBehaviours.FOCUS_EDITED_SPOT;
@@ -57,44 +58,54 @@ import bdv.viewer.ViewerPanel;
 import net.imglib2.realtransform.AffineTransform3D;
 import net.imglib2.util.LinAlgHelpers;
 
-public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends OverlayEdge< E, V > >
-{
+public class EditSpecialBehaviours<V extends OverlayVertex<V, E>, E extends OverlayEdge<E, V>> {
+
 	private static final String ADD_SPOT_AND_LINK_IT_FORWARD = "add linked spot";
-	private static final String ADD_SPOT_AND_LINK_IT_BACKWARD = "add linked spot backward";
+	private static final String ADD_SPOT_AND_LINK_IT_BACKWARD =
+		"add linked spot backward";
 	private static final String TOGGLE_LINK_FORWARD = "toggle link";
 	private static final String TOGGLE_LINK_BACKWARD = "toggle link backward";
 
-	private static final String[] ADD_SPOT_AND_LINK_IT_FORWARD_KEYS = new String[] { "A" };
-	private static final String[] ADD_SPOT_AND_LINK_IT_BACKWARD_KEYS = new String[] { "C" };
+	private static final String[] ADD_SPOT_AND_LINK_IT_FORWARD_KEYS =
+		new String[] { "A" };
+	private static final String[] ADD_SPOT_AND_LINK_IT_BACKWARD_KEYS =
+		new String[] { "C" };
 	private static final String[] TOGGLE_LINK_FORWARD_KEYS = new String[] { "L" };
-	private static final String[] TOGGLE_LINK_BACKWARD_KEYS = new String[] { "shift L" };
+	private static final String[] TOGGLE_LINK_BACKWARD_KEYS = new String[] {
+		"shift L" };
 
 	/*
 	 * Command descriptions for all provided commands
 	 */
-	@Plugin( type = CommandDescriptionProvider.class )
-	public static class Descriptions extends CommandDescriptionProvider
-	{
-		public Descriptions()
-		{
-			super( KeyConfigContexts.BIGDATAVIEWER );
+	@Plugin(type = CommandDescriptionProvider.class)
+	public static class Descriptions extends CommandDescriptionProvider {
+
+		public Descriptions() {
+			super(KeyConfigContexts.BIGDATAVIEWER);
 		}
 
 		@Override
-		public void getCommandDescriptions( final CommandDescriptions descriptions )
-		{
-			descriptions.add( ADD_SPOT_AND_LINK_IT_FORWARD, ADD_SPOT_AND_LINK_IT_FORWARD_KEYS, "Add a spot new spot in the next timepoint, linked to the spot under the mouse." );
-			descriptions.add( ADD_SPOT_AND_LINK_IT_BACKWARD, ADD_SPOT_AND_LINK_IT_BACKWARD_KEYS, "Add a spot new spot in the previous timepoint, linked to the spot under the mouse." );
-			descriptions.add( TOGGLE_LINK_FORWARD, TOGGLE_LINK_FORWARD_KEYS, "Toggle link from the spot under the mouse, by dragging to a spot in the next timepoint." );
-			descriptions.add( TOGGLE_LINK_BACKWARD, TOGGLE_LINK_BACKWARD_KEYS, "Toggle link from the spot under the mouse, by dragging to a spot in the previous timepoint." );
+		public void getCommandDescriptions(final CommandDescriptions descriptions) {
+			descriptions.add(ADD_SPOT_AND_LINK_IT_FORWARD,
+				ADD_SPOT_AND_LINK_IT_FORWARD_KEYS,
+				"Add a spot new spot in the next timepoint, linked to the spot under the mouse.");
+			descriptions.add(ADD_SPOT_AND_LINK_IT_BACKWARD,
+				ADD_SPOT_AND_LINK_IT_BACKWARD_KEYS,
+				"Add a spot new spot in the previous timepoint, linked to the spot under the mouse.");
+			descriptions.add(TOGGLE_LINK_FORWARD, TOGGLE_LINK_FORWARD_KEYS,
+				"Toggle link from the spot under the mouse, by dragging to a spot in the next timepoint.");
+			descriptions.add(TOGGLE_LINK_BACKWARD, TOGGLE_LINK_BACKWARD_KEYS,
+				"Toggle link from the spot under the mouse, by dragging to a spot in the previous timepoint.");
 		}
 	}
 
 	public static final Color EDIT_GRAPH_OVERLAY_COLOR = Color.WHITE;
-	public static final BasicStroke EDIT_GRAPH_OVERLAY_STROKE = new BasicStroke( 2f );
-	public static final BasicStroke EDIT_GRAPH_OVERLAY_GHOST_STROKE = new BasicStroke(
+	public static final BasicStroke EDIT_GRAPH_OVERLAY_STROKE = new BasicStroke(
+		2f);
+	public static final BasicStroke EDIT_GRAPH_OVERLAY_GHOST_STROKE =
+		new BasicStroke(
 			1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL,
-			1.0f, new float[] { 4f, 10f }, 0f );
+			1.0f, new float[] { 4f, 10f }, 0f);
 
 	private final AddSpotAndLinkIt addSpotAndLinkItForwardBehaviour;
 
@@ -104,46 +115,52 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 
 	private final ToggleLink toggleLinkBackwardBehaviour;
 
-	public static < V extends OverlayVertex< V, E >, E extends OverlayEdge< E, V > > void install(
+	public static <V extends OverlayVertex<V, E>, E extends OverlayEdge<E, V>>
+		void install(
 			final Behaviours behaviours,
 			final ViewerPanel viewer,
-			final OverlayGraph< V, E > overlayGraph,
-			final OverlayGraphRenderer< V, E > renderer,
-			final SelectionModel< V, E > selection,
-			final FocusModel< V, E > focus,
-			final UndoPointMarker undo )
+			final OverlayGraph<V, E> overlayGraph,
+			final OverlayGraphRenderer<V, E> renderer,
+			final SelectionModel<V, E> selection,
+			final FocusModel<V, E> focus,
+			final UndoPointMarker undo)
 	{
-		final EditSpecialBehaviours< V, E > eb = new EditSpecialBehaviours<>( viewer, overlayGraph, renderer, selection, focus, undo );
+		final EditSpecialBehaviours<V, E> eb = new EditSpecialBehaviours<>(viewer,
+			overlayGraph, renderer, selection, focus, undo);
 
-		behaviours.namedBehaviour( eb.addSpotAndLinkItForwardBehaviour, ADD_SPOT_AND_LINK_IT_FORWARD_KEYS );
-		behaviours.namedBehaviour( eb.addSpotAndLinkItBackwardBehaviour, ADD_SPOT_AND_LINK_IT_BACKWARD_KEYS );
-		behaviours.namedBehaviour( eb.toggleLinkForwardBehaviour, TOGGLE_LINK_FORWARD_KEYS );
-		behaviours.namedBehaviour( eb.toggleLinkBackwardBehaviour, TOGGLE_LINK_BACKWARD_KEYS );
+		behaviours.namedBehaviour(eb.addSpotAndLinkItForwardBehaviour,
+			ADD_SPOT_AND_LINK_IT_FORWARD_KEYS);
+		behaviours.namedBehaviour(eb.addSpotAndLinkItBackwardBehaviour,
+			ADD_SPOT_AND_LINK_IT_BACKWARD_KEYS);
+		behaviours.namedBehaviour(eb.toggleLinkForwardBehaviour,
+			TOGGLE_LINK_FORWARD_KEYS);
+		behaviours.namedBehaviour(eb.toggleLinkBackwardBehaviour,
+			TOGGLE_LINK_BACKWARD_KEYS);
 	}
 
 	private final ViewerPanel viewer;
 
-	private final OverlayGraph< V, E > overlayGraph;
+	private final OverlayGraph<V, E> overlayGraph;
 
 	private final ReentrantReadWriteLock lock;
 
-	private final OverlayGraphRenderer< V, E > renderer;
+	private final OverlayGraphRenderer<V, E> renderer;
 
-	private final SelectionModel< V, E > selection;
+	private final SelectionModel<V, E> selection;
 
-	private final FocusModel< V, E > focus;
+	private final FocusModel<V, E> focus;
 
 	private final UndoPointMarker undo;
 
-	private final EditSpecialBehaviours< V, E >.EditSpecialBehavioursOverlay overlay;
+	private final EditSpecialBehaviours<V, E>.EditSpecialBehavioursOverlay overlay;
 
 	private EditSpecialBehaviours(
-			final ViewerPanel viewer,
-			final OverlayGraph< V, E > overlayGraph,
-			final OverlayGraphRenderer< V, E > renderer,
-			final SelectionModel< V, E > selection,
-			final FocusModel< V, E > focus,
-			final UndoPointMarker undo )
+		final ViewerPanel viewer,
+		final OverlayGraph<V, E> overlayGraph,
+		final OverlayGraphRenderer<V, E> renderer,
+		final SelectionModel<V, E> selection,
+		final FocusModel<V, E> focus,
+		final UndoPointMarker undo)
 	{
 		this.viewer = viewer;
 		this.overlayGraph = overlayGraph;
@@ -155,19 +172,23 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 
 		// Create and register overlay.
 		overlay = new EditSpecialBehavioursOverlay();
-		overlay.transformChanged( viewer.state().getViewerTransform() );
-		viewer.getDisplay().overlays().add( overlay );
-		viewer.renderTransformListeners().add( overlay );
+		overlay.transformChanged(viewer.state().getViewerTransform());
+		viewer.getDisplay().overlays().add(overlay);
+		viewer.renderTransformListeners().add(overlay);
 
 		// Behaviours.
-		addSpotAndLinkItForwardBehaviour = new AddSpotAndLinkIt( ADD_SPOT_AND_LINK_IT_FORWARD, true );
-		addSpotAndLinkItBackwardBehaviour = new AddSpotAndLinkIt( ADD_SPOT_AND_LINK_IT_BACKWARD, false );
-		toggleLinkForwardBehaviour = new ToggleLink( TOGGLE_LINK_FORWARD, true );
-		toggleLinkBackwardBehaviour = new ToggleLink( TOGGLE_LINK_BACKWARD, false );
+		addSpotAndLinkItForwardBehaviour = new AddSpotAndLinkIt(
+			ADD_SPOT_AND_LINK_IT_FORWARD, true);
+		addSpotAndLinkItBackwardBehaviour = new AddSpotAndLinkIt(
+			ADD_SPOT_AND_LINK_IT_BACKWARD, false);
+		toggleLinkForwardBehaviour = new ToggleLink(TOGGLE_LINK_FORWARD, true);
+		toggleLinkBackwardBehaviour = new ToggleLink(TOGGLE_LINK_BACKWARD, false);
 	}
 
-	// TODO: This should respect the same RenderSettings as OverlayGraphRenderer for painting the ghost vertex & edge!!!
-	private class EditSpecialBehavioursOverlay implements OverlayRenderer, TransformListener< AffineTransform3D >
+	// TODO: This should respect the same RenderSettings as OverlayGraphRenderer
+	// for painting the ghost vertex & edge!!!
+	private class EditSpecialBehavioursOverlay implements OverlayRenderer,
+		TransformListener<AffineTransform3D>
 	{
 
 		/** The global coordinates to paint the link from. */
@@ -193,78 +214,71 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 
 		public boolean paintGhostLink;
 
-
-		public EditSpecialBehavioursOverlay()
-		{
-			from = new double[ 3 ];
-			vFrom = new double[ 3 ];
-			to = new double[ 3 ];
-			vTo = new double[ 3 ];
+		public EditSpecialBehavioursOverlay() {
+			from = new double[3];
+			vFrom = new double[3];
+			to = new double[3];
+			vTo = new double[3];
 
 			renderTransform = new AffineTransform3D();
 			screenVertexMath = new ScreenVertexMath();
 		}
 
 		@Override
-		public void drawOverlays( final Graphics g )
-		{
-			final Graphics2D graphics = ( Graphics2D ) g;
-			g.setColor( EDIT_GRAPH_OVERLAY_COLOR );
+		public void drawOverlays(final Graphics g) {
+			final Graphics2D graphics = (Graphics2D) g;
+			g.setColor(EDIT_GRAPH_OVERLAY_COLOR);
 
 			// The vertex
-			if ( paintGhostVertex )
-			{
+			if (paintGhostVertex) {
 				final AffineTransform3D transform = getRenderTransformCopy();
-				graphics.setStroke( EDIT_GRAPH_OVERLAY_GHOST_STROKE );
+				graphics.setStroke(EDIT_GRAPH_OVERLAY_GHOST_STROKE);
 
 				// The spot ghost, painted using ellipse projection.
 				final AffineTransform torig = graphics.getTransform();
 
-				screenVertexMath.init( vertex, transform );
+				screenVertexMath.init(vertex, transform);
 
 				final Ellipse ellipse = screenVertexMath.getProjectEllipse();
-				OverlayGraphRenderer.drawEllipse( graphics, ellipse, torig, false );
+				OverlayGraphRenderer.drawEllipse(graphics, ellipse, torig, false);
 			}
 
 			// The link.
-			if ( paintGhostLink )
-			{
-				graphics.setStroke( EDIT_GRAPH_OVERLAY_STROKE );
-				renderer.getViewerPosition( from, vFrom );
-				renderer.getViewerPosition( to, vTo );
-				g.drawLine( ( int ) vFrom[ 0 ], ( int ) vFrom[ 1 ],
-						( int ) vTo[ 0 ], ( int ) vTo[ 1 ] );
+			if (paintGhostLink) {
+				graphics.setStroke(EDIT_GRAPH_OVERLAY_STROKE);
+				renderer.getViewerPosition(from, vFrom);
+				renderer.getViewerPosition(to, vTo);
+				g.drawLine((int) vFrom[0], (int) vFrom[1],
+					(int) vTo[0], (int) vTo[1]);
 			}
 		}
 
 		@Override
-		public void setCanvasSize( final int width, final int height )
-		{}
+		public void setCanvasSize(final int width, final int height) {}
 
 		@Override
-		public void transformChanged( final AffineTransform3D transform )
-		{
-			synchronized ( renderTransform )
-			{
-				renderTransform.set( transform );
+		public void transformChanged(final AffineTransform3D transform) {
+			synchronized (renderTransform) {
+				renderTransform.set(transform);
 			}
 		}
 
-		private AffineTransform3D getRenderTransformCopy()
-		{
+		private AffineTransform3D getRenderTransformCopy() {
 			final AffineTransform3D transform = new AffineTransform3D();
-			synchronized ( renderTransform )
-			{
-				transform.set( renderTransform );
+			synchronized (renderTransform) {
+				transform.set(renderTransform);
 			}
 			return transform;
 		}
 	}
 
 	// TODO What to do if the user changes the time-point while dragging?
-	// TODO Because the user can move in time currently, always do a sanity check before inserting the link
-	private class ToggleLink extends AbstractNamedBehaviour implements DragBehaviour
+	// TODO Because the user can move in time currently, always do a sanity check
+	// before inserting the link
+	private class ToggleLink extends AbstractNamedBehaviour implements
+		DragBehaviour
 	{
+
 		private final V source;
 
 		private final V target;
@@ -275,9 +289,8 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 
 		private final boolean forward;
 
-		public ToggleLink( final String name, final boolean forward )
-		{
-			super( name );
+		public ToggleLink(final String name, final boolean forward) {
+			super(name);
 			this.forward = forward;
 			source = overlayGraph.vertexRef();
 			target = overlayGraph.vertexRef();
@@ -286,27 +299,26 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 		}
 
 		@Override
-		public void init( final int x, final int y )
-		{
+		public void init(final int x, final int y) {
 			lock.readLock().lock();
 
 			// Get vertex we clicked inside.
-			if ( renderer.getVertexAt( x, y, POINT_SELECT_DISTANCE_TOLERANCE, source ) != null )
+			if (renderer.getVertexAt(x, y, POINT_SELECT_DISTANCE_TOLERANCE,
+				source) != null)
 			{
-				source.localize( overlay.from );
-				source.localize( overlay.to );
+				source.localize(overlay.from);
+				source.localize(overlay.to);
 				overlay.vertex = source;
 
 				// Move to next or previous time point and check that we can.
 				final int currentTimepoint = viewer.state().getCurrentTimepoint();
-				if ( forward )
+				if (forward)
 					viewer.nextTimePoint();
 				else
 					viewer.previousTimePoint();
 
 				final int newTimepoint = viewer.state().getCurrentTimepoint();
-				if ( currentTimepoint == newTimepoint )
-				{
+				if (currentTimepoint == newTimepoint) {
 					// Refuse to work: we are in the same time-point. We do not
 					// want to create links inside the same time-point.
 					lock.readLock().unlock();
@@ -322,22 +334,19 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 		}
 
 		@Override
-		public void drag( final int x, final int y )
-		{
-			if ( editing )
-			{
-				if ( renderer.getVertexAt( x, y, POINT_SELECT_DISTANCE_TOLERANCE, target ) != null )
-					target.localize( overlay.to );
+		public void drag(final int x, final int y) {
+			if (editing) {
+				if (renderer.getVertexAt(x, y, POINT_SELECT_DISTANCE_TOLERANCE,
+					target) != null)
+					target.localize(overlay.to);
 				else
-					renderer.getGlobalPosition( x, y, overlay.to );
+					renderer.getGlobalPosition(x, y, overlay.to);
 			}
 		}
 
 		@Override
-		public void end( final int x, final int y )
-		{
-			if ( editing )
-			{
+		public void end(final int x, final int y) {
+			if (editing) {
 				/*
 				 * TODO: The following is a recipe for disaster...
 				 *
@@ -350,12 +359,12 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 				 */
 				lock.readLock().unlock();
 				lock.writeLock().lock();
-				try
-				{
+				try {
 					source.getInternalPoolIndex();
-					if ( renderer.getVertexAt( x, y, POINT_SELECT_DISTANCE_TOLERANCE, target ) != null )
+					if (renderer.getVertexAt(x, y, POINT_SELECT_DISTANCE_TOLERANCE,
+						target) != null)
 					{
-						target.localize( overlay.to );
+						target.localize(overlay.to);
 
 						/*
 						 * Careful with directed graphs. We always check and
@@ -363,23 +372,22 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 						 */
 						final V from = forward ? source : target;
 						final V to = forward ? target : source;
-						final E edge = overlayGraph.getEdge( from, to, edgeRef );
-						if ( null == edge )
-							overlayGraph.addEdge( from, to, edgeRef ).init();
+						final E edge = overlayGraph.getEdge(from, to, edgeRef);
+						if (null == edge)
+							overlayGraph.addEdge(from, to, edgeRef).init();
 						else
-							overlayGraph.remove( edge );
+							overlayGraph.remove(edge);
 
 						overlayGraph.notifyGraphChanged();
 						undo.setUndoPoint();
 
-						if ( FOCUS_EDITED_SPOT )
-							focus.focusVertex( target );
+						if (FOCUS_EDITED_SPOT)
+							focus.focusVertex(target);
 
-						if ( SELECT_ADDED_SPOT )
-						{
+						if (SELECT_ADDED_SPOT) {
 							selection.pauseListeners();
 							selection.clearSelection();
-							selection.setSelected( target, true );
+							selection.setSelected(target, true);
 							selection.resumeListeners();
 						}
 					}
@@ -388,8 +396,7 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 					overlay.paintGhostLink = false;
 					editing = false;
 				}
-				finally
-				{
+				finally {
 					lock.writeLock().unlock();
 				}
 			}
@@ -397,8 +404,10 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 	}
 
 	// TODO What to do if the user changes the time-point while dragging?
-	private class AddSpotAndLinkIt extends AbstractNamedBehaviour implements DragBehaviour
+	private class AddSpotAndLinkIt extends AbstractNamedBehaviour implements
+		DragBehaviour
 	{
+
 		private final V source;
 
 		private final V target;
@@ -415,44 +424,42 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 
 		private final boolean forward;
 
-		public AddSpotAndLinkIt( final String name, final boolean forward )
-		{
-			super( name );
+		public AddSpotAndLinkIt(final String name, final boolean forward) {
+			super(name);
 			this.forward = forward;
 			source = overlayGraph.vertexRef();
 			target = overlayGraph.vertexRef();
 			edge = overlayGraph.edgeRef();
-			start = new double[ 3 ];
-			pos = new double[ 3 ];
+			start = new double[3];
+			pos = new double[3];
 			moving = false;
-			mat = new double[ 3 ][ 3 ];
+			mat = new double[3][3];
 		}
 
 		@Override
-		public void init( final int x, final int y )
-		{
+		public void init(final int x, final int y) {
 			lock.writeLock().lock();
 
-			if ( renderer.getVertexAt( x, y, POINT_SELECT_DISTANCE_TOLERANCE, source ) != null )
+			if (renderer.getVertexAt(x, y, POINT_SELECT_DISTANCE_TOLERANCE,
+				source) != null)
 			{
 				// Get vertex we clicked inside.
-				renderer.getGlobalPosition( x, y, start );
-				source.localize( pos );
-				LinAlgHelpers.subtract( pos, start, start );
+				renderer.getGlobalPosition(x, y, start);
+				source.localize(pos);
+				LinAlgHelpers.subtract(pos, start, start);
 
 				// Set it as ghost vertex for the overlay.
 				overlay.vertex = source;
 
 				// Move to next or previous time point and check that we can.
 				final int currentTimepoint = viewer.state().getCurrentTimepoint();
-				if ( forward )
+				if (forward)
 					viewer.nextTimePoint();
 				else
 					viewer.previousTimePoint();
 
 				final int newTimepoint = viewer.state().getCurrentTimepoint();
-				if ( currentTimepoint == newTimepoint )
-				{
+				if (currentTimepoint == newTimepoint) {
 					// Refuse to work: we are in the same time-point. We do not
 					// want to create links inside the same time-point.
 					lock.writeLock().unlock();
@@ -460,19 +467,19 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 				}
 
 				// Create new vertex under click location.
-				source.getCovariance( mat );
+				source.getCovariance(mat);
 				final int timepoint = viewer.state().getCurrentTimepoint();
-				overlayGraph.addVertex( target ).init( timepoint, pos, mat );
+				overlayGraph.addVertex(target).init(timepoint, pos, mat);
 
 				// Link it to source vertex. Careful for oriented edge.
-				if ( forward )
-					overlayGraph.addEdge( source, target, edge ).init();
+				if (forward)
+					overlayGraph.addEdge(source, target, edge).init();
 				else
-					overlayGraph.addEdge( target, source, edge ).init();
+					overlayGraph.addEdge(target, source, edge).init();
 
 				// Set it as ghost link for the overlay.
-				System.arraycopy( pos, 0, overlay.from, 0, pos.length );
-				System.arraycopy( pos, 0, overlay.to, 0, pos.length );
+				System.arraycopy(pos, 0, overlay.from, 0, pos.length);
+				System.arraycopy(pos, 0, overlay.to, 0, pos.length);
 				overlay.paintGhostLink = true;
 				overlay.paintGhostVertex = true;
 				overlayGraph.notifyGraphChanged();
@@ -487,35 +494,30 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 		}
 
 		@Override
-		public void drag( final int x, final int y )
-		{
-			if ( moving )
-			{
-				renderer.getGlobalPosition( x, y, pos );
-				LinAlgHelpers.add( pos, start, pos );
-				target.setPosition( pos );
-				System.arraycopy( pos, 0, overlay.to, 0, pos.length );
+		public void drag(final int x, final int y) {
+			if (moving) {
+				renderer.getGlobalPosition(x, y, pos);
+				LinAlgHelpers.add(pos, start, pos);
+				target.setPosition(pos);
+				System.arraycopy(pos, 0, overlay.to, 0, pos.length);
 			}
 		}
 
 		@Override
-		public void end( final int x, final int y )
-		{
-			if ( moving )
-			{
+		public void end(final int x, final int y) {
+			if (moving) {
 				overlay.paintGhostVertex = false;
 				overlay.paintGhostLink = false;
 				overlayGraph.notifyGraphChanged();
 				undo.setUndoPoint();
 
-				if ( FOCUS_EDITED_SPOT )
-					focus.focusVertex( target );
+				if (FOCUS_EDITED_SPOT)
+					focus.focusVertex(target);
 
-				if ( SELECT_ADDED_SPOT )
-				{
+				if (SELECT_ADDED_SPOT) {
 					selection.pauseListeners();
 					selection.clearSelection();
-					selection.setSelected( target, true );
+					selection.setSelected(target, true);
 					selection.resumeListeners();
 				}
 

@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.ui.coloring.feature;
 
 /**
@@ -34,10 +35,9 @@ package org.mastodon.ui.coloring.feature;
  * This is used for FeatureColorModes, which need to be serialized/edited
  * without mentioning/knowing an explicit target {@link Class}.
  */
-public enum TargetType
-{
-	VERTEX,
-	EDGE,
-	BRANCH_VERTEX,
-	BRANCH_EDGE;
+public enum TargetType {
+		VERTEX,
+		EDGE,
+		BRANCH_VERTEX,
+		BRANCH_EDGE;
 }

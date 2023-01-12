@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut;
 
 import java.awt.GraphicsDevice;
@@ -68,8 +69,7 @@ import net.imglib2.realtransform.AffineTransform3D;
 /**
  * Collection of constants and utilities related to de/serializing a GUI state.
  */
-class MamutViewStateSerialization
-{
+class MamutViewStateSerialization {
 
 	static final String WINDOW_TAG = "Window";
 
@@ -105,8 +105,8 @@ class MamutViewStateSerialization
 	static final String BDV_STATE_KEY = "BdvState";
 
 	/**
-	 * Key for the transform in a BDV view. Value is an
-	 * {@link AffineTransform3D} instance.
+	 * Key for the transform in a BDV view. Value is an {@link AffineTransform3D}
+	 * instance.
 	 */
 	static final String BDV_TRANSFORM_KEY = "BdvTransform";
 
@@ -117,14 +117,14 @@ class MamutViewStateSerialization
 	static final String TRACKSCHEME_TRANSFORM_KEY = "TrackSchemeTransform";
 
 	/**
-	 * Key for the transform in a Grapher view. Value is a Grapher
-	 * ScreenTransform instance.
+	 * Key for the transform in a Grapher view. Value is a Grapher ScreenTransform
+	 * instance.
 	 */
 	static final String GRAPHER_TRANSFORM_KEY = "GrapherTransform";
 
 	/**
-	 * Key that specifies whether a table only display the selection or the
-	 * whole model. Boolean instance.
+	 * Key that specifies whether a table only display the selection or the whole
+	 * model. Boolean instance.
 	 */
 	static final String TABLE_SELECTION_ONLY = "TableSelectionOnly";
 
@@ -132,7 +132,8 @@ class MamutViewStateSerialization
 	 * Key that specifies whether a table is currently showing the vertex table.
 	 * If <code>false</code>, then the edge table is displayed.
 	 */
-	static final String TABLE_DISPLAYING_VERTEX_TABLE = "TableVertexTableDisplayed";
+	static final String TABLE_DISPLAYING_VERTEX_TABLE =
+		"TableVertexTableDisplayed";
 
 	/**
 	 * Key that specifies what table is currently showing in the table view.
@@ -146,11 +147,12 @@ class MamutViewStateSerialization
 	 * Value is and <code>int[]</code> array of 4 elements: x, y, width and
 	 * height.
 	 */
-	static final String TABLE_VERTEX_TABLE_VISIBLE_POS = "TableVertexTableVisibleRect";
+	static final String TABLE_VERTEX_TABLE_VISIBLE_POS =
+		"TableVertexTableVisibleRect";
 
 	/**
-	 * Key to the parameter that stores the table displayed position. Value is
-	 * and <code>int[]</code> array of 2 elements: x, y.
+	 * Key to the parameter that stores the table displayed position. Value is and
+	 * <code>int[]</code> array of 2 elements: x, y.
 	 */
 	static final String TABLE_VISIBLE_POS = "TableVisibleRect";
 
@@ -161,17 +163,17 @@ class MamutViewStateSerialization
 	static final String TABLE_ELEMENT = "Tables";
 
 	/**
-	 * Key to the parameter that stores the table name in a table GUI state.
-	 * Value is a <code>String</code>.
+	 * Key to the parameter that stores the table name in a table GUI state. Value
+	 * is a <code>String</code>.
 	 */
 	static final String TABLE_NAME = "TableName";
 
 	/**
-	 * Key to the parameter that stores the edge table displayed rectangle.
-	 * Value is and <code>int[]</code> array of 4 elements: x, y, width and
-	 * height.
+	 * Key to the parameter that stores the edge table displayed rectangle. Value
+	 * is and <code>int[]</code> array of 4 elements: x, y, width and height.
 	 */
-	static final String TABLE_EDGE_TABLE_VISIBLE_POS = "TableEdgeTableVisibleRect";
+	static final String TABLE_EDGE_TABLE_VISIBLE_POS =
+		"TableEdgeTableVisibleRect";
 
 	/**
 	 * Key that specifies whether we do not use a special coloring scheme on the
@@ -183,9 +185,9 @@ class MamutViewStateSerialization
 	static final String NO_COLORING_KEY = "NoColoring";
 
 	/**
-	 * Key that specifies the name of the tag-set to use for coloring scheme
-	 * based on tag-sets. A non-<code>null</code> value means the coloring
-	 * scheme is based on tag-sets.
+	 * Key that specifies the name of the tag-set to use for coloring scheme based
+	 * on tag-sets. A non-<code>null</code> value means the coloring scheme is
+	 * based on tag-sets.
 	 *
 	 * @see #NO_COLORING_KEY
 	 * @see #FEATURE_COLOR_MODE_KEY
@@ -214,8 +216,8 @@ class MamutViewStateSerialization
 	static final String COLORBAR_VISIBLE_KEY = "ColorbarVisible";
 
 	/**
-	 * Key that specifies the colorbar position. Values are {@link Position}
-	 * enum values.
+	 * Key that specifies the colorbar position. Values are {@link Position} enum
+	 * values.
 	 */
 	static final String COLORBAR_POSITION_KEY = "ColorbarPosition";
 
@@ -228,464 +230,462 @@ class MamutViewStateSerialization
 	/**
 	 * Serializes a GUI state map into a XML element.
 	 *
-	 * @param guiState
-	 *            the GUI state to serialize.
+	 * @param guiState the GUI state to serialize.
 	 * @return a new XML element.
 	 */
-	static < V extends IMastodonFrameView & IMastodonView > Element toXml( final V view )
+	static <V extends IMastodonFrameView & IMastodonView> Element toXml(
+		final V view)
 	{
-		final Map< String, Object > guiState = getGuiState( view );
-		final Element element = new Element( WINDOW_TAG );
-		toXml( guiState, element );
+		final Map<String, Object> guiState = getGuiState(view);
+		final Element element = new Element(WINDOW_TAG);
+		toXml(guiState, element);
 		return element;
 	}
 
-	static void toXml( final Map< String, Object > map, final Element element )
-	{
-		for ( final Entry< String, Object > entry : map.entrySet() )
-		{
-			final Element el = toXml( entry.getKey(), entry.getValue() );
-			element.addContent( el );
+	static void toXml(final Map<String, Object> map, final Element element) {
+		for (final Entry<String, Object> entry : map.entrySet()) {
+			final Element el = toXml(entry.getKey(), entry.getValue());
+			element.addContent(el);
 		}
 	}
 
-	@SuppressWarnings( "unchecked" )
-	static Element toXml( final String key, final Object value )
-	{
+	@SuppressWarnings("unchecked")
+	static Element toXml(final String key, final Object value) {
 		final Element el;
-		if ( value instanceof Integer )
-			el = XmlHelpers.intElement( key, ( Integer ) value );
-		else if ( value instanceof int[] )
-			el = XmlHelpers.intArrayElement( key, ( int[] ) value );
-		else if ( value instanceof Double )
-			el = XmlHelpers.doubleElement( key, ( Double ) value );
-		else if ( value instanceof double[] )
-			el = XmlHelpers.doubleArrayElement( key, ( double[] ) value );
-		else if ( value instanceof AffineGet )
-			el = XmlHelpers.affineTransform3DElement( key, ( AffineGet ) value );
-		else if ( value instanceof Boolean )
-			el = XmlHelpers.booleanElement( key, ( Boolean ) value );
-		else if ( value instanceof String )
-		{
-			el = new Element( key );
-			el.setText( value.toString() );
+		if (value instanceof Integer)
+			el = XmlHelpers.intElement(key, (Integer) value);
+		else if (value instanceof int[])
+			el = XmlHelpers.intArrayElement(key, (int[]) value);
+		else if (value instanceof Double)
+			el = XmlHelpers.doubleElement(key, (Double) value);
+		else if (value instanceof double[])
+			el = XmlHelpers.doubleArrayElement(key, (double[]) value);
+		else if (value instanceof AffineGet)
+			el = XmlHelpers.affineTransform3DElement(key, (AffineGet) value);
+		else if (value instanceof Boolean)
+			el = XmlHelpers.booleanElement(key, (Boolean) value);
+		else if (value instanceof String) {
+			el = new Element(key);
+			el.setText(value.toString());
 		}
-		else if ( value instanceof ScreenTransform )
-		{
-			final ScreenTransform t = ( ScreenTransform ) value;
-			el = XmlHelpers.doubleArrayElement( key, new double[] {
-					t.getMinX(),
-					t.getMaxX(),
-					t.getMinY(),
-					t.getMaxY(),
-					t.getScreenWidth(),
-					t.getScreenHeight()
-			} );
-		}
-		else if ( value instanceof org.mastodon.views.grapher.datagraph.ScreenTransform )
-		{
-			final org.mastodon.views.grapher.datagraph.ScreenTransform t = ( org.mastodon.views.grapher.datagraph.ScreenTransform ) value;
-			el = XmlHelpers.doubleArrayElement( key, new double[] {
-					t.getMinX(),
-					t.getMaxX(),
-					t.getMinY(),
-					t.getMaxY(),
-					t.getScreenWidth(),
-					t.getScreenHeight()
-			} );
-		}
-		else if ( value instanceof Position )
-		{
-			el = new Element( key );
-			el.setText( ( ( Position ) value ).name() );
-		}
-		else if ( value instanceof Element )
-		{
-			el = new Element( key );
-			el.setContent( ( Element ) value );
-		}
-		else if ( value instanceof Map )
-		{
-			el = new Element( key );
-			toXml( ( Map< String, Object > ) value, el );
-		}
-		else if ( value instanceof List )
-		{
-			el = new Element( key );
-			final List< Object > os = ( List< Object > ) value;
-			for ( final Object o : os )
-			{
-				final Element child = toXml( key, o );
-				el.addContent( child );
-			}
+		else if (value instanceof ScreenTransform) {
+			final ScreenTransform t = (ScreenTransform) value;
+			el = XmlHelpers.doubleArrayElement(key, new double[] {
+				t.getMinX(),
+				t.getMaxX(),
+				t.getMinY(),
+				t.getMaxY(),
+				t.getScreenWidth(),
+				t.getScreenHeight()
+			});
 		}
 		else
-		{
-			System.err.println( "Do not know how to serialize object " + value + " for key " + key + "." );
-			el = null;
-		}
+			if (value instanceof org.mastodon.views.grapher.datagraph.ScreenTransform)
+			{
+				final org.mastodon.views.grapher.datagraph.ScreenTransform t =
+					(org.mastodon.views.grapher.datagraph.ScreenTransform) value;
+				el = XmlHelpers.doubleArrayElement(key, new double[] {
+					t.getMinX(),
+					t.getMaxX(),
+					t.getMinY(),
+					t.getMaxY(),
+					t.getScreenWidth(),
+					t.getScreenHeight()
+				});
+			}
+			else if (value instanceof Position) {
+				el = new Element(key);
+				el.setText(((Position) value).name());
+			}
+			else if (value instanceof Element) {
+				el = new Element(key);
+				el.setContent((Element) value);
+			}
+			else if (value instanceof Map) {
+				el = new Element(key);
+				toXml((Map<String, Object>) value, el);
+			}
+			else if (value instanceof List) {
+				el = new Element(key);
+				final List<Object> os = (List<Object>) value;
+				for (final Object o : os) {
+					final Element child = toXml(key, o);
+					el.addContent(child);
+				}
+			}
+			else {
+				System.err.println("Do not know how to serialize object " + value +
+					" for key " + key + ".");
+				el = null;
+			}
 		return el;
 	}
 
 	/**
 	 * Wraps GUI state of a {@link MamutView} into a map.
 	 * 
-	 * @param view
-	 *            the view.
+	 * @param view the view.
 	 * @return a new {@link Map}.
 	 */
-	private static < V extends IMastodonFrameView & IMastodonView > Map< String, Object > getGuiState( final V view )
+	private static <V extends IMastodonFrameView & IMastodonView>
+		Map<String, Object> getGuiState(final V view)
 	{
-		final Map< String, Object > guiState = new LinkedHashMap<>();
+		final Map<String, Object> guiState = new LinkedHashMap<>();
 
 		// View type.
-		guiState.put( VIEW_TYPE_KEY, view.getClass().getSimpleName() );
+		guiState.put(VIEW_TYPE_KEY, view.getClass().getSimpleName());
 
 		// Frame position and size.
 		final Rectangle bounds = view.getFrame().getBounds();
-		guiState.put( FRAME_POSITION_KEY, new int[] {
-				( int ) bounds.getMinX(),
-				( int ) bounds.getMinY(),
-				( int ) bounds.getWidth(),
-				( int ) bounds.getHeight() } );
+		guiState.put(FRAME_POSITION_KEY, new int[] {
+			(int) bounds.getMinX(),
+			(int) bounds.getMinY(),
+			(int) bounds.getWidth(),
+			(int) bounds.getHeight() });
 
 		// Lock groups.
-		guiState.put( GROUP_HANDLE_ID_KEY, view.getGroupHandle().getGroupId() );
+		guiState.put(GROUP_HANDLE_ID_KEY, view.getGroupHandle().getGroupId());
 
 		// Settings panel visibility.
-		guiState.put( SETTINGS_PANEL_VISIBLE_KEY, view.getFrame().isSettingsPanelVisible() );
+		guiState.put(SETTINGS_PANEL_VISIBLE_KEY, view.getFrame()
+			.isSettingsPanelVisible());
 
 		// View-specifics.
-		if ( view instanceof MamutViewBdv )
-			getGuiStateBdv( ( MamutViewBdv ) view, guiState );
-		else if ( view instanceof MamutBranchViewBdv )
-			getGuiStateBranchBdv( ( MamutBranchViewBdv ) view, guiState );
-		else if ( view instanceof MamutViewTrackScheme )
-			getGuiStateTrackScheme( ( MamutViewTrackScheme ) view, guiState );
-		else if ( view instanceof MamutBranchViewTrackScheme )
-			getGuiStateBranchTrackScheme( ( MamutBranchViewTrackScheme ) view, guiState );
-		else if ( view instanceof MamutViewTable )
-			getGuiStateTable( ( MamutViewTable ) view, guiState );
-		else if ( view instanceof MamutViewGrapher )
-			getGuiStateGrapher( ( MamutViewGrapher ) view, guiState );
+		if (view instanceof MamutViewBdv)
+			getGuiStateBdv((MamutViewBdv) view, guiState);
+		else if (view instanceof MamutBranchViewBdv)
+			getGuiStateBranchBdv((MamutBranchViewBdv) view, guiState);
+		else if (view instanceof MamutViewTrackScheme)
+			getGuiStateTrackScheme((MamutViewTrackScheme) view, guiState);
+		else if (view instanceof MamutBranchViewTrackScheme)
+			getGuiStateBranchTrackScheme((MamutBranchViewTrackScheme) view, guiState);
+		else if (view instanceof MamutViewTable)
+			getGuiStateTable((MamutViewTable) view, guiState);
+		else if (view instanceof MamutViewGrapher)
+			getGuiStateGrapher((MamutViewGrapher) view, guiState);
 
 		return guiState;
 	}
 
-	private static void getGuiStateGrapher( final MamutViewGrapher view, final Map< String, Object > guiState )
+	private static void getGuiStateGrapher(final MamutViewGrapher view,
+		final Map<String, Object> guiState)
 	{
-		final DataDisplayPanel< Spot, Link > dataDisplayPanel = view.getDataDisplayPanel();
+		final DataDisplayPanel<Spot, Link> dataDisplayPanel = view
+			.getDataDisplayPanel();
 
 		// Transform.
-		final org.mastodon.views.grapher.datagraph.ScreenTransform t = dataDisplayPanel.getScreenTransform().get();
-		guiState.put( GRAPHER_TRANSFORM_KEY, t );
+		final org.mastodon.views.grapher.datagraph.ScreenTransform t =
+			dataDisplayPanel.getScreenTransform().get();
+		guiState.put(GRAPHER_TRANSFORM_KEY, t);
 
 		// Coloring.
-		final ColoringModelMain< Spot, Link, BranchSpot, BranchLink > coloringModel = view.getColoringModel();
-		getColoringState( coloringModel, guiState );
+		final ColoringModelMain<Spot, Link, BranchSpot, BranchLink> coloringModel =
+			view.getColoringModel();
+		getColoringState(coloringModel, guiState);
 
 		// Colorbar.
 		final ColorBarOverlay colorBarOverlay = view.getColorBarOverlay();
-		getColorBarOverlayState( colorBarOverlay, guiState );
+		getColorBarOverlayState(colorBarOverlay, guiState);
 
 		// Context provider.
-		guiState.put( CHOSEN_CONTEXT_PROVIDER_KEY, view.getContextChooser().getChosenProvider().getName() );
+		guiState.put(CHOSEN_CONTEXT_PROVIDER_KEY, view.getContextChooser()
+			.getChosenProvider().getName());
 	}
 
 	/**
 	 * Stores the {@link MamutViewTable} GUI state in the specified map.
 	 * 
-	 * @param view
-	 *            the {@link MamutViewTable}.
-	 * @param guiState
-	 *            the map to store info into.
+	 * @param view the {@link MamutViewTable}.
+	 * @param guiState the map to store info into.
 	 */
-	private static void getGuiStateTable( final MamutViewTable view, final Map< String, Object > guiState )
+	private static void getGuiStateTable(final MamutViewTable view,
+		final Map<String, Object> guiState)
 	{
 		// Selection table or not.
-		guiState.put( TABLE_SELECTION_ONLY, view.isSelectionTable() );
+		guiState.put(TABLE_SELECTION_ONLY, view.isSelectionTable());
 
 		// Currently displayed table.
-		final FeatureTagTablePanel< ? > currentlyDisplayedTable = view.getFrame().getCurrentlyDisplayedTable();
+		final FeatureTagTablePanel<?> currentlyDisplayedTable = view.getFrame()
+			.getCurrentlyDisplayedTable();
 		String displayedTableName = "";
 
 		// Table visible rectangles.
-		final List< FeatureTagTablePanel< ? > > tables = view.getFrame().getTables();
-		final List< String > names = view.getFrame().getTableNames();
-		final List< Map< String, Object > > tableGuiStates = new ArrayList<>( names.size() );
-		for ( int i = 0; i < names.size(); i++ )
-		{
-			final String name = names.get( i );
-			final FeatureTagTablePanel< ? > table = tables.get( i );
+		final List<FeatureTagTablePanel<?>> tables = view.getFrame().getTables();
+		final List<String> names = view.getFrame().getTableNames();
+		final List<Map<String, Object>> tableGuiStates = new ArrayList<>(names
+			.size());
+		for (int i = 0; i < names.size(); i++) {
+			final String name = names.get(i);
+			final FeatureTagTablePanel<?> table = tables.get(i);
 
-			if ( table == currentlyDisplayedTable )
+			if (table == currentlyDisplayedTable)
 				displayedTableName = name;
 
 			final JViewport viewportVertex = table.getScrollPane().getViewport();
 			final Point tableRect = viewportVertex.getViewPosition();
 
-			final LinkedHashMap< String, Object > tableGuiState = new LinkedHashMap<>();
-			tableGuiState.put( TABLE_NAME, name );
-			tableGuiState.put( TABLE_VISIBLE_POS, new int[] {
-					tableRect.x,
-					tableRect.y } );
+			final LinkedHashMap<String, Object> tableGuiState = new LinkedHashMap<>();
+			tableGuiState.put(TABLE_NAME, name);
+			tableGuiState.put(TABLE_VISIBLE_POS, new int[] {
+				tableRect.x,
+				tableRect.y });
 
-			tableGuiStates.add( tableGuiState );
+			tableGuiStates.add(tableGuiState);
 		}
-		guiState.put( TABLE_ELEMENT, tableGuiStates );
-		guiState.put( TABLE_DISPLAYED, displayedTableName );
+		guiState.put(TABLE_ELEMENT, tableGuiStates);
+		guiState.put(TABLE_DISPLAYED, displayedTableName);
 
 		// Coloring for core graph.
 		final ColoringModel coloringModel = view.getColoringModel();
-		getColoringState( coloringModel, guiState );
+		getColoringState(coloringModel, guiState);
 
 		// Coloring for branch-graph.
 		final ColoringModel branchColoringModel = view.getBranchColoringModel();
-		final Map< String, Object > branchGraphMap = new HashMap<>();
-		getColoringState( branchColoringModel, branchGraphMap );
-		guiState.put( BRANCH_GRAPH, branchGraphMap );
+		final Map<String, Object> branchGraphMap = new HashMap<>();
+		getColoringState(branchColoringModel, branchGraphMap);
+		guiState.put(BRANCH_GRAPH, branchGraphMap);
 
 		// Context provider.
-		guiState.put( CHOSEN_CONTEXT_PROVIDER_KEY, view.getContextChooser().getChosenProvider().getName() );
+		guiState.put(CHOSEN_CONTEXT_PROVIDER_KEY, view.getContextChooser()
+			.getChosenProvider().getName());
 	}
 
 	/**
 	 * Stores the {@link MamutViewTrackScheme} GUI state in the specified map.
 	 * 
-	 * @param view
-	 *            the {@link MamutViewTrackScheme}.
-	 * @param guiState
-	 *            the map to store info into.
+	 * @param view the {@link MamutViewTrackScheme}.
+	 * @param guiState the map to store info into.
 	 */
-	private static void getGuiStateTrackScheme( final MamutViewTrackScheme view, final Map< String, Object > guiState )
+	private static void getGuiStateTrackScheme(final MamutViewTrackScheme view,
+		final Map<String, Object> guiState)
 	{
 		final TrackSchemePanel trackschemePanel = view.getTrackschemePanel();
 
 		// Edit position to reflect the fact that we store the TrackScheme panel
 		// width and height.
 		final Point point = view.getFrame().getLocation();
-		guiState.put( FRAME_POSITION_KEY, new int[] {
-				point.x,
-				point.y,
-				trackschemePanel.getDisplay().getWidth(),
-				trackschemePanel.getDisplay().getHeight() } );
+		guiState.put(FRAME_POSITION_KEY, new int[] {
+			point.x,
+			point.y,
+			trackschemePanel.getDisplay().getWidth(),
+			trackschemePanel.getDisplay().getHeight() });
 
 		// Transform.
 		final ScreenTransform t = trackschemePanel.getScreenTransform().get();
-		guiState.put( TRACKSCHEME_TRANSFORM_KEY, t );
+		guiState.put(TRACKSCHEME_TRANSFORM_KEY, t);
 
 		// Coloring.
-		final ColoringModelMain< Spot, Link, BranchSpot, BranchLink > coloringModel = view.getColoringModel();
-		getColoringState( coloringModel, guiState );
+		final ColoringModelMain<Spot, Link, BranchSpot, BranchLink> coloringModel =
+			view.getColoringModel();
+		getColoringState(coloringModel, guiState);
 
 		// Colorbar.
 		final ColorBarOverlay colorBarOverlay = view.getColorBarOverlay();
-		getColorBarOverlayState( colorBarOverlay, guiState );
+		getColorBarOverlayState(colorBarOverlay, guiState);
 
 		// Context provider.
-		guiState.put( CHOSEN_CONTEXT_PROVIDER_KEY, view.getContextChooser().getChosenProvider().getName() );
+		guiState.put(CHOSEN_CONTEXT_PROVIDER_KEY, view.getContextChooser()
+			.getChosenProvider().getName());
 	}
 
 	/**
 	 * Stores the {@link MamutBranchViewTrackScheme} GUI state in the specified
 	 * map.
 	 * 
-	 * @param view
-	 *            the {@link MamutBranchViewTrackScheme}.
-	 * @param guiState
-	 *            the map to store info into.
+	 * @param view the {@link MamutBranchViewTrackScheme}.
+	 * @param guiState the map to store info into.
 	 */
-	private static void getGuiStateBranchTrackScheme( final MamutBranchViewTrackScheme view, final Map< String, Object > guiState )
+	private static void getGuiStateBranchTrackScheme(
+		final MamutBranchViewTrackScheme view, final Map<String, Object> guiState)
 	{
-		final TrackSchemePanel trackschemePanel = view.getFrame().getTrackschemePanel();
+		final TrackSchemePanel trackschemePanel = view.getFrame()
+			.getTrackschemePanel();
 
 		// Edit position to reflect the fact that we store the TrackScheme panel
 		// width and height.
 		final Point point = view.getFrame().getLocation();
-		guiState.put( FRAME_POSITION_KEY, new int[] {
-				point.x,
-				point.y,
-				trackschemePanel.getDisplay().getWidth(),
-				trackschemePanel.getDisplay().getHeight() } );
+		guiState.put(FRAME_POSITION_KEY, new int[] {
+			point.x,
+			point.y,
+			trackschemePanel.getDisplay().getWidth(),
+			trackschemePanel.getDisplay().getHeight() });
 
 		// Transform.
 		final ScreenTransform t = trackschemePanel.getScreenTransform().get();
-		guiState.put( TRACKSCHEME_TRANSFORM_KEY, t );
+		guiState.put(TRACKSCHEME_TRANSFORM_KEY, t);
 
 		// Coloring.
 		final ColoringModel coloringModel = view.getColoringModel();
-		getColoringState( coloringModel, guiState );
+		getColoringState(coloringModel, guiState);
 
 		// Colorbar.
 		final ColorBarOverlay colorBarOverlay = view.getColorBarOverlay();
-		getColorBarOverlayState( colorBarOverlay, guiState );
+		getColorBarOverlayState(colorBarOverlay, guiState);
 	}
 
 	/**
 	 * Stores the {@link MamutViewBdv} GUI state in the specified map.
 	 * 
-	 * @param view
-	 *            the {@link MamutViewBdv}.
-	 * @param guiState
-	 *            the map to store info into.
+	 * @param view the {@link MamutViewBdv}.
+	 * @param guiState the map to store info into.
 	 */
-	private static void getGuiStateBdv( final MamutViewBdv view, final Map< String, Object > guiState )
+	private static void getGuiStateBdv(final MamutViewBdv view,
+		final Map<String, Object> guiState)
 	{
 		// Viewer state.
 		final Element stateEl = view.getViewerPanelMamut().stateToXml();
-		guiState.put( BDV_STATE_KEY, stateEl );
+		guiState.put(BDV_STATE_KEY, stateEl);
 		// Transform.
 		final AffineTransform3D t = new AffineTransform3D();
-		view.getViewerPanelMamut().state().getViewerTransform( t );
-		guiState.put( BDV_TRANSFORM_KEY, t );
+		view.getViewerPanelMamut().state().getViewerTransform(t);
+		guiState.put(BDV_TRANSFORM_KEY, t);
 		// Coloring.
 		final ColoringModel coloringModel = view.getColoringModel();
-		getColoringState( coloringModel, guiState );
+		getColoringState(coloringModel, guiState);
 		// Colorbar.
 		final ColorBarOverlay colorBarOverlay = view.getColorBarOverlay();
-		getColorBarOverlayState( colorBarOverlay, guiState );
+		getColorBarOverlayState(colorBarOverlay, guiState);
 	}
 
 	/**
 	 * Stores the {@link MamutBranchViewBdv} GUI state in the specified map.
 	 * 
-	 * @param view
-	 *            the {@link MamutViewBdv}.
-	 * @param guiState
-	 *            the map to store info into.
+	 * @param view the {@link MamutViewBdv}.
+	 * @param guiState the map to store info into.
 	 */
-	private static void getGuiStateBranchBdv( final MamutBranchViewBdv view, final Map< String, Object > guiState )
+	private static void getGuiStateBranchBdv(final MamutBranchViewBdv view,
+		final Map<String, Object> guiState)
 	{
 		// Viewer state.
 		final Element stateEl = view.getViewerPanelMamut().stateToXml();
-		guiState.put( BDV_STATE_KEY, stateEl );
+		guiState.put(BDV_STATE_KEY, stateEl);
 		// Transform.
 		final AffineTransform3D t = new AffineTransform3D();
-		view.getViewerPanelMamut().state().getViewerTransform( t );
-		guiState.put( BDV_TRANSFORM_KEY, t );
+		view.getViewerPanelMamut().state().getViewerTransform(t);
+		guiState.put(BDV_TRANSFORM_KEY, t);
 		// Coloring.
 		final ColoringModel coloringModel = view.getColoringModel();
-		getColoringState( coloringModel, guiState );
+		getColoringState(coloringModel, guiState);
 		// Colorbar.
 		final ColorBarOverlay colorBarOverlay = view.getColorBarOverlay();
-		getColorBarOverlayState( colorBarOverlay, guiState );
+		getColorBarOverlayState(colorBarOverlay, guiState);
 	}
 
 	/**
 	 * Reads the coloring state of a view and stores it into the specified map.
 	 * 
-	 * @param coloringModel
-	 *            the coloring model to read from.
-	 * @param guiState
-	 *            the map to store it to.
+	 * @param coloringModel the coloring model to read from.
+	 * @param guiState the map to store it to.
 	 */
-	private static void getColoringState( final ColoringModel coloringModel, final Map< String, Object > guiState )
+	private static void getColoringState(final ColoringModel coloringModel,
+		final Map<String, Object> guiState)
 	{
 		final boolean noColoring = coloringModel.noColoring();
-		guiState.put( NO_COLORING_KEY, noColoring );
-		if ( !noColoring )
-			if ( coloringModel.getTagSet() != null )
-				guiState.put( TAG_SET_KEY, coloringModel.getTagSet().getName() );
-			else if ( coloringModel.getFeatureColorMode() != null )
-				guiState.put( FEATURE_COLOR_MODE_KEY, coloringModel.getFeatureColorMode().getName() );
+		guiState.put(NO_COLORING_KEY, noColoring);
+		if (!noColoring)
+			if (coloringModel.getTagSet() != null)
+				guiState.put(TAG_SET_KEY, coloringModel.getTagSet().getName());
+			else if (coloringModel.getFeatureColorMode() != null)
+				guiState.put(FEATURE_COLOR_MODE_KEY, coloringModel.getFeatureColorMode()
+					.getName());
 	}
 
-	private static void getColorBarOverlayState( final ColorBarOverlay colorBarOverlay, final Map< String, Object > guiState )
+	private static void getColorBarOverlayState(
+		final ColorBarOverlay colorBarOverlay, final Map<String, Object> guiState)
 	{
-		guiState.put( COLORBAR_VISIBLE_KEY, colorBarOverlay.isVisible() );
-		guiState.put( COLORBAR_POSITION_KEY, colorBarOverlay.getPosition() );
+		guiState.put(COLORBAR_VISIBLE_KEY, colorBarOverlay.isVisible());
+		guiState.put(COLORBAR_POSITION_KEY, colorBarOverlay.getPosition());
 	}
 
 	/**
 	 * Deserializes a GUI state from XML and recreate view windows as specified.
 	 * 
-	 * @param windowsEl
-	 *            the XML element that stores the GUI state of a view.
-	 * @param windowManager
-	 *            the application {@link WindowManager}.
+	 * @param windowsEl the XML element that stores the GUI state of a view.
+	 * @param windowManager the application {@link WindowManager}.
 	 */
-	static void fromXml( final Element windowsEl, final WindowManager windowManager )
+	static void fromXml(final Element windowsEl,
+		final WindowManager windowManager)
 	{
 		// To deal later with context providers.
-		final Map< String, ContextProvider< Spot > > contextProviders = new HashMap<>();
-		final Map< ContextChooser< Spot >, String > contextChosers = new HashMap<>();
+		final Map<String, ContextProvider<Spot>> contextProviders = new HashMap<>();
+		final Map<ContextChooser<Spot>, String> contextChosers = new HashMap<>();
 
-		final List< Element > viewEls = windowsEl.getChildren( WINDOW_TAG );
-		for ( final Element viewEl : viewEls )
-		{
-			final Map< String, Object > guiState = xmlToMap( viewEl );
-			final String typeStr = ( String ) guiState.get( VIEW_TYPE_KEY );
-			switch ( typeStr )
-			{
-			case "MamutViewBdv":
-			{
-				try {
-					final MamutViewBdv bdv = windowManager.createBigDataViewer( guiState );
+		final List<Element> viewEls = windowsEl.getChildren(WINDOW_TAG);
+		for (final Element viewEl : viewEls) {
+			final Map<String, Object> guiState = xmlToMap(viewEl);
+			final String typeStr = (String) guiState.get(VIEW_TYPE_KEY);
+			switch (typeStr) {
+				case "MamutViewBdv": {
+					try {
+						final MamutViewBdv bdv = windowManager.createBigDataViewer(
+							guiState);
 
-					// Store context provider.
-					contextProviders.put( bdv.getContextProvider().getName(), bdv.getContextProvider() );
+						// Store context provider.
+						contextProviders.put(bdv.getContextProvider().getName(), bdv
+							.getContextProvider());
+					}
+					catch (final IllegalArgumentException iae) {
+						System.err.println(
+							"Info: Failed restoring state of a BigDataViewer window, thus not showing it.\n" +
+								"      You may want to resave your project to replace the previous (failing) state with the current (okay) state.");
+					}
+					break;
 				}
-				catch (final IllegalArgumentException iae) {
-					System.err.println( "Info: Failed restoring state of a BigDataViewer window, thus not showing it.\n"
-							+ "      You may want to resave your project to replace the previous (failing) state with the current (okay) state." );
+
+				case "MamutBranchViewBdv": {
+					windowManager.createBranchBigDataViewer(guiState);
+					break;
 				}
-				break;
-			}
 
-			case "MamutBranchViewBdv":
-			{
-				windowManager.createBranchBigDataViewer( guiState );
-				break;
-			}
+				case "MamutViewTrackScheme": {
+					final MamutViewTrackScheme ts = windowManager.createTrackScheme(
+						guiState);
 
-			case "MamutViewTrackScheme":
-			{
-				final MamutViewTrackScheme ts = windowManager.createTrackScheme( guiState );
+					// Deal with context chooser.
+					final String desiredProvider = (String) guiState.get(
+						CHOSEN_CONTEXT_PROVIDER_KEY);
+					if (null != desiredProvider)
+						contextChosers.put(ts.getContextChooser(), desiredProvider);
+					break;
+				}
 
-				// Deal with context chooser.
-				final String desiredProvider = ( String ) guiState.get( CHOSEN_CONTEXT_PROVIDER_KEY );
-				if ( null != desiredProvider )
-					contextChosers.put( ts.getContextChooser(), desiredProvider );
-				break;
-			}
+				case "MamutBranchViewTrackScheme": {
+					windowManager.createBranchTrackScheme(guiState);
+					break;
+				}
 
-			case "MamutBranchViewTrackScheme":
-			{
-				windowManager.createBranchTrackScheme( guiState );
-				break;
-			}
+				case "MamutBranchViewTrackSchemeHierarchy": {
+					windowManager.createHierarchyTrackScheme(guiState);
+					break;
+				}
 
-			case "MamutBranchViewTrackSchemeHierarchy":
-			{
-				windowManager.createHierarchyTrackScheme( guiState );
-				break;
-			}
+				case "MamutViewTable": {
+					final MamutViewTable table = windowManager.createTable(guiState);
 
-			case "MamutViewTable":
-			{
-				final MamutViewTable table = windowManager.createTable( guiState );
+					// Deal with context chooser.
+					final String desiredProvider = (String) guiState.get(
+						CHOSEN_CONTEXT_PROVIDER_KEY);
+					if (null != desiredProvider)
+						contextChosers.put(table.getContextChooser(), desiredProvider);
+					break;
+				}
 
-				// Deal with context chooser.
-				final String desiredProvider = ( String ) guiState.get( CHOSEN_CONTEXT_PROVIDER_KEY );
-				if ( null != desiredProvider )
-					contextChosers.put( table.getContextChooser(), desiredProvider );
-				break;
-			}
+				case "MamutViewGrapher": {
+					final MamutViewGrapher grapher = windowManager.createGrapher(
+						guiState);
 
-			case "MamutViewGrapher":
-			{
-				final MamutViewGrapher grapher = windowManager.createGrapher( guiState );
+					// Deal with context chooser.
+					final String desiredProvider = (String) guiState.get(
+						CHOSEN_CONTEXT_PROVIDER_KEY);
+					if (null != desiredProvider)
+						contextChosers.put(grapher.getContextChooser(), desiredProvider);
+					break;
+				}
 
-				// Deal with context chooser.
-				final String desiredProvider = ( String ) guiState.get( CHOSEN_CONTEXT_PROVIDER_KEY );
-				if ( null != desiredProvider )
-					contextChosers.put( grapher.getContextChooser(), desiredProvider );
-				break;
-			}
-
-			default:
-				System.err.println( "Deserializing GUI state: Unknown window type: " + typeStr + "." );
-				continue;
+				default:
+					System.err.println("Deserializing GUI state: Unknown window type: " +
+						typeStr + ".");
+					continue;
 			}
 		}
 
@@ -694,95 +694,91 @@ class MamutViewStateSerialization
 		 * context provider.
 		 */
 
-		for ( final ContextChooser< Spot > contextChooser : contextChosers.keySet() )
-		{
-			final String desiredContextProvider = contextChosers.get( contextChooser );
-			final ContextProvider< Spot > contextProvider = contextProviders.get( desiredContextProvider );
-			if ( null != contextProvider )
-				contextChooser.choose( contextProvider );
+		for (final ContextChooser<Spot> contextChooser : contextChosers.keySet()) {
+			final String desiredContextProvider = contextChosers.get(contextChooser);
+			final ContextProvider<Spot> contextProvider = contextProviders.get(
+				desiredContextProvider);
+			if (null != contextProvider)
+				contextChooser.choose(contextProvider);
 		}
 	}
 
-	private static Map< String, Object > xmlToMap( final Element viewEl )
-	{
-		final Map< String, Object > guiState = new HashMap<>();
-		final List< Element > children = viewEl.getChildren();
-		for ( final Element el : children )
-		{
+	private static Map<String, Object> xmlToMap(final Element viewEl) {
+		final Map<String, Object> guiState = new HashMap<>();
+		final List<Element> children = viewEl.getChildren();
+		for (final Element el : children) {
 			final String key = el.getName();
 			final Object value;
-			switch ( key )
-			{
-			case BDV_STATE_KEY:
-				value = el;
-				break;
-			case BDV_TRANSFORM_KEY:
-				value = XmlHelpers.getAffineTransform3D( viewEl, key );
-				break;
-			case FRAME_POSITION_KEY:
-				final int[] pos = XmlHelpers.getIntArray( viewEl, key );
-				value = sanitize( pos );
-				break;
-			case TAG_SET_KEY:
-			case FEATURE_COLOR_MODE_KEY:
-			case VIEW_TYPE_KEY:
-			case CHOSEN_CONTEXT_PROVIDER_KEY:
-				value = el.getTextTrim();
-				break;
-			case TRACKSCHEME_TRANSFORM_KEY:
-			{
-				final double[] arr = XmlHelpers.getDoubleArray( viewEl, key );
-				value = new ScreenTransform( arr[ 0 ], arr[ 1 ], arr[ 2 ], arr[ 3 ], ( int ) arr[ 4 ], ( int ) arr[ 5 ] );
-				break;
-			}
-			case GRAPHER_TRANSFORM_KEY:
-			{
-				final double[] arr = XmlHelpers.getDoubleArray( viewEl, key );
-				value = new org.mastodon.views.grapher.datagraph.ScreenTransform( arr[ 0 ], arr[ 1 ], arr[ 2 ], arr[ 3 ], ( int ) arr[ 4 ], ( int ) arr[ 5 ] );
-				break;
-			}
-			case TABLE_SELECTION_ONLY:
-			case NO_COLORING_KEY:
-			case SETTINGS_PANEL_VISIBLE_KEY:
-			case COLORBAR_VISIBLE_KEY:
-				value = XmlHelpers.getBoolean( viewEl, key );
-				break;
-			case COLORBAR_POSITION_KEY:
-				final String str = XmlHelpers.getText( viewEl, key );
-				value = Position.valueOf( str );
-				break;
-			case GROUP_HANDLE_ID_KEY:
-			{
-				value = XmlHelpers.getInt( viewEl, key );
-				break;
-			}
-			case TABLE_ELEMENT:
-			{
-				final List< Element > els = el.getChildren();
-				final List< Map< String, Object > > maps = new ArrayList<>( els.size() );
-				for ( final Element child : els )
-				{
-					final String name = child.getChildTextTrim( TABLE_NAME );
-					final int[] tablePos = XmlHelpers.getIntArray( child, TABLE_VISIBLE_POS );
-					final Map< String, Object > m = new HashMap<>();
-					m.put( TABLE_NAME, name );
-					m.put( TABLE_VISIBLE_POS, tablePos );
-					maps.add( m );
+			switch (key) {
+				case BDV_STATE_KEY:
+					value = el;
+					break;
+				case BDV_TRANSFORM_KEY:
+					value = XmlHelpers.getAffineTransform3D(viewEl, key);
+					break;
+				case FRAME_POSITION_KEY:
+					final int[] pos = XmlHelpers.getIntArray(viewEl, key);
+					value = sanitize(pos);
+					break;
+				case TAG_SET_KEY:
+				case FEATURE_COLOR_MODE_KEY:
+				case VIEW_TYPE_KEY:
+				case CHOSEN_CONTEXT_PROVIDER_KEY:
+					value = el.getTextTrim();
+					break;
+				case TRACKSCHEME_TRANSFORM_KEY: {
+					final double[] arr = XmlHelpers.getDoubleArray(viewEl, key);
+					value = new ScreenTransform(arr[0], arr[1], arr[2], arr[3],
+						(int) arr[4], (int) arr[5]);
+					break;
 				}
-				value = maps;
-				break;
+				case GRAPHER_TRANSFORM_KEY: {
+					final double[] arr = XmlHelpers.getDoubleArray(viewEl, key);
+					value = new org.mastodon.views.grapher.datagraph.ScreenTransform(
+						arr[0], arr[1], arr[2], arr[3], (int) arr[4], (int) arr[5]);
+					break;
+				}
+				case TABLE_SELECTION_ONLY:
+				case NO_COLORING_KEY:
+				case SETTINGS_PANEL_VISIBLE_KEY:
+				case COLORBAR_VISIBLE_KEY:
+					value = XmlHelpers.getBoolean(viewEl, key);
+					break;
+				case COLORBAR_POSITION_KEY:
+					final String str = XmlHelpers.getText(viewEl, key);
+					value = Position.valueOf(str);
+					break;
+				case GROUP_HANDLE_ID_KEY: {
+					value = XmlHelpers.getInt(viewEl, key);
+					break;
+				}
+				case TABLE_ELEMENT: {
+					final List<Element> els = el.getChildren();
+					final List<Map<String, Object>> maps = new ArrayList<>(els.size());
+					for (final Element child : els) {
+						final String name = child.getChildTextTrim(TABLE_NAME);
+						final int[] tablePos = XmlHelpers.getIntArray(child,
+							TABLE_VISIBLE_POS);
+						final Map<String, Object> m = new HashMap<>();
+						m.put(TABLE_NAME, name);
+						m.put(TABLE_VISIBLE_POS, tablePos);
+						maps.add(m);
+					}
+					value = maps;
+					break;
+				}
+				case TABLE_DISPLAYED:
+					value = XmlHelpers.getText(viewEl, TABLE_DISPLAYED);
+					break;
+				case BRANCH_GRAPH:
+					value = xmlToMap(el);
+					break;
+				default:
+					System.err.println("Unknown GUI config parameter: " + key +
+						" found in GUI file.");
+					continue;
 			}
-			case TABLE_DISPLAYED:
-				value = XmlHelpers.getText( viewEl, TABLE_DISPLAYED );
-				break;
-			case BRANCH_GRAPH:
-				value = xmlToMap( el );
-				break;
-			default:
-				System.err.println( "Unknown GUI config parameter: " + key + " found in GUI file." );
-				continue;
-			}
-			guiState.put( key, value );
+			guiState.put(key, value);
 		}
 		return guiState;
 	}
@@ -793,54 +789,51 @@ class MamutViewStateSerialization
 
 	/**
 	 * Makes sure the specified position array won't end in creating windows
-	 * off-screen. We impose that a window is fully on *one* screen and not
-	 * split over severals. We also impose a minimal size for the windows.
+	 * off-screen. We impose that a window is fully on *one* screen and not split
+	 * over severals. We also impose a minimal size for the windows.
 	 * <p>
 	 * The pos array is { x, y, width, height }.
 	 * 
-	 * @param pos
-	 *            the position array.
+	 * @param pos the position array.
 	 * @return the same position array.
 	 */
-	private static int[] sanitize( final int[] pos )
-	{
+	private static int[] sanitize(final int[] pos) {
 		assert pos.length == 4;
-		final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		if ( null == ge )
+		final GraphicsEnvironment ge = GraphicsEnvironment
+			.getLocalGraphicsEnvironment();
+		if (null == ge)
 			return pos;
 		final GraphicsDevice sd[] = ge.getScreenDevices();
-		if ( sd.length < 1 )
+		if (sd.length < 1)
 			return pos;
 
 		// Window min size.
-		pos[ 2 ] = Math.max( MIN_WIDTH, pos[ 2 ] );
-		pos[ 3 ] = Math.max( MIN_HEIGHT, pos[ 3 ] );
+		pos[2] = Math.max(MIN_WIDTH, pos[2]);
+		pos[3] = Math.max(MIN_HEIGHT, pos[3]);
 
-		for ( final GraphicsDevice gd : sd )
-		{
+		for (final GraphicsDevice gd : sd) {
 			final Rectangle bounds = gd.getDefaultConfiguration().getBounds();
-			if ( bounds.contains( pos[ 0 ], pos[ 1 ], pos[ 2 ], pos[ 3 ] ) )
+			if (bounds.contains(pos[0], pos[1], pos[2], pos[3]))
 				// Fully in a screen, nothing to do.
 				return pos;
 
-			if ( bounds.contains( pos[ 0 ], pos[ 1 ] ) )
-			{
+			if (bounds.contains(pos[0], pos[1])) {
 				/*
 				 * This window is on this screen, but exits it. First resize it
 				 * so that it is not bigger than the screen.
 				 */
-				pos[ 2 ] = Math.min( bounds.width, pos[ 2 ] );
-				pos[ 3 ] = Math.min( bounds.height, pos[ 3 ] );
+				pos[2] = Math.min(bounds.width, pos[2]);
+				pos[3] = Math.min(bounds.height, pos[3]);
 
 				/*
 				 * Then move it back so that its bottom right corner is in the
 				 * screen.
 				 */
-				if ( pos[ 0 ] + pos[ 2 ] > bounds.x + bounds.width )
-					pos[ 0 ] -= ( pos[ 0 ] - bounds.x + pos[ 2 ] - bounds.width );
+				if (pos[0] + pos[2] > bounds.x + bounds.width)
+					pos[0] -= (pos[0] - bounds.x + pos[2] - bounds.width);
 
-				if ( pos[ 1 ] + pos[ 3 ] > bounds.y + bounds.height )
-					pos[ 1 ] -= ( pos[ 1 ] - bounds.y + pos[ 3 ] - bounds.height );
+				if (pos[1] + pos[3] > bounds.y + bounds.height)
+					pos[1] -= (pos[1] - bounds.y + pos[3] - bounds.height);
 
 				return pos;
 			}
@@ -850,13 +843,13 @@ class MamutViewStateSerialization
 		 * Ok we did not find a screen in which this window is. So we will put
 		 * it in the first screen.
 		 */
-		final Rectangle bounds = sd[ 0 ].getDefaultConfiguration().getBounds();
-		pos[ 0 ] = Math.max( bounds.x,
-				Math.min( bounds.x + bounds.width - pos[ 2 ], pos[ 0 ] ) );
-		pos[ 1 ] = Math.max( bounds.y,
-				Math.min( bounds.y + bounds.height - pos[ 3 ], pos[ 1 ] ) );
+		final Rectangle bounds = sd[0].getDefaultConfiguration().getBounds();
+		pos[0] = Math.max(bounds.x,
+			Math.min(bounds.x + bounds.width - pos[2], pos[0]));
+		pos[1] = Math.max(bounds.y,
+			Math.min(bounds.y + bounds.height - pos[3], pos[1]));
 
-		if ( bounds.contains( pos[ 0 ], pos[ 1 ], pos[ 2 ], pos[ 3 ] ) )
+		if (bounds.contains(pos[0], pos[1], pos[2], pos[3]))
 			// Fully in a screen, nothing to do.
 			return pos;
 
@@ -864,14 +857,14 @@ class MamutViewStateSerialization
 		 * This window is on this screen, but exits it. First resize it so that
 		 * it is not bigger than the screen.
 		 */
-		pos[ 2 ] = Math.min( bounds.width, pos[ 2 ] );
-		pos[ 3 ] = Math.min( bounds.height, pos[ 3 ] );
+		pos[2] = Math.min(bounds.width, pos[2]);
+		pos[3] = Math.min(bounds.height, pos[3]);
 
 		/*
 		 * Then move it back so that its bottom right corner is in the screen.
 		 */
-		pos[ 0 ] -= ( pos[ 0 ] - bounds.x + pos[ 2 ] - bounds.width );
-		pos[ 1 ] -= ( pos[ 1 ] - bounds.y + pos[ 3 ] - bounds.height );
+		pos[0] -= (pos[0] - bounds.x + pos[2] - bounds.width);
+		pos[1] -= (pos[1] - bounds.y + pos[3] - bounds.height);
 
 		return pos;
 	}

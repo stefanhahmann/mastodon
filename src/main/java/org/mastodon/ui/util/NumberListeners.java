@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.ui.util;
 
 import java.awt.event.ActionEvent;
@@ -65,42 +66,44 @@ import javax.swing.KeyStroke;
  *
  * @author Jean-Yves Tinevez
  */
-public class NumberListeners
-{
+public class NumberListeners {
 
 	/**
 	 * How much time we wait before committing a number.
 	 */
 	private static final long WAIT_DELAY = 1; // s
 
-	public static void doubleListener( final ActionMap actionMap, final InputMap inputMap, final DoubleConsumer notify )
+	public static void doubleListener(final ActionMap actionMap,
+		final InputMap inputMap, final DoubleConsumer notify)
 	{
-		new NumberListener( actionMap, inputMap, notify, true, true );
+		new NumberListener(actionMap, inputMap, notify, true, true);
 	}
 
-	public static void positiveDoubleListener( final ActionMap actionMap, final InputMap inputMap, final DoubleConsumer notify )
+	public static void positiveDoubleListener(final ActionMap actionMap,
+		final InputMap inputMap, final DoubleConsumer notify)
 	{
-		new NumberListener( actionMap, inputMap, notify, true, false );
+		new NumberListener(actionMap, inputMap, notify, true, false);
 	}
 
-	public static void integerListener( final ActionMap actionMap, final InputMap inputMap, final DoubleConsumer notify )
+	public static void integerListener(final ActionMap actionMap,
+		final InputMap inputMap, final DoubleConsumer notify)
 	{
-		new NumberListener( actionMap, inputMap, notify, false, true );
+		new NumberListener(actionMap, inputMap, notify, false, true);
 	}
 
-	public static void positiveIntegerListener( final ActionMap actionMap, final InputMap inputMap, final DoubleConsumer notify )
+	public static void positiveIntegerListener(final ActionMap actionMap,
+		final InputMap inputMap, final DoubleConsumer notify)
 	{
-		new NumberListener( actionMap, inputMap, notify, false, false );
+		new NumberListener(actionMap, inputMap, notify, false, false);
 	}
 
-	private static class NumberListener
-	{
+	private static class NumberListener {
 
 		private String strNumber = "";
 
 		private ScheduledExecutorService ex;
 
-		private ScheduledFuture< ? > future;
+		private ScheduledFuture<?> future;
 
 		private final ActionMap actionMap;
 
@@ -115,11 +118,11 @@ public class NumberListeners
 		private final boolean acceptSign;
 
 		public NumberListener(
-				final ActionMap actionMap,
-				final InputMap inputMap,
-				final DoubleConsumer notify,
-				final boolean acceptDot,
-				final boolean acceptSign )
+			final ActionMap actionMap,
+			final InputMap inputMap,
+			final DoubleConsumer notify,
+			final boolean acceptDot,
+			final boolean acceptSign)
 		{
 			this.actionMap = actionMap;
 			this.inputMap = inputMap;
@@ -129,19 +132,16 @@ public class NumberListeners
 			setup();
 		}
 
-		private final Runnable command = new Runnable()
-		{
+		private final Runnable command = new Runnable() {
+
 			@Override
-			public void run()
-			{
+			public void run() {
 				// Convert to double.
-				try
-				{
-					final double number = Double.parseDouble( strNumber );
-					notify.accept( number );
+				try {
+					final double number = Double.parseDouble(strNumber);
+					notify.accept(number);
 				}
-				catch ( final NumberFormatException nfe )
-				{}
+				catch (final NumberFormatException nfe) {}
 				// Reset
 				ex = null;
 				strNumber = "";
@@ -149,40 +149,35 @@ public class NumberListeners
 			}
 		};
 
-		private void setup()
-		{
+		private void setup() {
 			// Digit keys.
-			for ( int i = 0; i < 10; i++ )
-			{
+			for (int i = 0; i < 10; i++) {
 				final String actionName = "digit " + i;
 				final int digit = i;
-				final KeyStroke digitKey = KeyStroke.getKeyStroke( ( char ) ( '0' + i ) );
-				final Action digitAction = new AbstractAction( actionName )
-				{
+				final KeyStroke digitKey = KeyStroke.getKeyStroke((char) ('0' + i));
+				final Action digitAction = new AbstractAction(actionName) {
+
 					@Override
-					public void actionPerformed( final ActionEvent e )
-					{
+					public void actionPerformed(final ActionEvent e) {
 						restartTimer();
 						strNumber += "" + digit;
 					}
 
 					private static final long serialVersionUID = 1L;
 				};
-				inputMap.put( digitKey, actionName );
-				actionMap.put( actionName, digitAction );
+				inputMap.put(digitKey, actionName);
+				actionMap.put(actionName, digitAction);
 			}
 
 			// Dot key.
-			if ( acceptDot )
-			{
+			if (acceptDot) {
 				final String actionName = "dot";
-				final KeyStroke dotKey = KeyStroke.getKeyStroke( '.' );
-				final Action dotAction = new AbstractAction( "dot" )
-				{
+				final KeyStroke dotKey = KeyStroke.getKeyStroke('.');
+				final Action dotAction = new AbstractAction("dot") {
+
 					@Override
-					public void actionPerformed( final ActionEvent e )
-					{
-						if ( dotAdded )
+					public void actionPerformed(final ActionEvent e) {
+						if (dotAdded)
 							return;
 
 						restartTimer();
@@ -192,25 +187,22 @@ public class NumberListeners
 
 					private static final long serialVersionUID = 1L;
 				};
-				inputMap.put( dotKey, actionName );
-				actionMap.put( actionName, dotAction );
+				inputMap.put(dotKey, actionName);
+				actionMap.put(actionName, dotAction);
 			}
 
 			// Sign keys.
-			if ( acceptSign )
-			{
+			if (acceptSign) {
 				final char[] signChars = new char[] { '+', '-' };
-				for ( final char signChar : signChars )
-				{
+				for (final char signChar : signChars) {
 					final String actionName = "sign " + signChar;
-					final KeyStroke signKey = KeyStroke.getKeyStroke( signChar );
-					final Action signAction = new AbstractAction( "sign " + signChar )
-					{
+					final KeyStroke signKey = KeyStroke.getKeyStroke(signChar);
+					final Action signAction = new AbstractAction("sign " + signChar) {
+
 						@Override
-						public void actionPerformed( final ActionEvent e )
-						{
+						public void actionPerformed(final ActionEvent e) {
 							// Only accept sign as a first character.
-							if ( strNumber.length() > 1 )
+							if (strNumber.length() > 1)
 								return;
 
 							restartTimer();
@@ -220,50 +212,46 @@ public class NumberListeners
 						private static final long serialVersionUID = 1L;
 					};
 
-					inputMap.put( signKey, actionName );
-					actionMap.put( actionName, signAction );
+					inputMap.put(signKey, actionName);
+					actionMap.put(actionName, signAction);
 				}
 			}
 
 			// Commit keys.
 			final int[] commitKeyCodes = new int[] {
-					KeyEvent.VK_ENTER,
-					KeyEvent.VK_SPACE,
-					KeyEvent.VK_TAB
+				KeyEvent.VK_ENTER,
+				KeyEvent.VK_SPACE,
+				KeyEvent.VK_TAB
 			};
-			for ( final int commitKeyCode : commitKeyCodes )
-			{
-				final String actionName = "commit with " + KeyEvent.getKeyText( commitKeyCode );
-				final KeyStroke commitKey = KeyStroke.getKeyStroke( commitKeyCode, 0 );
-				final Action commitAction = new AbstractAction( actionName )
-				{
+			for (final int commitKeyCode : commitKeyCodes) {
+				final String actionName = "commit with " + KeyEvent.getKeyText(
+					commitKeyCode);
+				final KeyStroke commitKey = KeyStroke.getKeyStroke(commitKeyCode, 0);
+				final Action commitAction = new AbstractAction(actionName) {
+
 					@Override
-					public void actionPerformed( final ActionEvent e )
-					{
+					public void actionPerformed(final ActionEvent e) {
 						command.run();
 					}
 
 					private static final long serialVersionUID = 1L;
 				};
 
-				inputMap.put( commitKey, actionName );
-				actionMap.put( actionName, commitAction );
+				inputMap.put(commitKey, actionName);
+				actionMap.put(actionName, commitAction);
 			}
 		}
 
-		private void restartTimer()
-		{
-			if ( ex == null )
-			{
+		private void restartTimer() {
+			if (ex == null) {
 				// Create new waiting line
 				ex = Executors.newSingleThreadScheduledExecutor();
-				future = ex.schedule( command, WAIT_DELAY, TimeUnit.SECONDS );
+				future = ex.schedule(command, WAIT_DELAY, TimeUnit.SECONDS);
 			}
-			else
-			{
+			else {
 				// Reset waiting line
-				future.cancel( false );
-				future = ex.schedule( command, WAIT_DELAY, TimeUnit.SECONDS );
+				future.cancel(false);
+				future = ex.schedule(command, WAIT_DELAY, TimeUnit.SECONDS);
 			}
 		}
 	}

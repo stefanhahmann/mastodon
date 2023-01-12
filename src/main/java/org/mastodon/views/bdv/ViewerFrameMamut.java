@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.bdv;
 
 import java.awt.BorderLayout;
@@ -60,8 +61,8 @@ import bdv.viewer.ViewerPanel;
  *
  * @author Tobias Pietzsch
  */
-public class ViewerFrameMamut extends ViewFrame
-{
+public class ViewerFrameMamut extends ViewFrame {
+
 	private static final long serialVersionUID = 1L;
 
 	private final ViewerPanel viewer;
@@ -73,78 +74,74 @@ public class ViewerFrameMamut extends ViewFrame
 	/**
 	 * Creates a new {@link ViewerFrameMamut}.
 	 *
-	 * @param windowTitle
-	 *            the window title to display.
-	 * @param sources
-	 *            the {@link SourceAndConverter sources} to display.
-	 * @param setups
-	 *            min/max and color settings of the sources.
-	 * @param numTimepoints
-	 *            number of available timepoints.
-	 * @param cacheControl
-	 *            handle to cache. This is used to control io timing.
-	 * @param groupHandle
-	 *            the group handle.
-	 * @param optional
-	 *            optional parameters. See {@link ViewerOptions#options()}.
+	 * @param windowTitle the window title to display.
+	 * @param sources the {@link SourceAndConverter sources} to display.
+	 * @param setups min/max and color settings of the sources.
+	 * @param numTimepoints number of available timepoints.
+	 * @param cacheControl handle to cache. This is used to control io timing.
+	 * @param groupHandle the group handle.
+	 * @param optional optional parameters. See {@link ViewerOptions#options()}.
 	 */
 	public ViewerFrameMamut(
-			final String windowTitle,
-			final List< SourceAndConverter< ? > > sources,
-			final ConverterSetups setups,
-			final int numTimepoints,
-			final CacheControl cacheControl,
-			final GroupHandle groupHandle,
-			final ViewerOptions optional )
+		final String windowTitle,
+		final List<SourceAndConverter<?>> sources,
+		final ConverterSetups setups,
+		final int numTimepoints,
+		final CacheControl cacheControl,
+		final GroupHandle groupHandle,
+		final ViewerOptions optional)
 	{
-		super( windowTitle );
+		super(windowTitle);
 
-		viewer = new ViewerPanel( sources, numTimepoints, cacheControl, optional );
-		setups.listeners().add( s -> viewer.requestRepaint() );
+		viewer = new ViewerPanel(sources, numTimepoints, cacheControl, optional);
+		setups.listeners().add(s -> viewer.requestRepaint());
 
 		cards = new CardPanel();
-		BdvDefaultCards.setup( cards, viewer, setups );
-		splitPanel = new SplitPanel( viewer, cards );
+		BdvDefaultCards.setup(cards, viewer, setups);
+		splitPanel = new SplitPanel(viewer, cards);
 
-		add( splitPanel, BorderLayout.CENTER );
+		add(splitPanel, BorderLayout.CENTER);
 
-		final GroupLocksPanel navigationLocksPanel = new GroupLocksPanel( groupHandle );
-		settingsPanel.add( navigationLocksPanel );
-		settingsPanel.add( Box.createHorizontalGlue() );
+		final GroupLocksPanel navigationLocksPanel = new GroupLocksPanel(
+			groupHandle);
+		settingsPanel.add(navigationLocksPanel);
+		settingsPanel.add(Box.createHorizontalGlue());
 
 		pack();
-		setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
-		addWindowListener( new WindowAdapter()
-		{
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+
 			@Override
-			public void windowClosing( final WindowEvent e )
-			{
+			public void windowClosing(final WindowEvent e) {
 				viewer.stop();
 			}
-		} );
+		});
 
-		SwingUtilities.replaceUIActionMap( viewer, keybindings.getConcatenatedActionMap() );
-		SwingUtilities.replaceUIInputMap( viewer, JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, keybindings.getConcatenatedInputMap() );
+		SwingUtilities.replaceUIActionMap(viewer, keybindings
+			.getConcatenatedActionMap());
+		SwingUtilities.replaceUIInputMap(viewer,
+			JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, keybindings
+				.getConcatenatedInputMap());
 
 		final MouseAndKeyHandler mouseAndKeyHandler = new MouseAndKeyHandler();
-		mouseAndKeyHandler.setInputMap( triggerbindings.getConcatenatedInputTriggerMap() );
-		mouseAndKeyHandler.setBehaviourMap( triggerbindings.getConcatenatedBehaviourMap() );
-		mouseAndKeyHandler.setKeypressManager( optional.values.getKeyPressedManager(), viewer.getDisplay() );
-		viewer.getDisplay().addHandler( mouseAndKeyHandler );
+		mouseAndKeyHandler.setInputMap(triggerbindings
+			.getConcatenatedInputTriggerMap());
+		mouseAndKeyHandler.setBehaviourMap(triggerbindings
+			.getConcatenatedBehaviourMap());
+		mouseAndKeyHandler.setKeypressManager(optional.values
+			.getKeyPressedManager(), viewer.getDisplay());
+		viewer.getDisplay().addHandler(mouseAndKeyHandler);
 	}
 
-	public ViewerPanel getViewerPanel()
-	{
+	public ViewerPanel getViewerPanel() {
 		return viewer;
 	}
 
-	public CardPanel getCardPanel()
-	{
+	public CardPanel getCardPanel() {
 		return cards;
 	}
 
-	public SplitPanel getSplitPanel()
-	{
+	public SplitPanel getSplitPanel() {
 		return splitPanel;
 	}
 }

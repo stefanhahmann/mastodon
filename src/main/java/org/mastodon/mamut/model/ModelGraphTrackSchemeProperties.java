@@ -26,52 +26,51 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.model;
 
 import org.mastodon.views.trackscheme.wrap.DefaultModelGraphProperties;
 
-public class ModelGraphTrackSchemeProperties extends DefaultModelGraphProperties< Spot, Link >
+public class ModelGraphTrackSchemeProperties extends
+	DefaultModelGraphProperties<Spot, Link>
 {
+
 	private final ModelGraph modelGraph;
 
-	public ModelGraphTrackSchemeProperties( final ModelGraph modelGraph )
-	{
+	public ModelGraphTrackSchemeProperties(final ModelGraph modelGraph) {
 		this.modelGraph = modelGraph;
 	}
 
 	@Override
-	public Link addEdge( final Spot source, final Spot target, final Link ref )
-	{
-		return modelGraph.addEdge( source, target, ref );
+	public Link addEdge(final Spot source, final Spot target, final Link ref) {
+		return modelGraph.addEdge(source, target, ref);
 	}
 
 	@Override
-	public Link insertEdge( final Spot source, final int sourceOutIndex, final Spot target, final int targetInIndex, final Link ref )
+	public Link insertEdge(final Spot source, final int sourceOutIndex,
+		final Spot target, final int targetInIndex, final Link ref)
 	{
-		return modelGraph.insertEdge( source, sourceOutIndex, target, targetInIndex, ref );
+		return modelGraph.insertEdge(source, sourceOutIndex, target, targetInIndex,
+			ref);
 	}
 
 	@Override
-	public Link initEdge( final Link link )
-	{
+	public Link initEdge(final Link link) {
 		return link.init();
 	}
 
 	@Override
-	public void removeEdge( final Link link )
-	{
-		modelGraph.remove( link );
+	public void removeEdge(final Link link) {
+		modelGraph.remove(link);
 	}
 
 	@Override
-	public void removeVertex( final Spot spot )
-	{
-		modelGraph.remove( spot );
+	public void removeVertex(final Spot spot) {
+		modelGraph.remove(spot);
 	}
 
 	@Override
-	public void notifyGraphChanged()
-	{
+	public void notifyGraphChanged() {
 		modelGraph.notifyGraphChanged();
 	}
 }

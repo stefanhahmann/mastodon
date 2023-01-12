@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.feature.ui;
 
 import org.mastodon.ui.coloring.feature.FeatureRangeCalculator;
@@ -39,10 +40,10 @@ import org.scijava.listeners.Listeners;
  *
  * @author Tobias Pietzsch
  */
-public interface FeatureProjectionsManager
-{
-	public interface AvailableFeatureProjectionsListener
-	{
+public interface FeatureProjectionsManager {
+
+	public interface AvailableFeatureProjectionsListener {
+
 		/**
 		 * Notifies a listener that the set of available feature projections has
 		 * changed.
@@ -56,7 +57,7 @@ public interface FeatureProjectionsManager
 	 * 
 	 * @return the listeners.
 	 */
-	public Listeners< AvailableFeatureProjectionsListener > listeners();
+	public Listeners<AvailableFeatureProjectionsListener> listeners();
 
 	public AvailableFeatureProjections getAvailableFeatureProjections();
 

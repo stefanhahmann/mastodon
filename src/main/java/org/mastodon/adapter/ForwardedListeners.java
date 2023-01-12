@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.adapter;
 
 import java.util.ArrayList;
@@ -33,78 +34,67 @@ import java.util.function.Consumer;
 
 import org.scijava.listeners.Listeners;
 
-
 /**
  * A subset of listeners of type {@code T} forwarding to a wrapped
  * {@link Listeners} instance. It extends the {@code Listeners} interface by a
  * {@link #removeAll()} method that can be used to remove all listeners that
  * have been registered through this {@code ForwardedListeners}.
  *
- * @param <T>
- *            listener type
+ * @param <T> listener type
  */
-public interface ForwardedListeners< T > extends Listeners< T >
-{
+public interface ForwardedListeners<T> extends Listeners<T> {
+
 	public void removeAll();
 
 	/**
 	 * Implements {@link Listeners} using an {@link ArrayList}.
 	 *
-	 * @param <T>
-	 *            the type of listeners.
+	 * @param <T> the type of listeners.
 	 */
-	public static class List< T > implements ForwardedListeners< T >
-	{
-		private final Listeners< T > listeners;
+	public static class List<T> implements ForwardedListeners<T> {
 
-		private final Consumer< T > onAdd;
+		private final Listeners<T> listeners;
 
-		public List( final Listeners< T > listeners, final Consumer< T > onAdd )
-		{
+		private final Consumer<T> onAdd;
+
+		public List(final Listeners<T> listeners, final Consumer<T> onAdd) {
 			this.listeners = listeners;
 			this.onAdd = onAdd;
 		}
 
-		public List( final Listeners< T > listeners )
-		{
-			this( listeners, o -> {} );
+		public List(final Listeners<T> listeners) {
+			this(listeners, o -> {});
 		}
 
-		public final ArrayList< T > list = new ArrayList<>();
+		public final ArrayList<T> list = new ArrayList<>();
 
 		@Override
-		public boolean add( final T listener )
-		{
-			if ( !list.contains( listener ) )
-			{
-				list.add( listener );
-				onAdd.accept( listener );
+		public boolean add(final T listener) {
+			if (!list.contains(listener)) {
+				list.add(listener);
+				onAdd.accept(listener);
 			}
-			return listeners.add( listener );
+			return listeners.add(listener);
 		}
 
 		@Override
-		public boolean add( final int index, final T listener )
-		{
-			if ( !list.contains( listener ) )
-			{
-				list.add( index, listener );
-				onAdd.accept( listener );
+		public boolean add(final int index, final T listener) {
+			if (!list.contains(listener)) {
+				list.add(index, listener);
+				onAdd.accept(listener);
 			}
-			return listeners.add( listener );
+			return listeners.add(listener);
 		}
 
 		@Override
-		public boolean remove( final T listener )
-		{
-			list.remove( listener );
-			return listeners.remove( listener );
+		public boolean remove(final T listener) {
+			list.remove(listener);
+			return listeners.remove(listener);
 		}
 
 		@Override
-		public void removeAll()
-		{
-			listeners.removeAll( list );
+		public void removeAll() {
+			listeners.removeAll(list);
 		}
 	}
 
@@ -112,36 +102,32 @@ public interface ForwardedListeners< T > extends Listeners< T >
 	 * Extends {@link ForwardedListeners.List}, making {@code add} and
 	 * {@code remove} methods synchronized.
 	 *
-	 * @param <T>
-	 *            the type of listeners.
+	 * @param <T> the type of listeners.
 	 */
-	public static class SynchronizedList< T > extends List< T >
-	{
-		public SynchronizedList( final Listeners< T > listeners, final Consumer< T > onAdd )
+	public static class SynchronizedList<T> extends List<T> {
+
+		public SynchronizedList(final Listeners<T> listeners,
+			final Consumer<T> onAdd)
 		{
-			super( listeners, onAdd );
+			super(listeners, onAdd);
 		}
 
-		public SynchronizedList( final Listeners< T > listeners )
-		{
-			super( listeners );
-		}
-
-		@Override
-		public synchronized boolean add( final T listener )
-		{
-			return super.add( listener );
+		public SynchronizedList(final Listeners<T> listeners) {
+			super(listeners);
 		}
 
 		@Override
-		public synchronized boolean remove( final T listener )
-		{
-			return super.remove( listener );
+		public synchronized boolean add(final T listener) {
+			return super.add(listener);
 		}
 
 		@Override
-		public synchronized  void removeAll()
-		{
+		public synchronized boolean remove(final T listener) {
+			return super.remove(listener);
+		}
+
+		@Override
+		public synchronized void removeAll() {
 			super.removeAll();
 		}
 	}

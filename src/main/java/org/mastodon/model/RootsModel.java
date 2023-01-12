@@ -26,15 +26,16 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.model;
 
 import org.mastodon.collection.RefList;
 
 import java.util.List;
 
-public interface RootsModel<V>
-{
-	void setRoots( List<V> roots );
+public interface RootsModel<V> {
+
+	void setRoots(List<V> roots);
 
 	RefList<V> getRoots();
 }

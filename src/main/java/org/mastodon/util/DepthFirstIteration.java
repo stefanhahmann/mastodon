@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.util;
 
 import java.util.ArrayList;
@@ -101,8 +102,7 @@ import net.imglib2.util.Cast;
  *
  * @author Matthias Arzt
  */
-public class DepthFirstIteration
-{
+public class DepthFirstIteration {
 
 	public interface Step<V extends Vertex<?>> {
 
@@ -112,51 +112,53 @@ public class DepthFirstIteration
 		V node();
 
 		/**
-		 * @return the length of the path from the root node the the
-		 *         {@link #node() current node}.
+		 * @return the length of the path from the root node the the {@link #node()
+		 *         current node}.
 		 */
 		int depth();
 
 		/**
-		 * @return true if the {@link #node() node} has not outgoing edges / child nodes.
+		 * @return true if the {@link #node() node} has not outgoing edges / child
+		 *         nodes.
 		 */
 		boolean isLeaf();
 
 		/**
 		 * @return true if the {@link #node() node} is visited the first time
-		 * (before visiting all the child nodes).
+		 *         (before visiting all the child nodes).
 		 */
 		boolean isFirstVisit();
 
 		/**
 		 * @return true if the {@link #node() node} is visited the second time
-		 * (after visiting all the child nodes).
+		 *         (after visiting all the child nodes).
 		 */
 		boolean isSecondVisit();
 
 		/**
-		 * Calling this method when a {@link #node() node} is first visited,
-		 * will cause the iterator to skip all child nodes (and the entire
-		 * subtrees) of the current node.
+		 * Calling this method when a {@link #node() node} is first visited, will
+		 * cause the iterator to skip all child nodes (and the entire subtrees) of
+		 * the current node.
 		 */
 		void truncate();
 	}
 
-	public static <V extends Vertex<?>> Iterable<Step<V>> forRoot( final Graph<V, ?> graph, final V root )
+	public static <V extends Vertex<?>> Iterable<Step<V>> forRoot(
+		final Graph<V, ?> graph, final V root)
 	{
-		return () -> new DFIterator<>( graph, root );
+		return () -> new DFIterator<>(graph, root);
 	}
 
-	private DepthFirstIteration( ) {
+	private DepthFirstIteration() {}
+
+	private enum Stage {
+			INIT, FIRST_VISIT, SECOND_VISIT, LEAF;
 	}
 
-	private enum Stage
+	private static class DFIterator<V extends Vertex<?>> implements
+		Iterator<Step<V>>, Step<V>
 	{
-		INIT, FIRST_VISIT, SECOND_VISIT, LEAF;
-	}
 
-	private static class DFIterator<V extends Vertex<?>> implements Iterator<Step<V>>, Step<V>
-	{
 		private final Graph<V, ?> graph;
 		private Stage stage = Stage.INIT;
 		private V node = null;
@@ -164,41 +166,36 @@ public class DepthFirstIteration
 		private int depth = -1;
 		private final List<Entry<V>> stack = new ArrayList<>();
 
-		public DFIterator( final Graph<V, ?> graph, final V root )
-		{
+		public DFIterator(final Graph<V, ?> graph, final V root) {
 			this.graph = graph;
-			push( root );
+			push(root);
 		}
 
 		@Override
-		public boolean hasNext()
-		{
+		public boolean hasNext() {
 			return depth > 0 ||
-					(stage == Stage.FIRST_VISIT && !truncate) ||
-					stage == Stage.INIT;
+				(stage == Stage.FIRST_VISIT && !truncate) ||
+				stage == Stage.INIT;
 		}
 
 		@Override
-		public Step<V> next()
-		{
-			if( stage == Stage.INIT) {
-				final Entry<V> entry = stack.get( depth );
+		public Step<V> next() {
+			if (stage == Stage.INIT) {
+				final Entry<V> entry = stack.get(depth);
 				this.node = entry.node;
 				this.stage = entry.edges.hasNext() ? Stage.FIRST_VISIT : Stage.LEAF;
 				this.truncate = false;
 				return this;
 			}
 
-			if(stage == Stage.FIRST_VISIT && !truncate )
-			{
+			if (stage == Stage.FIRST_VISIT && !truncate) {
 				gotoNextChild();
 				return this;
 			}
-			graph.releaseRef( stack.get(depth).node );
+			graph.releaseRef(stack.get(depth).node);
 			depth--;
-			final Entry<V> entry = stack.get( depth );
-			if(entry.edges.hasNext())
-			{
+			final Entry<V> entry = stack.get(depth);
+			if (entry.edges.hasNext()) {
 				gotoNextChild();
 				return this;
 			}
@@ -208,13 +205,12 @@ public class DepthFirstIteration
 			return this;
 		}
 
-		private DFIterator<V> gotoNextChild()
-		{
-			Entry<V> entry = stack.get( depth );
+		private DFIterator<V> gotoNextChild() {
+			Entry<V> entry = stack.get(depth);
 			final Edge<V> edge = entry.edges.next();
-			final V child = edge.getTarget( graph.vertexRef() );
-			push( child );
-			entry = stack.get( depth );
+			final V child = edge.getTarget(graph.vertexRef());
+			push(child);
+			entry = stack.get(depth);
 			this.node = entry.node;
 			this.stage = entry.edges.hasNext() ? Stage.FIRST_VISIT : Stage.LEAF;
 			this.truncate = false;
@@ -222,55 +218,49 @@ public class DepthFirstIteration
 		}
 
 		@Override
-		public boolean isLeaf()
-		{
+		public boolean isLeaf() {
 			return stage == Stage.LEAF;
 		}
 
 		@Override
-		public boolean isFirstVisit()
-		{
+		public boolean isFirstVisit() {
 			return stage == Stage.FIRST_VISIT;
 		}
 
 		@Override
-		public boolean isSecondVisit()
-		{
+		public boolean isSecondVisit() {
 			return stage == Stage.SECOND_VISIT;
 		}
 
 		@Override
-		public V node()
-		{
+		public V node() {
 			return node;
 		}
 
 		@Override
-		public int depth()
-		{
+		public int depth() {
 			return depth;
 		}
 
 		@Override
-		public void truncate()
-		{
+		public void truncate() {
 			this.truncate = true;
 		}
 
-		private void push( final V root )
-		{
+		private void push(final V root) {
 			Entry<V> entry;
 			depth++;
-			if( stack.size() <= depth ) {
+			if (stack.size() <= depth) {
 				entry = new Entry<V>();
-				stack.add( entry );
+				stack.add(entry);
 			}
 			entry = stack.get(depth);
 			entry.node = root;
-			entry.edges = Cast.unchecked( root.outgoingEdges().iterator() );
+			entry.edges = Cast.unchecked(root.outgoingEdges().iterator());
 		}
 
 		private static class Entry<V extends Vertex<?>> {
+
 			private V node;
 			private Iterator<Edge<V>> edges;
 		}

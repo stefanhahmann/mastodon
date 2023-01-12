@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.app.plugin;
 
 import java.util.Collections;
@@ -43,23 +44,21 @@ import org.scijava.ui.behaviour.util.Actions;
  * one, that specifies against what concrete {@link MastodonAppPluginModel} it
  * is built.
  *
- * @param <M>
- *            the type of {@link MastodonAppPluginModel} this plugin will use.
+ * @param <M> the type of {@link MastodonAppPluginModel} this plugin will use.
  */
-public interface MastodonPlugin< M extends MastodonAppPluginModel > extends SciJavaPlugin
+public interface MastodonPlugin<M extends MastodonAppPluginModel> extends
+	SciJavaPlugin
 {
-	void setAppPluginModel( final M appPluginModel );
 
-	default List< MenuItem > getMenuItems()
-	{
+	void setAppPluginModel(final M appPluginModel);
+
+	default List<MenuItem> getMenuItems() {
 		return Collections.emptyList();
 	}
 
-	default Map< String, String > getMenuTexts()
-	{
+	default Map<String, String> getMenuTexts() {
 		return Collections.emptyMap();
 	}
 
-	default void installGlobalActions( final Actions pluginActions )
-	{};
+	default void installGlobalActions(final Actions pluginActions) {};
 }

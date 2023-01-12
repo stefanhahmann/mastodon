@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.util;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -40,28 +41,29 @@ import org.junit.Test;
 /**
  * Tests {@link DummySpimData}.
  */
-public class DummySpimDataTest
-{
+public class DummySpimDataTest {
 
 	@Test
-	public void testTryCreate()
-	{
+	public void testTryCreate() {
 		String path = "/test/some/path/x=10 y=20 z=30 t=40.dummy";
-		AbstractSpimData<?> spimData = DummySpimData.tryCreate( path );
-		AbstractSequenceDescription<?, ?, ?> seq = spimData.getSequenceDescription();
-		BasicViewSetup setup = seq.getViewSetupsOrdered().get( 0 );
+		AbstractSpimData<?> spimData = DummySpimData.tryCreate(path);
+		AbstractSequenceDescription<?, ?, ?> seq = spimData
+			.getSequenceDescription();
+		BasicViewSetup setup = seq.getViewSetupsOrdered().get(0);
 		long[] size = setup.getSize().dimensionsAsLongArray();
-		assertArrayEquals(new long[]{ 10, 20, 30}, size);
+		assertArrayEquals(new long[] { 10, 20, 30 }, size);
 		int numberOfTimepoints = seq.getTimePoints().size();
 		assertEquals(40, numberOfTimepoints);
 	}
 
 	@Test
-	public void testFromSpimDataXml() throws SpimDataException
-	{
-		String xml = this.getClass().getResource( "/org/mastodon/mamut/examples/tiny-unknown-url/remote-dataset.xml" ).getPath();
-		AbstractSpimData<?> data = DummySpimData.fromSpimDataXml( xml );
-		long[] size = data.getSequenceDescription().getViewSetups().get( 0 ).getSize().dimensionsAsLongArray();
-		assertArrayEquals( new long[] { 2169, 2048, 988 }, size);
+	public void testFromSpimDataXml() throws SpimDataException {
+		String xml = this.getClass().getResource(
+			"/org/mastodon/mamut/examples/tiny-unknown-url/remote-dataset.xml")
+			.getPath();
+		AbstractSpimData<?> data = DummySpimData.fromSpimDataXml(xml);
+		long[] size = data.getSequenceDescription().getViewSetups().get(0).getSize()
+			.dimensionsAsLongArray();
+		assertArrayEquals(new long[] { 2169, 2048, 988 }, size);
 	}
 }

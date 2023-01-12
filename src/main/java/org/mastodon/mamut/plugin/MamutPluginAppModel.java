@@ -26,31 +26,31 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.plugin;
 
 import org.mastodon.app.plugin.MastodonAppPluginModel;
 import org.mastodon.mamut.MamutAppModel;
 import org.mastodon.mamut.WindowManager;
 
-public class MamutPluginAppModel  implements MastodonAppPluginModel
-{
+public class MamutPluginAppModel implements MastodonAppPluginModel {
+
 	private final WindowManager windowManager;
 
 	private final MamutAppModel appModel;
 
-	public MamutPluginAppModel( final MamutAppModel appModel, final WindowManager windowManager )
+	public MamutPluginAppModel(final MamutAppModel appModel,
+		final WindowManager windowManager)
 	{
 		this.appModel = appModel;
 		this.windowManager = windowManager;
 	}
 
-	public MamutAppModel getAppModel()
-	{
+	public MamutAppModel getAppModel() {
 		return appModel;
 	}
 
-	public WindowManager getWindowManager()
-	{
+	public WindowManager getWindowManager() {
 		return windowManager;
 	}
 }

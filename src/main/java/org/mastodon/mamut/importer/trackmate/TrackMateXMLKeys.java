@@ -26,10 +26,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.mamut.importer.trackmate;
 
-public class TrackMateXMLKeys
-{
+public class TrackMateXMLKeys {
 
 	public static final String TRACKMATE_TAG = "TrackMate";
 
@@ -141,9 +141,11 @@ public class TrackMateXMLKeys
 
 	public static final String FILTER_IS_ABOVE_ATTRIBUTE = "isabove";
 
-	public static final String SPOT_FILTER_COLLECTION_TAG = "SpotFilterCollection";
+	public static final String SPOT_FILTER_COLLECTION_TAG =
+		"SpotFilterCollection";
 
-	public static final String TRACK_FILTER_COLLECTION_TAG = "TrackFilterCollection";
+	public static final String TRACK_FILTER_COLLECTION_TAG =
+		"TrackFilterCollection";
 
 	public static final String ANALYZER_COLLECTION_TAG = "AnalyzerCollection";
 
@@ -165,6 +167,5 @@ public class TrackMateXMLKeys
 
 	public static final String BOOKMARKS_TAG = "Bookmarks";
 
-	private TrackMateXMLKeys()
-	{}
+	private TrackMateXMLKeys() {}
 }

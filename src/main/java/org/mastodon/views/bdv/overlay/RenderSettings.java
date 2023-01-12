@@ -26,6 +26,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  * #L%
  */
+
 package org.mastodon.views.bdv.overlay;
 
 import java.awt.Color;
@@ -37,8 +38,7 @@ import org.scijava.listeners.Listeners;
 
 import bdv.ui.settings.style.Style;
 
-public class RenderSettings implements Style< RenderSettings >
-{
+public class RenderSettings implements Style<RenderSettings> {
 	/*
 	 * PUBLIC DISPLAY CONFIG DEFAULTS.
 	 */
@@ -53,8 +53,10 @@ public class RenderSettings implements Style< RenderSettings >
 	public static final boolean DEFAULT_DRAW_ARROW_HEADS = false;
 	public static final boolean DEFAULT_DRAW_ELLIPSE = true;
 	public static final boolean DEFAULT_DRAW_SLICE_INTERSECTION = true;
-	public static final boolean DEFAULT_DRAW_SLICE_PROJECTION = !DEFAULT_DRAW_SLICE_INTERSECTION;
-	public static final boolean DEFAULT_DRAW_POINTS = !DEFAULT_DRAW_ELLIPSE || (DEFAULT_DRAW_ELLIPSE && DEFAULT_DRAW_SLICE_INTERSECTION);
+	public static final boolean DEFAULT_DRAW_SLICE_PROJECTION =
+		!DEFAULT_DRAW_SLICE_INTERSECTION;
+	public static final boolean DEFAULT_DRAW_POINTS = !DEFAULT_DRAW_ELLIPSE ||
+		(DEFAULT_DRAW_ELLIPSE && DEFAULT_DRAW_SLICE_INTERSECTION);
 	public static final boolean DEFAULT_DRAW_POINTS_FOR_ELLIPSE = false;
 	public static final boolean DEFAULT_DRAW_SPOT_LABELS = false;
 	public static final boolean DEFAULT_FILL_SPOTS = false;
@@ -67,43 +69,38 @@ public class RenderSettings implements Style< RenderSettings >
 	public static final int DEFAULT_COLOR_PAST = Color.RED.getRGB();
 	public static final int DEFAULT_COLOR_FUTURE = Color.BLUE.getRGB();
 
-	public interface UpdateListener
-	{
+	public interface UpdateListener {
+
 		public void renderSettingsChanged();
 	}
 
-	private final Listeners.List< UpdateListener > updateListeners;
+	private final Listeners.List<UpdateListener> updateListeners;
 
-	private RenderSettings()
-	{
+	private RenderSettings() {
 		updateListeners = new Listeners.SynchronizedList<>();
 	}
 
 	/**
 	 * Returns a new render settings, copied from this instance.
 	 *
-	 * @param name
-	 *            the name for the copied render settings.
+	 * @param name the name for the copied render settings.
 	 * @return a new {@link RenderSettings} instance.
 	 */
 	@Override
-	public RenderSettings copy( final String name )
-	{
+	public RenderSettings copy(final String name) {
 		final RenderSettings rs = new RenderSettings();
-		rs.set( this );
-		if ( name != null )
-			rs.setName( name );
+		rs.set(this);
+		if (name != null)
+			rs.setName(name);
 		return rs;
 	}
 
 	@Override
-	public RenderSettings copy()
-	{
-		return copy( null );
+	public RenderSettings copy() {
+		return copy(null);
 	}
 
-	public synchronized void set( final RenderSettings settings )
-	{
+	public synchronized void set(final RenderSettings settings) {
 		name = settings.name;
 		useAntialiasing = settings.useAntialiasing;
 		useGradient = settings.useGradient;
@@ -130,14 +127,12 @@ public class RenderSettings implements Style< RenderSettings >
 		notifyListeners();
 	}
 
-	private void notifyListeners()
-	{
-		for ( final UpdateListener l : updateListeners.list )
+	private void notifyListeners() {
+		for (final UpdateListener l : updateListeners.list)
 			l.renderSettingsChanged();
 	}
 
-	public Listeners< UpdateListener > updateListeners()
-	{
+	public Listeners<UpdateListener> updateListeners() {
 		return updateListeners;
 	}
 
@@ -162,8 +157,8 @@ public class RenderSettings implements Style< RenderSettings >
 	private boolean useGradient;
 
 	/**
-	 * Maximum number of timepoints into the past for which outgoing edges
-	 * should be drawn.
+	 * Maximum number of timepoints into the past for which outgoing edges should
+	 * be drawn.
 	 */
 	private int timeLimit;
 
@@ -173,8 +168,8 @@ public class RenderSettings implements Style< RenderSettings >
 	private boolean drawLinks;
 
 	/**
-	 * Whether to draw links ahead in time. They are otherwise drawn only
-	 * backward in time.
+	 * Whether to draw links ahead in time. They are otherwise drawn only backward
+	 * in time.
 	 */
 	private boolean drawLinksAheadInTime;
 
@@ -204,7 +199,8 @@ public class RenderSettings implements Style< RenderSettings >
 	private boolean drawPoints;
 
 	/**
-	 * Whether to draw spot centers also for those points that are visible as ellipses.
+	 * Whether to draw spot centers also for those points that are visible as
+	 * ellipses.
 	 */
 	private boolean drawPointsForEllipses;
 
@@ -220,18 +216,16 @@ public class RenderSettings implements Style< RenderSettings >
 
 	/**
 	 * Maximum distance from view plane up to which to draw spots.
-	 *
 	 * <p>
 	 * Depending on {@link #isFocusLimitViewRelative}, the distance is either in
 	 * the current view coordinate system or in the global coordinate system. If
-	 * {@code isFocusLimitViewRelative() == true} then the distance is in
-	 * current view coordinates. For example, a value of 100 means that spots
-	 * will be visible up to 100 pixel widths from the view plane. Thus, the
-	 * effective focus range depends on the current zoom level. If
-	 * {@code isFocusLimitViewRelative() == false} then the distance is in
-	 * global coordinates. A value of 100 means that spots will be visible up to
-	 * 100 units (of the global coordinate system) from the view plane.
-	 *
+	 * {@code isFocusLimitViewRelative() == true} then the distance is in current
+	 * view coordinates. For example, a value of 100 means that spots will be
+	 * visible up to 100 pixel widths from the view plane. Thus, the effective
+	 * focus range depends on the current zoom level. If
+	 * {@code isFocusLimitViewRelative() == false} then the distance is in global
+	 * coordinates. A value of 100 means that spots will be visible up to 100
+	 * units (of the global coordinate system) from the view plane.
 	 * <p>
 	 * Ellipsoids are drawn increasingly translucent the closer they are to
 	 * {@link #focusLimit}. See {@link #ellipsoidFadeDepth}.
@@ -239,32 +233,31 @@ public class RenderSettings implements Style< RenderSettings >
 	private double focusLimit;
 
 	/**
-	 * Whether the {@link #focusLimit} is relative to the the current
-	 * view coordinate system.
-	 *
+	 * Whether the {@link #focusLimit} is relative to the the current view
+	 * coordinate system.
 	 * <p>
 	 * If {@code true} then the distance is in current view coordinates. For
 	 * example, a value of 100 means that spots will be visible up to 100 pixel
-	 * widths from the view plane. Thus, the effective focus range depends on
-	 * the current zoom level. If {@code false} then the distance is in global
+	 * widths from the view plane. Thus, the effective focus range depends on the
+	 * current zoom level. If {@code false} then the distance is in global
 	 * coordinates. A value of 100 means that spots will be visible up to 100
 	 * units (of the global coordinate system) from the view plane.
 	 */
 	private boolean isFocusLimitViewRelative;
 
 	/**
-	 * The ratio of {@link #focusLimit} at which ellipsoids start to
-	 * fade. Ellipsoids are drawn increasingly translucent the closer they are
-	 * to {@link #focusLimit}. Up to ratio {@link #ellipsoidFadeDepth}
-	 * they are fully opaque, then their alpha value goes to 0 linearly.
+	 * The ratio of {@link #focusLimit} at which ellipsoids start to fade.
+	 * Ellipsoids are drawn increasingly translucent the closer they are to
+	 * {@link #focusLimit}. Up to ratio {@link #ellipsoidFadeDepth} they are fully
+	 * opaque, then their alpha value goes to 0 linearly.
 	 */
 	private double ellipsoidFadeDepth;
 
 	/**
-	 * The ratio of {@link #focusLimit} at which points start to
-	 * fade. Points are drawn increasingly translucent the closer they are
-	 * to {@link #focusLimit}. Up to ratio {@link #pointFadeDepth}
-	 * they are fully opaque, then their alpha value goes to 0 linearly.
+	 * The ratio of {@link #focusLimit} at which points start to fade. Points are
+	 * drawn increasingly translucent the closer they are to {@link #focusLimit}.
+	 * Up to ratio {@link #pointFadeDepth} they are fully opaque, then their alpha
+	 * value goes to 0 linearly.
 	 */
 	private double pointFadeDepth;
 
@@ -272,7 +265,7 @@ public class RenderSettings implements Style< RenderSettings >
 	 * The stroke with of spots.
 	 */
 	private double spotStrokeWidth;
-	
+
 	/**
 	 * The stroke with of links.
 	 */
@@ -299,22 +292,18 @@ public class RenderSettings implements Style< RenderSettings >
 	 * @return the name.
 	 */
 	@Override
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
 	/**
 	 * Sets the name of this {@link RenderSettings}.
 	 *
-	 * @param name
-	 *            the name to set.
+	 * @param name the name to set.
 	 */
 	@Override
-	public synchronized void setName( final String name )
-	{
-		if ( !Objects.equals( this.name, name ) )
-		{
+	public synchronized void setName(final String name) {
+		if (!Objects.equals(this.name, name)) {
 			this.name = name;
 			notifyListeners();
 		}
@@ -325,21 +314,17 @@ public class RenderSettings implements Style< RenderSettings >
 	 *
 	 * @return {@code true} if antialiasing is used.
 	 */
-	public boolean getUseAntialiasing()
-	{
+	public boolean getUseAntialiasing() {
 		return useAntialiasing;
 	}
 
 	/**
 	 * Sets whether to use anti-aliasing for drawing.
 	 *
-	 * @param useAntialiasing
-	 *            whether to use use anti-aliasing.
+	 * @param useAntialiasing whether to use use anti-aliasing.
 	 */
-	public synchronized void setUseAntialiasing( final boolean useAntialiasing )
-	{
-		if ( this.useAntialiasing != useAntialiasing )
-		{
+	public synchronized void setUseAntialiasing(final boolean useAntialiasing) {
+		if (this.useAntialiasing != useAntialiasing) {
 			this.useAntialiasing = useAntialiasing;
 			notifyListeners();
 		}
@@ -348,28 +333,24 @@ public class RenderSettings implements Style< RenderSettings >
 	/**
 	 * Returns whether a gradient is used for drawing links.
 	 *
-	 * @return {@code true} if links are drawn using a gradient from source
-	 *         color to target color, or {@code false}, if links are drawn using
-	 *         the target color.
+	 * @return {@code true} if links are drawn using a gradient from source color
+	 *         to target color, or {@code false}, if links are drawn using the
+	 *         target color.
 	 */
-	public boolean getUseGradient()
-	{
+	public boolean getUseGradient() {
 		return useGradient;
 	}
 
 	/**
 	 * Sets whether to use a gradient for drawing links. If
-	 * {@code useGradient=true}, draw links using a gradient from source color
-	 * to target color. If {@code useGradient=false}, draw links using the
-	 * target color.
+	 * {@code useGradient=true}, draw links using a gradient from source color to
+	 * target color. If {@code useGradient=false}, draw links using the target
+	 * color.
 	 *
-	 * @param useGradient
-	 *            whether to use a gradient for drawing links.
+	 * @param useGradient whether to use a gradient for drawing links.
 	 */
-	public synchronized void setUseGradient( final boolean useGradient )
-	{
-		if ( this.useGradient != useGradient )
-		{
+	public synchronized void setUseGradient(final boolean useGradient) {
+		if (this.useGradient != useGradient) {
 			this.useGradient = useGradient;
 			notifyListeners();
 		}
@@ -381,8 +362,7 @@ public class RenderSettings implements Style< RenderSettings >
 	 *
 	 * @return maximum number of time-points into the past to draw links.
 	 */
-	public int getTimeLimit()
-	{
+	public int getTimeLimit() {
 		return timeLimit;
 	}
 
@@ -390,13 +370,10 @@ public class RenderSettings implements Style< RenderSettings >
 	 * Sets the maximum number of time-points into the past for which outgoing
 	 * edges should be drawn.
 	 *
-	 * @param timeLimit
-	 *            maximum number of time-points into the past to draw links.
+	 * @param timeLimit maximum number of time-points into the past to draw links.
 	 */
-	public synchronized void setTimeLimit( final int timeLimit )
-	{
-		if ( this.timeLimit != timeLimit )
-		{
+	public synchronized void setTimeLimit(final int timeLimit) {
+		if (this.timeLimit != timeLimit) {
 			this.timeLimit = timeLimit;
 			notifyListeners();
 		}
@@ -408,8 +385,7 @@ public class RenderSettings implements Style< RenderSettings >
 	 *
 	 * @return {@code true} if links are drawn.
 	 */
-	public boolean getDrawLinks()
-	{
+	public boolean getDrawLinks() {
 		return drawLinks;
 	}
 
@@ -419,8 +395,7 @@ public class RenderSettings implements Style< RenderSettings >
 	 * 
 	 * @return {@code true} if links are drawn ahead in time.
 	 */
-	public boolean getDrawLinksAheadInTime()
-	{
+	public boolean getDrawLinksAheadInTime() {
 		return drawLinksAheadInTime;
 	}
 
@@ -429,8 +404,7 @@ public class RenderSettings implements Style< RenderSettings >
 	 *
 	 * @return {@code true} if links are drawn with arrow heads.
 	 */
-	public boolean getDrawArrowHeads()
-	{
+	public boolean getDrawArrowHeads() {
 		return drawArrowHeads;
 	}
 
@@ -438,13 +412,10 @@ public class RenderSettings implements Style< RenderSettings >
 	 * Sets whether to draw links (at all). For specific settings, see
 	 * {@link #setTimeLimit(int)}, {@link #setUseGradient(boolean)}.
 	 *
-	 * @param drawLinks
-	 *            whether to draw links.
+	 * @param drawLinks whether to draw links.
 	 */
-	public synchronized void setDrawLinks( final boolean drawLinks )
-	{
-		if ( this.drawLinks != drawLinks )
-		{
+	public synchronized void setDrawLinks(final boolean drawLinks) {
+		if (this.drawLinks != drawLinks) {
 			this.drawLinks = drawLinks;
 			notifyListeners();
 		}
@@ -454,13 +425,12 @@ public class RenderSettings implements Style< RenderSettings >
 	 * Sets whether to draw links ahead in time. They are otherwise drawn only
 	 * backward in time.
 	 *
-	 * @param drawLinksAheadInTime
-	 *            whether to draw links ahead in time.
+	 * @param drawLinksAheadInTime whether to draw links ahead in time.
 	 */
-	public synchronized void setDrawLinksAheadInTime( final boolean drawLinksAheadInTime )
+	public synchronized void setDrawLinksAheadInTime(
+		final boolean drawLinksAheadInTime)
 	{
-		if ( this.drawLinksAheadInTime != drawLinksAheadInTime )
-		{
+		if (this.drawLinksAheadInTime != drawLinksAheadInTime) {
 			this.drawLinksAheadInTime = drawLinksAheadInTime;
 			notifyListeners();
 		}
@@ -469,21 +439,18 @@ public class RenderSettings implements Style< RenderSettings >
 	/**
 	 * Sets whether to draw links with arrow heads.
 	 *
-	 * @param drawArrowHeads
-	 *            whether to draw links with arrow heads.
+	 * @param drawArrowHeads whether to draw links with arrow heads.
 	 */
-	public synchronized void setDrawArrowHeads( final boolean drawArrowHeads )
-	{
-		if ( this.drawArrowHeads != drawArrowHeads )
-		{
+	public synchronized void setDrawArrowHeads(final boolean drawArrowHeads) {
+		if (this.drawArrowHeads != drawArrowHeads) {
 			this.drawArrowHeads = drawArrowHeads;
 			notifyListeners();
 		}
 	}
 
 	/**
-	 * Gets whether to draw spots (at all). For specific settings, see other
-	 * spot drawing settings.
+	 * Gets whether to draw spots (at all). For specific settings, see other spot
+	 * drawing settings.
 	 *
 	 * @return {@code true} if spots are to be drawn.
 	 * @see #getDrawEllipsoidSliceIntersection()
@@ -496,17 +463,15 @@ public class RenderSettings implements Style< RenderSettings >
 	 * @see #getFocusLimitViewRelative()
 	 * @see #getPointFadeDepth()
 	 */
-	public boolean getDrawSpots()
-	{
+	public boolean getDrawSpots() {
 		return drawSpots;
 	}
 
 	/**
-	 * Sets whether to draw spots (at all). For specific settings, see other
-	 * spot drawing settings.
+	 * Sets whether to draw spots (at all). For specific settings, see other spot
+	 * drawing settings.
 	 *
-	 * @param drawSpots
-	 *            whether to draw spots.
+	 * @param drawSpots whether to draw spots.
 	 * @see #setDrawEllipsoidSliceIntersection(boolean)
 	 * @see #setDrawEllipsoidSliceProjection(boolean)
 	 * @see #setDrawSpotCenters(boolean)
@@ -517,10 +482,8 @@ public class RenderSettings implements Style< RenderSettings >
 	 * @see #setFocusLimitViewRelative(boolean)
 	 * @see #setPointFadeDepth(double)
 	 */
-	public synchronized void setDrawSpots( final boolean drawSpots )
-	{
-		if ( this.drawSpots != drawSpots )
-		{
+	public synchronized void setDrawSpots(final boolean drawSpots) {
+		if (this.drawSpots != drawSpots) {
 			this.drawSpots = drawSpots;
 			notifyListeners();
 		}
@@ -530,26 +493,23 @@ public class RenderSettings implements Style< RenderSettings >
 	 * Get whether the projections of spot ellipsoids onto the view plane are
 	 * drawn.
 	 *
-	 * @return {@code true} iff projections of spot ellipsoids onto the view
-	 *         plane are drawn.
+	 * @return {@code true} iff projections of spot ellipsoids onto the view plane
+	 *         are drawn.
 	 */
-	public boolean getDrawEllipsoidSliceProjection()
-	{
+	public boolean getDrawEllipsoidSliceProjection() {
 		return drawEllipsoidSliceProjection;
 	}
 
 	/**
-	 * Set whether to draw the projections of spot ellipsoids onto the view
-	 * plane.
+	 * Set whether to draw the projections of spot ellipsoids onto the view plane.
 	 *
-	 * @param drawEllipsoidSliceProjection
-	 *            whether to draw projections of spot ellipsoids onto the view
-	 *            plane.
+	 * @param drawEllipsoidSliceProjection whether to draw projections of spot
+	 *          ellipsoids onto the view plane.
 	 */
-	public synchronized void setDrawEllipsoidSliceProjection( final boolean drawEllipsoidSliceProjection )
+	public synchronized void setDrawEllipsoidSliceProjection(
+		final boolean drawEllipsoidSliceProjection)
 	{
-		if ( this.drawEllipsoidSliceProjection != drawEllipsoidSliceProjection )
-		{
+		if (this.drawEllipsoidSliceProjection != drawEllipsoidSliceProjection) {
 			this.drawEllipsoidSliceProjection = drawEllipsoidSliceProjection;
 			notifyListeners();
 		}
@@ -562,8 +522,7 @@ public class RenderSettings implements Style< RenderSettings >
 	 * @return {@code true} iff intersections of spot ellipsoids with the view
 	 *         plane are drawn.
 	 */
-	public boolean getDrawEllipsoidSliceIntersection()
-	{
+	public boolean getDrawEllipsoidSliceIntersection() {
 		return drawEllipsoidSliceIntersection;
 	}
 
@@ -571,14 +530,13 @@ public class RenderSettings implements Style< RenderSettings >
 	 * Set whether to draw the intersections of spot ellipsoids with the view
 	 * plane.
 	 *
-	 * @param drawEllipsoidSliceIntersection
-	 *            whether to draw intersections of spot ellipsoids with the view
-	 *            plane.
+	 * @param drawEllipsoidSliceIntersection whether to draw intersections of spot
+	 *          ellipsoids with the view plane.
 	 */
-	public synchronized void setDrawEllipsoidSliceIntersection( final boolean drawEllipsoidSliceIntersection )
+	public synchronized void setDrawEllipsoidSliceIntersection(
+		final boolean drawEllipsoidSliceIntersection)
 	{
-		if ( this.drawEllipsoidSliceIntersection != drawEllipsoidSliceIntersection )
-		{
+		if (this.drawEllipsoidSliceIntersection != drawEllipsoidSliceIntersection) {
 			this.drawEllipsoidSliceIntersection = drawEllipsoidSliceIntersection;
 			notifyListeners();
 		}
@@ -593,8 +551,7 @@ public class RenderSettings implements Style< RenderSettings >
 	 *
 	 * @return whether spot centers are drawn.
 	 */
-	public boolean getDrawSpotCenters()
-	{
+	public boolean getDrawSpotCenters() {
 		return drawPoints;
 	}
 
@@ -605,13 +562,10 @@ public class RenderSettings implements Style< RenderSettings >
 	 * was drawn (unless {@link #getDrawSpotCentersForEllipses()}
 	 * {@code == true}).
 	 *
-	 * @param drawPoints
-	 *            whether spot centers are drawn.
+	 * @param drawPoints whether spot centers are drawn.
 	 */
-	public synchronized void setDrawSpotCenters( final boolean drawPoints )
-	{
-		if ( this.drawPoints != drawPoints )
-		{
+	public synchronized void setDrawSpotCenters(final boolean drawPoints) {
+		if (this.drawPoints != drawPoints) {
 			this.drawPoints = drawPoints;
 			notifyListeners();
 		}
@@ -624,8 +578,7 @@ public class RenderSettings implements Style< RenderSettings >
 	 * @return whether spot centers are also drawn for those points that are
 	 *         visible as ellipses.
 	 */
-	public boolean getDrawSpotCentersForEllipses()
-	{
+	public boolean getDrawSpotCentersForEllipses() {
 		return drawPointsForEllipses;
 	}
 
@@ -633,14 +586,13 @@ public class RenderSettings implements Style< RenderSettings >
 	 * Set whether spot centers are also drawn for those points that are visible
 	 * as ellipses.
 	 *
-	 * @param drawPointsForEllipses
-	 *            whether spot centers are also drawn for those points that are
-	 *            visible as ellipses.
+	 * @param drawPointsForEllipses whether spot centers are also drawn for those
+	 *          points that are visible as ellipses.
 	 */
-	public synchronized void setDrawSpotCentersForEllipses( final boolean drawPointsForEllipses )
+	public synchronized void setDrawSpotCentersForEllipses(
+		final boolean drawPointsForEllipses)
 	{
-		if ( this.drawPointsForEllipses != drawPointsForEllipses )
-		{
+		if (this.drawPointsForEllipses != drawPointsForEllipses) {
 			this.drawPointsForEllipses = drawPointsForEllipses;
 			notifyListeners();
 		}
@@ -651,21 +603,17 @@ public class RenderSettings implements Style< RenderSettings >
 	 *
 	 * @return whether spot labels are drawn next to ellipses.
 	 */
-	public boolean getDrawSpotLabels()
-	{
+	public boolean getDrawSpotLabels() {
 		return drawSpotLabels;
 	}
 
 	/**
 	 * Set whether spot labels are drawn next to ellipses.
 	 *
-	 * @param drawSpotLabels
-	 *            whether spot labels are drawn next to ellipses.
+	 * @param drawSpotLabels whether spot labels are drawn next to ellipses.
 	 */
-	public void setDrawSpotLabels( final boolean drawSpotLabels )
-	{
-		if ( this.drawSpotLabels != drawSpotLabels )
-		{
+	public void setDrawSpotLabels(final boolean drawSpotLabels) {
+		if (this.drawSpotLabels != drawSpotLabels) {
 			this.drawSpotLabels = drawSpotLabels;
 			notifyListeners();
 		}
@@ -676,21 +624,17 @@ public class RenderSettings implements Style< RenderSettings >
 	 *
 	 * @return whether spots are filled.
 	 */
-	public boolean getFillSpots()
-	{
+	public boolean getFillSpots() {
 		return fillSpots;
 	}
 
 	/**
 	 * Set whether spots are filled.
 	 *
-	 * @param fillSpots
-	 *            whether spots are filled.
+	 * @param fillSpots whether spots are filled.
 	 */
-	public void setFillSpots( final boolean fillSpots )
-	{
-		if ( this.fillSpots != fillSpots )
-		{
+	public void setFillSpots(final boolean fillSpots) {
+		if (this.fillSpots != fillSpots) {
 			this.fillSpots = fillSpots;
 			notifyListeners();
 		}
@@ -703,12 +647,12 @@ public class RenderSettings implements Style< RenderSettings >
 	 * Depending on {@link #getFocusLimitViewRelative()}, the distance is either
 	 * in the current view coordinate system or in the global coordinate system.
 	 * If {@code getFocusLimitViewRelative() == true} then the distance is in
-	 * current view coordinates. For example, a value of 100 means that spots
-	 * will be visible up to 100 pixel widths from the view plane. Thus, the
-	 * effective focus range depends on the current zoom level. If
-	 * {@code getFocusLimitViewRelative() == false} then the distance is in
-	 * global coordinates. A value of 100 means that spots will be visible up to
-	 * 100 units (of the global coordinate system) from the view plane.
+	 * current view coordinates. For example, a value of 100 means that spots will
+	 * be visible up to 100 pixel widths from the view plane. Thus, the effective
+	 * focus range depends on the current zoom level. If
+	 * {@code getFocusLimitViewRelative() == false} then the distance is in global
+	 * coordinates. A value of 100 means that spots will be visible up to 100
+	 * units (of the global coordinate system) from the view plane.
 	 * <p>
 	 * Ellipsoids are drawn increasingly translucent the closer they are to the
 	 * {@code focusLimit}. See {@link #getEllipsoidFadeDepth()}.
@@ -716,8 +660,7 @@ public class RenderSettings implements Style< RenderSettings >
 	 * @return the maximum distance from the view plane up to which to spots are
 	 *         drawn.
 	 */
-	public double getFocusLimit()
-	{
+	public double getFocusLimit() {
 		return focusLimit;
 	}
 
@@ -725,14 +668,11 @@ public class RenderSettings implements Style< RenderSettings >
 	 * Set the maximum distance from the view plane up to which to spots are
 	 * drawn. See {@link #getFocusLimit()}.
 	 *
-	 * @param focusLimit
-	 *            the maximum distance from the view plane up to which to spots
-	 *            are drawn.
+	 * @param focusLimit the maximum distance from the view plane up to which to
+	 *          spots are drawn.
 	 */
-	public synchronized void setFocusLimit( final double focusLimit )
-	{
-		if ( this.focusLimit != focusLimit )
-		{
+	public synchronized void setFocusLimit(final double focusLimit) {
+		if (this.focusLimit != focusLimit) {
 			this.focusLimit = focusLimit;
 			notifyListeners();
 		}
@@ -744,16 +684,15 @@ public class RenderSettings implements Style< RenderSettings >
 	 * <p>
 	 * If {@code true} then the distance is in current view coordinates. For
 	 * example, a value of 100 means that spots will be visible up to 100 pixel
-	 * widths from the view plane. Thus, the effective focus range depends on
-	 * the current zoom level. If {@code false} then the distance is in global
+	 * widths from the view plane. Thus, the effective focus range depends on the
+	 * current zoom level. If {@code false} then the distance is in global
 	 * coordinates. A value of 100 means that spots will be visible up to 100
 	 * units (of the global coordinate system) from the view plane.
 	 *
 	 * @return {@code true} iff the {@link #getFocusLimit()} is relative to the
 	 *         the current view coordinate system.
 	 */
-	public boolean getFocusLimitViewRelative()
-	{
+	public boolean getFocusLimitViewRelative() {
 		return isFocusLimitViewRelative;
 	}
 
@@ -761,14 +700,13 @@ public class RenderSettings implements Style< RenderSettings >
 	 * Set whether the {@link #getFocusLimit()} is relative to the the current
 	 * view coordinate system. See {@link #getFocusLimitViewRelative()}.
 	 *
-	 * @param isFocusLimitViewRelative
-	 *            whether the {@link #getFocusLimit()} is relative to the the
-	 *            current view coordinate system.
+	 * @param isFocusLimitViewRelative whether the {@link #getFocusLimit()} is
+	 *          relative to the the current view coordinate system.
 	 */
-	public synchronized void setFocusLimitViewRelative( final boolean isFocusLimitViewRelative )
+	public synchronized void setFocusLimitViewRelative(
+		final boolean isFocusLimitViewRelative)
 	{
-		if ( this.isFocusLimitViewRelative != isFocusLimitViewRelative )
-		{
+		if (this.isFocusLimitViewRelative != isFocusLimitViewRelative) {
 			this.isFocusLimitViewRelative = isFocusLimitViewRelative;
 			notifyListeners();
 		}
@@ -776,15 +714,14 @@ public class RenderSettings implements Style< RenderSettings >
 
 	/**
 	 * Get the ratio of {@link #getFocusLimit()} at which ellipsoids start to
-	 * fade. Ellipsoids are drawn increasingly translucent the closer they are
-	 * to {@link #getFocusLimit()}. Up to ratio {@link #getEllipsoidFadeDepth()}
-	 * they are fully opaque, then their alpha value goes to 0 linearly.
+	 * fade. Ellipsoids are drawn increasingly translucent the closer they are to
+	 * {@link #getFocusLimit()}. Up to ratio {@link #getEllipsoidFadeDepth()} they
+	 * are fully opaque, then their alpha value goes to 0 linearly.
 	 *
-	 * @return the ratio of {@link #getFocusLimit()} at which ellipsoids start
-	 *         to fade.
+	 * @return the ratio of {@link #getFocusLimit()} at which ellipsoids start to
+	 *         fade.
 	 */
-	public double getEllipsoidFadeDepth()
-	{
+	public double getEllipsoidFadeDepth() {
 		return ellipsoidFadeDepth;
 	}
 
@@ -792,30 +729,28 @@ public class RenderSettings implements Style< RenderSettings >
 	 * Set the ratio of {@link #getFocusLimit()} at which ellipsoids start to
 	 * fade. See {@link #getEllipsoidFadeDepth()}.
 	 *
-	 * @param ellipsoidFadeDepth
-	 *            the ratio of {@link #getFocusLimit()} at which ellipsoids
-	 *            start to fade.
+	 * @param ellipsoidFadeDepth the ratio of {@link #getFocusLimit()} at which
+	 *          ellipsoids start to fade.
 	 */
-	public synchronized void setEllipsoidFadeDepth( final double ellipsoidFadeDepth )
+	public synchronized void setEllipsoidFadeDepth(
+		final double ellipsoidFadeDepth)
 	{
-		if ( this.ellipsoidFadeDepth != ellipsoidFadeDepth )
-		{
+		if (this.ellipsoidFadeDepth != ellipsoidFadeDepth) {
 			this.ellipsoidFadeDepth = ellipsoidFadeDepth;
 			notifyListeners();
 		}
 	}
 
 	/**
-	 * The ratio of {@link #getFocusLimit()} at which points start to fade.
-	 * Points are drawn increasingly translucent the closer they are to
+	 * The ratio of {@link #getFocusLimit()} at which points start to fade. Points
+	 * are drawn increasingly translucent the closer they are to
 	 * {@link #getFocusLimit()}. Up to ratio {@link #getPointFadeDepth} they are
 	 * fully opaque, then their alpha value goes to 0 linearly.
 	 *
 	 * @return the ratio of {@link #getFocusLimit()} at which points start to
 	 *         fade.
 	 */
-	public double getPointFadeDepth()
-	{
+	public double getPointFadeDepth() {
 		return pointFadeDepth;
 	}
 
@@ -823,14 +758,11 @@ public class RenderSettings implements Style< RenderSettings >
 	 * Set the ratio of {@link #getFocusLimit()} at which points start to fade.
 	 * See {@link #getPointFadeDepth()}.
 	 *
-	 * @param pointFadeDepth
-	 *            the ratio of {@link #getFocusLimit()} at which points start to
-	 *            fade.
+	 * @param pointFadeDepth the ratio of {@link #getFocusLimit()} at which points
+	 *          start to fade.
 	 */
-	public synchronized void setPointFadeDepth( final double pointFadeDepth )
-	{
-		if ( this.pointFadeDepth != pointFadeDepth )
-		{
+	public synchronized void setPointFadeDepth(final double pointFadeDepth) {
+		if (this.pointFadeDepth != pointFadeDepth) {
 			this.pointFadeDepth = pointFadeDepth;
 			notifyListeners();
 		}
@@ -841,21 +773,17 @@ public class RenderSettings implements Style< RenderSettings >
 	 *
 	 * @return stroke width for spots.
 	 */
-	public double getSpotStrokeWidth()
-	{
+	public double getSpotStrokeWidth() {
 		return spotStrokeWidth;
 	}
 
 	/**
 	 * Set stroke width for spots.
 	 *
-	 * @param spotStrokeWidth
-	 *            stroke width for spots.
+	 * @param spotStrokeWidth stroke width for spots.
 	 */
-	public void setSpotStrokeWidth( final double spotStrokeWidth )
-	{
-		if ( this.spotStrokeWidth != spotStrokeWidth )
-		{
+	public void setSpotStrokeWidth(final double spotStrokeWidth) {
+		if (this.spotStrokeWidth != spotStrokeWidth) {
 			this.spotStrokeWidth = spotStrokeWidth;
 			notifyListeners();
 		}
@@ -866,49 +794,39 @@ public class RenderSettings implements Style< RenderSettings >
 	 *
 	 * @return stroke width for links.
 	 */
-	public double getLinkStrokeWidth()
-	{
+	public double getLinkStrokeWidth() {
 		return linkStrokeWidth;
 	}
 
 	/**
 	 * Set stroke width for links.
 	 *
-	 * @param linkStrokeWidth
-	 *            stroke width for links.
+	 * @param linkStrokeWidth stroke width for links.
 	 */
-	public void setLinkStrokeWidth( final double linkStrokeWidth )
-	{
-		if ( this.linkStrokeWidth != linkStrokeWidth )
-		{
+	public void setLinkStrokeWidth(final double linkStrokeWidth) {
+		if (this.linkStrokeWidth != linkStrokeWidth) {
 			this.linkStrokeWidth = linkStrokeWidth;
 			notifyListeners();
 		}
 	}
 
 	/**
-	 * Returns the color used to paint spots and links in the current
-	 * time-point.
+	 * Returns the color used to paint spots and links in the current time-point.
 	 * 
-	 * @return the color used to paint spots and links in the current
-	 *         time-point.
+	 * @return the color used to paint spots and links in the current time-point.
 	 */
-	public int getColorSpot()
-	{
+	public int getColorSpot() {
 		return colorSpot;
 	}
 
 	/**
 	 * Sets the color used to paint spots and links in the current time-point.
 	 * 
-	 * @param colorSpot
-	 *            the color used to paint spots and links in the current
-	 *            time-point.
+	 * @param colorSpot the color used to paint spots and links in the current
+	 *          time-point.
 	 */
-	public synchronized void setColorSpot( final int colorSpot )
-	{
-		if ( this.colorSpot != colorSpot )
-		{
+	public synchronized void setColorSpot(final int colorSpot) {
+		if (this.colorSpot != colorSpot) {
 			this.colorSpot = colorSpot;
 			notifyListeners();
 		}
@@ -919,21 +837,17 @@ public class RenderSettings implements Style< RenderSettings >
 	 * 
 	 * @return the color used to paint links in the past time-points.
 	 */
-	public int getColorPast()
-	{
+	public int getColorPast() {
 		return colorPast;
 	}
 
 	/**
 	 * Sets the color used to paint links in the past time-points.
 	 * 
-	 * @param colorPast
-	 *            the color used to paint links in the past time-points.
+	 * @param colorPast the color used to paint links in the past time-points.
 	 */
-	public synchronized void setColorPast( final int colorPast )
-	{
-		if ( this.colorPast != colorPast )
-		{
+	public synchronized void setColorPast(final int colorPast) {
+		if (this.colorPast != colorPast) {
 			this.colorPast = colorPast;
 			notifyListeners();
 		}
@@ -944,21 +858,17 @@ public class RenderSettings implements Style< RenderSettings >
 	 * 
 	 * @return the color used to paint links in the future time-points.
 	 */
-	public int getColorFuture()
-	{
+	public int getColorFuture() {
 		return colorFuture;
 	}
 
 	/**
 	 * Sets the color used to paint links in the future time-points.
 	 * 
-	 * @param colorFuture
-	 *            the color used to paint links in the future time-points.
+	 * @param colorFuture the color used to paint links in the future time-points.
 	 */
-	public synchronized void setColorFuture( final int colorFuture )
-	{
-		if ( this.colorFuture != colorFuture )
-		{
+	public synchronized void setColorFuture(final int colorFuture) {
+		if (this.colorFuture != colorFuture) {
 			this.colorFuture = colorFuture;
 			notifyListeners();
 		}
@@ -969,8 +879,7 @@ public class RenderSettings implements Style< RenderSettings >
 	 */
 
 	private static final RenderSettings df;
-	static
-	{
+	static {
 		df = new RenderSettings();
 		df.useAntialiasing = DEFAULT_USE_ANTI_ALIASING;
 		df.useGradient = DEFAULT_USE_GRADIENT;
@@ -998,33 +907,29 @@ public class RenderSettings implements Style< RenderSettings >
 	}
 
 	private static final RenderSettings POINT_CLOUD;
-	static
-	{
-		POINT_CLOUD = df.copy( "Point cloud" );
+	static {
+		POINT_CLOUD = df.copy("Point cloud");
 		POINT_CLOUD.drawLinks = false;
 		POINT_CLOUD.drawEllipsoidSliceIntersection = false;
 		POINT_CLOUD.isFocusLimitViewRelative = false;
 	}
 
 	private static final RenderSettings NONE;
-	static
-	{
-		NONE = df.copy( "No overlay" );
+	static {
+		NONE = df.copy("No overlay");
 		NONE.drawLinks = false;
 		NONE.drawSpots = false;
 	}
 
-	public static final Collection< RenderSettings > defaults;
-	static
-	{
-		defaults = new ArrayList<>( 4 );
-		defaults.add( df );
-		defaults.add( POINT_CLOUD );
-		defaults.add( NONE );
+	public static final Collection<RenderSettings> defaults;
+	static {
+		defaults = new ArrayList<>(4);
+		defaults.add(df);
+		defaults.add(POINT_CLOUD);
+		defaults.add(NONE);
 	}
 
-	public static RenderSettings defaultStyle()
-	{
+	public static RenderSettings defaultStyle() {
 		return df;
 	}
 }
