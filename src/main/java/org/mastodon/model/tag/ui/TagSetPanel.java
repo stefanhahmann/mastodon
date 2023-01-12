@@ -71,23 +71,9 @@ public class TagSetPanel extends JPanel
 		this.tagSetStructure = tagSetStructure;
 		updateListeners = new Listeners.SynchronizedList<>();
 
-		tagSetTable = new TagTable<>( tagSetStructure,
-				tss -> tss.createTagSet( makeNewName( "Tag set" ) ),
-				tss -> tss.getTagSets().size(),
-				TagSetStructure::remove,
-				(tss, i) -> tss.getTagSets().get( i ),
-				TagSet::setName,
-				TagSet::getName );
+		tagSetTable = new TagTable<>( tagSetStructure, tss -> tss.createTagSet( makeNewName( "Tag set" ) ), tss -> tss.getTagSets().size(), TagSetStructure::remove, ( tss, i ) -> tss.getTagSets().get( i ), TagSet::setName, TagSet::getName );
 
-		tagTable = new ColorTagTable<>( null,
-				ts -> ts.createTag( "Tag", colorGenerator.next() ),
-				ts -> ts.getTags().size(),
-				TagSet::removeTag,
-				(ts, i) -> ts.getTags().get( i ),
-				Tag::setLabel,
-				Tag::label,
-				( t, color ) -> t.setColor( color.getRGB() ),
-				t -> new Color( t.color(), true ) );
+		tagTable = new ColorTagTable<>( null, ts -> ts.createTag( "Tag", colorGenerator.next() ), ts -> ts.getTags().size(), TagSet::removeTag, ( ts, i ) -> ts.getTags().get( i ), Tag::setLabel, Tag::label, ( t, color ) -> t.setColor( color.getRGB() ), t -> new Color( t.color(), true ) );
 
 		tagSetTable.updateListeners().add( this::notifyListeners );
 		tagTable.updateListeners().add( this::notifyListeners );
@@ -99,7 +85,7 @@ public class TagSetPanel extends JPanel
 		splitPane.setDividerSize( 10 );
 		splitPane.setDividerLocation( 300 );
 		splitPane.setBorder( new MatteBorder( 0, 0, 1, 0, Color.LIGHT_GRAY ) );
-//		splitPane.setBorder( new EmptyBorder( 0, 0, 0, 0 ) );
+		//		splitPane.setBorder( new EmptyBorder( 0, 0, 0, 0 ) );
 
 		this.add( splitPane, BorderLayout.CENTER );
 	}
@@ -173,7 +159,7 @@ public class TagSetPanel extends JPanel
 		@Override
 		public Integer next()
 		{
-			return ran.nextInt() | 0xFF000000 ;
+			return ran.nextInt() | 0xFF000000;
 		}
 	};
 }

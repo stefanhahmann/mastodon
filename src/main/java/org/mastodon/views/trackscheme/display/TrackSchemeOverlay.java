@@ -146,13 +146,7 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	 * @param options
 	 *            options for TrackScheme look.
 	 */
-	public TrackSchemeOverlay(
-			final TrackSchemeGraph< ?, ? > graph,
-			final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight,
-			final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-			final PaintDecorations paintDecorations,
-			final PaintGraph paintGraph,
-			final TrackSchemeOptions options )
+	public TrackSchemeOverlay( final TrackSchemeGraph< ?, ? > graph, final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight, final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus, final PaintDecorations paintDecorations, final PaintGraph paintGraph, final TrackSchemeOptions options )
 	{
 		this.graph = graph;
 		this.highlight = highlight;
@@ -248,9 +242,7 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 			vertices.releaseRef( vs );
 			vertices.releaseRef( vt );
 
-			return ( i >= 0 )
-					? graph.getEdgePool().getObjectIfExists( i, ref )
-					: null;
+			return ( i >= 0 ) ? graph.getEdgePool().getObjectIfExists( i, ref ) : null;
 		}
 	}
 
@@ -297,9 +289,7 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 				}
 			}
 
-			return ( iBest >= 0 )
-					? graph.getVertexPool().getObjectIfExists( iBest, ref )
-					: null;
+			return ( iBest >= 0 ) ? graph.getVertexPool().getObjectIfExists( iBest, ref ) : null;
 		}
 	}
 
@@ -347,7 +337,7 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	 */
 	public void setCurrentTimepoint( final int timepoint )
 	{
-		this.currentTimepoint  = timepoint;
+		this.currentTimepoint = timepoint;
 	}
 
 	/**
@@ -422,11 +412,7 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 
 	public static class TrackSchemeOverlayFactory
 	{
-		public TrackSchemeOverlay create(
-				final TrackSchemeGraph< ?, ? > graph,
-				final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight,
-				final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
-				final TrackSchemeOptions options )
+		public TrackSchemeOverlay create( final TrackSchemeGraph< ?, ? > graph, final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight, final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus, final TrackSchemeOptions options )
 		{
 			return new TrackSchemeOverlay( graph, highlight, focus, new PaintDecorations(), new PaintGraph(), options );
 		}

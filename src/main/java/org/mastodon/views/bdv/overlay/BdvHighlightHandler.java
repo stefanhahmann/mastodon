@@ -49,10 +49,7 @@ public class BdvHighlightHandler< V extends OverlayVertex< V, E >, E extends Ove
 
 	private int x, y;
 
-	public BdvHighlightHandler(
-			final OverlayGraph< V, E > overlayGraph,
-			final OverlayGraphRenderer< V, E > renderer,
-			final HighlightModel< V, E > highlight )
+	public BdvHighlightHandler( final OverlayGraph< V, E > overlayGraph, final OverlayGraphRenderer< V, E > renderer, final HighlightModel< V, E > highlight )
 	{
 		this.highlight = highlight;
 		this.renderer = renderer;

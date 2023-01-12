@@ -75,7 +75,8 @@ final public class EverythingDisablerAndReenabler
 	public EverythingDisablerAndReenabler( final Container rootContainerForWhatShouldBeDisabled, final Class< ? >[] componentClassesToBeIgnored )
 	{
 
-		if ( rootContainerForWhatShouldBeDisabled == null ) { throw new IllegalArgumentException(); }
+		if ( rootContainerForWhatShouldBeDisabled == null )
+		{ throw new IllegalArgumentException(); }
 		this.rootContainerForWhatShouldBeDisabled = rootContainerForWhatShouldBeDisabled;
 		this.componentClassesToBeIgnored = componentClassesToBeIgnored;
 	}
@@ -92,7 +93,7 @@ final public class EverythingDisablerAndReenabler
 	{
 		if ( enable && disableHasBeenCalled )
 			reenable();
-		else if (!enable && !disableHasBeenCalled )
+		else if ( !enable && !disableHasBeenCalled )
 			disable();
 	}
 
@@ -105,7 +106,8 @@ final public class EverythingDisablerAndReenabler
 	public void disable()
 	{
 
-		if ( disableHasBeenCalled ) { throw new IllegalStateException(); }
+		if ( disableHasBeenCalled )
+		{ throw new IllegalStateException(); }
 		disableHasBeenCalled = true;
 		componentsToReenable.clear();
 		disableEverythingInsideThisHierarchically( rootContainerForWhatShouldBeDisabled );
@@ -119,7 +121,8 @@ final public class EverythingDisablerAndReenabler
 	public void reenable()
 	{
 
-		if ( !disableHasBeenCalled ) { throw new IllegalStateException(); }
+		if ( !disableHasBeenCalled )
+		{ throw new IllegalStateException(); }
 		disableHasBeenCalled = false;
 
 		for ( int i = componentsToReenable.size() - 1; i >= 0; i-- )

@@ -50,8 +50,7 @@ import org.mastodon.model.SelectionModel;
  * @param <WE>
  *            edge type this wrapped {@link SelectionModel}.
  */
-public class SelectionModelAdapter< V extends Vertex< E >, E extends Edge< V >, WV extends Vertex< WE >, WE extends Edge< WV > >
-		implements SelectionModel< WV, WE >
+public class SelectionModelAdapter< V extends Vertex< E >, E extends Edge< V >, WV extends Vertex< WE >, WE extends Edge< WV > > implements SelectionModel< WV, WE >
 {
 	private final SelectionModel< V, E > selection;
 
@@ -61,10 +60,7 @@ public class SelectionModelAdapter< V extends Vertex< E >, E extends Edge< V >, 
 
 	private final ForwardedListeners< SelectionListener > listeners;
 
-	public SelectionModelAdapter(
-			final SelectionModel< V, E > selection,
-			final RefBimap< V, WV > vertexMap,
-			final RefBimap< E, WE > edgeMap )
+	public SelectionModelAdapter( final SelectionModel< V, E > selection, final RefBimap< V, WV > vertexMap, final RefBimap< E, WE > edgeMap )
 	{
 		this.selection = selection;
 		this.vertexMap = vertexMap;

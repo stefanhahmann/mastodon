@@ -93,15 +93,7 @@ public class PaintDecorations
 	 * @param style
 	 *            style with which to paint (background color, etc.)
 	 */
-	public void paintBackground(
-			final Graphics2D g2,
-			final int width,
-			final int height,
-			final int headerWidth,
-			final int headerHeight,
-			final ScreenEntities screenEntities,
-			final int currentTimepoint,
-			final TrackSchemeStyle style )
+	public void paintBackground( final Graphics2D g2, final int width, final int height, final int headerWidth, final int headerHeight, final ScreenEntities screenEntities, final int currentTimepoint, final TrackSchemeStyle style )
 	{
 		final ScreenTransform screenTransform = new ScreenTransform();
 		screenEntities.getScreenTransform( screenTransform );
@@ -186,15 +178,7 @@ public class PaintDecorations
 	 * @param style
 	 *            style with which to paint (background color, etc.)
 	 */
-	public void paintHeaders(
-			final Graphics2D g2,
-			final int width,
-			final int height,
-			final int headerWidth,
-			final int headerHeight,
-			final ScreenEntities screenEntities,
-			final int currentTimepoint,
-			final TrackSchemeStyle style )
+	public void paintHeaders( final Graphics2D g2, final int width, final int height, final int headerWidth, final int headerHeight, final ScreenEntities screenEntities, final int currentTimepoint, final TrackSchemeStyle style )
 	{
 		final ScreenTransform screenTransform = new ScreenTransform();
 		screenEntities.getScreenTransform( screenTransform );
@@ -247,9 +231,7 @@ public class PaintDecorations
 				final int yline = ( int ) ( ( t - minY - 0.5 ) * yScale ) + headerHeight;
 				g2.drawLine( 0, yline, headerWidth, yline );
 
-				final int ytext = Math.max(
-						( int ) ( ( t - minY ) * yScale ) + fontInc + headerHeight,
-						yline + fontHeight );
+				final int ytext = Math.max( ( int ) ( ( t - minY ) * yScale ) + fontInc + headerHeight, yline + fontHeight );
 				g2.drawString( "" + t, 5, ytext );
 			}
 		}
@@ -284,7 +266,7 @@ public class PaintDecorations
 				final int boundedMin = Math.max( headerWidth, column.xLeft );
 				final int boundedMax = Math.min( column.xLeft + column.width, width );
 				final int boundedWidth = boundedMax - boundedMin;
-				if ( boundedWidth >= stringWidth + 5  )
+				if ( boundedWidth >= stringWidth + 5 )
 				{
 					final int xtext = ( boundedMin + boundedMax - stringWidth ) / 2;
 					g2.drawString( str, xtext, headerHeight / 2 );

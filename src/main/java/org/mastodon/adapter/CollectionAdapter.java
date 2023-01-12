@@ -46,16 +46,13 @@ import java.util.Iterator;
  *
  * @author Tobias Pietzsch
  */
-public class CollectionAdapter< O, WO >
-		implements Collection< WO >
+public class CollectionAdapter< O, WO > implements Collection< WO >
 {
 	private final Collection< O > collection;
 
 	private final RefBimap< O, WO > map;
 
-	public CollectionAdapter(
-			final Collection< O > collection,
-			final RefBimap< O, WO > map )
+	public CollectionAdapter( final Collection< O > collection, final RefBimap< O, WO > map )
 	{
 		this.collection = collection;
 		this.map = map;
@@ -85,7 +82,8 @@ public class CollectionAdapter< O, WO >
 	{
 		final Iterator< O > iter = collection.iterator();
 		final WO ref = map.reusableRightRef();
-		return new Iterator< WO >() {
+		return new Iterator< WO >()
+		{
 			@Override
 			public boolean hasNext()
 			{

@@ -150,33 +150,24 @@ public class Model extends AbstractModel< ModelGraph, Spot, Link > implements Un
 		featureModel = new FeatureModel();
 		declareDefaultFeatures();
 		tagSetModel = new DefaultTagSetModel<>( getGraph() );
-		vertexUndoableProperties.add(
-				new DefaultTagSetModel.SerialisationAccess< Spot, Link >( tagSetModel )
-				{
-					@Override
-					protected LabelSets< Spot, Integer > getVertexIdLabelSets()
-					{
-						return super.getVertexIdLabelSets();
-					}
-				}.getVertexIdLabelSets() );
-		edgeUndoableProperties.add(
-				new DefaultTagSetModel.SerialisationAccess< Spot, Link >( tagSetModel )
-				{
-					@Override
-					protected LabelSets< Link, Integer > getEdgeIdLabelSets()
-					{
-						return super.getEdgeIdLabelSets();
-					}
-				}.getEdgeIdLabelSets() );
+		vertexUndoableProperties.add( new DefaultTagSetModel.SerialisationAccess< Spot, Link >( tagSetModel )
+		{
+			@Override
+			protected LabelSets< Spot, Integer > getVertexIdLabelSets()
+			{
+				return super.getVertexIdLabelSets();
+			}
+		}.getVertexIdLabelSets() );
+		edgeUndoableProperties.add( new DefaultTagSetModel.SerialisationAccess< Spot, Link >( tagSetModel )
+		{
+			@Override
+			protected LabelSets< Link, Integer > getEdgeIdLabelSets()
+			{
+				return super.getEdgeIdLabelSets();
+			}
+		}.getEdgeIdLabelSets() );
 
-		undoRecorder = new GraphUndoRecorder<>(
-				initialCapacity,
-				modelGraph,
-				modelGraph.idmap(),
-				ModelSerializer.getInstance().getVertexSerializer(),
-				ModelSerializer.getInstance().getEdgeSerializer(),
-				vertexUndoableProperties,
-				edgeUndoableProperties );
+		undoRecorder = new GraphUndoRecorder<>( initialCapacity, modelGraph, modelGraph.idmap(), ModelSerializer.getInstance().getVertexSerializer(), ModelSerializer.getInstance().getEdgeSerializer(), vertexUndoableProperties, edgeUndoableProperties );
 
 		final Recorder< DefaultTagSetModel.SetTagSetStructureUndoableEdit > recorder = undoRecorder.createGenericUndoableEditRecorder();
 		tagSetModel.setUndoRecorder( recorder );

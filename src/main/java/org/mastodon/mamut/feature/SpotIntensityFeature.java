@@ -50,18 +50,21 @@ import org.scijava.plugin.Plugin;
 
 public class SpotIntensityFeature implements Feature< Spot >
 {
-	
+
 	public static final String KEY = "Spot intensity";
 
-	private static final String HELP_STRING =
-			"Computes spot intensity features like mean, median, etc for all the channels of the source image. "
-			+ "All the pixels within the spot ellipsoid are taken into account.";
+	private static final String HELP_STRING = "Computes spot intensity features like mean, median, etc for all the channels of the source image. " + "All the pixels within the spot ellipsoid are taken into account.";
 
 	public static final FeatureProjectionSpec MEAN_PROJECTION_SPEC = new FeatureProjectionSpec( "Mean", Dimension.INTENSITY );
+
 	public static final FeatureProjectionSpec STD_PROJECTION_SPEC = new FeatureProjectionSpec( "Std", Dimension.INTENSITY );
+
 	public static final FeatureProjectionSpec MIN_PROJECTION_SPEC = new FeatureProjectionSpec( "Min", Dimension.INTENSITY );
+
 	public static final FeatureProjectionSpec MAX_PROJECTION_SPEC = new FeatureProjectionSpec( "Max", Dimension.INTENSITY );
+
 	public static final FeatureProjectionSpec MEDIAN_PROJECTION_SPEC = new FeatureProjectionSpec( "Median", Dimension.INTENSITY );
+
 	public static final FeatureProjectionSpec SUM_PROJECTION_SPEC = new FeatureProjectionSpec( "Sum", Dimension.INTENSITY );
 
 	public static final Spec SPEC = new Spec();
@@ -71,37 +74,25 @@ public class SpotIntensityFeature implements Feature< Spot >
 	{
 		public Spec()
 		{
-			super(
-					KEY,
-					HELP_STRING,
-					SpotIntensityFeature.class,
-					Spot.class,
-					Multiplicity.ON_SOURCES,
-					MEAN_PROJECTION_SPEC,
-					STD_PROJECTION_SPEC,
-					MIN_PROJECTION_SPEC,
-					MAX_PROJECTION_SPEC,
-					MEDIAN_PROJECTION_SPEC,
-					SUM_PROJECTION_SPEC );
+			super( KEY, HELP_STRING, SpotIntensityFeature.class, Spot.class, Multiplicity.ON_SOURCES, MEAN_PROJECTION_SPEC, STD_PROJECTION_SPEC, MIN_PROJECTION_SPEC, MAX_PROJECTION_SPEC, MEDIAN_PROJECTION_SPEC, SUM_PROJECTION_SPEC );
 		}
 	}
 
 	private final Map< FeatureProjectionKey, FeatureProjection< Spot > > projectionMap;
 
 	final List< DoublePropertyMap< Spot > > means;
+
 	final List< DoublePropertyMap< Spot > > stds;
+
 	final List< DoublePropertyMap< Spot > > mins;
+
 	final List< DoublePropertyMap< Spot > > maxs;
+
 	final List< DoublePropertyMap< Spot > > medians;
+
 	final List< DoublePropertyMap< Spot > > sums;
-	
-	SpotIntensityFeature(
-			final List< DoublePropertyMap< Spot > > means,
-			final List< DoublePropertyMap< Spot > > stds,
-			final List< DoublePropertyMap< Spot > > mins,
-			final List< DoublePropertyMap< Spot > > maxs,
-			final List< DoublePropertyMap< Spot > > medians,
-			final List< DoublePropertyMap< Spot > > sums )
+
+	SpotIntensityFeature( final List< DoublePropertyMap< Spot > > means, final List< DoublePropertyMap< Spot > > stds, final List< DoublePropertyMap< Spot > > mins, final List< DoublePropertyMap< Spot > > maxs, final List< DoublePropertyMap< Spot > > medians, final List< DoublePropertyMap< Spot > > sums )
 	{
 		this.means = means;
 		this.stds = stds;

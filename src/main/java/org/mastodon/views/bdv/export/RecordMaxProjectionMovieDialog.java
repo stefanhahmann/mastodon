@@ -135,18 +135,9 @@ public class RecordMaxProjectionMovieDialog extends DelayedPackDialog implements
 	 * @return a runnable that should be executed when the BDV window is closed,
 	 *         and that closes this dialog and de-registers its listeners.
 	 */
-	public static Runnable install(
-			final Actions actions,
-			final BigDataViewerMamut bdv,
-			final OverlayGraphRenderer< ?, ? > tracksOverlay,
-			final ColorBarOverlay colorBarOverlay,
-			final Keymap keymap )
+	public static Runnable install( final Actions actions, final BigDataViewerMamut bdv, final OverlayGraphRenderer< ?, ? > tracksOverlay, final ColorBarOverlay colorBarOverlay, final Keymap keymap )
 	{
-		final RecordMaxProjectionMovieDialog dialog = new RecordMaxProjectionMovieDialog(
-				bdv.getViewerFrame(),
-				bdv.getViewer(),
-				tracksOverlay,
-				colorBarOverlay );
+		final RecordMaxProjectionMovieDialog dialog = new RecordMaxProjectionMovieDialog( bdv.getViewerFrame(), bdv.getViewer(), tracksOverlay, colorBarOverlay );
 		dialog.setTitle( "Record max projection movie on " + bdv.getViewerFrame().getTitle() );
 		bdv.getViewer().getDisplay().overlays().add( dialog );
 		actions.namedAction( new RecordMovieDialog.MyToggleDialogAction( RECORD_MIP_MOVIE_DIALOG, dialog ), RECORD_MIP_MOVIE_DIALOG_KEYS );
@@ -172,7 +163,7 @@ public class RecordMaxProjectionMovieDialog extends DelayedPackDialog implements
 			dialogActions.namedAction( new RecordMovieDialog.MyToggleDialogAction( RECORD_MIP_MOVIE_DIALOG, dialog ), RECORD_MIP_MOVIE_DIALOG_KEYS );
 			return onClose;
 		}
-		
+
 		return () -> {
 			dialog.setVisible( false );
 			dialog.dispose();
@@ -182,11 +173,17 @@ public class RecordMaxProjectionMovieDialog extends DelayedPackDialog implements
 	private static final long serialVersionUID = 1L;
 
 	private static final String EXPORT_TO_MOVIE_KEY = "ExportToMovie";
+
 	private static final String PNG_EXPORT_PATH_KEY = "PNGExportPath";
+
 	private static final String MOVIE_EXPORT_PATH_KEY = "MovieExportPath";
+
 	private static final String FPS_KEY = "FPS";
+
 	private static final String NUM_STEPS_KEY = "NumSteps";
+
 	private static final String STEP_SIZE_KEY = "StepSize";
+
 	private static final String PROJECT_OVERLAY_KEY = "ProjectOverlay";
 
 	private final int maxTimepoint;
@@ -203,11 +200,7 @@ public class RecordMaxProjectionMovieDialog extends DelayedPackDialog implements
 
 	private JTextField tfPathMovie;
 
-	public RecordMaxProjectionMovieDialog(
-			final Frame owner,
-			final ViewerPanel viewer,
-			final OverlayGraphRenderer< ?, ? > tracksOverlay,
-			final ColorBarOverlay colorBarOverlay )
+	public RecordMaxProjectionMovieDialog( final Frame owner, final ViewerPanel viewer, final OverlayGraphRenderer< ?, ? > tracksOverlay, final ColorBarOverlay colorBarOverlay )
 	{
 		super( owner, "Record BDV max projection movie", false );
 		maxTimepoint = ( null == viewer ) ? 10 : viewer.state().getNumTimepoints() - 1;
@@ -488,17 +481,8 @@ public class RecordMaxProjectionMovieDialog extends DelayedPackDialog implements
 			}
 		} );
 
-
 		btnBrowsePNGs.addActionListener( e -> {
-			final File file = FileChooser.chooseFile(
-					FileChooser.useJFileChooser,
-					RecordMaxProjectionMovieDialog.this,
-					tfPathPNGs.getText(),
-					null,
-					"Browse to a folder to save the PNGs to",
-					DialogType.SAVE,
-					SelectionMode.DIRECTORIES_ONLY,
-					MastodonIcons.BDV_ICON_MEDIUM.getImage() );
+			final File file = FileChooser.chooseFile( FileChooser.useJFileChooser, RecordMaxProjectionMovieDialog.this, tfPathPNGs.getText(), null, "Browse to a folder to save the PNGs to", DialogType.SAVE, SelectionMode.DIRECTORIES_ONLY, MastodonIcons.BDV_ICON_MEDIUM.getImage() );
 			if ( file != null )
 			{
 				tfPathPNGs.setText( file.getAbsolutePath() );
@@ -507,15 +491,7 @@ public class RecordMaxProjectionMovieDialog extends DelayedPackDialog implements
 		} );
 
 		btnBrowseMovie.addActionListener( e -> {
-			final File file = FileChooser.chooseFile(
-					FileChooser.useJFileChooser,
-					RecordMaxProjectionMovieDialog.this,
-					tfPathMovie.getText(),
-					null,
-					"Save to movie file (MP4, MOV, AVI, ...)",
-					DialogType.SAVE,
-					SelectionMode.FILES_ONLY,
-					MastodonIcons.BDV_ICON_MEDIUM.getImage() );
+			final File file = FileChooser.chooseFile( FileChooser.useJFileChooser, RecordMaxProjectionMovieDialog.this, tfPathMovie.getText(), null, "Save to movie file (MP4, MOV, AVI, ...)", DialogType.SAVE, SelectionMode.FILES_ONLY, MastodonIcons.BDV_ICON_MEDIUM.getImage() );
 			if ( file != null )
 			{
 				tfPathMovie.setText( file.getAbsolutePath() );
@@ -564,7 +540,7 @@ public class RecordMaxProjectionMovieDialog extends DelayedPackDialog implements
 		spinnerNumSteps.addChangeListener( e -> prefService.put( RecordMaxProjectionMovieDialog.class, NUM_STEPS_KEY, ( ( Number ) spinnerNumSteps.getValue() ).intValue() ) );
 		spinnerStepSize.addChangeListener( e -> prefService.put( RecordMaxProjectionMovieDialog.class, STEP_SIZE_KEY, ( ( Number ) spinnerStepSize.getValue() ).doubleValue() ) );
 		chckbxProjectOverlay.addChangeListener( e -> prefService.put( RecordMaxProjectionMovieDialog.class, PROJECT_OVERLAY_KEY, chckbxProjectOverlay.isSelected() ) );
-		
+
 		setCanvasSize( viewer.getWidth(), viewer.getHeight() );
 
 		/*
@@ -614,11 +590,7 @@ public class RecordMaxProjectionMovieDialog extends DelayedPackDialog implements
 						try
 						{
 							recordButton.setEnabled( false );
-							recorder.recordMaxProjectionMovie(
-									width, height,
-									minTimepointIndex, maxTimepointIndex,
-									stepSize, numSteps,
-									projectOverlay );
+							recorder.recordMaxProjectionMovie( width, height, minTimepointIndex, maxTimepointIndex, stepSize, numSteps, projectOverlay );
 						}
 						catch ( final Exception ex )
 						{

@@ -81,8 +81,7 @@ import bdv.viewer.OverlayRenderer;
  * @param <E>
  *            the type of edges to tag.
  */
-public class EditTagActions< V extends Vertex< E >, E extends Edge< V > >
-		implements Runnable
+public class EditTagActions< V extends Vertex< E >, E extends Edge< V > > implements Runnable
 {
 	public static final String PICK_TAGS = "pick tags";
 
@@ -140,15 +139,7 @@ public class EditTagActions< V extends Vertex< E >, E extends Edge< V > >
 
 	private TagSet tagSet;
 
-	private EditTagActions(
-			final InputActionBindings inputActionBindings,
-			final TriggerBehaviourBindings triggerBehaviourBindings,
-			final TagSetModel< V, E > tagModel,
-			final SelectionModel< V, E > selectionModel,
-			final ReentrantReadWriteLock lock,
-			final Component panel,
-			final InteractiveDisplayCanvas renderer,
-			final UndoPointMarker undoPointMarker )
+	private EditTagActions( final InputActionBindings inputActionBindings, final TriggerBehaviourBindings triggerBehaviourBindings, final TagSetModel< V, E > tagModel, final SelectionModel< V, E > selectionModel, final ReentrantReadWriteLock lock, final Component panel, final InteractiveDisplayCanvas renderer, final UndoPointMarker undoPointMarker )
 	{
 		this.actionBindings = inputActionBindings;
 		this.behaviourBindings = triggerBehaviourBindings;
@@ -417,9 +408,13 @@ public class EditTagActions< V extends Vertex< E >, E extends Edge< V > >
 	}
 
 	private final static Color BACKGROUND_COLOR = new Color( 255, 255, 255, 230 );
+
 	private static final Color LINE_COLOR = Color.ORANGE;
+
 	private final static int INSET = 5;
+
 	private static final int X_CORNER = 10;
+
 	private static final int Y_CORNER = 10;
 
 	private class TagSelectionOverlay implements OverlayRenderer
@@ -527,17 +522,9 @@ public class EditTagActions< V extends Vertex< E >, E extends Edge< V > >
 
 			// Paint box.
 			g.setColor( BACKGROUND_COLOR );
-			g.fillRect(
-					X_CORNER,
-					Y_CORNER,
-					width + 2 * INSET,
-					height + 2 * INSET );
+			g.fillRect( X_CORNER, Y_CORNER, width + 2 * INSET, height + 2 * INSET );
 			g.setColor( LINE_COLOR );
-			g.drawRect(
-					X_CORNER,
-					Y_CORNER,
-					width + 2 * INSET,
-					height + 2 * INSET );
+			g.drawRect( X_CORNER, Y_CORNER, width + 2 * INSET, height + 2 * INSET );
 
 			// Paint strings.
 			final int xs = X_CORNER + INSET;
@@ -561,21 +548,10 @@ public class EditTagActions< V extends Vertex< E >, E extends Edge< V > >
 
 	static enum Mode
 	{
-		INACTIVE,
-		PICK_TAGSET,
-		PICK_TAG;
+		INACTIVE, PICK_TAGSET, PICK_TAG;
 	}
 
-	public static < V extends Vertex< E >, E extends Edge< V > > void install(
-			final Actions actions,
-			final InputActionBindings inputActionBindings,
-			final TriggerBehaviourBindings triggerBehaviourBindings,
-			final TagSetModel< V, E > tagModel,
-			final SelectionModel< V, E > selectionModel,
-			final ReentrantReadWriteLock lock,
-			final Component panel,
-			final InteractiveDisplayCanvas display,
-			final UndoPointMarker undo )
+	public static < V extends Vertex< E >, E extends Edge< V > > void install( final Actions actions, final InputActionBindings inputActionBindings, final TriggerBehaviourBindings triggerBehaviourBindings, final TagSetModel< V, E > tagModel, final SelectionModel< V, E > selectionModel, final ReentrantReadWriteLock lock, final Component panel, final InteractiveDisplayCanvas display, final UndoPointMarker undo )
 	{
 		final EditTagActions< V, E > editTagActions = new EditTagActions<>( inputActionBindings, triggerBehaviourBindings, tagModel, selectionModel, lock, panel, display, undo );
 		actions.runnableAction( editTagActions, PICK_TAGS, PICK_TAGS_KEYS );

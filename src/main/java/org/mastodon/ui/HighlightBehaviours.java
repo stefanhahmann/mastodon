@@ -58,9 +58,11 @@ import org.scijava.ui.behaviour.util.Behaviours;
 public class HighlightBehaviours< V extends Vertex< E >, E extends Edge< V > >
 {
 	private static final String REMOVE_HIGHLIGHTED_VERTEX = "remove highlighted vertex";
+
 	private static final String REMOVE_HIGHLIGHTED_EDGE = "remove highlighted edge";
 
 	private static final String[] REMOVE_HIGHLIGHTED_VERTEX_KEYS = new String[] { "D" };
+
 	private static final String[] REMOVE_HIGHLIGHTED_EDGE_KEYS = new String[] { "D" };
 
 	/*
@@ -86,13 +88,7 @@ public class HighlightBehaviours< V extends Vertex< E >, E extends Edge< V > >
 
 	private final RemoveHighlightedEdge removeHighlightedEdgeBehaviour;
 
-	public static < V extends Vertex< E >, E extends Edge< V > > void install(
-			final Behaviours behaviours,
-			final Graph< V, E > graph,
-			final ReentrantReadWriteLock lock,
-			final GraphChangeNotifier notify,
-			final HighlightModel< V, E > highlight,
-			final UndoPointMarker undo )
+	public static < V extends Vertex< E >, E extends Edge< V > > void install( final Behaviours behaviours, final Graph< V, E > graph, final ReentrantReadWriteLock lock, final GraphChangeNotifier notify, final HighlightModel< V, E > highlight, final UndoPointMarker undo )
 	{
 		final HighlightBehaviours< V, E > hb = new HighlightBehaviours<>( graph, lock, notify, highlight, undo );
 
@@ -110,12 +106,7 @@ public class HighlightBehaviours< V extends Vertex< E >, E extends Edge< V > >
 
 	private final UndoPointMarker undo;
 
-	private HighlightBehaviours(
-			final Graph< V, E > graph,
-			final ReentrantReadWriteLock lock,
-			final GraphChangeNotifier notify,
-			final HighlightModel< V, E > highlight,
-			final UndoPointMarker undo )
+	private HighlightBehaviours( final Graph< V, E > graph, final ReentrantReadWriteLock lock, final GraphChangeNotifier notify, final HighlightModel< V, E > highlight, final UndoPointMarker undo )
 	{
 		this.graph = graph;
 		this.lock = lock;

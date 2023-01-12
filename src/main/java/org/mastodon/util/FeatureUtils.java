@@ -58,9 +58,7 @@ public class FeatureUtils
 	 */
 	public static final < O > Map< FeatureSpec< ?, O >, Feature< O > > collectFeatureMap( final FeatureModel featureModel, final Class< O > clazz )
 	{
-		final Set< FeatureSpec< ?, ? > > featureSpecs = featureModel.getFeatureSpecs().stream()
-				.filter( ( fs ) -> fs.getTargetClass().isAssignableFrom( clazz ) )
-				.collect( Collectors.toSet() );
+		final Set< FeatureSpec< ?, ? > > featureSpecs = featureModel.getFeatureSpecs().stream().filter( ( fs ) -> fs.getTargetClass().isAssignableFrom( clazz ) ).collect( Collectors.toSet() );
 		final Map< FeatureSpec< ?, O >, Feature< O > > featureMap = new HashMap<>();
 		for ( final FeatureSpec< ?, ? > fs : featureSpecs )
 		{

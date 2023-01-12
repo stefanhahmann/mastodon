@@ -70,10 +70,7 @@ public class TagSetStructure
 
 	public void saveRaw( final File file ) throws IOException
 	{
-		try (ObjectOutputStream oos = new ObjectOutputStream(
-				new BufferedOutputStream(
-						new FileOutputStream( file ),
-						1024 * 1024 ) ))
+		try (ObjectOutputStream oos = new ObjectOutputStream( new BufferedOutputStream( new FileOutputStream( file ), 1024 * 1024 ) ))
 		{
 			saveRaw( oos );
 		}
@@ -97,10 +94,7 @@ public class TagSetStructure
 
 	public void loadRaw( final File file ) throws IOException
 	{
-		try (final ObjectInputStream ois = new ObjectInputStream(
-				new BufferedInputStream(
-						new FileInputStream( file ),
-						1024 * 1024 ) ))
+		try (final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( new FileInputStream( file ), 1024 * 1024 ) ))
 		{
 			loadRaw( ois );
 		}
@@ -116,7 +110,7 @@ public class TagSetStructure
 		{
 			// TagSet id.
 			final int tagSetId = ois.readInt();
-			if (tagSetId >= tagSetIDgenerator.get())
+			if ( tagSetId >= tagSetIDgenerator.get() )
 				tagSetIDgenerator.set( tagSetId + 1 );
 			// TagSet name.
 			final String tagSetName = ois.readUTF();

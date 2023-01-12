@@ -57,15 +57,10 @@ public class FeatureColorModeConfigPageDemo
 		{
 
 			final FeatureColorModeManager featureColorModeManager = new FeatureColorModeManager();
-			final MamutFeatureProjectionsManager featureProjectionsManager = new MamutFeatureProjectionsManager(
-					context.getService( FeatureSpecsService.class ),
-					featureColorModeManager );
+			final MamutFeatureProjectionsManager featureProjectionsManager = new MamutFeatureProjectionsManager( context.getService( FeatureSpecsService.class ), featureColorModeManager );
 
 			final PreferencesDialog settings = new PreferencesDialog( null, new Keymap(), new String[] { KeyConfigContexts.MASTODON } );
-			settings.addPage( new FeatureColorModeConfigPage( FEATURECOLORMODE_SETTINGSPAGE_TREEPATH,
-					featureColorModeManager,
-					featureProjectionsManager,
-					"Spot", "Link" ) );
+			settings.addPage( new FeatureColorModeConfigPage( FEATURECOLORMODE_SETTINGSPAGE_TREEPATH, featureColorModeManager, featureProjectionsManager, "Spot", "Link" ) );
 
 			final MamutProject project = new MamutProjectIO().load( "samples/drosophila_crop.mastodon" );
 			final Model model = new Model();

@@ -33,15 +33,13 @@ import org.mastodon.graph.Edge;
 import org.mastodon.graph.GraphIdBimap;
 import org.mastodon.graph.Vertex;
 
-public class TrackSchemeEdgeBimap< V extends Vertex< E >, E extends Edge< V > >
-		implements RefBimap< E, TrackSchemeEdge >
+public class TrackSchemeEdgeBimap< V extends Vertex< E >, E extends Edge< V > > implements RefBimap< E, TrackSchemeEdge >
 {
 	private final GraphIdBimap< V, E > idmap;
 
 	private final TrackSchemeGraph< V, E > tsgraph;
 
-	public TrackSchemeEdgeBimap(
-			final TrackSchemeGraph< V, E > tsgraph )
+	public TrackSchemeEdgeBimap( final TrackSchemeGraph< V, E > tsgraph )
 	{
 		this.idmap = tsgraph.getGraphIdBimap();
 		this.tsgraph = tsgraph;

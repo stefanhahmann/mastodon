@@ -91,7 +91,7 @@ public class ForwardingNavigationHandler< V, E > implements NavigationHandler< V
 		handler = newHandler;
 	}
 
-	public static class Factory< V, E> implements GroupableModelFactory< NavigationHandler< V, E > >
+	public static class Factory< V, E > implements GroupableModelFactory< NavigationHandler< V, E > >
 	{
 		@Override
 		public NavigationHandler< V, E > createBackingModel()

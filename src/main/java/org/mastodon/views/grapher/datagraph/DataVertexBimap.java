@@ -35,8 +35,7 @@ import org.mastodon.graph.Vertex;
 import org.mastodon.model.HasLabel;
 import org.mastodon.spatial.HasTimepoint;
 
-public class DataVertexBimap< V extends Vertex< E > & HasTimepoint & HasLabel, E extends Edge< V > >
-		implements RefBimap< V, DataVertex >
+public class DataVertexBimap< V extends Vertex< E > & HasTimepoint & HasLabel, E extends Edge< V > > implements RefBimap< V, DataVertex >
 {
 	private final GraphIdBimap< V, E > idmap;
 

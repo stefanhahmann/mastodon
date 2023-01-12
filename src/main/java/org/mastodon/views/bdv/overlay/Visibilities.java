@@ -117,11 +117,7 @@ public class Visibilities< V extends Vertex< E >, E extends Edge< V > >
 	 *            the lock on the specified graph, used to read-lock the graph
 	 *            when building the {@link Visibility} instances.
 	 */
-	public Visibilities(
-			final ReadOnlyGraph< V, E > graph,
-			final SelectionModel< V, E > selectionModel,
-			final FocusModel< V, E > focusModel,
-			final ReentrantReadWriteLock lock )
+	public Visibilities( final ReadOnlyGraph< V, E > graph, final SelectionModel< V, E > selectionModel, final FocusModel< V, E > focusModel, final ReentrantReadWriteLock lock )
 	{
 		this.graph = graph;
 		this.selectionModel = selectionModel;

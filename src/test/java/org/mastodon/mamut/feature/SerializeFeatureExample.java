@@ -70,13 +70,13 @@ public class SerializeFeatureExample
 		featureComputerService.setSharedBdvData( windowManager.getAppModel().getSharedBdvData() );
 		System.out.println( "\nComputing features..." );
 		final StopWatch stopWatch = StopWatch.createAndStart();
-		final Map< FeatureSpec< ?, ? >, Feature< ? > > features = featureComputerService.compute(	featureComputerService.getFeatureSpecs() );
+		final Map< FeatureSpec< ?, ? >, Feature< ? > > features = featureComputerService.compute( featureComputerService.getFeatureSpecs() );
 		featureModel.clear();
 		features.values().forEach( featureModel::declareFeature );
 		stopWatch.stop();
 		System.out.println( String.format( "Done in %.1f s.", stopWatch.nanoTime() / 1e9 ) );
 
-		final File targetFile = new File("samples/featureserialized.mastodon");
+		final File targetFile = new File( "samples/featureserialized.mastodon" );
 
 		System.out.println( "\nResaving." );
 		windowManager.getProjectManager().saveProject( targetFile );

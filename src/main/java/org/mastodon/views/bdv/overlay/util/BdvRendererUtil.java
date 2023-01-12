@@ -46,14 +46,9 @@ public class BdvRendererUtil
 	 *            the view interval.
 	 * @return {@code viewerInterval} transformed to global coordinates.
 	 */
-	public static ConvexPolytope getPolytopeGlobal(
-			final AffineTransform3D transform,
-			final RealInterval viewerInterval )
+	public static ConvexPolytope getPolytopeGlobal( final AffineTransform3D transform, final RealInterval viewerInterval )
 	{
-		return getPolytopeGlobal( transform,
-				viewerInterval.realMin( 0 ), viewerInterval.realMax( 0 ),
-				viewerInterval.realMin( 1 ), viewerInterval.realMax( 1 ),
-				viewerInterval.realMin( 2 ), viewerInterval.realMax( 2 ) );
+		return getPolytopeGlobal( transform, viewerInterval.realMin( 0 ), viewerInterval.realMax( 0 ), viewerInterval.realMin( 1 ), viewerInterval.realMax( 1 ), viewerInterval.realMin( 2 ), viewerInterval.realMax( 2 ) );
 	}
 
 	/**
@@ -77,23 +72,12 @@ public class BdvRendererUtil
 	 *            the z max bound of the view interval.
 	 * @return the specified viewer interval, transformed to global coordinates.
 	 */
-	public static ConvexPolytope getPolytopeGlobal(
-			final AffineTransform3D transform,
-			final double viewerMinX, final double viewerMaxX,
-			final double viewerMinY, final double viewerMaxY,
-			final double viewerMinZ, final double viewerMaxZ )
+	public static ConvexPolytope getPolytopeGlobal( final AffineTransform3D transform, final double viewerMinX, final double viewerMaxX, final double viewerMinY, final double viewerMaxY, final double viewerMinZ, final double viewerMaxZ )
 	{
-		final ConvexPolytope polytopeViewer = new ConvexPolytope(
-				new HyperPlane(  1,  0,  0, viewerMinX ),
-				new HyperPlane( -1,  0,  0, -viewerMaxX ),
-				new HyperPlane(  0,  1,  0, viewerMinY ),
-				new HyperPlane(  0, -1,  0, -viewerMaxY ),
-				new HyperPlane(  0,  0,  1, viewerMinZ),
-				new HyperPlane(  0,  0, -1, -viewerMaxZ ) );
+		final ConvexPolytope polytopeViewer = new ConvexPolytope( new HyperPlane( 1, 0, 0, viewerMinX ), new HyperPlane( -1, 0, 0, -viewerMaxX ), new HyperPlane( 0, 1, 0, viewerMinY ), new HyperPlane( 0, -1, 0, -viewerMaxY ), new HyperPlane( 0, 0, 1, viewerMinZ ), new HyperPlane( 0, 0, -1, -viewerMaxZ ) );
 		final ConvexPolytope polytopeGlobal = ConvexPolytope.transform( polytopeViewer, transform.inverse() );
 		return polytopeGlobal;
 	}
-
 
 	private BdvRendererUtil()
 	{}

@@ -71,8 +71,7 @@ public class DummyGraph extends AbstractObjectIdGraph< DummyVertex, DummyEdge > 
 
 	public static enum Examples
 	{
-		CELEGANS( CElegansExample.graph, CElegansExample.selectedVertices, CElegansExample.selectedEdges ),
-		DIVIDING_CELL( DividingCellExample.graph, DividingCellExample.selectedVertices, DividingCellExample.selectedEdges );
+		CELEGANS( CElegansExample.graph, CElegansExample.selectedVertices, CElegansExample.selectedEdges ), DIVIDING_CELL( DividingCellExample.graph, DividingCellExample.selectedVertices, DividingCellExample.selectedEdges );
 
 		private final DummyGraph graph;
 
@@ -271,7 +270,8 @@ public class DummyGraph extends AbstractObjectIdGraph< DummyVertex, DummyEdge > 
 					selectedEdges.add( edge );
 				}
 
-				@Override public void crossComponent( final DummyVertex from, final DummyVertex to, final DepthFirstSearch< DummyVertex, DummyEdge > search )
+				@Override
+				public void crossComponent( final DummyVertex from, final DummyVertex to, final DepthFirstSearch< DummyVertex, DummyEdge > search )
 				{}
 			} );
 			dfs.start( ABa );

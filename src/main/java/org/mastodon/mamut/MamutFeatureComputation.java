@@ -91,10 +91,7 @@ public class MamutFeatureComputation
 
 		private final BranchGraphSynchronizer branchGraphSynchronizer;
 
-		public MamutFeatureComputationController(
-				final FeatureComputerService computerService,
-				final Collection< Class< ? > > targets,
-				final BranchGraphSynchronizer branchGraphSynchronizer )
+		public MamutFeatureComputationController( final FeatureComputerService computerService, final Collection< Class< ? > > targets, final BranchGraphSynchronizer branchGraphSynchronizer )
 		{
 			super( computerService, targets );
 			this.branchGraphSynchronizer = branchGraphSynchronizer;

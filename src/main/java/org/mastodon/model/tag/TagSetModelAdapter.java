@@ -60,10 +60,7 @@ public class TagSetModelAdapter< V extends Vertex< E >, E extends Edge< V >, WV 
 
 	private final ForwardedListeners< TagSetModelListener > listeners;
 
-	public TagSetModelAdapter(
-			final TagSetModel< V, E > tagSetModel,
-			final RefBimap< V, WV > vertexMap,
-			final RefBimap< E, WE > edgeMap )
+	public TagSetModelAdapter( final TagSetModel< V, E > tagSetModel, final RefBimap< V, WV > vertexMap, final RefBimap< E, WE > edgeMap )
 	{
 		this.tagSetModel = tagSetModel;
 		vertexTags = new ObjTagsAdapter<>( tagSetModel.getVertexTags(), vertexMap );

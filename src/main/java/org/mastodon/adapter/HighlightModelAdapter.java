@@ -49,8 +49,7 @@ import org.mastodon.model.HighlightModel;
  *
  * @author Tobias Pietzsch
  */
-public class HighlightModelAdapter< V extends Vertex< E >, E extends Edge< V >, WV extends Vertex< WE >, WE extends Edge< WV > >
-		implements HighlightModel< WV, WE >
+public class HighlightModelAdapter< V extends Vertex< E >, E extends Edge< V >, WV extends Vertex< WE >, WE extends Edge< WV > > implements HighlightModel< WV, WE >
 {
 	private final HighlightModel< V, E > highlight;
 
@@ -60,10 +59,7 @@ public class HighlightModelAdapter< V extends Vertex< E >, E extends Edge< V >, 
 
 	private final ForwardedListeners< HighlightListener > listeners;
 
-	public HighlightModelAdapter(
-			final HighlightModel< V, E > highlight,
-			final RefBimap< V, WV > vertexMap,
-			final RefBimap< E, WE > edgeMap )
+	public HighlightModelAdapter( final HighlightModel< V, E > highlight, final RefBimap< V, WV > vertexMap, final RefBimap< E, WE > edgeMap )
 	{
 		this.highlight = highlight;
 		this.vertexMap = vertexMap;

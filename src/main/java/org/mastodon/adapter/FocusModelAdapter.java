@@ -49,8 +49,7 @@ import org.mastodon.model.FocusModel;
  *
  * @author Tobias Pietzsch
  */
-public class FocusModelAdapter< V extends Vertex< E >, E extends Edge< V >, WV extends Vertex< WE >, WE extends Edge< WV > >
-		implements FocusModel< WV, WE >
+public class FocusModelAdapter< V extends Vertex< E >, E extends Edge< V >, WV extends Vertex< WE >, WE extends Edge< WV > > implements FocusModel< WV, WE >
 {
 	private final FocusModel< V, E > focus;
 
@@ -58,10 +57,7 @@ public class FocusModelAdapter< V extends Vertex< E >, E extends Edge< V >, WV e
 
 	private final ForwardedListeners< FocusListener > listeners;
 
-	public FocusModelAdapter(
-			final FocusModel< V, E > focus,
-			final RefBimap< V, WV > vertexMap,
-			final RefBimap< E, WE > edgeMap )
+	public FocusModelAdapter( final FocusModel< V, E > focus, final RefBimap< V, WV > vertexMap, final RefBimap< E, WE > edgeMap )
 	{
 		this.focus = focus;
 		this.vertexMap = vertexMap;

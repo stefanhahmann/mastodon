@@ -213,19 +213,8 @@ public class MainWindow extends JFrame
 		}
 
 		// Custom button text
-		final Object[] options = {
-				"Save project",
-				"Don't save",
-				"Cancel" };
-		final int choice = JOptionPane.showOptionDialog( this,
-				"Data changed since last save. \n"
-						+ "Do you want to save the project before closing mastodon?",
-				"Save before close?",
-				JOptionPane.YES_NO_CANCEL_OPTION,
-				JOptionPane.QUESTION_MESSAGE,
-				MastodonIcons.MASTODON_ICON_MEDIUM,
-				options,
-				JOptionPane.CANCEL_OPTION );
+		final Object[] options = { "Save project", "Don't save", "Cancel" };
+		final int choice = JOptionPane.showOptionDialog( this, "Data changed since last save. \n" + "Do you want to save the project before closing mastodon?", "Save before close?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, MastodonIcons.MASTODON_ICON_MEDIUM, options, JOptionPane.CANCEL_OPTION );
 
 		switch ( choice )
 		{
@@ -258,30 +247,16 @@ public class MainWindow extends JFrame
 
 	public static void addMenus( final ViewMenu menu, final ActionMap actionMap )
 	{
-		MamutMenuBuilder.build( menu, actionMap,
-				fileMenu(
-//						item( ProjectManager.CREATE_PROJECT ),
-//						item( ProjectManager.CREATE_PROJECT_FROM_URL ),
-//						item( ProjectManager.LOAD_PROJECT ),
-						item( ProjectManager.SAVE_PROJECT ),
-						item( ProjectManager.SAVE_PROJECT_AS ),
-						separator(),
-//						item( ProjectManager.IMPORT_TGMM ),
-//						item( ProjectManager.IMPORT_SIMI ),
-//						item( ProjectManager.IMPORT_MAMUT ),
-//						item( ProjectManager.EXPORT_MAMUT ),
-//						separator(),
-						item( WindowManager.PREFERENCES_DIALOG ),
-						separator(),
-						item( WindowManager.OPEN_ONLINE_DOCUMENTATION ) ),
-				windowMenu(
-						item( WindowManager.NEW_BDV_VIEW ),
-						item( WindowManager.NEW_TRACKSCHEME_VIEW ),
-						item( WindowManager.NEW_TABLE_VIEW ),
-						item( WindowManager.NEW_SELECTION_TABLE_VIEW ),
-						item( WindowManager.NEW_GRAPHER_VIEW ),
-						item( WindowManager.NEW_BRANCH_BDV_VIEW ),
-						item( WindowManager.NEW_BRANCH_TRACKSCHEME_VIEW ),
-						item( WindowManager.NEW_HIERARCHY_TRACKSCHEME_VIEW ) ) );
+		MamutMenuBuilder.build( menu, actionMap, fileMenu(
+				//						item( ProjectManager.CREATE_PROJECT ),
+				//						item( ProjectManager.CREATE_PROJECT_FROM_URL ),
+				//						item( ProjectManager.LOAD_PROJECT ),
+				item( ProjectManager.SAVE_PROJECT ), item( ProjectManager.SAVE_PROJECT_AS ), separator(),
+				//						item( ProjectManager.IMPORT_TGMM ),
+				//						item( ProjectManager.IMPORT_SIMI ),
+				//						item( ProjectManager.IMPORT_MAMUT ),
+				//						item( ProjectManager.EXPORT_MAMUT ),
+				//						separator(),
+				item( WindowManager.PREFERENCES_DIALOG ), separator(), item( WindowManager.OPEN_ONLINE_DOCUMENTATION ) ), windowMenu( item( WindowManager.NEW_BDV_VIEW ), item( WindowManager.NEW_TRACKSCHEME_VIEW ), item( WindowManager.NEW_TABLE_VIEW ), item( WindowManager.NEW_SELECTION_TABLE_VIEW ), item( WindowManager.NEW_GRAPHER_VIEW ), item( WindowManager.NEW_BRANCH_BDV_VIEW ), item( WindowManager.NEW_BRANCH_TRACKSCHEME_VIEW ), item( WindowManager.NEW_HIERARCHY_TRACKSCHEME_VIEW ) ) );
 	}
 }

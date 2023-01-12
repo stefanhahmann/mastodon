@@ -124,14 +124,7 @@ public class SearchVertexLabel< V extends Vertex< E > & HasLabel & Ref< V >, E e
 	 *            the search text field.
 	 * @return a new panel containing the search field.
 	 */
-	public static < V extends Vertex< E > & HasLabel & Ref< V >, E extends Edge< V > > JPanel
-			install(
-					final Actions actions,
-					final ReadOnlyGraph< V, E > graph,
-					final NavigationHandler< V, E > navigation,
-					final SelectionModel< V, E > selection,
-					final FocusModel< V, E > focus,
-					final JComponent cancelEntryFocusTarget )
+	public static < V extends Vertex< E > & HasLabel & Ref< V >, E extends Edge< V > > JPanel install( final Actions actions, final ReadOnlyGraph< V, E > graph, final NavigationHandler< V, E > navigation, final SelectionModel< V, E > selection, final FocusModel< V, E > focus, final JComponent cancelEntryFocusTarget )
 	{
 		final SearchVertexLabel< V, E > search = new SearchVertexLabel<>( graph, navigation, selection, focus, cancelEntryFocusTarget );
 		actions.runnableAction( () -> search.searchField.requestFocusInWindow(), SEARCH, SEARCH_KEYS );
@@ -152,19 +145,11 @@ public class SearchVertexLabel< V extends Vertex< E > & HasLabel & Ref< V >, E e
 		@Override
 		public void getCommandDescriptions( final CommandDescriptions descriptions )
 		{
-			descriptions.add(
-					SEARCH,
-					SEARCH_KEYS,
-					"Find vertices by their label." );
+			descriptions.add( SEARCH, SEARCH_KEYS, "Find vertices by their label." );
 		}
 	}
 
-	private SearchVertexLabel(
-			final ReadOnlyGraph< V, E > graph,
-			final NavigationHandler< V, E > navigation,
-			final SelectionModel< V, E > selection,
-			final FocusModel< V, E > focus,
-			final JComponent cancelFocusTarget )
+	private SearchVertexLabel( final ReadOnlyGraph< V, E > graph, final NavigationHandler< V, E > navigation, final SelectionModel< V, E > selection, final FocusModel< V, E > focus, final JComponent cancelFocusTarget )
 	{
 		searchPanel = new JPanel();
 		searchPanel.setMinimumSize( new Dimension( 26, 25 ) );
@@ -272,9 +257,7 @@ public class SearchVertexLabel< V extends Vertex< E > & HasLabel & Ref< V >, E e
 		}
 	}
 
-	private static class SearchAction< V extends Vertex< E > & HasLabel & Ref< V >, E extends Edge< V > >
-			extends AbstractGraphAlgorithm< V, E >
-			implements FocusListener
+	private static class SearchAction< V extends Vertex< E > & HasLabel & Ref< V >, E extends Edge< V > > extends AbstractGraphAlgorithm< V, E > implements FocusListener
 	{
 		private Iterator< V > iterator;
 
@@ -292,11 +275,7 @@ public class SearchVertexLabel< V extends Vertex< E > & HasLabel & Ref< V >, E e
 
 		private boolean gotOne;
 
-		public SearchAction(
-				final ReadOnlyGraph< V, E > graph,
-				final NavigationHandler< V, E > navigation,
-				final SelectionModel< V, E > selection,
-				final FocusModel< V, E > focus )
+		public SearchAction( final ReadOnlyGraph< V, E > graph, final NavigationHandler< V, E > navigation, final SelectionModel< V, E > selection, final FocusModel< V, E > focus )
 		{
 			super( graph );
 			this.navigation = navigation;

@@ -72,13 +72,8 @@ public class EllpsoidIteratorExample
 		final BdvStackSource< UnsignedByteType > bdv = BdvFunctions.show( img, "img", Bdv.options().sourceTransform( sourceTransform ) );
 
 		final ModelGraph graph = new ModelGraph();
-		final Spot spot = graph.addVertex().init( 0,
-				new double[] { 50, 50, 50 },
-				new double[][] {
-						{ 210, 100, 0 },
-						{ 100, 110, 10 },
-						{ 0, 10, 100 }
-				} );
+		final Spot spot = graph.addVertex().init( 0, new double[] { 50, 50, 50 }, new double[][] { { 210, 100, 0 }, { 100, 110, 10 }, { 0, 10, 100 }
+		} );
 
 		final Source< UnsignedByteType > source = bdv.getSources().get( 0 ).getSpimSource();
 		final EllipsoidIterable< UnsignedByteType > ellipsoidIter = new EllipsoidIterable<>( source );
@@ -126,7 +121,6 @@ public class EllpsoidIteratorExample
 
 		BdvFunctions.showOverlay( overlay, "spot", Bdv.options().addTo( bdv ) );
 	}
-
 
 	// copy of ScreenVertexMath from BDV view using Spot instead of ScreenVertex
 	static class ScreenVertexMath

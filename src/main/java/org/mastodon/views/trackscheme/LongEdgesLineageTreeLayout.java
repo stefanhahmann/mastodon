@@ -53,21 +53,13 @@ import gnu.trove.list.array.TIntArrayList;
 public class LongEdgesLineageTreeLayout extends LineageTreeLayoutImp
 {
 
-	public LongEdgesLineageTreeLayout(
-			final RootsModel<TrackSchemeVertex> rootsModel,
-			final TrackSchemeGraph<?, ?> graph,
-			final SelectionModel<TrackSchemeVertex, TrackSchemeEdge> selection )
+	public LongEdgesLineageTreeLayout( final RootsModel< TrackSchemeVertex > rootsModel, final TrackSchemeGraph< ?, ? > graph, final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection )
 	{
 		super( rootsModel, graph, selection );
 	}
 
 	@Override
-	public void cropAndScale(
-			final ScreenTransform transform,
-			final ScreenEntities screenEntities,
-			final int decorationsOffsetX,
-			final int decorationsOffsetY,
-			final GraphColorGenerator< TrackSchemeVertex, TrackSchemeEdge > colorGenerator )
+	public void cropAndScale( final ScreenTransform transform, final ScreenEntities screenEntities, final int decorationsOffsetX, final int decorationsOffsetY, final GraphColorGenerator< TrackSchemeVertex, TrackSchemeEdge > colorGenerator )
 	{
 		final double minX = transform.getMinX();
 		final double maxX = transform.getMaxX();
@@ -137,7 +129,7 @@ public class LongEdgesLineageTreeLayout extends LineageTreeLayoutImp
 				{
 					edge.getSource( v2 );
 
-					if( v2.getLayoutTimestamp() != timestamp )
+					if ( v2.getLayoutTimestamp() != timestamp )
 						continue;
 
 					// Check if the edge has some parts on the screen.

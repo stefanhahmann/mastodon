@@ -59,13 +59,7 @@ public abstract class FeatureSpec< F extends Feature< T >, T > implements SciJav
 	 */
 	private final Multiplicity multiplicity;
 
-	protected FeatureSpec(
-			final String key,
-			final String info,
-			final Class< F > featureClass,
-			final Class< T > targetClass,
-			final Multiplicity multiplicity,
-			final FeatureProjectionSpec... projectionSpecs )
+	protected FeatureSpec( final String key, final String info, final Class< F > featureClass, final Class< T > targetClass, final Multiplicity multiplicity, final FeatureProjectionSpec... projectionSpecs )
 	{
 		this.key = key;
 		this.info = info;
@@ -125,9 +119,7 @@ public abstract class FeatureSpec< F extends Feature< T >, T > implements SciJav
 		final FeatureSpec< ?, ? > that = ( FeatureSpec< ?, ? > ) o;
 
 		// Don't test for feature projection.
-		return key.equals( that.key )
-				&& featureClass.equals( that.featureClass )
-				&& targetClass.equals( that.targetClass );
+		return key.equals( that.key ) && featureClass.equals( that.featureClass ) && targetClass.equals( that.targetClass );
 	}
 
 	@Override

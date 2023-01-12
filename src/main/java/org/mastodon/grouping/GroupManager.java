@@ -141,9 +141,7 @@ public class GroupManager
 		public void moveTo( final GroupHandle handle, final int groupId, final boolean copyCurrentStateToNewModel )
 		{
 			final GroupHandle.ModelData< T > data = handle.getModelData( factory );
-			final T model = ( groupId == NO_GROUP )
-					? data.backing
-					: models.get( groupId );
+			final T model = ( groupId == NO_GROUP ) ? data.backing : models.get( groupId );
 			data.forwarding.linkTo( model, copyCurrentStateToNewModel );
 		}
 	}

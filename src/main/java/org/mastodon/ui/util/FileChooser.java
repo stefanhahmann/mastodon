@@ -57,67 +57,32 @@ public class FileChooser
 		FILES_ONLY, DIRECTORIES_ONLY, FILES_AND_DIRECTORIES
 	}
 
-	public static File chooseFile(
-			final Component parent,
-			final String selectedFile,
-			final DialogType dialogType )
+	public static File chooseFile( final Component parent, final String selectedFile, final DialogType dialogType )
 	{
 		return chooseFile( parent, selectedFile, null, null, dialogType );
 	}
 
-	public static File chooseFile(
-			final Component parent,
-			final String selectedFile,
-			final FileFilter fileFilter,
-			final String dialogTitle,
-			final DialogType dialogType )
+	public static File chooseFile( final Component parent, final String selectedFile, final FileFilter fileFilter, final String dialogTitle, final DialogType dialogType )
 	{
 		return chooseFile( parent, selectedFile, fileFilter, dialogTitle, dialogType, SelectionMode.FILES_ONLY );
 	}
 
-	public static File chooseFile(
-			final Component parent,
-			final String selectedFile,
-			final XmlFileFilter fileFilter,
-			final String dialogTitle,
-			final DialogType dialogType,
-			final Image image )
+	public static File chooseFile( final Component parent, final String selectedFile, final XmlFileFilter fileFilter, final String dialogTitle, final DialogType dialogType, final Image image )
 	{
 		return chooseFile( useJFileChooser, parent, selectedFile, fileFilter, dialogTitle, dialogType, SelectionMode.FILES_ONLY, image );
 	}
 
-	public static File chooseFile(
-			final Component parent,
-			final String selectedFile,
-			final FileFilter fileFilter,
-			final String dialogTitle,
-			final DialogType dialogType,
-			final SelectionMode selectionMode )
+	public static File chooseFile( final Component parent, final String selectedFile, final FileFilter fileFilter, final String dialogTitle, final DialogType dialogType, final SelectionMode selectionMode )
 	{
 		return chooseFile( useJFileChooser, parent, selectedFile, fileFilter, dialogTitle, dialogType, selectionMode, null );
 	}
 
-	public static File chooseFile(
-			final boolean useJFileChooser,
-			final Component parent,
-			final String selectedFile,
-			final FileFilter fileFilter,
-			final String dialogTitle,
-			final DialogType dialogType,
-			final SelectionMode selectionMode )
+	public static File chooseFile( final boolean useJFileChooser, final Component parent, final String selectedFile, final FileFilter fileFilter, final String dialogTitle, final DialogType dialogType, final SelectionMode selectionMode )
 	{
 		return chooseFile( useJFileChooser, parent, selectedFile, fileFilter, dialogTitle, dialogType, selectionMode, null );
 	}
 
-	public static File chooseFile(
-			boolean useJFileChooser,
-			final Component parent,
-			final String selectedFile,
-			final FileFilter fileFilter,
-			final String dialogTitle,
-			final DialogType dialogType,
-			final SelectionMode selectionMode,
-			final Image iconImage )
+	public static File chooseFile( boolean useJFileChooser, final Component parent, final String selectedFile, final FileFilter fileFilter, final String dialogTitle, final DialogType dialogType, final SelectionMode selectionMode, final Image iconImage )
 	{
 		final boolean isSaveDialog = ( dialogType == DialogType.SAVE );
 		final boolean isDirectoriesOnly = ( selectionMode == SelectionMode.DIRECTORIES_ONLY );
@@ -136,8 +101,7 @@ public class FileChooser
 		 */
 		String title = dialogTitle;
 		if ( title == null )
-			title = ( isSaveDialog ? "Save" : "Open" )
-					+ ( fileFilter == null ? "" : " " + fileFilter.getDescription() );
+			title = ( isSaveDialog ? "Save" : "Open" ) + ( fileFilter == null ? "" : " " + fileFilter.getDescription() );
 
 		File file = null;
 		if ( useJFileChooser )
@@ -176,9 +140,7 @@ public class FileChooser
 
 			fileChooser.setFileFilter( fileFilter );
 
-			final int returnVal = isSaveDialog
-					? fileChooser.showSaveDialog( parent )
-					: fileChooser.showOpenDialog( parent );
+			final int returnVal = isSaveDialog ? fileChooser.showSaveDialog( parent ) : fileChooser.showOpenDialog( parent );
 			if ( returnVal == JFileChooser.APPROVE_OPTION )
 				file = fileChooser.getSelectedFile();
 		}

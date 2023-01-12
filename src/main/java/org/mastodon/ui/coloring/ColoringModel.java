@@ -74,10 +74,7 @@ public abstract class ColoringModel
 
 	private final Listeners.List< ColoringChangedListener > listeners;
 
-	public ColoringModel(
-			final TagSetModel< ?, ? > tagSetModel,
-			final FeatureColorModeManager featureColorModeManager,
-			final FeatureModel featureModel )
+	public ColoringModel( final TagSetModel< ?, ? > tagSetModel, final FeatureColorModeManager featureColorModeManager, final FeatureModel featureModel )
 	{
 		this.tagSetModel = tagSetModel;
 		this.featureColorModeManager = featureColorModeManager;
@@ -145,11 +142,7 @@ public abstract class ColoringModel
 		if ( featureColorMode != null )
 		{
 			final String name = featureColorMode.getName();
-			final Optional< FeatureColorMode > mode = Stream.concat(
-					featureColorModeManager.getBuiltinStyles().stream(),
-					featureColorModeManager.getUserStyles().stream() )
-					.filter( m -> m.getName().equals( name ) && isValid( m ) )
-					.findFirst();
+			final Optional< FeatureColorMode > mode = Stream.concat( featureColorModeManager.getBuiltinStyles().stream(), featureColorModeManager.getUserStyles().stream() ).filter( m -> m.getName().equals( name ) && isValid( m ) ).findFirst();
 			if ( mode.isPresent() )
 				colorByFeature( mode.get() );
 			else

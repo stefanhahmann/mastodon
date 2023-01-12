@@ -52,7 +52,7 @@ public class MamutTestPlugin implements MamutPlugin
 	/*
 	 * Command descriptions for all provided commands
 	 */
-//	@Plugin( type = CommandDescriptionProvider.class )
+	//	@Plugin( type = CommandDescriptionProvider.class )
 	public static class Descriptions extends CommandDescriptionProvider
 	{
 		public Descriptions()
@@ -91,9 +91,7 @@ public class MamutTestPlugin implements MamutPlugin
 	@Override
 	public List< ViewMenuBuilder.MenuItem > getMenuItems()
 	{
-		return Arrays.asList(
-				MamutMenuBuilder.menu( "Plugins",
-						MamutMenuBuilder.item( ACTION_1 ) ) );
+		return Arrays.asList( MamutMenuBuilder.menu( "Plugins", MamutMenuBuilder.item( ACTION_1 ) ) );
 	}
 
 	@Override

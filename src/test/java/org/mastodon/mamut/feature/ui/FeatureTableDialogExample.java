@@ -90,10 +90,10 @@ public class FeatureTableDialogExample
 			return uptodate;
 		}
 
-//		public void setUptodate( final boolean uptodate )
-//		{
-//			this.uptodate = uptodate;
-//		}
+		//		public void setUptodate( final boolean uptodate )
+		//		{
+		//			this.uptodate = uptodate;
+		//		}
 
 		@Override
 		public String toString()
@@ -104,14 +104,7 @@ public class FeatureTableDialogExample
 
 	private static FeatureTable< List< MyElement >, MyElement > createFeatureTable()
 	{
-		final FeatureTable< List< MyElement >, MyElement > featureTable = new FeatureTable<>(
-				null,
-				List::size,
-				List::get,
-				MyElement::getName,
-				MyElement::isSelected,
-				MyElement::setSelected,
-				MyElement::isUptodate );
+		final FeatureTable< List< MyElement >, MyElement > featureTable = new FeatureTable<>( null, List::size, List::get, MyElement::getName, MyElement::isSelected, MyElement::setSelected, MyElement::isUptodate );
 		return featureTable;
 	}
 
@@ -136,8 +129,7 @@ public class FeatureTableDialogExample
 			tablePanel.setLayout( new BoxLayout( tablePanel, BoxLayout.PAGE_AXIS ) );
 			tablePanel.setBorder( BorderFactory.createEmptyBorder( 10, 10, 10, 10 ) );
 
-			final FeatureTable.SelectionListener< MyElement > sl = t ->
-			{
+			final FeatureTable.SelectionListener< MyElement > sl = t -> {
 				if ( t == null )
 					System.out.println();
 				System.out.println( "Element " + t + " changed." );

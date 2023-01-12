@@ -162,13 +162,7 @@ public class FeatureTagTablePanel< O > extends JPanel
 
 	private final JScrollPane scrollPane;
 
-	public FeatureTagTablePanel(
-			final ObjTags< O > tags,
-			final RefPool< O > idBimap,
-			final Function< O, String > labelGenerator,
-			final BiConsumer< O, String > labelSetter,
-			final UndoPointMarker undoPointMarker,
-			final ColorGenerator< O > coloring )
+	public FeatureTagTablePanel( final ObjTags< O > tags, final RefPool< O > idBimap, final Function< O, String > labelGenerator, final BiConsumer< O, String > labelSetter, final UndoPointMarker undoPointMarker, final ColorGenerator< O > coloring )
 	{
 		this.tags = tags;
 		this.idBimap = idBimap;
@@ -696,9 +690,7 @@ public class FeatureTagTablePanel< O > extends JPanel
 		{
 			this.defaultRenderer = defaultRenderer;
 			this.bold = bold;
-			this.border = bottomLine
-					? BorderFactory.createMatteBorder( 0, 0, 1, 1, Color.GRAY )
-					: BorderFactory.createMatteBorder( 0, 0, 0, 1, Color.GRAY );
+			this.border = bottomLine ? BorderFactory.createMatteBorder( 0, 0, 1, 1, Color.GRAY ) : BorderFactory.createMatteBorder( 0, 0, 0, 1, Color.GRAY );
 		}
 
 		@Override
@@ -909,9 +901,7 @@ public class FeatureTagTablePanel< O > extends JPanel
 	 */
 	private static Color textColorForBackground( final Color backgroundColor )
 	{
-		if ( ( backgroundColor.getRed() * 0.299
-				+ backgroundColor.getGreen() * 0.587
-				+ backgroundColor.getBlue() * 0.114 ) > 150 )
+		if ( ( backgroundColor.getRed() * 0.299 + backgroundColor.getGreen() * 0.587 + backgroundColor.getBlue() * 0.114 ) > 150 )
 			return Color.BLACK;
 		else
 			return Color.WHITE;

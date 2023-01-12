@@ -46,15 +46,10 @@ import org.mastodon.ui.coloring.feature.FeatureColorModeManager;
  * @author Tobias Pietzsch
  * @author Jean-Yves Tinevez
  */
-public class ColoringModelBranchGraph< V extends Vertex< E >, E extends Edge< V > >
-		extends ColoringModel
-		implements TagSetModel.TagSetModelListener, FeatureColorModeManager.FeatureColorModesListener
+public class ColoringModelBranchGraph< V extends Vertex< E >, E extends Edge< V > > extends ColoringModel implements TagSetModel.TagSetModelListener, FeatureColorModeManager.FeatureColorModesListener
 {
 
-	public ColoringModelBranchGraph(
-			final TagSetModel< ?, ? > tagSetModel,
-			final FeatureColorModeManager featureColorModeManager,
-			final FeatureModel featureModel )
+	public ColoringModelBranchGraph( final TagSetModel< ?, ? > tagSetModel, final FeatureColorModeManager featureColorModeManager, final FeatureModel featureModel )
 	{
 		super( tagSetModel, featureColorModeManager, featureModel );
 	}
@@ -70,9 +65,7 @@ public class ColoringModelBranchGraph< V extends Vertex< E >, E extends Edge< V 
 				return false;
 
 			// Forbid modes that are not defined on branch objects.
-			if ( vmode == VertexColorMode.INCOMING_EDGE ||
-					vmode == VertexColorMode.OUTGOING_EDGE ||
-					vmode == VertexColorMode.VERTEX )
+			if ( vmode == VertexColorMode.INCOMING_EDGE || vmode == VertexColorMode.OUTGOING_EDGE || vmode == VertexColorMode.VERTEX )
 				return false;
 		}
 
@@ -82,9 +75,7 @@ public class ColoringModelBranchGraph< V extends Vertex< E >, E extends Edge< V 
 			if ( null == projections.getFeatureProjection( mode.getEdgeFeatureProjection() ) )
 				return false;
 
-			if ( emode == EdgeColorMode.EDGE ||
-					emode == EdgeColorMode.SOURCE_VERTEX ||
-					emode == EdgeColorMode.TARGET_VERTEX )
+			if ( emode == EdgeColorMode.EDGE || emode == EdgeColorMode.SOURCE_VERTEX || emode == EdgeColorMode.TARGET_VERTEX )
 				return false;
 		}
 
@@ -114,24 +105,15 @@ public class ColoringModelBranchGraph< V extends Vertex< E >, E extends Edge< V 
 			{
 			case INCOMING_EDGE:
 			case INCOMING_BRANCH_EDGE:
-				vertexColorGenerator = new FeatureColorGeneratorIncomingEdge<>(
-						( FeatureProjection< E > ) vertexProjection,
-						ColorMap.getColorMap( vertexColorMap ),
-						vertexRangeMin, vertexRangeMax );
+				vertexColorGenerator = new FeatureColorGeneratorIncomingEdge<>( ( FeatureProjection< E > ) vertexProjection, ColorMap.getColorMap( vertexColorMap ), vertexRangeMin, vertexRangeMax );
 				break;
 			case OUTGOING_EDGE:
 			case OUTGOING_BRANCH_EDGE:
-				vertexColorGenerator = new FeatureColorGeneratorOutgoingEdge<>(
-						( FeatureProjection< E > ) vertexProjection,
-						ColorMap.getColorMap( vertexColorMap ),
-						vertexRangeMin, vertexRangeMax );
+				vertexColorGenerator = new FeatureColorGeneratorOutgoingEdge<>( ( FeatureProjection< E > ) vertexProjection, ColorMap.getColorMap( vertexColorMap ), vertexRangeMin, vertexRangeMax );
 				break;
 			case VERTEX:
 			case BRANCH_VERTEX:
-				vertexColorGenerator = new FeatureColorGenerator<>(
-						( FeatureProjection< V > ) vertexProjection,
-						ColorMap.getColorMap( vertexColorMap ),
-						vertexRangeMin, vertexRangeMax );
+				vertexColorGenerator = new FeatureColorGenerator<>( ( FeatureProjection< V > ) vertexProjection, ColorMap.getColorMap( vertexColorMap ), vertexRangeMin, vertexRangeMax );
 				break;
 			case NONE:
 				vertexColorGenerator = new DefaultColorGenerator<>();
@@ -155,25 +137,16 @@ public class ColoringModelBranchGraph< V extends Vertex< E >, E extends Edge< V 
 			{
 			case SOURCE_VERTEX:
 			case SOURCE_BRANCH_VERTEX:
-				edgeColorGenerator = new FeatureColorGeneratorSourceVertex<>(
-						( FeatureProjection< V > ) edgeProjection,
-						ColorMap.getColorMap( edgeColorMap ),
-						edgeRangeMin, edgeRangeMax );
+				edgeColorGenerator = new FeatureColorGeneratorSourceVertex<>( ( FeatureProjection< V > ) edgeProjection, ColorMap.getColorMap( edgeColorMap ), edgeRangeMin, edgeRangeMax );
 				break;
 			case TARGET_VERTEX:
 			case TARGET_BRANCH_VERTEX:
-				edgeColorGenerator = new FeatureColorGeneratorTargetVertex<>(
-						( FeatureProjection< V > ) edgeProjection,
-						ColorMap.getColorMap( edgeColorMap ),
-						edgeRangeMin, edgeRangeMax );
+				edgeColorGenerator = new FeatureColorGeneratorTargetVertex<>( ( FeatureProjection< V > ) edgeProjection, ColorMap.getColorMap( edgeColorMap ), edgeRangeMin, edgeRangeMax );
 				break;
 			case EDGE:
 			case INCOMING_BRANCH_EDGE:
 			case OUTGOING_BRANCH_EDGE:
-				edgeColorGenerator = new FeatureEdgeColorGenerator<>(
-						( FeatureProjection< E > ) edgeProjection,
-						ColorMap.getColorMap( edgeColorMap ),
-						edgeRangeMin, edgeRangeMax );
+				edgeColorGenerator = new FeatureEdgeColorGenerator<>( ( FeatureProjection< E > ) edgeProjection, ColorMap.getColorMap( edgeColorMap ), edgeRangeMin, edgeRangeMax );
 				break;
 			case NONE:
 				edgeColorGenerator = new DefaultEdgeColorGenerator<>();

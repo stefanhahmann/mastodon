@@ -111,8 +111,7 @@ public class FeatureComputationController implements GraphChangeListener
 
 	protected synchronized void compute()
 	{
-		final EverythingDisablerAndReenabler reenabler = new EverythingDisablerAndReenabler( gui,
-				new Class[] { JLabel.class, JProgressBar.class } );
+		final EverythingDisablerAndReenabler reenabler = new EverythingDisablerAndReenabler( gui, new Class[] { JLabel.class, JProgressBar.class } );
 		reenabler.disable();
 
 		gui.btnCancel.setEnabled( true );
@@ -124,8 +123,7 @@ public class FeatureComputationController implements GraphChangeListener
 			@Override
 			public void run()
 			{
-				final Map< FeatureSpec< ?, ? >, Feature< ? > > computed =
-						computerService.compute( forceComputeAll, model.getSelectedFeatureKeys() );
+				final Map< FeatureSpec< ?, ? >, Feature< ? > > computed = computerService.compute( forceComputeAll, model.getSelectedFeatureKeys() );
 				SwingUtilities.invokeLater( () -> {
 					gui.btnCancel.setVisible( false );
 					gui.btnCompute.setVisible( true );

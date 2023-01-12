@@ -62,10 +62,7 @@ public class MouseHighlightHandler implements MouseMotionListener, MouseListener
 	 */
 	private int headerHeight;
 
-	public MouseHighlightHandler(
-			final TrackSchemeOverlay graphOverlay,
-			final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight,
-			final TrackSchemeGraph< ?, ? > graph )
+	public MouseHighlightHandler( final TrackSchemeOverlay graphOverlay, final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight, final TrackSchemeGraph< ?, ? > graph )
 	{
 		this.graphOverlay = graphOverlay;
 		this.highlight = highlight;

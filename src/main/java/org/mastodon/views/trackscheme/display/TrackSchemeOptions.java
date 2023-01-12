@@ -145,6 +145,7 @@ public class TrackSchemeOptions
 		values.keyPressedManager = manager;
 		return this;
 	}
+
 	/**
 	 * Sets the navigation etiquette.
 	 *
@@ -204,7 +205,6 @@ public class TrackSchemeOptions
 		return this;
 	}
 
-
 	/**
 	 * Read-only {@link TrackSchemeOptions} values.
 	 */
@@ -234,17 +234,7 @@ public class TrackSchemeOptions
 
 		public TrackSchemeOptions optionsFromValues()
 		{
-			return new TrackSchemeOptions().
-				x( x ).
-				y( y ).
-				width( width ).
-				height( height ).
-				animationDurationMillis( animationDurationMillis ).
-				navigationEtiquette( navigationEtiquette ).
-				style( style ).
-				trackSchemeOverlayFactory( trackSchemeOverlayFactory ).
-				graphColorGenerator( graphColorGenerator ).
-				lineageTreeLayoutFactory( lineageTreeLayoutFactory );
+			return new TrackSchemeOptions().x( x ).y( y ).width( width ).height( height ).animationDurationMillis( animationDurationMillis ).navigationEtiquette( navigationEtiquette ).style( style ).trackSchemeOverlayFactory( trackSchemeOverlayFactory ).graphColorGenerator( graphColorGenerator ).lineageTreeLayoutFactory( lineageTreeLayoutFactory );
 		}
 
 		public int getX()

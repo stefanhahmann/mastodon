@@ -166,11 +166,7 @@ class NewMastodonProjectPanel extends JPanel
 		 * Wire listeners.
 		 */
 
-		btnBrowse.addActionListener( l -> LauncherUtil.browseToBDVFile(
-				null,
-				textAreaFile,
-				() -> checkBDVFile(),
-				this ) );
+		btnBrowse.addActionListener( l -> LauncherUtil.browseToBDVFile( null, textAreaFile, () -> checkBDVFile(), this ) );
 		LauncherUtil.decorateJComponent( textAreaFile, () -> checkBDVFile() );
 
 		rdbtBrowseToBDV.addItemListener( e -> {

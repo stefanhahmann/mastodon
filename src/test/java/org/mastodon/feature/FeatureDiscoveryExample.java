@@ -40,9 +40,11 @@ import org.scijava.plugin.PluginService;
 
 public class FeatureDiscoveryExample
 {
-	public static class ExampleSpot {};
+	public static class ExampleSpot
+	{};
 
-	public static class ExampleLink {};
+	public static class ExampleLink
+	{};
 
 	public static class F1 implements Feature< ExampleSpot >
 	{
@@ -53,12 +55,7 @@ public class FeatureDiscoveryExample
 		{
 			public Spec()
 			{
-				super(
-						"F1",
-						"Dummy feature F1",
-						F1.class,
-						ExampleSpot.class,
-						Multiplicity.SINGLE );
+				super( "F1", "Dummy feature F1", F1.class, ExampleSpot.class, Multiplicity.SINGLE );
 			}
 		}
 
@@ -94,12 +91,7 @@ public class FeatureDiscoveryExample
 		{
 			public Spec()
 			{
-				super(
-						"F2",
-						"Dummy feature F2",
-						F2.class,
-						ExampleSpot.class,
-						Multiplicity.SINGLE );
+				super( "F2", "Dummy feature F2", F2.class, ExampleSpot.class, Multiplicity.SINGLE );
 			}
 		}
 
@@ -135,12 +127,7 @@ public class FeatureDiscoveryExample
 		{
 			public Spec()
 			{
-				super(
-						"F3",
-						"Dummy feature F3",
-						F3.class,
-						ExampleSpot.class,
-						Multiplicity.SINGLE );
+				super( "F3", "Dummy feature F3", F3.class, ExampleSpot.class, Multiplicity.SINGLE );
 			}
 		}
 
@@ -176,12 +163,7 @@ public class FeatureDiscoveryExample
 		{
 			public Spec()
 			{
-				super(
-						"F4",
-						"Dummy feature F4",
-						F4.class,
-						ExampleSpot.class,
-						Multiplicity.SINGLE );
+				super( "F4", "Dummy feature F4", F4.class, ExampleSpot.class, Multiplicity.SINGLE );
 			}
 		}
 

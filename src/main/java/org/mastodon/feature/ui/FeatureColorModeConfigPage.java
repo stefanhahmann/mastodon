@@ -42,20 +42,9 @@ import bdv.ui.settings.style.StyleProfileManager;
 
 public class FeatureColorModeConfigPage extends SelectAndEditProfileSettingsPage< StyleProfile< FeatureColorMode > >
 {
-	public FeatureColorModeConfigPage(
-			final String treePath,
-			final FeatureColorModeManager featureColorModeManager,
-			final FeatureProjectionsManager featureProjectionsManager,
-			final String vertexName, 
-			final String edgeName )
+	public FeatureColorModeConfigPage( final String treePath, final FeatureColorModeManager featureColorModeManager, final FeatureProjectionsManager featureProjectionsManager, final String vertexName, final String edgeName )
 	{
-		super( treePath,
-				new StyleProfileManager<>( featureColorModeManager, new FeatureColorModeManager( false ) ),
-				new FeatureColorModelEditPanel(
-						featureColorModeManager.getSelectedStyle(),
-						featureProjectionsManager,
-						vertexName,
-						edgeName ) );
+		super( treePath, new StyleProfileManager<>( featureColorModeManager, new FeatureColorModeManager( false ) ), new FeatureColorModelEditPanel( featureColorModeManager.getSelectedStyle(), featureProjectionsManager, vertexName, edgeName ) );
 	}
 
 	public static class FeatureColorModelEditPanel implements FeatureColorMode.UpdateListener, SelectAndEditProfileSettingsPage.ProfileEditPanel< StyleProfile< FeatureColorMode > >
@@ -69,18 +58,10 @@ public class FeatureColorModeConfigPage extends SelectAndEditProfileSettingsPage
 
 		private boolean trackModifications = true;
 
-		public FeatureColorModelEditPanel(
-				final FeatureColorMode initialMode,
-				final FeatureProjectionsManager featureProjectionsManager,
-				final String vertexName,
-				final String edgeName )
+		public FeatureColorModelEditPanel( final FeatureColorMode initialMode, final FeatureProjectionsManager featureProjectionsManager, final String vertexName, final String edgeName )
 		{
 			this.editedMode = initialMode.copy( "Edited" );
-			this.featureColorModeEditorPanel = new FeatureColorModeEditorPanel(
-					editedMode,
-					featureProjectionsManager.getFeatureRangeCalculator(),
-					vertexName,
-					edgeName );
+			this.featureColorModeEditorPanel = new FeatureColorModeEditorPanel( editedMode, featureProjectionsManager.getFeatureRangeCalculator(), vertexName, edgeName );
 			featureColorModeEditorPanel.setAvailableFeatureProjections( featureProjectionsManager.getAvailableFeatureProjections() );
 			featureProjectionsManager.listeners().add( () -> {
 				featureColorModeEditorPanel.setAvailableFeatureProjections( featureProjectionsManager.getAvailableFeatureProjections() );

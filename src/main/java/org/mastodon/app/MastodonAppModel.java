@@ -65,10 +65,7 @@ import org.scijava.ui.behaviour.util.Actions;
  * @param <E>
  *            the type of edges in the model graph.
  */
-public class MastodonAppModel<
-		M extends AbstractModel< ?, V, E >,
-		V extends AbstractSpot< V, E, ?, ?, ? >,
-		E extends AbstractListenableEdge< E, V, ?, ? > >
+public class MastodonAppModel< M extends AbstractModel< ?, V, E >, V extends AbstractSpot< V, E, ?, ?, ? >, E extends AbstractListenableEdge< E, V, ?, ? > >
 {
 	public final GroupableModelFactory< NavigationHandler< V, E > > NAVIGATION = new ForwardingNavigationHandler.Factory<>();
 
@@ -122,14 +119,7 @@ public class MastodonAppModel<
 	 *            keyconf contexts for appActions (actions that should be
 	 *            available in all views)
 	 */
-	public MastodonAppModel(
-			final int numGroups,
-			final M model,
-			final KeyPressedManager keyPressedManager,
-			final KeymapManager keymapManager,
-			final MastodonPlugins< ?, ? > plugins,
-			final Actions globalActions,
-			final String[] keyConfigContexts )
+	public MastodonAppModel( final int numGroups, final M model, final KeyPressedManager keyPressedManager, final KeymapManager keymapManager, final MastodonPlugins< ?, ? > plugins, final Actions globalActions, final String[] keyConfigContexts )
 	{
 		this.model = model;
 		this.plugins = plugins;

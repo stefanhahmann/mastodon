@@ -98,8 +98,7 @@ public class DummyImgLoader implements ViewerImgLoader
 		return new CacheControl.Dummy();
 	}
 
-	private static class DummyViewerSetupImgLoader< T extends RealType< T > >
-			implements ViewerSetupImgLoader< T, Volatile< T > >
+	private static class DummyViewerSetupImgLoader< T extends RealType< T > > implements ViewerSetupImgLoader< T, Volatile< T > >
 	{
 		private final T type;
 
