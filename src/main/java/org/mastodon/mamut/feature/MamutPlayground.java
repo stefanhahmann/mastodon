@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -78,9 +78,8 @@ public class MamutPlayground
 		final List< FeatureSpec< ?, T > > specs = specsService.getSpecs( target );
 		for ( final FeatureSpec< ?, T > spec : specs )
 		{
-			@SuppressWarnings( "unchecked" )
-			final Feature< T > feature = ( Feature< T > ) featureModel.get( spec );
-			if (null == feature)
+			@SuppressWarnings("unchecked") final Feature< T > feature = ( Feature< T > ) featureModel.get( spec );
+			if ( null == feature )
 			{
 				System.out.println( "\n - Feature " + spec.getKey() + " is not computed." );
 				continue;
@@ -88,7 +87,7 @@ public class MamutPlayground
 			final Set< FeatureProjection< T > > projections = feature.projections();
 			if ( null == projections )
 				continue;
-			System.out.println( "\n - Feature " + spec.getKey() +". Has " + projections.size() + " projections:" );
+			System.out.println( "\n - Feature " + spec.getKey() + ". Has " + projections.size() + " projections:" );
 			for ( final FeatureProjection< T > projection : projections )
 			{
 				System.out.println( "   - Projection " + projection.getKey() );

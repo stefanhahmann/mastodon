@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -36,7 +36,7 @@ import org.mastodon.graph.branch.BranchGraph;
 /**
  * Mother class for color generators that return a color for a vertex based on
  * feature defined for a branch vertex 'upward' or 'downward' in time.
- * 
+ *
  * @author Jean-Yves Tinevez
  *
  * @param <V>
@@ -60,7 +60,8 @@ public abstract class AbstractBranchVertexColorGenerator< V extends Vertex< E >,
 			final BranchGraph< BV, BE, V, E > branchGraph,
 			final ColorMap colorMap,
 			final double min,
-			final double max )
+			final double max
+	)
 	{
 		this.branchGraph = branchGraph;
 		this.colorGenerator = new FeatureColorGenerator<>( featureProjection, colorMap, min, max );
@@ -69,7 +70,8 @@ public abstract class AbstractBranchVertexColorGenerator< V extends Vertex< E >,
 	protected int branchVertexColor( V v )
 	{
 		BV bvRef = branchGraph.vertexRef();
-		try {
+		try
+		{
 			BV branchVertex = branchGraph.getBranchVertex( v, bvRef );
 			return colorGenerator.color( branchVertex );
 		}

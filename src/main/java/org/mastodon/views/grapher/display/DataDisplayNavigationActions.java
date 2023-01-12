@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -54,31 +54,47 @@ import org.scijava.ui.behaviour.util.Actions;
  */
 public class DataDisplayNavigationActions
 {
-	
+
 	public static final String NAVIGATE_CHILD = "grapher navigate to child";
+
 	public static final String NAVIGATE_PARENT = "grapher navigate to parent";
+
 	public static final String NAVIGATE_LEFT = "grapher navigate left";
+
 	public static final String NAVIGATE_RIGHT = "grapher navigate right";
+
 	public static final String SELECT_NAVIGATE_CHILD = "grapher select navigate to child";
+
 	public static final String SELECT_NAVIGATE_PARENT = "grapher select navigate to parent";
+
 	public static final String SELECT_NAVIGATE_LEFT = "grapher select navigate left";
+
 	public static final String SELECT_NAVIGATE_RIGHT = "grapher select navigate right";
+
 	public static final String TOGGLE_FOCUS_SELECTION = "grapher toggle focus selection";
 
 	private static final String[] NAVIGATE_CHILD_KEYS = new String[] { "DOWN" };
+
 	private static final String[] NAVIGATE_PARENT_KEYS = new String[] { "UP" };
+
 	private static final String[] NAVIGATE_LEFT_KEYS = new String[] { "LEFT" };
+
 	private static final String[] NAVIGATE_RIGHT_KEYS = new String[] { "RIGHT" };
+
 	private static final String[] SELECT_NAVIGATE_CHILD_KEYS = new String[] { "shift DOWN" };
+
 	private static final String[] SELECT_NAVIGATE_PARENT_KEYS = new String[] { "shift UP" };
+
 	private static final String[] SELECT_NAVIGATE_LEFT_KEYS = new String[] { "shift LEFT" };
+
 	private static final String[] SELECT_NAVIGATE_RIGHT_KEYS = new String[] { "shift RIGHT" };
+
 	private static final String[] TOGGLE_FOCUS_SELECTION_KEYS = new String[] { "SPACE" };
 
 	/*
 	 * Command descriptions for all provided commands
 	 */
-	@Plugin( type = CommandDescriptionProvider.class )
+	@Plugin(type = CommandDescriptionProvider.class)
 	public static class Descriptions extends CommandDescriptionProvider
 	{
 		public Descriptions()
@@ -122,7 +138,8 @@ public class DataDisplayNavigationActions
 	public DataDisplayNavigationActions(
 			final DataGraph< ?, ? > graph,
 			final FocusModel< DataVertex, DataEdge > focus,
-			final SelectionModel< DataVertex, DataEdge > selection )
+			final SelectionModel< DataVertex, DataEdge > selection
+	)
 	{
 		this.graph = graph;
 		this.lock = graph.getLock();
@@ -133,7 +150,8 @@ public class DataDisplayNavigationActions
 
 	public void install(
 			final Actions actions,
-			final NavigatorEtiquette etiquette )
+			final NavigatorEtiquette etiquette
+	)
 	{
 		switch ( etiquette )
 		{

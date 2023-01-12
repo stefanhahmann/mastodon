@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -90,7 +90,8 @@ public class MamutProject
 
 	public MamutProject(
 			final File projectRoot,
-			final File datasetXmlFile )
+			final File datasetXmlFile
+	)
 	{
 		this.projectRoot = projectRoot;
 		this.datasetXmlFile = datasetXmlFile;
@@ -247,9 +248,9 @@ public class MamutProject
 				return Collections.emptyList();
 
 			final List< String > featureKeys = Arrays.stream( featureFolder.listFiles( ( dir, name ) -> name.toLowerCase().endsWith( ".raw" ) ) )
-				.map( f -> f.getName() )
-				.map( s -> s.replace( ".raw", "" ) )
-				.collect( Collectors.toList() );
+					.map( f -> f.getName() )
+					.map( s -> s.replace( ".raw", "" ) )
+					.collect( Collectors.toList() );
 			return featureKeys;
 		}
 
@@ -267,7 +268,8 @@ public class MamutProject
 
 		@Override
 		public void close()
-		{}
+		{
+		}
 	}
 
 	private class ReadFromZip implements ProjectReader
@@ -307,8 +309,8 @@ public class MamutProject
 		public Collection< String > getFeatureKeys()
 		{
 			return zip.listFile( FEATURE_FOLDER_NAME ).stream()
-				.map( s -> s.replace( ".raw", "" ) )
-				.collect( Collectors.toList() );
+					.map( s -> s.replace( ".raw", "" ) )
+					.collect( Collectors.toList() );
 		}
 
 		@Override
@@ -374,7 +376,8 @@ public class MamutProject
 
 		@Override
 		public void close() throws IOException
-		{}
+		{
+		}
 	}
 
 	private class WriteToZip implements ProjectWriter

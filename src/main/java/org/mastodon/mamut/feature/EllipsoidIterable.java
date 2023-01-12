@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -53,7 +53,7 @@ import net.imglib2.view.Views;
  * <p>
  * Call {@link #reset(Spot)} before iterating over a spot. The
  * {@link Localizable} methods return the spot center in pixel coordinates.
- * 
+ *
  * @author Tobias Pietzsch
  *
  * @param <T>
@@ -97,7 +97,7 @@ public class EllipsoidIterable< T > implements IterableInterval< T >, Localizabl
 	/**
 	 * Resets this iterable to that it iterates over the specified spot. The
 	 * pixel iterated are taken from the resolution level 0,
-	 * 
+	 *
 	 * @param spot
 	 *            the spot to iterate.
 	 */
@@ -110,7 +110,7 @@ public class EllipsoidIterable< T > implements IterableInterval< T >, Localizabl
 	 * Resets this iterable to that it iterates over the specified spot, at the
 	 * specified resolution level in the source. Generate an error of the
 	 * specified resolution level is not present in the source.
-	 * 
+	 *
 	 * @param spot
 	 *            the spot to iterate.
 	 * @param resolutionLevel

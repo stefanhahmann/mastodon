@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -51,7 +51,7 @@ import org.scijava.module.ModuleItem;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
-@Plugin( type = MamutFeatureComputerService.class )
+@Plugin(type = MamutFeatureComputerService.class)
 public class MamutFeatureComputerService extends DefaultFeatureComputerService
 {
 
@@ -88,14 +88,14 @@ public class MamutFeatureComputerService extends DefaultFeatureComputerService
 	protected void provideParameters(
 			final ModuleItem< ? > item,
 			final CommandModule module, final Class< ? > parameterClass,
-			final Map< FeatureSpec< ?, ? >, Feature< ? > > featureModel )
+			final Map< FeatureSpec< ?, ? >, Feature< ? > > featureModel
+	)
 	{
 
 		// Pass the model is required.
 		if ( Model.class.isAssignableFrom( parameterClass ) )
 		{
-			@SuppressWarnings( "unchecked" )
-			final ModuleItem< Model > modelItem = ( ModuleItem< Model > ) item;
+			@SuppressWarnings("unchecked") final ModuleItem< Model > modelItem = ( ModuleItem< Model > ) item;
 			modelItem.setValue( module, model );
 			return;
 		}
@@ -103,8 +103,7 @@ public class MamutFeatureComputerService extends DefaultFeatureComputerService
 		// Pass the model graph.
 		if ( ModelGraph.class.isAssignableFrom( parameterClass ) )
 		{
-			@SuppressWarnings( "unchecked" )
-			final ModuleItem< ModelGraph > graphItem = ( ModuleItem< ModelGraph > ) item;
+			@SuppressWarnings("unchecked") final ModuleItem< ModelGraph > graphItem = ( ModuleItem< ModelGraph > ) item;
 			graphItem.setValue( module, model.getGraph() );
 			return;
 		}
@@ -112,8 +111,7 @@ public class MamutFeatureComputerService extends DefaultFeatureComputerService
 		// Pass the model branch graph.
 		if ( ModelBranchGraph.class.isAssignableFrom( parameterClass ) )
 		{
-			@SuppressWarnings( "unchecked" )
-			final ModuleItem< ModelBranchGraph > graphItem = ( ModuleItem< ModelBranchGraph > ) item;
+			@SuppressWarnings("unchecked") final ModuleItem< ModelBranchGraph > graphItem = ( ModuleItem< ModelBranchGraph > ) item;
 			graphItem.setValue( module, model.getBranchGraph() );
 			return;
 		}
@@ -121,8 +119,7 @@ public class MamutFeatureComputerService extends DefaultFeatureComputerService
 		// Pass the BDV data.
 		if ( SharedBigDataViewerData.class.isAssignableFrom( parameterClass ) )
 		{
-			@SuppressWarnings( "unchecked" )
-			final ModuleItem< SharedBigDataViewerData > bdvItem = ( ModuleItem< SharedBigDataViewerData > ) item;
+			@SuppressWarnings("unchecked") final ModuleItem< SharedBigDataViewerData > bdvItem = ( ModuleItem< SharedBigDataViewerData > ) item;
 			bdvItem.setValue( module, sharedBdvData );
 			return;
 		}
@@ -130,8 +127,7 @@ public class MamutFeatureComputerService extends DefaultFeatureComputerService
 		// Pass the "force recompute" flag.
 		if ( AtomicBoolean.class.isAssignableFrom( parameterClass ) )
 		{
-			@SuppressWarnings( "unchecked" )
-			final ModuleItem< AtomicBoolean > forceRecomputeAllItem = ( ModuleItem< AtomicBoolean > ) item;
+			@SuppressWarnings("unchecked") final ModuleItem< AtomicBoolean > forceRecomputeAllItem = ( ModuleItem< AtomicBoolean > ) item;
 			forceRecomputeAllItem.setValue( module, shouldRecomputeAll );
 			return;
 		}

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -68,7 +68,8 @@ public abstract class AbstractBDVRecorder
 			final ViewerPanel viewer,
 			final OverlayGraphRenderer< ?, ? > tracksOverlay,
 			final ColorBarOverlay colorBarOverlay,
-			final ProgressWriter progressWriter )
+			final ProgressWriter progressWriter
+	)
 	{
 		this.viewer = viewer;
 		this.tracksOverlay = tracksOverlay;
@@ -80,7 +81,8 @@ public abstract class AbstractBDVRecorder
 			final int width, final int height,
 			final int minTimepointIndex, final int maxTimepointIndex,
 			final double stepSize, final int numSteps,
-			final boolean projectOverlay )
+			final boolean projectOverlay
+	)
 	{
 		initializeRecorder( width, height );
 
@@ -151,7 +153,8 @@ public abstract class AbstractBDVRecorder
 							Math.max( ARGBType.red( in ), ARGBType.red( current ) ),
 							Math.max( ARGBType.green( in ), ARGBType.green( current ) ),
 							Math.max( ARGBType.blue( in ), ARGBType.blue( current ) ),
-							Math.max( ARGBType.alpha( in ), ARGBType.alpha( current ) ) ) );
+							Math.max( ARGBType.alpha( in ), ARGBType.alpha( current ) )
+					) );
 				}
 			}
 
@@ -169,8 +172,10 @@ public abstract class AbstractBDVRecorder
 		}
 		final MyTarget target = new MyTarget();
 		final MultiResolutionRenderer renderer = new MultiResolutionRenderer(
-				target, () -> {}, new double[] { 1 }, 0, 1, null, false,
-				viewer.getOptionValues().getAccumulateProjectorFactory(), new CacheControl.Dummy() );
+				target, () -> {
+		}, new double[] { 1 }, 0, 1, null, false,
+				viewer.getOptionValues().getAccumulateProjectorFactory(), new CacheControl.Dummy()
+		);
 
 		// Mastodon overlays.
 		if ( tracksOverlay != null )
@@ -191,7 +196,8 @@ public abstract class AbstractBDVRecorder
 				affine.set(
 						1, 0, 0, 0,
 						0, 1, 0, 0,
-						0, 0, 1, -dd * stepSize * ( step - numSteps / 2 ) );
+						0, 0, 1, -dd * stepSize * ( step - numSteps / 2 )
+				);
 				affine.concatenate( tGV );
 				renderState.setViewerTransform( affine );
 				renderer.requestRepaint();
@@ -226,7 +232,8 @@ public abstract class AbstractBDVRecorder
 						affine.set(
 								1, 0, 0, 0,
 								0, 1, 0, 0,
-								0, 0, 1, -dd * stepSize * ( step - numSteps / 2 ) );
+								0, 0, 1, -dd * stepSize * ( step - numSteps / 2 )
+						);
 						affine.concatenate( tGV );
 
 						if ( tracksOverlay != null )
@@ -256,7 +263,8 @@ public abstract class AbstractBDVRecorder
 			final int width,
 			final int height,
 			final int minTimepointIndex,
-			final int maxTimepointIndex )
+			final int maxTimepointIndex
+	)
 	{
 		initializeRecorder( width, height );
 
@@ -295,7 +303,8 @@ public abstract class AbstractBDVRecorder
 
 			@Override
 			public void setRenderResult( final BufferedImageRenderResult renderResult )
-			{}
+			{
+			}
 
 			@Override
 			public int getWidth()
@@ -311,8 +320,10 @@ public abstract class AbstractBDVRecorder
 		}
 		final MyTarget target = new MyTarget();
 		final MultiResolutionRenderer renderer = new MultiResolutionRenderer(
-				target, () -> {}, new double[] { 1 }, 0, 1, null, false,
-				viewer.getOptionValues().getAccumulateProjectorFactory(), new CacheControl.Dummy() );
+				target, () -> {
+		}, new double[] { 1 }, 0, 1, null, false,
+				viewer.getOptionValues().getAccumulateProjectorFactory(), new CacheControl.Dummy()
+		);
 
 		// Mastodon overlays.
 		if ( tracksOverlay != null )

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -80,7 +80,8 @@ public class DataDisplayFrame< V extends Vertex< E > & HasTimepoint & HasLabel, 
 			final UndoPointMarker undoPointMarker,
 			final GroupHandle groupHandle,
 			final ContextChooser< V > contextChooser,
-			final DataDisplayOptions optional )
+			final DataDisplayOptions optional
+	)
 	{
 		super( "Grapher" );
 
@@ -95,7 +96,8 @@ public class DataDisplayFrame< V extends Vertex< E > & HasTimepoint & HasLabel, 
 				focus,
 				selection,
 				navigation,
-				optional );
+				optional
+		);
 
 		/*
 		 * Get the classes of the model vertices and edges. We need them to
@@ -114,7 +116,8 @@ public class DataDisplayFrame< V extends Vertex< E > & HasTimepoint & HasLabel, 
 
 		final FeatureModelListener featureModelListener = () -> sidePanel.setFeatures(
 				FeatureUtils.collectFeatureMap( featureModel, vertexClass ),
-				FeatureUtils.collectFeatureMap( featureModel, edgeClass ) );
+				FeatureUtils.collectFeatureMap( featureModel, edgeClass )
+		);
 		featureModel.listeners().add( featureModelListener );
 		featureModelListener.featureModelChanged();
 
@@ -123,7 +126,8 @@ public class DataDisplayFrame< V extends Vertex< E > & HasTimepoint & HasLabel, 
 		 */
 
 		final JSplitPane mainPanel = new JSplitPane( JSplitPane.HORIZONTAL_SPLIT,
-				sidePanel, dataDisplayPanel );
+				sidePanel, dataDisplayPanel
+		);
 		mainPanel.setOneTouchExpandable( true );
 		mainPanel.setBorder( null );
 		mainPanel.setDividerLocation( 250 );
@@ -138,8 +142,8 @@ public class DataDisplayFrame< V extends Vertex< E > & HasTimepoint & HasLabel, 
 		settingsPanel.add( navigationLocksPanel );
 		settingsPanel.add( Box.createHorizontalGlue() );
 
-//		final ContextChooserPanel< ? > contextChooserPanel = new ContextChooserPanel<>( contextChooser );
-//		settingsPanel.add( contextChooserPanel );
+		//		final ContextChooserPanel< ? > contextChooserPanel = new ContextChooserPanel<>( contextChooser );
+		//		settingsPanel.add( contextChooserPanel );
 
 		pack();
 		setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );

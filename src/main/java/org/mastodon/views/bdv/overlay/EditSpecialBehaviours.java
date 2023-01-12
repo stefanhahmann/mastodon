@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -60,19 +60,25 @@ import net.imglib2.util.LinAlgHelpers;
 public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends OverlayEdge< E, V > >
 {
 	private static final String ADD_SPOT_AND_LINK_IT_FORWARD = "add linked spot";
+
 	private static final String ADD_SPOT_AND_LINK_IT_BACKWARD = "add linked spot backward";
+
 	private static final String TOGGLE_LINK_FORWARD = "toggle link";
+
 	private static final String TOGGLE_LINK_BACKWARD = "toggle link backward";
 
 	private static final String[] ADD_SPOT_AND_LINK_IT_FORWARD_KEYS = new String[] { "A" };
+
 	private static final String[] ADD_SPOT_AND_LINK_IT_BACKWARD_KEYS = new String[] { "C" };
+
 	private static final String[] TOGGLE_LINK_FORWARD_KEYS = new String[] { "L" };
+
 	private static final String[] TOGGLE_LINK_BACKWARD_KEYS = new String[] { "shift L" };
 
 	/*
 	 * Command descriptions for all provided commands
 	 */
-	@Plugin( type = CommandDescriptionProvider.class )
+	@Plugin(type = CommandDescriptionProvider.class)
 	public static class Descriptions extends CommandDescriptionProvider
 	{
 		public Descriptions()
@@ -91,10 +97,13 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 	}
 
 	public static final Color EDIT_GRAPH_OVERLAY_COLOR = Color.WHITE;
+
 	public static final BasicStroke EDIT_GRAPH_OVERLAY_STROKE = new BasicStroke( 2f );
+
 	public static final BasicStroke EDIT_GRAPH_OVERLAY_GHOST_STROKE = new BasicStroke(
 			1f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL,
-			1.0f, new float[] { 4f, 10f }, 0f );
+			1.0f, new float[] { 4f, 10f }, 0f
+	);
 
 	private final AddSpotAndLinkIt addSpotAndLinkItForwardBehaviour;
 
@@ -111,7 +120,8 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 			final OverlayGraphRenderer< V, E > renderer,
 			final SelectionModel< V, E > selection,
 			final FocusModel< V, E > focus,
-			final UndoPointMarker undo )
+			final UndoPointMarker undo
+	)
 	{
 		final EditSpecialBehaviours< V, E > eb = new EditSpecialBehaviours<>( viewer, overlayGraph, renderer, selection, focus, undo );
 
@@ -143,7 +153,8 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 			final OverlayGraphRenderer< V, E > renderer,
 			final SelectionModel< V, E > selection,
 			final FocusModel< V, E > focus,
-			final UndoPointMarker undo )
+			final UndoPointMarker undo
+	)
 	{
 		this.viewer = viewer;
 		this.overlayGraph = overlayGraph;
@@ -193,7 +204,6 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 
 		public boolean paintGhostLink;
 
-
 		public EditSpecialBehavioursOverlay()
 		{
 			from = new double[ 3 ];
@@ -233,13 +243,15 @@ public class EditSpecialBehaviours< V extends OverlayVertex< V, E >, E extends O
 				renderer.getViewerPosition( from, vFrom );
 				renderer.getViewerPosition( to, vTo );
 				g.drawLine( ( int ) vFrom[ 0 ], ( int ) vFrom[ 1 ],
-						( int ) vTo[ 0 ], ( int ) vTo[ 1 ] );
+						( int ) vTo[ 0 ], ( int ) vTo[ 1 ]
+				);
 			}
 		}
 
 		@Override
 		public void setCanvasSize( final int width, final int height )
-		{}
+		{
+		}
 
 		@Override
 		public void transformChanged( final AffineTransform3D transform )

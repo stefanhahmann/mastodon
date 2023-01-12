@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -40,7 +40,7 @@ import org.scijava.plugin.PluginInfo;
 import org.scijava.plugin.PluginService;
 import org.scijava.service.AbstractService;
 
-@Plugin( type = FeatureSerializationService.class )
+@Plugin(type = FeatureSerializationService.class)
 public class DefaultFeatureSerializationService extends AbstractService implements FeatureSerializationService
 {
 
@@ -58,15 +58,12 @@ public class DefaultFeatureSerializationService extends AbstractService implemen
 
 	private void discover()
 	{
-		@SuppressWarnings( "rawtypes" )
-		final List< PluginInfo< FeatureSerializer > > infos = plugins.getPluginsOfType( FeatureSerializer.class );
-		for ( @SuppressWarnings( "rawtypes" )
-		final PluginInfo< FeatureSerializer > info : infos )
+		@SuppressWarnings("rawtypes") final List< PluginInfo< FeatureSerializer > > infos = plugins.getPluginsOfType( FeatureSerializer.class );
+		for ( @SuppressWarnings("rawtypes") final PluginInfo< FeatureSerializer > info : infos )
 		{
 			try
 			{
-				@SuppressWarnings( "rawtypes" )
-				final FeatureSerializer fs = info.createInstance();
+				@SuppressWarnings("rawtypes") final FeatureSerializer fs = info.createInstance();
 				final FeatureSpec< ?, ? > spec = fs.getFeatureSpec();
 				serializers.put( spec, fs );
 			}

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -63,7 +63,7 @@ public class LinkTargetIdFeature implements Feature< Link >
 
 	private final ModelGraph graph;
 
-	@Plugin( type = FeatureSpec.class )
+	@Plugin(type = FeatureSpec.class)
 	public static class Spec extends FeatureSpec< LinkTargetIdFeature, Link >
 	{
 		public Spec()
@@ -75,7 +75,8 @@ public class LinkTargetIdFeature implements Feature< Link >
 					Link.class,
 					Multiplicity.SINGLE,
 					SOURCE_PROJECTION_SPEC,
-					TARGET_PROJECTION_SPEC );
+					TARGET_PROJECTION_SPEC
+			);
 		}
 	}
 
@@ -89,11 +90,10 @@ public class LinkTargetIdFeature implements Feature< Link >
 	{
 		if ( key( SOURCE_PROJECTION_SPEC ).equals( key ) )
 			return new SourceIdProjection( graph.vertexRef() );
-		if ( key(TARGET_PROJECTION_SPEC ).equals( key ) )
+		if ( key( TARGET_PROJECTION_SPEC ).equals( key ) )
 			return new TargetIdProjection( graph.vertexRef() );
 		return null;
 	}
-
 
 	@Override
 	public FeatureSpec< ? extends Feature< Link >, Link > getSpec()
@@ -112,7 +112,8 @@ public class LinkTargetIdFeature implements Feature< Link >
 
 	@Override
 	public void invalidate( final Link obj )
-	{}
+	{
+	}
 
 	private static final class SourceIdProjection implements FeatureProjection< Link >
 	{

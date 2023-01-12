@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import org.scijava.listeners.Listeners;
-
 
 /**
  * A subset of listeners of type {@code T} forwarding to a wrapped
@@ -67,7 +66,8 @@ public interface ForwardedListeners< T > extends Listeners< T >
 
 		public List( final Listeners< T > listeners )
 		{
-			this( listeners, o -> {} );
+			this( listeners, o -> {
+			} );
 		}
 
 		public final ArrayList< T > list = new ArrayList<>();
@@ -140,7 +140,7 @@ public interface ForwardedListeners< T > extends Listeners< T >
 		}
 
 		@Override
-		public synchronized  void removeAll()
+		public synchronized void removeAll()
 		{
 			super.removeAll();
 		}

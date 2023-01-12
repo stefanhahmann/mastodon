@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -131,7 +131,8 @@ public class SharedBigDataViewerData
 			final CacheControl cache,
 			final int numTimepoints,
 			final ViewerOptions options,
-			final RequestRepaint requestRepaint )
+			final RequestRepaint requestRepaint
+	)
 	{
 		this.spimData = spimData;
 		this.sources = sources;
@@ -175,7 +176,8 @@ public class SharedBigDataViewerData
 					return true;
 				}
 				catch ( final FileNotFoundException e )
-				{}
+				{
+				}
 				catch ( final Exception e )
 				{
 					e.printStackTrace();
@@ -329,17 +331,18 @@ public class SharedBigDataViewerData
 	public static SharedBigDataViewerData fromSpimDataXmlFile(
 			final String spimDataXmlFilename,
 			final ViewerOptions viewerOptions,
-			final RequestRepaint requestRepaint ) throws SpimDataException
+			final RequestRepaint requestRepaint
+	) throws SpimDataException
 	{
 		final AbstractSpimData< ? > spimData = new XmlIoSpimDataMinimal().load( spimDataXmlFilename );
 		return formSpimData( spimDataXmlFilename, spimData, viewerOptions, requestRepaint );
 	}
 
-	public static
-			SharedBigDataViewerData fromDummyFilename(
-					final String spimDataXmlFilename,
-					final ViewerOptions viewerOptions,
-					final RequestRepaint requestRepaint )
+	public static SharedBigDataViewerData fromDummyFilename(
+			final String spimDataXmlFilename,
+			final ViewerOptions viewerOptions,
+			final RequestRepaint requestRepaint
+	)
 	{
 		final AbstractSpimData< ? > spimData = DummySpimData.tryCreate( spimDataXmlFilename );
 		return formSpimData( spimDataXmlFilename, spimData, viewerOptions, requestRepaint );
@@ -350,13 +353,14 @@ public class SharedBigDataViewerData
 	 * image sizes, and image transformations are read from the given
 	 * BigDataViewer XML. The actual image data is not loaded, all pixels are
 	 * black.
-	 * 
+	 *
 	 * @return a "dummy" {@link SharedBigDataViewerData} object.
 	 */
 	public static SharedBigDataViewerData createDummyDataFromSpimDataXml(
 			final String spimDataXmlFilename,
 			final ViewerOptions viewerOptions,
-			final RequestRepaint requestRepaint ) throws SpimDataException
+			final RequestRepaint requestRepaint
+	) throws SpimDataException
 	{
 		final AbstractSpimData< ? > spimData = DummySpimData.fromSpimDataXml( spimDataXmlFilename );
 		return formSpimData( spimDataXmlFilename, spimData, viewerOptions, requestRepaint );
@@ -366,7 +370,8 @@ public class SharedBigDataViewerData
 			final String spimDataXmlFilename,
 			final AbstractSpimData< ? > spimData,
 			final ViewerOptions viewerOptions,
-			final RequestRepaint requestRepaint )
+			final RequestRepaint requestRepaint
+	)
 	{
 		final AbstractSequenceDescription< ?, ?, ? > seq = spimData.getSequenceDescription();
 		final int numTimepoints = seq.getTimePoints().size();
@@ -398,7 +403,8 @@ public class SharedBigDataViewerData
 				cache,
 				numTimepoints,
 				viewerOptions,
-				requestRepaint );
+				requestRepaint
+		);
 
 		if ( !sbdv.tryLoadSettings( spimDataXmlFilename ) )
 		{
@@ -418,7 +424,8 @@ public class SharedBigDataViewerData
 	public static SharedBigDataViewerData fromImagePlus(
 			final ImagePlus imp,
 			final ViewerOptions viewerOptions,
-			final RequestRepaint requestRepaint )
+			final RequestRepaint requestRepaint
+	)
 	{
 		// check the image type
 		switch ( imp.getType() )
@@ -544,7 +551,8 @@ public class SharedBigDataViewerData
 				cache,
 				numTimepoints,
 				viewerOptions,
-				requestRepaint );
+				requestRepaint
+		);
 
 		// File info
 		final FileInfo fileInfo = imp.getOriginalFileInfo();
@@ -586,7 +594,8 @@ public class SharedBigDataViewerData
 	 */
 	private static int transferChannelVisibility(
 			final ImagePlus imp,
-			final ViewerState state )
+			final ViewerState state
+	)
 	{
 		final int nChannels = imp.getNChannels();
 		final CompositeImage ci = imp.isComposite() ? ( CompositeImage ) imp : null;

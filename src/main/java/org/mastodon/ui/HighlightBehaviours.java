@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -58,15 +58,17 @@ import org.scijava.ui.behaviour.util.Behaviours;
 public class HighlightBehaviours< V extends Vertex< E >, E extends Edge< V > >
 {
 	private static final String REMOVE_HIGHLIGHTED_VERTEX = "remove highlighted vertex";
+
 	private static final String REMOVE_HIGHLIGHTED_EDGE = "remove highlighted edge";
 
 	private static final String[] REMOVE_HIGHLIGHTED_VERTEX_KEYS = new String[] { "D" };
+
 	private static final String[] REMOVE_HIGHLIGHTED_EDGE_KEYS = new String[] { "D" };
 
 	/*
 	 * Command descriptions for all provided commands
 	 */
-	@Plugin( type = CommandDescriptionProvider.class )
+	@Plugin(type = CommandDescriptionProvider.class)
 	public static class Descriptions extends CommandDescriptionProvider
 	{
 		public Descriptions()
@@ -92,7 +94,8 @@ public class HighlightBehaviours< V extends Vertex< E >, E extends Edge< V > >
 			final ReentrantReadWriteLock lock,
 			final GraphChangeNotifier notify,
 			final HighlightModel< V, E > highlight,
-			final UndoPointMarker undo )
+			final UndoPointMarker undo
+	)
 	{
 		final HighlightBehaviours< V, E > hb = new HighlightBehaviours<>( graph, lock, notify, highlight, undo );
 
@@ -115,7 +118,8 @@ public class HighlightBehaviours< V extends Vertex< E >, E extends Edge< V > >
 			final ReentrantReadWriteLock lock,
 			final GraphChangeNotifier notify,
 			final HighlightModel< V, E > highlight,
-			final UndoPointMarker undo )
+			final UndoPointMarker undo
+	)
 	{
 		this.graph = graph;
 		this.lock = lock;

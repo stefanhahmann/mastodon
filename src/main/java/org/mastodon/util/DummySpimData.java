@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -99,7 +99,7 @@ public class DummySpimData
 	public static SpimDataMinimal tryCreate( final String name )
 	{
 		if ( !isDummyString( name ) )
-			throw new IllegalArgumentException("Couldn't parse dummy dataset description: '" + name + "'");
+			throw new IllegalArgumentException( "Couldn't parse dummy dataset description: '" + name + "'" );
 
 		try
 		{
@@ -116,7 +116,7 @@ public class DummySpimData
 		}
 		catch ( final NumberFormatException e )
 		{
-			throw new IllegalArgumentException("Couldn't parse dummy dataset description: '" + name + "'");
+			throw new IllegalArgumentException( "Couldn't parse dummy dataset description: '" + name + "'" );
 		}
 	}
 
@@ -161,11 +161,11 @@ public class DummySpimData
 	 * BigDataViewer XML. The actual image data is not loaded, all pixels
 	 * are black. {@link DummyImgLoader} is used to provide the dummy image data.
 	 */
-	public static AbstractSpimData<?> fromSpimDataXml( String spimDataXmlFilename )
+	public static AbstractSpimData< ? > fromSpimDataXml( String spimDataXmlFilename )
 			throws SpimDataException
 	{
 		File modifiedXml = getBdvXmlWithoutImageLoader( new File( spimDataXmlFilename ) );
-		AbstractSpimData<?> spimData = new XmlIoSpimDataMinimal().load( modifiedXml.getAbsolutePath() );
+		AbstractSpimData< ? > spimData = new XmlIoSpimDataMinimal().load( modifiedXml.getAbsolutePath() );
 		setDummyImageLoader( spimData );
 		return spimData;
 	}
@@ -179,10 +179,10 @@ public class DummySpimData
 		return writeXmlToTmpFile( document );
 	}
 
-	private static void setDummyImageLoader( AbstractSpimData<?> spimData )
+	private static void setDummyImageLoader( AbstractSpimData< ? > spimData )
 	{
-		final AbstractSequenceDescription<?, ?, BasicImgLoader> seq = Cast.unchecked( spimData.getSequenceDescription() );
-		List<Dimensions> dimensionsList = new ArrayList<>();
+		final AbstractSequenceDescription< ?, ?, BasicImgLoader > seq = Cast.unchecked( spimData.getSequenceDescription() );
+		List< Dimensions > dimensionsList = new ArrayList<>();
 		for ( BasicViewSetup basicViewSetup : seq.getViewSetupsOrdered() )
 			dimensionsList.add( basicViewSetup.getSize() );
 		seq.setImgLoader( new DummyImgLoader( new UnsignedShortType(), dimensionsList ) );
@@ -206,8 +206,9 @@ public class DummySpimData
 		{
 			File file = File.createTempFile( "dataset-dummy-img-loader", ".xml" );
 			file.deleteOnExit();
-			try (OutputStream outputStream = new FileOutputStream( file )) {
-				new XMLOutputter( Format.getPrettyFormat() ).output( document, outputStream);
+			try (OutputStream outputStream = new FileOutputStream( file ))
+			{
+				new XMLOutputter( Format.getPrettyFormat() ).output( document, outputStream );
 			}
 			return file;
 		}

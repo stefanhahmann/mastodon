@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -39,14 +39,14 @@ import org.scijava.ItemIO;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
-@Plugin( type = MamutFeatureComputer.class )
+@Plugin(type = MamutFeatureComputer.class)
 public class SpotTrackIDFeatureComputer implements MamutFeatureComputer
 {
 
 	@Parameter
 	private ModelGraph graph;
 
-	@Parameter( type = ItemIO.OUTPUT )
+	@Parameter(type = ItemIO.OUTPUT)
 	private SpotTrackIDFeature output;
 
 	@Override
@@ -73,7 +73,8 @@ public class SpotTrackIDFeatureComputer implements MamutFeatureComputer
 
 					@Override
 					public void processVertexLate( final Spot spot, final BreadthFirstCrossComponentSearch< Spot, Link > search )
-					{}
+					{
+					}
 
 					@Override
 					public void processVertexEarly( final Spot spot, final BreadthFirstCrossComponentSearch< Spot, Link > search )
@@ -83,7 +84,8 @@ public class SpotTrackIDFeatureComputer implements MamutFeatureComputer
 
 					@Override
 					public void processEdge( final Link link, final Spot source, final Spot target, final BreadthFirstCrossComponentSearch< Spot, Link > search )
-					{}
+					{
+					}
 
 					@Override
 					public void crossComponent( final Spot endSpot, final Spot startSpot, final BreadthFirstCrossComponentSearch< Spot, Link > search )

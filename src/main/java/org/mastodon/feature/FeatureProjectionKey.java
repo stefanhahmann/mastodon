@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -41,7 +41,7 @@ public final class FeatureProjectionKey
 	/**
 	 * Construct a {@link FeatureProjectionKey} with
 	 * {@link Multiplicity#SINGLE}.
-	 * 
+	 *
 	 * @param spec
 	 *            the feature projection spec.
 	 * @return a new {@link FeatureProjectionKey}.
@@ -54,7 +54,7 @@ public final class FeatureProjectionKey
 	/**
 	 * Constructs a {@link FeatureProjectionKey} with
 	 * {@link Multiplicity#ON_SOURCES}.
-	 * 
+	 *
 	 * @param spec
 	 *            the feature projection spec.
 	 * @param i0
@@ -69,7 +69,7 @@ public final class FeatureProjectionKey
 	/**
 	 * Constructs a {@link FeatureProjectionKey} with
 	 * {@link Multiplicity#ON_SOURCE_PAIRS}.
-	 * 
+	 *
 	 * @param spec
 	 *            the feature projection spec.
 	 * @param i0

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -80,7 +80,6 @@ public class MaMuTExportExample
 		final Map< FeatureSpec< ?, ? >, Feature< ? > > features = featureComputerService.compute( featureKeys );
 		System.out.println( "Done." );
 
-
 		for ( final FeatureSpec< ?, ? > fs : features.keySet() )
 		{
 			System.out.println( " - " + fs.getKey() );
@@ -97,7 +96,7 @@ public class MaMuTExportExample
 		 */
 
 		featureModel.clear();
-		for ( final FeatureSpec< ?, ? > spec: features.keySet() )
+		for ( final FeatureSpec< ?, ? > spec : features.keySet() )
 			featureModel.declareFeature( features.get( spec ) );
 
 		System.out.println();
@@ -137,7 +136,7 @@ public class MaMuTExportExample
 		System.out.println( "Computing feature: " + TrackSizeFeature.SPEC );
 		final Map< FeatureSpec< ?, ? >, Feature< ? > > features2 = featureComputerService.compute( Collections.singleton( TrackSizeFeature.SPEC ) );
 		System.out.println( "Done." );
-		for ( final FeatureSpec< ?, ? > spec: features2.keySet() )
+		for ( final FeatureSpec< ?, ? > spec : features2.keySet() )
 			importedModel.getFeatureModel().declareFeature( features.get( spec ) );
 
 		System.out.println();

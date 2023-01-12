@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -61,8 +61,8 @@ public class AbstractModelGraph<
 		V extends AbstractSpot< V, E, VP, T, G >,
 		E extends AbstractListenableEdge< E, V, EP, T >,
 		T extends MappedElement >
-	extends ListenableGraphImp< VP, EP, V, E, T >
-	implements VertexPositionChangeProvider< V >, GraphChangeNotifier
+		extends ListenableGraphImp< VP, EP, V, E, T >
+		implements VertexPositionChangeProvider< V >, GraphChangeNotifier
 {
 	protected final GraphIdBimap< V, E > idmap;
 
@@ -77,8 +77,7 @@ public class AbstractModelGraph<
 	public AbstractModelGraph( final EP edgePool )
 	{
 		super( edgePool );
-		@SuppressWarnings( "unchecked" )
-		final G g = ( G ) this;
+		@SuppressWarnings("unchecked") final G g = ( G ) this;
 		vertexPool.linkModelGraph( g );
 		idmap = new GraphIdBimap<>( vertexPool, edgePool );
 		vertexPropertySerializers = new PropertyMapSerializers<>();
@@ -111,8 +110,9 @@ public class AbstractModelGraph<
 	 */
 	public FileIdToGraphMap< V, E > loadRaw(
 			final InputStream is,
-			final GraphSerializer< V, E > serializer )
-					throws IOException
+			final GraphSerializer< V, E > serializer
+	)
+			throws IOException
 	{
 		final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( is, 1024 * 1024 ) );
 		pauseListeners();
@@ -120,8 +120,8 @@ public class AbstractModelGraph<
 		final FileIdToGraphMap< V, E > fileIdMap = RawGraphIO.read( this, idmap, serializer, ois );
 		RawPropertyIO.readPropertyMaps( fileIdMap.vertices(), vertexPropertySerializers, ois );
 		// TODO: edge properties
-//		RawFeatureIO.readFeatureMaps( fileIdMap.vertices(), vertexFeatures, ois );
-//		RawFeatureIO.readFeatureMaps( fileIdMap.edges(), edgeFeatures, ois );
+		//		RawFeatureIO.readFeatureMaps( fileIdMap.vertices(), vertexFeatures, ois );
+		//		RawFeatureIO.readFeatureMaps( fileIdMap.edges(), edgeFeatures, ois );
 		ois.close();
 		resumeListeners();
 
@@ -137,25 +137,26 @@ public class AbstractModelGraph<
 	 *            The stream will be closed when done!
 	 * @param serializer
 	 *            the serializer used for writing individual vertices.
-//	 * @param vertexFeaturesToSerialize
-//	 *            the vertex features to serialize.
-//	 * @param edgeFeaturesToSerialize
-//	 *            the edge features to serialize.
+	//	 * @param vertexFeaturesToSerialize
+	//	 *            the vertex features to serialize.
+	//	 * @param edgeFeaturesToSerialize
+	//	 *            the edge features to serialize.
 	 * @return the map from vertices/edges to IDs used in the raw file.
 	 * @throws IOException
 	 *             if an I/O error occurs while writing the file.
 	 */
 	public GraphToFileIdMap< V, E > saveRaw(
 			final OutputStream os,
-			final GraphSerializer< V, E > serializer )
-					throws IOException
+			final GraphSerializer< V, E > serializer
+	)
+			throws IOException
 	{
 		final ObjectOutputStream oos = new ObjectOutputStream( new BufferedOutputStream( os, 1024 * 1024 ) );
 		final GraphToFileIdMap< V, E > fileIdMap = RawGraphIO.write( this, idmap, serializer, oos );
 		RawPropertyIO.writePropertyMaps( fileIdMap.vertices(), vertexPropertySerializers, oos );
 		// TODO: edge properties
-//		RawFeatureIO.writeFeatureMaps( fileIdMap.vertices(), vertexFeatures, vertexFeaturesToSerialize, oos );
-//		RawFeatureIO.writeFeatureMaps( fileIdMap.edges(), edgeFeatures, edgeFeaturesToSerialize, oos );
+		//		RawFeatureIO.writeFeatureMaps( fileIdMap.vertices(), vertexFeatures, vertexFeaturesToSerialize, oos );
+		//		RawFeatureIO.writeFeatureMaps( fileIdMap.edges(), edgeFeatures, edgeFeaturesToSerialize, oos );
 		oos.close();
 
 		return fileIdMap;
@@ -250,7 +251,7 @@ public class AbstractModelGraph<
 			return l.hashCode();
 		}
 
-		@SuppressWarnings( "unchecked" )
+		@SuppressWarnings("unchecked")
 		@Override
 		public boolean equals( final Object obj )
 		{

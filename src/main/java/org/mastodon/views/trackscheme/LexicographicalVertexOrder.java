@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -56,7 +56,8 @@ public class LexicographicalVertexOrder
 {
 	public static RefList< TrackSchemeVertex > sort(
 			final TrackSchemeGraph< ?, ? > graph,
-			final RefCollection< TrackSchemeVertex > vertices )
+			final RefCollection< TrackSchemeVertex > vertices
+	)
 	{
 		final ArrayList< VertexKey > keys = new ArrayList<>( vertices.size() );
 		for ( final TrackSchemeVertex v : vertices )
@@ -75,7 +76,8 @@ public class LexicographicalVertexOrder
 	{
 		public static VertexKey build(
 				final TrackSchemeVertex v,
-				final TrackSchemeGraph< ?, ? > graph )
+				final TrackSchemeGraph< ?, ? > graph
+		)
 		{
 			final VertexKey token;
 			if ( v.incomingEdges().isEmpty() )

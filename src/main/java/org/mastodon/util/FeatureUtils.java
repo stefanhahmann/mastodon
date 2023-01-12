@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -47,7 +47,7 @@ public class FeatureUtils
 	 * Returns the map of feature specs to feature stored in the specified
 	 * feature model, for features that are defined on objects of the specified
 	 * class.
-	 * 
+	 *
 	 * @param <O>
 	 *            the type of objects whose features we want to extract.
 	 * @param featureModel
@@ -64,16 +64,15 @@ public class FeatureUtils
 		final Map< FeatureSpec< ?, O >, Feature< O > > featureMap = new HashMap<>();
 		for ( final FeatureSpec< ?, ? > fs : featureSpecs )
 		{
-			@SuppressWarnings( "unchecked" )
-			final Feature< O > feature = ( Feature< O > ) featureModel.getFeature( fs );
-			@SuppressWarnings( "unchecked" )
-			final FeatureSpec< ?, O > featureSpec = ( FeatureSpec< ?, O > ) fs;
+			@SuppressWarnings("unchecked") final Feature< O > feature = ( Feature< O > ) featureModel.getFeature( fs );
+			@SuppressWarnings("unchecked") final FeatureSpec< ?, O > featureSpec = ( FeatureSpec< ?, O > ) fs;
 			featureMap.put( featureSpec, feature );
 		}
 		return featureMap;
 	}
 
 	private FeatureUtils()
-	{}
+	{
+	}
 
 }

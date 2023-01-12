@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -43,7 +43,7 @@ import org.scijava.service.SciJavaService;
 /**
  * Helper class to discover and hold {@link FeatureSpec}s.
  */
-@Plugin( type = FeatureSpecsService.class )
+@Plugin(type = FeatureSpecsService.class)
 public class FeatureSpecsService extends AbstractService implements SciJavaService
 {
 	@Parameter
@@ -130,14 +130,14 @@ public class FeatureSpecsService extends AbstractService implements SciJavaServi
 	/**
 	 * Returns a list of feature specifications for features that operate on the
 	 * specified target.
-	 * 
+	 *
 	 * @param <T>
 	 *            the type of the target.
 	 * @param target
 	 *            the target features returned operate on.
 	 * @return a new unmodifiable list, never <code>null</code>.
 	 */
-	@SuppressWarnings( "unchecked" )
+	@SuppressWarnings("unchecked")
 	public < T > List< FeatureSpec< ?, T > > getSpecs( final Class< T > target )
 	{
 		final List< ? > list = targetToSpecs.get( target );

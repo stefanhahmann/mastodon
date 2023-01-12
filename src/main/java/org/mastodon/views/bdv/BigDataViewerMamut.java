@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -30,6 +30,7 @@ package org.mastodon.views.bdv;
 
 import bdv.ui.splitpanel.SplitPanel;
 import bdv.viewer.ViewerPanel;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
@@ -75,7 +76,8 @@ public class BigDataViewerMamut
 	public BigDataViewerMamut(
 			final SharedBigDataViewerData shared,
 			final String windowTitle,
-			final GroupHandle groupHandle )
+			final GroupHandle groupHandle
+	)
 	{
 		this.shared = shared;
 		viewerFrame = new ViewerFrameMamut(
@@ -85,7 +87,8 @@ public class BigDataViewerMamut
 				shared.getNumTimepoints(),
 				shared.getCache(),
 				groupHandle,
-				shared.getOptions() );
+				shared.getOptions()
+		);
 		viewer = viewerFrame.getViewerPanel();
 		splitPanel = viewerFrame.getSplitPanel();
 
@@ -182,7 +185,7 @@ public class BigDataViewerMamut
 
 	protected void loadSettings()
 	{
-		fileChooser.setSelectedFile( shared.getProposedSettingsFile()  );
+		fileChooser.setSelectedFile( shared.getProposedSettingsFile() );
 		final int returnVal = fileChooser.showOpenDialog( null );
 		if ( returnVal == JFileChooser.APPROVE_OPTION )
 		{
