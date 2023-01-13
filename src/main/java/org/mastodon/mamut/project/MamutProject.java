@@ -247,9 +247,9 @@ public class MamutProject
 				return Collections.emptyList();
 
 			final List< String > featureKeys = Arrays.stream( featureFolder.listFiles( ( dir, name ) -> name.toLowerCase().endsWith( ".raw" ) ) )
-				.map( f -> f.getName() )
-				.map( s -> s.replace( ".raw", "" ) )
-				.collect( Collectors.toList() );
+					.map( f -> f.getName() )
+					.map( s -> s.replace( ".raw", "" ) )
+					.collect( Collectors.toList() );
 			return featureKeys;
 		}
 
@@ -307,8 +307,8 @@ public class MamutProject
 		public Collection< String > getFeatureKeys()
 		{
 			return zip.listFile( FEATURE_FOLDER_NAME ).stream()
-				.map( s -> s.replace( ".raw", "" ) )
-				.collect( Collectors.toList() );
+					.map( s -> s.replace( ".raw", "" ) )
+					.collect( Collectors.toList() );
 		}
 
 		@Override

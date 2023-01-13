@@ -59,7 +59,8 @@ public class GraphFeatureUpdateListeners
 	 *
 	 * @return a new {@link PropertyChangeListener}.
 	 */
-	public static < V extends Vertex< E >, E extends Edge< V > > PropertyChangeListener< V > vertexPropertyListener( final FeatureModel featureModel, final Class< V > vertexClass, final Class< E > edgeClass )
+	public static < V extends Vertex< E >, E extends Edge< V > > PropertyChangeListener< V > vertexPropertyListener( final FeatureModel featureModel, final Class< V > vertexClass,
+			final Class< E > edgeClass )
 	{
 		return new MyVertexPropertyChangeListener<>( featureModel, vertexClass, edgeClass );
 	}

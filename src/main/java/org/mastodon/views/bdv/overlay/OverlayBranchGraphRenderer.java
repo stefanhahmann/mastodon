@@ -166,7 +166,7 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 
 					if ( isHighlighted )
 						graphics.setStroke( defaultEdgeStroke );
-				});
+				} );
 			}
 
 			if ( settings.getDrawSpots() )
@@ -178,7 +178,7 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 				final double pointFadeDepth = settings.getPointFadeDepth();
 				final boolean fillSpots = settings.getFillSpots();
 				final Visibility< BV, BE > visibility = visibilities.getVisibility();
-				
+
 				final BV highlighted = highlight.getHighlightedVertex( ref1 );
 				final BV focused = focus.getFocusedVertex( ref2 );
 

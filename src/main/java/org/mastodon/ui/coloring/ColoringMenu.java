@@ -87,12 +87,11 @@ public class ColoringMenu implements TagSetModel.TagSetModelListener, FeatureMod
 		final FeatureColorModeManager featureColorModeManager = coloringModel.getFeatureColorModeManager();
 		final List< FeatureColorMode > l1 = featureColorModeManager.getBuiltinStyles();
 		final List< FeatureColorMode > l2 = featureColorModeManager.getUserStyles();
-		Stream.concat( l1.stream(), l2.stream() ).forEach( mode ->
-				addColorAction( new ColorAction(
-						mode.getName(),
-						() -> coloringModel.getFeatureColorMode() == mode,
-						() -> coloringModel.isValid( mode ),
-						() -> coloringModel.colorByFeature( mode ) ) ) );
+		Stream.concat( l1.stream(), l2.stream() ).forEach( mode -> addColorAction( new ColorAction(
+				mode.getName(),
+				() -> coloringModel.getFeatureColorMode() == mode,
+				() -> coloringModel.isValid( mode ),
+				() -> coloringModel.colorByFeature( mode ) ) ) );
 
 		if ( !( l1.isEmpty() && l2.isEmpty() ) )
 			menu.add( new JSeparator() );

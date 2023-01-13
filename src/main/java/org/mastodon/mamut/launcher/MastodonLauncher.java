@@ -370,7 +370,7 @@ public class MastodonLauncher extends JFrame
 				{
 					final WindowManager windowManager = createWindowManager();
 					final MainWindow mainWindow = new MainWindow( windowManager );
-					
+
 					/*
 					 * Action when user closes source image plus.
 					 */
@@ -408,7 +408,7 @@ public class MastodonLauncher extends JFrame
 							}
 						} );
 					}
-					
+
 					// Check whether the imp can be found on disk.
 					if ( imp.getOriginalFileInfo() == null ||
 							imp.getOriginalFileInfo().directory == null ||

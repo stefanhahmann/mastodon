@@ -45,7 +45,7 @@ import org.mastodon.properties.IntPropertyMap;
 import org.scijava.plugin.Plugin;
 
 @Plugin( type = FeatureSerializer.class )
-public class BranchNSpotsFeatureSerializer implements BranchFeatureSerializer< BranchNSpotsFeature, BranchSpot, Spot>
+public class BranchNSpotsFeatureSerializer implements BranchFeatureSerializer< BranchNSpotsFeature, BranchSpot, Spot >
 {
 
 	@Override

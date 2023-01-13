@@ -201,10 +201,10 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 	public Collection< FeatureSpec< ?, ? > > getDependencies( final FeatureSpec< ?, ? > spec )
 	{
 		final Vertex vertex = dependencies.get( spec );
-		if (null == vertex)
+		if ( null == vertex )
 			return Collections.emptyList();
 
-		final List<FeatureSpec< ?, ? >> deps = new ArrayList<>();
+		final List< FeatureSpec< ?, ? > > deps = new ArrayList<>();
 		for ( final Edge edge : vertex.outgoingEdges() )
 		{
 			final Vertex target = edge.getTarget();
@@ -295,7 +295,7 @@ public class DefaultFeatureComputerService extends AbstractService implements Fe
 		}
 
 		// FeatureComputationStatus.
-		if (FeatureComputationStatus.class.isAssignableFrom( parameterClass ))
+		if ( FeatureComputationStatus.class.isAssignableFrom( parameterClass ) )
 		{
 			@SuppressWarnings( "unchecked" )
 			final ModuleItem< FeatureComputationStatus > statusModule = ( ModuleItem< FeatureComputationStatus > ) item;

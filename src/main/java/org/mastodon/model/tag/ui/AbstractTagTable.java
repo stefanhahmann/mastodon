@@ -212,7 +212,7 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 		table.getColumnModel().getColumn( buttonColumn ).setMaxWidth( 32 );
 		table.addMouseListener( new MyTableButtonMouseListener() );
 		table.setShowGrid( false );
-		table.setIntercellSpacing( new Dimension( 0,0 ) );
+		table.setIntercellSpacing( new Dimension( 0, 0 ) );
 		table.setSurrendersFocusOnKeystroke( true );
 		table.setFocusTraversalKeys( KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null );
 		table.setFocusTraversalKeys( KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null );

@@ -128,7 +128,8 @@ public class MamutViewTable extends MamutView< ViewGraph< Spot, Link, Spot, Link
 		// Branch-graph coloring.
 		final ModelBranchGraph branchGraph = model.getBranchGraph();
 		final ViewGraph< BranchSpot, BranchLink, BranchSpot, BranchLink > viewBranchGraph = IdentityViewGraph.wrap( branchGraph, branchGraph.getGraphIdBimap() );
-		final GraphColorGeneratorAdapter< BranchSpot, BranchLink, BranchSpot, BranchLink > branchColoringAdapter = new GraphColorGeneratorAdapter<>( viewBranchGraph.getVertexMap(), viewBranchGraph.getEdgeMap() );
+		final GraphColorGeneratorAdapter< BranchSpot, BranchLink, BranchSpot, BranchLink > branchColoringAdapter =
+				new GraphColorGeneratorAdapter<>( viewBranchGraph.getVertexMap(), viewBranchGraph.getEdgeMap() );
 
 		// Selection table?
 		this.selectionTable = ( boolean ) guiState.getOrDefault( TABLE_SELECTION_ONLY, false );
@@ -139,29 +140,29 @@ public class MamutViewTable extends MamutView< ViewGraph< Spot, Link, Spot, Link
 				.groupHandle( groupHandle )
 				.undo( model )
 				.addGraph( model.getGraph() )
-					.selectionModel( selectionModel )
-					.highlightModel( highlightModel )
-					.focusModel( focusModel )
-					.featureModel( featureModel )
-					.tagSetModel( tagSetModel )
-					.navigationHandler( navigationHandler )
-					.coloring( coloringAdapter )
-					.vertexLabelGetter( s -> s.getLabel() )
-					.vertexLabelSetter( ( s, label ) -> s.setLabel( label ) )
-					.listenToContext( true )
-					.selectionTable( selectionTable )
-					.done()
+				.selectionModel( selectionModel )
+				.highlightModel( highlightModel )
+				.focusModel( focusModel )
+				.featureModel( featureModel )
+				.tagSetModel( tagSetModel )
+				.navigationHandler( navigationHandler )
+				.coloring( coloringAdapter )
+				.vertexLabelGetter( s -> s.getLabel() )
+				.vertexLabelSetter( ( s, label ) -> s.setLabel( label ) )
+				.listenToContext( true )
+				.selectionTable( selectionTable )
+				.done()
 				.addGraph( model.getBranchGraph() )
-					.vertexLabelGetter( s -> s.getLabel() )
-					.vertexLabelSetter( ( s, label ) -> s.setLabel( label ) )
-					.featureModel( featureModel )
-					.tagSetModel( branchTagSetModel( appModel ) )
-					.selectionModel( branchSelectionModel( appModel ) )
-					.highlightModel( branchHighlightModel( appModel ) )
-					.coloring( branchColoringAdapter )
-					.focusModel( branchFocusfocusModel( appModel ) )
-					.navigationHandler( branchGraphNavigation( appModel, navigationHandler ) )
-					.done()
+				.vertexLabelGetter( s -> s.getLabel() )
+				.vertexLabelSetter( ( s, label ) -> s.setLabel( label ) )
+				.featureModel( featureModel )
+				.tagSetModel( branchTagSetModel( appModel ) )
+				.selectionModel( branchSelectionModel( appModel ) )
+				.highlightModel( branchHighlightModel( appModel ) )
+				.coloring( branchColoringAdapter )
+				.focusModel( branchFocusfocusModel( appModel ) )
+				.navigationHandler( branchGraphNavigation( appModel, navigationHandler ) )
+				.done()
 				.title( selectionTable ? "Selection table" : "Data table" )
 				.get();
 		setFrame( frame );

@@ -76,9 +76,9 @@ public interface BranchFeatureSerializer< F extends Feature< O >, O, Q > extends
 			ModelBranchGraph branchGraph,
 			ModelGraph graph ) throws ClassNotFoundException, IOException;
 
-	public void serialize( 
-			final F feature, 
-			final ObjectToFileIdMap< Q > idmap, 
+	public void serialize(
+			final F feature,
+			final ObjectToFileIdMap< Q > idmap,
 			final ObjectOutputStream oos,
 			ModelBranchGraph branchGraph,
 			final ModelGraph graph ) throws IOException;

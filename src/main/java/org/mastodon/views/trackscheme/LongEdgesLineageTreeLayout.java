@@ -54,9 +54,9 @@ public class LongEdgesLineageTreeLayout extends LineageTreeLayoutImp
 {
 
 	public LongEdgesLineageTreeLayout(
-			final RootsModel<TrackSchemeVertex> rootsModel,
-			final TrackSchemeGraph<?, ?> graph,
-			final SelectionModel<TrackSchemeVertex, TrackSchemeEdge> selection )
+			final RootsModel< TrackSchemeVertex > rootsModel,
+			final TrackSchemeGraph< ?, ? > graph,
+			final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection )
 	{
 		super( rootsModel, graph, selection );
 	}
@@ -137,7 +137,7 @@ public class LongEdgesLineageTreeLayout extends LineageTreeLayoutImp
 				{
 					edge.getSource( v2 );
 
-					if( v2.getLayoutTimestamp() != timestamp )
+					if ( v2.getLayoutTimestamp() != timestamp )
 						continue;
 
 					// Check if the edge has some parts on the screen.

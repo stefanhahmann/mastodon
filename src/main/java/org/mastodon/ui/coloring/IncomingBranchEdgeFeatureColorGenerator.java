@@ -56,13 +56,14 @@ public class IncomingBranchEdgeFeatureColorGenerator< V extends Vertex< E >, E e
 		try
 		{
 			BE be = branchGraph.getBranchEdge( edge, beRef );
-			if(be == null) {
+			if ( be == null )
+			{
 				final BV bv = branchGraph.getBranchVertex( edge, bvRef );
-				if(bv == null)
+				if ( bv == null )
 					return 0;
-				if(bv.incomingEdges().size() != 1)
+				if ( bv.incomingEdges().size() != 1 )
 					return 0;
-				be = bv.incomingEdges().get(0, beRef);
+				be = bv.incomingEdges().get( 0, beRef );
 			}
 			return colorGenerator.color( be, null, null );
 		}

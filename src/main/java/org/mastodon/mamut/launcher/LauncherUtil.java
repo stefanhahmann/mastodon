@@ -96,7 +96,7 @@ class LauncherUtil
 		}
 		catch (
 
-		final IOException e )
+			final IOException e )
 		{
 			editorPane.setText( "Attempted to read a bad URL: " + helpURL );
 		}

@@ -222,7 +222,7 @@ public class TrackMateImporterTest
 		try (final Context context = new Context())
 		{
 			final FeatureSpecsService featureSpecsService = context.getService( FeatureSpecsService.class );
-//			final WindowManager windowManager = new WindowManager( context );
+			//			final WindowManager windowManager = new WindowManager( context );
 			final TrackMateImporter importer = new TrackMateImporter( new File( TRACKMATE_FILE ) );
 			final MamutProject project = importer.createProject();
 			final Model model = new Model( project.getSpaceUnits(), project.getTimeUnits() );
@@ -316,7 +316,6 @@ public class TrackMateImporterTest
 		for ( final FeatureProjection< ? > projection : projections )
 			assertTrue( "Unexpected projection spec: " + projection.getKey(),
 					expectedProjectionKeys.contains( projection.getKey().toString() ) );
-
 
 		// Inspect feature projection units and multiplicity.
 		for ( final FeatureProjectionSpec projSpec : feature.getSpec().getProjectionSpecs() )

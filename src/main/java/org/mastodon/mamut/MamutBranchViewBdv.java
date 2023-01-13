@@ -92,10 +92,10 @@ import bdv.viewer.NavigationActions;
 import bdv.viewer.ViewerPanel;
 import net.imglib2.realtransform.AffineTransform3D;
 
-public class MamutBranchViewBdv extends MamutBranchView< 
-	OverlayGraphWrapper< BranchSpot, BranchLink >,
-	OverlayVertexWrapper< BranchSpot, BranchLink >, 
-	OverlayEdgeWrapper< BranchSpot, BranchLink > >
+public class MamutBranchViewBdv extends MamutBranchView<
+		OverlayGraphWrapper< BranchSpot, BranchLink >,
+		OverlayVertexWrapper< BranchSpot, BranchLink >,
+		OverlayEdgeWrapper< BranchSpot, BranchLink > >
 {
 
 	private static int bdvName = 1;
@@ -114,7 +114,7 @@ public class MamutBranchViewBdv extends MamutBranchView<
 	public MamutBranchViewBdv( final MamutAppModel appModel, final Map< String, Object > guiState )
 	{
 		super( appModel, createViewBranchGraph( appModel ), new String[] { KeyConfigContexts.BIGDATAVIEWER } );
-		
+
 		// Image data.
 		final SharedBigDataViewerData sharedBdvData = appModel.getSharedBdvData();
 
@@ -290,7 +290,7 @@ public class MamutBranchViewBdv extends MamutBranchView<
 		return viewer;
 	}
 
-	private static OverlayGraphWrapper<BranchSpot, BranchLink> createViewBranchGraph( final MamutAppModel appModel )
+	private static OverlayGraphWrapper< BranchSpot, BranchLink > createViewBranchGraph( final MamutAppModel appModel )
 	{
 		// Model.
 		final Model model = appModel.getModel();

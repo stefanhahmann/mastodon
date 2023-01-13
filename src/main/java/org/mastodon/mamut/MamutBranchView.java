@@ -87,10 +87,10 @@ import org.scijava.ui.behaviour.util.Behaviours;
 import org.scijava.ui.behaviour.util.WrappedActionMap;
 import org.scijava.ui.behaviour.util.WrappedInputMap;
 
-public class MamutBranchView< 
-	VG extends ViewGraph< BranchSpot, BranchLink, V, E >, 
-	V extends Vertex< E >, 
-	E extends Edge< V > >
+public class MamutBranchView<
+		VG extends ViewGraph< BranchSpot, BranchLink, V, E >,
+		V extends Vertex< E >,
+		E extends Edge< V > >
 		implements IMastodonFrameView, IMastodonView
 {
 

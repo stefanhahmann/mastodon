@@ -74,7 +74,7 @@ public class MastodonView<
 		ME extends AbstractListenableEdge< ME, MV, ?, ? >,
 		V extends Vertex< E >,
 		E extends Edge< V > >
-	implements IMastodonView
+		implements IMastodonView
 {
 	protected final M appModel;
 
@@ -125,7 +125,7 @@ public class MastodonView<
 			focusModelAdapter.listeners().removeAll();
 			selectionModelAdapter.listeners().removeAll();
 			navigationHandlerAdapter.listeners().removeAll();
-		});
+		} );
 	}
 
 	/**

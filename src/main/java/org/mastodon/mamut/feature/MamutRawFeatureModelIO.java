@@ -144,7 +144,7 @@ public class MamutRawFeatureModelIO
 		for ( final String featureKey : featureKeys )
 		{
 			final FeatureSpec< ?, ? > spec = featureSpecsService.getSpec( featureKey );
-			if (null == spec)
+			if ( null == spec )
 			{
 				System.err.println( "Unknown feature: " + featureKey );
 				continue;

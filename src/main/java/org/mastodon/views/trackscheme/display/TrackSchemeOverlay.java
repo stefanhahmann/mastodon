@@ -347,7 +347,7 @@ public class TrackSchemeOverlay implements OverlayRenderer, OffsetHeadersListene
 	 */
 	public void setCurrentTimepoint( final int timepoint )
 	{
-		this.currentTimepoint  = timepoint;
+		this.currentTimepoint = timepoint;
 	}
 
 	/**

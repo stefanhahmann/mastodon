@@ -353,7 +353,7 @@ public class DataDisplayStyleIO
 				s.vertexHighlightStroke( ( Stroke ) mapping.getOrDefault( "vertexHighlightStroke", df.getVertexHighlightStroke() ) );
 				s.focusStroke( ( Stroke ) mapping.getOrDefault( "focusStroke", df.getFocusStroke() ) );
 
-				s.drawVertexName( (boolean) mapping.getOrDefault( "drawVertexName", df.isDrawVertexName() ) );
+				s.drawVertexName( ( boolean ) mapping.getOrDefault( "drawVertexName", df.isDrawVertexName() ) );
 
 				return s;
 			}

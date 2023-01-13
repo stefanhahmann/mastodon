@@ -256,7 +256,6 @@ class LauncherGUI extends JPanel
 
 		private static final long serialVersionUID = 1L;
 
-
 		private static final String DOCUMENTATION_STR = "Mastodon online documentation";
 
 		private static final String DOCUMENTATION_LINK = "<html><a href='" + DOCUMENTATION_URL + "'>" + DOCUMENTATION_STR + "</html>";

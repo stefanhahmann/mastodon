@@ -128,14 +128,21 @@ public class FeatureTable< C, T >
 	}
 
 	private static final ImageIcon UP_TO_DATE_ICON = new ImageIcon( FeatureTable.class.getResource( "bullet_green.png" ) );
+
 	private static final ImageIcon NOT_UP_TO_DATE_ICON = new ImageIcon( FeatureTable.class.getResource( "time.png" ) );
 
 	private C elements;
+
 	private final ToIntFunction< C > size;
+
 	private final BiFunction< C, Integer, T > get;
+
 	private final Function< T, String > getName;
+
 	private final Predicate< T > isSelected;
+
 	private final BiConsumer< T, Boolean > setSelected;
+
 	private final Predicate< T > isUptodate;
 
 	private final Listeners.List< SelectionListener< T > > selectionListeners;
@@ -362,7 +369,7 @@ public class FeatureTable< C, T >
 		@Override
 		public void setValueAt( final Object aValue, final int rowIndex, final int columnIndex )
 		{
-			final boolean selected =  (columnIndex == 0)
+			final boolean selected = ( columnIndex == 0 )
 					? ( boolean ) aValue
 					: !isSelected.test( get( rowIndex ) );
 			if ( selected != isSelected.test( get( rowIndex ) ) )

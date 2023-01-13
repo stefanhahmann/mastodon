@@ -147,7 +147,6 @@ public class TrackSchemeVertex extends AbstractVertex< TrackSchemeVertex, TrackS
 		pool.firstTimepoint.setQuiet( this, timepoint );
 	}
 
-
 	/**
 	 * Internal pool index of last {@link ScreenVertex} that was created for
 	 * this vertex. Used for lookup when creating {@link ScreenEdge}s.

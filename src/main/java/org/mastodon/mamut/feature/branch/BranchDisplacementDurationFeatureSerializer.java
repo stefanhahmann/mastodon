@@ -45,7 +45,7 @@ import org.mastodon.properties.DoublePropertyMap;
 import org.scijava.plugin.Plugin;
 
 @Plugin( type = FeatureSerializer.class )
-public class BranchDisplacementDurationFeatureSerializer implements BranchFeatureSerializer< BranchDisplacementDurationFeature, BranchSpot, Spot>
+public class BranchDisplacementDurationFeatureSerializer implements BranchFeatureSerializer< BranchDisplacementDurationFeature, BranchSpot, Spot >
 {
 
 	@Override

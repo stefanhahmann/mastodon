@@ -127,7 +127,6 @@ public class EllpsoidIteratorExample
 		BdvFunctions.showOverlay( overlay, "spot", Bdv.options().addTo( bdv ) );
 	}
 
-
 	// copy of ScreenVertexMath from BDV view using Spot instead of ScreenVertex
 	static class ScreenVertexMath
 	{

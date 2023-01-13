@@ -53,23 +53,39 @@ import org.scijava.ui.behaviour.util.Actions;
 public class TrackSchemeNavigationActions
 {
 	public static final String NAVIGATE_CHILD = "ts navigate to child";
+
 	public static final String NAVIGATE_PARENT = "ts navigate to parent";
+
 	public static final String NAVIGATE_LEFT = "ts navigate left";
+
 	public static final String NAVIGATE_RIGHT = "ts navigate right";
+
 	public static final String SELECT_NAVIGATE_CHILD = "ts select navigate to child";
+
 	public static final String SELECT_NAVIGATE_PARENT = "ts select navigate to parent";
+
 	public static final String SELECT_NAVIGATE_LEFT = "ts select navigate left";
+
 	public static final String SELECT_NAVIGATE_RIGHT = "ts select navigate right";
+
 	public static final String TOGGLE_FOCUS_SELECTION = "ts toggle focus selection";
 
 	private static final String[] NAVIGATE_CHILD_KEYS = new String[] { "DOWN" };
+
 	private static final String[] NAVIGATE_PARENT_KEYS = new String[] { "UP" };
+
 	private static final String[] NAVIGATE_LEFT_KEYS = new String[] { "LEFT" };
+
 	private static final String[] NAVIGATE_RIGHT_KEYS = new String[] { "RIGHT" };
+
 	private static final String[] SELECT_NAVIGATE_CHILD_KEYS = new String[] { "shift DOWN" };
+
 	private static final String[] SELECT_NAVIGATE_PARENT_KEYS = new String[] { "shift UP" };
+
 	private static final String[] SELECT_NAVIGATE_LEFT_KEYS = new String[] { "shift LEFT" };
+
 	private static final String[] SELECT_NAVIGATE_RIGHT_KEYS = new String[] { "shift RIGHT" };
+
 	private static final String[] TOGGLE_FOCUS_SELECTION_KEYS = new String[] { "SPACE" };
 
 	/*
@@ -244,7 +260,8 @@ public class TrackSchemeNavigationActions
 			case LEFT_SIBLING:
 				current = layout.getLeftSibling( vertex, ref );
 				break;
-			case RIGHT_SIBLING: default:
+			case RIGHT_SIBLING:
+			default:
 				current = layout.getRightSibling( vertex, ref );
 				break;
 			}
@@ -272,7 +289,7 @@ public class TrackSchemeNavigationActions
 			final TrackSchemeVertex v = focus.getFocusedVertex( ref );
 			if ( v != null )
 				selection.toggle( v );
-			}
+		}
 		finally
 		{
 			lock.readLock().unlock();

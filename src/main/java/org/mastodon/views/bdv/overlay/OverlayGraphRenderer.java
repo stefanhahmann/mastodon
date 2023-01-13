@@ -452,7 +452,7 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 	{
 		return settings.getDrawSpotCenters()
 				&& ( ( !settings.getDrawEllipsoidSliceIntersection() && !settings.getDrawEllipsoidSliceProjection() )
-				|| settings.getDrawSpotCentersForEllipses() );
+						|| settings.getDrawSpotCentersForEllipses() );
 	}
 
 	/**
@@ -587,7 +587,7 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 		index.readLock().lock();
 		try
 		{
-			if ( settings.getDrawLinks())
+			if ( settings.getDrawLinks() )
 			{
 				final E highlighted = highlight.getHighlightedEdge( ref3 );
 				graphics.setStroke( defaultEdgeStroke );
@@ -807,7 +807,7 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 			final Color color = graphics.getColor();
 			graphics.setColor( Color.BLACK );
 			graphics.draw( ellipse2D );
-			graphics.setColor( color );	
+			graphics.setColor( color );
 		}
 		else
 		{

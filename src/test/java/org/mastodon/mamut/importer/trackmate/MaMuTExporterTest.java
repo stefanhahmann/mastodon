@@ -306,7 +306,7 @@ public class MaMuTExporterTest
 
 	private static void loadProject( final Context context, final MamutProject project, final Model model ) throws IOException
 	{
-		try ( final MamutProject.ProjectReader reader = project.openForReading() )
+		try (final MamutProject.ProjectReader reader = project.openForReading())
 		{
 			final RawGraphIO.FileIdToGraphMap< Spot, Link > idmap = model.loadRaw( reader );
 			MamutRawFeatureModelIO.deserialize( context, model, idmap, reader );
@@ -316,7 +316,6 @@ public class MaMuTExporterTest
 			throw new RuntimeException( e );
 		}
 	}
-
 
 	private Model export() throws IOException, SpimDataException
 	{

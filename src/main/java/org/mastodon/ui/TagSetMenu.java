@@ -128,7 +128,8 @@ public class TagSetMenu< V extends Vertex< E >, E extends Edge< V > > implements
 
 		private final ReentrantReadWriteLock lock;
 
-		public SetTagAction( final TagSetModel< V, E > tagSetModel, final TagSet tagSet, final Tag tag, final SelectionModel< V, E > selectionModel, final ReentrantReadWriteLock lock, final UndoPointMarker undo )
+		public SetTagAction( final TagSetModel< V, E > tagSetModel, final TagSet tagSet, final Tag tag, final SelectionModel< V, E > selectionModel, final ReentrantReadWriteLock lock,
+				final UndoPointMarker undo )
 		{
 			super( tag.label(), new ColorIcon( new Color( tag.color(), true ) ) );
 			this.tagSetModel = tagSetModel;

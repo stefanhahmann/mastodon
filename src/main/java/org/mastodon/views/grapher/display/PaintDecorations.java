@@ -129,7 +129,7 @@ public class PaintDecorations
 		final double maxX = screenTransform.getMaxX();
 		final double minY = screenTransform.getMinY();
 		final double maxY = screenTransform.getMaxY();
-		
+
 		double xScale = screenTransform.getScaleX();
 		double yScale = screenTransform.getScaleY();
 		xScale = Double.isNaN( xScale ) ? 1. : xScale;
