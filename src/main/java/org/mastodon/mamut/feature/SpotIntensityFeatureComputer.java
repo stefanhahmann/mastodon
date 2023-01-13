@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -51,7 +51,7 @@ import bdv.viewer.Source;
 import bdv.viewer.SourceAndConverter;
 import net.imglib2.type.numeric.RealType;
 
-@Plugin( type = MamutFeatureComputer.class )
+@Plugin(type = MamutFeatureComputer.class)
 public class SpotIntensityFeatureComputer implements MamutFeatureComputer, Cancelable
 {
 
@@ -67,7 +67,7 @@ public class SpotIntensityFeatureComputer implements MamutFeatureComputer, Cance
 	@Parameter
 	private FeatureComputationStatus status;
 
-	@Parameter( type = ItemIO.OUTPUT )
+	@Parameter(type = ItemIO.OUTPUT)
 	private SpotIntensityFeature output;
 
 	private String cancelReason;
@@ -136,9 +136,10 @@ public class SpotIntensityFeatureComputer implements MamutFeatureComputer, Cance
 		final ArrayList< SourceAndConverter< ? > > sources = bdvData.getSources();
 		final int nSources = sources.size();
 		int done = 0;
-		MAIN_LOOP: for ( int iSource = 0; iSource < nSources; iSource++ )
+		MAIN_LOOP:
+		for ( int iSource = 0; iSource < nSources; iSource++ )
 		{
-			@SuppressWarnings( "unchecked" )
+			@SuppressWarnings("unchecked")
 			final Source< RealType< ? > > source = ( Source< RealType< ? > > ) sources.get( iSource ).getSpimSource();
 			// Calculation are made on resolution level 0 by default.
 			final EllipsoidIterable< RealType< ? > > ellipsoidIter = new EllipsoidIterable<>( source );
@@ -181,7 +182,7 @@ public class SpotIntensityFeatureComputer implements MamutFeatureComputer, Cance
 						output.sums.get( iSource ).set( spot, array[ 0 ] );
 						continue;
 					}
-					
+
 					double sum = 0.;
 					for ( int i = 0; i < size; i++ )
 						sum += array[ i ];
@@ -217,8 +218,7 @@ public class SpotIntensityFeatureComputer implements MamutFeatureComputer, Cance
 		for ( int timepoint = 0; timepoint < numTimepoints; timepoint++ )
 		{
 			final Iterable< Spot > iterable = index.apply( timepoint );
-			for ( @SuppressWarnings( "unused" )
-			final Spot spot : iterable )
+			for ( @SuppressWarnings("unused") final Spot spot : iterable )
 				nSpots++;
 		}
 		return nSpots;

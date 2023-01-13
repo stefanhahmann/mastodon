@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -42,11 +42,11 @@ import org.mastodon.model.SelectionListener;
 import org.mastodon.model.SelectionModel;
 import org.scijava.listeners.Listeners;
 
-public class BranchGraphSelectionAdapter< 
-	V extends Vertex< E >, 
-	E extends Edge< V >, 
-	BV extends Vertex< BE >, 
-	BE extends Edge< BV > >
+public class BranchGraphSelectionAdapter<
+		V extends Vertex< E >,
+		E extends Edge< V >,
+		BV extends Vertex< BE >,
+		BE extends Edge< BV > >
 		extends AbstractBranchGraphAdapter< V, E, BV, BE >
 		implements SelectionModel< BV, BE >
 {
@@ -57,7 +57,8 @@ public class BranchGraphSelectionAdapter<
 			final BranchGraph< BV, BE, V, E > branchGraph,
 			final ReadOnlyGraph< V, E > graph,
 			final GraphIdBimap< V, E > idmap,
-			final SelectionModel< V, E > selection )
+			final SelectionModel< V, E > selection
+	)
 	{
 		super( branchGraph, graph, idmap );
 		this.selection = selection;
@@ -78,8 +79,8 @@ public class BranchGraphSelectionAdapter<
 	@Override
 	public boolean isSelected( final BV vertex )
 	{
-		Iterator<V> vIter = branchGraph.vertexBranchIterator( vertex );
-		Iterator<E> eIter = branchGraph.edgeBranchIterator( vertex );
+		Iterator< V > vIter = branchGraph.vertexBranchIterator( vertex );
+		Iterator< E > eIter = branchGraph.edgeBranchIterator( vertex );
 		try
 		{
 			while ( vIter.hasNext() )
@@ -130,8 +131,8 @@ public class BranchGraphSelectionAdapter<
 
 	private boolean setVertexSelected( final BV branchVertex, final boolean selected )
 	{
-		Iterator<V> vertices = branchGraph.vertexBranchIterator( branchVertex );
-		Iterator<E> edges = branchGraph.edgeBranchIterator( branchVertex );
+		Iterator< V > vertices = branchGraph.vertexBranchIterator( branchVertex );
+		Iterator< E > edges = branchGraph.edgeBranchIterator( branchVertex );
 		try
 		{
 			boolean changed = false;
@@ -165,7 +166,7 @@ public class BranchGraphSelectionAdapter<
 		try
 		{
 			E e = branchGraph.getLinkedEdge( edge, eRef );
-			if( e != null )
+			if ( e != null )
 				selection.setSelected( e, selected );
 		}
 		finally
@@ -243,7 +244,8 @@ public class BranchGraphSelectionAdapter<
 	public RefSet< BE > getSelectedEdges()
 	{
 		final BE beRef = branchGraph.edgeRef();
-		try {
+		try
+		{
 			final RefSet< BE > branchEdges =
 					RefCollections.createRefSet( branchGraph.edges() );
 
@@ -256,7 +258,8 @@ public class BranchGraphSelectionAdapter<
 
 			return branchEdges;
 		}
-		finally {
+		finally
+		{
 			branchGraph.releaseRef( beRef );
 		}
 	}
@@ -267,7 +270,7 @@ public class BranchGraphSelectionAdapter<
 		final BV bvRef = branchGraph.vertexRef();
 		try
 		{
-			final RefSet<BV> branchVertices = RefCollections.createRefSet( branchGraph.vertices() );
+			final RefSet< BV > branchVertices = RefCollections.createRefSet( branchGraph.vertices() );
 
 			for ( final V v : selection.getSelectedVertices() )
 			{
@@ -278,7 +281,8 @@ public class BranchGraphSelectionAdapter<
 
 			return branchVertices;
 		}
-		finally {
+		finally
+		{
 			branchGraph.releaseRef( bvRef );
 		}
 	}
@@ -292,7 +296,7 @@ public class BranchGraphSelectionAdapter<
 	@Override
 	public boolean isEmpty()
 	{
-		if( selection.isEmpty() )
+		if ( selection.isEmpty() )
 			return true;
 		return getSelectedEdges().isEmpty() && getSelectedVertices().isEmpty();
 	}

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -60,7 +60,8 @@ public class FileChooser
 	public static File chooseFile(
 			final Component parent,
 			final String selectedFile,
-			final DialogType dialogType )
+			final DialogType dialogType
+	)
 	{
 		return chooseFile( parent, selectedFile, null, null, dialogType );
 	}
@@ -70,7 +71,8 @@ public class FileChooser
 			final String selectedFile,
 			final FileFilter fileFilter,
 			final String dialogTitle,
-			final DialogType dialogType )
+			final DialogType dialogType
+	)
 	{
 		return chooseFile( parent, selectedFile, fileFilter, dialogTitle, dialogType, SelectionMode.FILES_ONLY );
 	}
@@ -81,7 +83,8 @@ public class FileChooser
 			final XmlFileFilter fileFilter,
 			final String dialogTitle,
 			final DialogType dialogType,
-			final Image image )
+			final Image image
+	)
 	{
 		return chooseFile( useJFileChooser, parent, selectedFile, fileFilter, dialogTitle, dialogType, SelectionMode.FILES_ONLY, image );
 	}
@@ -92,7 +95,8 @@ public class FileChooser
 			final FileFilter fileFilter,
 			final String dialogTitle,
 			final DialogType dialogType,
-			final SelectionMode selectionMode )
+			final SelectionMode selectionMode
+	)
 	{
 		return chooseFile( useJFileChooser, parent, selectedFile, fileFilter, dialogTitle, dialogType, selectionMode, null );
 	}
@@ -104,7 +108,8 @@ public class FileChooser
 			final FileFilter fileFilter,
 			final String dialogTitle,
 			final DialogType dialogType,
-			final SelectionMode selectionMode )
+			final SelectionMode selectionMode
+	)
 	{
 		return chooseFile( useJFileChooser, parent, selectedFile, fileFilter, dialogTitle, dialogType, selectionMode, null );
 	}
@@ -117,7 +122,8 @@ public class FileChooser
 			final String dialogTitle,
 			final DialogType dialogType,
 			final SelectionMode selectionMode,
-			final Image iconImage )
+			final Image iconImage
+	)
 	{
 		final boolean isSaveDialog = ( dialogType == DialogType.SAVE );
 		final boolean isDirectoriesOnly = ( selectionMode == SelectionMode.DIRECTORIES_ONLY );
@@ -177,8 +183,8 @@ public class FileChooser
 			fileChooser.setFileFilter( fileFilter );
 
 			final int returnVal = isSaveDialog
-					? fileChooser.showSaveDialog( parent )
-					: fileChooser.showOpenDialog( parent );
+								  ? fileChooser.showSaveDialog( parent )
+								  : fileChooser.showOpenDialog( parent );
 			if ( returnVal == JFileChooser.APPROVE_OPTION )
 				file = fileChooser.getSelectedFile();
 		}
@@ -273,7 +279,7 @@ public class FileChooser
 	/**
 	 * Possible creates the whole directories needed to save a file with the
 	 * specified path.
-	 * 
+	 *
 	 * @param path
 	 *            the path.
 	 * @return <code>true</code> if folders have actually been created.

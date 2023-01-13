@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -128,14 +128,21 @@ public class FeatureTable< C, T >
 	}
 
 	private static final ImageIcon UP_TO_DATE_ICON = new ImageIcon( FeatureTable.class.getResource( "bullet_green.png" ) );
+
 	private static final ImageIcon NOT_UP_TO_DATE_ICON = new ImageIcon( FeatureTable.class.getResource( "time.png" ) );
 
 	private C elements;
+
 	private final ToIntFunction< C > size;
+
 	private final BiFunction< C, Integer, T > get;
+
 	private final Function< T, String > getName;
+
 	private final Predicate< T > isSelected;
+
 	private final BiConsumer< T, Boolean > setSelected;
+
 	private final Predicate< T > isUptodate;
 
 	private final Listeners.List< SelectionListener< T > > selectionListeners;
@@ -150,7 +157,7 @@ public class FeatureTable< C, T >
 
 	/**
 	 * Creates a new feature table.
-	 * 
+	 *
 	 * @param elements
 	 *            collection of elements.
 	 * @param size
@@ -173,7 +180,8 @@ public class FeatureTable< C, T >
 			final Function< T, String > getName,
 			final Predicate< T > isSelected,
 			final BiConsumer< T, Boolean > setSelected,
-			final Predicate< T > isUptodate )
+			final Predicate< T > isUptodate
+	)
 	{
 		this.elements = elements;
 		this.size = size;
@@ -197,8 +205,8 @@ public class FeatureTable< C, T >
 				return;
 			final int row = table.getSelectedRow();
 			final T selected = ( this.elements != null && row >= 0 && row < this.size.applyAsInt( this.elements ) )
-					? this.get.apply( this.elements, row )
-					: null;
+							   ? this.get.apply( this.elements, row )
+							   : null;
 			selectionListeners.list.forEach( l -> l.selectionChanged( selected ) );
 		};
 		table.getSelectionModel().addListSelectionListener( listSelectionListener );
@@ -362,9 +370,9 @@ public class FeatureTable< C, T >
 		@Override
 		public void setValueAt( final Object aValue, final int rowIndex, final int columnIndex )
 		{
-			final boolean selected =  (columnIndex == 0)
-					? ( boolean ) aValue
-					: !isSelected.test( get( rowIndex ) );
+			final boolean selected = ( columnIndex == 0 )
+									 ? ( boolean ) aValue
+									 : !isSelected.test( get( rowIndex ) );
 			if ( selected != isSelected.test( get( rowIndex ) ) )
 			{
 				setSelected.accept( get( rowIndex ), ( Boolean ) aValue );
@@ -394,12 +402,13 @@ public class FeatureTable< C, T >
 				final boolean isSelected,
 				final boolean hasFocus,
 				final int row,
-				final int column )
+				final int column
+		)
 		{
 			final JLabel label = ( JLabel ) renderer.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column );
 			label.setIcon( isUptodate.test( get.apply( elements, Integer.valueOf( row ) ) )
-					? UP_TO_DATE_ICON
-					: NOT_UP_TO_DATE_ICON );
+						   ? UP_TO_DATE_ICON
+						   : NOT_UP_TO_DATE_ICON );
 			label.setText( "" );
 			return label;
 		}

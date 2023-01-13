@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -140,12 +140,13 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 	static Color mixGhostColor( final Color color, final Color backgroundColor )
 	{
 		return ( color == null || backgroundColor == null )
-				? null
-				: new Color(
-						( color.getRed() + backgroundColor.getRed() ) / 2,
-						( color.getGreen() + backgroundColor.getGreen() ) / 2,
-						( color.getBlue() + backgroundColor.getBlue() ) / 2,
-						color.getAlpha() );
+			   ? null
+			   : new Color(
+					   ( color.getRed() + backgroundColor.getRed() ) / 2,
+					   ( color.getGreen() + backgroundColor.getGreen() ) / 2,
+					   ( color.getBlue() + backgroundColor.getBlue() ) / 2,
+					   color.getAlpha()
+			   );
 	}
 
 	private void updateGhostColors()
@@ -335,27 +336,33 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return vertexStroke;
 	}
 
-	public Stroke getBranchGraphEdgeStroke() {
+	public Stroke getBranchGraphEdgeStroke()
+	{
 		return branchGraphEdgeStroke;
 	}
 
-	public Stroke getBranchGraphEdgeHighlightStroke() {
+	public Stroke getBranchGraphEdgeHighlightStroke()
+	{
 		return branchGraphEdgeHighlightStroke;
 	}
 
-	public Stroke getHierarchyEdgeStroke() {
+	public Stroke getHierarchyEdgeStroke()
+	{
 		return hierarchyEdgeStroke;
 	}
 
-	public Stroke getHierarchyEdgeHighlightStroke() {
+	public Stroke getHierarchyEdgeHighlightStroke()
+	{
 		return hierarchyEdgeHighlightStroke;
 	}
 
-	public Stroke getHierarchyVertexStroke() {
+	public Stroke getHierarchyVertexStroke()
+	{
 		return hierarchyVertexStroke;
 	}
 
-	public Stroke getHierarchyVertexHighlightStroke() {
+	public Stroke getHierarchyVertexHighlightStroke()
+	{
 		return hierarchyVertexHighlightStroke;
 	}
 
@@ -663,7 +670,8 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return this;
 	}
 
-	public TrackSchemeStyle branchGraphEdgeStroke( final Stroke stroke ) {
+	public TrackSchemeStyle branchGraphEdgeStroke( final Stroke stroke )
+	{
 		if ( !Objects.equals( this.branchGraphEdgeStroke, stroke ) )
 		{
 			this.branchGraphEdgeStroke = stroke;
@@ -672,7 +680,8 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return this;
 	}
 
-	public TrackSchemeStyle branchGraphEdgeHighlightStroke( final Stroke stroke ) {
+	public TrackSchemeStyle branchGraphEdgeHighlightStroke( final Stroke stroke )
+	{
 		if ( !Objects.equals( this.branchGraphEdgeHighlightStroke, stroke ) )
 		{
 			this.branchGraphEdgeHighlightStroke = stroke;
@@ -681,7 +690,8 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return this;
 	}
 
-	public TrackSchemeStyle hierarchyEdgeStroke( final Stroke stroke ) {
+	public TrackSchemeStyle hierarchyEdgeStroke( final Stroke stroke )
+	{
 		if ( !Objects.equals( this.hierarchyEdgeStroke, stroke ) )
 		{
 			this.hierarchyEdgeStroke = stroke;
@@ -690,7 +700,8 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return this;
 	}
 
-	public TrackSchemeStyle hierarchyEdgeHighlightStroke( final Stroke stroke ) {
+	public TrackSchemeStyle hierarchyEdgeHighlightStroke( final Stroke stroke )
+	{
 		if ( !Objects.equals( this.hierarchyEdgeHighlightStroke, stroke ) )
 		{
 			this.hierarchyEdgeHighlightStroke = stroke;
@@ -699,7 +710,8 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return this;
 	}
 
-	public TrackSchemeStyle hierarchyVertexStroke( final Stroke stroke ) {
+	public TrackSchemeStyle hierarchyVertexStroke( final Stroke stroke )
+	{
 		if ( !Objects.equals( this.hierarchyVertexStroke, stroke ) )
 		{
 			this.hierarchyVertexStroke = stroke;
@@ -708,7 +720,8 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return this;
 	}
 
-	public TrackSchemeStyle hierarchyVertexHighlightStroke( final Stroke stroke ) {
+	public TrackSchemeStyle hierarchyVertexHighlightStroke( final Stroke stroke )
+	{
 		if ( !Objects.equals( this.hierarchyVertexHighlightStroke, stroke ) )
 		{
 			this.hierarchyVertexHighlightStroke = stroke;
@@ -868,8 +881,8 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 		return copy( null );
 	}
 
-
-	private static TrackSchemeStyle basicStyle() {
+	private static TrackSchemeStyle basicStyle()
+	{
 		return new TrackSchemeStyle().
 				edgeStroke( new BasicStroke() ).
 				edgeGhostStroke( DEFAULT_GHOST_STROKE ).
@@ -879,7 +892,7 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 				vertexHighlightStroke( new BasicStroke( 3f ) ).
 				focusStroke( DEFAULT_FOCUS_STROKE ).
 				decorationStroke( new BasicStroke() ).
-				branchGraphEdgeStroke( new BasicStroke(1.5f ) ).
+				branchGraphEdgeStroke( new BasicStroke( 1.5f ) ).
 				branchGraphEdgeHighlightStroke( new BasicStroke( 3f ) ).
 				hierarchyEdgeStroke( new BasicStroke( 3f ) ).
 				hierarchyEdgeHighlightStroke( new BasicStroke( 5f ) ).
@@ -903,6 +916,7 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 	}
 
 	private static final TrackSchemeStyle df;
+
 	static
 	{
 		final Color fill = new Color( 128, 255, 128 );
@@ -920,7 +934,7 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 				decorationColor( Color.YELLOW.darker().darker() ).
 				vertexRangeColor( new Color( 128, 128, 128 ) ).
 				headerBackgroundColor( new Color( 217, 217, 217 ) ). // new Color( 238, 238, 238 ) ).
-				headerDecorationColor( Color.DARK_GRAY ).
+						headerDecorationColor( Color.DARK_GRAY ).
 				headerCurrentTimepointColor( Color.WHITE ).
 				font( new Font( "SansSerif", Font.PLAIN, 9 ) ).
 				headerFont( new Font( "SansSerif", Font.PLAIN, 9 ) );
@@ -938,6 +952,7 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 	}
 
 	private static final TrackSchemeStyle modern;
+
 	static
 	{
 		final Color bg = new Color( 163, 199, 197 );
@@ -976,6 +991,7 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 	}
 
 	private static final TrackSchemeStyle hmdyk;
+
 	static
 	{
 		final Color bg = new Color( 163, 199, 197 );
@@ -1004,6 +1020,7 @@ public class TrackSchemeStyle implements Style< TrackSchemeStyle >
 	}
 
 	public static Collection< TrackSchemeStyle > defaults;
+
 	static
 	{
 		defaults = new ArrayList<>( 3 );

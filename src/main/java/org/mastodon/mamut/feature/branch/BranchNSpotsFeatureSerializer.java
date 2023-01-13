@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -44,8 +44,8 @@ import org.mastodon.mamut.model.branch.ModelBranchGraph;
 import org.mastodon.properties.IntPropertyMap;
 import org.scijava.plugin.Plugin;
 
-@Plugin( type = FeatureSerializer.class )
-public class BranchNSpotsFeatureSerializer implements BranchFeatureSerializer< BranchNSpotsFeature, BranchSpot, Spot>
+@Plugin(type = FeatureSerializer.class)
+public class BranchNSpotsFeatureSerializer implements BranchFeatureSerializer< BranchNSpotsFeature, BranchSpot, Spot >
 {
 
 	@Override
@@ -59,7 +59,8 @@ public class BranchNSpotsFeatureSerializer implements BranchFeatureSerializer< B
 			final FileIdToObjectMap< Spot > idmap,
 			final ObjectInputStream ois,
 			final ModelBranchGraph branchGraph,
-			final ModelGraph graph ) throws ClassNotFoundException, IOException
+			final ModelGraph graph
+	) throws ClassNotFoundException, IOException
 	{
 		// Read the map link -> val.
 		final IntPropertyMap< Spot > lmap = new IntPropertyMap<>( graph.vertices(), -1 );
@@ -76,7 +77,8 @@ public class BranchNSpotsFeatureSerializer implements BranchFeatureSerializer< B
 			final ObjectToFileIdMap< Spot > idmap,
 			final ObjectOutputStream oos,
 			final ModelBranchGraph branchGraph,
-			final ModelGraph graph ) throws IOException
+			final ModelGraph graph
+	) throws IOException
 	{
 		final IntPropertyMap< Spot > lmap = BranchFeatureSerializer.branchSpotMapToMap( feature.map, branchGraph, graph );
 		final IntPropertyMapSerializer< Spot > propertyMapSerializer = new IntPropertyMapSerializer<>( lmap );

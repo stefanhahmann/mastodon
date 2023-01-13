@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -91,7 +91,7 @@ public class FeatureColorModeIO
 		public Node representData( final Object data )
 		{
 			final FeatureProjectionId p = ( FeatureProjectionId ) data;
-			final Map< String, Object > mapping = new LinkedHashMap< >();
+			final Map< String, Object > mapping = new LinkedHashMap<>();
 			mapping.put( "feature", p.getFeatureKey() );
 			mapping.put( "projection", p.getProjectionKey() );
 			mapping.put( "target", p.getTargetType().name() );
@@ -114,7 +114,7 @@ public class FeatureColorModeIO
 		{
 			try
 			{
-				final Map< Object, Object > mapping = constructMapping( ( MappingNode  ) node );
+				final Map< Object, Object > mapping = constructMapping( ( MappingNode ) node );
 				final String featureKey = ( String ) mapping.get( "feature" );
 				final String projectionKey = ( String ) mapping.get( "projection" );
 				final TargetType targetType = TargetType.valueOf( ( String ) mapping.get( "target" ) );
@@ -122,7 +122,7 @@ public class FeatureColorModeIO
 				final int i1 = ( Integer ) mapping.get( "i1" );
 				return new FeatureProjectionId( featureKey, projectionKey, targetType, i0, i1 );
 			}
-			catch( final Exception e )
+			catch ( final Exception e )
 			{
 				e.printStackTrace();
 			}
@@ -180,13 +180,13 @@ public class FeatureColorModeIO
 				s.setVertexColorMode( VertexColorMode.valueOf( ( String ) mapping.get( "vertexColorMode" ) ) );
 				s.setVertexFeatureProjection( ( FeatureProjectionId ) mapping.get( "vertexFeatureProjection" ) );
 				s.setVertexColorMap( ( String ) mapping.get( "vertexColorMap" ) );
-				@SuppressWarnings( "unchecked" )
+				@SuppressWarnings("unchecked")
 				final List< Double > vertexRange = ( List< Double > ) mapping.get( "vertexFeatureRange" );
 				s.setVertexRange( vertexRange.get( 0 ), vertexRange.get( 1 ) );
 				s.setEdgeColorMode( EdgeColorMode.valueOf( ( String ) mapping.get( "edgeColorMode" ) ) );
-				s.setEdgeFeatureProjection( ( FeatureProjectionId )mapping.get( "edgeFeatureProjection" ) );
+				s.setEdgeFeatureProjection( ( FeatureProjectionId ) mapping.get( "edgeFeatureProjection" ) );
 				s.setEdgeColorMap( ( String ) mapping.get( "edgeColorMap" ) );
-				@SuppressWarnings( "unchecked" )
+				@SuppressWarnings("unchecked")
 				final List< Double > edgeRange = ( List< Double > ) mapping.get( "edgeFeatureRange" );
 				s.setEdgeRange( edgeRange.get( 0 ), edgeRange.get( 1 ) );
 

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -38,10 +38,10 @@ import org.mastodon.model.HighlightModel;
 import org.scijava.listeners.Listeners;
 
 public class BranchGraphHighlightAdapter<
-	V extends Vertex< E >,
-	E extends Edge< V >,
-	BV extends Vertex< BE >,
-	BE extends Edge< BV > >
+		V extends Vertex< E >,
+		E extends Edge< V >,
+		BV extends Vertex< BE >,
+		BE extends Edge< BV > >
 		extends AbstractBranchGraphAdapter< V, E, BV, BE >
 		implements HighlightModel< BV, BE >
 {
@@ -52,7 +52,8 @@ public class BranchGraphHighlightAdapter<
 			final BranchGraph< BV, BE, V, E > branchGraph,
 			final ReadOnlyGraph< V, E > graph,
 			final GraphIdBimap< V, E > idmap,
-			final HighlightModel< V, E > highlight )
+			final HighlightModel< V, E > highlight
+	)
 	{
 		super( branchGraph, graph, idmap );
 		this.highlight = highlight;
@@ -104,25 +105,27 @@ public class BranchGraphHighlightAdapter<
 			return null;
 
 		}
-		finally {
+		finally
+		{
 			graph.releaseRef( vRef );
 			graph.releaseRef( eRef );
 		}
 	}
 
-
 	@Override
 	public BE getHighlightedEdge( final BE ref )
 	{
 		final E eRef = graph.edgeRef();
-		try {
+		try
+		{
 			final E highlightedEdge = highlight.getHighlightedEdge( eRef );
 			if ( highlightedEdge == null )
 				return null;
 
 			return branchGraph.getBranchEdge( highlightedEdge, ref );
 		}
-		finally {
+		finally
+		{
 			graph.releaseRef( eRef );
 		}
 	}

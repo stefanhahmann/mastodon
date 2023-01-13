@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -61,7 +61,7 @@ public class SpotTrackIDFeature implements Feature< Spot >
 
 	private final IntFeatureProjection< Spot > projection;
 
-	@Plugin( type = FeatureSpec.class )
+	@Plugin(type = FeatureSpec.class)
 	public static class Spec extends FeatureSpec< SpotTrackIDFeature, Spot >
 	{
 		public Spec()
@@ -72,7 +72,8 @@ public class SpotTrackIDFeature implements Feature< Spot >
 					SpotTrackIDFeature.class,
 					Spot.class,
 					Multiplicity.SINGLE,
-					PROJECTION_SPEC );
+					PROJECTION_SPEC
+			);
 		}
 	}
 
@@ -82,7 +83,7 @@ public class SpotTrackIDFeature implements Feature< Spot >
 		this.projection = FeatureProjections.project( key( PROJECTION_SPEC ), map, Dimension.NONE_UNITS );
 	}
 
-	public int get( final Spot spot)
+	public int get( final Spot spot )
 	{
 		return map.getInt( spot );
 	}

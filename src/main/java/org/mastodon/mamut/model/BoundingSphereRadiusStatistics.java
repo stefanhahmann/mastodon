@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -64,7 +64,7 @@ public class BoundingSphereRadiusStatistics implements GraphListener< Spot, Link
 
 	private final Lock readLock;
 
-    private final Lock writeLock;
+	private final Lock writeLock;
 
 	/**
 	 * Creates a new statistics object for the specified model. After this
@@ -83,8 +83,8 @@ public class BoundingSphereRadiusStatistics implements GraphListener< Spot, Link
 		graph.addGraphListener( this );
 		graph.getVertexPool().boundingSphereRadiusSquProperty().propertyChangeListeners().add( this );
 		final ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
-	    readLock = rwl.readLock();
-	    writeLock = rwl.writeLock();
+		readLock = rwl.readLock();
+		writeLock = rwl.writeLock();
 		init();
 	}
 
@@ -137,18 +137,18 @@ public class BoundingSphereRadiusStatistics implements GraphListener< Spot, Link
 
 	private void init()
 	{
-	    timepointToStats.clear();
-	    for ( final Spot v : graph.vertices() )
-	    {
-	    	final int t = v.getTimepoint();
-	    	Stats stats = timepointToStats.get( t );
-	    	if ( stats == null )
-	    	{
-	    		stats = new Stats( graph.vertexRef() );
-	    		timepointToStats.put( t, stats );
-	    	}
-	    	stats.add( v );
-	    }
+		timepointToStats.clear();
+		for ( final Spot v : graph.vertices() )
+		{
+			final int t = v.getTimepoint();
+			Stats stats = timepointToStats.get( t );
+			if ( stats == null )
+			{
+				stats = new Stats( graph.vertexRef() );
+				timepointToStats.put( t, stats );
+			}
+			stats.add( v );
+		}
 	}
 
 	@Override
@@ -157,14 +157,14 @@ public class BoundingSphereRadiusStatistics implements GraphListener< Spot, Link
 		writeLock.lock();
 		try
 		{
-	    	final int t = v.getTimepoint();
-	    	Stats stats = timepointToStats.get( t );
-	    	if ( stats == null )
-	    	{
-	    		stats = new Stats( graph.vertexRef() );
-	    		timepointToStats.put( t, stats );
-	    	}
-	    	stats.add( v );
+			final int t = v.getTimepoint();
+			Stats stats = timepointToStats.get( t );
+			if ( stats == null )
+			{
+				stats = new Stats( graph.vertexRef() );
+				timepointToStats.put( t, stats );
+			}
+			stats.add( v );
 		}
 		finally
 		{
@@ -179,14 +179,14 @@ public class BoundingSphereRadiusStatistics implements GraphListener< Spot, Link
 		try
 		{
 			final int t = v.getTimepoint();
-	    	final SpatialIndex< Spot > spatialIndex = model.getSpatioTemporalIndex().getSpatialIndex( t );
-	    	if ( spatialIndex.isEmpty() )
-	    		timepointToStats.remove( t );
-	    	else
-	    	{
-		    	final Stats stats = timepointToStats.get( t );
-	    		stats.remove( v, model.getSpatioTemporalIndex().getSpatialIndex( t ) );
-	    	}
+			final SpatialIndex< Spot > spatialIndex = model.getSpatioTemporalIndex().getSpatialIndex( t );
+			if ( spatialIndex.isEmpty() )
+				timepointToStats.remove( t );
+			else
+			{
+				final Stats stats = timepointToStats.get( t );
+				stats.remove( v, model.getSpatioTemporalIndex().getSpatialIndex( t ) );
+			}
 		}
 		finally
 		{
@@ -223,8 +223,8 @@ public class BoundingSphereRadiusStatistics implements GraphListener< Spot, Link
 		try
 		{
 			final int t = v.getTimepoint();
-	    	final Stats stats = timepointToStats.get( t );
-	    	stats.radiusChanged( v, model.getSpatioTemporalIndex().getSpatialIndex( t ) );
+			final Stats stats = timepointToStats.get( t );
+			stats.radiusChanged( v, model.getSpatioTemporalIndex().getSpatialIndex( t ) );
 		}
 		finally
 		{

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -42,7 +42,7 @@ import org.mastodon.io.ObjectToFileIdMap;
 /**
  * Used to serialize features that are computed on the fly and therefore do not
  * have a property map that can be serialized.
- * 
+ *
  * @author Jean-Yves Tinevez
  *
  */
@@ -70,8 +70,8 @@ public class LazyFeatureSerializer
 	 * </ul>
 	 * </ul>
 	 * </ul>
-	 * 
-	 * 
+	 *
+	 *
 	 * @param <O>
 	 *            the type of objects to serialize.
 	 * @param feature
@@ -89,7 +89,8 @@ public class LazyFeatureSerializer
 			final Feature< O > feature,
 			final Collection< O > objs,
 			final ObjectToFileIdMap< O > idmap,
-			final ObjectOutputStream oos ) throws IOException
+			final ObjectOutputStream oos
+	) throws IOException
 	{
 		// NUMBER OF ENTRIES
 		oos.writeInt( objs.size() );

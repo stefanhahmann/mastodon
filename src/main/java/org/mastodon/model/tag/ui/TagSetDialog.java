@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -76,9 +76,11 @@ public class TagSetDialog extends JDialog
 			final TagSetModel< ?, ? > model,
 			final UndoPointMarker undoPointMarker,
 			final Keymap keymap,
-			final String[] keyConfigContexts )
+			final String[] keyConfigContexts
+	)
 	{
-		this( owner, new TagSetManager() {
+		this( owner, new TagSetManager()
+		{
 			@Override
 			public TagSetStructure getTagSetStructure()
 			{
@@ -117,7 +119,8 @@ public class TagSetDialog extends JDialog
 
 	public TagSetDialog(
 			final Frame owner,
-			final TagSetManager manager )
+			final TagSetManager manager
+	)
 	{
 		super( owner, "Configure Tag Sets", false );
 		this.manager = manager;

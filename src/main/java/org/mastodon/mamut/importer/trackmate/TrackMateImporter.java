@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -209,11 +209,12 @@ public class TrackMateImporter
 		final String dzel = imageDataEl.getAttributeValue( VOXEL_DEPTH_ATTRIBUTE );
 		final double dz = dzel == null ? 1. : Double.parseDouble( dzel );
 
-//		final String dtel = imageDataEl.getAttributeValue( TIME_INTERVAL_ATTRIBUTE );
-//		final double dt = dtel == null ? 1. : Double.parseDouble( dtel );
+		//		final String dtel = imageDataEl.getAttributeValue( TIME_INTERVAL_ATTRIBUTE );
+		//		final double dt = dtel == null ? 1. : Double.parseDouble( dtel );
 
 		final String dummyStr = String.format( "x=%d y=%d z=%d sx=%f sy=%f sz=%f t=%d.dummy",
-				width, height, depth, dx, dy, dz, nTimepoints );
+				width, height, depth, dx, dy, dz, nTimepoints
+		);
 		return new File( dummyStr );
 	}
 
@@ -280,8 +281,8 @@ public class TrackMateImporter
 				final String featureKey = featureEl.getAttributeValue( FEATURE_ATTRIBUTE );
 				if ( ignoredSpotFeatureKeys.contains( featureKey ) )
 					continue;
-//				final String featureName = featureEl.getAttributeValue( FEATURE_NAME_ATTRIBUTE );
-//				final String featureShortName = featureEl.getAttributeValue( FEATURE_SHORT_NAME_ATTRIBUTE );
+				//				final String featureName = featureEl.getAttributeValue( FEATURE_NAME_ATTRIBUTE );
+				//				final String featureShortName = featureEl.getAttributeValue( FEATURE_SHORT_NAME_ATTRIBUTE );
 				final String featureDimension = featureEl.getAttributeValue( FEATURE_DIMENSION_ATTRIBUTE );
 				final String units = dimensionToUnits( featureDimension, spaceUnits, timeUnits );
 				final boolean featureIsInt = Boolean.parseBoolean( featureEl.getAttributeValue( FEATURE_ISINT_ATTRIBUTE ) );
@@ -311,8 +312,8 @@ public class TrackMateImporter
 				final String featureKey = featureEl.getAttributeValue( FEATURE_ATTRIBUTE );
 				if ( ignoredLinkFeatureKeys.contains( featureKey ) )
 					continue;
-//				final String featureName = featureEl.getAttributeValue( FEATURE_NAME_ATTRIBUTE );
-//				final String featureShortName = featureEl.getAttributeValue( FEATURE_SHORT_NAME_ATTRIBUTE );
+				//				final String featureName = featureEl.getAttributeValue( FEATURE_NAME_ATTRIBUTE );
+				//				final String featureShortName = featureEl.getAttributeValue( FEATURE_SHORT_NAME_ATTRIBUTE );
 				final String featureDimension = featureEl.getAttributeValue( FEATURE_DIMENSION_ATTRIBUTE );
 				final String units = dimensionToUnits( featureDimension, spaceUnits, timeUnits );
 				final boolean featureIsInt = Boolean.parseBoolean( featureEl.getAttributeValue( FEATURE_ISINT_ATTRIBUTE ) );

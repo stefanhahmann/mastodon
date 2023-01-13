@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -49,7 +49,7 @@ import bdv.viewer.Source;
 import bdv.viewer.SourceAndConverter;
 import net.imglib2.type.numeric.RealType;
 
-@Plugin( type = MamutFeatureComputer.class )
+@Plugin(type = MamutFeatureComputer.class)
 public class SpotQuickMeanIntensityFeatureComputer implements MamutFeatureComputer, Cancelable
 {
 
@@ -65,7 +65,7 @@ public class SpotQuickMeanIntensityFeatureComputer implements MamutFeatureComput
 	@Parameter
 	private FeatureComputationStatus status;
 
-	@Parameter( type = ItemIO.OUTPUT )
+	@Parameter(type = ItemIO.OUTPUT)
 	private SpotQuickMeanIntensityFeature output;
 
 	private String cancelReason;
@@ -112,9 +112,10 @@ public class SpotQuickMeanIntensityFeatureComputer implements MamutFeatureComput
 		final ArrayList< SourceAndConverter< ? > > sources = bdvData.getSources();
 		final int nSources = sources.size();
 		int done = 0;
-		MAIN_LOOP: for ( int iSource = 0; iSource < nSources; iSource++ )
+		MAIN_LOOP:
+		for ( int iSource = 0; iSource < nSources; iSource++ )
 		{
-			@SuppressWarnings( "unchecked" )
+			@SuppressWarnings("unchecked")
 			final Source< RealType< ? > > source = ( Source< RealType< ? > > ) sources.get( iSource ).getSpimSource();
 			// Calculation are made on resolution level 0 by default.
 			final EllipsoidIterable< RealType< ? > > ellipsoidIter = new EllipsoidIterable<>( source );
@@ -169,8 +170,7 @@ public class SpotQuickMeanIntensityFeatureComputer implements MamutFeatureComput
 		for ( int timepoint = 0; timepoint < numTimepoints; timepoint++ )
 		{
 			final Iterable< Spot > iterable = index.apply( timepoint );
-			for ( @SuppressWarnings( "unused" )
-			final Spot spot : iterable )
+			for ( @SuppressWarnings("unused") final Spot spot : iterable )
 				nSpots++;
 		}
 		return nSpots;

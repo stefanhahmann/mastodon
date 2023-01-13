@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -40,15 +40,19 @@ import org.scijava.plugin.PluginService;
 
 public class FeatureDiscoveryExample
 {
-	public static class ExampleSpot {};
+	public static class ExampleSpot {}
 
-	public static class ExampleLink {};
+	;
+
+	public static class ExampleLink {}
+
+	;
 
 	public static class F1 implements Feature< ExampleSpot >
 	{
 		public static final Spec SPEC = new Spec();
 
-		@Plugin( type = FeatureSpec.class )
+		@Plugin(type = FeatureSpec.class)
 		public static class Spec extends FeatureSpec< F1, ExampleSpot >
 		{
 			public Spec()
@@ -58,7 +62,8 @@ public class FeatureDiscoveryExample
 						"Dummy feature F1",
 						F1.class,
 						ExampleSpot.class,
-						Multiplicity.SINGLE );
+						Multiplicity.SINGLE
+				);
 			}
 		}
 
@@ -89,7 +94,7 @@ public class FeatureDiscoveryExample
 	{
 		public static final Spec SPEC = new Spec();
 
-		@Plugin( type = FeatureSpec.class )
+		@Plugin(type = FeatureSpec.class)
 		public static class Spec extends FeatureSpec< F2, ExampleSpot >
 		{
 			public Spec()
@@ -99,7 +104,8 @@ public class FeatureDiscoveryExample
 						"Dummy feature F2",
 						F2.class,
 						ExampleSpot.class,
-						Multiplicity.SINGLE );
+						Multiplicity.SINGLE
+				);
 			}
 		}
 
@@ -130,7 +136,7 @@ public class FeatureDiscoveryExample
 	{
 		public static final Spec SPEC = new Spec();
 
-		@Plugin( type = FeatureSpec.class )
+		@Plugin(type = FeatureSpec.class)
 		public static class Spec extends FeatureSpec< F3, ExampleSpot >
 		{
 			public Spec()
@@ -140,7 +146,8 @@ public class FeatureDiscoveryExample
 						"Dummy feature F3",
 						F3.class,
 						ExampleSpot.class,
-						Multiplicity.SINGLE );
+						Multiplicity.SINGLE
+				);
 			}
 		}
 
@@ -171,7 +178,7 @@ public class FeatureDiscoveryExample
 	{
 		public static final Spec SPEC = new Spec();
 
-		@Plugin( type = FeatureSpec.class )
+		@Plugin(type = FeatureSpec.class)
 		public static class Spec extends FeatureSpec< F4, ExampleSpot >
 		{
 			public Spec()
@@ -181,7 +188,8 @@ public class FeatureDiscoveryExample
 						"Dummy feature F4",
 						F4.class,
 						ExampleSpot.class,
-						Multiplicity.SINGLE );
+						Multiplicity.SINGLE
+				);
 			}
 		}
 
@@ -208,10 +216,10 @@ public class FeatureDiscoveryExample
 		{}
 	}
 
-	@Plugin( type = FeatureComputer.class )
+	@Plugin(type = FeatureComputer.class)
 	public static class FC1 implements FeatureComputer
 	{
-		@Parameter( type = OUTPUT )
+		@Parameter(type = OUTPUT)
 		private F1 f1;
 
 		@Override
@@ -225,13 +233,13 @@ public class FeatureDiscoveryExample
 		}
 	}
 
-	@Plugin( type = FeatureComputer.class )
+	@Plugin(type = FeatureComputer.class)
 	public static class FC2 implements FeatureComputer
 	{
 		@Parameter
 		private F1 f1;
 
-		@Parameter( type = OUTPUT )
+		@Parameter(type = OUTPUT)
 		private F2 f2;
 
 		@Override
@@ -247,7 +255,7 @@ public class FeatureDiscoveryExample
 		}
 	}
 
-	@Plugin( type = FeatureComputer.class )
+	@Plugin(type = FeatureComputer.class)
 	public static class FC3 implements FeatureComputer
 	{
 		@Parameter
@@ -256,7 +264,7 @@ public class FeatureDiscoveryExample
 		@Parameter
 		private F2 f2;
 
-		@Parameter( type = OUTPUT )
+		@Parameter(type = OUTPUT)
 		private F3 f3;
 
 		@Override
@@ -272,13 +280,13 @@ public class FeatureDiscoveryExample
 		}
 	}
 
-	@Plugin( type = FeatureComputer.class )
+	@Plugin(type = FeatureComputer.class)
 	public static class FC4 implements FeatureComputer
 	{
 		@Parameter
 		private F1 f1;
 
-		@Parameter( type = OUTPUT )
+		@Parameter(type = OUTPUT)
 		private F4 f4;
 
 		@Override

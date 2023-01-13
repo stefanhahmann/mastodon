@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -108,7 +108,7 @@ public class SearchVertexLabel< V extends Vertex< E > & HasLabel & Ref< V >, E e
 
 	/**
 	 * Installs the search vertex label action.
-	 * 
+	 *
 	 * @param actions
 	 *            the {@link Actions} to add the search vertex action to.
 	 * @param graph
@@ -125,13 +125,14 @@ public class SearchVertexLabel< V extends Vertex< E > & HasLabel & Ref< V >, E e
 	 * @return a new panel containing the search field.
 	 */
 	public static < V extends Vertex< E > & HasLabel & Ref< V >, E extends Edge< V > > JPanel
-			install(
-					final Actions actions,
-					final ReadOnlyGraph< V, E > graph,
-					final NavigationHandler< V, E > navigation,
-					final SelectionModel< V, E > selection,
-					final FocusModel< V, E > focus,
-					final JComponent cancelEntryFocusTarget )
+	install(
+			final Actions actions,
+			final ReadOnlyGraph< V, E > graph,
+			final NavigationHandler< V, E > navigation,
+			final SelectionModel< V, E > selection,
+			final FocusModel< V, E > focus,
+			final JComponent cancelEntryFocusTarget
+	)
 	{
 		final SearchVertexLabel< V, E > search = new SearchVertexLabel<>( graph, navigation, selection, focus, cancelEntryFocusTarget );
 		actions.runnableAction( () -> search.searchField.requestFocusInWindow(), SEARCH, SEARCH_KEYS );
@@ -141,7 +142,7 @@ public class SearchVertexLabel< V extends Vertex< E > & HasLabel & Ref< V >, E e
 	/*
 	 * Command description.
 	 */
-	@Plugin( type = Descriptions.class )
+	@Plugin(type = Descriptions.class)
 	public static class Descriptions extends CommandDescriptionProvider
 	{
 		public Descriptions()
@@ -155,7 +156,8 @@ public class SearchVertexLabel< V extends Vertex< E > & HasLabel & Ref< V >, E e
 			descriptions.add(
 					SEARCH,
 					SEARCH_KEYS,
-					"Find vertices by their label." );
+					"Find vertices by their label."
+			);
 		}
 	}
 
@@ -164,7 +166,8 @@ public class SearchVertexLabel< V extends Vertex< E > & HasLabel & Ref< V >, E e
 			final NavigationHandler< V, E > navigation,
 			final SelectionModel< V, E > selection,
 			final FocusModel< V, E > focus,
-			final JComponent cancelFocusTarget )
+			final JComponent cancelFocusTarget
+	)
 	{
 		searchPanel = new JPanel();
 		searchPanel.setMinimumSize( new Dimension( 26, 25 ) );
@@ -235,7 +238,9 @@ public class SearchVertexLabel< V extends Vertex< E > & HasLabel & Ref< V >, E e
 						{
 							doChangeFocusIcon.set( true );
 						}
-					};
+					}
+
+					;
 				}.start();
 			}
 		} );
@@ -296,7 +301,8 @@ public class SearchVertexLabel< V extends Vertex< E > & HasLabel & Ref< V >, E e
 				final ReadOnlyGraph< V, E > graph,
 				final NavigationHandler< V, E > navigation,
 				final SelectionModel< V, E > selection,
-				final FocusModel< V, E > focus )
+				final FocusModel< V, E > focus
+		)
 		{
 			super( graph );
 			this.navigation = navigation;

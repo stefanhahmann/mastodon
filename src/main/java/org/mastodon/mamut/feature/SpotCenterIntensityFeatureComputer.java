@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -59,7 +59,7 @@ import net.imglib2.Cursor;
 import net.imglib2.realtransform.AffineTransform3D;
 import net.imglib2.type.numeric.RealType;
 
-@Plugin( type = MamutFeatureComputer.class )
+@Plugin(type = MamutFeatureComputer.class)
 public class SpotCenterIntensityFeatureComputer implements MamutFeatureComputer, Cancelable
 {
 
@@ -83,7 +83,7 @@ public class SpotCenterIntensityFeatureComputer implements MamutFeatureComputer,
 	@Parameter
 	private FeatureComputationStatus status;
 
-	@Parameter( type = ItemIO.OUTPUT )
+	@Parameter(type = ItemIO.OUTPUT)
 	private SpotCenterIntensityFeature output;
 
 	private String cancelReason;
@@ -132,7 +132,7 @@ public class SpotCenterIntensityFeatureComputer implements MamutFeatureComputer,
 		final ExecutorService executor = Executors.newFixedThreadPool( numThreads );
 		for ( int iSource = 0; iSource < sources.size(); iSource++ )
 		{
-			@SuppressWarnings( "unchecked" )
+			@SuppressWarnings("unchecked")
 			final Source< RealType< ? > > source = ( Source< RealType< ? > > ) sources.get( iSource ).getSpimSource();
 			for ( int timepoint = 0; timepoint < numTimepoints; timepoint++ )
 			{
@@ -146,7 +146,8 @@ public class SpotCenterIntensityFeatureComputer implements MamutFeatureComputer,
 						toProcess.iterator(),
 						getCalibration( source, timepoint ),
 						output.maps.get( iSource ),
-						recomputeAll ) );
+						recomputeAll
+				) );
 				try
 				{
 					final List< Future< Void > > futures = executor.invokeAll( tasks );
@@ -202,7 +203,8 @@ public class SpotCenterIntensityFeatureComputer implements MamutFeatureComputer,
 				final Iterator< Spot > iterator,
 				final double[] calibration,
 				final DoublePropertyMap< Spot > map,
-				final boolean recomputeAll )
+				final boolean recomputeAll
+		)
 		{
 			this.source = source;
 			this.iterator = iterator;

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -194,7 +194,7 @@ public class MainWindow extends JFrame
 	 * has been modified and not saved, prompts the user for confirmation.
 	 * Returns <code>true</code> if Mastodon has been closed, or
 	 * <code>false</code> if the user canceled closing.
-	 * 
+	 *
 	 * @param windowManager
 	 *            the Mastodon window manager controlled in this windown.
 	 * @param saveAction
@@ -217,7 +217,8 @@ public class MainWindow extends JFrame
 				"Save project",
 				"Don't save",
 				"Cancel" };
-		final int choice = JOptionPane.showOptionDialog( this,
+		final int choice = JOptionPane.showOptionDialog(
+				this,
 				"Data changed since last save. \n"
 						+ "Do you want to save the project before closing mastodon?",
 				"Save before close?",
@@ -225,7 +226,8 @@ public class MainWindow extends JFrame
 				JOptionPane.QUESTION_MESSAGE,
 				MastodonIcons.MASTODON_ICON_MEDIUM,
 				options,
-				JOptionPane.CANCEL_OPTION );
+				JOptionPane.CANCEL_OPTION
+		);
 
 		switch ( choice )
 		{
@@ -260,20 +262,21 @@ public class MainWindow extends JFrame
 	{
 		MamutMenuBuilder.build( menu, actionMap,
 				fileMenu(
-//						item( ProjectManager.CREATE_PROJECT ),
-//						item( ProjectManager.CREATE_PROJECT_FROM_URL ),
-//						item( ProjectManager.LOAD_PROJECT ),
+						//						item( ProjectManager.CREATE_PROJECT ),
+						//						item( ProjectManager.CREATE_PROJECT_FROM_URL ),
+						//						item( ProjectManager.LOAD_PROJECT ),
 						item( ProjectManager.SAVE_PROJECT ),
 						item( ProjectManager.SAVE_PROJECT_AS ),
 						separator(),
-//						item( ProjectManager.IMPORT_TGMM ),
-//						item( ProjectManager.IMPORT_SIMI ),
-//						item( ProjectManager.IMPORT_MAMUT ),
-//						item( ProjectManager.EXPORT_MAMUT ),
-//						separator(),
+						//						item( ProjectManager.IMPORT_TGMM ),
+						//						item( ProjectManager.IMPORT_SIMI ),
+						//						item( ProjectManager.IMPORT_MAMUT ),
+						//						item( ProjectManager.EXPORT_MAMUT ),
+						//						separator(),
 						item( WindowManager.PREFERENCES_DIALOG ),
 						separator(),
-						item( WindowManager.OPEN_ONLINE_DOCUMENTATION ) ),
+						item( WindowManager.OPEN_ONLINE_DOCUMENTATION )
+				),
 				windowMenu(
 						item( WindowManager.NEW_BDV_VIEW ),
 						item( WindowManager.NEW_TRACKSCHEME_VIEW ),
@@ -282,6 +285,8 @@ public class MainWindow extends JFrame
 						item( WindowManager.NEW_GRAPHER_VIEW ),
 						item( WindowManager.NEW_BRANCH_BDV_VIEW ),
 						item( WindowManager.NEW_BRANCH_TRACKSCHEME_VIEW ),
-						item( WindowManager.NEW_HIERARCHY_TRACKSCHEME_VIEW ) ) );
+						item( WindowManager.NEW_HIERARCHY_TRACKSCHEME_VIEW )
+				)
+		);
 	}
 }
