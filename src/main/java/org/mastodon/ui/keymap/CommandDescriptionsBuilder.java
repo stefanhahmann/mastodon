@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -90,7 +90,7 @@ public class CommandDescriptionsBuilder extends AbstractContextual
 	 * @param contexts
 	 *            the list of contexts to add to.
 	 */
-	public void addManually( final CommandDescriptionProvider provider, final String ... contexts )
+	public void addManually( final CommandDescriptionProvider provider, final String... contexts )
 	{
 		Arrays.stream( contexts ).forEachOrdered( context -> addManually( provider, context ) );
 	}
@@ -123,7 +123,8 @@ public class CommandDescriptionsBuilder extends AbstractContextual
 
 		// Can all registered providers be discovered?
 		boolean anyFailed = false;
-		A: for ( final ProviderAndContext r : registered )
+		A:
+		for ( final ProviderAndContext r : registered )
 		{
 			for ( final ProviderAndContext d : discovered )
 				if ( r.context.equals( d.context ) && r.provider.getClass().equals( d.provider.getClass() ) )
@@ -135,7 +136,8 @@ public class CommandDescriptionsBuilder extends AbstractContextual
 			System.err.println();
 
 		// Were all discovered providers manually added?
-		A: for ( final ProviderAndContext d : discovered )
+		A:
+		for ( final ProviderAndContext d : discovered )
 		{
 			for ( final ProviderAndContext r : registered )
 				if ( r.context.equals( d.context ) && r.provider.getClass().equals( d.provider.getClass() ) )

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -129,7 +129,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 			final HighlightModel< V, E > highlight,
 			final FocusModel< V, E > focus,
 			final SelectionModel< V, E > selection,
-			final GraphColorGenerator< V, E > coloring )
+			final GraphColorGenerator< V, E > coloring
+	)
 	{
 		this.graph = graph;
 		this.highlight = highlight;
@@ -220,7 +221,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 				trunc255( r ),
 				trunc255( g ),
 				trunc255( b ),
-				trunc255( a ) );
+				trunc255( a )
+		);
 	}
 
 	private static int truncRGBA( final double r, final double g, final double b, final double a )
@@ -229,7 +231,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 				( int ) ( 255 * r ),
 				( int ) ( 255 * g ),
 				( int ) ( 255 * b ),
-				( int ) ( 255 * a ) );
+				( int ) ( 255 * a )
+		);
 	}
 
 	/**
@@ -263,7 +266,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 			final int colorSpot,
 			final int colorPast,
 			final int colorFuture,
-			final int color )
+			final int color
+	)
 	{
 		/*
 		 * |sf| = {                  0  for  |sd| <= sdFade,
@@ -283,19 +287,19 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 		{
 			tf = Math.max( 0, ( td - tdFade ) / ( 1 - tdFade ) );
 			colorTo = isSelected
-					? complementaryColor( colorFuture )
-					: colorFuture;
+					  ? complementaryColor( colorFuture )
+					  : colorFuture;
 		}
 		else
 		{
 			tf = -Math.max( 0, ( -td - tdFade ) / ( 1 - tdFade ) );
 			colorTo = isSelected
-					? complementaryColor( colorPast )
-					: colorPast;
+					  ? complementaryColor( colorPast )
+					  : colorPast;
 		}
 		final int colorFrom = isSelected
-				? complementaryColor( colorSpot )
-				: colorSpot;
+							  ? complementaryColor( colorSpot )
+							  : colorSpot;
 
 		if ( color == 0 )
 		{
@@ -311,9 +315,10 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 			final double b = ( Math.abs( td ) * ( b1 - b0 ) + b0 ) / 255.;
 			final double a = Math.max(
 					isHighlighted
-							? 0.8
-							: ( isSelected ? 0.6 : 0.4 ),
-					( 1 + tf ) * ( 1 - Math.abs( sf ) ) );
+					? 0.8
+					: ( isSelected ? 0.6 : 0.4 ),
+					( 1 + tf ) * ( 1 - Math.abs( sf ) )
+			);
 			return new Color( truncRGBA( r, g, b, a ), true );
 		}
 		else
@@ -332,9 +337,10 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 			final double b = ( 1 + Math.abs( td ) ) * b0 / 255;
 			final double a = Math.max(
 					isHighlighted
-							? 0.8
-							: ( isSelected ? 0.6 : 0.4 ),
-					a0 / 255f * ( 1 + tf ) * ( 1 - Math.abs( sf ) ) );
+					? 0.8
+					: ( isSelected ? 0.6 : 0.4 ),
+					a0 / 255f * ( 1 + tf ) * ( 1 - Math.abs( sf ) )
+			);
 			return new Color( truncRGBA( r, g, b, a ), true );
 		}
 	}
@@ -367,7 +373,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 			final double yMin,
 			final double yMax,
 			final AffineTransform3D transform,
-			final int timepoint )
+			final int timepoint
+	)
 	{
 		final double maxDepth = getMaxDepth( transform );
 		final double globalToViewerScale = Affine3DHelpers.extractScale( transform, 0 );
@@ -375,7 +382,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 		return BdvRendererUtil.getPolytopeGlobal( transform,
 				xMin - border, xMax + border,
 				yMin - border, yMax + border,
-				-maxDepth - border, maxDepth + border );
+				-maxDepth - border, maxDepth + border
+		);
 	}
 
 	/**
@@ -405,7 +413,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 	 */
 	protected ConvexPolytope getVisiblePolytopeGlobal(
 			final AffineTransform3D transform,
-			final int timepoint )
+			final int timepoint
+	)
 	{
 		return getOverlappingPolytopeGlobal( 0, width, 0, height, transform, timepoint );
 	}
@@ -427,7 +436,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 			final double x,
 			final double y,
 			final AffineTransform3D transform,
-			final int timepoint )
+			final int timepoint
+	)
 	{
 		return getOverlappingPolytopeGlobal( x, x, y, y, transform, timepoint );
 	}
@@ -480,7 +490,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 	protected void forEachVisibleEdge(
 			final AffineTransform3D transform,
 			final int currentTimepoint,
-			final EdgeOperation< E > edgeOperation )
+			final EdgeOperation< E > edgeOperation
+	)
 	{
 		if ( !settings.getDrawLinks() || visibilities.getMode() == VisibilityMode.NONE )
 			return;
@@ -496,8 +507,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 		final int timeLimit = settings.getTimeLimit();
 		final int minT = Math.max( 0, currentTimepoint - timeLimit + 1 );
 		final int maxT = drawLinksAheadInTime
-				? currentTimepoint + timeLimit - 1
-				: currentTimepoint;
+						 ? currentTimepoint + timeLimit - 1
+						 : currentTimepoint;
 
 		for ( int t = minT; t <= maxT; ++t )
 		{
@@ -561,8 +572,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 		final double maxDepth = getMaxDepth( transform );
 
 		final Object antialiasing = settings.getUseAntialiasing()
-				? RenderingHints.VALUE_ANTIALIAS_ON
-				: RenderingHints.VALUE_ANTIALIAS_OFF;
+									? RenderingHints.VALUE_ANTIALIAS_ON
+									: RenderingHints.VALUE_ANTIALIAS_OFF;
 		graphics.setRenderingHint( RenderingHints.KEY_ANTIALIASING, antialiasing );
 
 		final V ref1 = graph.vertexRef();
@@ -587,7 +598,7 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 		index.readLock().lock();
 		try
 		{
-			if ( settings.getDrawLinks())
+			if ( settings.getDrawLinks() )
 			{
 				final E highlighted = highlight.getHighlightedEdge( ref3 );
 				graphics.setStroke( defaultEdgeStroke );
@@ -607,7 +618,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 							colorSpot,
 							colorPast,
 							colorFuture,
-							edgeColor );
+							edgeColor
+					);
 					if ( useGradient )
 					{
 						final Color c0 = getColor(
@@ -620,7 +632,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 								colorSpot,
 								colorPast,
 								colorFuture,
-								edgeColor );
+								edgeColor
+						);
 						graphics.setPaint( new GradientPaint( x0, y0, c0, x1, y1, c1 ) );
 					}
 					else
@@ -703,7 +716,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 									colorSpot,
 									colorPast,
 									colorFuture,
-									color ) );
+									color
+							) );
 							if ( isHighlighted )
 								graphics.setStroke( highlightedVertexStroke );
 							else if ( isFocused )
@@ -733,7 +747,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 									colorSpot,
 									colorPast,
 									colorFuture,
-									color ) );
+									color
+							) );
 							if ( isHighlighted )
 								graphics.setStroke( highlightedVertexStroke );
 							else if ( isFocused )
@@ -760,7 +775,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 									colorSpot,
 									colorPast,
 									colorFuture,
-									color ) );
+									color
+							) );
 							double radius = pointRadius;
 							if ( isHighlighted || isFocused )
 								radius *= 2;
@@ -807,7 +823,7 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 			final Color color = graphics.getColor();
 			graphics.setColor( Color.BLACK );
 			graphics.draw( ellipse2D );
-			graphics.setColor( color );	
+			graphics.setColor( color );
 		}
 		else
 		{
@@ -893,7 +909,8 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 					ref.refTo( edge );
 				}
 			}
-		};
+		}
+		;
 		final Op op = new Op();
 
 		index.readLock().lock();
@@ -1175,7 +1192,7 @@ public class OverlayGraphRenderer< V extends OverlayVertex< V, E >, E extends Ov
 	{
 		final double focusLimit = settings.getFocusLimit();
 		return settings.getFocusLimitViewRelative()
-				? focusLimit
-				: focusLimit * Affine3DHelpers.extractScale( transform, 0 );
+			   ? focusLimit
+			   : focusLimit * Affine3DHelpers.extractScale( transform, 0 );
 	}
 }

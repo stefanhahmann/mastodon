@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -60,7 +60,8 @@ public class ContextLayout
 
 	public ContextLayout(
 			final TrackSchemeGraph< ?, ? > graph,
-			final LineageTreeLayout layout )
+			final LineageTreeLayout layout
+	)
 	{
 		this.graph = graph;
 		this.layout = layout;
@@ -89,7 +90,8 @@ public class ContextLayout
 	public boolean buildContext(
 			final Context< TrackSchemeVertex > context,
 			final ScreenTransform transform,
-			final boolean forceUpdate )
+			final boolean forceUpdate
+	)
 	{
 		final int minTimepoint = ( int ) transform.getMinY();
 		final int maxTimepoint = ( int ) transform.getMaxY() + 1;
@@ -141,7 +143,7 @@ public class ContextLayout
 	 */
 	private void buildContextTraceParents( final TrackSchemeVertex tv, final int ghostmark, final int minTimepoint, final RefList< TrackSchemeVertex > roots )
 	{
-		if( tv.incomingEdges().isEmpty() )
+		if ( tv.incomingEdges().isEmpty() )
 			roots.add( tv );
 		else
 		{

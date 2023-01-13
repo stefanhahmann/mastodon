@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -105,7 +105,7 @@ public class ScreenEntitiesInterpolator
 	public static ScreenTransform getIncrementalY( final ScreenEntities start, final ScreenEntities end )
 	{
 		final ScreenTransform t = end.screenTransform().concatenate( start.screenTransform().inverse() );
-		t.set( 0, t.getScreenWidth() -1, t.getMinY(), t.getMaxY(), t.getScreenWidth(), t.getScreenHeight() );
+		t.set( 0, t.getScreenWidth() - 1, t.getMinY(), t.getMaxY(), t.getScreenWidth(), t.getScreenHeight() );
 		return t;
 	}
 
@@ -162,7 +162,8 @@ public class ScreenEntitiesInterpolator
 					sourceIndex,
 					targetIndex,
 					endSelected,
-					e.getColor() ) );
+					e.getColor()
+			) );
 			if ( idToStartEdge.get( e.getDataEdgeId(), eStart ) != null )
 			{
 				// changing selection state?
@@ -198,7 +199,8 @@ public class ScreenEntitiesInterpolator
 						sourceIndex,
 						targetIndex,
 						endSelected,
-						e.getColor() ) );
+						e.getColor()
+				) );
 				eCurrent.setTransition( DISAPPEAR );
 				eCurrent.setInterpolationCompletionRatio( accelRatio );
 			}
@@ -238,10 +240,10 @@ public class ScreenEntitiesInterpolator
 		vCurrent.setY( ratio * vEnd.getY() + ( 1 - ratio ) * startY );
 		vCurrent.setTransition(
 				( vStart.isSelected() == endSelected )
-						? NONE
-						: ( endSelected
-								? SELECTING
-								: DESELECTING ) );
+				? NONE
+				: ( endSelected
+					? SELECTING
+					: DESELECTING ) );
 		vCurrent.setColor( vEnd.getColor() );
 		vCurrent.setInterpolationCompletionRatio( ratio );
 		vEnd.setInterpolatedScreenVertexIndex( vCurrent.getInternalPoolIndex() );

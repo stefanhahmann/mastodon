@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -168,7 +168,7 @@ public class TableViewFrameBuilder
 	/**
 	 * Centralizes the creation of the vertex and edge tables for the specified
 	 * graph, plus wire listeners.
-	 * 
+	 *
 	 * @author Jean-Yves Tinevez
 	 *
 	 * @param <VV>
@@ -219,7 +219,8 @@ public class TableViewFrameBuilder
 		public GraphTableBundle(
 				final GraphTableBuilder< VV, EE > graphBuilder,
 				final UndoPointMarker undo,
-				final JPanel settingsPanel )
+				final JPanel settingsPanel
+		)
 		{
 			this.selectionModel = graphBuilder.selectionModel;
 			this.focusModel = graphBuilder.focusModel;
@@ -295,7 +296,7 @@ public class TableViewFrameBuilder
 			// Features.
 			if ( graphBuilder.featureModel != null )
 			{
-				@SuppressWarnings( "unchecked" )
+				@SuppressWarnings("unchecked")
 				final Class< VV > vertexClass = ( Class< VV > ) graphBuilder.graph.vertexRef().getClass();
 				final Map< FeatureSpec< ?, VV >, Feature< VV > > vertexFeatures =
 						FeatureUtils.collectFeatureMap( graphBuilder.featureModel, vertexClass );
@@ -422,7 +423,7 @@ public class TableViewFrameBuilder
 			// Features.
 			if ( graphBuilder.featureModel != null )
 			{
-				@SuppressWarnings( "unchecked" )
+				@SuppressWarnings("unchecked")
 				final Class< EE > edgeClass = ( Class< EE > ) graphBuilder.graph.edgeRef().getClass();
 				final Map< FeatureSpec< ?, EE >, Feature< EE > > edgeFeatures =
 						FeatureUtils.collectFeatureMap( graphBuilder.featureModel, edgeClass );
@@ -589,11 +590,11 @@ public class TableViewFrameBuilder
 				return;
 			ignoreTableSelectionChange = true;
 			final Map< ?, ? > map1 = FeatureUtils.collectFeatureMap( featureModel, vref1.getClass() );
-			@SuppressWarnings( "unchecked" )
+			@SuppressWarnings("unchecked")
 			final Map< FeatureSpec< ?, VV >, Feature< VV > > vertexFeatures = ( Map< FeatureSpec< ?, VV >, Feature< VV > > ) map1;
 			vertexTable.setFeatures( vertexFeatures );
 			final Map< ?, ? > map2 = FeatureUtils.collectFeatureMap( featureModel, eref.getClass() );
-			@SuppressWarnings( "unchecked" )
+			@SuppressWarnings("unchecked")
 			final Map< FeatureSpec< ?, EE >, Feature< EE > > edgeFeatures = ( Map< FeatureSpec< ?, EE >, Feature< EE > > ) map2;
 			edgeTable.setFeatures( edgeFeatures );
 			if ( mirrorSelection )
@@ -684,7 +685,7 @@ public class TableViewFrameBuilder
 		 * If sets to to <code>true</code>, the vertex and edge tables will
 		 * display the content of the {@link #selectionModel}, which cannot be
 		 * null.
-		 * 
+		 *
 		 * @param selectionTable
 		 *            if <code>true</code> will display the content of the
 		 *            {@link #selectionModel}.
@@ -777,7 +778,6 @@ public class TableViewFrameBuilder
 	public static class MyTableViewFrame extends ViewFrame
 	{
 
-
 		private static final long serialVersionUID = 1L;
 
 		public final List< ContextChooser< ? > > contextChoosers;
@@ -815,8 +815,8 @@ public class TableViewFrameBuilder
 		public List< FeatureTagTablePanel< ? > > getTables()
 		{
 			final int nTabs = pane.getTabCount();
-			final ArrayList< FeatureTagTablePanel< ? > > tables = new ArrayList<>(nTabs);
-			for(int i = 0; i < nTabs; i++)
+			final ArrayList< FeatureTagTablePanel< ? > > tables = new ArrayList<>( nTabs );
+			for ( int i = 0; i < nTabs; i++ )
 			{
 				final FeatureTagTablePanel< ? > table = ( FeatureTagTablePanel< ? > ) pane.getComponentAt( i );
 				tables.add( table );

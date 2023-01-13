@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -47,8 +47,11 @@ public class ScreenVertexRange extends PoolObject< ScreenVertexRange, ScreenVert
 	public static class ScreenVertexRangeLayout extends PoolObjectLayout
 	{
 		final DoubleField minX = doubleField();
+
 		final DoubleField maxX = doubleField();
+
 		final DoubleField minY = doubleField();
+
 		final DoubleField maxY = doubleField();
 	}
 
@@ -57,8 +60,11 @@ public class ScreenVertexRange extends PoolObject< ScreenVertexRange, ScreenVert
 	public static class ScreenVertexRangePool extends Pool< ScreenVertexRange, ByteMappedElement >
 	{
 		final DoubleAttribute< ScreenVertexRange > minX = new DoubleAttribute<>( layout.minX, this );
+
 		final DoubleAttribute< ScreenVertexRange > maxX = new DoubleAttribute<>( layout.maxX, this );
+
 		final DoubleAttribute< ScreenVertexRange > minY = new DoubleAttribute<>( layout.minY, this );
+
 		final DoubleAttribute< ScreenVertexRange > maxY = new DoubleAttribute<>( layout.maxY, this );
 
 		public ScreenVertexRangePool( final int initialCapacity )

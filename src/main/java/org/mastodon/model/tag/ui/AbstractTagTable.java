@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -175,7 +175,8 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 			final BiFunction< C, Integer, T > get,
 			final BiConsumer< T, String > setName,
 			final Function< T, String > getName,
-			final int numAdditionalCols )
+			final int numAdditionalCols
+	)
 	{
 		this.addElement = addElement;
 		this.size = size;
@@ -202,8 +203,8 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 				return;
 			final int row = table.getSelectedRow();
 			final T selected = ( this.elements != null && row >= 0 && row < this.elements.size() )
-					? this.elements.get( row ).wrapped
-					: null;
+							   ? this.elements.get( row ).wrapped
+							   : null;
 			selectionListeners.list.forEach( l -> l.selectionChanged( selected ) );
 		} );
 		table.getColumnModel().getColumn( 0 ).setCellRenderer( new MyTagSetRenderer() );
@@ -212,7 +213,7 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 		table.getColumnModel().getColumn( buttonColumn ).setMaxWidth( 32 );
 		table.addMouseListener( new MyTableButtonMouseListener() );
 		table.setShowGrid( false );
-		table.setIntercellSpacing( new Dimension( 0,0 ) );
+		table.setIntercellSpacing( new Dimension( 0, 0 ) );
 		table.setSurrendersFocusOnKeystroke( true );
 		table.setFocusTraversalKeys( KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, null );
 		table.setFocusTraversalKeys( KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, null );
@@ -368,7 +369,7 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 		public Component getTableCellRendererComponent( final JTable table, final Object value, final boolean isSelected, final boolean hasFocus, final int row, final int column )
 		{
 			super.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column );
-			@SuppressWarnings( "unchecked" )
+			@SuppressWarnings("unchecked")
 			final String text = ( value == null ) ? null : ( ( Element ) value ).getName();
 			setText( text );
 			return this;
@@ -386,8 +387,10 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 		}
 
 		@Override
-		public Component getTableCellRendererComponent( final JTable table, final Object value,
-				final boolean isSelected, final boolean hasFocus, final int row, final int column )
+		public Component getTableCellRendererComponent(
+				final JTable table, final Object value,
+				final boolean isSelected, final boolean hasFocus, final int row, final int column
+		)
 		{
 			if ( row == elements.size() )
 				setIcon( ADD_ICON );
@@ -442,7 +445,7 @@ public abstract class AbstractTagTable< C, T, E extends AbstractTagTable< ?, T, 
 			} );
 		}
 
-		@SuppressWarnings( "unchecked" )
+		@SuppressWarnings("unchecked")
 		@Override
 		public Component getTableCellEditorComponent( final JTable table, final Object value, final boolean isSelected, final int row, final int column )
 		{

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -168,7 +168,8 @@ public class FeatureTagTablePanel< O > extends JPanel
 			final Function< O, String > labelGenerator,
 			final BiConsumer< O, String > labelSetter,
 			final UndoPointMarker undoPointMarker,
-			final ColorGenerator< O > coloring )
+			final ColorGenerator< O > coloring
+	)
 	{
 		this.tags = tags;
 		this.idBimap = idBimap;
@@ -209,7 +210,9 @@ public class FeatureTagTablePanel< O > extends JPanel
 				final boolean result = super.editCellAt( row, column, e );
 				final Component editor = getEditorComponent();
 				if ( editor == null || !( editor instanceof JTextComponent ) )
-				{ return result; }
+				{
+					return result;
+				}
 
 				// Is about text.
 				blockKeys( ( JComponent ) editor, table );
@@ -411,7 +414,7 @@ public class FeatureTagTablePanel< O > extends JPanel
 			final List< FeatureProjection< ? > > projections = new ArrayList<>( feature.projections() );
 			for ( final FeatureProjection< ? > projection : projections )
 			{
-				@SuppressWarnings( "unchecked" )
+				@SuppressWarnings("unchecked")
 				final FeatureProjection< O > fp = ( FeatureProjection< O > ) projection;
 				mapToProjections.add( fp );
 				mapToTooltip.add( "<html><p width=\"300\">" + fs.getInfo() + "</p></html>" );
@@ -697,8 +700,8 @@ public class FeatureTagTablePanel< O > extends JPanel
 			this.defaultRenderer = defaultRenderer;
 			this.bold = bold;
 			this.border = bottomLine
-					? BorderFactory.createMatteBorder( 0, 0, 1, 1, Color.GRAY )
-					: BorderFactory.createMatteBorder( 0, 0, 0, 1, Color.GRAY );
+						  ? BorderFactory.createMatteBorder( 0, 0, 1, 1, Color.GRAY )
+						  : BorderFactory.createMatteBorder( 0, 0, 0, 1, Color.GRAY );
 		}
 
 		@Override

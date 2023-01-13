@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -67,7 +67,8 @@ public class MamutRawFeatureModelIO
 			final Context context,
 			final Model model,
 			final GraphToFileIdMap< Spot, Link > idmap,
-			final ProjectWriter writer )
+			final ProjectWriter writer
+	)
 			throws IOException
 	{
 		final FeatureModel featureModel = model.getFeatureModel();
@@ -92,7 +93,7 @@ public class MamutRawFeatureModelIO
 							+ "The serializer discovered for this feature was of class: " + rawSerializer.getClass().getName() );
 					continue;
 				}
-				@SuppressWarnings( "rawtypes" )
+				@SuppressWarnings("rawtypes")
 				final BranchFeatureSerializer branchFeatureSerializer = ( BranchFeatureSerializer ) rawSerializer;
 				writeBranchFeature(
 						rawFeature,
@@ -100,7 +101,8 @@ public class MamutRawFeatureModelIO
 						idmap.vertices(),
 						model.getBranchGraph(),
 						model.getGraph(),
-						writer );
+						writer
+				);
 			}
 			else if ( specTargetClass == BranchLink.class )
 			{
@@ -110,7 +112,7 @@ public class MamutRawFeatureModelIO
 							+ "The serializer discovered for this feature was of class: " + rawSerializer.getClass().getName() );
 					continue;
 				}
-				@SuppressWarnings( "rawtypes" )
+				@SuppressWarnings("rawtypes")
 				final BranchFeatureSerializer branchFeatureSerializer = ( BranchFeatureSerializer ) rawSerializer;
 				writeBranchFeature(
 						rawFeature,
@@ -118,7 +120,8 @@ public class MamutRawFeatureModelIO
 						idmap.edges(),
 						model.getBranchGraph(),
 						model.getGraph(),
-						writer );
+						writer
+				);
 			}
 			else
 				System.err.println( "Do not know how to serialize a feature that targets " + specTargetClass );
@@ -129,7 +132,8 @@ public class MamutRawFeatureModelIO
 			final Context context,
 			final Model model,
 			final FileIdToGraphMap< Spot, Link > idmap,
-			final ProjectReader reader ) throws ClassNotFoundException, IOException
+			final ProjectReader reader
+	) throws ClassNotFoundException, IOException
 	{
 		final FeatureSerializationService featureSerializationService = context.getService( FeatureSerializationService.class );
 		final FeatureSpecsService featureSpecsService = context.getService( FeatureSpecsService.class );
@@ -144,7 +148,7 @@ public class MamutRawFeatureModelIO
 		for ( final String featureKey : featureKeys )
 		{
 			final FeatureSpec< ?, ? > spec = featureSpecsService.getSpec( featureKey );
-			if (null == spec)
+			if ( null == spec )
 			{
 				System.err.println( "Unknown feature: " + featureKey );
 				continue;
@@ -157,20 +161,22 @@ public class MamutRawFeatureModelIO
 			}
 
 			final Class< ? > targetClass = serializer.getFeatureSpec().getTargetClass();
-			@SuppressWarnings( "rawtypes" )
+			@SuppressWarnings("rawtypes")
 			Feature feature;
 			if ( targetClass == Spot.class )
 				feature = read(
 						serializer,
 						idmap.vertices(),
 						model.getGraph().vertices(),
-						reader );
+						reader
+				);
 			else if ( targetClass == Link.class )
 				feature = read(
 						serializer,
 						idmap.edges(),
 						model.getGraph().edges(),
-						reader );
+						reader
+				);
 			else if ( targetClass == BranchSpot.class )
 			{
 				if ( !BranchFeatureSerializer.class.isInstance( serializer ) )
@@ -179,14 +185,15 @@ public class MamutRawFeatureModelIO
 							+ "The serializer discovered for this feature was of class: " + serializer.getClass().getName() );
 					continue;
 				}
-				@SuppressWarnings( "rawtypes" )
+				@SuppressWarnings("rawtypes")
 				final BranchFeatureSerializer branchFeatureSerializer = ( BranchFeatureSerializer ) serializer;
 				feature = readBranchFeature(
 						branchFeatureSerializer,
 						idmap.vertices(),
 						model.getBranchGraph(),
 						model.getGraph(),
-						reader );
+						reader
+				);
 			}
 			else if ( targetClass == BranchLink.class )
 			{
@@ -196,14 +203,15 @@ public class MamutRawFeatureModelIO
 							+ "The serializer discovered for this feature was of class: " + serializer.getClass().getName() );
 					continue;
 				}
-				@SuppressWarnings( "rawtypes" )
+				@SuppressWarnings("rawtypes")
 				final BranchFeatureSerializer branchFeatureSerializer = ( BranchFeatureSerializer ) serializer;
 				feature = readBranchFeature(
 						branchFeatureSerializer,
 						idmap.edges(),
 						model.getBranchGraph(),
 						model.getGraph(),
-						reader );
+						reader
+				);
 			}
 			else
 			{
@@ -222,69 +230,77 @@ public class MamutRawFeatureModelIO
 		featureModel.resumeListeners();
 	}
 
-	@SuppressWarnings( { "unchecked", "rawtypes" } )
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static void write(
 			final Feature< ? > rawFeature,
 			final FeatureSerializer< ?, ? > rawSerializer,
 			final ObjectToFileIdMap< ? > idmap,
-			final ProjectWriter writer ) throws IOException
+			final ProjectWriter writer
+	) throws IOException
 	{
 		final Feature feature = rawFeature;
 		final FeatureSerializer serializer = rawSerializer;
 		try (
 				final OutputStream fos = writer.getFeatureOutputStream( rawFeature.getSpec().getKey() );
-				final ObjectOutputStream oos = new ObjectOutputStream( new BufferedOutputStream( fos, 1024 * 1024 ) ))
+				final ObjectOutputStream oos = new ObjectOutputStream( new BufferedOutputStream( fos, 1024 * 1024 ) )
+		)
 		{
 			serializer.serialize( feature, idmap, oos );
 		}
 	}
 
-	@SuppressWarnings( { "unchecked", "rawtypes" } )
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static void writeBranchFeature(
 			final Feature< ? > rawFeature,
 			final BranchFeatureSerializer< ?, ?, ? > branchFeatureSerializer,
 			final ObjectToFileIdMap< ? > idmap,
 			final ModelBranchGraph branchGraph,
 			final ModelGraph graph,
-			final ProjectWriter writer ) throws IOException
+			final ProjectWriter writer
+	) throws IOException
 	{
 		final BranchFeatureSerializer serializer = branchFeatureSerializer;
 		try (
 				final OutputStream fos = writer.getFeatureOutputStream( rawFeature.getSpec().getKey() );
-				final ObjectOutputStream oos = new ObjectOutputStream( new BufferedOutputStream( fos, 1024 * 1024 ) ))
+				final ObjectOutputStream oos = new ObjectOutputStream( new BufferedOutputStream( fos, 1024 * 1024 ) )
+		)
 		{
 			serializer.serialize( rawFeature, idmap, oos, branchGraph, graph );
 		}
 	}
 
-	@SuppressWarnings( { "unchecked", "rawtypes" } )
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static Feature read(
 			final FeatureSerializer< ?, ? > rawSerializer,
 			final FileIdToObjectMap< ? > idmap,
 			final RefCollection< ? > pool,
-			final ProjectReader reader ) throws IOException, ClassNotFoundException
+			final ProjectReader reader
+	) throws IOException, ClassNotFoundException
 	{
 		final FeatureSerializer serializer = rawSerializer;
 		try (
 				final InputStream fis = reader.getFeatureInputStream( serializer.getFeatureSpec().getKey() );
-				final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( fis, 1024 * 1024 ) ))
+				final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( fis, 1024 * 1024 ) )
+		)
 		{
 			return serializer.deserialize( idmap, pool, ois );
 		}
 	}
 
-	@SuppressWarnings( { "unchecked", "rawtypes" } )
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static Feature readBranchFeature(
 			final BranchFeatureSerializer< ?, ?, ? > rawSerializer,
 			final FileIdToObjectMap< ? > idmap,
 			final ModelBranchGraph branchGraph,
 			final ModelGraph graph,
-			final ProjectReader reader ) throws IOException, ClassNotFoundException
+			final ProjectReader reader
+	) throws IOException, ClassNotFoundException
 	{
 		final BranchFeatureSerializer serializer = rawSerializer;
 		try (
 				final InputStream fis = reader.getFeatureInputStream( serializer.getFeatureSpec().getKey() );
-				final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( fis, 1024 * 1024 ) ))
+				final ObjectInputStream ois = new ObjectInputStream( new BufferedInputStream( fis, 1024 * 1024 ) )
+		)
 		{
 			return serializer.deserialize( idmap, ois, branchGraph, graph );
 		}

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -140,6 +140,7 @@ public class TrackMateImporterTest
 	private static final String TARGET_SPOT_LABEL = "ID7931";
 
 	private static final Map< String, Double > EXPECTED_SPOT_FEATURE_VALUES = new HashMap<>();
+
 	static
 	{
 		EXPECTED_SPOT_FEATURE_VALUES.put( "STD_INTENSITY_CH1", 69.99796221830115 );
@@ -189,6 +190,7 @@ public class TrackMateImporterTest
 			Dimension.NONE } );
 
 	private static final Map< String, Double > EXPECTED_LINK_FEATURE_VALUES = new HashMap<>();
+
 	static
 	{
 		EXPECTED_LINK_FEATURE_VALUES.put( "SPOT_SOURCE_ID", 19398. );
@@ -222,7 +224,7 @@ public class TrackMateImporterTest
 		try (final Context context = new Context())
 		{
 			final FeatureSpecsService featureSpecsService = context.getService( FeatureSpecsService.class );
-//			final WindowManager windowManager = new WindowManager( context );
+			//			final WindowManager windowManager = new WindowManager( context );
 			final TrackMateImporter importer = new TrackMateImporter( new File( TRACKMATE_FILE ) );
 			final MamutProject project = importer.createProject();
 			final Model model = new Model( project.getSpaceUnits(), project.getTimeUnits() );
@@ -240,19 +242,23 @@ public class TrackMateImporterTest
 			final Collection< FeatureSpec< ?, ? > > specs = featureModel.getFeatureSpecs();
 
 			final Spec specSpots = new TrackMateImportedSpotFeatures.Spec();
-			assertTrue( "The feature model should contain the specs for TrackMateImportedSpotFeatures.",
-					specs.contains( specSpots ) );
+			assertTrue(
+					"The feature model should contain the specs for TrackMateImportedSpotFeatures.",
+					specs.contains( specSpots )
+			);
 			final org.mastodon.mamut.importer.trackmate.TrackMateImportedLinkFeatures.Spec specLinks = new TrackMateImportedLinkFeatures.Spec();
-			assertTrue( "The feature model should contain the specs for TrackMateImportedLinkFeatures.",
-					specs.contains( specLinks ) );
+			assertTrue(
+					"The feature model should contain the specs for TrackMateImportedLinkFeatures.",
+					specs.contains( specLinks )
+			);
 
 			// Inspect spot feature projections.
-			@SuppressWarnings( "unchecked" )
+			@SuppressWarnings("unchecked")
 			final Feature< Spot > spotFeature = ( Feature< Spot > ) featureModel.getFeature( specSpots );
 			inspectFeatureProjections( spotFeature, EXPECTED_SPOT_FEATURE_PROJECTIONS, EXPECTED_SPOT_PROJECTION_DIMENSIONS, EXPECTED_SPOT_ISINT );
 
 			// Inspect link feature projections.
-			@SuppressWarnings( "unchecked" )
+			@SuppressWarnings("unchecked")
 			final Feature< Link > linkFeature = ( Feature< Link > ) featureModel.getFeature( specLinks );
 			inspectFeatureProjections( linkFeature, EXPECTED_LINK_FEATURE_PROJECTIONS, EXPECTED_LINK_PROJECTION_DIMENSIONS, EXPECTED_LINK_ISINT );
 
@@ -307,16 +313,18 @@ public class TrackMateImporterTest
 			final Feature< ? > feature,
 			final List< String > expectedProjectionKeys,
 			final List< Dimension > expectedProjectionDimensions,
-			final boolean[] expectedProjectionIsint )
+			final boolean[] expectedProjectionIsint
+	)
 	{
 		final Set< ? > sp = feature.projections();
-		@SuppressWarnings( "unchecked" )
+		@SuppressWarnings("unchecked")
 		final Set< FeatureProjection< ? > > projections = ( Set< FeatureProjection< ? > > ) sp;
 		assertEquals( "Unexpected number of spot feature projections.", expectedProjectionKeys.size(), projections.size() );
 		for ( final FeatureProjection< ? > projection : projections )
-			assertTrue( "Unexpected projection spec: " + projection.getKey(),
-					expectedProjectionKeys.contains( projection.getKey().toString() ) );
-
+			assertTrue(
+					"Unexpected projection spec: " + projection.getKey(),
+					expectedProjectionKeys.contains( projection.getKey().toString() )
+			);
 
 		// Inspect feature projection units and multiplicity.
 		for ( final FeatureProjectionSpec projSpec : feature.getSpec().getProjectionSpecs() )
@@ -326,10 +334,12 @@ public class TrackMateImporterTest
 			assertTrue( "Feature projection spec is unexpected: " + key, index >= 0 );
 
 			assertEquals( "Unexpected dimension for projection " + key + ".",
-					expectedProjectionDimensions.get( index ), projSpec.projectionDimension );
+					expectedProjectionDimensions.get( index ), projSpec.projectionDimension
+			);
 
 			assertEquals( "Unexpected name for projection " + key + ".",
-					expectedProjectionKeys.get( index ), projSpec.projectionName );
+					expectedProjectionKeys.get( index ), projSpec.projectionName
+			);
 
 			// Int or Double?
 			final FeatureProjection< ? > projection = feature.project( FeatureProjectionKey.key( projSpec ) );

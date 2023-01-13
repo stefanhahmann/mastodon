@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -103,7 +103,8 @@ public class MamutView< VG extends ViewGraph< Spot, Link, V, E >, V extends Vert
 	protected ColoringModelMain< Spot, Link, BranchSpot, BranchLink > registerColoring(
 			final GraphColorGeneratorAdapter< Spot, Link, V, E > colorGeneratorAdapter,
 			final JMenuHandle menuHandle,
-			final Runnable refresh )
+			final Runnable refresh
+	)
 	{
 		final TagSetModel< Spot, Link > tagSetModel = appModel.getModel().getTagSetModel();
 		final FeatureModel featureModel = appModel.getModel().getFeatureModel();
@@ -142,7 +143,8 @@ public class MamutView< VG extends ViewGraph< Spot, Link, V, E >, V extends Vert
 	protected void registerColorbarOverlay(
 			final ColorBarOverlay colorBarOverlay,
 			final JMenuHandle menuHandle,
-			final Runnable refresh )
+			final Runnable refresh
+	)
 	{
 		menuHandle.getMenu().add( new JSeparator() );
 		final JCheckBoxMenuItem toggleOverlay = new JCheckBoxMenuItem( "Show colorbar", ColorBarOverlay.DEFAULT_VISIBLE );
@@ -176,12 +178,13 @@ public class MamutView< VG extends ViewGraph< Spot, Link, V, E >, V extends Vert
 
 	protected void registerTagSetMenu(
 			final JMenuHandle menuHandle,
-			final Runnable refresh )
+			final Runnable refresh
+	)
 	{
 		final SelectionModel< Spot, Link > selectionModel = appModel.getSelectionModel();
 		final Model model = appModel.getModel();
 		final TagSetModel< Spot, Link > tagSetModel = model.getTagSetModel();
-		final TagSetMenu< Spot, Link > tagSetMenu = new TagSetMenu< >( menuHandle.getMenu(), tagSetModel, selectionModel, model.getGraph().getLock(), model );
+		final TagSetMenu< Spot, Link > tagSetMenu = new TagSetMenu<>( menuHandle.getMenu(), tagSetModel, selectionModel, model.getGraph().getLock(), model );
 		tagSetModel.listeners().add( tagSetMenu );
 		onClose( () -> tagSetModel.listeners().remove( tagSetMenu ) );
 	}

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -89,7 +89,8 @@ public class ConstrainScreenTransform
 			final double borderRatioX,
 			final double borderRatioY,
 			final double borderAbsX,
-			final double borderAbsY )
+			final double borderAbsY
+	)
 	{
 		double minX = transform.getMinX();
 		double maxX = transform.getMaxX();
@@ -159,7 +160,6 @@ public class ConstrainScreenTransform
 		transform.set( minX, maxX, minY, maxY, screenWidth, screenHeight );
 	}
 
-
 	/**
 	 * Zoom out in X to the maximally allowed width.
 	 *
@@ -183,7 +183,8 @@ public class ConstrainScreenTransform
 			final double minBoundX,
 			final double maxBoundX,
 			final double borderRatioX,
-			final double borderAbsX )
+			final double borderAbsX
+	)
 	{
 		final int screenWidth = transform.getScreenWidth();
 		final double scaleX = maxSizeX / ( screenWidth - 1 );
@@ -213,7 +214,7 @@ public class ConstrainScreenTransform
 	 * @param borderAbsY
 	 *            absolute value of the border in Y to respect when unzooming in
 	 *            pixels.
-	 * 
+	 *
 	 */
 	public static void zoomOutFullyY(
 			final ScreenTransform transform,
@@ -221,7 +222,8 @@ public class ConstrainScreenTransform
 			final double minBoundY,
 			final double maxBoundY,
 			final double borderRatioY,
-			final double borderAbsY )
+			final double borderAbsY
+	)
 	{
 		final int screenHeight = transform.getScreenHeight();
 		final double scaleY = maxSizeY / ( screenHeight - 1 );
@@ -255,7 +257,6 @@ public class ConstrainScreenTransform
 			transform.set( reference );
 	}
 
-
 	/**
 	 * Checks whether the given {@link ScreenTransform} covers an area having
 	 * width less or equal to the specified {@code minSizeX}.
@@ -269,7 +270,8 @@ public class ConstrainScreenTransform
 	 */
 	public static boolean hasMinSizeX(
 			final ScreenTransform transform,
-			final double minSizeX )
+			final double minSizeX
+	)
 	{
 		return transform.getMaxX() - transform.getMinX() <= minSizeX;
 	}
@@ -287,7 +289,8 @@ public class ConstrainScreenTransform
 	 */
 	public static boolean hasMinSizeY(
 			final ScreenTransform transform,
-			final double minSizeY )
+			final double minSizeY
+	)
 	{
 		return transform.getMaxY() - transform.getMinY() <= minSizeY;
 	}
@@ -305,7 +308,8 @@ public class ConstrainScreenTransform
 	 */
 	public static boolean hasMaxSizeX(
 			final ScreenTransform transform,
-			final double maxSizeX )
+			final double maxSizeX
+	)
 	{
 		return transform.getMaxX() - transform.getMinX() >= maxSizeX;
 	}
@@ -323,7 +327,8 @@ public class ConstrainScreenTransform
 	 */
 	public static boolean hasMaxSizeY(
 			final ScreenTransform transform,
-			final double maxSizeY )
+			final double maxSizeY
+	)
 	{
 		return transform.getMaxY() - transform.getMinY() >= maxSizeY;
 	}

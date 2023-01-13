@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -61,7 +61,7 @@ public class MamutActions
 	/*
 	 * Command descriptions for all provided commands
 	 */
-	@Plugin( type = Descriptions.class )
+	@Plugin(type = Descriptions.class)
 	public static class Descriptions extends CommandDescriptionProvider
 	{
 		public Descriptions()
@@ -81,22 +81,20 @@ public class MamutActions
 
 	private final LinkSpotsInSelection linkSpotsInSelection;
 
-
 	public MamutActions( final MamutAppModel appModel )
 	{
 		this.appModel = appModel;
 		this.linkSpotsInSelection = new LinkSpotsInSelection( LINK_SELECTED_SPOTS );
 	}
 
-
 	public static void install(
 			final Actions actions,
-			final MamutAppModel appModel)
+			final MamutAppModel appModel
+	)
 	{
-		final MamutActions mamutActions = new MamutActions(appModel);
+		final MamutActions mamutActions = new MamutActions( appModel );
 		actions.namedAction( mamutActions.linkSpotsInSelection, LINK_SELECTED_SPOTS_KEYS );
 	}
-
 
 	private class LinkSpotsInSelection extends AbstractNamedAction
 	{

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -76,7 +76,8 @@ public class MamutFeatureProjectionsManager implements FeatureProjectionsManager
 
 	public MamutFeatureProjectionsManager(
 			final FeatureSpecsService featureSpecsService,
-			final FeatureColorModeManager featureColorModeManager )
+			final FeatureColorModeManager featureColorModeManager
+	)
 	{
 		this.featureSpecsService = featureSpecsService;
 		this.featureColorModeManager = featureColorModeManager;
@@ -140,7 +141,8 @@ public class MamutFeatureProjectionsManager implements FeatureProjectionsManager
 				Spot.class,
 				Link.class,
 				BranchSpot.class,
-				BranchLink.class );
+				BranchLink.class
+		);
 	}
 
 	private void notifyAvailableFeatureProjectionsChanged()
@@ -169,25 +171,27 @@ public class MamutFeatureProjectionsManager implements FeatureProjectionsManager
 			{
 			case VERTEX:
 				return vertexCalculator == null
-						? null
-						: vertexCalculator.computeMinMax( projection );
+					   ? null
+					   : vertexCalculator.computeMinMax( projection );
 			case EDGE:
 				return edgeCalculator == null
-						? null
-						: edgeCalculator.computeMinMax( projection );
+					   ? null
+					   : edgeCalculator.computeMinMax( projection );
 			case BRANCH_VERTEX:
 				return branchVertexCalculator == null
-						? null
-						: branchVertexCalculator.computeMinMax( projection );
+					   ? null
+					   : branchVertexCalculator.computeMinMax( projection );
 			case BRANCH_EDGE:
 				return branchEdgeCalculator == null
-						? null
-						: branchEdgeCalculator.computeMinMax( projection );
+					   ? null
+					   : branchEdgeCalculator.computeMinMax( projection );
 			default:
 				throw new IllegalArgumentException( "Unknown target type: " + projection.getTargetType() + " of projection " + projection );
 			}
 		}
-	};
+	}
+
+	;
 
 	@Override
 	public FeatureRangeCalculator getFeatureRangeCalculator()

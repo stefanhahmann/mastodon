@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -65,19 +65,22 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		 * this edge.
 		 */
 		EDGE( "Edge", TargetType.EDGE,
-				"Each edge has a color that depends on a numerical feature defined for this edge." ),
+				"Each edge has a color that depends on a numerical feature defined for this edge."
+		),
 		/**
 		 * Edges have a color determined by a numerical feature of their source
 		 * vertex.
 		 */
 		SOURCE_VERTEX( "Source vertex", TargetType.VERTEX,
-				"Edges have a color determined by a numerical feature of their source vertex." ),
+				"Edges have a color determined by a numerical feature of their source vertex."
+		),
 		/**
 		 * Edges have a color determined by a numerical feature of their target
 		 * vertex.
 		 */
 		TARGET_VERTEX( "Target vertex", TargetType.VERTEX,
-				"Edges have a color determined by a numerical feature of their target vertex." ),
+				"Edges have a color determined by a numerical feature of their target vertex."
+		),
 		/**
 		 * Edges are painted with a default color.
 		 */
@@ -89,7 +92,8 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		 */
 		SOURCE_BRANCH_VERTEX( "Source branch-vertex", TargetType.BRANCH_VERTEX,
 				"Edges have a color determined by a numerical feature of the branch-"
-						+ "vertex that is linked to their source vertex." ),
+						+ "vertex that is linked to their source vertex."
+		),
 		/**
 		 * Edges have a color determined by a numerical feature of the branch
 		 * vertex in the branch 'up' (backward in time) that is linked to their
@@ -97,7 +101,8 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		 */
 		TARGET_BRANCH_VERTEX( "Target branch-vertex", TargetType.BRANCH_VERTEX,
 				"Edges have a color determined by a numerical feature of the branch-"
-						+ "vertex that is linked to their target vertex." ),
+						+ "vertex that is linked to their target vertex."
+		),
 		/**
 		 * Edges have a color determined by a numerical feature of the
 		 * branch-link they are linked to. Or the color of the incoming edge of
@@ -105,7 +110,8 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		 */
 		INCOMING_BRANCH_EDGE( "Branch-edge up", TargetType.BRANCH_EDGE,
 				"Edges have a color determined by a numerical feature of the branch-edge they are linked to."
-						+ "Or the color of the incoming edge of the branch-vertex they are linked to. "),
+						+ "Or the color of the incoming edge of the branch-vertex they are linked to. "
+		),
 		/**
 		 * Edges have a color determined by a numerical feature of the
 		 * branch-link they are linked to. Or the color of the outgoing edge of
@@ -113,7 +119,8 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		 */
 		OUTGOING_BRANCH_EDGE( "Branch-edge down", TargetType.BRANCH_EDGE,
 				"Edges have a color determined by a numerical feature of the branch-edge they are linked to."
-						+ "Or the color of the outgoing edge of the branch-vertex they are linked to. ");
+						+ "Or the color of the outgoing edge of the branch-vertex they are linked to. "
+		);
 
 		private final String label;
 
@@ -160,33 +167,38 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		 * this vertex.
 		 */
 		VERTEX( "Vertex", TargetType.VERTEX,
-				"Each vertex has a color determined by a numerical feature defined for this vertex." ),
+				"Each vertex has a color determined by a numerical feature defined for this vertex."
+		),
 		/**
 		 * Vertices have a color determined by a numerical feature of their
 		 * incoming edge, iff they have exactly one incoming edge.
 		 */
 		INCOMING_EDGE( "Incoming edge", TargetType.EDGE,
 				"Vertices have a color determined by a numerical feature of their "
-						+ "incoming edge, iff they have exactly one incoming edge." ),
+						+ "incoming edge, iff they have exactly one incoming edge."
+		),
 		/**
 		 * Vertices have a color determined by a numerical feature of their
 		 * outgoing edge, iff they have exactly one outgoing edge.
 		 */
 		OUTGOING_EDGE( "Outgoing edge", TargetType.EDGE,
 				"Vertices have a color determined by a numerical feature of their "
-						+ "outgoing edge, iff they have exactly one outgoing edge." ),
+						+ "outgoing edge, iff they have exactly one outgoing edge."
+		),
 		/**
 		 * Vertices are painted with a default color.
 		 */
 		NONE( "Default", null,
-				"Vertices are painted with a default color." ),
+				"Vertices are painted with a default color."
+		),
 		/**
 		 * Each vertex has a color determined by a numerical feature defined for
 		 * the branch vertex it is linked to.
 		 */
 		BRANCH_VERTEX( "Branch-vertex", TargetType.BRANCH_VERTEX,
 				"Each vertex has a color determined by a numerical feature defined "
-						+ "for the branch vertex it is linked to." ),
+						+ "for the branch vertex it is linked to."
+		),
 		/**
 		 * Vertices have a color determined by a numerical feature of the
 		 * incoming branch-edge they are linked to, iff they have exactly one
@@ -194,7 +206,8 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		 */
 		INCOMING_BRANCH_EDGE( "Incoming branch-edge", TargetType.BRANCH_EDGE,
 				"Vertices have a color determined by a numerical feature of the incoming branch-edge "
-						+ "they are linked to, iff they have exactly one such edge." ),
+						+ "they are linked to, iff they have exactly one such edge."
+		),
 		/**
 		 * Vertices have a color determined by a numerical feature of the
 		 * outgoing branch-edge they are linked to, iff they have exactly one
@@ -202,7 +215,8 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		 */
 		OUTGOING_BRANCH_EDGE( "Outgoing branch-edge", TargetType.BRANCH_EDGE,
 				"Vertices have a color determined by a numerical feature of the outgoing branch-edge "
-						+ "they are linked to, iff they have exactly one such edge." );
+						+ "they are linked to, iff they have exactly one such edge."
+		);
 
 		private final String label;
 
@@ -426,7 +440,6 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		}
 	}
 
-
 	public synchronized void setEdgeColorMap( final String edgeColorMap )
 	{
 		if ( this.edgeColorMap != edgeColorMap )
@@ -517,6 +530,7 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 	 */
 
 	private static final FeatureColorMode N_LINKS;
+
 	static
 	{
 		N_LINKS = new FeatureColorMode();
@@ -534,6 +548,7 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 	}
 
 	public static final Collection< FeatureColorMode > defaults;
+
 	static
 	{
 		defaults = new ArrayList<>( 1 );

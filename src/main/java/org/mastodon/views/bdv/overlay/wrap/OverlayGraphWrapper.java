@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -83,13 +83,14 @@ public class OverlayGraphWrapper< V extends Vertex< E >, E extends Edge< V > > i
 			final GraphIdBimap< V, E > idmap,
 			final SpatioTemporalIndex< V > graphIndex,
 			final ReentrantReadWriteLock lock,
-			final OverlayProperties< V, E > overlayProperties )
+			final OverlayProperties< V, E > overlayProperties
+	)
 	{
 		this.wrappedGraph = graph;
 		this.idmap = idmap;
 		this.lock = lock;
 		this.overlayProperties = overlayProperties;
-		tmpVertexRefs =	new ConcurrentLinkedQueue<>();
+		tmpVertexRefs = new ConcurrentLinkedQueue<>();
 		tmpEdgeRefs = new ConcurrentLinkedQueue<>();
 		wrappedIndex = new SpatioTemporalIndexWrapper<>( this, graphIndex );
 		vertexMap = new OverlayVertexWrapperBimap<>( this );
@@ -135,12 +136,14 @@ public class OverlayGraphWrapper< V extends Vertex< E >, E extends Edge< V > > i
 		return edge.orNull();
 	}
 
-	@Override public Edges< OverlayEdgeWrapper< V, E > > getEdges( final OverlayVertexWrapper< V, E > source, final OverlayVertexWrapper< V, E > target )
+	@Override
+	public Edges< OverlayEdgeWrapper< V, E > > getEdges( final OverlayVertexWrapper< V, E > source, final OverlayVertexWrapper< V, E > target )
 	{
 		return getEdges( source, target, vertexRef() );
 	}
 
-	@Override public Edges< OverlayEdgeWrapper< V, E > > getEdges( final OverlayVertexWrapper< V, E > source, final OverlayVertexWrapper< V, E > target, final OverlayVertexWrapper< V, E > ref )
+	@Override
+	public Edges< OverlayEdgeWrapper< V, E > > getEdges( final OverlayVertexWrapper< V, E > source, final OverlayVertexWrapper< V, E > target, final OverlayVertexWrapper< V, E > ref )
 	{
 		final Edges< E > wes = wrappedGraph.getEdges( source.wv, target.wv, ref.wv );
 		ref.edges.wrap( wes );
@@ -204,7 +207,9 @@ public class OverlayGraphWrapper< V extends Vertex< E >, E extends Edge< V > > i
 	}
 
 	@Override
-	public OverlayEdgeWrapper< V, E > insertEdge( final OverlayVertexWrapper< V, E > source, final int sourceOutIndex, final OverlayVertexWrapper< V, E > target, final int targetInIndex, final OverlayEdgeWrapper< V, E > ref )
+	public OverlayEdgeWrapper< V, E > insertEdge(
+			final OverlayVertexWrapper< V, E > source, final int sourceOutIndex, final OverlayVertexWrapper< V, E > target, final int targetInIndex, final OverlayEdgeWrapper< V, E > ref
+	)
 	{
 		ref.we = overlayProperties.insertEdge( source.wv, sourceOutIndex, target.wv, targetInIndex, ref.ref );
 		return ref;
@@ -290,7 +295,7 @@ public class OverlayGraphWrapper< V extends Vertex< E >, E extends Edge< V > > i
 			return idmap.getVertexId( v.wv );
 		}
 
-		@SuppressWarnings( { "unchecked", "rawtypes" } )
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
 		public Class< OverlayVertexWrapper< V, E > > getRefClass()
 		{
@@ -298,20 +303,21 @@ public class OverlayGraphWrapper< V extends Vertex< E >, E extends Edge< V > > i
 		}
 	};
 
-	private final AbstractRefPoolCollectionWrapper< OverlayVertexWrapper< V, E >, RefPool< OverlayVertexWrapper< V, E > > > vertices = new AbstractRefPoolCollectionWrapper< OverlayVertexWrapper< V, E >, RefPool< OverlayVertexWrapper< V, E > > >( vertexPool )
-	{
-		@Override
-		public int size()
-		{
-			return wrappedGraph.vertices().size();
-		}
+	private final AbstractRefPoolCollectionWrapper< OverlayVertexWrapper< V, E >, RefPool< OverlayVertexWrapper< V, E > > > vertices =
+			new AbstractRefPoolCollectionWrapper< OverlayVertexWrapper< V, E >, RefPool< OverlayVertexWrapper< V, E > > >( vertexPool )
+			{
+				@Override
+				public int size()
+				{
+					return wrappedGraph.vertices().size();
+				}
 
-		@Override
-		public Iterator< OverlayVertexWrapper< V, E > > iterator()
-		{
-			return new OverlayVertexIteratorWrapper<>( OverlayGraphWrapper.this, OverlayGraphWrapper.this.vertexRef(), wrappedGraph.vertices().iterator() );
-		}
-	};
+				@Override
+				public Iterator< OverlayVertexWrapper< V, E > > iterator()
+				{
+					return new OverlayVertexIteratorWrapper<>( OverlayGraphWrapper.this, OverlayGraphWrapper.this.vertexRef(), wrappedGraph.vertices().iterator() );
+				}
+			};
 
 	private final RefPool< OverlayEdgeWrapper< V, E > > edgePool = new RefPool< OverlayEdgeWrapper< V, E > >()
 	{
@@ -347,7 +353,7 @@ public class OverlayGraphWrapper< V extends Vertex< E >, E extends Edge< V > > i
 			return idmap.getEdgeId( e.we );
 		}
 
-		@SuppressWarnings( { "unchecked", "rawtypes" } )
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		@Override
 		public Class< OverlayEdgeWrapper< V, E > > getRefClass()
 		{
@@ -355,19 +361,20 @@ public class OverlayGraphWrapper< V extends Vertex< E >, E extends Edge< V > > i
 		}
 	};
 
-	private final AbstractRefPoolCollectionWrapper< OverlayEdgeWrapper< V, E >, RefPool< OverlayEdgeWrapper< V, E > > > edges = new AbstractRefPoolCollectionWrapper< OverlayEdgeWrapper< V, E >, RefPool< OverlayEdgeWrapper< V, E > > >( edgePool )
-	{
-		@Override
-		public int size()
-		{
-			return wrappedGraph.edges().size();
-		}
+	private final AbstractRefPoolCollectionWrapper< OverlayEdgeWrapper< V, E >, RefPool< OverlayEdgeWrapper< V, E > > > edges =
+			new AbstractRefPoolCollectionWrapper< OverlayEdgeWrapper< V, E >, RefPool< OverlayEdgeWrapper< V, E > > >( edgePool )
+			{
+				@Override
+				public int size()
+				{
+					return wrappedGraph.edges().size();
+				}
 
-		@Override
-		public Iterator< OverlayEdgeWrapper< V, E > > iterator()
-		{
-			return new OverlayEdgeIteratorWrapper<>( OverlayGraphWrapper.this, OverlayGraphWrapper.this.edgeRef(), wrappedGraph.edges().iterator() );
-		}
-	};
+				@Override
+				public Iterator< OverlayEdgeWrapper< V, E > > iterator()
+				{
+					return new OverlayEdgeIteratorWrapper<>( OverlayGraphWrapper.this, OverlayGraphWrapper.this.edgeRef(), wrappedGraph.edges().iterator() );
+				}
+			};
 
 }

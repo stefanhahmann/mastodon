@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -309,7 +309,8 @@ public class MamutExporter
 			folder = datasetXmlFile.getParentFile().getCanonicalPath();
 		}
 		catch ( final IOException e )
-		{}
+		{
+		}
 		attributes.add( new Attribute( FOLDER_ATTRIBUTE, folder ) );
 
 		// Image attributes.
@@ -522,7 +523,8 @@ public class MamutExporter
 		// Link features.
 		linkFeatureProjections.forEach( p -> attributes.add( new Attribute(
 				p.attributeName,
-				Double.toString( p.projection.value( edge ) ) ) ) );
+				Double.toString( p.projection.value( edge ) )
+		) ) );
 
 		final Element edgeElement = new Element( EDGE_TAG );
 		edgeElement.setAttributes( attributes );
@@ -577,7 +579,8 @@ public class MamutExporter
 		// Spot features.
 		spotFeatureProjections.forEach( p -> attributes.add( new Attribute(
 				p.attributeName,
-				Double.toString( p.projection.value( spot ) ) ) ) );
+				Double.toString( p.projection.value( spot ) )
+		) ) );
 
 		final Element spotElement = new Element( SPOT_ELEMENT_TAG );
 		spotElement.setAttributes( attributes );
@@ -594,7 +597,7 @@ public class MamutExporter
 		return featuresElement;
 	}
 
-	@SuppressWarnings( { "unchecked", "rawtypes" } )
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private < T > void appendFeaturesDeclarationOfClass( final Class< T > clazz, final Element featuresElement, final String classFeatureDeclarationTag )
 	{
 		final List< ExportFeatureProjection< T > > projections;
@@ -609,8 +612,8 @@ public class MamutExporter
 		for ( final ExportFeatureProjection< T > p : projections )
 		{
 			final String isint = ( p.projection instanceof IntFeatureProjection )
-					? "true"
-					: "false";
+								 ? "true"
+								 : "false";
 
 			final Element fel = new Element( FEATURE_TAG );
 			fel.setAttribute( FEATURE_ATTRIBUTE, p.attributeName );
@@ -695,7 +698,8 @@ public class MamutExporter
 	public static < T > List< ExportFeatureProjection< T > > getExportFeatureProjections(
 			final FeatureModel featureModel,
 			final Class< T > target,
-			final Class< ? > trackMateImporterFeatureClass )
+			final Class< ? > trackMateImporterFeatureClass
+	)
 	{
 		/*
 		 * First iteration: collect all projection names that are NOT coming
@@ -707,7 +711,7 @@ public class MamutExporter
 		{
 			if ( fspec.getTargetClass().equals( target ) )
 			{
-				@SuppressWarnings( "unchecked" )
+				@SuppressWarnings("unchecked")
 				final Feature< T > feature = ( Feature< T > ) featureModel.getFeature( fspec );
 				final String fname = fspec.getKey();
 				if ( null == feature.projections() )
@@ -720,8 +724,8 @@ public class MamutExporter
 				{
 					final String pname = projection.getKey().getSpec().getKey();
 					final String name = isScalarFeature( fspec )
-							? getProjectionExportName( fname )
-							: getProjectionExportName( fname, pname, projection.getKey().getSourceIndices() );
+										? getProjectionExportName( fname )
+										: getProjectionExportName( fname, pname, projection.getKey().getSourceIndices() );
 					featureModelProjections.add( sanitize( name ) );
 				}
 			}
@@ -737,7 +741,7 @@ public class MamutExporter
 		{
 			if ( fspec.getTargetClass().equals( target ) )
 			{
-				@SuppressWarnings( "unchecked" )
+				@SuppressWarnings("unchecked")
 				final Feature< T > feature = ( Feature< T > ) featureModel.getFeature( fspec );
 				final String fname = fspec.getKey();
 				if ( null == feature.projections() )
@@ -754,8 +758,8 @@ public class MamutExporter
 					final String pname = projection.getKey().getSpec().getKey();
 
 					final String name = isScalarFeature( fspec )
-							? getProjectionExportName( fname )
-							: getProjectionExportName( fname, pname, projection.getKey().getSourceIndices() );
+										? getProjectionExportName( fname )
+										: getProjectionExportName( fname, pname, projection.getKey().getSourceIndices() );
 
 					/*
 					 * Avoid re-exporting features that were imported from
@@ -769,8 +773,8 @@ public class MamutExporter
 					 * --> ...
 					 */
 					final String croppedName = reExport
-							? name.substring( 1 + TrackMateImportedSpotFeatures.KEY.length() )
-							: name;
+											   ? name.substring( 1 + TrackMateImportedSpotFeatures.KEY.length() )
+											   : name;
 
 					/*
 					 * To avoid name clash between re-imported feature and
@@ -827,7 +831,7 @@ public class MamutExporter
 	public static < T > Set< String > getLikelyExportedFeatureProjections( final FeatureSpecsService specsService, final int numSources, final Class< T > target )
 	{
 		final HashSet< String > names = new HashSet<>();
-		if (null == specsService)
+		if ( null == specsService )
 			return names;
 
 		final List< FeatureSpec< ?, T > > fspecs = specsService.getSpecs( target );
@@ -842,7 +846,7 @@ public class MamutExporter
 			for ( final FeatureProjectionSpec pspec : fspec.getProjectionSpecs() )
 			{
 				final String pname = pspec.getKey();
-				switch( fspec.getMultiplicity() )
+				switch ( fspec.getMultiplicity() )
 				{
 				case SINGLE:
 					names.add( sanitize( getProjectionExportName( fname, pname ) ) );
