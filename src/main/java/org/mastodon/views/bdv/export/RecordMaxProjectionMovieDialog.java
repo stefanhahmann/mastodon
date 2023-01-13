@@ -172,7 +172,7 @@ public class RecordMaxProjectionMovieDialog extends DelayedPackDialog implements
 			dialogActions.namedAction( new RecordMovieDialog.MyToggleDialogAction( RECORD_MIP_MOVIE_DIALOG, dialog ), RECORD_MIP_MOVIE_DIALOG_KEYS );
 			return onClose;
 		}
-		
+
 		return () -> {
 			dialog.setVisible( false );
 			dialog.dispose();
@@ -182,11 +182,17 @@ public class RecordMaxProjectionMovieDialog extends DelayedPackDialog implements
 	private static final long serialVersionUID = 1L;
 
 	private static final String EXPORT_TO_MOVIE_KEY = "ExportToMovie";
+
 	private static final String PNG_EXPORT_PATH_KEY = "PNGExportPath";
+
 	private static final String MOVIE_EXPORT_PATH_KEY = "MovieExportPath";
+
 	private static final String FPS_KEY = "FPS";
+
 	private static final String NUM_STEPS_KEY = "NumSteps";
+
 	private static final String STEP_SIZE_KEY = "StepSize";
+
 	private static final String PROJECT_OVERLAY_KEY = "ProjectOverlay";
 
 	private final int maxTimepoint;
@@ -488,7 +494,6 @@ public class RecordMaxProjectionMovieDialog extends DelayedPackDialog implements
 			}
 		} );
 
-
 		btnBrowsePNGs.addActionListener( e -> {
 			final File file = FileChooser.chooseFile(
 					FileChooser.useJFileChooser,
@@ -564,7 +569,7 @@ public class RecordMaxProjectionMovieDialog extends DelayedPackDialog implements
 		spinnerNumSteps.addChangeListener( e -> prefService.put( RecordMaxProjectionMovieDialog.class, NUM_STEPS_KEY, ( ( Number ) spinnerNumSteps.getValue() ).intValue() ) );
 		spinnerStepSize.addChangeListener( e -> prefService.put( RecordMaxProjectionMovieDialog.class, STEP_SIZE_KEY, ( ( Number ) spinnerStepSize.getValue() ).doubleValue() ) );
 		chckbxProjectOverlay.addChangeListener( e -> prefService.put( RecordMaxProjectionMovieDialog.class, PROJECT_OVERLAY_KEY, chckbxProjectOverlay.isSelected() ) );
-		
+
 		setCanvasSize( viewer.getWidth(), viewer.getHeight() );
 
 		/*

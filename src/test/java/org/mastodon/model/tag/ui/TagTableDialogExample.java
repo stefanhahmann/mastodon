@@ -85,8 +85,8 @@ public class TagTableDialogExample
 					elements,
 					MyElements::addElement,
 					MyElements::size,
-					(c, e ) -> c.remove( e ),
-					(c, i) -> c.get( i ),
+					( c, e ) -> c.remove( e ),
+					( c, i ) -> c.get( i ),
 					MyElement::setName,
 					MyElement::getName );
 

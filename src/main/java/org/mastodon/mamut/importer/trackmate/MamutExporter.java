@@ -827,7 +827,7 @@ public class MamutExporter
 	public static < T > Set< String > getLikelyExportedFeatureProjections( final FeatureSpecsService specsService, final int numSources, final Class< T > target )
 	{
 		final HashSet< String > names = new HashSet<>();
-		if (null == specsService)
+		if ( null == specsService )
 			return names;
 
 		final List< FeatureSpec< ?, T > > fspecs = specsService.getSpecs( target );
@@ -842,7 +842,7 @@ public class MamutExporter
 			for ( final FeatureProjectionSpec pspec : fspec.getProjectionSpecs() )
 			{
 				final String pname = pspec.getKey();
-				switch( fspec.getMultiplicity() )
+				switch ( fspec.getMultiplicity() )
 				{
 				case SINGLE:
 					names.add( sanitize( getProjectionExportName( fname, pname ) ) );

@@ -109,33 +109,53 @@ import net.imglib2.realtransform.AffineTransform3D;
  */
 public class WindowManager
 {
-	
+
 	public static final String NEW_BDV_VIEW = "new bdv view";
+
 	public static final String NEW_TRACKSCHEME_VIEW = "new trackscheme view";
+
 	public static final String NEW_TABLE_VIEW = "new full table view";
+
 	public static final String NEW_SELECTION_TABLE_VIEW = "new selection table view";
+
 	public static final String NEW_GRAPHER_VIEW = "new grapher view";
+
 	public static final String PREFERENCES_DIALOG = "Preferences";
+
 	public static final String TAGSETS_DIALOG = "edit tag sets";
+
 	public static final String COMPUTE_FEATURE_DIALOG = "compute features";
+
 	public static final String OPEN_ONLINE_DOCUMENTATION = "open online documentation";
 
 	static final String[] NEW_BDV_VIEW_KEYS = new String[] { "not mapped" };
+
 	static final String[] NEW_TRACKSCHEME_VIEW_KEYS = new String[] { "not mapped" };
+
 	static final String[] NEW_TABLE_VIEW_KEYS = new String[] { "not mapped" };
+
 	static final String[] NEW_SELECTION_TABLE_VIEW_KEYS = new String[] { "not mapped" };
+
 	static final String[] NEW_GRAPHER_VIEW_KEYS = new String[] { "not mapped" };
+
 	static final String[] PREFERENCES_DIALOG_KEYS = new String[] { "meta COMMA", "ctrl COMMA" };
+
 	static final String[] TAGSETS_DIALOG_KEYS = new String[] { "not mapped" };
+
 	static final String[] COMPUTE_FEATURE_DIALOG_KEYS = new String[] { "not mapped" };
+
 	static final String[] OPEN_ONLINE_DOCUMENTATION_KEYS = new String[] { "not mapped" };
 
 	static final String NEW_BRANCH_BDV_VIEW = "new branch bdv view";
+
 	static final String NEW_BRANCH_TRACKSCHEME_VIEW = "new branch trackscheme view";
+
 	static final String NEW_HIERARCHY_TRACKSCHEME_VIEW = "new hierarchy trackscheme view";
 
 	static final String[] NEW_BRANCH_BDV_VIEW_KEYS = new String[] { "not mapped" };
+
 	static final String[] NEW_BRANCH_TRACKSCHEME_VIEW_KEYS = new String[] { "not mapped" };
+
 	static final String[] NEW_HIERARCHY_TRACKSCHEME_VIEW_KEYS = new String[] { "not mapped" };
 
 	public static final String DOCUMENTATION_URL = "https://mastodon.readthedocs.io/en/latest/";
@@ -516,7 +536,7 @@ public class WindowManager
 	{
 		btsWindows.forEach( action );
 	}
-	
+
 	/**
 	 * Executes the specified action for all the currently opened Branch-BDV
 	 * views.

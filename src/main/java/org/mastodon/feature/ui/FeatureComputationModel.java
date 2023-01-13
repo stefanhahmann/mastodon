@@ -60,7 +60,6 @@ public class FeatureComputationModel
 
 	private final Map< FeatureSpec< ?, ? >, Collection< FeatureSpec< ?, ? > > > deps;
 
-
 	public FeatureComputationModel()
 	{
 		this.updateListeners = new Listeners.SynchronizedList<>();

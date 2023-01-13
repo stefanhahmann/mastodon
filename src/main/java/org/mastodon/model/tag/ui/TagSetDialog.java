@@ -78,7 +78,8 @@ public class TagSetDialog extends JDialog
 			final Keymap keymap,
 			final String[] keyConfigContexts )
 	{
-		this( owner, new TagSetManager() {
+		this( owner, new TagSetManager()
+		{
 			@Override
 			public TagSetStructure getTagSetStructure()
 			{

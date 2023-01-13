@@ -46,7 +46,7 @@ public class FeatureColorModeConfigPage extends SelectAndEditProfileSettingsPage
 			final String treePath,
 			final FeatureColorModeManager featureColorModeManager,
 			final FeatureProjectionsManager featureProjectionsManager,
-			final String vertexName, 
+			final String vertexName,
 			final String edgeName )
 	{
 		super( treePath,

@@ -362,12 +362,12 @@ public class TrackSchemeStyleIO
 				s.vertexGhostStroke( ( Stroke ) mapping.getOrDefault( "vertexGhostStroke", df.getVertexGhostStroke() ) );
 				s.vertexHighlightStroke( ( Stroke ) mapping.getOrDefault( "vertexHighlightStroke", df.getVertexHighlightStroke() ) );
 				s.focusStroke( ( Stroke ) mapping.getOrDefault( "focusStroke", df.getFocusStroke() ) );
-				s.branchGraphEdgeStroke( ( Stroke ) mapping.getOrDefault( "branchGraphEdgeStroke", df.getBranchGraphEdgeStroke() ));
-				s.branchGraphEdgeHighlightStroke( ( Stroke ) mapping.getOrDefault( "branchGraphEdgeHighlightStroke", df.getBranchGraphEdgeHighlightStroke() ));
-				s.hierarchyEdgeStroke( ( Stroke ) mapping.getOrDefault( "hierarchyEdgeStroke", df.getHierarchyEdgeStroke() ));
-				s.hierarchyEdgeHighlightStroke( ( Stroke ) mapping.getOrDefault( "hierarchyEdgeHighlightStroke", df.getHierarchyEdgeHighlightStroke() ));
-				s.hierarchyVertexStroke( ( Stroke ) mapping.getOrDefault( "hierarchyVertexStroke", df.getHierarchyVertexStroke() ));
-				s.hierarchyVertexHighlightStroke( ( Stroke ) mapping.getOrDefault( "hierarchyVertexHighlightStroke", df.getHierarchyVertexHighlightStroke() ));
+				s.branchGraphEdgeStroke( ( Stroke ) mapping.getOrDefault( "branchGraphEdgeStroke", df.getBranchGraphEdgeStroke() ) );
+				s.branchGraphEdgeHighlightStroke( ( Stroke ) mapping.getOrDefault( "branchGraphEdgeHighlightStroke", df.getBranchGraphEdgeHighlightStroke() ) );
+				s.hierarchyEdgeStroke( ( Stroke ) mapping.getOrDefault( "hierarchyEdgeStroke", df.getHierarchyEdgeStroke() ) );
+				s.hierarchyEdgeHighlightStroke( ( Stroke ) mapping.getOrDefault( "hierarchyEdgeHighlightStroke", df.getHierarchyEdgeHighlightStroke() ) );
+				s.hierarchyVertexStroke( ( Stroke ) mapping.getOrDefault( "hierarchyVertexStroke", df.getHierarchyVertexStroke() ) );
+				s.hierarchyVertexHighlightStroke( ( Stroke ) mapping.getOrDefault( "hierarchyVertexHighlightStroke", df.getHierarchyVertexHighlightStroke() ) );
 
 				s.hierarchyGraphCurvedLines( ( boolean ) mapping.getOrDefault( "hierarchyGraphCurvedLines", df.isHierarchyGraphCurvedLines() ) );
 				s.highlightCurrentTimepoint( ( boolean ) mapping.getOrDefault( "highlightCurrentTimepoint", df.isHighlightCurrentTimepoint() ) );

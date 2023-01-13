@@ -777,7 +777,6 @@ public class TableViewFrameBuilder
 	public static class MyTableViewFrame extends ViewFrame
 	{
 
-
 		private static final long serialVersionUID = 1L;
 
 		public final List< ContextChooser< ? > > contextChoosers;
@@ -815,8 +814,8 @@ public class TableViewFrameBuilder
 		public List< FeatureTagTablePanel< ? > > getTables()
 		{
 			final int nTabs = pane.getTabCount();
-			final ArrayList< FeatureTagTablePanel< ? > > tables = new ArrayList<>(nTabs);
-			for(int i = 0; i < nTabs; i++)
+			final ArrayList< FeatureTagTablePanel< ? > > tables = new ArrayList<>( nTabs );
+			for ( int i = 0; i < nTabs; i++ )
 			{
 				final FeatureTagTablePanel< ? > table = ( FeatureTagTablePanel< ? > ) pane.getComponentAt( i );
 				tables.add( table );

@@ -150,7 +150,7 @@ public class MamutViewTrackScheme extends MamutView< TrackSchemeGraph< Spot, Lin
 
 		final AutoNavigateFocusModel< TrackSchemeVertex, TrackSchemeEdge > navigateFocusModel = new AutoNavigateFocusModel<>( focusModel, navigationHandler, timepointModel );
 
-		final RootsModel<TrackSchemeVertex> rootsModel = new DefaultRootsModel<>( model.getGraph(), viewGraph );
+		final RootsModel< TrackSchemeVertex > rootsModel = new DefaultRootsModel<>( model.getGraph(), viewGraph );
 
 		final TrackSchemeFrame frame = new TrackSchemeFrame(
 				viewGraph,
@@ -195,8 +195,9 @@ public class MamutViewTrackScheme extends MamutView< TrackSchemeGraph< Spot, Lin
 		EditFocusVertexLabelAction.install( viewActions, frame.getTrackschemePanel(), focusModel, model );
 		FocusActions.install( viewActions, viewGraph, viewGraph.getLock(), navigateFocusModel, selectionModel );
 		TrackSchemeZoom.install( viewBehaviours, frame.getTrackschemePanel() );
-		EditTagActions.install( viewActions, frame.getKeybindings(), frame.getTriggerbindings(), model.getTagSetModel(), appModel.getSelectionModel(), viewGraph.getLock(), frame.getTrackschemePanel(), frame.getTrackschemePanel().getDisplay(), model );
-		ShowSelectedTracksActions.install(viewActions, viewGraph, selectionModel, rootsModel, frame.getTrackschemePanel());
+		EditTagActions.install( viewActions, frame.getKeybindings(), frame.getTriggerbindings(), model.getTagSetModel(), appModel.getSelectionModel(), viewGraph.getLock(), frame.getTrackschemePanel(),
+				frame.getTrackschemePanel().getDisplay(), model );
+		ShowSelectedTracksActions.install( viewActions, viewGraph, selectionModel, rootsModel, frame.getTrackschemePanel() );
 
 		final JPanel searchPanel = SearchVertexLabel.install( viewActions, viewGraph, navigationHandler, selectionModel, focusModel, frame.getTrackschemePanel() );
 		frame.getSettingsPanel().add( searchPanel );

@@ -105,7 +105,7 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		 */
 		INCOMING_BRANCH_EDGE( "Branch-edge up", TargetType.BRANCH_EDGE,
 				"Edges have a color determined by a numerical feature of the branch-edge they are linked to."
-						+ "Or the color of the incoming edge of the branch-vertex they are linked to. "),
+						+ "Or the color of the incoming edge of the branch-vertex they are linked to. " ),
 		/**
 		 * Edges have a color determined by a numerical feature of the
 		 * branch-link they are linked to. Or the color of the outgoing edge of
@@ -113,7 +113,7 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 		 */
 		OUTGOING_BRANCH_EDGE( "Branch-edge down", TargetType.BRANCH_EDGE,
 				"Edges have a color determined by a numerical feature of the branch-edge they are linked to."
-						+ "Or the color of the outgoing edge of the branch-vertex they are linked to. ");
+						+ "Or the color of the outgoing edge of the branch-vertex they are linked to. " );
 
 		private final String label;
 
@@ -425,7 +425,6 @@ public class FeatureColorMode implements Style< FeatureColorMode >
 			notifyListeners();
 		}
 	}
-
 
 	public synchronized void setEdgeColorMap( final String edgeColorMap )
 	{

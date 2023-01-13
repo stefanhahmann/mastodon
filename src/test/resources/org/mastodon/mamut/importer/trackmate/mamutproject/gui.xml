@@ -1,111 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  #%L
-  Mastodon
-  %%
-  Copyright (C) 2014 - 2022 Tobias Pietzsch, Jean-Yves Tinevez
-  %%
-  Redistribution and use in source and binary forms, with or without
-  modification, are permitted provided that the following conditions are met:
-  
-  1. Redistributions of source code must retain the above copyright notice,
-     this list of conditions and the following disclaimer.
-  2. Redistributions in binary form must reproduce the above copyright notice,
-     this list of conditions and the following disclaimer in the documentation
-     and/or other materials provided with the distribution.
-  
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
-  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-  POSSIBILITY OF SUCH DAMAGE.
-  #L%
-  -->
+<!-- #%L Mastodon %% Copyright (C) 2014 - 2022 Tobias Pietzsch, Jean-Yves 
+	Tinevez %% Redistribution and use in source and binary forms, with or without 
+	modification, are permitted provided that the following conditions are met: 
+	1. Redistributions of source code must retain the above copyright notice, 
+	this list of conditions and the following disclaimer. 2. Redistributions 
+	in binary form must reproduce the above copyright notice, this list of conditions 
+	and the following disclaimer in the documentation and/or other materials 
+	provided with the distribution. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT 
+	HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, 
+	BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS 
+	FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+	HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, 
+	EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT 
+	OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+	INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, 
+	STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN 
+	ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
+	OF SUCH DAMAGE. #L% -->
 
 <MamutGui version="0.3">
-  <Windows>
-    <Window>
-      <Type>MamutViewBdv</Type>
-      <FramePosition>174 139 816 697</FramePosition>
-      <LockGroupId>0</LockGroupId>
-      <SettingsPanelVisible>true</SettingsPanelVisible>
-      <BdvState>
-        <ViewerState>
-          <Sources>
-            <Source>
-              <active>true</active>
-            </Source>
-          </Sources>
-          <SourceGroups>
-            <SourceGroup>
-              <active>true</active>
-              <name>group 1</name>
-              <id>0</id>
-            </SourceGroup>
-            <SourceGroup>
-              <active>true</active>
-              <name>group 2</name>
-            </SourceGroup>
-            <SourceGroup>
-              <active>true</active>
-              <name>group 3</name>
-            </SourceGroup>
-            <SourceGroup>
-              <active>true</active>
-              <name>group 4</name>
-            </SourceGroup>
-            <SourceGroup>
-              <active>true</active>
-              <name>group 5</name>
-            </SourceGroup>
-            <SourceGroup>
-              <active>true</active>
-              <name>group 6</name>
-            </SourceGroup>
-            <SourceGroup>
-              <active>true</active>
-              <name>group 7</name>
-            </SourceGroup>
-            <SourceGroup>
-              <active>true</active>
-              <name>group 8</name>
-            </SourceGroup>
-            <SourceGroup>
-              <active>true</active>
-              <name>group 9</name>
-            </SourceGroup>
-            <SourceGroup>
-              <active>true</active>
-              <name>group 10</name>
-            </SourceGroup>
-          </SourceGroups>
-          <DisplayMode>ss</DisplayMode>
-          <Interpolation>nearestneighbor</Interpolation>
-          <CurrentSource>0</CurrentSource>
-          <CurrentGroup>0</CurrentGroup>
-          <CurrentTimePoint>49</CurrentTimePoint>
-        </ViewerState>
-      </BdvState>
-      <BdvTransform>4.6875 0.0 0.0 101.84375 0.0 4.6875 0.0 79.99526024964294 0.0 0.0 4.6875 0.0</BdvTransform>
-      <NoColoring>true</NoColoring>
-    </Window>
-    <Window>
-      <Type>MamutViewTable</Type>
-      <FramePosition>760 320 1039 457</FramePosition>
-      <LockGroupId>0</LockGroupId>
-      <SettingsPanelVisible>true</SettingsPanelVisible>
-      <TableSelectionOnly>false</TableSelectionOnly>
-      <TableVertexTableVisibleRect>480 1884</TableVertexTableVisibleRect>
-      <TableEdgeTableVisibleRect>0 0</TableEdgeTableVisibleRect>
-      <TableVertexTableDisplayed>true</TableVertexTableDisplayed>
-      <NoColoring>true</NoColoring>
-      <ContextProvider>full graph</ContextProvider>
-    </Window>
-  </Windows>
+	<Windows>
+		<Window>
+			<Type>MamutViewBdv</Type>
+			<FramePosition>174 139 816 697</FramePosition>
+			<LockGroupId>0</LockGroupId>
+			<SettingsPanelVisible>true</SettingsPanelVisible>
+			<BdvState>
+				<ViewerState>
+					<Sources>
+						<Source>
+							<active>true</active>
+						</Source>
+					</Sources>
+					<SourceGroups>
+						<SourceGroup>
+							<active>true</active>
+							<name>group 1</name>
+							<id>0</id>
+						</SourceGroup>
+						<SourceGroup>
+							<active>true</active>
+							<name>group 2</name>
+						</SourceGroup>
+						<SourceGroup>
+							<active>true</active>
+							<name>group 3</name>
+						</SourceGroup>
+						<SourceGroup>
+							<active>true</active>
+							<name>group 4</name>
+						</SourceGroup>
+						<SourceGroup>
+							<active>true</active>
+							<name>group 5</name>
+						</SourceGroup>
+						<SourceGroup>
+							<active>true</active>
+							<name>group 6</name>
+						</SourceGroup>
+						<SourceGroup>
+							<active>true</active>
+							<name>group 7</name>
+						</SourceGroup>
+						<SourceGroup>
+							<active>true</active>
+							<name>group 8</name>
+						</SourceGroup>
+						<SourceGroup>
+							<active>true</active>
+							<name>group 9</name>
+						</SourceGroup>
+						<SourceGroup>
+							<active>true</active>
+							<name>group 10</name>
+						</SourceGroup>
+					</SourceGroups>
+					<DisplayMode>ss</DisplayMode>
+					<Interpolation>nearestneighbor</Interpolation>
+					<CurrentSource>0</CurrentSource>
+					<CurrentGroup>0</CurrentGroup>
+					<CurrentTimePoint>49</CurrentTimePoint>
+				</ViewerState>
+			</BdvState>
+			<BdvTransform>4.6875 0.0 0.0 101.84375 0.0 4.6875 0.0
+				79.99526024964294 0.0 0.0 4.6875 0.0</BdvTransform>
+			<NoColoring>true</NoColoring>
+		</Window>
+		<Window>
+			<Type>MamutViewTable</Type>
+			<FramePosition>760 320 1039 457</FramePosition>
+			<LockGroupId>0</LockGroupId>
+			<SettingsPanelVisible>true</SettingsPanelVisible>
+			<TableSelectionOnly>false</TableSelectionOnly>
+			<TableVertexTableVisibleRect>480 1884</TableVertexTableVisibleRect>
+			<TableEdgeTableVisibleRect>0 0</TableEdgeTableVisibleRect>
+			<TableVertexTableDisplayed>true</TableVertexTableDisplayed>
+			<NoColoring>true</NoColoring>
+			<ContextProvider>full graph</ContextProvider>
+		</Window>
+	</Windows>
 </MamutGui>

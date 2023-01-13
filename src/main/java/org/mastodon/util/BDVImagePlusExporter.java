@@ -186,7 +186,8 @@ public class BDVImagePlusExporter
 		final LoopbackHeuristic loopbackHeuristic = new LoopbackHeuristic()
 		{
 			@Override
-			public boolean decide( final RandomAccessibleInterval< ? > originalImg, final int[] factorsToOriginalImg, final int previousLevel, final int[] factorsToPreviousLevel, final int[] chunkSize )
+			public boolean decide( final RandomAccessibleInterval< ? > originalImg, final int[] factorsToOriginalImg, final int previousLevel, final int[] factorsToPreviousLevel,
+					final int[] chunkSize )
 			{
 				if ( previousLevel < 0 )
 					return false;
@@ -242,7 +243,8 @@ public class BDVImagePlusExporter
 		else
 		{
 			partitions = null;
-			WriteSequenceToHdf5.writeHdf5File( seq, perSetupExportMipmapInfo, params.deflate, params.hdf5File, loopbackHeuristic, afterEachPlane, numCellCreatorThreads, new SubTaskProgressWriter( progressWriter, 0, 0.95 ) );
+			WriteSequenceToHdf5.writeHdf5File( seq, perSetupExportMipmapInfo, params.deflate, params.hdf5File, loopbackHeuristic, afterEachPlane, numCellCreatorThreads,
+					new SubTaskProgressWriter( progressWriter, 0, 0.95 ) );
 		}
 
 		// write xml sequence description
@@ -366,11 +368,11 @@ public class BDVImagePlusExporter
 					"Compute min/max of the (hyper-)stack",
 					"Use values specified below" };
 			gd.addChoice( "Value_range", minMaxChoices, minMaxChoices[ lastMinMaxChoice ] );
-			final Choice cMinMaxChoices = (Choice) gd.getChoices().lastElement();
+			final Choice cMinMaxChoices = ( Choice ) gd.getChoices().lastElement();
 			gd.addNumericField( "Min", lastMin, 0 );
-			final TextField tfMin = (TextField) gd.getNumericFields().lastElement();
+			final TextField tfMin = ( TextField ) gd.getNumericFields().lastElement();
 			gd.addNumericField( "Max", lastMax, 0 );
-			final TextField tfMax = (TextField) gd.getNumericFields().lastElement();
+			final TextField tfMax = ( TextField ) gd.getNumericFields().lastElement();
 
 			gd.addMessage( "" );
 			gd.addCheckbox( "split_hdf5", lastSplit );
@@ -502,6 +504,8 @@ public class BDVImagePlusExporter
 			final String hdf5Filename = seqFilename.substring( 0, seqFilename.length() - 4 ) + ".h5";
 			final File hdf5File = new File( hdf5Filename );
 
-			return new Parameters( lastSetMipmapManual, resolutions, subdivisions, seqFile, hdf5File, minMaxOption, lastMin, lastMax, lastDeflate, lastSplit, lastTimepointsPerPartition, lastSetupsPerPartition );		}
+			return new Parameters( lastSetMipmapManual, resolutions, subdivisions, seqFile, hdf5File, minMaxOption, lastMin, lastMax, lastDeflate, lastSplit, lastTimepointsPerPartition,
+					lastSetupsPerPartition );
+		}
 	}
 }

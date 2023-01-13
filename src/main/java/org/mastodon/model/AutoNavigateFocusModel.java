@@ -59,6 +59,7 @@ public class AutoNavigateFocusModel< V extends Vertex< E > & HasTimepoint, E ext
 	{
 		this( focus, navigation, null );
 	}
+
 	public AutoNavigateFocusModel(
 			final FocusModel< V, E > focus,
 			final NavigationHandler< V, E > navigation,

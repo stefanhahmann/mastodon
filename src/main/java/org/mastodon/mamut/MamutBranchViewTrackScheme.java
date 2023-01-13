@@ -113,7 +113,7 @@ public class MamutBranchViewTrackScheme extends MamutBranchView< TrackSchemeGrap
 			final BranchTrackSchemeFactory trackSchemeGraphFactory,
 			final TrackSchemeOverlayFactory overlayFactory,
 			final LineageTreeLayout.LineageTreeLayoutFactory layoutFactory,
-			final TimepointModel timepointModel)
+			final TimepointModel timepointModel )
 	{
 		super( appModel, trackSchemeGraphFactory.createViewGraph( appModel ), new String[] { KeyConfigContexts.TRACKSCHEME } );
 
@@ -142,12 +142,12 @@ public class MamutBranchViewTrackScheme extends MamutBranchView< TrackSchemeGrap
 		// Show TrackSchemeFrame.
 		final Model model = appModel.getModel();
 		final AutoNavigateFocusModel< TrackSchemeVertex, TrackSchemeEdge > navigateFocusModel = new AutoNavigateFocusModel<>( focusModel, navigationHandler );
-		final RootsModel< TrackSchemeVertex > rootsModel = new BranchTrackSchemeRootsModel( model.getGraph(), model.getBranchGraph(), viewGraph);
+		final RootsModel< TrackSchemeVertex > rootsModel = new BranchTrackSchemeRootsModel( model.getGraph(), model.getBranchGraph(), viewGraph );
 		final TrackSchemeFrame frame = new TrackSchemeFrame(
 				viewGraph,
 				highlightModel,
 				navigateFocusModel,
-				(timepointModel == null) ? this.timepointModel : timepointModel,
+				( timepointModel == null ) ? this.timepointModel : timepointModel,
 				selectionModel,
 				rootsModel,
 				navigationHandler,
@@ -187,7 +187,8 @@ public class MamutBranchViewTrackScheme extends MamutBranchView< TrackSchemeGrap
 		BranchTrackSchemeEditLabelAction.install( viewActions, frame.getTrackschemePanel(), focusModel, model, model.getBranchGraph() );
 		FocusActions.install( viewActions, viewGraph, lock, focusModel, selectionModel );
 		TrackSchemeZoom.install( viewBehaviours, frame.getTrackschemePanel() );
-		EditTagActions.install( viewActions, frame.getKeybindings(), frame.getTriggerbindings(), model.getTagSetModel(), appModel.getSelectionModel(), lock, frame.getTrackschemePanel(), frame.getTrackschemePanel().getDisplay(), model );
+		EditTagActions.install( viewActions, frame.getKeybindings(), frame.getTriggerbindings(), model.getTagSetModel(), appModel.getSelectionModel(), lock, frame.getTrackschemePanel(),
+				frame.getTrackschemePanel().getDisplay(), model );
 		ShowSelectedTracksActions.install( viewActions, viewGraph, selectionModel, rootsModel, frame.getTrackschemePanel() );
 
 		frame.getTrackschemePanel().getNavigationActions().install( viewActions, TrackSchemeNavigationActions.NavigatorEtiquette.FINDER_LIKE );
@@ -340,10 +341,12 @@ public class MamutBranchViewTrackScheme extends MamutBranchView< TrackSchemeGrap
 			final ModelBranchGraph graph = model.getBranchGraph();
 			final GraphIdBimap< BranchSpot, BranchLink > idmap = graph.getGraphIdBimap();
 			final ModelGraphProperties< BranchSpot, BranchLink > properties =
-					new DefaultModelGraphProperties<BranchSpot, BranchLink>() {
+					new DefaultModelGraphProperties< BranchSpot, BranchLink >()
+					{
 
 						@Override
-						public String getFirstLabel( BranchSpot branchSpot ) {
+						public String getFirstLabel( BranchSpot branchSpot )
+						{
 							return branchSpot.getFirstLabel();
 						}
 

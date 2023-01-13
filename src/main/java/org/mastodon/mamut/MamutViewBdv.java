@@ -155,7 +155,6 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 		MastodonFrameViewActions.install( viewActions, this );
 		BigDataViewerActionsMamut.install( viewActions, bdv );
 
-		
 		/*
 		 * We have to build the coloring menu handles now. But the other actions
 		 * need to be included in the menus later, after they have been
@@ -212,7 +211,6 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 
 		final Model model = appModel.getModel();
 		final ModelGraph modelGraph = model.getGraph();
-
 
 		highlightModel.listeners().add( () -> viewer.getDisplay().repaint() );
 		focusModel.listeners().add( () -> viewer.getDisplay().repaint() );

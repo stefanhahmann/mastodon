@@ -172,7 +172,7 @@ public class RecordMovieDialog extends DelayedPackDialog implements OverlayRende
 			dialogActions.namedAction( new MyToggleDialogAction( RECORD_MOVIE_DIALOG, dialog ), RECORD_MOVIE_DIALOG_KEYS );
 			return onClose;
 		}
-		
+
 		return () -> {
 			dialog.setVisible( false );
 			dialog.dispose();
@@ -182,8 +182,11 @@ public class RecordMovieDialog extends DelayedPackDialog implements OverlayRende
 	private static final long serialVersionUID = 1L;
 
 	private static final String EXPORT_TO_MOVIE_KEY = "ExportToMovie";
+
 	private static final String PNG_EXPORT_PATH_KEY = "PNGExportPath";
+
 	private static final String MOVIE_EXPORT_PATH_KEY = "MovieExportPath";
+
 	private static final String FPS_KEY = "FPS";
 
 	private final int maxTimepoint;
@@ -448,7 +451,6 @@ public class RecordMovieDialog extends DelayedPackDialog implements OverlayRende
 					spinnerMinTimepoint.setValue( max );
 			}
 		} );
-
 
 		btnBrowsePNGs.addActionListener( e -> {
 			final File file = FileChooser.chooseFile(

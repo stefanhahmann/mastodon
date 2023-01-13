@@ -105,7 +105,7 @@ public class ScreenEntitiesInterpolator
 	public static ScreenTransform getIncrementalY( final ScreenEntities start, final ScreenEntities end )
 	{
 		final ScreenTransform t = end.screenTransform().concatenate( start.screenTransform().inverse() );
-		t.set( 0, t.getScreenWidth() -1, t.getMinY(), t.getMaxY(), t.getScreenWidth(), t.getScreenHeight() );
+		t.set( 0, t.getScreenWidth() - 1, t.getMinY(), t.getMaxY(), t.getScreenWidth(), t.getScreenHeight() );
 		return t;
 	}
 

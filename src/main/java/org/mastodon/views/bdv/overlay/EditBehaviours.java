@@ -61,23 +61,39 @@ import net.imglib2.util.LinAlgHelpers;
 public class EditBehaviours< V extends OverlayVertex< V, E >, E extends OverlayEdge< E, V > >
 {
 	public static final String MOVE_SPOT = "move spot";
+
 	public static final String ADD_SPOT = "add spot";
+
 	public static final String TOGGLE_AUTO_LINKING_MODE = "toggle auto-linking mode";
+
 	public static final String INCREASE_SPOT_RADIUS = "increase spot radius";
+
 	public static final String INCREASE_SPOT_RADIUS_ALOT = "increase spot radius a lot";
+
 	public static final String INCREASE_SPOT_RADIUS_ABIT = "increase spot radius a bit";
+
 	public static final String DECREASE_SPOT_RADIUS = "decrease spot radius";
+
 	public static final String DECREASE_SPOT_RADIUS_ALOT = "decrease spot radius a lot";
+
 	public static final String DECREASE_SPOT_RADIUS_ABIT = "decrease spot radius a bit";
 
 	static final String[] MOVE_SPOT_KEYS = new String[] { "SPACE" };
+
 	static final String[] ADD_SPOT_KEYS = new String[] { "A" };
+
 	static final String[] TOGGLE_AUTO_LINKING_MODE_KEYS = { "control L" };
+
 	static final String[] INCREASE_SPOT_RADIUS_KEYS = new String[] { "E" };
+
 	static final String[] INCREASE_SPOT_RADIUS_ALOT_KEYS = new String[] { "shift E" };
+
 	static final String[] INCREASE_SPOT_RADIUS_ABIT_KEYS = new String[] { "control E" };
+
 	static final String[] DECREASE_SPOT_RADIUS_KEYS = new String[] { "Q" };
+
 	static final String[] DECREASE_SPOT_RADIUS_ALOT_KEYS = new String[] { "shift Q" };
+
 	static final String[] DECREASE_SPOT_RADIUS_ABIT_KEYS = new String[] { "control Q" };
 
 	/**
@@ -240,7 +256,7 @@ public class EditBehaviours< V extends OverlayVertex< V, E >, E extends OverlayE
 
 	private class AddSpotBehaviour extends AbstractNamedBehaviour implements ClickBehaviour
 	{
-		
+
 		private final double[] pos;
 
 		public AddSpotBehaviour( final String name )

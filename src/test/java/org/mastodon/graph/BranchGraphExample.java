@@ -49,8 +49,8 @@ public class BranchGraphExample
 		try (final Context context = new Context())
 		{
 			final String projectPath = "samples/test_branchgraph.mastodon";
-//			final String projectPath = "samples/mette_e1.mastodon";
-//			final String projectPath = "samples/mette_e1_small.mastodon";
+			//			final String projectPath = "samples/mette_e1.mastodon";
+			//			final String projectPath = "samples/mette_e1_small.mastodon";
 			final MamutProject project = new MamutProjectIO().load( projectPath );
 
 			final WindowManager wm = new WindowManager( context );

@@ -68,7 +68,7 @@ public class EllpsoidIteratorMinimalExample
 				new double[] { 20, 80, 40 },
 				new double[][] {
 						{ 90, 0, 0 },
-						{ 0, 90,  0 },
+						{ 0, 90, 0 },
 						{ 0, 0, 500 }
 				} );
 		graph.addVertex().init( 0,
@@ -82,8 +82,7 @@ public class EllpsoidIteratorMinimalExample
 		// We now create an EllipsoidIterable and re-use it for each spot.
 		// For each spot, we iterate inside pixels and set them to 255.
 		final EllipsoidIterable< UnsignedByteType > ellipsoidIter = new EllipsoidIterable<>( bdv.getSources().get( 0 ).getSpimSource() );
-		graph.vertices().forEach( spot ->
-		{
+		graph.vertices().forEach( spot -> {
 			ellipsoidIter.reset( spot );
 			ellipsoidIter.forEach( t -> t.set( 255 ) );
 		} );

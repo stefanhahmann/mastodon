@@ -69,7 +69,8 @@ public abstract class AbstractBranchVertexColorGenerator< V extends Vertex< E >,
 	protected int branchVertexColor( V v )
 	{
 		BV bvRef = branchGraph.vertexRef();
-		try {
+		try
+		{
 			BV branchVertex = branchGraph.getBranchVertex( v, bvRef );
 			return colorGenerator.color( branchVertex );
 		}

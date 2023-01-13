@@ -283,7 +283,7 @@ public class GrapherSidePanel extends JPanel
 				case SINGLE:
 					for ( final FeatureProjectionSpec ps : fs.getProjectionSpecs() )
 					{
-						specs.add(  new FeatureSpecPair( fs, ps, false, false ) );
+						specs.add( new FeatureSpecPair( fs, ps, false, false ) );
 					}
 					break;
 				default:
@@ -345,9 +345,9 @@ public class GrapherSidePanel extends JPanel
 				? GraphDataItemsSource.CONTEXT
 				: rdbtnKeepCurrent.isSelected()
 						? GraphDataItemsSource.KEEP_CURRENT
-						: rdbtnSelection.isSelected()
-								? GraphDataItemsSource.SELECTION
-								: GraphDataItemsSource.TRACK_OF_SELECTION;
+				: rdbtnSelection.isSelected()
+						? GraphDataItemsSource.SELECTION
+				: GraphDataItemsSource.TRACK_OF_SELECTION;
 		return new FeatureGraphConfig(
 				xFeature,
 				yFeature,

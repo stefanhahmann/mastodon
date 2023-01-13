@@ -209,8 +209,8 @@ public class TrackMateImporter
 		final String dzel = imageDataEl.getAttributeValue( VOXEL_DEPTH_ATTRIBUTE );
 		final double dz = dzel == null ? 1. : Double.parseDouble( dzel );
 
-//		final String dtel = imageDataEl.getAttributeValue( TIME_INTERVAL_ATTRIBUTE );
-//		final double dt = dtel == null ? 1. : Double.parseDouble( dtel );
+		//		final String dtel = imageDataEl.getAttributeValue( TIME_INTERVAL_ATTRIBUTE );
+		//		final double dt = dtel == null ? 1. : Double.parseDouble( dtel );
 
 		final String dummyStr = String.format( "x=%d y=%d z=%d sx=%f sy=%f sz=%f t=%d.dummy",
 				width, height, depth, dx, dy, dz, nTimepoints );
@@ -280,8 +280,8 @@ public class TrackMateImporter
 				final String featureKey = featureEl.getAttributeValue( FEATURE_ATTRIBUTE );
 				if ( ignoredSpotFeatureKeys.contains( featureKey ) )
 					continue;
-//				final String featureName = featureEl.getAttributeValue( FEATURE_NAME_ATTRIBUTE );
-//				final String featureShortName = featureEl.getAttributeValue( FEATURE_SHORT_NAME_ATTRIBUTE );
+				//				final String featureName = featureEl.getAttributeValue( FEATURE_NAME_ATTRIBUTE );
+				//				final String featureShortName = featureEl.getAttributeValue( FEATURE_SHORT_NAME_ATTRIBUTE );
 				final String featureDimension = featureEl.getAttributeValue( FEATURE_DIMENSION_ATTRIBUTE );
 				final String units = dimensionToUnits( featureDimension, spaceUnits, timeUnits );
 				final boolean featureIsInt = Boolean.parseBoolean( featureEl.getAttributeValue( FEATURE_ISINT_ATTRIBUTE ) );
@@ -311,8 +311,8 @@ public class TrackMateImporter
 				final String featureKey = featureEl.getAttributeValue( FEATURE_ATTRIBUTE );
 				if ( ignoredLinkFeatureKeys.contains( featureKey ) )
 					continue;
-//				final String featureName = featureEl.getAttributeValue( FEATURE_NAME_ATTRIBUTE );
-//				final String featureShortName = featureEl.getAttributeValue( FEATURE_SHORT_NAME_ATTRIBUTE );
+				//				final String featureName = featureEl.getAttributeValue( FEATURE_NAME_ATTRIBUTE );
+				//				final String featureShortName = featureEl.getAttributeValue( FEATURE_SHORT_NAME_ATTRIBUTE );
 				final String featureDimension = featureEl.getAttributeValue( FEATURE_DIMENSION_ATTRIBUTE );
 				final String units = dimensionToUnits( featureDimension, spaceUnits, timeUnits );
 				final boolean featureIsInt = Boolean.parseBoolean( featureEl.getAttributeValue( FEATURE_ISINT_ATTRIBUTE ) );

@@ -224,7 +224,7 @@ public class FeatureSelectionPanel
 
 			return new FeatureProjectionId( featureKey, projectionKey, targetType, i0, i1 );
 		}
-		catch( final NoSuchElementException e )
+		catch ( final NoSuchElementException e )
 		{
 			return null;
 		}
@@ -310,7 +310,7 @@ public class FeatureSelectionPanel
 			cbFeatures.setModel( new DefaultComboBoxModel<>() );
 			notifyListeners();
 		}
-		else if ( ! ( afp.equals( this.availableFeatureProjections ) && targetType.equals( this.targetType ) ) )
+		else if ( !( afp.equals( this.availableFeatureProjections ) && targetType.equals( this.targetType ) ) )
 		{
 			this.availableFeatureProjections = afp;
 			this.targetType = targetType;
@@ -328,7 +328,7 @@ public class FeatureSelectionPanel
 			final String previousSelection = ( String ) cbFeatures.getSelectedItem();
 
 			cbFeatures.setModel( new DefaultComboBoxModel<>( featureKeys.toArray( new String[] {} ) ) );
-			if(!featureKeys.isEmpty())
+			if ( !featureKeys.isEmpty() )
 			{
 				final int selectIndex = Math.max( 0, featureKeys.indexOf( previousSelection ) );
 				cbFeatures.setSelectedIndex( selectIndex );

@@ -36,15 +36,16 @@ import org.mastodon.pool.ByteMappedElementArray;
 import org.mastodon.pool.SingleArrayMemPool;
 import org.mastodon.pool.attributes.IntAttribute;
 
-public class BranchSpotPool extends AbstractListenableVertexPool< 
-		BranchSpot, 
-		BranchLink, 
+public class BranchSpotPool extends AbstractListenableVertexPool<
+		BranchSpot,
+		BranchLink,
 		ByteMappedElement >
 {
 
 	public static class BranchVertexLayout extends AbstractVertexLayout
 	{
 		final IntField firstLinkedVertexId = intField();
+
 		final IntField lastLinkedVertexId = intField();
 	}
 

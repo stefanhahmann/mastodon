@@ -72,7 +72,8 @@ public class MamutPlayground
 		printForTarget( Link.class, model.getGraph().edges(), specsService, features );
 	}
 
-	private static < T > void printForTarget( final Class< T > target, final Collection< T > collection, final FeatureSpecsService specsService, final Map< FeatureSpec< ?, ? >, Feature< ? > > featureModel )
+	private static < T > void printForTarget( final Class< T > target, final Collection< T > collection, final FeatureSpecsService specsService,
+			final Map< FeatureSpec< ?, ? >, Feature< ? > > featureModel )
 	{
 		System.out.println( "\n\nFeatures that have " + target.getSimpleName() + " as target:" );
 		final List< FeatureSpec< ?, T > > specs = specsService.getSpecs( target );
@@ -80,7 +81,7 @@ public class MamutPlayground
 		{
 			@SuppressWarnings( "unchecked" )
 			final Feature< T > feature = ( Feature< T > ) featureModel.get( spec );
-			if (null == feature)
+			if ( null == feature )
 			{
 				System.out.println( "\n - Feature " + spec.getKey() + " is not computed." );
 				continue;
@@ -88,7 +89,7 @@ public class MamutPlayground
 			final Set< FeatureProjection< T > > projections = feature.projections();
 			if ( null == projections )
 				continue;
-			System.out.println( "\n - Feature " + spec.getKey() +". Has " + projections.size() + " projections:" );
+			System.out.println( "\n - Feature " + spec.getKey() + ". Has " + projections.size() + " projections:" );
 			for ( final FeatureProjection< T > projection : projections )
 			{
 				System.out.println( "   - Projection " + projection.getKey() );

@@ -116,7 +116,7 @@ public class TagSetStructure
 		{
 			// TagSet id.
 			final int tagSetId = ois.readInt();
-			if (tagSetId >= tagSetIDgenerator.get())
+			if ( tagSetId >= tagSetIDgenerator.get() )
 				tagSetIDgenerator.set( tagSetId + 1 );
 			// TagSet name.
 			final String tagSetName = ois.readUTF();

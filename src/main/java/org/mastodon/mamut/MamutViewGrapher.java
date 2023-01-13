@@ -136,7 +136,6 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 		 */
 		final DataGraphLayout< Spot, Link > layout = new DataGraphLayout<>( viewGraph, selectionModel );
 
-
 		/*
 		 * ContextChooser
 		 */
@@ -212,7 +211,8 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 
 		MastodonFrameViewActions.install( viewActions, this );
 		FocusActions.install( viewActions, viewGraph, viewGraph.getLock(), navigateFocusModel, selectionModel );
-		EditTagActions.install( viewActions, frame.getKeybindings(), frame.getTriggerbindings(), model.getTagSetModel(), appModel.getSelectionModel(), viewGraph.getLock(), dataDisplayPanel, dataDisplayPanel.getDisplay(), model );
+		EditTagActions.install( viewActions, frame.getKeybindings(), frame.getTriggerbindings(), model.getTagSetModel(), appModel.getSelectionModel(), viewGraph.getLock(), dataDisplayPanel,
+				dataDisplayPanel.getDisplay(), model );
 		DataDisplayZoom.install( viewBehaviours, dataDisplayPanel );
 
 		final JPanel searchPanel = SearchVertexLabel.install( viewActions, viewGraph, navigationHandler, selectionModel, focusModel, dataDisplayPanel );

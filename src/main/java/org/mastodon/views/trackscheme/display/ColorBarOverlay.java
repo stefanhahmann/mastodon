@@ -203,7 +203,7 @@ public class ColorBarOverlay implements OverlayRenderer
 
 		y += VINSET;
 		x += HINSET;
-		
+
 		y += ascent;
 		g.setColor( Color.BLACK );
 		g.drawString( tagSet.getName(), x, y );
@@ -271,7 +271,7 @@ public class ColorBarOverlay implements OverlayRenderer
 	{
 		if ( !featureColorMode.getVertexColorMap().equals( featureColorMode.getEdgeColorMap() ) )
 			return false;
-		if ( !Objects.equals(featureColorMode.getVertexFeatureProjection(), featureColorMode.getEdgeFeatureProjection()) )
+		if ( !Objects.equals( featureColorMode.getVertexFeatureProjection(), featureColorMode.getEdgeFeatureProjection() ) )
 			return false;
 		if ( featureColorMode.getVertexRangeMin() != featureColorMode.getEdgeRangeMin() )
 			return false;
@@ -283,7 +283,7 @@ public class ColorBarOverlay implements OverlayRenderer
 
 	private static String toString( final FeatureProjectionId featureProjectionId )
 	{
-		if(featureProjectionId == null)
+		if ( featureProjectionId == null )
 			return "null";
 		final StringBuilder sb = new StringBuilder( featureProjectionId.getProjectionKey() );
 		final int[] sourceIndices;
