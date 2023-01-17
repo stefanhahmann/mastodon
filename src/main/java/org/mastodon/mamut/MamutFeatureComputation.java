@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -62,11 +62,14 @@ public class MamutFeatureComputation
 		final MamutFeatureComputerService computerService = context.getService( MamutFeatureComputerService.class );
 		computerService.setModel( appModel.getModel() );
 		computerService.setSharedBdvData( appModel.getSharedBdvData() );
-		final MyFeatureComputerService myComputerService = new MyFeatureComputerService( computerService, appModel.getModel().getFeatureModel() );
+		final MyFeatureComputerService myComputerService =
+				new MyFeatureComputerService( computerService, appModel.getModel().getFeatureModel() );
 
 		// Controller.
-		final Collection< Class< ? > > targets = Arrays.asList( Spot.class, Link.class, BranchSpot.class, BranchLink.class );
-		final MamutFeatureComputationController controller = new MamutFeatureComputationController( myComputerService, targets, appModel.getBranchGraphSync() );
+		final Collection< Class< ? > > targets =
+				Arrays.asList( Spot.class, Link.class, BranchSpot.class, BranchLink.class );
+		final MamutFeatureComputationController controller =
+				new MamutFeatureComputationController( myComputerService, targets, appModel.getBranchGraphSync() );
 		computerService.computationStatusListeners().add( controller.getComputationStatusListener() );
 
 		// Listen to model changes and echo in the GUI
@@ -83,7 +86,7 @@ public class MamutFeatureComputation
 	/**
 	 * A {@link FeatureComputationController} that regenerate the branch-graph
 	 * prior to feature computation if the branch-graph is out of sync.
-	 * 
+	 *
 	 * @author Jean-Yves Tinevez
 	 */
 	private static final class MamutFeatureComputationController extends FeatureComputationController
@@ -167,7 +170,8 @@ public class MamutFeatureComputation
 		}
 
 		@Override
-		public Map< FeatureSpec< ?, ? >, Feature< ? > > compute( final boolean forceComputeAll, final Collection< FeatureSpec< ?, ? > > featureKeys )
+		public Map< FeatureSpec< ?, ? >, Feature< ? > > compute( final boolean forceComputeAll,
+				final Collection< FeatureSpec< ?, ? > > featureKeys )
 		{
 			final Map< FeatureSpec< ?, ? >, Feature< ? > > map = wrapped.compute( forceComputeAll, featureKeys );
 			if ( wrapped.isCanceled() )

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -92,7 +92,8 @@ public class FeatureSpecsService extends AbstractService implements SciJavaServi
 	private void add( final FeatureSpec< ?, ? > spec ) throws IllegalArgumentException
 	{
 		if ( keyToSpec.containsKey( spec.getKey() ) )
-			throw new IllegalArgumentException( "Trying to add " + spec + ". A feature with that name is already present." );
+			throw new IllegalArgumentException(
+					"Trying to add " + spec + ". A feature with that name is already present." );
 		specs.add( spec );
 		targetToSpecs.computeIfAbsent( spec.getTargetClass(), k -> new ArrayList<>() ).add( spec );
 		keyToSpec.put( spec.getKey(), spec );
@@ -130,7 +131,7 @@ public class FeatureSpecsService extends AbstractService implements SciJavaServi
 	/**
 	 * Returns a list of feature specifications for features that operate on the
 	 * specified target.
-	 * 
+	 *
 	 * @param <T>
 	 *            the type of the target.
 	 * @param target

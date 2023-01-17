@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -63,7 +63,8 @@ import bdv.viewer.TransformListener;
  *
  * @author Jean-Yves Tinevez
  */
-public class EditFocusVertexLabelAction extends AbstractNamedAction implements TransformListener< ScreenTransform >, OffsetHeadersListener
+public class EditFocusVertexLabelAction extends AbstractNamedAction
+		implements TransformListener< ScreenTransform >, OffsetHeadersListener
 {
 	private static final long serialVersionUID = 1L;
 
@@ -119,7 +120,8 @@ public class EditFocusVertexLabelAction extends AbstractNamedAction implements T
 			final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus,
 			final UndoPointMarker undoPointMarker )
 	{
-		final EditFocusVertexLabelAction editFocusVertexLabelAction = new EditFocusVertexLabelAction( focus, undoPointMarker, panel );
+		final EditFocusVertexLabelAction editFocusVertexLabelAction =
+				new EditFocusVertexLabelAction( focus, undoPointMarker, panel );
 		panel.getScreenTransform().listeners().add( editFocusVertexLabelAction );
 		panel.getOffsetHeaders().listeners().add( editFocusVertexLabelAction );
 		actions.namedAction( editFocusVertexLabelAction, EDIT_FOCUS_LABEL_KEYS );

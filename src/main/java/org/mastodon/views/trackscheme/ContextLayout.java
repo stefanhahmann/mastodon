@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -139,9 +139,10 @@ public class ContextLayout
 	 * Mark all recursively visited vertices as ghosts. In case (B), add the
 	 * final vertex to set of roots.
 	 */
-	private void buildContextTraceParents( final TrackSchemeVertex tv, final int ghostmark, final int minTimepoint, final RefList< TrackSchemeVertex > roots )
+	private void buildContextTraceParents( final TrackSchemeVertex tv, final int ghostmark, final int minTimepoint,
+			final RefList< TrackSchemeVertex > roots )
 	{
-		if( tv.incomingEdges().isEmpty() )
+		if ( tv.incomingEdges().isEmpty() )
 			roots.add( tv );
 		else
 		{

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -57,7 +57,7 @@ import org.mastodon.properties.IntPropertyMap;
  * interface that invalidates the mother interface (calling the non-specialized
  * methods will trigger a {@link IllegalArgumentException}) and can deal with
  * the issue.
- * 
+ *
  * @author Jean-Yves Tinevez
  *
  * @param <F>
@@ -76,9 +76,9 @@ public interface BranchFeatureSerializer< F extends Feature< O >, O, Q > extends
 			ModelBranchGraph branchGraph,
 			ModelGraph graph ) throws ClassNotFoundException, IOException;
 
-	public void serialize( 
-			final F feature, 
-			final ObjectToFileIdMap< Q > idmap, 
+	public void serialize(
+			final F feature,
+			final ObjectToFileIdMap< Q > idmap,
 			final ObjectOutputStream oos,
 			ModelBranchGraph branchGraph,
 			final ModelGraph graph ) throws IOException;
@@ -87,7 +87,8 @@ public interface BranchFeatureSerializer< F extends Feature< O >, O, Q > extends
 	 * Deserialization utils.
 	 */
 
-	public static IntPropertyMap< BranchLink > mapToBranchLinkMap( final IntPropertyMap< Link > map, final ModelBranchGraph branchGraph )
+	public static IntPropertyMap< BranchLink > mapToBranchLinkMap( final IntPropertyMap< Link > map,
+			final ModelBranchGraph branchGraph )
 	{
 		final IntPropertyMap< BranchLink > bmap = new IntPropertyMap<>( branchGraph.edges(), -1 );
 		final BranchLink beref = branchGraph.edgeRef();
@@ -106,7 +107,8 @@ public interface BranchFeatureSerializer< F extends Feature< O >, O, Q > extends
 		return bmap;
 	}
 
-	public static DoublePropertyMap< BranchLink > mapToBranchLinkMap( final DoublePropertyMap< Link > map, final ModelBranchGraph branchGraph )
+	public static DoublePropertyMap< BranchLink > mapToBranchLinkMap( final DoublePropertyMap< Link > map,
+			final ModelBranchGraph branchGraph )
 	{
 		final DoublePropertyMap< BranchLink > bmap = new DoublePropertyMap<>( branchGraph.edges(), Double.NaN );
 		final BranchLink beref = branchGraph.edgeRef();
@@ -125,7 +127,8 @@ public interface BranchFeatureSerializer< F extends Feature< O >, O, Q > extends
 		return bmap;
 	}
 
-	public static IntPropertyMap< BranchSpot > mapToBranchSpotMap( final IntPropertyMap< Spot > map, final ModelBranchGraph branchGraph )
+	public static IntPropertyMap< BranchSpot > mapToBranchSpotMap( final IntPropertyMap< Spot > map,
+			final ModelBranchGraph branchGraph )
 	{
 		final IntPropertyMap< BranchSpot > bmap = new IntPropertyMap<>( branchGraph.vertices(), -1 );
 		final BranchSpot beref = branchGraph.vertexRef();
@@ -144,7 +147,8 @@ public interface BranchFeatureSerializer< F extends Feature< O >, O, Q > extends
 		return bmap;
 	}
 
-	public static DoublePropertyMap< BranchSpot > mapToBranchSpotMap( final DoublePropertyMap< Spot > map, final ModelBranchGraph branchGraph )
+	public static DoublePropertyMap< BranchSpot > mapToBranchSpotMap( final DoublePropertyMap< Spot > map,
+			final ModelBranchGraph branchGraph )
 	{
 		final DoublePropertyMap< BranchSpot > bmap = new DoublePropertyMap<>( branchGraph.vertices(), Double.NaN );
 		final BranchSpot beref = branchGraph.vertexRef();
@@ -167,7 +171,8 @@ public interface BranchFeatureSerializer< F extends Feature< O >, O, Q > extends
 	 * Serialization utils.
 	 */
 
-	public static IntPropertyMap< Link > branchLinkMapToMap( final IntPropertyMap< BranchLink > map, final ModelBranchGraph branchGraph, final ModelGraph graph )
+	public static IntPropertyMap< Link > branchLinkMapToMap( final IntPropertyMap< BranchLink > map,
+			final ModelBranchGraph branchGraph, final ModelGraph graph )
 	{
 		final IntPropertyMap< Link > lmap = new IntPropertyMap<>( graph.edges(), -1 );
 		final Link eref = graph.edgeRef();
@@ -186,7 +191,8 @@ public interface BranchFeatureSerializer< F extends Feature< O >, O, Q > extends
 		return lmap;
 	}
 
-	public static DoublePropertyMap< Link > branchLinkMapToMap( final DoublePropertyMap< BranchLink > map, final ModelBranchGraph branchGraph, final ModelGraph graph )
+	public static DoublePropertyMap< Link > branchLinkMapToMap( final DoublePropertyMap< BranchLink > map,
+			final ModelBranchGraph branchGraph, final ModelGraph graph )
 	{
 		final DoublePropertyMap< Link > lmap = new DoublePropertyMap<>( graph.edges(), Double.NaN );
 		final Link eref = graph.edgeRef();
@@ -205,7 +211,8 @@ public interface BranchFeatureSerializer< F extends Feature< O >, O, Q > extends
 		return lmap;
 	}
 
-	public static IntPropertyMap< Spot > branchSpotMapToMap( final IntPropertyMap< BranchSpot > map, final ModelBranchGraph branchGraph, final ModelGraph graph )
+	public static IntPropertyMap< Spot > branchSpotMapToMap( final IntPropertyMap< BranchSpot > map,
+			final ModelBranchGraph branchGraph, final ModelGraph graph )
 	{
 		final IntPropertyMap< Spot > lmap = new IntPropertyMap<>( graph.vertices(), -1 );
 		final Spot eref = graph.vertexRef();
@@ -224,7 +231,8 @@ public interface BranchFeatureSerializer< F extends Feature< O >, O, Q > extends
 		return lmap;
 	}
 
-	public static DoublePropertyMap< Spot > branchSpotMapToMap( final DoublePropertyMap< BranchSpot > map, final ModelBranchGraph branchGraph, final ModelGraph graph )
+	public static DoublePropertyMap< Spot > branchSpotMapToMap( final DoublePropertyMap< BranchSpot > map,
+			final ModelBranchGraph branchGraph, final ModelGraph graph )
 	{
 		final DoublePropertyMap< Spot > lmap = new DoublePropertyMap<>( graph.vertices(), Double.NaN );
 		final Spot eref = graph.vertexRef();
@@ -249,13 +257,15 @@ public interface BranchFeatureSerializer< F extends Feature< O >, O, Q > extends
 
 	// FIXME Imperfect. Use another interface?
 	@Override
-	default void serialize( final F feature, final ObjectToFileIdMap< O > idmap, final ObjectOutputStream oos ) throws IOException
+	default void serialize( final F feature, final ObjectToFileIdMap< O > idmap, final ObjectOutputStream oos )
+			throws IOException
 	{
 		throw new IllegalArgumentException( "Branch features cannot be serialized by this method call." );
 	}
 
 	@Override
-	default F deserialize( final FileIdToObjectMap< O > idmap, final RefCollection< O > pool, final ObjectInputStream ois ) throws IOException, ClassNotFoundException
+	default F deserialize( final FileIdToObjectMap< O > idmap, final RefCollection< O > pool,
+			final ObjectInputStream ois ) throws IOException, ClassNotFoundException
 	{
 		throw new IllegalArgumentException( "Branch features cannot be deserialized by this method call." );
 	}

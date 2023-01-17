@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -72,10 +72,14 @@ final public class EverythingDisablerAndReenabler
 	 *             is not. If an argument does not check out, the choice of
 	 *             Exception, of course, is IllegalArgument, not NullPointer.
 	 */
-	public EverythingDisablerAndReenabler( final Container rootContainerForWhatShouldBeDisabled, final Class< ? >[] componentClassesToBeIgnored )
+	public EverythingDisablerAndReenabler( final Container rootContainerForWhatShouldBeDisabled,
+			final Class< ? >[] componentClassesToBeIgnored )
 	{
 
-		if ( rootContainerForWhatShouldBeDisabled == null ) { throw new IllegalArgumentException(); }
+		if ( rootContainerForWhatShouldBeDisabled == null )
+		{
+			throw new IllegalArgumentException();
+		}
 		this.rootContainerForWhatShouldBeDisabled = rootContainerForWhatShouldBeDisabled;
 		this.componentClassesToBeIgnored = componentClassesToBeIgnored;
 	}
@@ -92,7 +96,7 @@ final public class EverythingDisablerAndReenabler
 	{
 		if ( enable && disableHasBeenCalled )
 			reenable();
-		else if (!enable && !disableHasBeenCalled )
+		else if ( !enable && !disableHasBeenCalled )
 			disable();
 	}
 
@@ -105,7 +109,10 @@ final public class EverythingDisablerAndReenabler
 	public void disable()
 	{
 
-		if ( disableHasBeenCalled ) { throw new IllegalStateException(); }
+		if ( disableHasBeenCalled )
+		{
+			throw new IllegalStateException();
+		}
 		disableHasBeenCalled = true;
 		componentsToReenable.clear();
 		disableEverythingInsideThisHierarchically( rootContainerForWhatShouldBeDisabled );
@@ -119,7 +126,10 @@ final public class EverythingDisablerAndReenabler
 	public void reenable()
 	{
 
-		if ( !disableHasBeenCalled ) { throw new IllegalStateException(); }
+		if ( !disableHasBeenCalled )
+		{
+			throw new IllegalStateException();
+		}
 		disableHasBeenCalled = false;
 
 		for ( int i = componentsToReenable.size() - 1; i >= 0; i-- )

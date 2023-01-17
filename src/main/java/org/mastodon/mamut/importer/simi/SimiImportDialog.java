@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -123,7 +123,8 @@ public class SimiImportDialog
 			c.gridy = 0;
 			c.gridx = 0;
 			content.add( new JLabel( "import from" ), c );
-			pathTextField = new JTextField( "/Users/pietzsch/Desktop/SIMI/040612_300312_A190_TL71-418_AP_DV_boundary_curated.sbd" );
+			pathTextField = new JTextField(
+					"/Users/pietzsch/Desktop/SIMI/040612_300312_A190_TL71-418_AP_DV_boundary_curated.sbd" );
 			c.gridx = 1;
 			content.add( pathTextField, c );
 			pathTextField.setColumns( 20 );
@@ -237,12 +238,14 @@ public class SimiImportDialog
 					int tp = frame - frameOffset;
 					if ( tp < 0 )
 					{
-						System.err.println( "WARNING: simi frame " + frame + " translates to out-of-bounds timepoint index " + tp + ". Clipping to 0." );
+						System.err.println(
+								"WARNING: simi frame " + frame + " translates to out-of-bounds timepoint index " + tp + ". Clipping to 0." );
 						tp = 0;
 					}
 					else if ( tp > maxtp )
 					{
-						System.err.println( "WARNING: simi frame " + frame + " translates to out-of-bounds timepoint index " + tp + ". Clipping to " + maxtp + "." );
+						System.err.println(
+								"WARNING: simi frame " + frame + " translates to out-of-bounds timepoint index " + tp + ". Clipping to " + maxtp + "." );
 						tp = maxtp;
 					}
 					return tp;
@@ -265,7 +268,8 @@ public class SimiImportDialog
 				};
 				final int radius = Integer.parseInt( radiusTextField.getText() );
 				final boolean interpolateMissingSpots = interpolateCheckbox.isSelected();
-				SimiImporter.read( sbdFilename, frameToTimepointFunction, labelFunction, positionFunction, radius, interpolateMissingSpots, model );
+				SimiImporter.read( sbdFilename, frameToTimepointFunction, labelFunction, positionFunction, radius,
+						interpolateMissingSpots, model );
 			}
 			catch ( final ParseException | IOException e )
 			{

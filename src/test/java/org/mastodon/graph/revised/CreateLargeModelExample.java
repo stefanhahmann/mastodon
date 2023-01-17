@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -59,7 +59,10 @@ public class CreateLargeModelExample
 
 	public Model run( final int nStartingCells, final int nDivisions, final int nFramesPerDivision )
 	{
-		new ModelImporter( model ){{ startImport(); }};
+		new ModelImporter( model )
+		{{
+			startImport();
+		}};
 		final Spot tmp = model.getGraph().vertexRef();
 		for ( int ic = 0; ic < nStartingCells; ic++ )
 		{
@@ -67,7 +70,7 @@ public class CreateLargeModelExample
 			final double vx = VELOCITY * Math.cos( angle );
 			final double vy = VELOCITY * Math.sin( angle );
 
-//			final int nframes = N_DIVISIONS * N_FRAMES_PER_DIVISION;
+			//			final int nframes = N_DIVISIONS * N_FRAMES_PER_DIVISION;
 			final double x = 0.; // nframes * VELOCITY + vx;
 			final double y = 0.; // nframes * VELOCITY + vy;
 			final double z = N_DIVISIONS * VELOCITY;
@@ -79,13 +82,20 @@ public class CreateLargeModelExample
 			addBranch( mother, vx, vy, 1, nDivisions, nFramesPerDivision );
 		}
 		model.getGraph().releaseRef( tmp );
-		new ModelImporter( model ){{ finishImport(); }};
+		new ModelImporter( model )
+		{{
+			finishImport();
+		}};
 		return model;
 	}
 
-	private void addBranch( final Spot start, final double vx, final double vy, final int iteration, final int nDivisions, final int nFramesPerDivision )
+	private void addBranch( final Spot start, final double vx, final double vy, final int iteration,
+			final int nDivisions, final int nFramesPerDivision )
 	{
-		if ( iteration >= nDivisions ) { return; }
+		if ( iteration >= nDivisions )
+		{
+			return;
+		}
 
 		final Spot previousSpot = model.getGraph().vertexRef();
 		final Spot spot = model.getGraph().vertexRef();
@@ -156,6 +166,7 @@ public class CreateLargeModelExample
 		final long end = System.currentTimeMillis();
 		System.out.println( "Model created in " + ( end - start ) + " ms." );
 		System.out.println( "Total number of spots: " + model.getGraph().vertices().size() );
-		System.out.println( String.format( "Total memory used by the model: %.1f MB", ( Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory() ) / 1e6d ) );
+		System.out.println( String.format( "Total memory used by the model: %.1f MB",
+				( Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory() ) / 1e6d ) );
 	}
 }

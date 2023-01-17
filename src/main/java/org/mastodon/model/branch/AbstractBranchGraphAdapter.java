@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -37,14 +37,14 @@ import org.mastodon.graph.branch.BranchGraph;
 /**
  * Base class for classes that adapt a model component of a core graph to a
  * branch graph.
- * 
+ *
  * @author Jean-Yves Tinevez
  */
-public abstract class AbstractBranchGraphAdapter< 
-	V extends Vertex< E >, 
-	E extends Edge< V >, 
-	BV extends Vertex< BE >, 
-	BE extends Edge< BV > >
+public abstract class AbstractBranchGraphAdapter<
+		V extends Vertex< E >,
+		E extends Edge< V >,
+		BV extends Vertex< BE >,
+		BE extends Edge< BV > >
 {
 
 	protected final BranchGraph< BV, BE, V, E > branchGraph;
@@ -57,7 +57,7 @@ public abstract class AbstractBranchGraphAdapter<
 
 	private final V vref;
 
-	protected AbstractBranchGraphAdapter( 
+	protected AbstractBranchGraphAdapter(
 			final BranchGraph< BV, BE, V, E > branchGraph,
 			final ReadOnlyGraph< V, E > graph,
 			final GraphIdBimap< V, E > idmap )
@@ -68,7 +68,6 @@ public abstract class AbstractBranchGraphAdapter<
 		this.eref = graph.edgeRef();
 		this.vref = graph.vertexRef();
 	}
-	
 
 	protected final boolean isValid( final E e )
 	{

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -127,7 +127,8 @@ public class TgmmImportDialog
 			c.gridy = 0;
 			c.gridx = 0;
 			content.add( new JLabel( "import from" ), c );
-			pathTextField = new JTextField( "/Users/pietzsch/Downloads/data/TGMMruns_testRunToCheckOutput/XML_finalResult_lht/" );
+			pathTextField = new JTextField(
+					"/Users/pietzsch/Downloads/data/TGMMruns_testRunToCheckOutput/XML_finalResult_lht/" );
 			c.gridx = 1;
 			content.add( pathTextField, c );
 			pathTextField.setColumns( 20 );
@@ -258,10 +259,12 @@ public class TgmmImportDialog
 				if ( covCheckBox.isSelected() )
 				{
 					final double[][] cov = parseCov( covTextField.getText() );
-					TgmmImporter.read( tgmmFiles, timepoints, TgmmImporter.getTimepointToIndex( spimData ), viewRegistrations, setupID, nSigmas, cov, model );
+					TgmmImporter.read( tgmmFiles, timepoints, TgmmImporter.getTimepointToIndex( spimData ),
+							viewRegistrations, setupID, nSigmas, cov, model );
 				}
 				else
-					TgmmImporter.read( tgmmFiles, timepoints, TgmmImporter.getTimepointToIndex( spimData ), viewRegistrations, setupID, nSigmas, model );
+					TgmmImporter.read( tgmmFiles, timepoints, TgmmImporter.getTimepointToIndex( spimData ),
+							viewRegistrations, setupID, nSigmas, model );
 			}
 			catch ( final ParseException | JDOMException | IOException e )
 			{
@@ -299,7 +302,8 @@ public class TgmmImportDialog
 				}
 			}
 			catch ( final Exception e )
-			{}
+			{
+			}
 			throw new ParseException( "Cannot parse: '" + text + "'", 0 );
 		}
 

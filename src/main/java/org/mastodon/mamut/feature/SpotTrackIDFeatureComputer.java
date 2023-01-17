@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -64,7 +64,8 @@ public class SpotTrackIDFeatureComputer implements MamutFeatureComputer
 		if ( graph.vertices().isEmpty() )
 			return;
 
-		final BreadthFirstCrossComponentSearch< Spot, Link > search = new BreadthFirstCrossComponentSearch<>( graph, SearchDirection.UNDIRECTED );
+		final BreadthFirstCrossComponentSearch< Spot, Link > search =
+				new BreadthFirstCrossComponentSearch<>( graph, SearchDirection.UNDIRECTED );
 		final SearchListener< Spot, Link, BreadthFirstCrossComponentSearch< Spot, Link > > l =
 				new SearchListener< Spot, Link, BreadthFirstCrossComponentSearch< Spot, Link > >()
 				{
@@ -72,21 +73,25 @@ public class SpotTrackIDFeatureComputer implements MamutFeatureComputer
 					private int id = 0;
 
 					@Override
-					public void processVertexLate( final Spot spot, final BreadthFirstCrossComponentSearch< Spot, Link > search )
+					public void processVertexLate( final Spot spot,
+							final BreadthFirstCrossComponentSearch< Spot, Link > search )
 					{}
 
 					@Override
-					public void processVertexEarly( final Spot spot, final BreadthFirstCrossComponentSearch< Spot, Link > search )
+					public void processVertexEarly( final Spot spot,
+							final BreadthFirstCrossComponentSearch< Spot, Link > search )
 					{
 						output.map.set( spot, id );
 					}
 
 					@Override
-					public void processEdge( final Link link, final Spot source, final Spot target, final BreadthFirstCrossComponentSearch< Spot, Link > search )
+					public void processEdge( final Link link, final Spot source, final Spot target,
+							final BreadthFirstCrossComponentSearch< Spot, Link > search )
 					{}
 
 					@Override
-					public void crossComponent( final Spot endSpot, final Spot startSpot, final BreadthFirstCrossComponentSearch< Spot, Link > search )
+					public void crossComponent( final Spot endSpot, final Spot startSpot,
+							final BreadthFirstCrossComponentSearch< Spot, Link > search )
 					{
 						id++;
 					}

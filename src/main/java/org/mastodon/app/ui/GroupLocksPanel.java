@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -41,6 +41,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
+
 import org.mastodon.grouping.GroupChangeListener;
 import org.mastodon.grouping.GroupHandle;
 
@@ -56,7 +57,8 @@ public class GroupLocksPanel extends JPanel implements GroupChangeListener
 
 	private static final ImageIcon LOCK_ICON = new ImageIcon( GroupLocksPanel.class.getResource( "lock.png" ) );
 
-	private static final ImageIcon UNLOCK_ICON = new ImageIcon( GroupLocksPanel.class.getResource( "lock_open_grey.png" ) );
+	private static final ImageIcon UNLOCK_ICON =
+			new ImageIcon( GroupLocksPanel.class.getResource( "lock_open_grey.png" ) );
 
 	private static final Font FONT = new Font( "Arial", Font.PLAIN, 10 );
 
@@ -74,7 +76,8 @@ public class GroupLocksPanel extends JPanel implements GroupChangeListener
 		{
 			final int lockId = i;
 			final boolean isActive = groupHandle.getGroupId() == lockId;
-			final JToggleButton button = new JToggleButton( "" + ( i + 1 ), isActive ? LOCK_ICON : UNLOCK_ICON, isActive );
+			final JToggleButton button =
+					new JToggleButton( "" + ( i + 1 ), isActive ? LOCK_ICON : UNLOCK_ICON, isActive );
 			button.setFont( FONT );
 			button.setPreferredSize( new Dimension( 60, 20 ) );
 			button.setHorizontalAlignment( SwingConstants.LEFT );

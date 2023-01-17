@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -90,10 +90,10 @@ public class FeatureTableDialogExample
 			return uptodate;
 		}
 
-//		public void setUptodate( final boolean uptodate )
-//		{
-//			this.uptodate = uptodate;
-//		}
+		//		public void setUptodate( final boolean uptodate )
+		//		{
+		//			this.uptodate = uptodate;
+		//		}
 
 		@Override
 		public String toString()
@@ -119,7 +119,8 @@ public class FeatureTableDialogExample
 	{
 		private static final long serialVersionUID = 1L;
 
-		public FeatureTableDialog( final Frame owner, final List< MyElement > elements1, final List< MyElement > elements2 )
+		public FeatureTableDialog( final Frame owner, final List< MyElement > elements1,
+				final List< MyElement > elements2 )
 		{
 			super( owner, "Feature computation", false );
 
@@ -153,7 +154,8 @@ public class FeatureTableDialogExample
 				aggregator.add( featureTable );
 
 				final JLabel lbl = new JLabel( targets.get( i ).getSimpleName() );
-				lbl.setFont( tablePanel.getFont().deriveFont( Font.BOLD ).deriveFont( tablePanel.getFont().getSize2D() + 2f ) );
+				lbl.setFont( tablePanel.getFont().deriveFont( Font.BOLD )
+						.deriveFont( tablePanel.getFont().getSize2D() + 2f ) );
 				lbl.setHorizontalTextPosition( SwingConstants.LEADING );
 				lbl.setHorizontalAlignment( SwingConstants.LEADING );
 				lbl.setAlignmentX( Component.LEFT_ALIGNMENT );
@@ -179,7 +181,9 @@ public class FeatureTableDialogExample
 		}
 	}
 
-	public static void main( final String[] args ) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException, InterruptedException
+	public static void main( final String[] args )
+			throws ClassNotFoundException, InstantiationException, IllegalAccessException,
+			UnsupportedLookAndFeelException, InterruptedException
 	{
 
 		UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName() );

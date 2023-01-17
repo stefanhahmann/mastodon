@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -115,14 +115,18 @@ public class TrackSchemeStyleEditorPanel extends JPanel
 		final TrackSchemeGraph< DummyVertex, DummyEdge > graph = new TrackSchemeGraph<>( example, idmap, dummyProps );
 		final RefBimap< DummyVertex, TrackSchemeVertex > vertexMap = new TrackSchemeVertexBimap<>( graph );
 		final RefBimap< DummyEdge, TrackSchemeEdge > edgeMap = new TrackSchemeEdgeBimap<>( graph );
-		final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight = new HighlightModelAdapter<>( new DefaultHighlightModel<>( idmap ), vertexMap, edgeMap );
-		final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus = new FocusModelAdapter<>( new DefaultFocusModel<>( idmap ), vertexMap, edgeMap );
+		final HighlightModel< TrackSchemeVertex, TrackSchemeEdge > highlight =
+				new HighlightModelAdapter<>( new DefaultHighlightModel<>( idmap ), vertexMap, edgeMap );
+		final FocusModel< TrackSchemeVertex, TrackSchemeEdge > focus =
+				new FocusModelAdapter<>( new DefaultFocusModel<>( idmap ), vertexMap, edgeMap );
 		final TimepointModel timepoint = new DefaultTimepointModel();
-		final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection = new SelectionModelAdapter<>( ex.getSelectionModel(), vertexMap, edgeMap );
+		final SelectionModel< TrackSchemeVertex, TrackSchemeEdge > selection =
+				new SelectionModelAdapter<>( ex.getSelectionModel(), vertexMap, edgeMap );
 		final RootsModel< TrackSchemeVertex > roots = new DefaultRootsModel< DummyVertex, DummyEdge >( example, graph );
 		final NavigationHandler< TrackSchemeVertex, TrackSchemeEdge > navigation = new DefaultNavigationHandler<>();
 		final TrackSchemeOptions options = TrackSchemeOptions.options().style( style );
-		final TrackSchemePanel previewPanel = new TrackSchemePanel( graph, highlight, focus, timepoint, selection, roots, navigation, options );
+		final TrackSchemePanel previewPanel =
+				new TrackSchemePanel( graph, highlight, focus, timepoint, selection, roots, navigation, options );
 		previewPanel.setTimepointRange( 0, 7 );
 		timepoint.setTimepoint( 2 );
 		previewPanel.graphChanged();
@@ -212,11 +216,15 @@ public class TrackSchemeStyleEditorPanel extends JPanel
 				colorElement( "edge", style::getEdgeColor, style::edgeColor ),
 				colorElement( "selected edge", style::getSelectedEdgeColor, style::selectedEdgeColor ),
 				colorElement( "vertex fill", style::getVertexFillColor, style::vertexFillColor ),
-				colorElement( "selected vertex fill", style::getSelectedVertexFillColor, style::selectedVertexFillColor ),
+				colorElement( "selected vertex fill", style::getSelectedVertexFillColor,
+						style::selectedVertexFillColor ),
 				colorElement( "vertex draw", style::getVertexDrawColor, style::vertexDrawColor ),
-				colorElement( "selected vertex draw", style::getSelectedVertexDrawColor, style::selectedVertexDrawColor ),
-				colorElement( "simplified vertex fill", style::getSimplifiedVertexFillColor, style::simplifiedVertexFillColor ),
-				colorElement( "selected simplified vertex fill", style::getSelectedSimplifiedVertexFillColor, style::selectedSimplifiedVertexFillColor ),
+				colorElement( "selected vertex draw", style::getSelectedVertexDrawColor,
+						style::selectedVertexDrawColor ),
+				colorElement( "simplified vertex fill", style::getSimplifiedVertexFillColor,
+						style::simplifiedVertexFillColor ),
+				colorElement( "selected simplified vertex fill", style::getSelectedSimplifiedVertexFillColor,
+						style::selectedSimplifiedVertexFillColor ),
 
 				separator(),
 
@@ -229,18 +237,21 @@ public class TrackSchemeStyleEditorPanel extends JPanel
 				colorElement( "decoration", style::getDecorationColor, style::decorationColor ),
 				colorElement( "header decoration", style::getHeaderDecorationColor, style::headerDecorationColor ),
 				colorElement( "current timepoint", style::getCurrentTimepointColor, style::currentTimepointColor ),
-				colorElement( "header current timepoint", style::getHeaderCurrentTimepointColor, style::headerCurrentTimepointColor ),
+				colorElement( "header current timepoint", style::getHeaderCurrentTimepointColor,
+						style::headerCurrentTimepointColor ),
 
 				separator(),
 
 				booleanElement( "paint rows", style::isPaintRows, style::paintRows ),
-				booleanElement( "highlight current timepoint", style::isHighlightCurrentTimepoint, style::highlightCurrentTimepoint ),
+				booleanElement( "highlight current timepoint", style::isHighlightCurrentTimepoint,
+						style::highlightCurrentTimepoint ),
 				booleanElement( "paint columns", style::isPaintColumns, style::paintColumns ),
 				booleanElement( "paint header shadow", style::isPaintHeaderShadow, style::paintHeaderShadow ),
 
 				separator(),
 
-				booleanElement( "hierarchy graph use curved lines", style::isHierarchyGraphCurvedLines, style::hierarchyGraphCurvedLines )
+				booleanElement( "hierarchy graph use curved lines", style::isHierarchyGraphCurvedLines,
+						style::hierarchyGraphCurvedLines )
 		);
 	}
 

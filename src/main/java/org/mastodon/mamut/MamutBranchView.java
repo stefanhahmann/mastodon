@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -87,10 +87,10 @@ import org.scijava.ui.behaviour.util.Behaviours;
 import org.scijava.ui.behaviour.util.WrappedActionMap;
 import org.scijava.ui.behaviour.util.WrappedInputMap;
 
-public class MamutBranchView< 
-	VG extends ViewGraph< BranchSpot, BranchLink, V, E >, 
-	V extends Vertex< E >, 
-	E extends Edge< V > >
+public class MamutBranchView<
+		VG extends ViewGraph< BranchSpot, BranchLink, V, E >,
+		V extends Vertex< E >,
+		E extends Edge< V > >
 		implements IMastodonFrameView, IMastodonView
 {
 
@@ -164,7 +164,8 @@ public class MamutBranchView<
 		// Navigation.
 		final NavigationHandler< Spot, Link > graphNavigationHandler = groupHandle.getModel( appModel.NAVIGATION );
 		final NavigationHandler< BranchSpot, BranchLink > branchGraphNavigation =
-				new BranchGraphNavigationHandlerAdapter<>( branchGraph, graph, graph.getGraphIdBimap(), graphNavigationHandler );
+				new BranchGraphNavigationHandlerAdapter<>( branchGraph, graph, graph.getGraphIdBimap(),
+						graphNavigationHandler );
 		this.navigationHandler = new NavigationHandlerAdapter<>( branchGraphNavigation, vertexMap, edgeMap );
 
 		// Time-point.
@@ -237,7 +238,8 @@ public class MamutBranchView<
 	{
 		final FeatureModel featureModel = appModel.getModel().getFeatureModel();
 		final FeatureColorModeManager featureColorModeManager = appModel.getFeatureColorModeManager();
-		final ColoringModelBranchGraph< ?, ? > coloringModel = new ColoringModelBranchGraph<>( tagSetModel, featureColorModeManager, featureModel );
+		final ColoringModelBranchGraph< ?, ? > coloringModel =
+				new ColoringModelBranchGraph<>( tagSetModel, featureColorModeManager, featureModel );
 		final ColoringMenu coloringMenu = new ColoringMenu( menuHandle.getMenu(), coloringModel );
 
 		tagSetModel.listeners().add( coloringModel );
@@ -258,9 +260,11 @@ public class MamutBranchView<
 			if ( coloringModel.noColoring() )
 				colorGeneratorAdapter.setColorGenerator( null );
 			else if ( coloringModel.getTagSet() != null )
-				colorGeneratorAdapter.setColorGenerator( new TagSetGraphColorGenerator<>( tagSetModel, coloringModel.getTagSet() ) );
+				colorGeneratorAdapter.setColorGenerator(
+						new TagSetGraphColorGenerator<>( tagSetModel, coloringModel.getTagSet() ) );
 			else if ( coloringModel.getFeatureColorMode() != null )
-				colorGeneratorAdapter.setColorGenerator( ( GraphColorGenerator< BranchSpot, BranchLink > ) coloringModel.getFeatureGraphColorGenerator() );
+				colorGeneratorAdapter.setColorGenerator(
+						( GraphColorGenerator< BranchSpot, BranchLink > ) coloringModel.getFeatureGraphColorGenerator() );
 			refresh.run();
 		};
 		coloringModel.listeners().add( coloringChangedListener );
@@ -274,7 +278,8 @@ public class MamutBranchView<
 			final Runnable refresh )
 	{
 		menuHandle.getMenu().add( new JSeparator() );
-		final JCheckBoxMenuItem toggleOverlay = new JCheckBoxMenuItem( "Show colorbar", ColorBarOverlay.DEFAULT_VISIBLE );
+		final JCheckBoxMenuItem toggleOverlay =
+				new JCheckBoxMenuItem( "Show colorbar", ColorBarOverlay.DEFAULT_VISIBLE );
 		toggleOverlay.addActionListener( ( l ) -> {
 			colorBarOverlay.setVisible( toggleOverlay.isSelected() );
 			refresh.run();

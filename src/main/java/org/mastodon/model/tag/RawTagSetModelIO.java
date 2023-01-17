@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -51,7 +51,8 @@ public class RawTagSetModelIO
 			void read() throws IOException
 			{
 				tagSetModel.getTagSetStructure().loadRaw( ois );
-				LabelSetsSerializer.readPropertyMap( getVertexIdLabelSets(), intLabelSerializer, idmap.vertices(), ois );
+				LabelSetsSerializer.readPropertyMap( getVertexIdLabelSets(), intLabelSerializer, idmap.vertices(),
+						ois );
 				LabelSetsSerializer.readPropertyMap( getEdgeIdLabelSets(), intLabelSerializer, idmap.edges(), ois );
 				updateObjTags();
 			}
@@ -69,24 +70,26 @@ public class RawTagSetModelIO
 			void write() throws IOException
 			{
 				tagSetModel.getTagSetStructure().saveRaw( oos );
-				LabelSetsSerializer.writePropertyMap( getVertexIdLabelSets(), intLabelSerializer, idmap.vertices(), oos );
+				LabelSetsSerializer.writePropertyMap( getVertexIdLabelSets(), intLabelSerializer, idmap.vertices(),
+						oos );
 				LabelSetsSerializer.writePropertyMap( getEdgeIdLabelSets(), intLabelSerializer, idmap.edges(), oos );
 			}
 		}.write();
 	}
 
-	private static final LabelSetsSerializer.LabelSerializer< Integer > intLabelSerializer = new LabelSetsSerializer.LabelSerializer< Integer >()
-	{
-		@Override
-		public void writeLabel( final Integer label, final ObjectOutputStream oos ) throws IOException
-		{
-			oos.writeInt( label );
-		}
+	private static final LabelSetsSerializer.LabelSerializer< Integer > intLabelSerializer =
+			new LabelSetsSerializer.LabelSerializer< Integer >()
+			{
+				@Override
+				public void writeLabel( final Integer label, final ObjectOutputStream oos ) throws IOException
+				{
+					oos.writeInt( label );
+				}
 
-		@Override
-		public Integer readLabel( final ObjectInputStream ois ) throws IOException
-		{
-			return ois.readInt();
-		}
-	};
+				@Override
+				public Integer readLabel( final ObjectInputStream ois ) throws IOException
+				{
+					return ois.readInt();
+				}
+			};
 }

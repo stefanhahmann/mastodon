@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -197,7 +197,8 @@ public class OpenRemoteURLPanel extends JPanel
 			return;
 		}
 
-		final EverythingDisablerAndReenabler disabler = new EverythingDisablerAndReenabler( this, new Class[] { JLabel.class } );
+		final EverythingDisablerAndReenabler disabler =
+				new EverythingDisablerAndReenabler( this, new Class[] { JLabel.class } );
 		disabler.disable();
 		new Thread()
 		{
@@ -223,7 +224,8 @@ public class OpenRemoteURLPanel extends JPanel
 					final JLabel lblPassword = new JLabel( "Password" );
 					final JPasswordField passwordField = new JPasswordField();
 					final Object[] ob = { lblUsername, textFieldUsername, lblPassword, passwordField };
-					final int result = JOptionPane.showConfirmDialog( null, ob, "Please input credentials", JOptionPane.OK_CANCEL_OPTION );
+					final int result = JOptionPane.showConfirmDialog( null, ob, "Please input credentials",
+							JOptionPane.OK_CANCEL_OPTION );
 
 					if ( result == JOptionPane.OK_OPTION )
 					{
@@ -266,13 +268,17 @@ public class OpenRemoteURLPanel extends JPanel
 				{
 					disabler.reenable();
 				}
-			};
+			}
+
+			;
 		}.start();
 	}
 
-	private static final void browseSaveToBDVFile( final String suggestedFile, final JTextArea target, final Runnable onSucess, final JComponent parent )
+	private static final void browseSaveToBDVFile( final String suggestedFile, final JTextArea target,
+			final Runnable onSucess, final JComponent parent )
 	{
-		final EverythingDisablerAndReenabler disabler = new EverythingDisablerAndReenabler( parent, new Class[] { JLabel.class } );
+		final EverythingDisablerAndReenabler disabler =
+				new EverythingDisablerAndReenabler( parent, new Class[] { JLabel.class } );
 		disabler.disable();
 		try
 		{

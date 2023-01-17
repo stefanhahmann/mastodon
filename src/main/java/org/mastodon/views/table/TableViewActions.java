@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -137,7 +137,8 @@ public class TableViewActions
 		}
 	}
 
-	public static < O > void export( final String path, final FeatureTagTablePanel< O > table, final char separator ) throws IOException
+	public static < O > void export( final String path, final FeatureTagTablePanel< O > table, final char separator )
+			throws IOException
 	{
 		try (CSVWriter writer = new CSVWriter( new FileWriter( new File( path ) ),
 				separator,
@@ -170,7 +171,8 @@ public class TableViewActions
 						final ColumnGroup cg2 = ( ColumnGroup ) obj;
 						headerEntries[ 0 ][ lcol ] = cg.text;
 						headerEntries[ 1 ][ lcol ] = cg2.text;
-						headerEntries[ 2 ][ lcol ] = header.getColumnModel().getColumn( lcol ).getHeaderValue().toString();
+						headerEntries[ 2 ][ lcol ] =
+								header.getColumnModel().getColumn( lcol ).getHeaderValue().toString();
 						lcol++;
 					}
 				}
@@ -222,7 +224,8 @@ public class TableViewActions
 		{
 			descriptions.add( EDIT_LABEL, EDIT_LABEL_KEYS, "Edit the label of the current row." );
 			descriptions.add( TOGGLE_TAG, TOGGLE_TAG_KEYS, "Toggle the tag at the current cell in the table." );
-			descriptions.add( EXPORT_TO_CSV, EXPORT_TO_CSV_KEYS, "Export the content of the displayed table to a CSV file." );
+			descriptions.add( EXPORT_TO_CSV, EXPORT_TO_CSV_KEYS,
+					"Export the content of the displayed table to a CSV file." );
 		}
 	}
 }

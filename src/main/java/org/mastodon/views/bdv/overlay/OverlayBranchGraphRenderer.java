@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -68,7 +68,8 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 		final Graphics2D graphics = ( Graphics2D ) g;
 		final BasicStroke defaultVertexStroke = new BasicStroke( ( float ) settings.getSpotStrokeWidth() );
 		final BasicStroke highlightedVertexStroke = new BasicStroke( 4f );
-		final BasicStroke focusedVertexStroke = new BasicStroke( 2f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1f, new float[] { 8f, 3f }, 0 );
+		final BasicStroke focusedVertexStroke =
+				new BasicStroke( 2f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 1f, new float[] { 8f, 3f }, 0 );
 		final BasicStroke defaultEdgeStroke = new BasicStroke( ( float ) settings.getLinkStrokeWidth() );
 		final BasicStroke highlightedEdgeStroke = new BasicStroke( 3f );
 
@@ -166,7 +167,7 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 
 					if ( isHighlighted )
 						graphics.setStroke( defaultEdgeStroke );
-				});
+				} );
 			}
 
 			if ( settings.getDrawSpots() )
@@ -178,7 +179,7 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 				final double pointFadeDepth = settings.getPointFadeDepth();
 				final boolean fillSpots = settings.getFillSpots();
 				final Visibility< BV, BE > visibility = visibilities.getVisibility();
-				
+
 				final BV highlighted = highlight.getHighlightedVertex( ref1 );
 				final BV focused = focus.getFocusedVertex( ref2 );
 
@@ -319,7 +320,8 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 			boolean found = false;
 
 			@Override
-			public void apply( final BE edge, final double td0, final double td1, final double sd0, final double sd1, final int x0, final int y0, final int x1, final int y1 )
+			public void apply( final BE edge, final double td0, final double td1, final double sd0, final double sd1,
+					final int x0, final int y0, final int x1, final int y1 )
 			{
 				final double squDist = GeometryUtil.squSegmentDist( x, y, x0, y0, x1, y1 );
 				if ( squDist <= squTolerance && squDist < bestSquDist )
@@ -329,7 +331,8 @@ public class OverlayBranchGraphRenderer< BV extends OverlayVertex< BV, BE >, BE 
 					ref.refTo( edge );
 				}
 			}
-		};
+		}
+		;
 		final Op op = new Op();
 
 		index.readLock().lock();

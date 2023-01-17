@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -127,15 +127,23 @@ public class FeatureTable< C, T >
 		}
 	}
 
-	private static final ImageIcon UP_TO_DATE_ICON = new ImageIcon( FeatureTable.class.getResource( "bullet_green.png" ) );
+	private static final ImageIcon UP_TO_DATE_ICON =
+			new ImageIcon( FeatureTable.class.getResource( "bullet_green.png" ) );
+
 	private static final ImageIcon NOT_UP_TO_DATE_ICON = new ImageIcon( FeatureTable.class.getResource( "time.png" ) );
 
 	private C elements;
+
 	private final ToIntFunction< C > size;
+
 	private final BiFunction< C, Integer, T > get;
+
 	private final Function< T, String > getName;
+
 	private final Predicate< T > isSelected;
+
 	private final BiConsumer< T, Boolean > setSelected;
+
 	private final Predicate< T > isUptodate;
 
 	private final Listeners.List< SelectionListener< T > > selectionListeners;
@@ -150,7 +158,7 @@ public class FeatureTable< C, T >
 
 	/**
 	 * Creates a new feature table.
-	 * 
+	 *
 	 * @param elements
 	 *            collection of elements.
 	 * @param size
@@ -211,7 +219,9 @@ public class FeatureTable< C, T >
 		table.getColumnModel().getColumn( 2 ).setCellRenderer( new UpdatedCellRenderer() );
 		table.setShowGrid( false );
 
-		final Actions actions = new Actions( table.getInputMap( WHEN_ANCESTOR_OF_FOCUSED_COMPONENT ), table.getActionMap(), new InputTriggerConfig() );
+		final Actions actions =
+				new Actions( table.getInputMap( WHEN_ANCESTOR_OF_FOCUSED_COMPONENT ), table.getActionMap(),
+						new InputTriggerConfig() );
 		actions.runnableAction( this::toggleSelectedRow, "toggle selected row", "SPACE", "ENTER" );
 		actions.runnableAction( this::nextRowOrTable, "select next row or table", "DOWN" );
 		actions.runnableAction( this::previousRowOrTable, "select previous row or table", "UP" );
@@ -362,7 +372,7 @@ public class FeatureTable< C, T >
 		@Override
 		public void setValueAt( final Object aValue, final int rowIndex, final int columnIndex )
 		{
-			final boolean selected =  (columnIndex == 0)
+			final boolean selected = ( columnIndex == 0 )
 					? ( boolean ) aValue
 					: !isSelected.test( get( rowIndex ) );
 			if ( selected != isSelected.test( get( rowIndex ) ) )
@@ -396,7 +406,9 @@ public class FeatureTable< C, T >
 				final int row,
 				final int column )
 		{
-			final JLabel label = ( JLabel ) renderer.getTableCellRendererComponent( table, value, isSelected, hasFocus, row, column );
+			final JLabel label =
+					( JLabel ) renderer.getTableCellRendererComponent( table, value, isSelected, hasFocus, row,
+							column );
 			label.setIcon( isUptodate.test( get.apply( elements, Integer.valueOf( row ) ) )
 					? UP_TO_DATE_ICON
 					: NOT_UP_TO_DATE_ICON );

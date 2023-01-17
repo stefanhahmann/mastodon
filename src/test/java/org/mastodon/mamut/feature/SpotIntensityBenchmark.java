@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -50,7 +50,8 @@ public class SpotIntensityBenchmark
 		 * 1. Load a regular Mastodon project.
 		 */
 
-		final MamutProject project = new MamutProjectIO().load( "/Users/tinevez/Projects/JYTinevez/MaMuT/Mastodon-dataset/MaMuT_Parhyale_demo.mastodon" );
+		final MamutProject project = new MamutProjectIO().load(
+				"/Users/tinevez/Projects/JYTinevez/MaMuT/Mastodon-dataset/MaMuT_Parhyale_demo.mastodon" );
 		final WindowManager windowManager = new WindowManager( new Context() );
 		windowManager.getProjectManager().open( project );
 		final Model model = windowManager.getAppModel().getModel();
@@ -73,7 +74,8 @@ public class SpotIntensityBenchmark
 		 */
 
 		final Context context = windowManager.getContext();
-		final MamutFeatureComputerService featureComputerService = context.getService( MamutFeatureComputerService.class );
+		final MamutFeatureComputerService featureComputerService =
+				context.getService( MamutFeatureComputerService.class );
 		featureComputerService.setModel( model );
 		featureComputerService.setSharedBdvData( windowManager.getAppModel().getSharedBdvData() );
 		System.out.println( "Computing spot intensity..." );

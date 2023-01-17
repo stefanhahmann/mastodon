@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -58,7 +58,8 @@ public class PaintBranchGraph extends PaintGraph
 	}
 
 	@Override
-	public double distanceToPaintedEdge( final double x0, final double y0, final ScreenEdge edge, final ScreenVertex source, final ScreenVertex target )
+	public double distanceToPaintedEdge( final double x0, final double y0, final ScreenEdge edge,
+			final ScreenVertex source, final ScreenVertex target )
 	{
 		final double xs = source.getX();
 		final double xt = target.getX();
@@ -75,7 +76,7 @@ public class PaintBranchGraph extends PaintGraph
 	@Override
 	public boolean isInsidePaintedVertex( double x, double y, ScreenVertex vertex )
 	{
-		if( y >= vertex.getYStart() && y <= vertex.getY() && Math.abs( x - vertex.getX() ) <= 2 )
+		if ( y >= vertex.getYStart() && y <= vertex.getY() && Math.abs( x - vertex.getX() ) <= 2 )
 			return true;
 		return super.isInsidePaintedVertex( x, y, vertex );
 	}
@@ -84,7 +85,7 @@ public class PaintBranchGraph extends PaintGraph
 	protected void drawVertex( ScreenVertex vertex )
 	{
 		boolean resetStroke = setStroke( vertex );
-		g2.drawLine( (int) vertex.getX(), (int) vertex.getYStart(), (int) vertex.getX(), (int) vertex.getY());
+		g2.drawLine( ( int ) vertex.getX(), ( int ) vertex.getYStart(), ( int ) vertex.getX(), ( int ) vertex.getY() );
 		resetStroke( resetStroke );
 
 		super.drawVertex( vertex );
@@ -95,7 +96,8 @@ public class PaintBranchGraph extends PaintGraph
 		final ScreenVertex.Transition transition = vertex.getTransition();
 		final double ratio = vertex.getInterpolationCompletionRatio();
 
-		final boolean highlighted = ( highlightedVertexId >= 0 ) && ( vertex.getTrackSchemeVertexId() == highlightedVertexId );
+		final boolean highlighted =
+				( highlightedVertexId >= 0 ) && ( vertex.getTrackSchemeVertexId() == highlightedVertexId );
 		final boolean focused = ( focusedVertexId >= 0 ) && ( vertex.getTrackSchemeVertexId() == focusedVertexId );
 		final boolean selected = vertex.isSelected();
 		final boolean ghost = vertex.isGhost();

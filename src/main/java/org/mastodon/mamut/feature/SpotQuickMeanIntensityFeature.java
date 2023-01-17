@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -57,7 +57,8 @@ public class SpotQuickMeanIntensityFeature implements Feature< Spot >
 			"Computes the mean intensity of spots using the highest resolution level to speedup calculation."
 					+ "It is recommended to use the 'Spot intensity' feature when the best accuracy is required.";
 
-	public static final FeatureProjectionSpec PROJECTION_SPEC = new FeatureProjectionSpec( "Mean", Dimension.INTENSITY );
+	public static final FeatureProjectionSpec PROJECTION_SPEC =
+			new FeatureProjectionSpec( "Mean", Dimension.INTENSITY );
 
 	public static final Spec SPEC = new Spec();
 
@@ -87,7 +88,8 @@ public class SpotQuickMeanIntensityFeature implements Feature< Spot >
 		for ( int iSource = 0; iSource < means.size(); iSource++ )
 		{
 			final FeatureProjectionKey meankey = key( PROJECTION_SPEC, iSource );
-			projectionMap.put( meankey, FeatureProjections.project( meankey, means.get( iSource ), Dimension.COUNTS_UNITS ) );
+			projectionMap.put( meankey,
+					FeatureProjections.project( meankey, means.get( iSource ), Dimension.COUNTS_UNITS ) );
 		}
 	}
 

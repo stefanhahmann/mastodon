@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -119,7 +119,8 @@ public class RecentProjectsPanel extends JPanel
 		{
 			gbc.gridy++;
 			final JLabel lblTitleHint = new JLabel( "Double-click to open the containing folder." );
-			lblTitleHint.setFont( lblTitleHint.getFont().deriveFont( lblTitleHint.getFont().getStyle() | Font.ITALIC ) );
+			lblTitleHint.setFont(
+					lblTitleHint.getFont().deriveFont( lblTitleHint.getFont().getStyle() | Font.ITALIC ) );
 			lblTitleHint.setHorizontalAlignment( SwingConstants.CENTER );
 			add( lblTitleHint, gbc );
 
@@ -183,43 +184,59 @@ public class RecentProjectsPanel extends JPanel
 		repaint();
 	}
 
-
-	public static final class MouseDblClickOpenPath implements MouseListener {
+	public static final class MouseDblClickOpenPath implements MouseListener
+	{
 		final String Uri;
-		public MouseDblClickOpenPath(final String pathOnDblClick) {
-			Uri = Paths.get(pathOnDblClick).getParent().toUri().toString();
+
+		public MouseDblClickOpenPath( final String pathOnDblClick )
+		{
+			Uri = Paths.get( pathOnDblClick ).getParent().toUri().toString();
 		}
 
 		@Override
-		public void mouseClicked(MouseEvent mouseEvent) {
-			if (mouseEvent.getClickCount() == 2) openUrl( Uri );
+		public void mouseClicked( MouseEvent mouseEvent )
+		{
+			if ( mouseEvent.getClickCount() == 2 )
+				openUrl( Uri );
 		}
 
 		@Override
-		public void mousePressed(MouseEvent mouseEvent) { /* empty */ }
+		public void mousePressed( MouseEvent mouseEvent ) { /* empty */ }
+
 		@Override
-		public void mouseReleased(MouseEvent mouseEvent) { /* empty */ }
+		public void mouseReleased( MouseEvent mouseEvent ) { /* empty */ }
+
 		@Override
-		public void mouseEntered(MouseEvent mouseEvent) { /* empty */ }
+		public void mouseEntered( MouseEvent mouseEvent ) { /* empty */ }
+
 		@Override
-		public void mouseExited(MouseEvent mouseEvent) { /* empty */ }
+		public void mouseExited( MouseEvent mouseEvent ) { /* empty */ }
 	}
 
-	public static void openUrl(final String url) {
-		final String myOS = System.getProperty("os.name").toLowerCase();
-		try {
-			if (myOS.contains("mac")) {
-				Runtime.getRuntime().exec("open "+url);
+	public static void openUrl( final String url )
+	{
+		final String myOS = System.getProperty( "os.name" ).toLowerCase();
+		try
+		{
+			if ( myOS.contains( "mac" ) )
+			{
+				Runtime.getRuntime().exec( "open " + url );
 			}
-			else if (myOS.contains("nux") || myOS.contains("nix")) {
-				Runtime.getRuntime().exec("xdg-open "+url);
+			else if ( myOS.contains( "nux" ) || myOS.contains( "nix" ) )
+			{
+				Runtime.getRuntime().exec( "xdg-open " + url );
 			}
-			else if (Desktop.isDesktopSupported()) {
-				Desktop.getDesktop().browse(new URI(url));
+			else if ( Desktop.isDesktopSupported() )
+			{
+				Desktop.getDesktop().browse( new URI( url ) );
 			}
-			else {
-				System.out.println("Please, open this URL yourself: "+url);
+			else
+			{
+				System.out.println( "Please, open this URL yourself: " + url );
 			}
-		} catch (IOException | URISyntaxException ignored) {}
+		}
+		catch ( IOException | URISyntaxException ignored )
+		{
+		}
 	}
 }

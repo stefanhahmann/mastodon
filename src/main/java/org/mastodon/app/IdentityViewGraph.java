@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -39,7 +39,7 @@ import org.mastodon.graph.Vertex;
 
 /**
  * A {@link ViewGraph} that simply exposes the graph it wraps.
- * 
+ *
  * @author Jean-Yves Tinevez
  *
  * @param <V>
@@ -178,14 +178,15 @@ public class IdentityViewGraph< V extends Vertex< E >, E extends Edge< V > > imp
 
 	/**
 	 * Wraps the specified graph in a {@link ViewGraph} that plainly exposes it.
-	 * 
+	 *
 	 * @param graph
 	 *            the graph to wrap.
 	 * @param idBimap
 	 *            a {@link GraphIdBimap} for the wrapped graph.
 	 * @return an identity wrapper graph.
 	 */
-	public static final < V extends Vertex< E >, E extends Edge< V > > ViewGraph< V, E, V, E > wrap( final ReadOnlyGraph< V, E > graph, final GraphIdBimap< V, E > idBimap )
+	public static final < V extends Vertex< E >, E extends Edge< V > > ViewGraph< V, E, V, E > wrap(
+			final ReadOnlyGraph< V, E > graph, final GraphIdBimap< V, E > idBimap )
 	{
 		return new IdentityViewGraph<>( graph, idBimap );
 	}

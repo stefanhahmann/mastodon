@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -210,7 +210,8 @@ public class Visibilities< V extends Vertex< E >, E extends Edge< V > >
 			previousSelectionListener = selectionVisibility;
 			return selectionVisibility;
 		case TRACK_OF_FOCUSED_VERTEX:
-			final TrackOfFocusedVisibility trackOfFocusedVisibility = new TrackOfFocusedVisibility( graph, focusModel, lock );
+			final TrackOfFocusedVisibility trackOfFocusedVisibility =
+					new TrackOfFocusedVisibility( graph, focusModel, lock );
 			trackOfFocusedVisibility.focusChanged();
 			focusModel.listeners().add( trackOfFocusedVisibility );
 			previousFocusListener = trackOfFocusedVisibility;
@@ -298,7 +299,8 @@ public class Visibilities< V extends Vertex< E >, E extends Edge< V > >
 
 		private final ReentrantReadWriteLock lock;
 
-		public TrackOfFocusedVisibility( final ReadOnlyGraph< V, E > graph, final FocusModel< V, E > focusModel, final ReentrantReadWriteLock lock )
+		public TrackOfFocusedVisibility( final ReadOnlyGraph< V, E > graph, final FocusModel< V, E > focusModel,
+				final ReentrantReadWriteLock lock )
 		{
 			this.graph = graph;
 			this.focusModel = focusModel;
@@ -343,14 +345,16 @@ public class Visibilities< V extends Vertex< E >, E extends Edge< V > >
 
 	}
 
-	private static class ConnectedComponent< V extends Vertex< E >, E extends Edge< V > > extends AbstractGraphAlgorithm< V, E >
+	private static class ConnectedComponent< V extends Vertex< E >, E extends Edge< V > >
+			extends AbstractGraphAlgorithm< V, E >
 	{
 
 		private final RefSet< V > vertices;
 
 		private final RefSet< E > edges;
 
-		public ConnectedComponent( final ReadOnlyGraph< V, E > graph, final RefSet< V > vertices, final RefSet< E > edges )
+		public ConnectedComponent( final ReadOnlyGraph< V, E > graph, final RefSet< V > vertices,
+				final RefSet< E > edges )
 		{
 			super( graph );
 			this.vertices = vertices;

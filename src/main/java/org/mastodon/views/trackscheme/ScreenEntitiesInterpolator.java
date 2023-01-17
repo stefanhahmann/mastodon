@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -76,7 +76,8 @@ public class ScreenEntitiesInterpolator
 	 * @param incrementalStartTransform
 	 *            optional incremental transform of start entities.
 	 */
-	public ScreenEntitiesInterpolator( final ScreenEntities start, final ScreenEntities end, final ScreenTransform incrementalStartTransform )
+	public ScreenEntitiesInterpolator( final ScreenEntities start, final ScreenEntities end,
+			final ScreenTransform incrementalStartTransform )
 	{
 		this.start = start;
 		this.end = end;
@@ -99,7 +100,7 @@ public class ScreenEntitiesInterpolator
 	public static ScreenTransform getIncrementalY( final ScreenEntities start, final ScreenEntities end )
 	{
 		final ScreenTransform t = end.screenTransform().concatenate( start.screenTransform().inverse() );
-		t.set( 0, t.getScreenWidth() -1, t.getMinY(), t.getMaxY(), t.getScreenWidth(), t.getScreenHeight() );
+		t.set( 0, t.getScreenWidth() - 1, t.getMinY(), t.getMaxY(), t.getScreenWidth(), t.getScreenHeight() );
 		return t;
 	}
 
@@ -147,8 +148,10 @@ public class ScreenEntitiesInterpolator
 		final ScreenEdge eStart = start.getEdgePool().createRef();
 		for ( final ScreenEdge e : end.getEdges() )
 		{
-			final int sourceIndex = end.getVertices().get( e.getSourceScreenVertexIndex(), vEnd ).getInterpolatedScreenVertexIndex();
-			final int targetIndex = end.getVertices().get( e.getTargetScreenVertexIndex(), vEnd ).getInterpolatedScreenVertexIndex();
+			final int sourceIndex =
+					end.getVertices().get( e.getSourceScreenVertexIndex(), vEnd ).getInterpolatedScreenVertexIndex();
+			final int targetIndex =
+					end.getVertices().get( e.getTargetScreenVertexIndex(), vEnd ).getInterpolatedScreenVertexIndex();
 			final boolean endSelected = e.isSelected();
 			current.getEdges().add( current.getEdgePool().create( eCurrent ).init(
 					e.getTrackSchemeEdgeId(),
@@ -195,7 +198,8 @@ public class ScreenEntitiesInterpolator
 		current.getEdgePool().releaseRef( eStart );
 	}
 
-	private void interpolate( final ScreenVertex vStart, final ScreenVertex vEnd, final double ratio, final ScreenVertex vCurrent )
+	private void interpolate( final ScreenVertex vStart, final ScreenVertex vEnd, final double ratio,
+			final ScreenVertex vCurrent )
 	{
 		vCurrent.setTrackSchemeVertexId( vEnd.getTrackSchemeVertexId() );
 		vCurrent.setLabel( vEnd.getLabel() );
@@ -219,8 +223,8 @@ public class ScreenEntitiesInterpolator
 				( vStart.isSelected() == endSelected )
 						? NONE
 						: ( endSelected
-								? SELECTING
-								: DESELECTING ) );
+						? SELECTING
+						: DESELECTING ) );
 		vCurrent.setColor( vEnd.getColor() );
 		vCurrent.setInterpolationCompletionRatio( ratio );
 		vEnd.setInterpolatedScreenVertexIndex( vCurrent.getInternalPoolIndex() );

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -63,28 +63,32 @@ public class NavigationHandlerAdapter< V, E, WV, WE >
 		navigationHandler.notifyNavigateToEdge( edgeMap.getLeft( edge ) );
 	}
 
-	private final ForwardedListeners< NavigationListener< WV, WE > > listeners = new ForwardedListeners.SynchronizedList<>(
-			new Listeners< NavigationListener< WV, WE > >()
-			{
-				@Override
-				public boolean add( final NavigationListener< WV, WE > listener )
-				{
-					return navigationHandler.listeners().add( new NavigationListenerAdapter<>( listener, vertexMap, edgeMap ) );
-				}
+	private final ForwardedListeners< NavigationListener< WV, WE > > listeners =
+			new ForwardedListeners.SynchronizedList<>(
+					new Listeners< NavigationListener< WV, WE > >()
+					{
+						@Override
+						public boolean add( final NavigationListener< WV, WE > listener )
+						{
+							return navigationHandler.listeners()
+									.add( new NavigationListenerAdapter<>( listener, vertexMap, edgeMap ) );
+						}
 
-				@Override
-				public boolean add( final int index, final NavigationListener< WV, WE > listener )
-				{
-					return navigationHandler.listeners().add( index, new NavigationListenerAdapter<>( listener, vertexMap, edgeMap ) );
-				}
+						@Override
+						public boolean add( final int index, final NavigationListener< WV, WE > listener )
+						{
+							return navigationHandler.listeners()
+									.add( index, new NavigationListenerAdapter<>( listener, vertexMap, edgeMap ) );
+						}
 
-				@Override
-				public boolean remove( final NavigationListener< WV, WE > listener )
-				{
-					return navigationHandler.listeners().remove( new NavigationListenerAdapter<>( listener, vertexMap, edgeMap ) );
-				}
-			}
-	);
+						@Override
+						public boolean remove( final NavigationListener< WV, WE > listener )
+						{
+							return navigationHandler.listeners()
+									.remove( new NavigationListenerAdapter<>( listener, vertexMap, edgeMap ) );
+						}
+					}
+			);
 
 	@Override
 	public ForwardedListeners< NavigationListener< WV, WE > > listeners()

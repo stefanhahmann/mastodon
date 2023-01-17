@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -29,6 +29,7 @@
 package org.mastodon.views.trackscheme.display;
 
 import bdv.viewer.TransformListener;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -40,7 +41,8 @@ import org.mastodon.views.trackscheme.TrackSchemeGraph;
 import org.mastodon.views.trackscheme.TrackSchemeVertex;
 import org.mastodon.views.trackscheme.display.OffsetHeaders.OffsetHeadersListener;
 
-public class MouseHighlightHandler implements MouseMotionListener, MouseListener, TransformListener< ScreenTransform >, OffsetHeadersListener
+public class MouseHighlightHandler
+		implements MouseMotionListener, MouseListener, TransformListener< ScreenTransform >, OffsetHeadersListener
 {
 	private final TrackSchemeOverlay graphOverlay;
 
@@ -114,8 +116,9 @@ public class MouseHighlightHandler implements MouseMotionListener, MouseListener
 			// See if we can find a vertex.
 			if ( graphOverlay.getVertexAt( x, y, vertex ) != null )
 				highlight.highlightVertex( vertex );
-			// See if we can find an edge.
-			else if ( graphOverlay.getEdgeAt( x, y, TrackSchemeNavigationBehaviours.EDGE_SELECT_DISTANCE_TOLERANCE, edge ) != null )
+				// See if we can find an edge.
+			else if ( graphOverlay.getEdgeAt( x, y, TrackSchemeNavigationBehaviours.EDGE_SELECT_DISTANCE_TOLERANCE,
+					edge ) != null )
 				highlight.highlightEdge( edge );
 			else
 				highlight.clearHighlight();

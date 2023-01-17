@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -64,9 +64,11 @@ public class FeatureComputationPanel extends JPanel
 {
 	private static final long serialVersionUID = 1L;
 
-	private static final ImageIcon GO_ICON = new ImageIcon( FeatureComputationPanel.class.getResource( "bullet_green.png" ) );
+	private static final ImageIcon GO_ICON =
+			new ImageIcon( FeatureComputationPanel.class.getResource( "bullet_green.png" ) );
 
-	private static final ImageIcon CANCEL_ICON = new ImageIcon( FeatureComputationPanel.class.getResource( "cancel.png" ) );
+	private static final ImageIcon CANCEL_ICON =
+			new ImageIcon( FeatureComputationPanel.class.getResource( "cancel.png" ) );
 
 	final JButton btnCompute;
 
@@ -165,7 +167,8 @@ public class FeatureComputationPanel extends JPanel
 
 		// Feed the feature panel.
 
-		final FeatureTable.SelectionListener< FeatureSpec< ?, ? > > sl = fs -> displayConfigPanel( fs, model.getDependencies( fs ) );
+		final FeatureTable.SelectionListener< FeatureSpec< ?, ? > > sl =
+				fs -> displayConfigPanel( fs, model.getDependencies( fs ) );
 		final FeatureTable.Tables aggregator = new FeatureTable.Tables();
 
 		for ( final Class< ? > target : targets )
@@ -228,7 +231,8 @@ public class FeatureComputationPanel extends JPanel
 		scrollPaneFeatures.setPreferredSize( new Dimension( 300, 300 ) );
 	}
 
-	private void displayConfigPanel( final FeatureSpec< ?, ? > spec, final Collection< FeatureSpec< ?, ? > > dependencies )
+	private void displayConfigPanel( final FeatureSpec< ?, ? > spec,
+			final Collection< FeatureSpec< ?, ? > > dependencies )
 	{
 		panelConfig.removeAll();
 		if ( null == spec )

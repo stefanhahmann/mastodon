@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -60,7 +60,8 @@ public class KeymapSettingsPage extends SelectAndEditProfileSettingsPage< StyleP
 	 * @param commandDescriptions
 	 *            the command descriptions.
 	 */
-	public KeymapSettingsPage( final String treePath, final KeymapManager styleManager, final CommandDescriptions commandDescriptions )
+	public KeymapSettingsPage( final String treePath, final KeymapManager styleManager,
+			final CommandDescriptions commandDescriptions )
 	{
 		super(
 				treePath,
@@ -68,7 +69,8 @@ public class KeymapSettingsPage extends SelectAndEditProfileSettingsPage< StyleP
 				new KeymapProfileEditPanel( styleManager.getSelectedStyle(), commandDescriptions ) );
 	}
 
-	static class KeymapProfileEditPanel implements VisualEditorPanel.ConfigChangeListener, ProfileEditPanel< StyleProfile< Keymap > >
+	static class KeymapProfileEditPanel
+			implements VisualEditorPanel.ConfigChangeListener, ProfileEditPanel< StyleProfile< Keymap > >
 	{
 		private final Listeners.SynchronizedList< ModificationListener > modificationListeners;
 
@@ -79,7 +81,8 @@ public class KeymapSettingsPage extends SelectAndEditProfileSettingsPage< StyleP
 		public KeymapProfileEditPanel( final Keymap initialStyle, final CommandDescriptions commandDescriptions )
 		{
 			editedStyle = initialStyle.copy( "Edited" );
-			styleEditorPanel = new VisualEditorPanel( editedStyle.getConfig(), commandDescriptions.createCommandDescriptionsMap() );
+			styleEditorPanel = new VisualEditorPanel( editedStyle.getConfig(),
+					commandDescriptions.createCommandDescriptionsMap() );
 			styleEditorPanel.setButtonPanelVisible( false );
 			modificationListeners = new Listeners.SynchronizedList<>();
 			styleEditorPanel.modelChangedListeners().add( this );

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -153,7 +153,8 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 				.shareKeyPressedEvents( keyPressedManager )
 				.style( forwardDefaultStyle )
 				.graphColorGenerator( coloringAdapter );
-		final AutoNavigateFocusModel< DataVertex, DataEdge > navigateFocusModel = new AutoNavigateFocusModel<>( focusModel, navigationHandler );
+		final AutoNavigateFocusModel< DataVertex, DataEdge > navigateFocusModel =
+				new AutoNavigateFocusModel<>( focusModel, navigationHandler );
 
 		final DataDisplayFrame< Spot, Link > frame = new DataDisplayFrame< Spot, Link >(
 				viewGraph,
@@ -171,9 +172,13 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 		dataDisplayPanel = frame.getDataDisplayPanel();
 
 		// If they are available, set some sensible defaults for the feature.
-		final FeatureSpecPair spvx = new FeatureSpecPair( SpotFrameFeature.SPEC, SpotFrameFeature.SPEC.getProjectionSpecs().iterator().next(), false, false );
-		final FeatureSpecPair spvy = new FeatureSpecPair( SpotQuickMeanIntensityFeature.SPEC, SpotQuickMeanIntensityFeature.PROJECTION_SPEC, 0, false, false );
-		final FeatureGraphConfig gcv = new FeatureGraphConfig( spvx, spvy, GraphDataItemsSource.TRACK_OF_SELECTION, true );
+		final FeatureSpecPair spvx = new FeatureSpecPair( SpotFrameFeature.SPEC,
+				SpotFrameFeature.SPEC.getProjectionSpecs().iterator().next(), false, false );
+		final FeatureSpecPair spvy =
+				new FeatureSpecPair( SpotQuickMeanIntensityFeature.SPEC, SpotQuickMeanIntensityFeature.PROJECTION_SPEC,
+						0, false, false );
+		final FeatureGraphConfig gcv =
+				new FeatureGraphConfig( spvx, spvy, GraphDataItemsSource.TRACK_OF_SELECTION, true );
 		frame.getVertexSidePanel().setGraphConfig( gcv );
 
 		// Restore position
@@ -212,13 +217,18 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 
 		MastodonFrameViewActions.install( viewActions, this );
 		FocusActions.install( viewActions, viewGraph, viewGraph.getLock(), navigateFocusModel, selectionModel );
-		EditTagActions.install( viewActions, frame.getKeybindings(), frame.getTriggerbindings(), model.getTagSetModel(), appModel.getSelectionModel(), viewGraph.getLock(), dataDisplayPanel, dataDisplayPanel.getDisplay(), model );
+		EditTagActions.install( viewActions, frame.getKeybindings(), frame.getTriggerbindings(), model.getTagSetModel(),
+				appModel.getSelectionModel(), viewGraph.getLock(), dataDisplayPanel, dataDisplayPanel.getDisplay(),
+				model );
 		DataDisplayZoom.install( viewBehaviours, dataDisplayPanel );
 
-		final JPanel searchPanel = SearchVertexLabel.install( viewActions, viewGraph, navigationHandler, selectionModel, focusModel, dataDisplayPanel );
+		final JPanel searchPanel =
+				SearchVertexLabel.install( viewActions, viewGraph, navigationHandler, selectionModel, focusModel,
+						dataDisplayPanel );
 		frame.getSettingsPanel().add( searchPanel );
 
-		dataDisplayPanel.getNavigationActions().install( viewActions, TrackSchemeNavigationActions.NavigatorEtiquette.FINDER_LIKE );
+		dataDisplayPanel.getNavigationActions()
+				.install( viewActions, TrackSchemeNavigationActions.NavigatorEtiquette.FINDER_LIKE );
 		dataDisplayPanel.getNavigationBehaviours().install( viewBehaviours );
 		dataDisplayPanel.getTransformEventHandler().install( viewBehaviours );
 
@@ -265,7 +275,8 @@ public class MamutViewGrapher extends MamutView< DataGraph< Spot, Link >, DataVe
 
 		// Restore colorbar state.
 		final boolean colorbarVisible = ( boolean ) guiState.getOrDefault( COLORBAR_VISIBLE_KEY, false );
-		final Position colorbarPosition = ( Position ) guiState.getOrDefault( COLORBAR_POSITION_KEY, Position.BOTTOM_RIGHT );
+		final Position colorbarPosition =
+				( Position ) guiState.getOrDefault( COLORBAR_POSITION_KEY, Position.BOTTOM_RIGHT );
 		colorbarOverlay.setVisible( colorbarVisible );
 		colorbarOverlay.setPosition( colorbarPosition );
 

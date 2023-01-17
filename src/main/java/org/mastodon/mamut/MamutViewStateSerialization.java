@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -284,7 +284,8 @@ class MamutViewStateSerialization
 		}
 		else if ( value instanceof org.mastodon.views.grapher.datagraph.ScreenTransform )
 		{
-			final org.mastodon.views.grapher.datagraph.ScreenTransform t = ( org.mastodon.views.grapher.datagraph.ScreenTransform ) value;
+			final org.mastodon.views.grapher.datagraph.ScreenTransform t =
+					( org.mastodon.views.grapher.datagraph.ScreenTransform ) value;
 			el = XmlHelpers.doubleArrayElement( key, new double[] {
 					t.getMinX(),
 					t.getMaxX(),
@@ -329,7 +330,7 @@ class MamutViewStateSerialization
 
 	/**
 	 * Wraps GUI state of a {@link MamutView} into a map.
-	 * 
+	 *
 	 * @param view
 	 *            the view.
 	 * @return a new {@link Map}.
@@ -394,7 +395,7 @@ class MamutViewStateSerialization
 
 	/**
 	 * Stores the {@link MamutViewTable} GUI state in the specified map.
-	 * 
+	 *
 	 * @param view
 	 *            the {@link MamutViewTable}.
 	 * @param guiState
@@ -451,7 +452,7 @@ class MamutViewStateSerialization
 
 	/**
 	 * Stores the {@link MamutViewTrackScheme} GUI state in the specified map.
-	 * 
+	 *
 	 * @param view
 	 *            the {@link MamutViewTrackScheme}.
 	 * @param guiState
@@ -489,13 +490,14 @@ class MamutViewStateSerialization
 	/**
 	 * Stores the {@link MamutBranchViewTrackScheme} GUI state in the specified
 	 * map.
-	 * 
+	 *
 	 * @param view
 	 *            the {@link MamutBranchViewTrackScheme}.
 	 * @param guiState
 	 *            the map to store info into.
 	 */
-	private static void getGuiStateBranchTrackScheme( final MamutBranchViewTrackScheme view, final Map< String, Object > guiState )
+	private static void getGuiStateBranchTrackScheme( final MamutBranchViewTrackScheme view,
+			final Map< String, Object > guiState )
 	{
 		final TrackSchemePanel trackschemePanel = view.getFrame().getTrackschemePanel();
 
@@ -523,7 +525,7 @@ class MamutViewStateSerialization
 
 	/**
 	 * Stores the {@link MamutViewBdv} GUI state in the specified map.
-	 * 
+	 *
 	 * @param view
 	 *            the {@link MamutViewBdv}.
 	 * @param guiState
@@ -548,7 +550,7 @@ class MamutViewStateSerialization
 
 	/**
 	 * Stores the {@link MamutBranchViewBdv} GUI state in the specified map.
-	 * 
+	 *
 	 * @param view
 	 *            the {@link MamutViewBdv}.
 	 * @param guiState
@@ -573,7 +575,7 @@ class MamutViewStateSerialization
 
 	/**
 	 * Reads the coloring state of a view and stores it into the specified map.
-	 * 
+	 *
 	 * @param coloringModel
 	 *            the coloring model to read from.
 	 * @param guiState
@@ -590,7 +592,8 @@ class MamutViewStateSerialization
 				guiState.put( FEATURE_COLOR_MODE_KEY, coloringModel.getFeatureColorMode().getName() );
 	}
 
-	private static void getColorBarOverlayState( final ColorBarOverlay colorBarOverlay, final Map< String, Object > guiState )
+	private static void getColorBarOverlayState( final ColorBarOverlay colorBarOverlay,
+			final Map< String, Object > guiState )
 	{
 		guiState.put( COLORBAR_VISIBLE_KEY, colorBarOverlay.isVisible() );
 		guiState.put( COLORBAR_POSITION_KEY, colorBarOverlay.getPosition() );
@@ -598,7 +601,7 @@ class MamutViewStateSerialization
 
 	/**
 	 * Deserializes a GUI state from XML and recreate view windows as specified.
-	 * 
+	 *
 	 * @param windowsEl
 	 *            the XML element that stores the GUI state of a view.
 	 * @param windowManager
@@ -619,13 +622,15 @@ class MamutViewStateSerialization
 			{
 			case "MamutViewBdv":
 			{
-				try {
+				try
+				{
 					final MamutViewBdv bdv = windowManager.createBigDataViewer( guiState );
 
 					// Store context provider.
 					contextProviders.put( bdv.getContextProvider().getName(), bdv.getContextProvider() );
 				}
-				catch (final IllegalArgumentException iae) {
+				catch ( final IllegalArgumentException iae )
+				{
 					System.err.println( "Info: Failed restoring state of a BigDataViewer window, thus not showing it.\n"
 							+ "      You may want to resave your project to replace the previous (failing) state with the current (okay) state." );
 				}
@@ -732,13 +737,15 @@ class MamutViewStateSerialization
 			case TRACKSCHEME_TRANSFORM_KEY:
 			{
 				final double[] arr = XmlHelpers.getDoubleArray( viewEl, key );
-				value = new ScreenTransform( arr[ 0 ], arr[ 1 ], arr[ 2 ], arr[ 3 ], ( int ) arr[ 4 ], ( int ) arr[ 5 ] );
+				value = new ScreenTransform( arr[ 0 ], arr[ 1 ], arr[ 2 ], arr[ 3 ], ( int ) arr[ 4 ],
+						( int ) arr[ 5 ] );
 				break;
 			}
 			case GRAPHER_TRANSFORM_KEY:
 			{
 				final double[] arr = XmlHelpers.getDoubleArray( viewEl, key );
-				value = new org.mastodon.views.grapher.datagraph.ScreenTransform( arr[ 0 ], arr[ 1 ], arr[ 2 ], arr[ 3 ], ( int ) arr[ 4 ], ( int ) arr[ 5 ] );
+				value = new org.mastodon.views.grapher.datagraph.ScreenTransform( arr[ 0 ], arr[ 1 ], arr[ 2 ],
+						arr[ 3 ], ( int ) arr[ 4 ], ( int ) arr[ 5 ] );
 				break;
 			}
 			case TABLE_SELECTION_ONLY:
@@ -797,7 +804,7 @@ class MamutViewStateSerialization
 	 * split over severals. We also impose a minimal size for the windows.
 	 * <p>
 	 * The pos array is { x, y, width, height }.
-	 * 
+	 *
 	 * @param pos
 	 *            the position array.
 	 * @return the same position array.

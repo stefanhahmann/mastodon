@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -39,7 +39,8 @@ import org.mastodon.mamut.model.Link;
 import org.scijava.plugin.Plugin;
 
 @Plugin( type = FeatureSerializer.class )
-public class TrackMateImportedLinkFeaturesSerializer extends TrackMateImportedFeaturesSerializer< TrackMateImportedLinkFeatures, Link >
+public class TrackMateImportedLinkFeaturesSerializer
+		extends TrackMateImportedFeaturesSerializer< TrackMateImportedLinkFeatures, Link >
 {
 
 	@Override
@@ -49,7 +50,8 @@ public class TrackMateImportedLinkFeaturesSerializer extends TrackMateImportedFe
 	}
 
 	@Override
-	public TrackMateImportedLinkFeatures deserialize( final FileIdToObjectMap< Link > idmap, final RefCollection< Link > pool, final ObjectInputStream ois ) throws IOException, ClassNotFoundException
+	public TrackMateImportedLinkFeatures deserialize( final FileIdToObjectMap< Link > idmap,
+			final RefCollection< Link > pool, final ObjectInputStream ois ) throws IOException, ClassNotFoundException
 	{
 		final TrackMateImportedLinkFeatures feature = new TrackMateImportedLinkFeatures();
 		deserializeInto( feature, idmap, pool, ois );

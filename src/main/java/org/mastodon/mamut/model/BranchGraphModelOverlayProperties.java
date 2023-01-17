@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -161,19 +161,22 @@ public class BranchGraphModelOverlayProperties implements OverlayProperties< Bra
 	}
 
 	@Override
-	public BranchSpot initVertex( final BranchSpot v, final int timepoint, final double[] position, final double radius )
+	public BranchSpot initVertex( final BranchSpot v, final int timepoint, final double[] position,
+			final double radius )
 	{
 		throw new UnsupportedOperationException( "Cannot modify a branch graph." );
 	}
 
 	@Override
-	public BranchSpot initVertex( final BranchSpot v, final int timepoint, final double[] position, final double[][] covariance )
+	public BranchSpot initVertex( final BranchSpot v, final int timepoint, final double[] position,
+			final double[][] covariance )
 	{
 		throw new UnsupportedOperationException( "Cannot modify a branch graph." );
 	}
 
 	@Override
-	public BranchLink insertEdge( final BranchSpot source, final int sourceOutIndex, final BranchSpot target, final int targetInIndex, final BranchLink ref )
+	public BranchLink insertEdge( final BranchSpot source, final int sourceOutIndex, final BranchSpot target,
+			final int targetInIndex, final BranchLink ref )
 	{
 		throw new UnsupportedOperationException( "Cannot modify a branch graph." );
 	}

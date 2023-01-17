@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -62,7 +62,7 @@ public class DefaultFocusModel< V extends Vertex< E >, E extends Edge< V > >
 	@Override
 	public synchronized void focusVertex( final V vertex )
 	{
-		final int id = ( vertex == null ) ? - 1 : idmap.getVertexId( vertex );
+		final int id = ( vertex == null ) ? -1 : idmap.getVertexId( vertex );
 		if ( focusVertexId != id )
 		{
 			focusVertexId = id;
@@ -93,13 +93,13 @@ public class DefaultFocusModel< V extends Vertex< E >, E extends Edge< V > >
 	public void graphRebuilt()
 	{
 		focusVertex( null );
-// TODO: notifyListeners(); ? (This may change the layout and we might want to re-center on the focused vertex
+		// TODO: notifyListeners(); ? (This may change the layout and we might want to re-center on the focused vertex
 	}
 
 	@Override
 	public void vertexAdded( final V vertex )
 	{
-// TODO: notifyListeners(); ? (This may change the layout and we might want to re-center on the focused vertex
+		// TODO: notifyListeners(); ? (This may change the layout and we might want to re-center on the focused vertex
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public class DefaultFocusModel< V extends Vertex< E >, E extends Edge< V > >
 	{
 		if ( focusVertexId == idmap.getVertexId( vertex ) )
 			focusVertex( null );
-// TODO: notifyListeners(); ? (This may change the layout and we might want to re-center on the focused vertex
+		// TODO: notifyListeners(); ? (This may change the layout and we might want to re-center on the focused vertex
 	}
 
 	@Override

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -32,7 +32,8 @@ import org.mastodon.feature.FeatureProjection;
 import org.mastodon.graph.Edge;
 import org.mastodon.graph.Vertex;
 
-public class FeatureColorGeneratorSourceVertex< V extends Vertex< E >, E extends Edge< V > > implements EdgeColorGenerator< V, E >
+public class FeatureColorGeneratorSourceVertex< V extends Vertex< E >, E extends Edge< V > >
+		implements EdgeColorGenerator< V, E >
 {
 	private final FeatureProjection< V > featureProjection;
 
@@ -42,7 +43,8 @@ public class FeatureColorGeneratorSourceVertex< V extends Vertex< E >, E extends
 
 	private final double max;
 
-	public FeatureColorGeneratorSourceVertex( final FeatureProjection< V > featureProjection, final ColorMap colorMap, final double min, final double max )
+	public FeatureColorGeneratorSourceVertex( final FeatureProjection< V > featureProjection, final ColorMap colorMap,
+			final double min, final double max )
 	{
 		this.featureProjection = featureProjection;
 		this.colorMap = colorMap;

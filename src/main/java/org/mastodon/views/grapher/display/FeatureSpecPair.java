@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -40,7 +40,7 @@ import org.mastodon.feature.Multiplicity;
  * Data class representing a selection of a feature plus a projection in said
  * feature, plus possibly a selection of the source indices in case the
  * multiplicity is not SINGLE.
- * 
+ *
  * @author Jean-Yves Tinevez
  */
 public class FeatureSpecPair implements Comparable< FeatureSpecPair >
@@ -67,7 +67,8 @@ public class FeatureSpecPair implements Comparable< FeatureSpecPair >
 	 */
 	private final boolean incoming;
 
-	public FeatureSpecPair( final FeatureSpec< ?, ? > f, final FeatureProjectionSpec ps, final boolean isEdgeFeature, final boolean incoming )
+	public FeatureSpecPair( final FeatureSpec< ?, ? > f, final FeatureProjectionSpec ps, final boolean isEdgeFeature,
+			final boolean incoming )
 	{
 		assert f.getMultiplicity() == Multiplicity.SINGLE;
 		this.featureSpec = f;
@@ -78,7 +79,8 @@ public class FeatureSpecPair implements Comparable< FeatureSpecPair >
 		this.incoming = incoming;
 	}
 
-	public FeatureSpecPair( final FeatureSpec< ?, ? > f, final FeatureProjectionSpec ps, final int c1, final boolean isEdgeFeature, final boolean incoming )
+	public FeatureSpecPair( final FeatureSpec< ?, ? > f, final FeatureProjectionSpec ps, final int c1,
+			final boolean isEdgeFeature, final boolean incoming )
 	{
 		assert f.getMultiplicity() == Multiplicity.ON_SOURCES;
 		this.featureSpec = f;
@@ -89,7 +91,8 @@ public class FeatureSpecPair implements Comparable< FeatureSpecPair >
 		this.incoming = incoming;
 	}
 
-	public FeatureSpecPair( final FeatureSpec< ?, ? > f, final FeatureProjectionSpec ps, final int c1, final int c2, final boolean isEdgeFeature, final boolean incoming )
+	public FeatureSpecPair( final FeatureSpec< ?, ? > f, final FeatureProjectionSpec ps, final int c1, final int c2,
+			final boolean isEdgeFeature, final boolean incoming )
 	{
 		assert f.getMultiplicity() == Multiplicity.ON_SOURCE_PAIRS;
 		this.featureSpec = f;
@@ -178,7 +181,7 @@ public class FeatureSpecPair implements Comparable< FeatureSpecPair >
 	 * Returns the feature projection found in the specified feature model, and
 	 * that matches the specifications of this instance. If the projection
 	 * cannot be found in the feature model, returns <code>null</code>.
-	 * 
+	 *
 	 * @param <O>
 	 *            the type of objects the projection is defined on.
 	 * @param featureModel

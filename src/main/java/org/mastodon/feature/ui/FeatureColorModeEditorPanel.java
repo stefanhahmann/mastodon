@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -109,7 +109,8 @@ public class FeatureColorModeEditorPanel extends JPanel
 		/*
 		 * Vertex color mode.
 		 */
-		final ModeSelector< VertexColorMode > vertexColorModeSelector = new ModeSelector<>( VertexColorMode.values(), VertexColorMode.tooltips() );
+		final ModeSelector< VertexColorMode > vertexColorModeSelector =
+				new ModeSelector<>( VertexColorMode.values(), VertexColorMode.tooltips() );
 		final JTextArea ta1 = new JTextArea( "Read " + vertexName.toLowerCase() + "\ncolor from" );
 		ta1.setFont( getFont() );
 		ta1.setOpaque( false );
@@ -167,11 +168,11 @@ public class FeatureColorModeEditorPanel extends JPanel
 		panelEdgeColoringTitle.setLayout( panelEdgeColoringTitleLayout );
 		final JLabel lbl2 = new JLabel( "Coloring " + edgeName + "s" );
 		lbl2.setFont( getFont().deriveFont( Font.BOLD ) );
-		
-		final JButton buttonCopy = new JButton( "Copy from " +vertexName + " settings" );
+
+		final JButton buttonCopy = new JButton( "Copy from " + vertexName + " settings" );
 		buttonCopy.setFont( getFont().deriveFont( getFont().getSize2D() - 2f ) );
 		buttonCopy.addActionListener( e -> copyFromVertexSettings() );
-		
+
 		panelEdgeColoringTitle.add( lbl2 );
 		panelEdgeColoringTitle.add( Box.createHorizontalGlue() );
 		panelEdgeColoringTitle.add( buttonCopy );
@@ -181,7 +182,8 @@ public class FeatureColorModeEditorPanel extends JPanel
 		/*
 		 * Edge color mode.
 		 */
-		final ModeSelector< EdgeColorMode > edgeColorModeSelector = new ModeSelector<>( EdgeColorMode.values(), EdgeColorMode.tooltips() );
+		final ModeSelector< EdgeColorMode > edgeColorModeSelector =
+				new ModeSelector<>( EdgeColorMode.values(), EdgeColorMode.tooltips() );
 		final JTextArea ta2 = new JTextArea( "Read " + edgeName.toLowerCase() + "\ncolor from" );
 		ta2.setFont( getFont() );
 		ta2.setEditable( false );
@@ -260,7 +262,8 @@ public class FeatureColorModeEditorPanel extends JPanel
 			vertexColorMapSelector.setVisible( visible );
 			vertexFeatureRangeSelector.setVisible( visible );
 			vertexFeatureSelectionPanel.getPanel().setVisible( visible );
-			vertexFeatureSelectionPanel.setAvailableFeatureProjections( visible ? availableFeatureProjections : null, vcm.targetType() );
+			vertexFeatureSelectionPanel.setAvailableFeatureProjections( visible ? availableFeatureProjections : null,
+					vcm.targetType() );
 
 			if ( doForwardToMode )
 				mode.setVertexColorMode( vcm );
@@ -277,7 +280,8 @@ public class FeatureColorModeEditorPanel extends JPanel
 			edgeColorMapSelector.setVisible( visible );
 			edgeFeatureRangeSelector.setVisible( visible );
 			edgeFeatureSelectionPanel.getPanel().setVisible( visible );
-			edgeFeatureSelectionPanel.setAvailableFeatureProjections( visible ? availableFeatureProjections : null, ecm.targetType() );
+			edgeFeatureSelectionPanel.setAvailableFeatureProjections( visible ? availableFeatureProjections : null,
+					ecm.targetType() );
 
 			if ( doForwardToMode )
 				mode.setEdgeColorMode( ecm );
@@ -455,7 +459,8 @@ public class FeatureColorModeEditorPanel extends JPanel
 
 		// Pass to lists.
 		doForwardToMode = false;
-		vertexFeatureSelectionPanel.setAvailableFeatureProjections( featureSpecs, mode.getVertexColorMode().targetType() );
+		vertexFeatureSelectionPanel.setAvailableFeatureProjections( featureSpecs,
+				mode.getVertexColorMode().targetType() );
 		vertexFeatureSelectionPanel.setSelection( mode.getVertexFeatureProjection() );
 		edgeFeatureSelectionPanel.setAvailableFeatureProjections( featureSpecs, mode.getEdgeColorMode().targetType() );
 		edgeFeatureSelectionPanel.setSelection( mode.getEdgeFeatureProjection() );

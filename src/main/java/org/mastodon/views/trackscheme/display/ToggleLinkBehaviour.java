@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -33,6 +33,7 @@ package org.mastodon.views.trackscheme.display;
 
 import bdv.viewer.OverlayRenderer;
 import bdv.viewer.TransformListener;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -125,7 +126,8 @@ public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extend
 			final GraphChangeNotifier notify,
 			final UndoPointMarker undo )
 	{
-		final ToggleLinkBehaviour< V, E > toggleLinkBehaviour = new ToggleLinkBehaviour<>( panel, graph, lock, notify, undo );
+		final ToggleLinkBehaviour< V, E > toggleLinkBehaviour =
+				new ToggleLinkBehaviour<>( panel, graph, lock, notify, undo );
 		behaviours.namedBehaviour( toggleLinkBehaviour, TOGGLE_LINK_KEYS );
 	}
 
@@ -178,7 +180,8 @@ public class ToggleLinkBehaviour< V extends Vertex< E > & HasTimepoint, E extend
 	{
 		if ( editing )
 		{
-			if ( renderer.getVertexAt( x, y, endVertex ) != null && startVertex.getTimepoint() != endVertex.getTimepoint() )
+			if ( renderer.getVertexAt( x, y,
+					endVertex ) != null && startVertex.getTimepoint() != endVertex.getTimepoint() )
 			{
 				overlay.to[ 0 ] = endVertex.getLayoutX();
 				overlay.to[ 1 ] = endVertex.getTimepoint();

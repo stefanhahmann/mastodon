@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -45,19 +45,30 @@ public class ScreenVertexPool extends Pool< ScreenVertex, ByteMappedElement >
 	final RefPool< DataVertex > dataVertexPool;
 
 	final IndexAttribute< ScreenVertex > origVertex = new IndexAttribute<>( ScreenVertex.layout.origVertex, this );
+
 	final DoubleAttribute< ScreenVertex > xOffset = new DoubleAttribute<>( ScreenVertex.layout.xOffset, this );
+
 	final DoubleAttribute< ScreenVertex > yOffset = new DoubleAttribute<>( ScreenVertex.layout.yOffset, this );
+
 	final DoubleAttribute< ScreenVertex > vertexDist = new DoubleAttribute<>( ScreenVertex.layout.vertexDist, this );
+
 	final BooleanAttribute< ScreenVertex > selected = new BooleanAttribute<>( ScreenVertex.layout.selected, this );
+
 	final ByteAttribute< ScreenVertex > transition = new ByteAttribute<>( ScreenVertex.layout.transition, this );
-	final IndexAttribute< ScreenVertex > ipScreenVertex = new IndexAttribute<>( ScreenVertex.layout.ipScreenVertex, this );
+
+	final IndexAttribute< ScreenVertex > ipScreenVertex =
+			new IndexAttribute<>( ScreenVertex.layout.ipScreenVertex, this );
+
 	final DoubleAttribute< ScreenVertex > ipRatio = new DoubleAttribute<>( ScreenVertex.layout.ipRatio, this );
+
 	final ObjPropertyMap< ScreenVertex, String > label = new ObjPropertyMap<>( this );
+
 	final IntAttribute< ScreenVertex > color = new IntAttribute<>( ScreenVertex.layout.color, this );
 
 	public ScreenVertexPool( final int initialCapacity, final RefPool< DataVertex > dataVertexPool )
 	{
-		super( initialCapacity, ScreenVertex.layout, ScreenVertex.class, SingleArrayMemPool.factory( ByteMappedElementArray.factory ) );
+		super( initialCapacity, ScreenVertex.layout, ScreenVertex.class,
+				SingleArrayMemPool.factory( ByteMappedElementArray.factory ) );
 		this.dataVertexPool = dataVertexPool;
 	}
 

@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -101,7 +101,8 @@ import bdv.viewer.SourceAndConverter;
 import bdv.viewer.ViewerPanel;
 import net.imglib2.realtransform.AffineTransform3D;
 
-public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > >
+public class MamutViewBdv extends
+		MamutView< OverlayGraphWrapper< Spot, Link >, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > >
 {
 	// TODO
 	private static int bdvName = 1;
@@ -155,7 +156,7 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 		MastodonFrameViewActions.install( viewActions, this );
 		BigDataViewerActionsMamut.install( viewActions, bdv );
 
-		
+
 		/*
 		 * We have to build the coloring menu handles now. But the other actions
 		 * need to be included in the menus later, after they have been
@@ -180,7 +181,8 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 		viewer = bdv.getViewer();
 
 		// we need the coloring now.
-		final GraphColorGeneratorAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > coloring =
+		final GraphColorGeneratorAdapter< Spot, Link, OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > >
+				coloring =
 				new GraphColorGeneratorAdapter<>( viewGraph.getVertexMap(), viewGraph.getEdgeMap() );
 		coloringModel = registerColoring( coloring, menuHandle,
 				() -> viewer.getDisplay().repaint() );
@@ -199,7 +201,8 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 		else
 			viewer.state().setViewerTransform( tLoaded );
 
-		final OverlayGraphRenderer< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > tracksOverlay = createRenderer(
+		final OverlayGraphRenderer< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > >
+				tracksOverlay = createRenderer(
 				viewGraph,
 				highlightModel,
 				focusModel,
@@ -213,7 +216,6 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 		final Model model = appModel.getModel();
 		final ModelGraph modelGraph = model.getGraph();
 
-
 		highlightModel.listeners().add( () -> viewer.getDisplay().repaint() );
 		focusModel.listeners().add( () -> viewer.getDisplay().repaint() );
 		modelGraph.addGraphChangeListener( () -> viewer.getDisplay().repaint() );
@@ -221,27 +223,36 @@ public class MamutViewBdv extends MamutView< OverlayGraphWrapper< Spot, Link >, 
 		modelGraph.addVertexLabelListener( v -> viewer.getDisplay().repaint() );
 		selectionModel.listeners().add( () -> viewer.getDisplay().repaint() );
 
-		final OverlayNavigation< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > overlayNavigation = new OverlayNavigation<>( viewer, viewGraph );
+		final OverlayNavigation< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > >
+				overlayNavigation = new OverlayNavigation<>( viewer, viewGraph );
 		navigationHandler.listeners().add( overlayNavigation );
 
-		final BdvHighlightHandler< ?, ? > highlightHandler = new BdvHighlightHandler<>( viewGraph, tracksOverlay, highlightModel );
+		final BdvHighlightHandler< ?, ? > highlightHandler =
+				new BdvHighlightHandler<>( viewGraph, tracksOverlay, highlightModel );
 		viewer.getDisplay().addHandler( highlightHandler );
 		viewer.renderTransformListeners().add( highlightHandler );
 
 		contextProvider = new BdvContextProvider<>( windowTitle, viewGraph, tracksOverlay );
 		viewer.renderTransformListeners().add( contextProvider );
 
-		final AutoNavigateFocusModel< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > > navigateFocusModel = new AutoNavigateFocusModel<>( focusModel, navigationHandler );
+		final AutoNavigateFocusModel< OverlayVertexWrapper< Spot, Link >, OverlayEdgeWrapper< Spot, Link > >
+				navigateFocusModel = new AutoNavigateFocusModel<>( focusModel, navigationHandler );
 
-		BdvSelectionBehaviours.install( viewBehaviours, viewGraph, tracksOverlay, selectionModel, focusModel, navigationHandler );
-		EditBehaviours.install( viewBehaviours, viewer, viewGraph, tracksOverlay, selectionModel, focusModel, model, getMinRadius( sharedBdvData ) );
-		EditSpecialBehaviours.install( viewBehaviours, frame.getViewerPanel(), viewGraph, tracksOverlay, selectionModel, focusModel, model );
+		BdvSelectionBehaviours.install( viewBehaviours, viewGraph, tracksOverlay, selectionModel, focusModel,
+				navigationHandler );
+		EditBehaviours.install( viewBehaviours, viewer, viewGraph, tracksOverlay, selectionModel, focusModel, model,
+				getMinRadius( sharedBdvData ) );
+		EditSpecialBehaviours.install( viewBehaviours, frame.getViewerPanel(), viewGraph, tracksOverlay, selectionModel,
+				focusModel, model );
 		HighlightBehaviours.install( viewBehaviours, viewGraph, viewGraph.getLock(), viewGraph, highlightModel, model );
 		FocusActions.install( viewActions, viewGraph, viewGraph.getLock(), navigateFocusModel, selectionModel );
 		OverlayActions.install( viewActions, viewer, tracksOverlay );
-		final Runnable onCloseDialog = RecordMovieDialog.install( viewActions, bdv, tracksOverlay, colorBarOverlay, appModel.getKeymap() );
+		final Runnable onCloseDialog =
+				RecordMovieDialog.install( viewActions, bdv, tracksOverlay, colorBarOverlay, appModel.getKeymap() );
 		onClose( onCloseDialog );
-		final Runnable onCloseMIPDialog = RecordMaxProjectionMovieDialog.install( viewActions, bdv, tracksOverlay, colorBarOverlay, appModel.getKeymap() );
+		final Runnable onCloseMIPDialog =
+				RecordMaxProjectionMovieDialog.install( viewActions, bdv, tracksOverlay, colorBarOverlay,
+						appModel.getKeymap() );
 		onClose( onCloseMIPDialog );
 
 		/*

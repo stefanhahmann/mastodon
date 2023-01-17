@@ -6,13 +6,13 @@
  * %%
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
  *    and/or other materials provided with the distribution.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -43,7 +43,8 @@ import org.mastodon.graph.object.AbstractObjectIdGraph;
 import org.mastodon.model.DefaultSelectionModel;
 import org.mastodon.model.SelectionModel;
 
-public class DummyGraph extends AbstractObjectIdGraph< DummyVertex, DummyEdge > implements ListenableGraph< DummyVertex, DummyEdge >
+public class DummyGraph extends AbstractObjectIdGraph< DummyVertex, DummyEdge >
+		implements ListenableGraph< DummyVertex, DummyEdge >
 {
 	public DummyGraph()
 	{
@@ -72,13 +73,15 @@ public class DummyGraph extends AbstractObjectIdGraph< DummyVertex, DummyEdge > 
 	public static enum Examples
 	{
 		CELEGANS( CElegansExample.graph, CElegansExample.selectedVertices, CElegansExample.selectedEdges ),
-		DIVIDING_CELL( DividingCellExample.graph, DividingCellExample.selectedVertices, DividingCellExample.selectedEdges );
+		DIVIDING_CELL( DividingCellExample.graph, DividingCellExample.selectedVertices,
+				DividingCellExample.selectedEdges );
 
 		private final DummyGraph graph;
 
 		private SelectionModel< DummyVertex, DummyEdge > selectionModel;
 
-		private Examples( final DummyGraph graph, final Collection< DummyVertex > vertices, final Collection< DummyEdge > edges )
+		private Examples( final DummyGraph graph, final Collection< DummyVertex > vertices,
+				final Collection< DummyEdge > edges )
 		{
 			this.graph = graph;
 			this.selectionModel = new DefaultSelectionModel<>( graph, graph.getIdBimap() );
@@ -252,28 +255,35 @@ public class DummyGraph extends AbstractObjectIdGraph< DummyVertex, DummyEdge > 
 
 			selectedVertices = new ArrayList<>();
 			selectedEdges = new ArrayList<>();
-			final DepthFirstSearch< DummyVertex, DummyEdge > dfs = new DepthFirstSearch<>( graph, SearchDirection.DIRECTED );
-			dfs.setTraversalListener( new SearchListener< DummyVertex, DummyEdge, DepthFirstSearch< DummyVertex, DummyEdge > >()
-			{
-				@Override
-				public void processVertexLate( final DummyVertex vertex, final DepthFirstSearch< DummyVertex, DummyEdge > search )
-				{}
+			final DepthFirstSearch< DummyVertex, DummyEdge > dfs =
+					new DepthFirstSearch<>( graph, SearchDirection.DIRECTED );
+			dfs.setTraversalListener(
+					new SearchListener< DummyVertex, DummyEdge, DepthFirstSearch< DummyVertex, DummyEdge > >()
+					{
+						@Override
+						public void processVertexLate( final DummyVertex vertex,
+								final DepthFirstSearch< DummyVertex, DummyEdge > search )
+						{}
 
-				@Override
-				public void processVertexEarly( final DummyVertex vertex, final DepthFirstSearch< DummyVertex, DummyEdge > search )
-				{
-					selectedVertices.add( vertex );
-				}
+						@Override
+						public void processVertexEarly( final DummyVertex vertex,
+								final DepthFirstSearch< DummyVertex, DummyEdge > search )
+						{
+							selectedVertices.add( vertex );
+						}
 
-				@Override
-				public void processEdge( final DummyEdge edge, final DummyVertex from, final DummyVertex to, final DepthFirstSearch< DummyVertex, DummyEdge > search )
-				{
-					selectedEdges.add( edge );
-				}
+						@Override
+						public void processEdge( final DummyEdge edge, final DummyVertex from, final DummyVertex to,
+								final DepthFirstSearch< DummyVertex, DummyEdge > search )
+						{
+							selectedEdges.add( edge );
+						}
 
-				@Override public void crossComponent( final DummyVertex from, final DummyVertex to, final DepthFirstSearch< DummyVertex, DummyEdge > search )
-				{}
-			} );
+						@Override
+						public void crossComponent( final DummyVertex from, final DummyVertex to,
+								final DepthFirstSearch< DummyVertex, DummyEdge > search )
+						{}
+					} );
 			dfs.start( ABa );
 		}
 
