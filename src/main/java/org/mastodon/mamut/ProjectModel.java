@@ -124,7 +124,8 @@ public class ProjectModel extends MastodonAppModel< Model, Spot, Link > implemen
 		this.windowManager = new WindowManager( this );
 
 		// Update sharedBdvData
-		sharedBdvData.getOptions()
+		if ( sharedBdvData != null )
+			sharedBdvData.getOptions()
 				.shareKeyPressedEvents( keyPressedManager )
 				.msgOverlay( new MessageOverlayAnimator( 1500, 0.005, 0.02 ) );
 
@@ -205,8 +206,13 @@ public class ProjectModel extends MastodonAppModel< Model, Spot, Link > implemen
 
 		final MamutPlugins plugins = ( MamutPlugins ) getPlugins();
 		final Consumer< MamutPlugin > registerAction = ( mp ) -> {
-			mp.setAppPluginModel( this );
-			plugins.register( mp );
+			try
+			{
+				mp.setAppPluginModel( this );
+				plugins.register( mp );
+			}
+			catch ( final NullPointerException e )
+			{}
 		};
 		PluginUtils.forEachDiscoveredPlugin( MamutPlugin.class, registerAction, context );
 	}

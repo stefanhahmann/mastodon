@@ -74,6 +74,7 @@ import org.mastodon.ui.coloring.GraphColorGeneratorAdapter;
 import org.mastodon.ui.coloring.HasColorBarOverlay;
 import org.mastodon.ui.coloring.HasColoringModel;
 import org.mastodon.ui.keymap.KeyConfigContexts;
+import org.mastodon.util.TreeUtils;
 import org.mastodon.views.trackscheme.LineageTreeLayout;
 import org.mastodon.views.trackscheme.LongEdgesLineageTreeLayout;
 import org.mastodon.views.trackscheme.TrackSchemeEdge;
@@ -267,7 +268,9 @@ public class MamutBranchViewTrackScheme
 		frame.getTrackschemePanel().getDisplay().overlays().add( colorBarOverlay );
 
 		// Time range and display refresh.
-		frame.getTrackschemePanel().setTimepointRange( appModel.getMinTimepoint(), appModel.getMaxTimepoint() );
+
+		frame.getTrackschemePanel().setTimepointRange( TreeUtils.getMinTimepoint( appModel.getModel() ),
+				TreeUtils.getMaxTimepoint( appModel.getModel() ) );
 		frame.getTrackschemePanel().graphChanged();
 
 		frame.getTrackschemePanel().repaint();

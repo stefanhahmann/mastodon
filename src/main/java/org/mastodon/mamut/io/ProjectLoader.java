@@ -168,17 +168,26 @@ public class ProjectLoader
 	public static ProjectModel open( final MamutProject project, final Context context, final boolean restoreGUIState, final boolean authorizeSubstituteDummyData ) throws IOException, SpimDataException
 	{
 		// Load image data.
-		final SharedBigDataViewerData imageData = loadImageData( project, authorizeSubstituteDummyData );
+		final SharedBigDataViewerData imageData =
+				project.getProjectRoot() == null ? null : loadImageData( project, authorizeSubstituteDummyData );
 
 		// Try to read units from spimData is they are not present.
 		if ( project.getSpaceUnits() == null )
 		{
-			project.setSpaceUnits(
-					imageData.getSpimData().getSequenceDescription().getViewSetupsOrdered().stream()
-							.filter( BasicViewSetup::hasVoxelSize )
-							.map( setup -> setup.getVoxelSize().unit() )
-							.findFirst()
-							.orElse( "pixel" ) );
+			try
+			{
+				project.setSpaceUnits(
+						imageData.getSpimData().getSequenceDescription().getViewSetupsOrdered().stream()
+								.filter( BasicViewSetup::hasVoxelSize )
+								.map( setup -> setup.getVoxelSize().unit() )
+								.findFirst()
+								.orElse( "pixel" ) );
+			}
+			catch ( final NullPointerException e )
+			{
+				// Ignore.
+			}
+
 		}
 
 		if ( project.getTimeUnits() == null )
@@ -259,7 +268,14 @@ public class ProjectLoader
 				return openDummyImageData( project );
 
 			// Try to open a BDV file. If it fails, crash.
-			return SharedBigDataViewerData.fromSpimDataXmlFile( project.getDatasetXmlFile().getAbsolutePath() );
+			try
+			{
+				return SharedBigDataViewerData.fromSpimDataXmlFile( project.getDatasetXmlFile().getAbsolutePath() );
+			}
+			catch ( SpimDataException e )
+			{
+				return simpleDummyData( project );
+			}
 		}
 	}
 

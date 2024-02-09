@@ -174,7 +174,8 @@ public class WindowManager
 		final FeatureColorModeManager featureColorModeManager = new FeatureColorModeManager();
 		managers.put( FeatureColorModeManager.class, featureColorModeManager );
 		final MamutFeatureProjectionsManager featureProjectionsManager = new MamutFeatureProjectionsManager( context.getService( FeatureSpecsService.class ), featureColorModeManager );
-		featureProjectionsManager.setModel( model, appModel.getSharedBdvData().getSources().size() );
+		int nSources = appModel.getSharedBdvData() == null ? 0 : appModel.getSharedBdvData().getSources().size();
+		featureProjectionsManager.setModel( model, nSources );
 		managers.put( MamutFeatureProjectionsManager.class, featureProjectionsManager );
 		final TrackGraphColorGenerator< Spot, Link > trackGraphColorGenerator = new TrackGraphColorGenerator<>( model.getGraph() );
 		appModel.projectClosedListeners().add( () -> trackGraphColorGenerator.close() );
